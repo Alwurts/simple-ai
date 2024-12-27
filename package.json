@@ -6,7 +6,8 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint"
+		"lint": "next lint",
+		"build:registry": "tsx src/scripts/build-registry.ts"
 	},
 	"dependencies": {
 		"@ai-sdk/groq": "^1.0.9",
