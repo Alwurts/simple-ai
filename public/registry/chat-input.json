@@ -1,0 +1,15 @@
+{
+  "name": "chat-input",
+  "type": "registry:ui",
+  "registryDependencies": [
+    "textarea"
+  ],
+  "files": [
+    {
+      "type": "registry:ui",
+      "content": "\"use client\";\n\nimport { Textarea } from \"@/components/ui/textarea\";\nimport { cn } from \"@/lib/utils\";\nimport type React from \"react\";\nimport { useLayoutEffect, useRef } from \"react\";\n\ninterface ChatInputProps extends React.ComponentProps<typeof Textarea> {\n\tsubmitMessage?: () => void;\n}\n\nexport function ChatInput({\n\t// Custom props\n\tsubmitMessage,\n\t// Textarea props\n\tvalue,\n\tonChange,\n\tclassName,\n\t...props\n}: ChatInputProps) {\n\tconst textareaRef = useRef<HTMLTextAreaElement>(null);\n\n\tconst handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {\n\t\tif (!submitMessage) {\n\t\t\treturn;\n\t\t}\n\t\tif (e.key === \"Enter\" && !e.shiftKey) {\n\t\t\tif (typeof value === \"string\" && value.length === 0) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t\te.preventDefault();\n\t\t\tsubmitMessage();\n\t\t}\n\t};\n\n\t// biome-ignore lint/correctness/useExhaustiveDependencies: We need value to update the height\n\tuseLayoutEffect(() => {\n\t\tconst textArea = textareaRef.current;\n\n\t\tif (textArea) {\n\t\t\ttextArea.style.height = \"0px\";\n\t\t\tconst scrollHeight = textArea.scrollHeight;\n\t\t\ttextArea.style.height = `${scrollHeight}px`;\n\t\t}\n\t}, [textareaRef, value]);\n\n\treturn (\n\t\t<Textarea\n\t\t\tref={textareaRef}\n\t\t\t{...props}\n\t\t\tvalue={value}\n\t\t\tonChange={onChange}\n\t\t\tonKeyDown={handleKeyDown}\n\t\t\tclassName={cn(\"min-h-min max-h-[200px] resize-none\", className)}\n\t\t\trows={1}\n\t\t/>\n\t);\n}\n\nChatInput.displayName = \"ChatInput\";\n",
+      "path": "ui/chat-input.tsx",
+      "target": "src/components/ui/chat-input.tsx"
+    }
+  ]
+}
