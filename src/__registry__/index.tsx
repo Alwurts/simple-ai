@@ -27,7 +27,7 @@ export const Index: Record<string, any> = {
 		name: "chat-input-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["chat-input"],
+		registryDependencies: ["https://ai.alwurts.com/registry/chat-input.json"],
 		files: [{
 			path: "src/registry/examples/chat-input-demo.tsx",
 			type: "registry:example",
