@@ -1,11 +1,10 @@
 // @ts-nocheck
 "use client";
 
-import type { HTMLAttributes, ComponentProps, ImgHTMLAttributes } from "react";
-import Link from "next/link";
 import { useMDXComponent } from "next-contentlayer2/hooks";
+import Link from "next/link";
+import type { ComponentProps, HTMLAttributes, ImgHTMLAttributes } from "react";
 
-import { cn } from "@/lib/utils";
 import {
 	Accordion,
 	AccordionContent,
@@ -13,6 +12,7 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { cn } from "@/lib/utils";
 
 const components = {
 	Accordion,

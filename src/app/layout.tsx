@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/styles/globals.css";
-import type { ReactNode } from "react";
-import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
+import type { ReactNode } from "react";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",

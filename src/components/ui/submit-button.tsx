@@ -1,5 +1,5 @@
-import { ArrowUpIcon, StopCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ArrowUpIcon, StopCircle } from "lucide-react";
 
 interface SubmitButtonProps {
 	submitMessage: () => void;

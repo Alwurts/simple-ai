@@ -1,13 +1,11 @@
 "use client";
 
-import * as React from "react";
-import { useRouter } from "next/navigation";
 import type { DialogProps } from "@radix-ui/react-dialog";
 import { Circle, File, Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
+import * as React from "react";
 
-import { docsConfig } from "@/config/docs";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
 	CommandDialog,
@@ -18,6 +16,8 @@ import {
 	CommandList,
 	CommandSeparator,
 } from "@/components/ui/command";
+import { docsConfig } from "@/config/docs";
+import { cn } from "@/lib/utils";
 
 export function CommandMenu({ ...props }: DialogProps) {
 	const router = useRouter();

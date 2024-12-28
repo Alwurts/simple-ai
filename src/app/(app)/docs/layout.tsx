@@ -1,5 +1,5 @@
-import { docsConfig } from "@/config/docs";
 import { DocsNav } from "@/components/layout/docs-nav";
+import { docsConfig } from "@/config/docs";
 import type { ReactNode } from "react";
 
 export default function DocsLayout({

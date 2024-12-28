@@ -1,8 +1,8 @@
 "use client";
 
+import type { SidebarNavItem } from "@/types/nav";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { SidebarNavItem } from "@/types/nav";
 
 import type { DocsConfig } from "@/config/docs";
 import { cn } from "@/lib/utils";

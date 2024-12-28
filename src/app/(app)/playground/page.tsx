@@ -1,11 +1,11 @@
 "use client";
 
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { Card } from "@/components/ui/card";
 import { ChatInput } from "@/components/ui/chat-input";
 import { ChatMessage } from "@/components/ui/message";
 import { MessageArea } from "@/components/ui/message-area";
 import { SubmitButton } from "@/components/ui/submit-button";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { Card } from "@/components/ui/card";
 import { useChat } from "ai/react";
 import { toast } from "sonner";
 

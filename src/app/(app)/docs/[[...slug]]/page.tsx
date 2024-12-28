@@ -1,18 +1,18 @@
-import { notFound } from "next/navigation";
 // biome-ignore lint/correctness/noUndeclaredDependencies: <explanation>
 import { allDocs } from "contentlayer/generated";
+import { notFound } from "next/navigation";
 
 import "@/styles/mdx.css";
+import { ChevronRight, ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronRight, ExternalLink } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 
-import { siteConfig } from "@/config/site";
-import { absoluteUrl, cn } from "@/lib/utils";
-import { badgeVariants } from "@/components/ui/badge";
 import { Mdx } from "@/components/mdx-components";
 import { DocsPager } from "@/components/pager";
+import { badgeVariants } from "@/components/ui/badge";
+import { siteConfig } from "@/config/site";
+import { absoluteUrl, cn } from "@/lib/utils";
 
 interface DocPageProps {
 	params: {

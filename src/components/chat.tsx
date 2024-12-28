@@ -1,13 +1,13 @@
 "use client";
 
+import { Card } from "@/components/ui/card";
 import { ChatInput } from "@/components/ui/chat-input";
 import { ChatMessage } from "@/components/ui/message";
 import { MessageArea } from "@/components/ui/message-area";
 import { SubmitButton } from "@/components/ui/submit-button";
-import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { useChat } from "ai/react";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 
 export default function Chat({ className }: { className?: string }) {
 	const { messages, input, handleInputChange, handleSubmit, isLoading, stop } =

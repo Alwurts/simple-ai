@@ -1,11 +1,11 @@
-import Link from "next/link";
+import type { NavItem, NavItemWithChildren } from "@/types/nav";
 // biome-ignore lint/correctness/noUndeclaredDependencies: <explanation>
 import type { Doc } from "contentlayer/generated";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { NavItem, NavItemWithChildren } from "@/types/nav";
+import Link from "next/link";
 
-import { docsConfig } from "@/config/docs";
 import { Button } from "@/components/ui/button";
+import { docsConfig } from "@/config/docs";
 
 interface DocsPagerProps {
 	doc: Doc;

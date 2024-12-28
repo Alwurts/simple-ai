@@ -1,12 +1,13 @@
 "use client";
 
-import * as React from "react";
 import Link, { type LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
+import * as React from "react";
 
-import { docsConfig } from "@/config/docs";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { docsConfig } from "@/config/docs";
+import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
 import {
 	Drawer,
 	DrawerContent,
@@ -15,7 +16,6 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "../ui/drawer";
-import { siteConfig } from "@/config/site";
 
 export function MobileNav() {
 	const [open, setOpen] = React.useState(false);

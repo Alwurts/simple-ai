@@ -1,8 +1,8 @@
-import type { Message } from "ai";
-import { cn } from "@/lib/utils";
 import { Markdown } from "@/components/ui/markdown";
-import { memo } from "react";
+import { cn } from "@/lib/utils";
+import type { Message } from "ai";
 import { SparklesIcon } from "lucide-react";
+import { memo } from "react";
 
 interface ChatMessageProps {
 	message: Message;

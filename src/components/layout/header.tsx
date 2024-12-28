@@ -2,12 +2,12 @@ import Link from "next/link";
 
 import { siteConfig } from "@/config/site";
 
+import { CommandMenu } from "../command-menu";
 import { GithubIcon } from "../icons/github-icon";
-import { Button } from "../ui/button";
 import { ThemeToggle } from "../theme/theme-toggle";
+import { Button } from "../ui/button";
 import { MainNav } from "./main-nav";
 import { MobileNav } from "./mobile-nav";
-import { CommandMenu } from "../command-menu";
 
 export function SiteHeader() {
 	return (

@@ -4,9 +4,9 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"build": "next build",
+		"build": "contentlayer2 build && npm run build:registry && next build",
 		"start": "next start",
-		"lint": "next lint",
+		"lint": "biome check --write src",
 		"build:registry": "tsx src/scripts/build-registry.ts",
 		"build:docs": "contentlayer2 build"
 	},

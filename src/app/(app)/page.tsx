@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { Announcement } from "@/components/announcement";
+import Chat from "@/components/chat";
 import {
 	PageActions,
 	PageHeader,
@@ -7,8 +9,6 @@ import {
 	PageHeaderHeading,
 } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
-import { Announcement } from "@/components/announcement";
-import Chat from "@/components/chat";
 
 export default function HomePage() {
 	return (
