@@ -1,0 +1,15 @@
+{
+  "name": "chat-input-demo",
+  "type": "registry:example",
+  "registryDependencies": [
+    "chat-input"
+  ],
+  "files": [
+    {
+      "path": "examples/chat-input-demo.tsx",
+      "content": "import { ChatInput } from \"@/registry/ui/chat-input\";\n\nexport default function ChatInputDemo() {\n\treturn <ChatInput />;\n}\n",
+      "type": "registry:example",
+      "target": ""
+    }
+  ]
+}

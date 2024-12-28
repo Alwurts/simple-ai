@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { LogoIcon } from "../icons/logo-icon";
+import { docsConfig } from "@/config/docs";
 
 export function MainNav() {
 	const pathname = usePathname();
@@ -19,38 +20,20 @@ export function MainNav() {
 				</span>
 			</Link>
 			<nav className="flex items-center gap-4 text-sm xl:gap-6">
-				<Link
-					href="/docs"
-					className={cn(
-						"transition-colors hover:text-foreground/80",
-						pathname === "/docs" ? "text-foreground" : "text-foreground/80",
-					)}
-				>
-					Docs
-				</Link>
-				<Link
-					href="/docs/components"
-					className={cn(
-						"transition-colors hover:text-foreground/80",
-						pathname?.startsWith("/docs/components") &&
-							!pathname?.startsWith("/docs/component/chart")
-							? "text-foreground"
-							: "text-foreground/80",
-					)}
-				>
-					Components
-				</Link>
-				<Link
-					href="/blocks"
-					className={cn(
-						"transition-colors hover:text-foreground/80",
-						pathname?.startsWith("/blocks")
-							? "text-foreground"
-							: "text-foreground/80",
-					)}
-				>
-					Blocks
-				</Link>
+				{docsConfig.mainNav.slice(1).map((navItem) => (
+					<Link
+						key={navItem.href}
+						href={navItem.href ?? ""}
+						className={cn(
+							"transition-colors hover:text-foreground/80",
+							pathname === navItem.href
+								? "text-foreground"
+								: "text-foreground/80",
+						)}
+					>
+						{navItem.title}
+					</Link>
+				))}
 			</nav>
 		</div>
 	);
