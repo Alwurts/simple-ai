@@ -3,7 +3,7 @@
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import type React from "react";
-import { useTextareaResize } from "../hooks/use-textarea-resize";
+import { useTextareaResize } from "@/hooks/use-textarea-resize";
 
 export interface ChatInputProps extends React.ComponentProps<typeof Textarea> {
 	submitMessage?: () => void;
@@ -12,7 +12,6 @@ export interface ChatInputProps extends React.ComponentProps<typeof Textarea> {
 function ChatInput({
 	submitMessage,
 	value,
-	onChange,
 	className,
 	...props
 }: ChatInputProps) {
@@ -36,7 +35,6 @@ function ChatInput({
 			ref={textareaRef}
 			{...props}
 			value={value}
-			onChange={onChange}
 			onKeyDown={handleKeyDown}
 			className={cn("min-h-min max-h-[200px] resize-none", className)}
 			rows={1}

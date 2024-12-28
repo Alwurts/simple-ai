@@ -14,6 +14,10 @@ export const Index: Record<string, any> = {
 			path: "src/registry/ui/chat-input.tsx",
 			type: "registry:ui",
 			target: ""
+		},{
+			path: "src/registry/hooks/use-textarea-resize.ts",
+			type: "registry:hook",
+			target: ""
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/ui/chat-input.tsx")),
@@ -31,6 +35,20 @@ export const Index: Record<string, any> = {
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/examples/chat-input-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"use-textarea-resize": {
+		name: "use-textarea-resize",
+		description: "",
+		type: "registry:hook",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/hooks/use-textarea-resize.ts",
+			type: "registry:hook",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/hooks/use-textarea-resize.ts")),
 		source: "",
 		meta: undefined,
     },

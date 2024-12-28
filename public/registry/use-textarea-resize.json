@@ -1,0 +1,12 @@
+{
+  "name": "use-textarea-resize",
+  "type": "registry:hook",
+  "files": [
+    {
+      "path": "hooks/use-textarea-resize.ts",
+      "content": "import { useLayoutEffect, useRef } from \"react\";\nimport type { ComponentProps } from \"react\";\n\nexport function useTextareaResize(value: ComponentProps<\"textarea\">[\"value\"]) {\n\tconst textareaRef = useRef<HTMLTextAreaElement>(null);\n\n\t// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>\n\tuseLayoutEffect(() => {\n\t\tconst textArea = textareaRef.current;\n\n\t\tif (textArea) {\n\t\t\ttextArea.style.height = \"0px\";\n\t\t\tconst scrollHeight = textArea.scrollHeight;\n\t\t\ttextArea.style.height = `${scrollHeight}px`;\n\t\t}\n\t}, [textareaRef, value]);\n\n\treturn textareaRef;\n}\n",
+      "type": "registry:hook",
+      "target": ""
+    }
+  ]
+}

@@ -9,6 +9,10 @@
       {
         "path": "ui/chat-input.tsx",
         "type": "registry:ui"
+      },
+      {
+        "path": "hooks/use-textarea-resize.ts",
+        "type": "registry:hook"
       }
     ]
   }
