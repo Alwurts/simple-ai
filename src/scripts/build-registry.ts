@@ -99,7 +99,6 @@ export const Index: Record<string, any> = {
 	);
 
 	const registryJson = JSON.stringify(uiRegistryItems, null, 2);
-	console.log("registryJson", registryJson);
 	rimraf.sync(path.join(REGISTRY_PUBLIC_PATH, "index.json"));
 	await fs.writeFile(
 		path.join(REGISTRY_PUBLIC_PATH, "index.json"),
@@ -190,7 +189,6 @@ const main = async () => {
 			console.error(result.error);
 			process.exit(1);
 		}
-		//console.log("result.data", result.data);
 
 		await buildRegistry(result.data);
 		await buildStyles(result.data);
