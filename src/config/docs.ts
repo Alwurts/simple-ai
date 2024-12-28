@@ -40,5 +40,15 @@ export const docsConfig: DocsConfig = {
 				},
 			],
 		},
+		{
+			title: "Components",
+			items: [
+				{
+					title: "Chat Input",
+					href: "/docs/components/chat-input",
+					items: [],
+				},
+			],
+		},
 	],
 };

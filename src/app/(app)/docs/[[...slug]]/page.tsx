@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+// biome-ignore lint/correctness/noUndeclaredDependencies: <explanation>
 import { allDocs } from "contentlayer/generated";
 
 import "@/styles/mdx.css";
@@ -8,12 +9,10 @@ import { ChevronRight, ExternalLink } from "lucide-react";
 import Balancer from "react-wrap-balancer";
 
 import { siteConfig } from "@/config/site";
-import { getTableOfContents } from "@/lib/toc";
 import { absoluteUrl, cn } from "@/lib/utils";
+import { badgeVariants } from "@/components/ui/badge";
 import { Mdx } from "@/components/mdx-components";
 import { DocsPager } from "@/components/pager";
-import { DashboardTableOfContents } from "@/components/toc";
-import { badgeVariants } from "@/components/ui/badge";
 
 interface DocPageProps {
 	params: {
@@ -63,7 +62,7 @@ export async function generateMetadata({
 			title: doc.title,
 			description: doc.description,
 			images: [siteConfig.ogImage],
-			creator: "@shadcn",
+			creator: "@alwurts",
 		},
 	};
 }
@@ -83,7 +82,7 @@ export default async function DocPage({ params }: DocPageProps) {
 		notFound();
 	}
 
-	const toc = await getTableOfContents(doc.body.raw);
+	//const toc = await getTableOfContents(doc.body.raw);
 
 	return (
 		<main className="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
@@ -134,14 +133,14 @@ export default async function DocPage({ params }: DocPageProps) {
 				</div>
 				<DocsPager doc={doc} />
 			</div>
-			<div className="hidden text-sm xl:block">
+			{/* <div className="hidden text-sm xl:block">
 				<div className="sticky top-20 -mt-6 h-[calc(100vh-3.5rem)] pt-4">
 					<div className="no-scrollbar h-full overflow-auto pb-10">
 						{doc.toc && <DashboardTableOfContents toc={toc} />}
-						{/* <OpenInV0Cta className="mt-6 max-w-[80%]" /> */}
+						<OpenInV0Cta className="mt-6 max-w-[80%]" />
 					</div>
 				</div>
-			</div>
+			</div> */}
 		</main>
 	);
 }
