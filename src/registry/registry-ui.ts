@@ -4,7 +4,7 @@ export const ui: Registry = [
 	{
 		name: "chat-input",
 		type: "registry:ui",
-		registryDependencies: ["textarea"],
+		registryDependencies: ["textarea", "use-textarea-resize"],
 		files: [{ type: "registry:ui", path: "ui/chat-input.tsx" }],
 	},
 ];

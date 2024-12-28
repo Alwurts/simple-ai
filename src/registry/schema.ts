@@ -1,18 +1,18 @@
 import { z } from "zod";
 
 export const registryItemTypeSchema = z.enum([
-	//"registry:lib",
-	//"registry:block",
-	//"registry:component",
+	"registry:lib",
+	"registry:block",
+	"registry:component",
 	"registry:ui",
-	//"registry:hook",
-	//"registry:theme",
-	//"registry:page",
+	"registry:hook",
+	"registry:theme",
+	"registry:page",
 
 	// Internal use only
 	"registry:example",
-	//"registry:style",
-	//"registry:internal",
+	"registry:style",
+	"registry:internal",
 ]);
 
 export const registryItemFileSchema = z.object({

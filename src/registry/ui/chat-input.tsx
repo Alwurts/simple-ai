@@ -3,7 +3,7 @@
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import type React from "react";
-import { useLayoutEffect, useRef } from "react";
+import { useTextareaResize } from "../hooks/use-textarea-resize";
 
 export interface ChatInputProps extends React.ComponentProps<typeof Textarea> {
 	submitMessage?: () => void;
@@ -16,8 +16,6 @@ function ChatInput({
 	className,
 	...props
 }: ChatInputProps) {
-	const textareaRef = useRef<HTMLTextAreaElement>(null);
-
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (!submitMessage) {
 			return;
@@ -31,16 +29,7 @@ function ChatInput({
 		}
 	};
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useLayoutEffect(() => {
-		const textArea = textareaRef.current;
-
-		if (textArea) {
-			textArea.style.height = "0px";
-			const scrollHeight = textArea.scrollHeight;
-			textArea.style.height = `${scrollHeight}px`;
-		}
-	}, [textareaRef, value]);
+	const textareaRef = useTextareaResize(value);
 
 	return (
 		<Textarea

@@ -3,7 +3,6 @@ import {
 	defineNestedType,
 	makeSource,
 } from "contentlayer2/source-files";
-import { codeImport } from "remark-code-import";
 import remarkGfm from "remark-gfm";
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
@@ -74,6 +73,6 @@ export default makeSource({
 	contentDirPath: "./src/content",
 	documentTypes: [Doc],
 	mdx: {
-		remarkPlugins: [remarkGfm, codeImport],
+		remarkPlugins: [remarkGfm],
 	},
 });

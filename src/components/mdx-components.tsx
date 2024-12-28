@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/accordion";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { cn } from "@/lib/utils";
+import { ComponentPreview } from "@/components/component-preview";
 
 const components = {
 	Accordion,
@@ -169,6 +170,7 @@ const components = {
 			{...props}
 		/>
 	),
+	ComponentPreview,
 };
 
 interface MdxProps {
