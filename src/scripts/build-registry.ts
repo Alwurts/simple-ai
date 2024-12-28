@@ -1,87 +1,42 @@
-import { type Registry, registrySchema } from "../registry/schema";
+import {
+	registryItemSchema,
+	registrySchema,
+	type Registry,
+	type registryItemTypeSchema,
+} from "../registry/schema";
 import { registry } from "../registry";
 import path from "node:path";
-import fs from "node:fs/promises";
+import { existsSync, promises as fs } from "node:fs";
 import { rimraf } from "rimraf";
+import type { z } from "zod";
+import { tmpdir } from "node:os";
+import { Project, ScriptKind } from "ts-morph";
 
-/* const REGISTRY_BASE_PATH = "src/registry";
-const PUBLIC_FOLDER_BASE_PATH = "public/registry";
-const COMPONENT_FOLDER_PATH = "components";
-
-type File = z.infer<typeof registryItemFileSchema>;
-const FolderToComponentTypeMap = {
-	block: "registry:block",
-	component: "registry:component",
-	hooks: "registry:hook",
-	ui: "registry:ui",
-}; */
-
-/* async function writeFileRecursive(filePath: string, data: string) {
-	const dir = path.dirname(filePath); // Extract the directory path
-
-	try {
-		// Ensure the directory exists, recursively creating directories as needed
-		await fs.mkdir(dir, { recursive: true });
-
-		// Write the file
-		await fs.writeFile(filePath, data, "utf-8");
-		console.log(`File written to ${filePath}`);
-	} catch (error) {
-		console.error("Error writing file");
-		console.error(error);
-	}
-} */
-
-/* const getComponentFiles = async (files: File[]) => {
-	const filesArrayPromises = (files ?? []).map(async (file) => {
-		if (typeof file === "string") {
-			const filePath = `${REGISTRY_BASE_PATH}/${file}`;
-			const fileContent = await fs.readFile(filePath, "utf-8");
-			return {
-				type: FolderToComponentTypeMap[
-					file.split("/")[0] as keyof typeof FolderToComponentTypeMap
-				],
-				content: fileContent,
-				path: file,
-				target: `${COMPONENT_FOLDER_PATH}/${file}`,
-			};
-		}
-	});
-	const filesArray = await Promise.all(filesArrayPromises);
-
-	return filesArray;
-}; */
-
-/* const main = async () => {
-	// make a json file and put it in public folder
-	for (let i = 0; i < registryComponents.length; i++) {
-		const component = registryComponents[i];
-		const files = component.files;
-		if (!files) {
-			throw new Error("No files found for component");
-		}
-
-		const filesArray = await getComponentFiles(files);
-
-		const json = JSON.stringify(
-			{
-				...component,
-				files: filesArray,
-			},
-			null,
-			2,
-		);
-		const jsonPath = `${PUBLIC_FOLDER_BASE_PATH}/${component.name}.json`;
-		await writeFileRecursive(jsonPath, json);
-		console.log(json);
-	}
-}; */
+const REGISTRY_INDEX_WHITELIST: z.infer<typeof registryItemTypeSchema>[] = [
+	"registry:ui",
+	//"registry:lib",
+	//"registry:hook",
+	//"registry:theme",
+	//"registry:block",
+	"registry:example",
+	//"registry:internal",
+];
 
 const REGISTRY_BASE_PATH = "src/registry";
 const REGISTRY_PUBLIC_PATH = path.join(process.cwd(), "public/registry");
 const REGISTRY_GENERATED_PATH = path.join(process.cwd(), "src/__registry__");
+
+const project = new Project({
+	compilerOptions: {},
+});
+
+async function createTempSourceFile(filename: string) {
+	const dir = await fs.mkdtemp(path.join(tmpdir(), "alwurts-ai-"));
+	return path.join(dir, filename);
+}
+
 // ----------------------------------------------------------------------------
-// Build __registry__/index.tsx.
+// Build __registry__/index.tsx. and public/registry/index.json.
 // ----------------------------------------------------------------------------
 async function buildRegistry(registry: Registry) {
 	let index = `// @ts-nocheck
@@ -137,9 +92,7 @@ export const Index: Record<string, any> = {
 	index += `
 }
 `;
-	// ----------------------------------------------------------------------------
-	// Build registry/index.json.
-	// ----------------------------------------------------------------------------
+
 	const uiRegistryItems = registry.filter((item) =>
 		["registry:ui"].includes(item.type),
 	);
@@ -161,6 +114,72 @@ export const Index: Record<string, any> = {
 	);
 }
 
+// ----------------------------------------------------------------------------
+// Build public/registry/[name].json.
+// ----------------------------------------------------------------------------
+async function buildStyles(registry: Registry) {
+	const targetPath = REGISTRY_PUBLIC_PATH;
+	// Create directory if it doesn't exist.
+	if (!existsSync(targetPath)) {
+		await fs.mkdir(targetPath, { recursive: true });
+	}
+
+	for (const item of registry) {
+		if (!REGISTRY_INDEX_WHITELIST.includes(item.type)) {
+			continue;
+		}
+
+		// biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
+		let files;
+		if (item.files) {
+			files = await Promise.all(
+				item.files.map(async (file) => {
+					let content: string;
+					try {
+						content = await fs.readFile(
+							path.join(process.cwd(), REGISTRY_BASE_PATH, file.path),
+							"utf8",
+						);
+					} catch (_) {
+						return;
+					}
+
+					const tempFile = await createTempSourceFile(file.path);
+					const sourceFile = project.createSourceFile(tempFile, content, {
+						scriptKind: ScriptKind.TSX,
+					});
+
+					sourceFile.getVariableDeclaration("iframeHeight")?.remove();
+					sourceFile.getVariableDeclaration("containerClassName")?.remove();
+					sourceFile.getVariableDeclaration("description")?.remove();
+
+					const target = file.target || "";
+
+					return {
+						path: file.path,
+						type: file.type,
+						content: sourceFile.getText(),
+						target,
+					};
+				}),
+			);
+		}
+
+		const payload = registryItemSchema.safeParse({
+			...item,
+			files,
+		});
+
+		if (payload.success) {
+			await fs.writeFile(
+				path.join(targetPath, `${item.name}.json`),
+				JSON.stringify(payload.data, null, 2),
+				"utf8",
+			);
+		}
+	}
+}
+
 const main = async () => {
 	try {
 		console.log("💽 Building registry...");
@@ -173,6 +192,7 @@ const main = async () => {
 		//console.log("result.data", result.data);
 
 		await buildRegistry(result.data);
+		await buildStyles(result.data);
 
 		console.log("✅ Done!");
 	} catch (error) {
