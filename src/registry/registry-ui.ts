@@ -5,6 +5,6 @@ export const ui: Registry = [
 		name: "chat-input",
 		type: "registry:ui",
 		registryDependencies: ["textarea"],
-		files: ["ui/chat-input.tsx"],
+		files: [{ type: "registry:ui", path: "ui/chat-input.tsx" }],
 	},
 ];

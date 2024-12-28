@@ -5,14 +5,12 @@ import { cn } from "@/lib/utils";
 import type React from "react";
 import { useLayoutEffect, useRef } from "react";
 
-interface ChatInputProps extends React.ComponentProps<typeof Textarea> {
+export interface ChatInputProps extends React.ComponentProps<typeof Textarea> {
 	submitMessage?: () => void;
 }
 
-export function ChatInput({
-	// Custom props
+function ChatInput({
 	submitMessage,
-	// Textarea props
 	value,
 	onChange,
 	className,
@@ -33,7 +31,7 @@ export function ChatInput({
 		}
 	};
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We need value to update the height
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useLayoutEffect(() => {
 		const textArea = textareaRef.current;
 
@@ -58,3 +56,5 @@ export function ChatInput({
 }
 
 ChatInput.displayName = "ChatInput";
+
+export { ChatInput };

@@ -1,0 +1,15 @@
+[
+  {
+    "name": "chat-input",
+    "type": "registry:ui",
+    "registryDependencies": [
+      "textarea"
+    ],
+    "files": [
+      {
+        "path": "ui/chat-input.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  }
+]
