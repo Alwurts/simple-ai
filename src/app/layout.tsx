@@ -3,7 +3,9 @@ import localFont from "next/font/local";
 import "./globals.css";
 import type { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
-import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ThemeProvider } from "@/components/providers/theme-provider";
+import { cn } from "@/lib/utils";
+import { siteConfig } from "@/config/site";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -17,28 +19,70 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-	title: "Alwurts AI",
-	description: "Alwurts AI",
+	title: siteConfig.name,
+	metadataBase: new URL(siteConfig.url),
+	description: siteConfig.description,
+	keywords: [
+		"AI SDK",
+		"shadcn/ui",
+		"React",
+		"Next.js",
+		"Tailwind CSS",
+		"TypeScript",
+	],
+	authors: [
+		{
+			name: "Alwurts",
+			url: "https://alwurts.com",
+		},
+	],
+	creator: "Alwurts",
+	openGraph: {
+		type: "website",
+		locale: "en_US",
+		url: siteConfig.url,
+		title: siteConfig.name,
+		description: siteConfig.description,
+		siteName: siteConfig.name,
+		images: [
+			{
+				url: siteConfig.ogImage,
+				width: 1200,
+				height: 630,
+				alt: siteConfig.name,
+			},
+		],
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: siteConfig.name,
+		description: siteConfig.description,
+		images: [siteConfig.ogImage],
+		creator: "@alwurts",
+	},
 };
 
-export default function RootLayout({
-	children,
-}: Readonly<{
+interface RootLayoutProps {
 	children: ReactNode;
-}>) {
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<html lang="en">
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={cn("antialiased", geistSans.variable, geistMono.variable)}
 			>
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="system"
 					enableSystem
 					disableTransitionOnChange
+					enableColorScheme
 				>
-					{children}
-					<Toaster position="top-center" />
+					<div className="min-h-screen bg-background flex flex-col">
+						{children}
+					</div>
+					<Toaster />
 				</ThemeProvider>
 			</body>
 		</html>

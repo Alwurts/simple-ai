@@ -2,7 +2,7 @@ import { groq } from "@ai-sdk/groq";
 import { smoothStream, streamText } from "ai";
 
 // Allow streaming responses up to 30 seconds
-export const maxDuration = 60;
+export const maxDuration = 30;
 
 export async function POST(req: Request) {
 	const { messages } = await req.json();
