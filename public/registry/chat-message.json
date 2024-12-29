@@ -1,7 +1,7 @@
 {
   "name": "chat-message",
   "type": "registry:ui",
-  "dependencies": [
+  "registryDependencies": [
     "https://ai.alwurts.com/registry/markdown-content.json"
   ],
   "files": [

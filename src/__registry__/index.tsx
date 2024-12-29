@@ -27,7 +27,7 @@ export const Index: Record<string, any> = {
 		name: "chat-message",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: undefined,
+		registryDependencies: ["https://ai.alwurts.com/registry/markdown-content.json"],
 		files: [{
 			path: "src/registry/ui/chat-message.tsx",
 			type: "registry:ui",
