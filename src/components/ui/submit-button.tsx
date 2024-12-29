@@ -1,24 +1,29 @@
 import { Button } from "@/components/ui/button";
 import { ArrowUpIcon, StopCircle } from "lucide-react";
+import type { ButtonProps } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-interface SubmitButtonProps {
-	submitMessage: () => void;
-	stop: () => void;
-	loading: boolean;
+interface SubmitButtonProps extends ButtonProps {
+	submitMessage?: () => void;
+	stop?: () => void;
+	loading?: boolean;
 }
 
 export const SubmitButton = ({
 	submitMessage,
 	loading,
 	stop,
+	className,
+	...props
 }: SubmitButtonProps) => {
-	if (loading) {
+	if (loading && stop) {
 		return (
 			<Button
 				type="button"
 				onClick={stop}
 				size="icon"
-				className="rounded-full border dark:border-zinc-600"
+				className={cn("rounded-full border dark:border-zinc-600", className)}
+				{...props}
 			>
 				<StopCircle />
 			</Button>
@@ -26,12 +31,13 @@ export const SubmitButton = ({
 	}
 	return (
 		<Button
-			className="rounded-full border dark:border-zinc-600"
+			className={cn("rounded-full border dark:border-zinc-600", className)}
 			size="icon"
 			onClick={(event) => {
 				event.preventDefault();
-				submitMessage();
+				submitMessage?.();
 			}}
+			{...props}
 		>
 			<ArrowUpIcon />
 		</Button>
