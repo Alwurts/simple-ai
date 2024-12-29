@@ -13,7 +13,7 @@ export const ui: Registry = [
 	{
 		name: "chat-message",
 		type: "registry:ui",
-		dependencies: ["https://ai.alwurts.com/registry/markdown-content.json"],
+		registryDependencies: ["https://ai.alwurts.com/registry/markdown-content.json"],
 		files: [{ type: "registry:ui", path: "ui/chat-message.tsx" }],
 	},
 	{
