@@ -3,7 +3,6 @@ import { memo, useMemo } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 
 const components: Partial<Components> = {
-	//code: CodeBlock,
 	pre: ({ children }) => <>{children}</>,
 	ol: ({ node, children, ...props }) => {
 		return (
@@ -124,14 +123,14 @@ const MemoizedMarkdownBlock = memo(
 
 MemoizedMarkdownBlock.displayName = "MemoizedMarkdownBlock";
 
-interface MarkdownRenderProps {
+interface MarkdownContentProps {
 	content: string;
 	id: string;
 	className?: string;
 }
 
-export const Markdown = memo(
-	({ content, id, className }: MarkdownRenderProps) => {
+export const MarkdownContent = memo(
+	({ content, id, className }: MarkdownContentProps) => {
 		const blocks = useMemo(() => parseMarkdownIntoBlocks(content), [content]);
 
 		return blocks.map((block, index) => (
@@ -147,4 +146,4 @@ export const Markdown = memo(
 	},
 );
 
-Markdown.displayName = "Markdown";
+MarkdownContent.displayName = "MarkdownContent";

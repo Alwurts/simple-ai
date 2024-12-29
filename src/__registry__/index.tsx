@@ -23,6 +23,34 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/ui/chat-input.tsx")),
 		source: "",
 		meta: undefined,
+    },	"chat-message": {
+		name: "chat-message",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/chat-message.tsx",
+			type: "registry:ui",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/chat-message.tsx")),
+		source: "",
+		meta: undefined,
+    },	"markdown-content": {
+		name: "markdown-content",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/markdown-content.tsx",
+			type: "registry:ui",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/markdown-content.tsx")),
+		source: "",
+		meta: undefined,
     },	"chat-input-demo": {
 		name: "chat-input-demo",
 		description: "",

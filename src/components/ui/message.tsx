@@ -1,4 +1,4 @@
-import { Markdown } from "@/components/ui/markdown";
+import { MarkdownContent } from "@/components/ui/markdown-content";
 import { cn } from "@/lib/utils";
 import type { Message } from "ai";
 import { SparklesIcon } from "lucide-react";
@@ -30,7 +30,7 @@ export const ChatMessage = memo(({ message }: ChatMessageProps) => {
 						"bg-primary text-primary-foreground px-3 py-2 rounded-xl",
 				)}
 			>
-				<Markdown id={message.id} content={message.content} />
+				<MarkdownContent id={message.id} content={message.content} />
 			</div>
 		</div>
 	);

@@ -15,5 +15,32 @@
         "type": "registry:hook"
       }
     ]
+  },
+  {
+    "name": "chat-message",
+    "type": "registry:ui",
+    "dependencies": [
+      "https://ai.alwurts.com/registry/markdown-content.json"
+    ],
+    "files": [
+      {
+        "path": "ui/chat-message.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "markdown-content",
+    "type": "registry:ui",
+    "dependencies": [
+      "react-markdown",
+      "marked"
+    ],
+    "files": [
+      {
+        "path": "ui/markdown-content.tsx",
+        "type": "registry:ui"
+      }
+    ]
   }
 ]
