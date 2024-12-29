@@ -7,7 +7,7 @@ import {
 	ChatMessageAvatar,
 	ChatMessageContent,
 } from "@/components/ui/chat-message";
-import { MessageArea } from "@/components/ui/message-area";
+import { ChatMessageArea } from "@/components/ui/chat-message-area";
 import { SubmitButton } from "@/components/ui/submit-button";
 import type { Message } from "ai/react";
 
@@ -46,7 +46,7 @@ export default function ChatPage() {
 			<div className="container p-4 flex-1">
 				<Card className="w-full max-w-xl mx-auto flex flex-col flex-1 h-[80vh]">
 					<div className="flex-1 flex flex-col min-h-0">
-						<MessageArea className="px-4 py-8 space-y-4">
+						<ChatMessageArea className="px-4 py-8 space-y-4">
 							{messages.map((message) => {
 								if (message.role !== "user") {
 									return (
@@ -73,7 +73,7 @@ export default function ChatPage() {
 									</ChatMessage>
 								);
 							})}
-						</MessageArea>
+						</ChatMessageArea>
 						<div className="border-t p-4">
 							<div className="flex items-center space-x-2">
 								<ChatInput />

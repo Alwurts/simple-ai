@@ -2,12 +2,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
 import type { ReactNode } from "react";
 
-interface MessageAreaProps {
+interface ChatMessageAreaProps {
 	children: ReactNode;
 	className?: string;
 }
 
-export function MessageArea({ children, className }: MessageAreaProps) {
+export function ChatMessageArea({ children, className }: ChatMessageAreaProps) {
 	const [messagesContainerRef, messagesEndRef] =
 		useScrollToBottom<HTMLDivElement>();
 
@@ -24,4 +24,4 @@ export function MessageArea({ children, className }: MessageAreaProps) {
 	);
 }
 
-MessageArea.displayName = "MessageArea";
+ChatMessageArea.displayName = "ChatMessageArea";

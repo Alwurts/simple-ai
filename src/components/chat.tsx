@@ -2,8 +2,12 @@
 
 import { Card } from "@/components/ui/card";
 import { ChatInput } from "@/components/ui/chat-input";
-import { ChatMessage } from "@/components/ui/message";
-import { MessageArea } from "@/components/ui/message-area";
+import {
+	ChatMessage,
+	ChatMessageContent,
+	ChatMessageAvatar,
+} from "@/components/ui/chat-message";
+import { ChatMessageArea } from "@/components/ui/chat-message-area";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { cn } from "@/lib/utils";
 import { useChat } from "ai/react";
@@ -26,11 +30,25 @@ export default function Chat({ className }: { className?: string }) {
 	return (
 		<Card className={cn("flex flex-col flex-1 h-full", className)}>
 			<div className="flex-1 flex flex-col min-h-0">
-				<MessageArea className="px-4 py-8 space-y-4">
+				<ChatMessageArea className="px-4 py-8 space-y-4">
 					{messages.map((message) => (
-						<ChatMessage key={message.id} message={message} />
+						<ChatMessage
+							key={message.id}
+							align={message.role === "user" ? "right" : "left"}
+							type={message.role === "user" ? "outgoing" : "incoming"}
+							variant="bubble"
+							className="w-11/12"
+						>
+							{message.role !== "user" && (
+								<ChatMessageAvatar imageSrc="/avatar-2.png" />
+							)}
+							<ChatMessageContent id={message.id} content={message.content} />
+							{message.role === "user" && (
+								<ChatMessageAvatar imageSrc="/avatar-1.png" />
+							)}
+						</ChatMessage>
 					))}
-				</MessageArea>
+				</ChatMessageArea>
 				<div className="border-t p-4">
 					<div className="flex items-center space-x-2">
 						<ChatInput

@@ -1,0 +1,12 @@
+{
+  "name": "use-scroll-to-bottom",
+  "type": "registry:hook",
+  "files": [
+    {
+      "path": "hooks/use-scroll-to-bottom.ts",
+      "content": "import { type RefObject, useEffect, useRef } from \"react\";\n\nexport function useScrollToBottom<T extends HTMLElement>(): [\n\tRefObject<T>,\n\tRefObject<T>,\n] {\n\tconst containerRef = useRef<T>(null);\n\tconst endRef = useRef<T>(null);\n\n\tuseEffect(() => {\n\t\tconst container = containerRef.current;\n\t\tconst end = endRef.current;\n\n\t\tif (container && end) {\n\t\t\tconst observer = new MutationObserver(() => {\n\t\t\t\tend.scrollIntoView({ behavior: \"instant\", block: \"end\" });\n\t\t\t});\n\n\t\t\tobserver.observe(container, {\n\t\t\t\tchildList: true,\n\t\t\t\tsubtree: true,\n\t\t\t\tattributes: true,\n\t\t\t\tcharacterData: true,\n\t\t\t});\n\n\t\t\treturn () => observer.disconnect();\n\t\t}\n\t}, []);\n\n\treturn [containerRef, endRef];\n}\n",
+      "type": "registry:hook",
+      "target": ""
+    }
+  ]
+}

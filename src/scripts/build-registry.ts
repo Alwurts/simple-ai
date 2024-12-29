@@ -193,7 +193,7 @@ const main = async () => {
 		await buildRegistry(result.data);
 		await buildStyles(result.data);
 
-		console.log("✅ Done!");
+		console.log("✅ Done!\n");
 	} catch (error) {
 		console.error(error);
 		process.exit(1);

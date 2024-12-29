@@ -23,6 +23,24 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/ui/chat-input.tsx")),
 		source: "",
 		meta: undefined,
+    },	"chat-message-area": {
+		name: "chat-message-area",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["scroll-area"],
+		files: [{
+			path: "src/registry/ui/chat-message-area.tsx",
+			type: "registry:ui",
+			target: ""
+		},{
+			path: "src/registry/hooks/use-scroll-to-bottom.ts",
+			type: "registry:hook",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/chat-message-area.tsx")),
+		source: "",
+		meta: undefined,
     },	"chat-message": {
 		name: "chat-message",
 		description: "",
@@ -77,6 +95,20 @@ export const Index: Record<string, any> = {
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/hooks/use-textarea-resize.ts")),
+		source: "",
+		meta: undefined,
+    },	"use-scroll-to-bottom": {
+		name: "use-scroll-to-bottom",
+		description: "",
+		type: "registry:hook",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/hooks/use-scroll-to-bottom.ts",
+			type: "registry:hook",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/hooks/use-scroll-to-bottom.ts")),
 		source: "",
 		meta: undefined,
     },

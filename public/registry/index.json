@@ -17,6 +17,23 @@
     ]
   },
   {
+    "name": "chat-message-area",
+    "type": "registry:ui",
+    "registryDependencies": [
+      "scroll-area"
+    ],
+    "files": [
+      {
+        "path": "ui/chat-message-area.tsx",
+        "type": "registry:ui"
+      },
+      {
+        "path": "hooks/use-scroll-to-bottom.ts",
+        "type": "registry:hook"
+      }
+    ]
+  },
+  {
     "name": "chat-message",
     "type": "registry:ui",
     "registryDependencies": [
