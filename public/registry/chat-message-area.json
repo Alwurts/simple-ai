@@ -7,7 +7,7 @@
   "files": [
     {
       "path": "ui/chat-message-area.tsx",
-      "content": "import { ScrollArea } from \"@/components/ui/scroll-area\";\nimport { useScrollToBottom } from \"@/registry/hooks/use-scroll-to-bottom\";\nimport type { ReactNode } from \"react\";\n\ninterface ChatMessageAreaProps {\n\tchildren: ReactNode;\n\tclassName?: string;\n}\n\nexport function ChatMessageArea({ children, className }: ChatMessageAreaProps) {\n\tconst [messagesContainerRef, messagesEndRef] =\n\t\tuseScrollToBottom<HTMLDivElement>();\n\n\treturn (\n\t\t<ScrollArea className=\"flex-1\">\n\t\t\t<div ref={messagesContainerRef}>\n\t\t\t\t<div className={className}>{children}</div>\n\t\t\t\t<div\n\t\t\t\t\tref={messagesEndRef}\n\t\t\t\t\tclassName=\"shrink-0 min-w-[24px] min-h-[4px]\"\n\t\t\t\t/>\n\t\t\t</div>\n\t\t</ScrollArea>\n\t);\n}\n\nChatMessageArea.displayName = \"ChatMessageArea\";\n",
+      "content": "import { ScrollArea } from \"@/components/ui/scroll-area\";\nimport { useScrollToBottom } from \"@/hooks/use-scroll-to-bottom\";\nimport type { ReactNode } from \"react\";\n\ninterface ChatMessageAreaProps {\n\tchildren: ReactNode;\n\tclassName?: string;\n}\n\nexport function ChatMessageArea({ children, className }: ChatMessageAreaProps) {\n\tconst [messagesContainerRef, messagesEndRef] =\n\t\tuseScrollToBottom<HTMLDivElement>();\n\n\treturn (\n\t\t<ScrollArea className=\"flex-1\">\n\t\t\t<div ref={messagesContainerRef}>\n\t\t\t\t<div className={className}>{children}</div>\n\t\t\t\t<div\n\t\t\t\t\tref={messagesEndRef}\n\t\t\t\t\tclassName=\"shrink-0 min-w-[24px] min-h-[4px]\"\n\t\t\t\t/>\n\t\t\t</div>\n\t\t</ScrollArea>\n\t);\n}\n\nChatMessageArea.displayName = \"ChatMessageArea\";\n",
       "type": "registry:ui",
       "target": ""
     },

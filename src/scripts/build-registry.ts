@@ -149,6 +149,26 @@ async function buildStyles(registry: Registry) {
 						scriptKind: ScriptKind.TSX,
 					});
 
+					// Replace @/registry/ui imports with @/components/ui
+					for (const importDecl of sourceFile.getImportDeclarations()) {
+						const moduleSpecifier = importDecl.getModuleSpecifierValue();
+						if (moduleSpecifier.startsWith("@/registry/ui")) {
+							importDecl.setModuleSpecifier(
+								moduleSpecifier.replace("@/registry/ui", "@/components/ui"),
+							);
+						}
+						if (moduleSpecifier.startsWith("@/registry/lib")) {
+							importDecl.setModuleSpecifier(
+								moduleSpecifier.replace("@/registry/lib", "@/lib"),
+							);
+						}
+						if (moduleSpecifier.startsWith("@/registry/hooks")) {
+							importDecl.setModuleSpecifier(
+								moduleSpecifier.replace("@/registry/hooks", "@/hooks"),
+							);
+						}
+					}
+
 					sourceFile.getVariableDeclaration("iframeHeight")?.remove();
 					sourceFile.getVariableDeclaration("containerClassName")?.remove();
 					sourceFile.getVariableDeclaration("description")?.remove();

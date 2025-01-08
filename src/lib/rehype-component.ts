@@ -151,6 +151,7 @@ function cleanCode(code: string) {
 	let cleaned = code.replaceAll("export default", "export");
 	cleaned = cleaned.replaceAll("@/registry/ui", "@/components/ui");
 	cleaned = cleaned.replaceAll("@/registry/hooks", "@/hooks");
+	cleaned = cleaned.replaceAll("@/registry/lib", "@/lib");
 	cleaned = cleaned.replaceAll("@/registry/examples", "@/examples");
 	return cleaned;
 }
