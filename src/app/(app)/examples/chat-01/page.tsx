@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { ChatInput } from "@/components/ui/chat-input";
+import { ChatInput } from "@/registry/ui/chat-input";
 import {
 	ChatMessage,
 	ChatMessageAvatar,

@@ -7,7 +7,7 @@
   "files": [
     {
       "path": "examples/chat-input-demo.tsx",
-      "content": "import { ChatInput } from \"@/components/ui/chat-input\";\n\nexport default function ChatInputDemo() {\n\treturn <ChatInput />;\n}\n",
+      "content": "import { ChatInput } from \"@/registry/ui/chat-input\";\nimport { useState } from \"react\";\n\nexport default function ChatInputDemo() {\n\tconst [value, setValue] = useState(\"\");\n\n\tconst handleSubmit = () => {\n\t\tconsole.log(\"submit\", value);\n\t};\n\n\treturn (\n\t\t<div className=\"w-full h-full\">\n\t\t\t<ChatInput\n\t\t\t\tvalue={value}\n\t\t\t\tonChange={(e) => setValue(e.target.value)}\n\t\t\t\tsubmitMessage={handleSubmit}\n\t\t\t/>\n\t\t</div>\n\t);\n}\n",
       "type": "registry:example",
       "target": ""
     }

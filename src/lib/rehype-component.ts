@@ -54,8 +54,7 @@ export function rehypeComponent() {
 					// Replace imports.
 					// TODO: Use @swc/core and a visitor to replace this.
 					// For now a simple regex should do.
-					source = source.replaceAll("@/registry/", "@/components/");
-					source = source.replaceAll("export default", "export");
+					source = cleanCode(source);
 
 					// Add code as children so that rehype can take over at build time.
 					node.children?.push(
@@ -111,8 +110,7 @@ export function rehypeComponent() {
 					// Replace imports.
 					// TODO: Use @swc/core and a visitor to replace this.
 					// For now a simple regex should do.
-					source = source.replaceAll("@/registry/", "@/components/");
-					source = source.replaceAll("export default", "export");
+					source = cleanCode(source);
 
 					// Add code as children so that rehype can take over at build time.
 					node.children?.push(
@@ -147,4 +145,12 @@ export function rehypeComponent() {
 
 function getNodeAttributeByName(node: UnistNode, name: string) {
 	return node.attributes?.find((attribute) => attribute.name === name);
+}
+
+function cleanCode(code: string) {
+	let cleaned = code.replaceAll("export default", "export");
+	cleaned = cleaned.replaceAll("@/registry/ui", "@/components/ui");
+	cleaned = cleaned.replaceAll("@/registry/hooks", "@/hooks");
+	cleaned = cleaned.replaceAll("@/registry/examples", "@/examples");
+	return cleaned;
 }

@@ -2,7 +2,7 @@
 
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Card } from "@/components/ui/card";
-import { ChatInput } from "@/components/ui/chat-input";
+import { ChatInput } from "@/registry/ui/chat-input";
 import { SubmitButton } from "@/components/ui/submit-button";
 import { useChat } from "ai/react";
 import { toast } from "sonner";
