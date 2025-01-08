@@ -33,4 +33,9 @@ export const ui: Registry = [
 		dependencies: ["react-markdown", "marked"],
 		files: [{ type: "registry:ui", path: "ui/markdown-content.tsx" }],
 	},
+	{
+		name: "submit-button",
+		type: "registry:ui",
+		files: [{ type: "registry:ui", path: "ui/submit-button.tsx" }],
+	},
 ];

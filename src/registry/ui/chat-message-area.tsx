@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useScrollToBottom } from "@/hooks/use-scroll-to-bottom";
+import { useScrollToBottom } from "@/registry/hooks/use-scroll-to-bottom";
 import type { ReactNode } from "react";
 
 interface ChatMessageAreaProps {

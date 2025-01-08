@@ -1,4 +1,4 @@
-import { MarkdownContent } from "@/components/ui/markdown-content";
+import { MarkdownContent } from "@/registry/ui/markdown-content";
 import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { SparklesIcon, UserIcon } from "lucide-react";

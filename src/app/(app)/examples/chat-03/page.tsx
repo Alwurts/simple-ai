@@ -6,9 +6,9 @@ import {
 	ChatMessage,
 	ChatMessageAvatar,
 	ChatMessageContent,
-} from "@/components/ui/chat-message";
-import { ChatMessageArea } from "@/components/ui/chat-message-area";
-import { SubmitButton } from "@/components/ui/submit-button";
+} from "@/registry/ui/chat-message";
+import { ChatMessageArea } from "@/registry/ui/chat-message-area";
+import { SubmitButton } from "@/registry/ui/submit-button";
 import type { Message } from "ai/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
