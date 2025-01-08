@@ -83,15 +83,12 @@ export default function ChatPage() {
 								return (
 									<ChatMessage
 										key={message.id}
-										align={message.role === "user" ? "right" : "left"}
+										id={message.id}
 										type={message.role === "user" ? "outgoing" : "incoming"}
 										variant="full"
 									>
 										{message.role !== "user" && <ChatMessageAvatar />}
-										<ChatMessageContent
-											id={message.id}
-											content={message.content}
-										/>
+										<ChatMessageContent content={message.content} />
 										{message.role === "user" && <ChatMessageAvatar />}
 									</ChatMessage>
 								);

@@ -125,6 +125,104 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/examples/markdown-streaming-demo.tsx")),
 		source: "",
 		meta: undefined,
+    },	"chat-message-demo": {
+		name: "chat-message-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/chat-message-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/chat-message-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"chat-message-demo-default": {
+		name: "chat-message-demo-default",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/chat-message-demo-default.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/chat-message-demo-default.tsx")),
+		source: "",
+		meta: undefined,
+    },	"chat-message-demo-bubble": {
+		name: "chat-message-demo-bubble",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/chat-message-demo-bubble.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/chat-message-demo-bubble.tsx")),
+		source: "",
+		meta: undefined,
+    },	"chat-message-demo-full": {
+		name: "chat-message-demo-full",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/chat-message-demo-full.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/chat-message-demo-full.tsx")),
+		source: "",
+		meta: undefined,
+    },	"chat-message-demo-without-avatar": {
+		name: "chat-message-demo-without-avatar",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/chat-message-demo-without-avatar.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/chat-message-demo-without-avatar.tsx")),
+		source: "",
+		meta: undefined,
+    },	"chat-message-demo-avatar-image": {
+		name: "chat-message-demo-avatar-image",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/chat-message-demo-avatar-image.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/chat-message-demo-avatar-image.tsx")),
+		source: "",
+		meta: undefined,
+    },	"chat-message-demo-markdown-content": {
+		name: "chat-message-demo-markdown-content",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/chat-message-demo-markdown-content.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/chat-message-demo-markdown-content.tsx")),
+		source: "",
+		meta: undefined,
     },	"use-textarea-resize": {
 		name: "use-textarea-resize",
 		description: "",

@@ -50,26 +50,20 @@ export default function ChatPage() {
 							{messages.map((message) => {
 								if (message.role !== "user") {
 									return (
-										<ChatMessage key={message.id} align="left">
+										<ChatMessage key={message.id} id={message.id}>
 											<ChatMessageAvatar />
-											<ChatMessageContent
-												id={message.id}
-												content={message.content}
-											/>
+											<ChatMessageContent content={message.content} />
 										</ChatMessage>
 									);
 								}
 								return (
 									<ChatMessage
 										key={message.id}
-										align="right"
+										id={message.id}
 										variant="bubble"
 										type="outgoing"
 									>
-										<ChatMessageContent
-											id={message.id}
-											content={message.content}
-										/>
+										<ChatMessageContent content={message.content} />
 									</ChatMessage>
 								);
 							})}

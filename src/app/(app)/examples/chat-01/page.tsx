@@ -87,7 +87,7 @@ export default function ChatPage() {
 								return (
 									<ChatMessage
 										key={message.id}
-										align={message.role === "user" ? "right" : "left"}
+										id={message.id}
 										type={message.role === "user" ? "outgoing" : "incoming"}
 										variant="bubble"
 										className="w-11/12"
@@ -96,7 +96,6 @@ export default function ChatPage() {
 											<ChatMessageAvatar imageSrc="/avatar-2.png" />
 										)}
 										<ChatMessageContent
-											id={message.id}
 											content={message.content}
 										/>
 										{message.role === "user" && (

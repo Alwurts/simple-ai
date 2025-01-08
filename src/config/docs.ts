@@ -49,6 +49,11 @@ export const docsConfig: DocsConfig = {
 					items: [],
 				},
 				{
+					title: "Chat Message",
+					href: "/docs/components/chat-message",
+					items: [],
+				},
+				{
 					title: "Markdown Content",
 					href: "/docs/components/markdown-content",
 					items: [],

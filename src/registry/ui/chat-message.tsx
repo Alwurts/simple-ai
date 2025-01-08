@@ -11,13 +11,9 @@ const chatMessageVariants = cva("flex gap-4 w-full", {
 			bubble: "",
 			full: "p-5",
 		},
-		align: {
-			left: "justify-start mr-auto",
-			right: "justify-end ml-auto",
-		},
 		type: {
-			incoming: "",
-			outgoing: "",
+			incoming: "justify-start mr-auto",
+			outgoing: "justify-end ml-auto",
 		},
 	},
 	compoundVariants: [
@@ -34,13 +30,13 @@ const chatMessageVariants = cva("flex gap-4 w-full", {
 	],
 	defaultVariants: {
 		variant: "default",
-		align: "left",
 		type: "incoming",
 	},
 });
 
-interface MessageContextValue
-	extends VariantProps<typeof chatMessageVariants> {}
+interface MessageContextValue extends VariantProps<typeof chatMessageVariants> {
+	id: string;
+}
 
 const ChatMessageContext = React.createContext<MessageContextValue | null>(
 	null,
@@ -56,27 +52,26 @@ interface ChatMessageProps
 	extends React.HTMLAttributes<HTMLDivElement>,
 		VariantProps<typeof chatMessageVariants> {
 	children?: React.ReactNode;
+	id: string;
 }
 
 const ChatMessage = React.forwardRef<HTMLDivElement, ChatMessageProps>(
 	(
 		{
 			className,
-			align = "left",
 			variant = "default",
 			type = "incoming",
+			id,
 			children,
 			...props
 		},
 		ref,
 	) => {
 		return (
-			<ChatMessageContext.Provider value={{ align, variant, type }}>
+			<ChatMessageContext.Provider value={{ variant, type, id }}>
 				<div
 					ref={ref}
-					className={cn(
-						chatMessageVariants({ variant, align, type, className }),
-					)}
+					className={cn(chatMessageVariants({ variant, type, className }))}
 					{...props}
 				>
 					{children}
@@ -168,18 +163,19 @@ const chatMessageContentVariants = cva("flex flex-col", {
 });
 
 interface ChatMessageContentProps extends React.HTMLAttributes<HTMLDivElement> {
-	id: string;
+	id?: string;
 	content: string;
 }
 
 const ChatMessageContent = React.forwardRef<
 	HTMLDivElement,
 	ChatMessageContentProps
->(({ className, content, id, ...props }, ref) => {
+>(({ className, content, id: idProp, ...props }, ref) => {
 	const context = useChatMessage();
 
 	const variant = context?.variant ?? "default";
 	const type = context?.type ?? "incoming";
+	const id = idProp ?? context?.id ?? "";
 
 	return (
 		<div

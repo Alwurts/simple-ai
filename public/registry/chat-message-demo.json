@@ -1,0 +1,12 @@
+{
+  "name": "chat-message-demo",
+  "type": "registry:example",
+  "files": [
+    {
+      "path": "examples/chat-message-demo.tsx",
+      "content": "import {\n\tChatMessage,\n\tChatMessageAvatar,\n\tChatMessageContent,\n} from \"@/components/ui/chat-message\";\n\nexport default function ChatMessageDemo() {\n\treturn (\n\t\t<div className=\"w-full px-4 py-8 space-y-4 border rounded-lg\">\n\t\t\t<ChatMessage key=\"1\" id=\"1\" variant=\"bubble\" type=\"outgoing\">\n\t\t\t\t<ChatMessageContent content=\"Hey how are you?\" />\n\t\t\t</ChatMessage>\n\n\t\t\t<ChatMessage key=\"2\" id=\"2\">\n\t\t\t\t<ChatMessageAvatar />\n\t\t\t\t<ChatMessageContent content=\"I'm fine, thanks for asking!\" />\n\t\t\t</ChatMessage>\n\n\t\t\t<ChatMessage key=\"3\" id=\"3\" variant=\"bubble\" type=\"outgoing\">\n\t\t\t\t<ChatMessageContent content=\"Great!\" />\n\t\t\t</ChatMessage>\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:example",
+      "target": ""
+    }
+  ]
+}
