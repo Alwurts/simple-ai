@@ -31,6 +31,8 @@ export function ComponentPreview({
 	hideCode = false,
 	...props
 }: ComponentPreviewProps) {
+	const [Code] = React.Children.toArray(children) as React.ReactElement[];
+
 	const Preview = useMemo(() => {
 		const Component = Index[name]?.component;
 
@@ -48,6 +50,17 @@ export function ComponentPreview({
 
 		return <Component />;
 	}, [name]);
+
+	const codeString = React.useMemo(() => {
+		if (
+			typeof Code?.props["data-rehype-pretty-code-fragment"] !== "undefined"
+		) {
+			const [Button] = React.Children.toArray(
+				Code.props.children,
+			) as React.ReactElement[];
+			return Button?.props?.value || Button?.props?.__rawString__ || null;
+		}
+	}, [Code]);
 
 	return (
 		<div
@@ -78,7 +91,7 @@ export function ComponentPreview({
 						{/* <StyleSwitcher /> */}
 						<div className="flex items-center gap-2">
 							<CopyButton
-								value={""}
+								value={codeString}
 								variant="outline"
 								className="h-7 w-7 text-foreground opacity-100 hover:bg-muted hover:text-foreground [&_svg]:h-3.5 [&_svg]:w-3.5"
 							/>
@@ -109,7 +122,7 @@ export function ComponentPreview({
 				<TabsContent value="code">
 					<div className="flex flex-col space-y-4">
 						<div className="w-full rounded-md [&_pre]:my-0 [&_pre]:max-h-[350px] [&_pre]:overflow-auto">
-							{/* {Code} */}
+							{Code}
 						</div>
 					</div>
 				</TabsContent>

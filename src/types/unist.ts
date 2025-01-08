@@ -1,6 +1,6 @@
-/* import type { Node } from "unist-builder";
- */
-/* export interface UnistNode extends Node {
+import type { Node } from "unist-builder";
+
+export interface UnistNode extends Node {
 	type: string;
 	name?: string;
 	tagName?: string;
@@ -17,11 +17,11 @@
 		type?: string;
 	}[];
 	children?: UnistNode[];
-} */
+}
 
-/* export interface UnistTree extends Node {
+export interface UnistTree extends Node {
 	children: UnistNode[];
-} */
+}
 
 export interface NpmCommands {
 	__npmCommand__?: string;
