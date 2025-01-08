@@ -1,9 +1,9 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { useScrollToBottom } from "@/registry/hooks/use-scroll-to-bottom";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import { useScrollToBottom } from "@/registry/hooks/use-scroll-to-bottom";
 import { ChevronDown } from "lucide-react";
 import type { ReactNode } from "react";
-import { cn } from "@/lib/utils";
 
 type ScrollButtonAlignment = "none" | "left" | "center" | "right";
 
@@ -31,7 +31,7 @@ export function ScrollButton({
 			className={cn(
 				"absolute bottom-4 rounded-full shadow-lg",
 				alignmentClasses[alignment],
-				className
+				className,
 			)}
 			onClick={onClick}
 		>
@@ -51,8 +51,12 @@ export function ChatMessageArea({
 	className,
 	scrollButtonAlignment = "right",
 }: ChatMessageAreaProps) {
-	const [messagesContainerRef, messagesEndRef, showScrollButton, scrollToBottom] =
-		useScrollToBottom<HTMLDivElement>();
+	const [
+		messagesContainerRef,
+		messagesEndRef,
+		showScrollButton,
+		scrollToBottom,
+	] = useScrollToBottom<HTMLDivElement>();
 
 	return (
 		<ScrollArea className="flex-1 relative">
@@ -64,7 +68,10 @@ export function ChatMessageArea({
 				/>
 			</div>
 			{showScrollButton && scrollButtonAlignment !== "none" && (
-				<ScrollButton onClick={scrollToBottom} alignment={scrollButtonAlignment} />
+				<ScrollButton
+					onClick={scrollToBottom}
+					alignment={scrollButtonAlignment}
+				/>
 			)}
 		</ScrollArea>
 	);

@@ -10,11 +10,11 @@ import Balancer from "react-wrap-balancer";
 
 import { Mdx } from "@/components/mdx-components";
 import { DocsPager } from "@/components/pager";
+import { DashboardTableOfContents } from "@/components/toc";
 import { badgeVariants } from "@/components/ui/badge";
 import { siteConfig } from "@/config/site";
-import { absoluteUrl, cn } from "@/lib/utils";
-import { DashboardTableOfContents } from "@/components/toc";
 import { getTableOfContents } from "@/lib/toc";
+import { absoluteUrl, cn } from "@/lib/utils";
 
 interface DocPageProps {
 	params: {

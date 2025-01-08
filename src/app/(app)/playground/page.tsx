@@ -31,9 +31,7 @@ export default function ChatPage() {
 			<div className="container p-4 flex-1">
 				<Card className="w-full max-w-xl mx-auto flex flex-col flex-1 h-[80vh]">
 					<div className="flex-1 flex flex-col min-h-0">
-						<ChatMessageArea 
-							className="px-6 py-8 space-y-4"
-						>
+						<ChatMessageArea className="px-6 py-8 space-y-4">
 							{messages.map((message) => {
 								if (message.role !== "user") {
 									return (

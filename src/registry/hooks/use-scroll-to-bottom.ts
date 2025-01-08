@@ -42,7 +42,8 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 				const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
 				// Use a hybrid approach: either within 30px of bottom OR 99.5% scrolled
 				const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
-				const isNearBottom = distanceFromBottom < 30 || scrollPercentage > 0.995;
+				const isNearBottom =
+					distanceFromBottom < 30 || scrollPercentage > 0.995;
 				setShouldAutoScroll(isNearBottom);
 				setShowScrollButton(!isNearBottom);
 			};

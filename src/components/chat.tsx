@@ -34,7 +34,7 @@ export default function Chat({ className }: { className?: string }) {
 					{messages.map((message) => (
 						<ChatMessage
 							key={message.id}
-							align={message.role === "user" ? "right" : "left"}
+							id={message.id}
 							type={message.role === "user" ? "outgoing" : "incoming"}
 							variant="bubble"
 							className="w-11/12"
@@ -42,7 +42,7 @@ export default function Chat({ className }: { className?: string }) {
 							{message.role !== "user" && (
 								<ChatMessageAvatar imageSrc="/avatar-2.png" />
 							)}
-							<ChatMessageContent id={message.id} content={message.content} />
+							<ChatMessageContent content={message.content} />
 							{message.role === "user" && (
 								<ChatMessageAvatar imageSrc="/avatar-1.png" />
 							)}
