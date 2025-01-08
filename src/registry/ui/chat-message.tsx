@@ -1,6 +1,6 @@
-import { MarkdownContent } from "@/registry/ui/markdown-content";
 import { cn } from "@/lib/utils";
-import { cva, type VariantProps } from "class-variance-authority";
+import { MarkdownContent } from "@/registry/ui/markdown-content";
+import { type VariantProps, cva } from "class-variance-authority";
 import { SparklesIcon, UserIcon } from "lucide-react";
 import React, { type ReactNode } from "react";
 
@@ -14,11 +14,6 @@ const chatMessageVariants = cva("flex gap-4 w-full", {
 		align: {
 			left: "justify-start mr-auto",
 			right: "justify-end ml-auto",
-		},
-		size: {
-			sm: "text-sm",
-			default: "text-base",
-			lg: "text-lg",
 		},
 		type: {
 			incoming: "",
@@ -40,7 +35,6 @@ const chatMessageVariants = cva("flex gap-4 w-full", {
 	defaultVariants: {
 		variant: "default",
 		align: "left",
-		size: "default",
 		type: "incoming",
 	},
 });
@@ -70,7 +64,6 @@ const ChatMessage = React.forwardRef<HTMLDivElement, ChatMessageProps>(
 			className,
 			align = "left",
 			variant = "default",
-			size = "default",
 			type = "incoming",
 			children,
 			...props
@@ -78,11 +71,11 @@ const ChatMessage = React.forwardRef<HTMLDivElement, ChatMessageProps>(
 		ref,
 	) => {
 		return (
-			<ChatMessageContext.Provider value={{ align, variant, size, type }}>
+			<ChatMessageContext.Provider value={{ align, variant, type }}>
 				<div
 					ref={ref}
 					className={cn(
-						chatMessageVariants({ variant, align, size, type, className }),
+						chatMessageVariants({ variant, align, type, className }),
 					)}
 					{...props}
 				>
@@ -155,11 +148,6 @@ const chatMessageContentVariants = cva("flex flex-col", {
 			incoming: "",
 			outgoing: "",
 		},
-		size: {
-			sm: "text-sm",
-			default: "text-base",
-			lg: "text-lg",
-		},
 	},
 	compoundVariants: [
 		{
@@ -176,7 +164,6 @@ const chatMessageContentVariants = cva("flex flex-col", {
 	defaultVariants: {
 		variant: "default",
 		type: "incoming",
-		size: "default",
 	},
 });
 
@@ -192,15 +179,12 @@ const ChatMessageContent = React.forwardRef<
 	const context = useChatMessage();
 
 	const variant = context?.variant ?? "default";
-	const size = context?.size ?? "default";
 	const type = context?.type ?? "incoming";
 
 	return (
 		<div
 			ref={ref}
-			className={cn(
-				chatMessageContentVariants({ variant, type, size, className }),
-			)}
+			className={cn(chatMessageContentVariants({ variant, type, className }))}
 			{...props}
 		>
 			<MarkdownContent id={id} content={content} />
