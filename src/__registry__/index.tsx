@@ -97,6 +97,34 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/examples/chat-input-demo.tsx")),
 		source: "",
 		meta: undefined,
+    },	"markdown-content-demo": {
+		name: "markdown-content-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/markdown-content-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/markdown-content-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"markdown-streaming-demo": {
+		name: "markdown-streaming-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/markdown-streaming-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/markdown-streaming-demo.tsx")),
+		source: "",
+		meta: undefined,
     },	"use-textarea-resize": {
 		name: "use-textarea-resize",
 		description: "",

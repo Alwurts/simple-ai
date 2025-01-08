@@ -12,4 +12,24 @@ export const examples: Registry = [
 			},
 		],
 	},
+	{
+		name: "markdown-content-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/markdown-content-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "markdown-streaming-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/markdown-streaming-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
 ];
