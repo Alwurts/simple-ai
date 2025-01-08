@@ -1,13 +1,13 @@
 "use client";
 
-import * as React from "react";
 import { Index } from "@/__registry__";
+import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import { useMemo } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { CopyButton } from "./copy-button";
 import { Loader2 } from "lucide-react";
+import { useMemo } from "react";
+import { CopyButton } from "./copy-button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
 	name: string;

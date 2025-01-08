@@ -1,6 +1,6 @@
 import { Button, type ButtonProps } from "@/components/ui/button";
-import { ArrowUpIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ArrowUpIcon } from "lucide-react";
 
 interface SubmitButtonProps extends ButtonProps {
 	submitMessage?: () => void;

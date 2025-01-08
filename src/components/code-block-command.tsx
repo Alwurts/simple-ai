@@ -1,13 +1,13 @@
 "use client";
 
-import * as React from "react";
 import { CheckIcon, ClipboardIcon } from "lucide-react";
+import * as React from "react";
 
-import type { NpmCommands } from "@/types/unist";
-import { useConfig } from "@/hooks/use-config";
 import { copyToClipboardWithMeta } from "@/components/copy-button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useConfig } from "@/hooks/use-config";
+import type { NpmCommands } from "@/types/unist";
 
 export function CodeBlockCommand({
 	__npmCommand__,

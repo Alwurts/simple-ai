@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import { MarkdownContent } from "../ui/markdown-content";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { MarkdownContent } from "../ui/markdown-content";
 
 export default function MarkdownStreamingDemo() {
 	const [content, setContent] = useState("");
@@ -55,10 +55,7 @@ export default function MarkdownStreamingDemo() {
 	return (
 		<div className="space-y-4 w-full h-full">
 			<div className="flex gap-2">
-				<Button 
-					onClick={handleStart}
-					disabled={isStreaming}
-				>
+				<Button onClick={handleStart} disabled={isStreaming}>
 					{content ? "Restart" : "Start"} Streaming
 				</Button>
 			</div>

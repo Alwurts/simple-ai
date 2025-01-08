@@ -3,15 +3,14 @@
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Card } from "@/components/ui/card";
 import { ChatInput } from "@/registry/ui/chat-input";
-import { SubmitButton } from "@/components/ui/submit-button";
+import { SubmitButton } from "@/registry/ui/submit-button";
 import { useChat } from "ai/react";
 import { toast } from "sonner";
 
 export default function ChatPage() {
-	const { messages, input, handleInputChange, handleSubmit, isLoading, stop } =
-		useChat({
-			api: "/api/ai/chat",
-		});
+	const { input, handleInputChange, handleSubmit, isLoading, stop } = useChat({
+		api: "/api/ai/chat",
+	});
 
 	const handleSubmitMessage = () => {
 		if (isLoading) {

@@ -2,8 +2,8 @@
 
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import type React from "react";
 import { useTextareaResize } from "@/registry/hooks/use-textarea-resize";
+import type React from "react";
 
 export interface ChatInputProps extends React.ComponentProps<typeof Textarea> {
 	submitMessage?: () => void;

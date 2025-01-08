@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { docsConfig } from "@/config/docs";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { LogoIcon } from "../icons/logo-icon";
-import { docsConfig } from "@/config/docs";
 
 export function MainNav() {
 	const pathname = usePathname();

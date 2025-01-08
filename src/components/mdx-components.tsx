@@ -1,13 +1,12 @@
 // @ts-nocheck
 "use client";
 
-import type * as React from "react";
+import type { NpmCommands } from "@/types/unist";
+import { useMDXComponent } from "next-contentlayer2/hooks";
 import Image from "next/image";
 import Link from "next/link";
-import { useMDXComponent } from "next-contentlayer2/hooks";
-import type { NpmCommands } from "@/types/unist";
+import type * as React from "react";
 
-import { cn } from "@/lib/utils";
 import { Callout } from "@/components/callout";
 import { CodeBlockCommand } from "@/components/code-block-command";
 import { CodeBlockWrapper } from "@/components/code-block-wrapper";
@@ -26,6 +25,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 const components = {
 	Accordion,
