@@ -1,16 +1,22 @@
 "use client";
 
-import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Card } from "@/components/ui/card";
 import { ChatInput } from "@/registry/ui/chat-input";
+import {
+	ChatMessage,
+	ChatMessageAvatar,
+	ChatMessageContent,
+} from "@/registry/ui/chat-message";
+import { ChatMessageArea } from "@/registry/ui/chat-message-area";
 import { SubmitButton } from "@/registry/ui/submit-button";
 import { useChat } from "ai/react";
 import { toast } from "sonner";
 
 export default function ChatPage() {
-	const { input, handleInputChange, handleSubmit, isLoading, stop } = useChat({
-		api: "/api/ai/chat",
-	});
+	const { messages, input, handleInputChange, handleSubmit, isLoading, stop } =
+		useChat({
+			api: "/api/ai/chat",
+		});
 
 	const handleSubmitMessage = () => {
 		if (isLoading) {
@@ -21,19 +27,34 @@ export default function ChatPage() {
 	};
 
 	return (
-		<div className="flex flex-col items-stretch justify-start h-screen">
-			<div className="bg-background w-full h-12 border-b border-border flex items-center justify-center">
-				<h1 className="text-2xl font-bold">Chat</h1>
-				<ThemeToggle className="ml-auto" />
-			</div>
-			<div className="w-full max-w-3xl mx-auto flex-1 overflow-y-auto p-4">
-				<Card className="flex flex-col flex-1 h-full">
+		<div className="container-wrapper flex-1 flex flex-col">
+			<div className="container p-4 flex-1">
+				<Card className="w-full max-w-xl mx-auto flex flex-col flex-1 h-[80vh]">
 					<div className="flex-1 flex flex-col min-h-0">
-						{/* <MessageArea className="px-4 py-8 space-y-4">
-							{messages.map((message) => (
-								<ChatMessage key={message.id} message={message} />
-							))}
-						</MessageArea> */}
+						<ChatMessageArea 
+							className="px-6 py-8 space-y-4"
+						>
+							{messages.map((message) => {
+								if (message.role !== "user") {
+									return (
+										<ChatMessage key={message.id} id={message.id}>
+											<ChatMessageAvatar />
+											<ChatMessageContent content={message.content} />
+										</ChatMessage>
+									);
+								}
+								return (
+									<ChatMessage
+										key={message.id}
+										id={message.id}
+										variant="bubble"
+										type="outgoing"
+									>
+										<ChatMessageContent content={message.content} />
+									</ChatMessage>
+								);
+							})}
+						</ChatMessageArea>
 						<div className="border-t p-4">
 							<div className="flex items-center space-x-2">
 								<ChatInput
