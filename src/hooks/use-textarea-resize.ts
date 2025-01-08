@@ -9,7 +9,8 @@ export function useTextareaResize(value: ComponentProps<"textarea">["value"]) {
 		const textArea = textareaRef.current;
 
 		if (textArea) {
-			textArea.style.height = "0px";
+			// Reset height to auto first to get the correct scrollHeight
+			textArea.style.height = "auto";
 			const scrollHeight = textArea.scrollHeight;
 			textArea.style.height = `${scrollHeight}px`;
 		}

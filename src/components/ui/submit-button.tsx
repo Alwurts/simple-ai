@@ -19,10 +19,11 @@ export const SubmitButton = ({
 	if (loading && stop) {
 		return (
 			<Button
-				type="button"
 				onClick={stop}
-				size="icon"
-				className={cn("rounded-full border dark:border-zinc-600", className)}
+				className={cn(
+					"shrink-0 rounded-full p-1.5 h-fit border dark:border-zinc-600",
+					className,
+				)}
 				{...props}
 			>
 				<StopCircle />
@@ -31,8 +32,10 @@ export const SubmitButton = ({
 	}
 	return (
 		<Button
-			className={cn("rounded-full border dark:border-zinc-600", className)}
-			size="icon"
+			className={cn(
+				"shrink-0 rounded-full p-1.5 h-fit border dark:border-zinc-600",
+				className,
+			)}
 			onClick={(event) => {
 				event.preventDefault();
 				submitMessage?.();

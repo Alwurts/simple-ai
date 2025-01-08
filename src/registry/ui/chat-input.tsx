@@ -36,7 +36,7 @@ function ChatInput({
 			{...props}
 			value={value}
 			onKeyDown={handleKeyDown}
-			className={cn("min-h-min max-h-[200px] resize-none", className)}
+			className={cn("min-h-min max-h-[200px] resize-none overflow-hidden", className)}
 			rows={1}
 		/>
 	);

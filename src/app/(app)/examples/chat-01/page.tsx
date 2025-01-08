@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { ChatInput } from "@/components/ui/chat-input";
 import {
@@ -10,8 +11,11 @@ import {
 import { ChatMessageArea } from "@/components/ui/chat-message-area";
 import { SubmitButton } from "@/components/ui/submit-button";
 import type { Message } from "ai/react";
+import { Paperclip } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function ChatPage() {
+	const [inputValue, setInputValue] = useState("");
 	const messages: Message[] = [
 		{
 			id: "1",
@@ -103,9 +107,23 @@ export default function ChatPage() {
 							})}
 						</ChatMessageArea>
 						<div className="border-t p-4">
-							<div className="flex items-center space-x-2">
-								<ChatInput />
-								<SubmitButton />
+							<div className="relative w-full">
+								<ChatInput
+									value={inputValue}
+									onChange={(e) => setInputValue(e.target.value)}
+									submitMessage={() => {
+										setInputValue("");
+									}}
+									className="min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-2xl bg-muted pb-10"
+								/>
+								<div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
+									<Button variant="ghost" size="icon">
+										<Paperclip />
+									</Button>
+								</div>
+								<div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
+									<SubmitButton />
+								</div>
 							</div>
 						</div>
 					</div>
