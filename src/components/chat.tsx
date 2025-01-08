@@ -1,6 +1,8 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { ChatInput } from "@/registry/ui/chat-input";
 import {
 	ChatMessage,
 	ChatMessageAvatar,
@@ -8,8 +10,6 @@ import {
 } from "@/registry/ui/chat-message";
 import { ChatMessageArea } from "@/registry/ui/chat-message-area";
 import { SubmitButton } from "@/registry/ui/submit-button";
-import { cn } from "@/lib/utils";
-import { ChatInput } from "@/registry/ui/chat-input";
 import { useChat } from "ai/react";
 import { toast } from "sonner";
 

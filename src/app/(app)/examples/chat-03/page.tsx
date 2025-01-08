@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ChatInput } from "@/registry/ui/chat-input";
 import {
@@ -8,11 +9,10 @@ import {
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
 import { ChatMessageArea } from "@/registry/ui/chat-message-area";
-import type { Message } from "ai/react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Paperclip } from "lucide-react";
 import { SubmitButton } from "@/registry/ui/submit-button";
+import type { Message } from "ai/react";
+import { Paperclip } from "lucide-react";
+import { useState } from "react";
 
 const messages: Message[] = [
 	{

@@ -95,9 +95,7 @@ export default function ChatPage() {
 										{message.role !== "user" && (
 											<ChatMessageAvatar imageSrc="/avatar-2.png" />
 										)}
-										<ChatMessageContent
-											content={message.content}
-										/>
+										<ChatMessageContent content={message.content} />
 										{message.role === "user" && (
 											<ChatMessageAvatar imageSrc="/avatar-1.png" />
 										)}
