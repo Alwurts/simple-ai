@@ -1,13 +1,16 @@
 "use client";
 import { Card } from "@/components/ui/card";
-import { ChatInput } from "@/registry/ui/chat-input";
+import {
+	ChatInput,
+	ChatInputSubmit,
+	ChatInputTextArea,
+} from "@/registry/ui/chat-input";
 import {
 	ChatMessage,
 	ChatMessageAvatar,
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
 import { ChatMessageArea } from "@/registry/ui/chat-message-area";
-import { SubmitButton } from "@/registry/ui/submit-button";
 import type { Message } from "ai/react";
 import { useState } from "react";
 
@@ -101,24 +104,17 @@ export default function ChatPage() {
 							})}
 						</ChatMessageArea>
 						<div className="border-t p-4">
-							<div className="relative w-full">
-								<ChatInput
-									value={inputValue}
-									onChange={(e) => setInputValue(e.target.value)}
-									submitMessage={() => {
-										setInputValue("");
-									}}
-									className="rounded-2xl bg-muted pb-10"
-								/>
-								{/* <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
-									<Button variant="ghost" size="icon">
-										<Paperclip />
-									</Button>
-								</div> */}
-								<div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
-									<SubmitButton />
-								</div>
-							</div>
+							<ChatInput
+								variant="default"
+								value={inputValue}
+								onChange={(e) => setInputValue(e.target.value)}
+								onSubmit={() => {
+									setInputValue("");
+								}}
+							>
+								<ChatInputTextArea placeholder="Type a message..." />
+								<ChatInputSubmit />
+							</ChatInput>
 						</div>
 					</div>
 				</Card>

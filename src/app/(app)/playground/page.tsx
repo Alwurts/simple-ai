@@ -1,14 +1,17 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
-import { ChatInput } from "@/registry/ui/chat-input";
+import {
+	ChatInput,
+	ChatInputTextArea,
+	ChatInputSubmit,
+} from "@/registry/ui/chat-input";
 import {
 	ChatMessage,
 	ChatMessageAvatar,
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
 import { ChatMessageArea } from "@/registry/ui/chat-message-area";
-import { SubmitButton } from "@/registry/ui/submit-button";
 import { useChat } from "ai/react";
 import { toast } from "sonner";
 
@@ -54,18 +57,17 @@ export default function ChatPage() {
 							})}
 						</ChatMessageArea>
 						<div className="border-t p-4">
-							<div className="flex items-center space-x-2">
-								<ChatInput
-									value={input}
-									onChange={handleInputChange}
-									submitMessage={handleSubmitMessage}
-								/>
-								<SubmitButton
-									loading={isLoading}
-									submitMessage={handleSubmitMessage}
-									stop={stop}
-								/>
-							</div>
+							<ChatInput
+								variant="default"
+								value={input}
+								onChange={handleInputChange}
+								onSubmit={handleSubmitMessage}
+								loading={isLoading}
+								onStop={stop}
+							>
+								<ChatInputTextArea placeholder="Type a message..." />
+								<ChatInputSubmit />
+							</ChatInput>
 						</div>
 					</div>
 				</Card>
