@@ -1,4 +1,10 @@
-import { type RefObject, useCallback, useEffect, useRef, useState } from "react";
+import {
+	type RefObject,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 
 export function useScrollToBottom<T extends HTMLElement>(): [
 	RefObject<T>,
@@ -20,22 +26,25 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 		return Math.abs(scrollHeight - scrollTop - clientHeight) < 10;
 	}, []);
 
-	const updateScrollState = useCallback((viewport: HTMLElement) => {
-		const { scrollHeight, clientHeight } = viewport;
-		const hasScrollableContent = scrollHeight > clientHeight;
-		const atBottom = isAtBottom(viewport);
-		
-		setShowScrollButton(hasScrollableContent && !atBottom);
-		
-		if (!isUserScrolling.current) {
-			setShouldAutoScroll(atBottom);
-		}
-	}, [isAtBottom]);
+	const updateScrollState = useCallback(
+		(viewport: HTMLElement) => {
+			const { scrollHeight, clientHeight } = viewport;
+			const hasScrollableContent = scrollHeight > clientHeight;
+			const atBottom = isAtBottom(viewport);
+
+			setShowScrollButton(hasScrollableContent && !atBottom);
+
+			if (!isUserScrolling.current) {
+				setShouldAutoScroll(atBottom);
+			}
+		},
+		[isAtBottom],
+	);
 
 	useEffect(() => {
 		const container = containerRef.current;
 		const viewport = getViewport(container);
-		
+
 		if (!container || !viewport) {
 			return;
 		}
@@ -51,7 +60,7 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 		const handleTouchStart = () => {
 			isUserScrolling.current = true;
 		};
-		
+
 		const handleTouchEnd = () => {
 			isUserScrolling.current = false;
 			updateScrollState(viewport);
@@ -61,16 +70,16 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 		const observer = new MutationObserver(() => {
 			isGrowing.current = true;
 			window.clearTimeout(growthTimeout);
-			
+
 			if (shouldAutoScroll && !isUserScrolling.current) {
 				viewport.scrollTo({
 					top: viewport.scrollHeight,
-					
+
 					behavior: "instant",
 				});
 			}
 			updateScrollState(viewport);
-			
+
 			growthTimeout = window.setTimeout(() => {
 				isGrowing.current = false;
 			}, 100);

@@ -51,11 +51,8 @@ export function ChatMessageArea({
 	className,
 	scrollButtonAlignment = "right",
 }: ChatMessageAreaProps) {
-	const [
-		containerRef,
-		showScrollButton,
-		scrollToBottom,
-	] = useScrollToBottom<HTMLDivElement>();
+	const [containerRef, showScrollButton, scrollToBottom] =
+		useScrollToBottom<HTMLDivElement>();
 
 	return (
 		<ScrollArea className="flex-1 relative">
