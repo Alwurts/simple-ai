@@ -111,13 +111,13 @@ export default function ChatPage() {
 									submitMessage={() => {
 										setInputValue("");
 									}}
-									className="min-h-[24px] max-h-[calc(75dvh)] overflow-hidden resize-none rounded-2xl bg-muted pb-10"
+									className="rounded-2xl bg-muted pb-10"
 								/>
-								<div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
+								{/* <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
 									<Button variant="ghost" size="icon">
 										<Paperclip />
 									</Button>
-								</div>
+								</div> */}
 								<div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
 									<SubmitButton />
 								</div>

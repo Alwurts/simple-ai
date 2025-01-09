@@ -6,12 +6,15 @@ import { useTextareaResize } from "@/registry/hooks/use-textarea-resize";
 import type React from "react";
 
 export interface ChatInputProps extends React.ComponentProps<typeof Textarea> {
+	value: string;
+	onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
 	submitMessage?: () => void;
 }
 
 function ChatInput({
 	submitMessage,
 	value,
+	onChange,
 	className,
 	...props
 }: ChatInputProps) {
@@ -34,11 +37,9 @@ function ChatInput({
 			ref={textareaRef}
 			{...props}
 			value={value}
+			onChange={onChange}
 			onKeyDown={handleKeyDown}
-			className={cn(
-				"min-h-[24px] max-h-[calc(75dvh)] resize-none overflow-hidden bg-muted",
-				className,
-			)}
+			className={cn("max-h-[400px] resize-none overflow-x-hidden", className)}
 			rows={2}
 		/>
 	);
