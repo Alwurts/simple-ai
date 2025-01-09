@@ -10,6 +10,13 @@ component: true
   description="A component that adds auto scrolling functionality to a list of chat messages."
 />
 
+The Chat Message Area component provides a responsive and intelligent scrollable container specifically designed for streamingchat interfaces. It features a sophisticated auto-scrolling system that adapts to user interaction:
+
+- **Smart Auto-scroll**: Automatically scrolls to new messages when they appear, but only if the user is already at the bottom
+- **Interaction Awareness**: Auto-scroll automatically disables when users scroll up to read previous messages
+- **Re-engagement**: Auto-scroll re-enables when users manually scroll back to the bottom
+- **Mobile Optimized**: On touch devices, auto-scroll pauses while the user's finger is on the screen
+- **Convenient Navigation**: Includes a scroll-to-bottom button that appears when not at the bottom
 
 ## Installation
 
@@ -75,9 +82,10 @@ You can align the scroll button to the left, right, or center.
 
 ### Streaming
 
+Try out the auto-scrolling behavior in this live demo. Scroll up to pause auto-scrolling, scroll to bottom to re-enable it, or use the scroll button for quick navigation. On mobile, touch the screen to temporarily pause auto-scroll.
+
 <ComponentPreview
   name="chat-message-area-demo-streaming"
   title="Chat Message Area Demo Streaming"
   description="A chat message area demo with streaming messages."
 />
-
