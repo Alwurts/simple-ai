@@ -7,7 +7,7 @@ import { ChatMessageArea } from "@/registry/ui/chat-message-area";
 
 export default function ChatMessageAreaDemo() {
 	return (
-		<ChatMessageArea className="space-y-4 p-4 max-h-[400px]">
+		<ChatMessageArea className="space-y-4 p-2 max-h-[400px]">
 			<ChatMessage key="1" id="1" variant="bubble" type="outgoing">
 				<ChatMessageContent content="Can you tell me a story? Maybe something about a magical forest?" />
 			</ChatMessage>

@@ -8,6 +8,7 @@ import { ThemeToggle } from "../theme/theme-toggle";
 import { Button } from "../ui/button";
 import { MainNav } from "./main-nav";
 import { MobileNav } from "./mobile-nav";
+import { XIcon } from "../icons/x-icon";
 
 export function SiteHeader() {
 	return (
@@ -34,6 +35,12 @@ export function SiteHeader() {
 								>
 									<GithubIcon className="h-4 w-4" />
 									<span className="sr-only">GitHub</span>
+								</Link>
+							</Button>
+							<Button variant="ghost" size="icon" asChild>
+								<Link href={siteConfig.links.twitter}>
+									<XIcon className="h-4 w-4" />
+									<span className="sr-only">X</span>
 								</Link>
 							</Button>
 							<ThemeToggle />
