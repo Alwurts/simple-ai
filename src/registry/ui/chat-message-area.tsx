@@ -52,7 +52,7 @@ export function ChatMessageArea({
 	scrollButtonAlignment = "right",
 }: ChatMessageAreaProps) {
 	const [
-		messagesContainerRef,
+		containerRef,
 		messagesEndRef,
 		showScrollButton,
 		scrollToBottom,
@@ -60,17 +60,18 @@ export function ChatMessageArea({
 
 	return (
 		<ScrollArea className="flex-1 relative">
-			<div ref={messagesContainerRef}>
+			<div ref={containerRef}>
 				<div className={cn(className, "min-h-0")}>{children}</div>
 				<div
 					ref={messagesEndRef}
-					className="shrink-0 min-w-[24px] min-h-[4px]"
+						className="shrink-0 min-w-[24px] min-h-[4px]"
 				/>
 			</div>
 			{showScrollButton && (
 				<ScrollButton
 					onClick={scrollToBottom}
 					alignment={scrollButtonAlignment}
+					className="absolute bottom-4 rounded-full shadow-lg hover:bg-secondary"
 				/>
 			)}
 		</ScrollArea>

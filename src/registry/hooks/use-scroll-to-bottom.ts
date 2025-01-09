@@ -1,4 +1,4 @@
-import { type RefObject, useEffect, useRef, useState } from "react";
+import { type RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 export function useScrollToBottom<T extends HTMLElement>(): [
 	RefObject<T>,
@@ -12,80 +12,82 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 	const [showScrollButton, setShowScrollButton] = useState(false);
 	const [isTouching, setIsTouching] = useState(false);
 	const isManualScrolling = useRef(false);
+	const lastScrollTop = useRef(0);
+	const smoothScrollTimeout = useRef<number>();
+
+	const getViewport = useCallback((element: HTMLElement | null) => {
+		return element?.closest("[data-radix-scroll-area-viewport]") as HTMLElement;
+	}, []);
+
+	const checkIfShouldShowButton = useCallback((viewport: HTMLElement) => {
+		const { scrollTop, scrollHeight, clientHeight } = viewport;
+		const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 10;
+		const hasScrollableContent = scrollHeight > clientHeight;
+
+		setShowScrollButton(hasScrollableContent && !isAtBottom);
+	}, []);
 
 	useEffect(() => {
 		const container = containerRef.current;
+		const viewport = getViewport(container);
 		const end = endRef.current;
 
-		if (container && end) {
-			// Find the actual scrollable viewport element (Radix UI ScrollArea Viewport)
-			const scrollViewport = container.closest(
-				"[data-radix-scroll-area-viewport]",
-			);
+		if (container && viewport && end) {
+			// Initial check for scroll button
+			checkIfShouldShowButton(viewport);
 
-			if (!scrollViewport) {
-				console.warn("ScrollArea viewport not found");
-				return;
-			}
-
-			// Check initial scroll position
-			const checkScrollPosition = () => {
-				if (isManualScrolling.current) {
-					return;
-				}
-
-				const { scrollTop, scrollHeight, clientHeight } = scrollViewport;
-				const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
-				const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
-				const isNearBottom =
-					distanceFromBottom < 30 || scrollPercentage > 0.995;
-				setShouldAutoScroll(isNearBottom);
-				setShowScrollButton(!isNearBottom);
-			};
-
-			// Initial check
-			checkScrollPosition();
-
-			// Handle touch events
-			const handleTouchStart = () => setIsTouching(true);
-			const handleTouchEnd = () => setIsTouching(false);
-
-			// Handle scroll events to determine if we should auto-scroll
 			const handleScroll = () => {
-				if (isTouching) {
-					setShouldAutoScroll(false);
+				if (isManualScrolling.current || isTouching) {
 					return;
 				}
-				checkScrollPosition();
+
+				const { scrollTop, scrollHeight, clientHeight } = viewport;
+				
+				// If scrolling up, disable auto-scroll
+				if (scrollTop < lastScrollTop.current) {
+					setShouldAutoScroll(false);
+				}
+				
+				// If manually scrolled to bottom, re-enable auto-scroll
+				const isAtBottom = Math.abs(scrollHeight - scrollTop - clientHeight) < 10;
+				if (isAtBottom) {
+					setShouldAutoScroll(true);
+				}
+				
+				lastScrollTop.current = scrollTop;
+				checkIfShouldShowButton(viewport);
 			};
 
-			scrollViewport.addEventListener("scroll", handleScroll);
-			scrollViewport.addEventListener("touchstart", handleTouchStart);
-			scrollViewport.addEventListener("touchend", handleTouchEnd);
+			const handleTouchStart = () => {
+				setIsTouching(true);
+			};
+			
+			const handleTouchEnd = () => {
+				setIsTouching(false);
+			};
 
-			const observer = new MutationObserver(() => {
+			// Content change observer
+			const mutationObserver = new MutationObserver(() => {
 				if (shouldAutoScroll && !isTouching) {
-					const scrollViewport = container.closest(
-						"[data-radix-scroll-area-viewport]",
-					) as HTMLElement;
-
-					if (scrollViewport) {
-						isManualScrolling.current = true;
-						scrollViewport.scrollTo({
-							top: scrollViewport.scrollHeight,
-							behavior: "instant",
-						});
-						requestAnimationFrame(() => {
-							isManualScrolling.current = false;
-							checkScrollPosition();
-						});
-					}
+					isManualScrolling.current = true;
+					viewport.scrollTo({
+						top: viewport.scrollHeight,
+						behavior: "instant",
+					});
+					requestAnimationFrame(() => {
+						isManualScrolling.current = false;
+						checkIfShouldShowButton(viewport);
+					});
 				} else {
-					checkScrollPosition();
+					checkIfShouldShowButton(viewport);
 				}
 			});
 
-			observer.observe(container, {
+			viewport.addEventListener("scroll", handleScroll, { passive: true });
+			viewport.addEventListener("touchstart", handleTouchStart);
+			viewport.addEventListener("touchend", handleTouchEnd);
+
+			mutationObserver.observe(container, {
 				childList: true,
 				subtree: true,
 				attributes: true,
@@ -93,35 +95,42 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 			});
 
 			return () => {
-				observer.disconnect();
-				scrollViewport.removeEventListener("scroll", handleScroll);
-				scrollViewport.removeEventListener("touchstart", handleTouchStart);
-				scrollViewport.removeEventListener("touchend", handleTouchEnd);
+				if (smoothScrollTimeout.current) {
+					window.clearTimeout(smoothScrollTimeout.current);
+				}
+				mutationObserver.disconnect();
+				viewport.removeEventListener("scroll", handleScroll);
+				viewport.removeEventListener("touchstart", handleTouchStart);
+				viewport.removeEventListener("touchend", handleTouchEnd);
 			};
 		}
-	}, [shouldAutoScroll, isTouching]);
+	}, [shouldAutoScroll, isTouching, getViewport, checkIfShouldShowButton]);
 
 	const scrollToBottom = () => {
 		const container = containerRef.current;
-		if (container) {
-			const scrollViewport = container.closest(
-				"[data-radix-scroll-area-viewport]",
-			) as HTMLElement;
+		const viewport = getViewport(container);
+		
+		if (viewport) {
+			// Clear any existing smooth scroll timeout
+			if (smoothScrollTimeout.current) {
+				window.clearTimeout(smoothScrollTimeout.current);
+			}
 
-			if (scrollViewport) {
+			isManualScrolling.current = true;
+			
+			// Do the smooth scroll
+			viewport.scrollTo({
+				top: viewport.scrollHeight,
+				behavior: "smooth",
+			});
+
+			// Wait for the smooth scroll to finish (approximately)
+			// and then enable auto-scroll
+			smoothScrollTimeout.current = window.setTimeout(() => {
+				isManualScrolling.current = false;
 				setShouldAutoScroll(true);
 				setShowScrollButton(false);
-				isManualScrolling.current = true;
-
-				scrollViewport.scrollTo({
-					top: scrollViewport.scrollHeight,
-					behavior: "instant",
-				});
-
-				requestAnimationFrame(() => {
-					isManualScrolling.current = false;
-				});
-			}
+			}, 500); // 500ms should be enough for most smooth scrolls
 		}
 	};
 

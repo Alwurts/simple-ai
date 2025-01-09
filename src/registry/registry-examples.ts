@@ -122,4 +122,14 @@ export const examples: Registry = [
 			},
 		],
 	},
+	{
+		name: "chat-message-area-demo-streaming",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/chat-message-area-demo-streaming.tsx",
+				type: "registry:example",
+			},
+		],
+	},
 ];
