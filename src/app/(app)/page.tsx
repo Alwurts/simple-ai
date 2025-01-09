@@ -5,14 +5,14 @@ import Link from "next/link";
 import { Announcement } from "@/components/announcement";
 import {
 	PageActions,
-	PageHeaderHeading,
 	PageHeaderDescription,
+	PageHeaderHeading,
 } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
-import { ComponentPreviewSimple } from "@/components/component-preview-simple";
 import { ComponentPreview } from "@/components/component-preview";
+import { ComponentPreviewSimple } from "@/components/component-preview-simple";
 
 export default function HomePage() {
 	return (

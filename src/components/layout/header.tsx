@@ -4,11 +4,11 @@ import { siteConfig } from "@/config/site";
 
 import { CommandMenu } from "../command-menu";
 import { GithubIcon } from "../icons/github-icon";
+import { XIcon } from "../icons/x-icon";
 import { ThemeToggle } from "../theme/theme-toggle";
 import { Button } from "../ui/button";
 import { MainNav } from "./main-nav";
 import { MobileNav } from "./mobile-nav";
-import { XIcon } from "../icons/x-icon";
 
 export function SiteHeader() {
 	return (

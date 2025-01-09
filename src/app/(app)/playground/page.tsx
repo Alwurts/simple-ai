@@ -3,8 +3,8 @@
 import { Card } from "@/components/ui/card";
 import {
 	ChatInput,
-	ChatInputTextArea,
 	ChatInputSubmit,
+	ChatInputTextArea,
 } from "@/registry/ui/chat-input";
 import {
 	ChatMessage,
