@@ -34,7 +34,7 @@ export default function HomePage() {
 			<div className="container-wrapper flex-1">
 				<div className="container py-6">
 					<section className="[&>div]:p-0">
-						<Chat className="h-[600px] max-w-3xl mx-auto" />
+						
 					</section>
 				</div>
 			</div>

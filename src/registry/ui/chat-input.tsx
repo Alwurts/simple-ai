@@ -15,6 +15,7 @@ interface ChatInputContextValue {
 	loading?: boolean;
 	onStop?: () => void;
 	variant?: "default" | "unstyled";
+	rows?: number;
 }
 
 const ChatInputContext = createContext<ChatInputContextValue>({});
@@ -23,6 +24,7 @@ interface ChatInputProps extends Omit<ChatInputContextValue, "variant"> {
 	children: React.ReactNode;
 	className?: string;
 	variant?: "default" | "unstyled";
+	rows?: number;
 }
 
 function ChatInput({
@@ -34,14 +36,16 @@ function ChatInput({
 	onSubmit,
 	loading,
 	onStop,
+	rows = 1,
 }: ChatInputProps) {
 	const contextValue: ChatInputContextValue = {
 		value,
 		onChange,
 		onSubmit,
-		loading,
-		onStop,
-		variant,
+			loading,
+			onStop,
+			variant,
+			rows,
 	};
 
 	return (
@@ -81,18 +85,19 @@ function ChatInputTextArea({
 	const value = valueProp ?? context.value ?? "";
 	const onChange = onChangeProp ?? context.onChange;
 	const onSubmit = onSubmitProp ?? context.onSubmit;
+	const rows = context.rows ?? 1;
 
 	// Convert parent variant to textarea variant unless explicitly overridden
 	const variant =
 		variantProp ?? (context.variant === "default" ? "unstyled" : "default");
 
-	const textareaRef = useTextareaResize(value);
+	const textareaRef = useTextareaResize(value, rows);
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (!onSubmit) {
 			return;
 		}
 		if (e.key === "Enter" && !e.shiftKey) {
-			if (typeof value === "string" && value.length === 0) {
+			if (typeof value !== "string" || value.trim().length === 0) {
 				return;
 			}
 			e.preventDefault();
@@ -108,12 +113,12 @@ function ChatInputTextArea({
 			onChange={onChange}
 			onKeyDown={handleKeyDown}
 			className={cn(
-				"max-h-[400px] resize-none overflow-x-hidden",
+				"max-h-[400px] min-h-0 resize-none overflow-x-hidden",
 				variant === "unstyled" &&
 					"border-none focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none",
 				className,
 			)}
-			rows={2}
+			rows={rows}
 		/>
 	);
 }
@@ -167,15 +172,20 @@ function ChatInputSubmit({
 		);
 	}
 
+	const isDisabled = typeof context.value !== "string" || context.value.trim().length === 0;
+
 	return (
 		<Button
 			className={cn(
 				"shrink-0 rounded-full p-1.5 h-fit border dark:border-zinc-600",
 				className,
 			)}
+			disabled={isDisabled}
 			onClick={(event) => {
 				event.preventDefault();
-				onSubmit?.();
+				if (!isDisabled) {
+					onSubmit?.();
+				}
 			}}
 			{...props}
 		>

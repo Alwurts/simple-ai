@@ -23,6 +23,16 @@ export const examples: Registry = [
 		],
 	},
 	{
+		name: "chat-input-unstyled-initial-rows",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/chat-input-unstyled-initial-rows.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
 		name: "markdown-content-demo",
 		type: "registry:example",
 		files: [

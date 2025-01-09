@@ -111,6 +111,20 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/examples/chat-input-unstyled.tsx")),
 		source: "",
 		meta: undefined,
+    },	"chat-input-unstyled-initial-rows": {
+		name: "chat-input-unstyled-initial-rows",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/chat-input-unstyled-initial-rows.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/chat-input-unstyled-initial-rows.tsx")),
+		source: "",
+		meta: undefined,
     },	"markdown-content-demo": {
 		name: "markdown-content-demo",
 		description: "",

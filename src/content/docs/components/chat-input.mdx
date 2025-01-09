@@ -1,6 +1,6 @@
 ---
 title: Chat Input
-description: A text input component that autoresizes to fit the content.
+description: A chat input component that autoresizes to fit the content and features a submit button.
 component: true
 ---
 
@@ -9,6 +9,9 @@ component: true
   title="Chat Input"
   description="A chat input component"
 />
+
+A versatile chat input component that comes pre-styled with a modern look. It features automatic height adjustment based on content, a submit button, and smart keyboard handling. Press Enter to submit your message or Shift+Enter to add a new line. The component is composed of a textarea and a submit button, which can be customized or used individually.
+
 
 ## Installation
 
@@ -61,6 +64,20 @@ import { ChatInput, ChatInputTextArea, ChatInputSubmit } from "@/components/ui/c
 </ChatInput>
 ```
 
+## Props
+
+### ChatInput
+
+| Prop      | Type                     | Default     | Description                                               |
+| --------- | ------------------------ | ----------- | --------------------------------------------------------- |
+| variant   | `"default" \| "unstyled"` | `"default"` | The visual style variant of the chat input                |
+| value     | `string`                 | -           | The controlled value of the textarea                      |
+| onChange  | `function`               | -           | Callback when the textarea value changes                  |
+| onSubmit  | `function`               | -           | Callback when the message is submitted                    |
+| loading   | `boolean`                | `false`     | Whether the input is in a loading state                   |
+| onStop    | `function`               | -           | Callback to stop an ongoing action (shown when loading)   |
+| rows      | `number`                 | `1`         | Initial number of rows to display in the textarea         |
+
 ## Examples
 
 ### Default
@@ -70,3 +87,7 @@ import { ChatInput, ChatInputTextArea, ChatInputSubmit } from "@/components/ui/c
 ### Unstyled
 
 <ComponentPreview name="chat-input-unstyled" />
+
+### Unstyled with initial rows
+
+<ComponentPreview name="chat-input-unstyled-initial-rows" />
