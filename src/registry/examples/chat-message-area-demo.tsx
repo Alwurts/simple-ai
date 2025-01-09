@@ -1,9 +1,9 @@
-import { ChatMessageArea } from "@/registry/ui/chat-message-area";
 import {
-	ChatMessageContent,
-	ChatMessageAvatar,
 	ChatMessage,
+	ChatMessageAvatar,
+	ChatMessageContent,
 } from "@/registry/ui/chat-message";
+import { ChatMessageArea } from "@/registry/ui/chat-message-area";
 
 export default function ChatMessageAreaDemo() {
 	return (

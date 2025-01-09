@@ -33,7 +33,7 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 				if (isManualScrolling.current) {
 					return;
 				}
-				
+
 				const { scrollTop, scrollHeight, clientHeight } = scrollViewport;
 				const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
 				const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
@@ -68,12 +68,12 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 					const scrollViewport = container.closest(
 						"[data-radix-scroll-area-viewport]",
 					) as HTMLElement;
-					
+
 					if (scrollViewport) {
 						isManualScrolling.current = true;
 						scrollViewport.scrollTo({
 							top: scrollViewport.scrollHeight,
-							behavior: "instant"
+							behavior: "instant",
 						});
 						requestAnimationFrame(() => {
 							isManualScrolling.current = false;
@@ -107,7 +107,7 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 			const scrollViewport = container.closest(
 				"[data-radix-scroll-area-viewport]",
 			) as HTMLElement;
-			
+
 			if (scrollViewport) {
 				setShouldAutoScroll(true);
 				setShowScrollButton(false);
@@ -115,7 +115,7 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 
 				scrollViewport.scrollTo({
 					top: scrollViewport.scrollHeight,
-					behavior: "instant"
+					behavior: "instant",
 				});
 
 				requestAnimationFrame(() => {
