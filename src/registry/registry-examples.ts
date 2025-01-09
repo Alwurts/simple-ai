@@ -2,6 +2,16 @@ import type { Registry } from "@/registry/schema";
 
 export const examples: Registry = [
 	{
+		name: "chat-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/chat-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
 		name: "chat-input-demo",
 		type: "registry:example",
 		registryDependencies: ["https://ai.alwurts.com/registry/chat-input.json"],

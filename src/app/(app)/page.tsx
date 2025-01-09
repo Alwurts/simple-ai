@@ -10,18 +10,9 @@ import {
 } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-	ChatInput,
-	ChatInputSubmit,
-	ChatInputTextArea,
-} from "@/registry/ui/chat-input";
-import {
-	ChatMessage,
-	ChatMessageAvatar,
-	ChatMessageContent,
-} from "@/registry/ui/chat-message";
-import { ChatMessageArea } from "@/registry/ui/chat-message-area";
+
 import { ComponentPreviewSimple } from "@/components/component-preview-simple";
+import { ComponentPreview } from "@/components/component-preview";
 
 export default function HomePage() {
 	return (
@@ -43,50 +34,26 @@ export default function HomePage() {
 									<Button asChild size="sm">
 										<Link href="/docs">Get Started</Link>
 									</Button>
-									<Button asChild size="sm" variant="ghost">
+									{/* <Button asChild size="sm" variant="ghost">
 										<Link href="/blocks">Browse Blocks</Link>
-									</Button>
+									</Button> */}
 								</PageActions>
 							</div>
-							<div className="w-full">
-								<Card className="w-full mx-auto flex flex-col h-[500px]">
-									<div className="flex-1 flex flex-col min-h-0">
-										<ChatMessageArea className="px-4 py-8 space-y-4">
-											<ChatMessage id="1">
-												<ChatMessageAvatar />
-												<ChatMessageContent content="Hi! I'm an AI assistant. I can help you build amazing applications with our UI components." />
-											</ChatMessage>
-											<ChatMessage id="2" variant="bubble" type="outgoing">
-												<ChatMessageContent content="That sounds great! How do I get started?" />
-											</ChatMessage>
-											<ChatMessage id="3">
-												<ChatMessageAvatar />
-												<ChatMessageContent content="You can start by checking our documentation or browsing our pre-built blocks. Each component is customizable and easy to integrate." />
-											</ChatMessage>
-										</ChatMessageArea>
-										<div className="border-t p-4">
-											<ChatInput variant="default">
-												<ChatInputTextArea placeholder="Type a message..." />
-												<ChatInputSubmit />
-											</ChatInput>
-										</div>
-									</div>
-								</Card>
-							</div>
+							<ComponentPreviewSimple name="chat-demo" />
 						</div>
 					</div>
 				</div>
 			</section>
 			<div className="container-wrapper flex-1">
 				<div className="container py-12">
-					<h2 className="text-2xl font-bold mb-8">Example Components</h2>
-					<div className="grid sm:grid-cols-2 gap-6">
+					<h2 className="text-2xl font-bold mb-8">Components</h2>
+					<div className="grid md:grid-cols-2 gap-6">
 						<Card className="p-6">
 							<h3 className="font-semibold mb-2">Chat Message</h3>
 							<p className="text-sm text-muted-foreground mb-4">
 								A composable component that displays a chat message.
 							</p>
-							<ComponentPreviewSimple name="chat-message-demo" />
+							<ComponentPreview name="chat-message-demo" hideCode />
 						</Card>
 						<Card className="p-6">
 							<h3 className="font-semibold mb-2">Chat Input</h3>
@@ -94,7 +61,7 @@ export default function HomePage() {
 								A chat input component that autoresizes to fit the content and
 								features a submit button.
 							</p>
-							<ComponentPreviewSimple name="chat-input-demo" />
+							<ComponentPreview name="chat-input-demo" hideCode />
 						</Card>
 						<Card className="p-6">
 							<h3 className="font-semibold mb-2">Chat Message Area</h3>
@@ -102,14 +69,14 @@ export default function HomePage() {
 								A component that adds auto scrolling functionality to a list of
 								chat messages
 							</p>
-							<ComponentPreviewSimple name="chat-message-area-demo" />
+							<ComponentPreview name="chat-message-area-demo" hideCode />
 						</Card>
 						<Card className="p-6">
 							<h3 className="font-semibold mb-2">Markdown Content</h3>
 							<p className="text-sm text-muted-foreground mb-4">
 								A component that renders markdown content.
 							</p>
-							<ComponentPreviewSimple name="markdown-content-demo" />
+							<ComponentPreview name="markdown-content-demo" hideCode />
 						</Card>
 					</div>
 				</div>

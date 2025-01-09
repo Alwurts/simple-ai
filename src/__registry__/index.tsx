@@ -83,6 +83,20 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/ui/submit-button.tsx")),
 		source: "",
 		meta: undefined,
+    },	"chat-demo": {
+		name: "chat-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/chat-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/chat-demo.tsx")),
+		source: "",
+		meta: undefined,
     },	"chat-input-demo": {
 		name: "chat-input-demo",
 		description: "",

@@ -19,10 +19,10 @@ export const docsConfig: DocsConfig = {
 			title: "Components",
 			href: "/docs/components/chat-input",
 		},
-		{
+		/* {
 			title: "Blocks",
 			href: "/blocks",
-		},
+		}, */
 	],
 	sidebarNav: [
 		{
