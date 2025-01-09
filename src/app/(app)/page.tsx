@@ -53,7 +53,7 @@ export default function HomePage() {
 							<p className="text-sm text-muted-foreground mb-4">
 								A composable component that displays a chat message.
 							</p>
-							<ComponentPreview name="chat-message-demo" hideCode />
+							<ComponentPreview name="chat-message-demo-avatar-image" hideCode />
 						</Card>
 						<Card className="p-6">
 							<h3 className="font-semibold mb-2">Chat Input</h3>

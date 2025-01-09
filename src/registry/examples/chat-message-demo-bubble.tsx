@@ -6,7 +6,7 @@ import {
 
 export default function ChatMessageDemoBubble() {
 	return (
-		<div className="w-full px-4 py-8 space-y-4 border rounded-lg">
+		<div className="w-full space-y-4">
 			<ChatMessage key="1" id="1" type="outgoing" variant="bubble">
 				<ChatMessageContent content="Hey how are you?" />
 				<ChatMessageAvatar />

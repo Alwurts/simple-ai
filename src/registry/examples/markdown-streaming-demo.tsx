@@ -59,7 +59,7 @@ export default function MarkdownStreamingDemo() {
 					{content ? "Restart" : "Start"} Streaming
 				</Button>
 			</div>
-			<div className="p-4 w-full min-h-[200px] bg-muted border rounded-md overflow-y-auto">
+			<div className="p-4 w-full min-h-[200px] border rounded-md overflow-y-auto">
 				<MarkdownContent id="markdown-content-demo" content={content} />
 			</div>
 		</div>

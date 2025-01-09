@@ -16,7 +16,7 @@ This is a sample paragraph that demonstrates how markdown content can be rendere
 - Customizable styling`,
 	);
 	return (
-		<div className="p-4 w-full h-full bg-muted border rounded-md">
+		<div className="w-full h-full">
 			<MarkdownContent id="markdown-content-demo" content={content} />
 		</div>
 	);
