@@ -20,7 +20,8 @@
     "name": "chat-message-area",
     "type": "registry:ui",
     "registryDependencies": [
-      "scroll-area"
+      "scroll-area",
+      "button"
     ],
     "files": [
       {

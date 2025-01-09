@@ -1,0 +1,75 @@
+---
+title: Chat Message Area
+description: A component that adds auto scrolling functionality to a list of chat messages.
+component: true
+---
+
+<ComponentPreview
+  name="chat-message-area-demo"
+  title="Chat Message Area"
+  description="A component that adds auto scrolling functionality to a list of chat messages."
+/>
+
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://ai.alwurts.com/registry/chat-message-area.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+`chat-message-area.tsx`
+
+<ComponentSource name="chat-message-area" />
+
+`use-scroll-to-bottom.ts`
+
+<ComponentSource name="use-scroll-to-bottom" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { ChatMessageArea } from "@/components/ui/chat-message-area"
+```
+
+```tsx
+<ChatMessageArea className="px-4 py-8 space-y-4">
+  {/* Your chat messages go here */}
+</ChatMessageArea>
+```
+
+## Examples
+
+### Alignment
+
+You can align the scroll button to the left, right, or center.
+
+<ComponentPreview
+  name="chat-message-area-demo-alignment"
+  title="Chat Message Area Demo Alignment"
+  description="A chat message area demo with alignment centered."
+/>
+

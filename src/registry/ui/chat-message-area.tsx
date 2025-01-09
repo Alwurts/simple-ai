@@ -5,11 +5,11 @@ import { useScrollToBottom } from "@/registry/hooks/use-scroll-to-bottom";
 import { ChevronDown } from "lucide-react";
 import type { ReactNode } from "react";
 
-type ScrollButtonAlignment = "none" | "left" | "center" | "right";
+type ScrollButtonAlignment = "left" | "center" | "right";
 
 interface ScrollButtonProps {
 	onClick: () => void;
-	alignment?: Exclude<ScrollButtonAlignment, "none">;
+	alignment?: ScrollButtonAlignment;
 	className?: string;
 }
 
@@ -29,7 +29,7 @@ export function ScrollButton({
 			variant="secondary"
 			size="icon"
 			className={cn(
-				"absolute bottom-4 rounded-full shadow-lg",
+				"absolute bottom-4 rounded-full shadow-lg hover:bg-secondary",
 				alignmentClasses[alignment],
 				className,
 			)}
@@ -61,13 +61,13 @@ export function ChatMessageArea({
 	return (
 		<ScrollArea className="flex-1 relative">
 			<div ref={messagesContainerRef}>
-				<div className={className}>{children}</div>
+				<div className={cn(className, "min-h-0")}>{children}</div>
 				<div
 					ref={messagesEndRef}
 					className="shrink-0 min-w-[24px] min-h-[4px]"
 				/>
 			</div>
-			{showScrollButton && scrollButtonAlignment !== "none" && (
+			{showScrollButton && (
 				<ScrollButton
 					onClick={scrollToBottom}
 					alignment={scrollButtonAlignment}

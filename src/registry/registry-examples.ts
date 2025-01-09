@@ -102,4 +102,24 @@ export const examples: Registry = [
 			},
 		],
 	},
+	{
+		name: "chat-message-area-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/chat-message-area-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "chat-message-area-demo-alignment",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/chat-message-area-demo-alignment.tsx",
+				type: "registry:example",
+			},
+		],
+	},
 ];

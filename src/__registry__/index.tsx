@@ -27,7 +27,7 @@ export const Index: Record<string, any> = {
 		name: "chat-message-area",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["scroll-area"],
+		registryDependencies: ["scroll-area","button"],
 		files: [{
 			path: "src/registry/ui/chat-message-area.tsx",
 			type: "registry:ui",
@@ -221,6 +221,34 @@ export const Index: Record<string, any> = {
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/examples/chat-message-demo-markdown-content.tsx")),
+		source: "",
+		meta: undefined,
+    },	"chat-message-area-demo": {
+		name: "chat-message-area-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/chat-message-area-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/chat-message-area-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"chat-message-area-demo-alignment": {
+		name: "chat-message-area-demo-alignment",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/chat-message-area-demo-alignment.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/chat-message-area-demo-alignment.tsx")),
 		source: "",
 		meta: undefined,
     },	"use-textarea-resize": {

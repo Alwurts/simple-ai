@@ -11,6 +11,7 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 	const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
 	const [showScrollButton, setShowScrollButton] = useState(false);
 	const [isTouching, setIsTouching] = useState(false);
+	const isManualScrolling = useRef(false);
 
 	useEffect(() => {
 		const container = containerRef.current;
@@ -27,6 +28,24 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 				return;
 			}
 
+			// Check initial scroll position
+			const checkScrollPosition = () => {
+				if (isManualScrolling.current) {
+					return;
+				}
+				
+				const { scrollTop, scrollHeight, clientHeight } = scrollViewport;
+				const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+				const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
+				const isNearBottom =
+					distanceFromBottom < 30 || scrollPercentage > 0.995;
+				setShouldAutoScroll(isNearBottom);
+				setShowScrollButton(!isNearBottom);
+			};
+
+			// Initial check
+			checkScrollPosition();
+
 			// Handle touch events
 			const handleTouchStart = () => setIsTouching(true);
 			const handleTouchEnd = () => setIsTouching(false);
@@ -37,15 +56,7 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 					setShouldAutoScroll(false);
 					return;
 				}
-
-				const { scrollTop, scrollHeight, clientHeight } = scrollViewport;
-				const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
-				// Use a hybrid approach: either within 30px of bottom OR 99.5% scrolled
-				const scrollPercentage = (scrollTop + clientHeight) / scrollHeight;
-				const isNearBottom =
-					distanceFromBottom < 30 || scrollPercentage > 0.995;
-				setShouldAutoScroll(isNearBottom);
-				setShowScrollButton(!isNearBottom);
+				checkScrollPosition();
 			};
 
 			scrollViewport.addEventListener("scroll", handleScroll);
@@ -54,7 +65,23 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 
 			const observer = new MutationObserver(() => {
 				if (shouldAutoScroll && !isTouching) {
-					end.scrollIntoView({ behavior: "instant", block: "end" });
+					const scrollViewport = container.closest(
+						"[data-radix-scroll-area-viewport]",
+					) as HTMLElement;
+					
+					if (scrollViewport) {
+						isManualScrolling.current = true;
+						scrollViewport.scrollTo({
+							top: scrollViewport.scrollHeight,
+							behavior: "instant"
+						});
+						requestAnimationFrame(() => {
+							isManualScrolling.current = false;
+							checkScrollPosition();
+						});
+					}
+				} else {
+					checkScrollPosition();
 				}
 			});
 
@@ -75,8 +102,27 @@ export function useScrollToBottom<T extends HTMLElement>(): [
 	}, [shouldAutoScroll, isTouching]);
 
 	const scrollToBottom = () => {
-		endRef.current?.scrollIntoView({ behavior: "smooth" });
-		setShouldAutoScroll(true);
+		const container = containerRef.current;
+		if (container) {
+			const scrollViewport = container.closest(
+				"[data-radix-scroll-area-viewport]",
+			) as HTMLElement;
+			
+			if (scrollViewport) {
+				setShouldAutoScroll(true);
+				setShowScrollButton(false);
+				isManualScrolling.current = true;
+
+				scrollViewport.scrollTo({
+					top: scrollViewport.scrollHeight,
+					behavior: "instant"
+				});
+
+				requestAnimationFrame(() => {
+					isManualScrolling.current = false;
+				});
+			}
+		}
 	};
 
 	return [containerRef, endRef, showScrollButton, scrollToBottom];
