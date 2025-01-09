@@ -1,0 +1,12 @@
+{
+  "name": "chat-input-unstyled",
+  "type": "registry:example",
+  "files": [
+    {
+      "path": "examples/chat-input-unstyled.tsx",
+      "content": "import {\n\tChatInput,\n\tChatInputSubmit,\n\tChatInputTextArea,\n} from \"@/components/ui/chat-input\";\nimport { useState } from \"react\";\n\nexport default function ChatInputDemo() {\n\tconst [value2, setValue2] = useState(\"\");\n\tconst [isLoading2, setIsLoading2] = useState(false);\n\n\tconst handleSubmit2 = () => {\n\t\tsetIsLoading2(true);\n\t\tsetTimeout(() => {\n\t\t\talert(value2);\n\t\t\tsetIsLoading2(false);\n\t\t}, 1000);\n\t};\n\n\treturn (\n\t\t<div className=\"w-full h-full flex flex-col gap-4\">\n\t\t\t<div>\n\t\t\t\t<p className=\"text-sm text-muted-foreground mb-2\">\n\t\t\t\t\tUnstyled variant (automatically sets textarea to default)\n\t\t\t\t</p>\n\t\t\t\t<ChatInput variant=\"unstyled\">\n\t\t\t\t\t<ChatInputTextArea\n\t\t\t\t\t\tvalue={value2}\n\t\t\t\t\t\tonChange={(e) => setValue2(e.target.value)}\n\t\t\t\t\t\tonSubmit={handleSubmit2}\n\t\t\t\t\t\tplaceholder=\"Type a message...\"\n\t\t\t\t\t/>\n\t\t\t\t\t<ChatInputSubmit\n\t\t\t\t\t\tonSubmit={handleSubmit2}\n\t\t\t\t\t\tloading={isLoading2}\n\t\t\t\t\t\tonStop={() => setIsLoading2(false)}\n\t\t\t\t\t/>\n\t\t\t\t</ChatInput>\n\t\t\t</div>\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:example",
+      "target": ""
+    }
+  ]
+}

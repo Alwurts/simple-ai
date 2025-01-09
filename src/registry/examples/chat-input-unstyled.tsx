@@ -21,7 +21,7 @@ export default function ChatInputDemo() {
 	return (
 		<div className="w-full h-full">
 			<ChatInput
-				variant="default"
+				variant="unstyled"
 				value={value}
 				onChange={(e) => setValue(e.target.value)}
 				onSubmit={handleSubmit}

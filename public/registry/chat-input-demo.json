@@ -7,7 +7,7 @@
   "files": [
     {
       "path": "examples/chat-input-demo.tsx",
-      "content": "import { ChatInput } from \"@/components/ui/chat-input\";\nimport { useState } from \"react\";\n\nexport default function ChatInputDemo() {\n\tconst [value, setValue] = useState(\"\");\n\n\tconst handleSubmit = () => {\n\t\talert(value);\n\t};\n\n\treturn (\n\t\t<div className=\"w-full h-full\">\n\t\t\t<ChatInput\n\t\t\t\tvalue={value}\n\t\t\t\tonChange={(e) => setValue(e.target.value)}\n\t\t\t\tsubmitMessage={handleSubmit}\n\t\t\t/>\n\t\t</div>\n\t);\n}\n",
+      "content": "import {\n\tChatInput,\n\tChatInputSubmit,\n\tChatInputTextArea,\n} from \"@/components/ui/chat-input\";\nimport { useState } from \"react\";\n\nexport default function ChatInputDemo() {\n\tconst [value1, setValue1] = useState(\"\");\n\tconst [isLoading1, setIsLoading1] = useState(false);\n\n\tconst handleSubmit1 = () => {\n\t\tsetIsLoading1(true);\n\t\tsetTimeout(() => {\n\t\t\talert(value1);\n\t\t\tsetIsLoading1(false);\n\t\t}, 1000);\n\t};\n\n\treturn (\n\t\t<div className=\"w-full h-full\">\n\t\t\t<ChatInput\n\t\t\t\tvariant=\"default\"\n\t\t\t\tvalue={value1}\n\t\t\t\tonChange={(e) => setValue1(e.target.value)}\n\t\t\t\tonSubmit={handleSubmit1}\n\t\t\t\tloading={isLoading1}\n\t\t\t\tonStop={() => setIsLoading1(false)}\n\t\t\t>\n\t\t\t\t<ChatInputTextArea placeholder=\"Type a message...\" />\n\t\t\t\t<ChatInputSubmit />\n\t\t\t</ChatInput>\n\t\t</div>\n\t);\n}\n",
       "type": "registry:example",
       "target": ""
     }

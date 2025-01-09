@@ -51,25 +51,22 @@ npx shadcn@latest add https://ai.alwurts.com/registry/chat-input.json
 ## Usage
 
 ```tsx
-import { Badge } from "@/components/ui/badge"
+import { ChatInput, ChatInputTextArea, ChatInputSubmit } from "@/components/ui/chat-input"
 ```
 
 ```tsx
-<Badge variant="outline">Badge</Badge>
-```
-
-### Link
-
-You can use the `badgeVariants` helper to create a link that looks like a badge.
-
-```tsx
-import { badgeVariants } from "@/components/ui/badge"
-```
-
-```tsx
-<Link className={badgeVariants({ variant: "outline" })}>Badge</Link>
+<ChatInput variant="default">
+  <ChatInputTextArea placeholder="Type a message..." />
+  <ChatInputSubmit />
+</ChatInput>
 ```
 
 ## Examples
 
 ### Default
+
+<ComponentPreview name="chat-input-demo" />
+
+### Unstyled
+
+<ComponentPreview name="chat-input-unstyled" />
