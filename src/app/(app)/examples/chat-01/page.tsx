@@ -1,6 +1,4 @@
 "use client";
-
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { ChatInput } from "@/registry/ui/chat-input";
 import {
@@ -11,7 +9,6 @@ import {
 import { ChatMessageArea } from "@/registry/ui/chat-message-area";
 import { SubmitButton } from "@/registry/ui/submit-button";
 import type { Message } from "ai/react";
-import { Paperclip } from "lucide-react";
 import { useState } from "react";
 
 export default function ChatPage() {

@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { Announcement } from "@/components/announcement";
-import Chat from "@/components/chat";
 import {
 	PageActions,
 	PageHeader,
@@ -33,9 +32,7 @@ export default function HomePage() {
 			</PageHeader>
 			<div className="container-wrapper flex-1">
 				<div className="container py-6">
-					<section className="[&>div]:p-0">
-						
-					</section>
+					<section className="[&>div]:p-0"></section>
 				</div>
 			</div>
 		</>

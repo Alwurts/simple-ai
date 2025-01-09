@@ -42,10 +42,10 @@ function ChatInput({
 		value,
 		onChange,
 		onSubmit,
-			loading,
-			onStop,
-			variant,
-			rows,
+		loading,
+		onStop,
+		variant,
+		rows,
 	};
 
 	return (
@@ -172,7 +172,8 @@ function ChatInputSubmit({
 		);
 	}
 
-	const isDisabled = typeof context.value !== "string" || context.value.trim().length === 0;
+	const isDisabled =
+		typeof context.value !== "string" || context.value.trim().length === 0;
 
 	return (
 		<Button
