@@ -132,7 +132,7 @@ ChatMessageAvatar.displayName = "ChatMessageAvatar";
 
 // Content component
 
-const chatMessageContentVariants = cva("flex flex-col", {
+const chatMessageContentVariants = cva("flex flex-col gap-2", {
 	variants: {
 		variant: {
 			default: "",
@@ -170,7 +170,7 @@ interface ChatMessageContentProps extends React.HTMLAttributes<HTMLDivElement> {
 const ChatMessageContent = React.forwardRef<
 	HTMLDivElement,
 	ChatMessageContentProps
->(({ className, content, id: idProp, ...props }, ref) => {
+>(({ className, content, id: idProp, children, ...props }, ref) => {
 	const context = useChatMessage();
 
 	const variant = context?.variant ?? "default";
@@ -183,7 +183,8 @@ const ChatMessageContent = React.forwardRef<
 			className={cn(chatMessageContentVariants({ variant, type, className }))}
 			{...props}
 		>
-			<MarkdownContent id={id} content={content} />
+			{content.length > 0 && <MarkdownContent id={id} content={content} />}
+			{children}
 		</div>
 	);
 });
