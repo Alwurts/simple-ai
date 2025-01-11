@@ -1,13 +1,13 @@
-import * as React from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import * as React from "react";
 
 import { siteConfig } from "@/config/site";
 import { absoluteUrl, cn } from "@/lib/utils";
 
 import "@/styles/mdx.css";
-import { getRegistryComponent, getRegistryItem } from "@/lib/registry";
 import { getAllBlockIds } from "@/lib/blocks";
+import { getRegistryComponent, getRegistryItem } from "@/lib/registry";
 
 const getCachedRegistryItem = React.cache(async (name: string) => {
 	return await getRegistryItem(name);

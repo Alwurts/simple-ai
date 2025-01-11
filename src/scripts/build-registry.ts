@@ -1,6 +1,7 @@
 import { promises as fs, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { registryCategories } from "@/registry/registry-categories";
 import { rimraf } from "rimraf";
 import { Project, ScriptKind } from "ts-morph";
 import type { z } from "zod";
@@ -11,7 +12,6 @@ import {
 	type registryItemTypeSchema,
 	registrySchema,
 } from "../registry/schema";
-import { registryCategories } from "@/registry/registry-categories";
 
 const REGISTRY_INDEX_WHITELIST: z.infer<typeof registryItemTypeSchema>[] = [
 	"registry:ui",

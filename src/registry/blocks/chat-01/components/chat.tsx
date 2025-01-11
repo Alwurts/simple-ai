@@ -12,7 +12,7 @@ import {
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
 import { ChatMessageArea } from "@/registry/ui/chat-message-area";
-import { useState, type ComponentPropsWithoutRef } from "react";
+import { type ComponentPropsWithoutRef, useState } from "react";
 
 export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 	const [value, setValue] = useState("");

@@ -1,12 +1,12 @@
 import * as React from "react";
 import type { z } from "zod";
 
+import { BlockViewer } from "@/components/blocks/block-viewer";
 import { highlightCode } from "@/lib/highlight-code";
 import {
 	createFileTreeForRegistryItemFiles,
 	getRegistryItem,
 } from "@/lib/registry";
-import { BlockViewer } from "@/components/blocks/block-viewer";
 import type { registryItemFileSchema } from "@/registry/schema";
 
 export async function BlockDisplay({ name }: { name: string }) {

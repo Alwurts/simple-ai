@@ -1,7 +1,5 @@
 "use client";
 
-import * as React from "react";
-import Link from "next/link";
 import {
 	Check,
 	ChevronRight,
@@ -14,14 +12,11 @@ import {
 	Tablet,
 	Terminal,
 } from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
 import type { ImperativePanelHandle } from "react-resizable-panels";
 import type { z } from "zod";
 
-import type {
-	FileTree,
-	createFileTreeForRegistryItemFiles,
-} from "@/lib/registry";
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { Button } from "@/components/ui/button";
 import {
 	Collapsible,
@@ -47,6 +42,11 @@ import {
 } from "@/components/ui/sidebar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import type {
+	FileTree,
+	createFileTreeForRegistryItemFiles,
+} from "@/lib/registry";
 import type {
 	registryItemFileSchema,
 	registryItemSchema,
