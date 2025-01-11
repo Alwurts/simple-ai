@@ -45,7 +45,7 @@ export const Index: Record<string, any> = {
 		name: "chat-message",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["https://ai.alwurts.com/registry/markdown-content.json"],
+		registryDependencies: ["https://simple-ai.alwurts.com/registry/markdown-content.json"],
 		files: [{
 			path: "src/registry/ui/chat-message.tsx",
 			type: "registry:ui",
@@ -101,7 +101,7 @@ export const Index: Record<string, any> = {
 		name: "chat-input-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["https://ai.alwurts.com/registry/chat-input.json"],
+		registryDependencies: ["https://simple-ai.alwurts.com/registry/chat-input.json"],
 		files: [{
 			path: "src/registry/examples/chat-input-demo.tsx",
 			type: "registry:example",
@@ -339,7 +339,7 @@ export const Index: Record<string, any> = {
 		name: "chat-01",
 		description: "A simple chat page.",
 		type: "registry:block",
-		registryDependencies: ["card","https://ai.alwurts.com/registry/chat-input.json","https://ai.alwurts.com/registry/chat-message-area.json","https://ai.alwurts.com/registry/chat-message.json"],
+		registryDependencies: ["card","https://simple-ai.alwurts.com/registry/chat-input.json","https://simple-ai.alwurts.com/registry/chat-message-area.json","https://simple-ai.alwurts.com/registry/chat-message.json"],
 		files: [{
 			path: "src/registry/blocks/chat-01/page.tsx",
 			type: "registry:page",

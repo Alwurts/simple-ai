@@ -4,11 +4,11 @@ A collection of beautifully designed chat interface components that you can copy
 
 ![hero](/public/og.jpg)
 
-[simple-ai.alwurts.com](https://ai.alwurts.com)
+[simple-ai.alwurts.com](https://simple-ai.alwurts.com)
 
 ## Documentation
 
-Visit [simple-ai.alwurts.com/docs](https://ai.alwurts.com/docs) to view the documentation.
+Visit [simple-ai.alwurts.com/docs](https://simple-ai.alwurts.com/docs) to view the documentation.
 
 ## Features
 
@@ -26,7 +26,7 @@ Visit [simple-ai.alwurts.com/docs](https://ai.alwurts.com/docs) to view the docu
 npx shadcn-ui@latest init
 
 # Then you can add simple-ai components
-npx shadcn@latest add https://ai.alwurts.com/registry/chat-message.json
+npx shadcn@latest add https://simple-ai.alwurts.com/registry/chat-message.json
 ```
 
 ## License

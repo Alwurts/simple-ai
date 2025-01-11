@@ -7,9 +7,9 @@ export const blocks: Registry = [
 		type: "registry:block",
 		registryDependencies: [
 			"card",
-			"https://ai.alwurts.com/registry/chat-input.json",
-			"https://ai.alwurts.com/registry/chat-message-area.json",
-			"https://ai.alwurts.com/registry/chat-message.json",
+			"https://simple-ai.alwurts.com/registry/chat-input.json",
+			"https://simple-ai.alwurts.com/registry/chat-message-area.json",
+			"https://simple-ai.alwurts.com/registry/chat-message.json",
 		],
 		files: [
 			{

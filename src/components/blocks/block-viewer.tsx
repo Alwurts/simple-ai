@@ -210,13 +210,13 @@ function BlockViewerToolbar() {
 						size="sm"
 						onClick={() => {
 							copyToClipboard(
-								`npx shadcn@latest add https://ai.alwurts.com/registry/${item.name}.json`,
+								`npx shadcn@latest add https://simple-ai.alwurts.com/registry/${item.name}.json`,
 							);
 						}}
 					>
 						{isCopied ? <Check /> : <Terminal />}
 						<span className="hidden lg:inline">
-							npx shadcn add https://ai.alwurts.com/registry/{item.name}.json
+							npx shadcn add https://simple-ai.alwurts.com/registry/{item.name}.json
 						</span>
 					</Button>
 				</div>
