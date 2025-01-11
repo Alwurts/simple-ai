@@ -5,7 +5,12 @@ export const blocks: Registry = [
 		name: "chat-01",
 		description: "A simple chat page.",
 		type: "registry:block",
-		registryDependencies: ["button", "card", "input", "label"],
+		registryDependencies: [
+			"card",
+			"https://ai.alwurts.com/registry/chat-input.json",
+			"https://ai.alwurts.com/registry/chat-message-area.json",
+			"https://ai.alwurts.com/registry/chat-message.json",
+		],
 		files: [
 			{
 				path: "blocks/chat-01/page.tsx",

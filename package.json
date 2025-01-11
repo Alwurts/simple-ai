@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev -p 4567",
+		"dev": "npm run build:registry && next dev -p 4567",
 		"build": "contentlayer2 build && npm run build:registry && next build",
 		"start": "next start",
 		"lint": "biome check --write src",

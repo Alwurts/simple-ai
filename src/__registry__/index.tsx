@@ -339,7 +339,7 @@ export const Index: Record<string, any> = {
 		name: "chat-01",
 		description: "A simple chat page.",
 		type: "registry:block",
-		registryDependencies: ["button","card","input","label"],
+		registryDependencies: ["button","card","input","label","https://ai.alwurts.com/registry/chat-input.json","https://ai.alwurts.com/registry/chat-message-area.json","https://ai.alwurts.com/registry/chat-message.json"],
 		files: [{
 			path: "src/registry/blocks/chat-01/page.tsx",
 			type: "registry:page",

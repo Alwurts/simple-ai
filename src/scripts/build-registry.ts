@@ -211,6 +211,18 @@ async function buildStyles(registry: Registry) {
 								moduleSpecifier.replace("@/registry/hooks", "@/hooks"),
 							);
 						}
+						if (
+							moduleSpecifier.startsWith(
+								`@/registry/blocks/${item.name}/components`,
+							)
+						) {
+							importDecl.setModuleSpecifier(
+								moduleSpecifier.replace(
+									`@/registry/blocks/${item.name}/components`,
+									"@/components",
+								),
+							);
+						}
 					}
 
 					sourceFile.getVariableDeclaration("iframeHeight")?.remove();

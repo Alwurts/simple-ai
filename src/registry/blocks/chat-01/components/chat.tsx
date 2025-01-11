@@ -11,7 +11,6 @@ import {
 } from "@/registry/ui/chat-message";
 import { ChatMessageArea } from "@/registry/ui/chat-message-area";
 import { useState, type ComponentPropsWithoutRef } from "react";
-import { toast } from "sonner";
 
 export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 	const [value, setValue] = useState("");
@@ -83,7 +82,7 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 						value={value}
 						onChange={(e) => setValue(e.target.value)}
 						onSubmit={() => {
-							toast(value);
+							console.log(value);
 						}}
 					>
 						<ChatInputTextArea placeholder="Type a message..." />
