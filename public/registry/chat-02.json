@@ -1,0 +1,26 @@
+{
+  "name": "chat-02",
+  "type": "registry:block",
+  "description": "A chat in a sidebar.",
+  "dependencies": [
+    "ai"
+  ],
+  "registryDependencies": [
+    "sidebar",
+    "breadcrumb"
+  ],
+  "files": [
+    {
+      "path": "blocks/chat-02/page.tsx",
+      "content": "import { AppSidebar } from \"@/components/app-sidebar\";\nimport {\n\tBreadcrumb,\n\tBreadcrumbItem,\n\tBreadcrumbLink,\n\tBreadcrumbList,\n\tBreadcrumbPage,\n\tBreadcrumbSeparator,\n} from \"@/components/ui/breadcrumb\";\nimport {\n\tSidebarInset,\n\tSidebarProvider,\n\tSidebarTrigger,\n} from \"@/components/ui/sidebar\";\n\nexport default function Page() {\n\treturn (\n\t\t<SidebarProvider>\n\t\t\t<SidebarInset>\n\t\t\t\t<header className=\"flex h-16 shrink-0 items-center gap-2 border-b px-4\">\n\t\t\t\t\t<Breadcrumb>\n\t\t\t\t\t\t<BreadcrumbList>\n\t\t\t\t\t\t\t<BreadcrumbItem className=\"hidden md:block\">\n\t\t\t\t\t\t\t\t<BreadcrumbLink href=\"#\">\n\t\t\t\t\t\t\t\t\tBuilding Your Application\n\t\t\t\t\t\t\t\t</BreadcrumbLink>\n\t\t\t\t\t\t\t</BreadcrumbItem>\n\t\t\t\t\t\t\t<BreadcrumbSeparator className=\"hidden md:block\" />\n\t\t\t\t\t\t\t<BreadcrumbItem>\n\t\t\t\t\t\t\t\t<BreadcrumbPage>Data Fetching</BreadcrumbPage>\n\t\t\t\t\t\t\t</BreadcrumbItem>\n\t\t\t\t\t\t</BreadcrumbList>\n\t\t\t\t\t</Breadcrumb>\n\t\t\t\t\t<SidebarTrigger className=\"-mr-1 ml-auto rotate-180\" />\n\t\t\t\t</header>\n\t\t\t\t<div className=\"flex flex-1 flex-col gap-4 p-4\">\n\t\t\t\t\t<div className=\"grid auto-rows-min gap-4 md:grid-cols-3\">\n\t\t\t\t\t\t<div className=\"aspect-video rounded-xl bg-muted/50\" />\n\t\t\t\t\t\t<div className=\"aspect-video rounded-xl bg-muted/50\" />\n\t\t\t\t\t\t<div className=\"aspect-video rounded-xl bg-muted/50\" />\n\t\t\t\t\t</div>\n\t\t\t\t\t<div className=\"min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min\" />\n\t\t\t\t</div>\n\t\t\t</SidebarInset>\n\t\t\t<AppSidebar side=\"right\" />\n\t\t</SidebarProvider>\n\t);\n}\n",
+      "type": "registry:page",
+      "target": "app/chat/page.tsx"
+    },
+    {
+      "path": "blocks/chat-02/components/app-sidebar.tsx",
+      "content": "import type * as React from \"react\";\n\nimport {\n\tSidebar,\n\tSidebarContent,\n\tSidebarGroup,\n\tSidebarGroupContent,\n\tSidebarGroupLabel,\n\tSidebarRail,\n} from \"@/components/ui/sidebar\";\n\nimport {\n\tChatInput,\n\tChatInputSubmit,\n\tChatInputTextArea,\n} from \"@/components/ui/chat-input\";\nimport {\n\tChatMessage,\n\tChatMessageAvatar,\n\tChatMessageContent,\n} from \"@/components/ui/chat-message\";\nimport { ChatMessageArea } from \"@/components/ui/chat-message-area\";\nimport { useChat } from \"ai/react\";\n\nexport function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {\n\tconst { messages, input, handleInputChange, handleSubmit, isLoading, stop } =\n\t\tuseChat({\n\t\t\tapi: \"/api/ai/chat\",\n\t\t\tinitialMessages: [\n\t\t\t\t{\n\t\t\t\t\tid: \"1\",\n\t\t\t\t\tcontent: \"Hi! How can I help you today?\",\n\t\t\t\t\trole: \"assistant\",\n\t\t\t\t},\n\t\t\t],\n\t\t});\n\n\tconst handleSubmitMessage = () => {\n\t\tif (isLoading) {\n\t\t\treturn;\n\t\t}\n\t\thandleSubmit();\n\t};\n\n\treturn (\n\t\t<Sidebar {...props}>\n\t\t\t<SidebarContent>\n\t\t\t\t<SidebarGroup>\n\t\t\t\t\t<SidebarGroupLabel>Chat</SidebarGroupLabel>\n\t\t\t\t\t<SidebarGroupContent className=\"flex-1 flex flex-col\">\n\t\t\t\t\t\t<ChatMessageArea scrollButtonAlignment=\"center\">\n\t\t\t\t\t\t\t<div className=\"px-2 py-4 space-y-4\">\n\t\t\t\t\t\t\t\t{messages.map((message) => {\n\t\t\t\t\t\t\t\t\tif (message.role !== \"user\") {\n\t\t\t\t\t\t\t\t\t\treturn (\n\t\t\t\t\t\t\t\t\t\t\t<ChatMessage key={message.id} id={message.id}>\n\t\t\t\t\t\t\t\t\t\t\t\t<ChatMessageAvatar />\n\t\t\t\t\t\t\t\t\t\t\t\t<ChatMessageContent content={message.content} />\n\t\t\t\t\t\t\t\t\t\t\t</ChatMessage>\n\t\t\t\t\t\t\t\t\t\t);\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\treturn (\n\t\t\t\t\t\t\t\t\t\t<ChatMessage\n\t\t\t\t\t\t\t\t\t\t\tkey={message.id}\n\t\t\t\t\t\t\t\t\t\t\tid={message.id}\n\t\t\t\t\t\t\t\t\t\t\tvariant=\"bubble\"\n\t\t\t\t\t\t\t\t\t\t\ttype=\"outgoing\"\n\t\t\t\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t\t\t\t<ChatMessageContent content={message.content} />\n\t\t\t\t\t\t\t\t\t\t</ChatMessage>\n\t\t\t\t\t\t\t\t\t);\n\t\t\t\t\t\t\t\t})}\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</ChatMessageArea>\n\t\t\t\t\t\t<div className=\"px-2 py-4\">\n\t\t\t\t\t\t\t<ChatInput\n\t\t\t\t\t\t\t\tvalue={input}\n\t\t\t\t\t\t\t\tonChange={handleInputChange}\n\t\t\t\t\t\t\t\tonSubmit={handleSubmitMessage}\n\t\t\t\t\t\t\t\tloading={isLoading}\n\t\t\t\t\t\t\t\tonStop={stop}\n\t\t\t\t\t\t\t>\n\t\t\t\t\t\t\t\t<ChatInputTextArea placeholder=\"Type a message...\" />\n\t\t\t\t\t\t\t\t<ChatInputSubmit />\n\t\t\t\t\t\t\t</ChatInput>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</SidebarGroupContent>\n\t\t\t\t</SidebarGroup>\n\t\t\t</SidebarContent>\n\t\t\t<SidebarRail />\n\t\t</Sidebar>\n\t);\n}\n",
+      "type": "registry:component",
+      "target": ""
+    }
+  ]
+}

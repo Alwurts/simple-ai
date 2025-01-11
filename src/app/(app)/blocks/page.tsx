@@ -1,6 +1,6 @@
 import { BlockDisplay } from "@/components/blocks/block-display";
 
-const FEATURED_BLOCKS = ["chat-01"];
+const FEATURED_BLOCKS = ["chat-01", "chat-02"];
 
 export default async function BlocksPage() {
 	return (

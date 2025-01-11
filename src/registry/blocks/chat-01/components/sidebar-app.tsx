@@ -13,6 +13,7 @@ import {
 	SidebarMenu,
 	SidebarMenuItem,
 	SidebarMenuButton,
+	SidebarSeparator,
 } from "@/components/ui/sidebar";
 import {
 	Tooltip,
