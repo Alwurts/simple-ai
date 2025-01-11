@@ -220,12 +220,6 @@ function BlockViewerToolbar() {
 						</span>
 					</Button>
 				</div>
-				<Separator orientation="vertical" className="mx-1 hidden h-4 xl:flex" />
-				{/* <V0Button
-					className="hidden shadow-none sm:flex"
-					id={`v0-button-${item.name}`}
-					name={`${item.name}`}
-				/> */}
 			</div>
 		</div>
 	);
@@ -240,7 +234,7 @@ function BlockViewerView() {
 				<ResizablePanelGroup direction="horizontal" className="relative z-10">
 					<ResizablePanel
 						ref={resizablePanelRef}
-						className="relative aspect-[4/2.5] rounded-xl border bg-background md:aspect-auto"
+						className="relative rounded-xl border bg-background md:aspect-auto"
 						defaultSize={100}
 						minSize={30}
 					>
@@ -264,7 +258,7 @@ function BlockViewerView() {
 							title={item.name}
 							src={`/view/${item.name}`}
 							height={item.meta?.iframeHeight ?? 930}
-							className="relative z-20 hidden w-full bg-background md:block"
+							className="relative z-20 w-full bg-background md:block"
 						/>
 					</ResizablePanel>
 					<ResizableHandle className="relative hidden w-3 bg-transparent p-0 after:absolute after:right-0 after:top-1/2 after:h-8 after:w-[6px] after:-translate-y-1/2 after:translate-x-[-1px] after:rounded-full after:bg-border after:transition-all after:hover:h-10 md:block" />
