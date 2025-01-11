@@ -32,7 +32,7 @@ const project = new Project({
 });
 
 async function createTempSourceFile(filename: string) {
-	const dir = await fs.mkdtemp(path.join(tmpdir(), "alwurts-ai-"));
+	const dir = await fs.mkdtemp(path.join(tmpdir(), "simple-ai-"));
 	return path.join(dir, filename);
 }
 

@@ -1,6 +1,6 @@
 {
-	"name": "alwurts-ai",
-	"version": "0.1.0",
+	"name": "simple-ai",
+	"version": "1.0.0",
 	"private": true,
 	"scripts": {
 		"dev": "npm run build:registry && next dev -p 4567",

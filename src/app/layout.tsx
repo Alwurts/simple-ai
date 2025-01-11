@@ -25,6 +25,8 @@ export const metadata: Metadata = {
 	keywords: [
 		"AI SDK",
 		"shadcn/ui",
+		"simple-ai",
+		"AI Chatbot",
 		"React",
 		"Next.js",
 		"Tailwind CSS",
