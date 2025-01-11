@@ -43,7 +43,7 @@ export function trackEvent(input: Event): void {
 		// Transform properties to GA4 format
 		const gaEventParams = {
 			...event.properties,
-			event_category: "user_interaction",
+			event_category: event.name,
 			event_label: event.properties?.name || event.name,
 		};
 

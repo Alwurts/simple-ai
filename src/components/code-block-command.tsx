@@ -42,7 +42,13 @@ export function CodeBlockCommand({
 			return;
 		}
 
-		copyToClipboardWithMeta(command);
+		copyToClipboardWithMeta(command, {
+			name: "copy_npm_command",
+			properties: {
+				command,
+				pm: packageManager,
+			},
+		});
 		setHasCopied(true);
 	}, [packageManager, tabs]);
 

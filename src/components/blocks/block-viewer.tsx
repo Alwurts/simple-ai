@@ -213,6 +213,12 @@ function BlockViewerToolbar() {
 							copyToClipboard(
 								`npx shadcn@latest add https://simple-ai.alwurts.com/registry/${item.name}.json`,
 							);
+							trackEvent({
+								name: "copy_block_code",
+								properties: {
+									name: item.name,
+								},
+							});
 						}}
 					>
 						{isCopied ? <Check /> : <Terminal />}
@@ -414,6 +420,7 @@ function BlockCopyCodeButton() {
 		<Button
 			onClick={() => {
 				copyToClipboard(content);
+				console.log("copy_block_code", item.name, file.path);
 				trackEvent({
 					name: "copy_block_code",
 					properties: {
