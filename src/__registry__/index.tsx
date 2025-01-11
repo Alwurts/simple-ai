@@ -57,7 +57,7 @@ export const Index: Record<string, any> = {
 		meta: undefined,
     },	"markdown-content": {
 		name: "markdown-content",
-		description: "",
+		description: "A markdown content component.",
 		type: "registry:ui",
 		registryDependencies: undefined,
 		files: [{
@@ -334,6 +334,24 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/hooks/use-scroll-to-bottom.ts")),
 		source: "",
+		meta: undefined,
+    },	"chat-01": {
+		name: "chat-01",
+		description: "A simple chat page.",
+		type: "registry:block",
+		registryDependencies: ["button","card","input","label"],
+		files: [{
+			path: "src/registry/blocks/chat-01/page.tsx",
+			type: "registry:page",
+			target: "app/chat/page.tsx"
+		},{
+			path: "src/registry/blocks/chat-01/components/chat.tsx",
+			type: "registry:component",
+			target: ""
+		}],
+		categories: ["chat"],
+		component: React.lazy(() => import("@/registry/blocks/chat-01/page.tsx")),
+		source: "src/__registry__/blocks/chat-01/page.tsx",
 		meta: undefined,
     },
 }

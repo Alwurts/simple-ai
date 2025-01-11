@@ -1,6 +1,7 @@
 {
   "name": "markdown-content",
   "type": "registry:ui",
+  "description": "A markdown content component.",
   "dependencies": [
     "react-markdown",
     "marked"

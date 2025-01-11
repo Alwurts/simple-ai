@@ -11,20 +11,21 @@ import {
 	type registryItemTypeSchema,
 	registrySchema,
 } from "../registry/schema";
+import { registryCategories } from "@/registry/registry-categories";
 
 const REGISTRY_INDEX_WHITELIST: z.infer<typeof registryItemTypeSchema>[] = [
 	"registry:ui",
-	//"registry:lib",
+	"registry:lib",
 	"registry:hook",
 	//"registry:theme",
-	//"registry:block",
+	"registry:block",
 	"registry:example",
 	//"registry:internal",
 ];
 
 const REGISTRY_BASE_PATH = "src/registry";
-const REGISTRY_PUBLIC_PATH = path.join(process.cwd(), "public/registry");
-const REGISTRY_GENERATED_PATH = path.join(process.cwd(), "src/__registry__");
+const REGISTRY_PUBLIC_PATH = "public/registry";
+const REGISTRY_GENERATED_PATH = "src/__registry__";
 
 const project = new Project({
 	compilerOptions: {},
@@ -49,6 +50,7 @@ export const Index: Record<string, any> = {
 `;
 
 	for (const item of registry) {
+		// Turns blocks/chat-01/page.tsx into src/registry/blocks/chat-01/page.tsx
 		const resolveFiles = item.files?.map(
 			(file) => `${REGISTRY_BASE_PATH}/${file.path}`,
 		);
@@ -56,11 +58,59 @@ export const Index: Record<string, any> = {
 			continue;
 		}
 
+		// Validate categories from registry-categories.ts.
+		if (item.categories) {
+			const invalidCategories = item.categories.filter(
+				(category) => !registryCategories.some((c) => c.slug === category),
+			);
+
+			if (invalidCategories.length > 0) {
+				console.error(
+					`${item.name} has invalid categories: ${invalidCategories}`,
+				);
+				process.exit(1);
+			}
+		}
+
+		// Gets the type of the item, e.g. "registry:block" -> "block"
 		const type = item.type.split(":")[1];
 
-		// biome-ignore lint/style/useConst: <explanation>
 		let sourceFilename = "";
 
+		if (item.type === "registry:block") {
+			const file = resolveFiles[0];
+			const filename = path.basename(file);
+			let raw: string;
+			try {
+				raw = await fs.readFile(file, "utf8");
+			} catch (_) {
+				continue;
+			}
+			const tempFile = await createTempSourceFile(filename);
+			const sourceFile = project.createSourceFile(tempFile, raw, {
+				scriptKind: ScriptKind.TSX,
+			});
+
+			// Write the source file for blocks only.
+			// We always have files?, so we can use the first file as the component path always?
+			sourceFilename = `${REGISTRY_GENERATED_PATH}/${item.name}/${type}/${item.name}.tsx`;
+
+			if (item.files) {
+				if (item.files?.length) {
+					sourceFilename = `${REGISTRY_GENERATED_PATH}/${item.files[0].path}`;
+				}
+			}
+
+			const sourcePath = path.join(process.cwd(), sourceFilename);
+			if (!existsSync(sourcePath)) {
+				await fs.mkdir(sourcePath, { recursive: true });
+			}
+
+			rimraf.sync(sourcePath);
+			await fs.writeFile(sourcePath, sourceFile.getText());
+		}
+
+		// We always have files?, so we can use the first file as the component path always?
 		let componentPath = `@/registry/${type}/${item.name}`;
 
 		if (item.files) {
@@ -76,7 +126,6 @@ export const Index: Record<string, any> = {
 		registryDependencies: ${JSON.stringify(item.registryDependencies)},
 		files: [${item.files?.map((file) => {
 			const filePath = `${REGISTRY_BASE_PATH}/${file.path}`;
-			//const resolvedFilePath = path.resolve(filePath);
 			return `{
 			path: "${filePath}",
 			type: "${file.type}",
@@ -93,32 +142,27 @@ export const Index: Record<string, any> = {
 	index += `
 }
 `;
+	const generatedPath = path.join(process.cwd(), REGISTRY_GENERATED_PATH);
+	rimraf.sync(path.join(generatedPath, "index.tsx"));
+	await fs.writeFile(path.join(generatedPath, "index.tsx"), index, "utf8");
+
+	// Create public/registry/index.json with registry:ui items. Might not be needed?
 
 	const uiRegistryItems = registry.filter((item) =>
 		["registry:ui"].includes(item.type),
 	);
 
+	const publicPath = path.join(process.cwd(), REGISTRY_PUBLIC_PATH);
 	const registryJson = JSON.stringify(uiRegistryItems, null, 2);
-	rimraf.sync(path.join(REGISTRY_PUBLIC_PATH, "index.json"));
-	await fs.writeFile(
-		path.join(REGISTRY_PUBLIC_PATH, "index.json"),
-		registryJson,
-		"utf8",
-	);
-
-	rimraf.sync(path.join(REGISTRY_GENERATED_PATH, "index.tsx"));
-	await fs.writeFile(
-		path.join(REGISTRY_GENERATED_PATH, "index.tsx"),
-		index,
-		"utf8",
-	);
+	rimraf.sync(path.join(publicPath, "index.json"));
+	await fs.writeFile(path.join(publicPath, "index.json"), registryJson, "utf8");
 }
 
 // ----------------------------------------------------------------------------
 // Build public/registry/[name].json.
 // ----------------------------------------------------------------------------
 async function buildStyles(registry: Registry) {
-	const targetPath = REGISTRY_PUBLIC_PATH;
+	const targetPath = path.join(process.cwd(), REGISTRY_PUBLIC_PATH);
 	// Create directory if it doesn't exist.
 	if (!existsSync(targetPath)) {
 		await fs.mkdir(targetPath, { recursive: true });
