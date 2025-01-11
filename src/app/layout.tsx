@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/styles/globals.css";
@@ -86,6 +87,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 					</div>
 					<Toaster />
 				</ThemeProvider>
+				<GoogleAnalytics gaId="G-SJSDG0H2W0" />
 			</body>
 		</html>
 	);

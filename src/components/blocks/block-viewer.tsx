@@ -43,6 +43,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { trackEvent } from "@/lib/events";
 import type {
 	FileTree,
 	createFileTreeForRegistryItemFiles,
@@ -216,7 +217,8 @@ function BlockViewerToolbar() {
 					>
 						{isCopied ? <Check /> : <Terminal />}
 						<span className="hidden lg:inline">
-							npx shadcn add https://simple-ai.alwurts.com/registry/{item.name}.json
+							npx shadcn add https://simple-ai.alwurts.com/registry/{item.name}
+							.json
 						</span>
 					</Button>
 				</div>
@@ -412,6 +414,13 @@ function BlockCopyCodeButton() {
 		<Button
 			onClick={() => {
 				copyToClipboard(content);
+				trackEvent({
+					name: "copy_block_code",
+					properties: {
+						name: item.name,
+						file: file.path,
+					},
+				});
 			}}
 			className="h-7 w-7 shrink-0 rounded-lg p-0 hover:bg-zinc-700 hover:text-white focus:bg-zinc-700 focus:text-white focus-visible:bg-zinc-700 focus-visible:text-white active:bg-zinc-700 active:text-white data-[active=true]:bg-zinc-700 data-[active=true]:text-white [&>svg]:size-3"
 			variant="ghost"
