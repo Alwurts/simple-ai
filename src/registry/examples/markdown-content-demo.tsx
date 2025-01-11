@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { MarkdownContent } from "../ui/markdown-content";
 
