@@ -1,11 +1,40 @@
+import {
+	Breadcrumb,
+	BreadcrumbItem,
+	BreadcrumbList,
+	BreadcrumbPage,
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import {
+	SidebarInset,
+	SidebarProvider,
+	SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { SidebarApp } from "@/registry/blocks/chat-01/components/sidebar-app";
 import { Chat } from "@/registry/blocks/chat-01/components/chat";
 
 export default function Page() {
 	return (
-		<div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-			<div className="w-full max-w-sm">
+		<SidebarProvider>
+			<SidebarApp />
+			<SidebarInset className="flex flex-col h-svh">
+				<header className="sticky top-0 flex h-14 shrink-0 items-center gap-2 bg-background">
+					<div className="flex flex-1 items-center gap-2 px-3">
+						<SidebarTrigger />
+						<Separator orientation="vertical" className="mr-2 h-4" />
+						<Breadcrumb>
+							<BreadcrumbList>
+								<BreadcrumbItem>
+									<BreadcrumbPage className="line-clamp-1">
+										Project Management & Task Tracking
+									</BreadcrumbPage>
+								</BreadcrumbItem>
+							</BreadcrumbList>
+						</Breadcrumb>
+					</div>
+				</header>
 				<Chat />
-			</div>
-		</div>
+			</SidebarInset>
+		</SidebarProvider>
 	);
 }

@@ -82,9 +82,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 					disableTransitionOnChange
 					enableColorScheme
 				>
-					<div className="min-h-screen bg-background flex flex-col">
-						{children}
-					</div>
+					{children}
 					<Toaster />
 				</ThemeProvider>
 				<GoogleAnalytics gaId="G-SJSDG0H2W0" />

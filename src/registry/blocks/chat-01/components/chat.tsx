@@ -1,6 +1,5 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
 import {
 	ChatInput,
 	ChatInputSubmit,
@@ -17,46 +16,61 @@ import { type ComponentPropsWithoutRef, useState } from "react";
 export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 	const [value, setValue] = useState("");
 
-	const messages: {
-		id: string;
-		content: string;
-		role: "user" | "assistant";
-	}[] = [
+	const messages = [
 		{
 			id: "1",
-			content: "Hey, how's your day going?",
+			content:
+				"Hi! I need help organizing my project management workflow. Can you guide me through some best practices?",
 			role: "user",
 		},
 		{
 			id: "2",
-			content: "It's going pretty well, thanks for asking! How about yours?",
+			content:
+				"I'd be happy to help you with project management best practices! Here's a structured approach:\n\n## 1. Project Initiation\n- Define clear project objectives\n- Identify key stakeholders\n- Set measurable goals\n- Create project charter\n\n## 2. Planning Phase\n- Break down work into tasks\n- Set priorities\n- Create timeline\n- Assign responsibilities\n\nWould you like me to elaborate on any of these points?",
 			role: "assistant",
 		},
 		{
 			id: "3",
-			content: "Not bad, just chilling at home. What did you do today?",
+			content:
+				"Yes, please tell me more about breaking down work into tasks. How should I approach this?",
 			role: "user",
 		},
 		{
 			id: "4",
 			content:
-				"I spent some time reading and then went for a walk. It was nice. I later went to the gym and then had dinner with some friends. In the evening, I watched a movie and then went to bed.",
+				"Breaking down work into tasks is crucial for project success. Here's a detailed approach:\n\n### Work Breakdown Structure (WBS)\n1. **Start with major deliverables**\n   - Identify end goals\n   - List main project phases\n\n2. **Break into smaller components**\n   - Tasks should be:\n     - Specific\n     - Measurable\n     - Achievable\n     - Time-bound\n\n3. **Task Estimation**\n   ```\n   Task Example:\n   - Name: User Authentication Feature\n   - Duration: 3 days\n   - Dependencies: Database setup\n   - Priority: High\n   ```\n\n4. **Use the 8/80 Rule**\n   - Tasks shouldn't take less than 8 hours\n   - Or more than 80 hours\n   - If they do, break them down further",
 			role: "assistant",
 		},
 		{
 			id: "5",
-			content: "What about you? What did you do today?",
+			content:
+				"That's really helpful! What tools would you recommend for tracking all these tasks?",
+			role: "user",
+		},
+		{
+			id: "6",
+			content:
+				"Here are some popular project management tools:\n\n### Tips for Tool Selection\n- ✅ Consider team size\n- ✅ Integration needs\n- ✅ Learning curve\n- ✅ Budget constraints\n\nWould you like specific recommendations based on your team's needs?",
+			role: "assistant",
+		},
+		{
+			id: "7",
+			content:
+				"Yes, we're a small team of 5 developers. What would work best for us?",
+			role: "user",
+		},
+		{
+			id: "8",
+			content:
+				"For a team of 5 developers, I'd recommend:\n\n### Primary Choice: Jira Software\n\n**Advantages:**\n- 🔧 Built for development teams\n- 📊 Great for agile workflows\n- 🔄 Git integration\n- 📱 Mobile apps\n\n### Alternative: ClickUp\n\n**Benefits:**\n- 💰 Cost-effective\n- 🎨 More flexible\n- 🚀 Faster setup\n\n```\nRecommended Setup:\n- Sprint Length: 2 weeks\n- Board Structure:\n  - Backlog\n  - To Do\n  - In Progress\n  - Code Review\n  - Testing\n  - Done\n- Key Features:\n  - Story Points\n  - Time Tracking\n  - Sprint Reports\n```\n\nWould you like me to explain how to set up the recommended workflow in either of these tools?",
 			role: "assistant",
 		},
 	];
 
 	return (
-		<Card
-			className="w-full max-w-xl mx-auto flex flex-col flex-1 h-[700px]"
-			{...props}
-		>
-			<div className="flex-1 flex flex-col min-h-0">
-				<ChatMessageArea className="px-4 py-8 space-y-4">
+		<div className="flex-1 flex flex-col h-full overflow-y-auto" {...props}>
+			<ChatMessageArea scrollButtonAlignment="center">
+				<div className="max-w-2xl mx-auto w-full px-4 py-8 space-y-4">
 					{messages.map((message) => {
 						if (message.role !== "user") {
 							return (
@@ -77,21 +91,22 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 							</ChatMessage>
 						);
 					})}
-				</ChatMessageArea>
-				<div className="border-t p-4">
-					<ChatInput
-						variant="default"
-						value={value}
-						onChange={(e) => setValue(e.target.value)}
-						onSubmit={() => {
-							console.log(value);
-						}}
-					>
-						<ChatInputTextArea placeholder="Type a message..." />
-						<ChatInputSubmit />
-					</ChatInput>
 				</div>
+			</ChatMessageArea>
+			<div className="px-2 py-4 max-w-2xl mx-auto w-full">
+				<ChatInput
+					variant="default"
+					value={value}
+					onChange={(e) => setValue(e.target.value)}
+					onSubmit={() => {
+						console.log(value);
+						setValue("");
+					}}
+				>
+					<ChatInputTextArea placeholder="Type a message..." />
+					<ChatInputSubmit />
+				</ChatInput>
 			</div>
-		</Card>
+		</div>
 	);
 }

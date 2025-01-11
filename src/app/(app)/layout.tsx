@@ -8,10 +8,12 @@ interface AppLayoutProps {
 
 export default function AppLayout({ children }: AppLayoutProps) {
 	return (
-		<div data-wrapper="" className="flex flex-1 flex-col">
-			<SiteHeader />
-			<main className="flex flex-1 flex-col">{children}</main>
-			<SiteFooter />
+		<div className="min-h-screen bg-background flex flex-col">
+			<div data-wrapper="" className="flex flex-1 flex-col">
+				<SiteHeader />
+				<main className="flex flex-1 flex-col">{children}</main>
+				<SiteFooter />
+			</div>
 		</div>
 	);
 }
