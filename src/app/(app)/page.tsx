@@ -32,9 +32,9 @@ export default function HomePage() {
 									<Button asChild size="sm">
 										<Link href="/docs">Get Started</Link>
 									</Button>
-									{/* <Button asChild size="sm" variant="ghost">
+									<Button asChild size="sm" variant="ghost">
 										<Link href="/blocks">Browse Blocks</Link>
-									</Button> */}
+									</Button>
 								</PageActions>
 							</div>
 							<ComponentPreviewSimple name="chat-demo" />

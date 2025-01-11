@@ -5,12 +5,7 @@ declare global {
 		gtag: (
 			command: "event",
 			action: string,
-			params?: {
-				[key: string]: string | number | boolean | null | undefined;
-				event_category?: string;
-				event_label?: string;
-				value?: number;
-			},
+			params?: Record<string, unknown>,
 		) => void;
 	}
 }
@@ -40,19 +35,6 @@ export type Event = z.infer<typeof eventSchema>;
 export function trackEvent(input: Event): void {
 	const event = eventSchema.parse(input);
 	if (event && typeof window !== "undefined") {
-		// Transform properties to GA4 format
-		const gaEventParams = {
-			...event.properties,
-			event_category: event.name,
-			event_label: event.properties?.name || event.name,
-		};
-
-		// Send to GA4
-		window.gtag("event", event.name, gaEventParams);
-
-		// Log in development
-		if (process.env.NODE_ENV === "development") {
-			console.log("[GA Event]", event.name, gaEventParams);
-		}
+		window.gtag("event", event.name, event.properties);
 	}
 }
