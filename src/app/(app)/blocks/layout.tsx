@@ -42,9 +42,6 @@ export default function BlocksLayout({
 				</PageHeaderDescription>
 				<PageActions>
 					<Button asChild size="sm">
-						<a href="/blocks">Browse Blocks</a>
-					</Button>
-					<Button asChild size="sm" variant="ghost">
 						<a href="/docs/blocks">See Docs</a>
 					</Button>
 				</PageActions>
