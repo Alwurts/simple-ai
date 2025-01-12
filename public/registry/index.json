@@ -53,7 +53,8 @@
     "description": "A markdown content component.",
     "dependencies": [
       "react-markdown",
-      "marked"
+      "marked",
+      "remark-gfm"
     ],
     "files": [
       {
