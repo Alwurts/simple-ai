@@ -3,7 +3,8 @@
   "type": "registry:block",
   "description": "A simple chat page.",
   "dependencies": [
-    "ai"
+    "ai",
+    "@ai-sdk/groq"
   ],
   "registryDependencies": [
     "card",
@@ -24,6 +25,12 @@
       "content": "import {\n\tBreadcrumb,\n\tBreadcrumbItem,\n\tBreadcrumbList,\n\tBreadcrumbPage,\n} from \"@/components/ui/breadcrumb\";\nimport { Separator } from \"@/components/ui/separator\";\nimport {\n\tSidebarInset,\n\tSidebarProvider,\n\tSidebarTrigger,\n} from \"@/components/ui/sidebar\";\nimport { Chat } from \"@/components/chat\";\nimport { SidebarApp } from \"@/components/sidebar-app\";\n\nexport default function Page() {\n\treturn (\n\t\t<SidebarProvider>\n\t\t\t<SidebarApp />\n\t\t\t<SidebarInset className=\"flex flex-col h-svh\">\n\t\t\t\t<header className=\"sticky top-0 flex h-14 shrink-0 items-center gap-2 bg-background\">\n\t\t\t\t\t<div className=\"flex flex-1 items-center gap-2 px-3\">\n\t\t\t\t\t\t<SidebarTrigger />\n\t\t\t\t\t\t<Separator orientation=\"vertical\" className=\"mr-2 h-4\" />\n\t\t\t\t\t\t<Breadcrumb>\n\t\t\t\t\t\t\t<BreadcrumbList>\n\t\t\t\t\t\t\t\t<BreadcrumbItem>\n\t\t\t\t\t\t\t\t\t<BreadcrumbPage className=\"line-clamp-1\">\n\t\t\t\t\t\t\t\t\t\tProject Management & Task Tracking\n\t\t\t\t\t\t\t\t\t</BreadcrumbPage>\n\t\t\t\t\t\t\t\t</BreadcrumbItem>\n\t\t\t\t\t\t\t</BreadcrumbList>\n\t\t\t\t\t\t</Breadcrumb>\n\t\t\t\t\t</div>\n\t\t\t\t</header>\n\t\t\t\t<Chat />\n\t\t\t</SidebarInset>\n\t\t</SidebarProvider>\n\t);\n}\n",
       "type": "registry:page",
       "target": "app/chat/page.tsx"
+    },
+    {
+      "path": "blocks/chat-01/route.ts",
+      "content": "import { groq } from \"@ai-sdk/groq\";\nimport { smoothStream, streamText } from \"ai\";\n\nexport async function POST(req: Request) {\n\tconst { messages } = await req.json();\n\n\ttry {\n\t\tconst result = streamText({\n\t\t\tmodel: groq(\"llama-3.1-8b-instant\"),\n\t\t\tsystem: \"You are a helpful assistant\",\n\t\t\tmessages,\n\t\t\texperimental_transform: smoothStream(),\n\t\t});\n\n\t\treturn result.toDataStreamResponse();\n\t} catch (error) {\n\t\tconsole.error(error);\n\t\treturn new Response(\"Internal Server Error\", { status: 500 });\n\t}\n}\n",
+      "type": "registry:page",
+      "target": "app/api/ai/chat/route.ts"
     },
     {
       "path": "blocks/chat-01/components/chat.tsx",

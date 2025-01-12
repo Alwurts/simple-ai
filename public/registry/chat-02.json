@@ -3,7 +3,8 @@
   "type": "registry:block",
   "description": "A chat in a sidebar.",
   "dependencies": [
-    "ai"
+    "ai",
+    "@ai-sdk/groq"
   ],
   "registryDependencies": [
     "sidebar",
@@ -18,6 +19,12 @@
       "content": "import {\n\tBreadcrumb,\n\tBreadcrumbItem,\n\tBreadcrumbLink,\n\tBreadcrumbList,\n\tBreadcrumbPage,\n\tBreadcrumbSeparator,\n} from \"@/components/ui/breadcrumb\";\nimport {\n\tSidebarInset,\n\tSidebarProvider,\n\tSidebarTrigger,\n} from \"@/components/ui/sidebar\";\nimport { AppSidebar } from \"@/components/app-sidebar\";\n\nexport default function Page() {\n\treturn (\n\t\t<SidebarProvider\n\t\t\tstyle={{\n\t\t\t\t// @ts-ignore\n\t\t\t\t\"--sidebar-width\": \"25rem\",\n\t\t\t\t\"--sidebar-width-mobile\": \"25rem\",\n\t\t\t}}\n\t\t>\n\t\t\t<SidebarInset>\n\t\t\t\t<header className=\"flex h-16 shrink-0 items-center gap-2 border-b px-4\">\n\t\t\t\t\t<Breadcrumb>\n\t\t\t\t\t\t<BreadcrumbList>\n\t\t\t\t\t\t\t<BreadcrumbItem className=\"hidden md:block\">\n\t\t\t\t\t\t\t\t<BreadcrumbLink href=\"#\">\n\t\t\t\t\t\t\t\t\tBuilding Your Application\n\t\t\t\t\t\t\t\t</BreadcrumbLink>\n\t\t\t\t\t\t\t</BreadcrumbItem>\n\t\t\t\t\t\t\t<BreadcrumbSeparator className=\"hidden md:block\" />\n\t\t\t\t\t\t\t<BreadcrumbItem>\n\t\t\t\t\t\t\t\t<BreadcrumbPage>Data Fetching</BreadcrumbPage>\n\t\t\t\t\t\t\t</BreadcrumbItem>\n\t\t\t\t\t\t</BreadcrumbList>\n\t\t\t\t\t</Breadcrumb>\n\t\t\t\t\t<SidebarTrigger className=\"-mr-1 ml-auto rotate-180\" />\n\t\t\t\t</header>\n\t\t\t\t<div className=\"flex flex-1 flex-col gap-4 p-4\">\n\t\t\t\t\t<div className=\"grid auto-rows-min gap-4 md:grid-cols-3\">\n\t\t\t\t\t\t<div className=\"aspect-video rounded-xl bg-muted/50\" />\n\t\t\t\t\t\t<div className=\"aspect-video rounded-xl bg-muted/50\" />\n\t\t\t\t\t\t<div className=\"aspect-video rounded-xl bg-muted/50\" />\n\t\t\t\t\t</div>\n\t\t\t\t\t<div className=\"min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min\" />\n\t\t\t\t</div>\n\t\t\t</SidebarInset>\n\t\t\t<AppSidebar side=\"right\" />\n\t\t</SidebarProvider>\n\t);\n}\n",
       "type": "registry:page",
       "target": "app/chat/page.tsx"
+    },
+    {
+      "path": "blocks/chat-02/route.ts",
+      "content": "import { groq } from \"@ai-sdk/groq\";\nimport { smoothStream, streamText } from \"ai\";\n\nexport async function POST(req: Request) {\n\tconst { messages } = await req.json();\n\n\ttry {\n\t\tconst result = streamText({\n\t\t\tmodel: groq(\"llama-3.1-8b-instant\"),\n\t\t\tsystem: \"You are a helpful assistant\",\n\t\t\tmessages,\n\t\t\texperimental_transform: smoothStream(),\n\t\t});\n\n\t\treturn result.toDataStreamResponse();\n\t} catch (error) {\n\t\tconsole.error(error);\n\t\treturn new Response(\"Internal Server Error\", { status: 500 });\n\t}\n}\n",
+      "type": "registry:page",
+      "target": "app/api/ai/chat/route.ts"
     },
     {
       "path": "blocks/chat-02/components/app-sidebar.tsx",

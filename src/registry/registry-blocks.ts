@@ -5,7 +5,7 @@ export const blocks: Registry = [
 		name: "chat-01",
 		description: "A simple chat page.",
 		type: "registry:block",
-		dependencies: ["ai"],
+		dependencies: ["ai", "@ai-sdk/groq"],
 		registryDependencies: [
 			"card",
 			"breadcrumb",
@@ -23,6 +23,11 @@ export const blocks: Registry = [
 			{
 				path: "blocks/chat-01/page.tsx",
 				target: "app/chat/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/chat-01/route.ts",
+				target: "app/api/ai/chat/route.ts",
 				type: "registry:page",
 			},
 			{
@@ -44,7 +49,7 @@ export const blocks: Registry = [
 		name: "chat-02",
 		description: "A chat in a sidebar.",
 		type: "registry:block",
-		dependencies: ["ai"],
+		dependencies: ["ai", "@ai-sdk/groq"],
 		registryDependencies: [
 			"sidebar",
 			"breadcrumb",
@@ -59,6 +64,11 @@ export const blocks: Registry = [
 				type: "registry:page",
 			},
 			{
+				path: "blocks/chat-02/route.ts",
+				target: "app/api/ai/chat/route.ts",
+				type: "registry:page",
+			},
+			{
 				path: "blocks/chat-02/components/app-sidebar.tsx",
 				type: "registry:component",
 			},
@@ -68,7 +78,7 @@ export const blocks: Registry = [
 		name: "chat-03",
 		description: "A chat in a popover.",
 		type: "registry:block",
-		dependencies: ["ai"],
+		dependencies: ["ai", "@ai-sdk/groq"],
 		registryDependencies: [
 			"popover",
 			"button",
@@ -80,6 +90,11 @@ export const blocks: Registry = [
 			{
 				path: "blocks/chat-03/page.tsx",
 				target: "app/chat/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/chat-03/route.ts",
+				target: "app/api/ai/chat/route.ts",
 				type: "registry:page",
 			},
 			{

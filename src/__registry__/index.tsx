@@ -345,6 +345,10 @@ export const Index: Record<string, any> = {
 			type: "registry:page",
 			target: "app/chat/page.tsx"
 		},{
+			path: "src/registry/blocks/chat-01/route.ts",
+			type: "registry:page",
+			target: "app/api/ai/chat/route.ts"
+		},{
 			path: "src/registry/blocks/chat-01/components/chat.tsx",
 			type: "registry:component",
 			target: ""
@@ -371,6 +375,10 @@ export const Index: Record<string, any> = {
 			type: "registry:page",
 			target: "app/chat/page.tsx"
 		},{
+			path: "src/registry/blocks/chat-02/route.ts",
+			type: "registry:page",
+			target: "app/api/ai/chat/route.ts"
+		},{
 			path: "src/registry/blocks/chat-02/components/app-sidebar.tsx",
 			type: "registry:component",
 			target: ""
@@ -388,6 +396,10 @@ export const Index: Record<string, any> = {
 			path: "src/registry/blocks/chat-03/page.tsx",
 			type: "registry:page",
 			target: "app/chat/page.tsx"
+		},{
+			path: "src/registry/blocks/chat-03/route.ts",
+			type: "registry:page",
+			target: "app/api/ai/chat/route.ts"
 		},{
 			path: "src/registry/blocks/chat-03/components/chat.tsx",
 			type: "registry:component",

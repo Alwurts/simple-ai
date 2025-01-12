@@ -1,9 +1,9 @@
+import { cn } from "@/lib/utils";
 import { marked } from "marked";
 import type * as React from "react";
-import { memo, useMemo, Suspense, isValidElement } from "react";
+import { Suspense, isValidElement, memo, useMemo } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { cn } from "@/lib/utils";
 
 const DEFAULT_PRE_BLOCK_CLASS =
 	"my-4 overflow-x-auto w-fit rounded-xl bg-zinc-950 text-zinc-50 dark:bg-zinc-900 border border-border p-4";

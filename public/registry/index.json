@@ -54,7 +54,8 @@
     "dependencies": [
       "react-markdown",
       "marked",
-      "remark-gfm"
+      "remark-gfm",
+      "shiki"
     ],
     "files": [
       {
