@@ -10,7 +10,8 @@ export async function POST(req: Request) {
 	try {
 		const result = streamText({
 			model: groq("llama-3.1-8b-instant"),
-			system: "You are a helpful assistant",
+			system:
+				"You are a helpful and very friendly assistant, and always answer with short sentences, never use long paragraphs, do not explain yourself, just answer the question",
 			messages,
 			experimental_transform: smoothStream(),
 		});
