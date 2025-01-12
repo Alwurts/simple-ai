@@ -45,7 +45,13 @@ export const blocks: Registry = [
 		description: "A chat in a sidebar.",
 		type: "registry:block",
 		dependencies: ["ai"],
-		registryDependencies: ["sidebar", "breadcrumb"],
+		registryDependencies: [
+			"sidebar",
+			"breadcrumb",
+			"https://simple-ai.alwurts.com/registry/chat-input.json",
+			"https://simple-ai.alwurts.com/registry/chat-message-area.json",
+			"https://simple-ai.alwurts.com/registry/chat-message.json",
+		],
 		files: [
 			{
 				path: "blocks/chat-02/page.tsx",
@@ -54,6 +60,30 @@ export const blocks: Registry = [
 			},
 			{
 				path: "blocks/chat-02/components/app-sidebar.tsx",
+				type: "registry:component",
+			},
+		],
+	},
+	{
+		name: "chat-03",
+		description: "A chat in a popover.",
+		type: "registry:block",
+		dependencies: ["ai"],
+		registryDependencies: [
+			"popover",
+			"button",
+			"https://simple-ai.alwurts.com/registry/chat-input.json",
+			"https://simple-ai.alwurts.com/registry/chat-message-area.json",
+			"https://simple-ai.alwurts.com/registry/chat-message.json",
+		],
+		files: [
+			{
+				path: "blocks/chat-03/page.tsx",
+				target: "app/chat/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/chat-03/components/chat.tsx",
 				type: "registry:component",
 			},
 		],

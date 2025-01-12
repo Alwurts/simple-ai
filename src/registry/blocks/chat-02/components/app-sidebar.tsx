@@ -8,6 +8,13 @@ import {
 	SidebarSeparator,
 } from "@/components/ui/sidebar";
 
+import { Button } from "@/components/ui/button";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
 	ChatInput,
 	ChatInputSubmit,
@@ -22,13 +29,6 @@ import { ChatMessageArea } from "@/registry/ui/chat-message-area";
 import { useChat } from "ai/react";
 import { MessageCircle } from "lucide-react";
 import { SquarePen } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const { messages, input, handleInputChange, handleSubmit, isLoading, stop } =
@@ -37,17 +37,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			initialMessages: [
 				{
 					id: "1",
-					content: "Hi! I'm here to help you build amazing user interfaces. What kind of app are you working on?",
+					content:
+						"Hi! I'm here to help you build amazing user interfaces. What kind of app are you working on?",
 					role: "assistant",
 				},
 				{
 					id: "2",
-					content: "I want to build a task management app but I'm not sure where to start with the UI design.",
+					content:
+						"I want to build a task management app but I'm not sure where to start with the UI design.",
 					role: "user",
 				},
 				{
 					id: "3",
-					content: "That's a great project! Let's break it down. For a task management app, we should focus on three key components: a clean navigation sidebar, a main task list view, and an intuitive task creation interface. Would you like to start with the layout structure first?",
+					content:
+						"That's a great project! Let's break it down. For a task management app, we should focus on three key components: a clean navigation sidebar, a main task list view, and an intuitive task creation interface. Would you like to start with the layout structure first?",
 					role: "assistant",
 				},
 				{
@@ -57,9 +60,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				},
 				{
 					id: "5",
-					content: "For the layout, I recommend a two-column design. The left sidebar can contain project categories and filters, while the main area shows your tasks. This is a common pattern that users are familiar with. Should we start designing the sidebar first?",
+					content:
+						"For the layout, I recommend a two-column design. The left sidebar can contain project categories and filters, while the main area shows your tasks. This is a common pattern that users are familiar with. Should we start designing the sidebar first?",
 					role: "assistant",
-				}
+				},
 			],
 		});
 

@@ -10,8 +10,8 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { SidebarApp } from "@/registry/blocks/chat-01/components/sidebar-app";
 import { Chat } from "@/registry/blocks/chat-01/components/chat";
+import { SidebarApp } from "@/registry/blocks/chat-01/components/sidebar-app";
 
 export default function Page() {
 	return (

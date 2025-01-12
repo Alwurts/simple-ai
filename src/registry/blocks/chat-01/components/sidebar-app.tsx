@@ -1,19 +1,17 @@
 "use client";
 
-import { MessageCircle, SquarePen } from "lucide-react";
-import type { ComponentProps } from "react";
+import { Button } from "@/components/ui/button";
 import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
-	SidebarHeader,
-	SidebarRail,
 	SidebarGroup,
 	SidebarGroupLabel,
+	SidebarHeader,
 	SidebarMenu,
-	SidebarMenuItem,
 	SidebarMenuButton,
-	SidebarSeparator,
+	SidebarMenuItem,
+	SidebarRail,
 } from "@/components/ui/sidebar";
 import {
 	Tooltip,
@@ -21,8 +19,9 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
 import { NavUser } from "@/registry/blocks/chat-01/components/nav-user";
+import { MessageCircle, SquarePen } from "lucide-react";
+import type { ComponentProps } from "react";
 
 // This is sample data.
 const data = {

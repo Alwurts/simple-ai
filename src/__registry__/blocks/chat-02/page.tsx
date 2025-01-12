@@ -1,4 +1,3 @@
-import { AppSidebar } from "@/registry/blocks/chat-02/components/app-sidebar";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -12,10 +11,17 @@ import {
 	SidebarProvider,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/registry/blocks/chat-02/components/app-sidebar";
 
 export default function Page() {
 	return (
-		<SidebarProvider>
+		<SidebarProvider
+			style={{
+				// @ts-ignore
+				"--sidebar-width": "25rem",
+				"--sidebar-width-mobile": "25rem",
+			}}
+		>
 			<SidebarInset>
 				<header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
 					<Breadcrumb>
