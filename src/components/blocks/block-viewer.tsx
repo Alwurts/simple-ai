@@ -295,7 +295,7 @@ function BlockViewerCode() {
 			</div>
 			<div className="flex min-w-0 flex-1 flex-col">
 				<div className="flex h-12 items-center gap-2 border-b border-zinc-700 bg-zinc-900 px-4 text-sm font-medium">
-					<File className="size-4" />
+					<File className="w-4 h-4" />
 					{file.target}
 					<div className="ml-auto flex items-center gap-2">
 						<BlockCopyCodeButton />

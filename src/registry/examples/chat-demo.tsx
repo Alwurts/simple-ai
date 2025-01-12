@@ -21,7 +21,8 @@ export default function ChatDemo() {
 			initialMessages: [
 				{
 					id: "1",
-					content: "Hi! Welcome to simple-ai, the collection of chat UI components that you can easily use to build your chat AI applications.",
+					content:
+						"Hi! Welcome to simple-ai, the collection of chat UI components that you can easily use to build your chat AI applications.",
 					role: "assistant",
 				},
 				{

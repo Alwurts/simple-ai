@@ -85,7 +85,7 @@ ChatMessage.displayName = "ChatMessage";
 // Avatar component
 
 const chatMessageAvatarVariants = cva(
-	"size-8 flex items-center rounded-full justify-center ring-1 shrink-0 bg-transparent overflow-hidden",
+	"w-8 h-8 flex items-center rounded-full justify-center ring-1 shrink-0 bg-transparent overflow-hidden",
 	{
 		variants: {
 			type: {
@@ -119,7 +119,11 @@ const ChatMessageAvatar = React.forwardRef<
 			{...props}
 		>
 			{imageSrc ? (
-				<img src={imageSrc} alt="Avatar" className="size-full object-cover" />
+				<img
+					src={imageSrc}
+					alt="Avatar"
+					className="h-full w-full object-cover"
+				/>
 			) : (
 				<div className="translate-y-px [&_svg]:size-4 [&_svg]:shrink-0">
 					{icon}
