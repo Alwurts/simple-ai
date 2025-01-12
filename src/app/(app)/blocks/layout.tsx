@@ -10,8 +10,8 @@ import {
 import { Button } from "@/components/ui/button";
 
 import "@/styles/mdx.css";
-import type { ReactNode } from "react";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
 	title: "Building Blocks for AI.",

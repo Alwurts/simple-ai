@@ -5,7 +5,7 @@ export const blocks: Registry = [
 		name: "chat-01",
 		description: "A simple chat page.",
 		type: "registry:block",
-		dependencies: ["ai", "@ai-sdk/groq"],
+		dependencies: ["ai", "@ai-sdk/openai"],
 		registryDependencies: [
 			"card",
 			"breadcrumb",
@@ -49,7 +49,7 @@ export const blocks: Registry = [
 		name: "chat-02",
 		description: "A chat in a sidebar.",
 		type: "registry:block",
-		dependencies: ["ai", "@ai-sdk/groq"],
+		dependencies: ["ai", "@ai-sdk/openai"],
 		registryDependencies: [
 			"sidebar",
 			"breadcrumb",
@@ -78,7 +78,7 @@ export const blocks: Registry = [
 		name: "chat-03",
 		description: "A chat in a popover.",
 		type: "registry:block",
-		dependencies: ["ai", "@ai-sdk/groq"],
+		dependencies: ["ai", "@ai-sdk/openai"],
 		registryDependencies: [
 			"popover",
 			"button",

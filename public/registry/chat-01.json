@@ -4,7 +4,7 @@
   "description": "A simple chat page.",
   "dependencies": [
     "ai",
-    "@ai-sdk/groq"
+    "@ai-sdk/openai"
   ],
   "registryDependencies": [
     "card",
@@ -28,7 +28,7 @@
     },
     {
       "path": "blocks/chat-01/route.ts",
-      "content": "import { groq } from \"@ai-sdk/groq\";\nimport { smoothStream, streamText } from \"ai\";\n\nexport async function POST(req: Request) {\n\tconst { messages } = await req.json();\n\n\ttry {\n\t\tconst result = streamText({\n\t\t\tmodel: groq(\"llama-3.1-8b-instant\"),\n\t\t\tsystem: \"You are a helpful assistant\",\n\t\t\tmessages,\n\t\t\texperimental_transform: smoothStream(),\n\t\t});\n\n\t\treturn result.toDataStreamResponse();\n\t} catch (error) {\n\t\tconsole.error(error);\n\t\treturn new Response(\"Internal Server Error\", { status: 500 });\n\t}\n}\n",
+      "content": "import { openai } from \"@ai-sdk/openai\";\nimport { streamText } from \"ai\";\n\nexport async function POST(req: Request) {\n\tconst { messages } = await req.json();\n\n\tconst result = streamText({\n\t\tmodel: openai(\"gpt-4o-mini\"),\n\t\tsystem: \"You are a helpful assistant\",\n\t\tmessages,\n\t});\n\n\treturn result.toDataStreamResponse();\n}\n",
       "type": "registry:page",
       "target": "app/api/ai/chat/route.ts"
     },
