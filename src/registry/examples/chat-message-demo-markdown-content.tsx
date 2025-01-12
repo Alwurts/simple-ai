@@ -4,32 +4,46 @@ import {
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
 
-export default function ChatMessageDemoMarkdownContent() {
-	return (
-		<div className="w-full border rounded-lg">
-			<ChatMessage key="1" id="1" type="outgoing" variant="full">
-				<ChatMessageContent content="Can you give me a summary of today's tech news?" />
-				<ChatMessageAvatar />
-			</ChatMessage>
-
-			<ChatMessage key="2" id="2" type="incoming" variant="full">
-				<ChatMessageAvatar />
-				<ChatMessageContent
-					content={`Sure, here's a summary of today's tech news:
+const messages = [
+	{
+		id: "1",
+		content: "Can you give me a summary of today's tech news?",
+		type: "user",
+	},
+	{
+		id: "2",
+		content: `Sure, here's a summary of today's tech news:
 ### Technology
 
 Latest developments in Technology:
 * OpenAI announces new breakthrough in language models
 * Tech giants collaborate on AI safety standards
 * Quantum computing reaches new milestone
-`}
-				/>
-			</ChatMessage>
+`,
+		type: "assistant",
+	},
+	{
+		id: "3",
+		content: "Thanks for the update!",
+		type: "user",
+	},
+];
 
-			<ChatMessage key="3" id="3" type="outgoing" variant="full">
-				<ChatMessageContent content="Thanks for the update!" />
-				<ChatMessageAvatar />
-			</ChatMessage>
+export default function ChatMessageDemoMarkdownContent() {
+	return (
+		<div className="w-full border rounded-lg">
+			{messages.map((message) => (
+				<ChatMessage
+					key={message.id}
+					id={message.id}
+					type={message.type === "user" ? "outgoing" : "incoming"}
+					variant="full"
+				>
+					{message.type === "assistant" && <ChatMessageAvatar />}
+					<ChatMessageContent content={message.content} />
+					{message.type === "user" && <ChatMessageAvatar />}
+				</ChatMessage>
+			))}
 		</div>
 	);
 }

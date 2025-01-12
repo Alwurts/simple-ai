@@ -1,19 +1,36 @@
 import { ChatMessage, ChatMessageContent } from "@/registry/ui/chat-message";
 
+const messages = [
+	{
+		id: "1",
+		content: "Hey how are you?",
+		type: "user",
+	},
+	{
+		id: "2",
+		content: "I'm fine, thanks for asking!",
+		type: "assistant",
+	},
+	{
+		id: "3",
+		content: "Great!",
+		type: "user",
+	},
+];
+
 export default function ChatMessageDemoWithoutAvatar() {
 	return (
 		<div className="w-full space-y-4">
-			<ChatMessage key="1" id="1" type="outgoing" variant="bubble">
-				<ChatMessageContent content="Hey how are you?" />
-			</ChatMessage>
-
-			<ChatMessage key="2" id="2" type="incoming" variant="bubble">
-				<ChatMessageContent content="I'm fine, thanks for asking!" />
-			</ChatMessage>
-
-			<ChatMessage key="3" id="3" type="outgoing" variant="bubble">
-				<ChatMessageContent content="Great!" />
-			</ChatMessage>
+			{messages.map((message) => (
+				<ChatMessage
+					key={message.id}
+					id={message.id}
+					type={message.type === "user" ? "outgoing" : "incoming"}
+					variant="bubble"
+				>
+					<ChatMessageContent content={message.content} />
+				</ChatMessage>
+			))}
 		</div>
 	);
 }

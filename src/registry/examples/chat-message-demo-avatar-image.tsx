@@ -4,23 +4,43 @@ import {
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
 
+const messages = [
+	{
+		id: "1",
+		content: "Hey how are you?",
+		type: "user",
+	},
+	{
+		id: "2",
+		content: "I'm fine, thanks for asking!",
+		type: "assistant",
+	},
+	{
+		id: "3",
+		content: "Great!",
+		type: "user",
+	},
+];
+
 export default function ChatMessageDemoAvatarImage() {
 	return (
 		<div className="w-full space-y-4">
-			<ChatMessage key="1" id="1" type="outgoing" variant="bubble">
-				<ChatMessageContent content="Hey how are you?" />
-				<ChatMessageAvatar imageSrc="/avatar-1.png" />
-			</ChatMessage>
-
-			<ChatMessage key="2" id="2" type="incoming" variant="bubble">
-				<ChatMessageAvatar imageSrc="/avatar-2.png" />
-				<ChatMessageContent content="I'm fine, thanks for asking!" />
-			</ChatMessage>
-
-			<ChatMessage key="3" id="3" type="outgoing" variant="bubble">
-				<ChatMessageContent content="Great!" />
-				<ChatMessageAvatar imageSrc="/avatar-1.png" />
-			</ChatMessage>
+			{messages.map((message) => (
+				<ChatMessage
+					key={message.id}
+					id={message.id}
+					type={message.type === "user" ? "outgoing" : "incoming"}
+					variant="bubble"
+				>
+					{message.type === "assistant" && (
+						<ChatMessageAvatar imageSrc="/avatar-2.png" />
+					)}
+					<ChatMessageContent content={message.content} />
+					{message.type === "user" && (
+						<ChatMessageAvatar imageSrc="/avatar-1.png" />
+					)}
+				</ChatMessage>
+			))}
 		</div>
 	);
 }
