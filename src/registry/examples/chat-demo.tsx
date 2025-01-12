@@ -21,29 +21,12 @@ export default function ChatDemo() {
 			initialMessages: [
 				{
 					id: "1",
-					content: "Hey, how's your day going?",
-					role: "user",
+					content: "Hi! Welcome to simple-ai, the collection of chat UI components that you can easily use to build your chat AI applications.",
+					role: "assistant",
 				},
 				{
 					id: "2",
-					content:
-						"It's going pretty well, thanks for asking! How about yours?",
-					role: "assistant",
-				},
-				{
-					id: "3",
-					content: "Not bad, just chilling at home. What did you do today?",
-					role: "user",
-				},
-				{
-					id: "4",
-					content:
-						"I spent some time reading and then went for a walk. It was nice. I later went to the gym and then had dinner with some friends. In the evening, I watched a movie and then went to bed.",
-					role: "assistant",
-				},
-				{
-					id: "5",
-					content: "What about you? What did you do today?",
+					content: "Would you like to know more?",
 					role: "assistant",
 				},
 			],
