@@ -1,4 +1,4 @@
-import { groq } from "@ai-sdk/groq";
+import { openai } from "@ai-sdk/openai";
 import { smoothStream, streamText } from "ai";
 
 export async function POST(req: Request) {
@@ -6,7 +6,7 @@ export async function POST(req: Request) {
 
 	try {
 		const result = streamText({
-			model: groq("llama-3.1-8b-instant"),
+			model: openai("gpt-4o-mini"),
 			system: "You are a helpful assistant",
 			messages,
 			experimental_transform: smoothStream(),

@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 
 import "@/styles/mdx.css";
 import type { ReactNode } from "react";
+import Link from "next/link";
 
 export const metadata: Metadata = {
 	title: "Building Blocks for AI.",
@@ -32,9 +33,19 @@ export default function BlocksLayout({
 					Building blocks for AI. Copy and paste into your apps. Works with all
 					React frameworks. Open Source..
 				</PageHeaderDescription>
+				<PageHeaderDescription>
+					All of our blocks use the Vercel AI SDK, click{" "}
+					<Link href="/docs/blocks" className="underline">
+						here
+					</Link>{" "}
+					for more details.
+				</PageHeaderDescription>
 				<PageActions>
 					<Button asChild size="sm">
-						<a href="#blocks">Browse Blocks</a>
+						<a href="/blocks">Browse Blocks</a>
+					</Button>
+					<Button asChild size="sm" variant="ghost">
+						<a href="/docs/blocks">See Docs</a>
 					</Button>
 				</PageActions>
 			</PageHeader>
