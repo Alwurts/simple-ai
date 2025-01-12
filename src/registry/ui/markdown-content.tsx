@@ -1,8 +1,116 @@
 import { marked } from "marked";
 import type * as React from "react";
-import { memo, useMemo } from "react";
+import { memo, useMemo, Suspense, isValidElement } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { cn } from "@/lib/utils";
+
+const DEFAULT_PRE_BLOCK_CLASS =
+	"my-4 overflow-x-auto w-fit rounded-xl bg-zinc-950 text-zinc-50 dark:bg-zinc-900 border border-border p-4";
+
+const extractTextContent = (node: React.ReactNode): string => {
+	if (typeof node === "string") {
+		return node;
+	}
+	if (Array.isArray(node)) {
+		return node.map(extractTextContent).join("");
+	}
+	if (isValidElement(node)) {
+		return extractTextContent(node.props.children);
+	}
+	return "";
+};
+
+interface HighlightedPreProps extends React.HTMLAttributes<HTMLPreElement> {
+	language: string;
+}
+
+const HighlightedPre = memo(
+	async ({ children, className, language, ...props }: HighlightedPreProps) => {
+		const { codeToTokens, bundledLanguages } = await import("shiki");
+		const code = extractTextContent(children);
+
+		if (!(language in bundledLanguages)) {
+			return (
+				<pre {...props} className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}>
+					<code className="whitespace-pre-wrap">{children}</code>
+				</pre>
+			);
+		}
+
+		const { tokens } = await codeToTokens(code, {
+			lang: language as keyof typeof bundledLanguages,
+			themes: {
+				light: "github-dark",
+				dark: "github-dark",
+			},
+		});
+
+		return (
+			<pre {...props} className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}>
+				<code className="whitespace-pre-wrap">
+					{tokens.map((line, lineIndex) => (
+						<span
+							key={`line-${
+								// biome-ignore lint/suspicious/noArrayIndexKey: Needed for react key
+								lineIndex
+							}`}
+						>
+							{line.map((token, tokenIndex) => {
+								const style =
+									typeof token.htmlStyle === "string"
+										? undefined
+										: token.htmlStyle;
+
+								return (
+									<span
+										key={`token-${
+											// biome-ignore lint/suspicious/noArrayIndexKey: Needed for react key
+											tokenIndex
+										}`}
+										style={style}
+									>
+										{token.content}
+									</span>
+								);
+							})}
+							{lineIndex !== tokens.length - 1 && "\n"}
+						</span>
+					))}
+				</code>
+			</pre>
+		);
+	},
+);
+
+HighlightedPre.displayName = "HighlightedPre";
+
+interface CodeBlockProps extends React.HTMLAttributes<HTMLPreElement> {
+	language: string;
+}
+
+const CodeBlock = ({
+	children,
+	language,
+	className,
+	...props
+}: CodeBlockProps) => {
+	return (
+		<Suspense
+			fallback={
+				<pre {...props} className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}>
+					<code className="whitespace-pre-wrap">{children}</code>
+				</pre>
+			}
+		>
+			<HighlightedPre language={language} {...props}>
+				{children}
+			</HighlightedPre>
+		</Suspense>
+	);
+};
+
+CodeBlock.displayName = "CodeBlock";
 
 const components: Partial<Components> = {
 	h1: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
@@ -134,6 +242,27 @@ const components: Partial<Components> = {
 		// biome-ignore lint/a11y/useAltText: alt is not required
 		<img className="rounded-md" alt={alt} {...props} />
 	),
+	code: ({ children, node, className, ...props }) => {
+		const match = /language-(\w+)/.exec(className || "");
+		if (match) {
+			return (
+				<CodeBlock language={match[1]} className={className} {...props}>
+					{children}
+				</CodeBlock>
+			);
+		}
+		return (
+			<code
+				className={cn(
+					"rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm",
+					className,
+				)}
+				{...props}
+			>
+				{children}
+			</code>
+		);
+	},
 	pre: ({ children }) => <>{children}</>,
 };
 

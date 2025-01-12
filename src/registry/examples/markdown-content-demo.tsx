@@ -36,7 +36,7 @@ Inline code: \`const greeting = "Hello World!"\`
 \`\`\`javascript
 // Code block
 function sayHello() {
-  console.log("Hello, Markdown!");
+  console.log("Hello!");
 }
 \`\`\`
 
@@ -73,7 +73,7 @@ function sayHello() {
 `,
 	);
 	return (
-		<div className="w-full h-[500px] overflow-y-auto">
+		<div className="w-full overflow-y-auto">
 			<MarkdownContent id="markdown-content-demo" content={content} />
 		</div>
 	);
