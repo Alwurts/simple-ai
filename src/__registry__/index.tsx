@@ -409,5 +409,23 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/blocks/chat-03/page.tsx")),
 		source: "src/__registry__/blocks/chat-03/page.tsx",
 		meta: undefined,
+    },	"chat-04": {
+		name: "chat-04",
+		description: "A chat with generative UI capabilities.",
+		type: "registry:block",
+		registryDependencies: ["resizable","breadcrumb","button","https://simple-ai.alwurts.com/registry/chat-input.json","https://simple-ai.alwurts.com/registry/chat-message-area.json","https://simple-ai.alwurts.com/registry/chat-message.json"],
+		files: [{
+			path: "src/registry/blocks/chat-04/page.tsx",
+			type: "registry:page",
+			target: "app/chat/page.tsx"
+		},{
+			path: "src/registry/blocks/chat-04/components/chat.tsx",
+			type: "registry:component",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/blocks/chat-04/page.tsx")),
+		source: "src/__registry__/blocks/chat-04/page.tsx",
+		meta: undefined,
     },
 }

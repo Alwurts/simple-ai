@@ -103,4 +103,29 @@ export const blocks: Registry = [
 			},
 		],
 	},
+	{
+		name: "chat-04",
+		description: "A chat with generative UI capabilities.",
+		type: "registry:block",
+		dependencies: ["ai", "@ai-sdk/openai", "@uiw/react-codemirror"],
+		registryDependencies: [
+			"resizable",
+			"breadcrumb",
+			"button",
+			"https://simple-ai.alwurts.com/registry/chat-input.json",
+			"https://simple-ai.alwurts.com/registry/chat-message-area.json",
+			"https://simple-ai.alwurts.com/registry/chat-message.json",
+		],
+		files: [
+			{
+				path: "blocks/chat-04/page.tsx",
+				target: "app/chat/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/chat-04/components/chat.tsx",
+				type: "registry:component",
+			},
+		],
+	},
 ];
