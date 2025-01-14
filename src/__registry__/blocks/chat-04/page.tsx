@@ -1,33 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import { Chat } from "./components/chat";
-import { Preview } from "./components/preview";
-import { CodeEditor } from "./components/code-editor";
+import { EditorLayout } from "./components/editor-layout";
+import { useGenerationStore } from "./store";
+
+const INITIAL_CODE = `<div className='bg-red-600 h-screen w-screen flex flex-col items-center justify-center gap-4'>
+	<h1 className="text-white">Hello from the preview</h1>
+	<p className="text-white">This is a paragraph</p>
+</div>`;
 
 export default function Page() {
-	const [code, setCode] = useState("<div className='bg-red-600'>Hello from the preview</div>");
-	const [isPreviewMode, setIsPreviewMode] = useState(true);
+	const { versions, addVersion } = useGenerationStore();
+
+	useEffect(() => {
+		// Only add initial version if there are no versions yet
+		if (versions.length === 0) {
+			addVersion(INITIAL_CODE);
+		}
+	}, [versions.length, addVersion]);
 
 	return (
 		<div className="flex w-screen h-screen justify-start">
 			<Chat />
-			<div className="flex-1 flex">
-				{isPreviewMode ? (
-					<Preview 
-						code={code} 
-						isPreviewMode={isPreviewMode}
-						onChangeMode={setIsPreviewMode}
-					/>
-				) : (
-					<CodeEditor 
-						code={code} 
-						onChange={setCode}
-						isPreviewMode={isPreviewMode}
-						onChangeMode={setIsPreviewMode}
-					/>
-				)}
-			</div>
+			<EditorLayout />
 		</div>
 	);
 }

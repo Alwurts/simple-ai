@@ -420,7 +420,6 @@ function BlockCopyCodeButton() {
 		<Button
 			onClick={() => {
 				copyToClipboard(content);
-				console.log("copy_block_code", item.name, file.path);
 				trackEvent({
 					name: "copy_block_code",
 					properties: {

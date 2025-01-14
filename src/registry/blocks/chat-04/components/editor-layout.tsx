@@ -1,24 +1,17 @@
 "use client";
 
 import type { ImperativePanelHandle } from "react-resizable-panels";
-
 import { Monitor, Smartphone, Tablet, Code, EyeIcon } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { type Dispatch, type SetStateAction, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Preview } from "./preview";
 import { CodeEditor } from "./code-editor";
 
-interface EditorLayoutProps {
-	code: string;
-	setCode: Dispatch<SetStateAction<string>>;
-}
-
-export function EditorLayout({ code, setCode }: EditorLayoutProps) {
+export function EditorLayout() {
 	const viewerPanelRef = useRef<ImperativePanelHandle>(null);
 	const [viewerSize, setViewerSize] = useState("100");
-
 	const [view, setView] = useState<"preview" | "code">("preview");
 
 	return (
@@ -27,8 +20,8 @@ export function EditorLayout({ code, setCode }: EditorLayoutProps) {
 				<div className="flex items-center gap-1.5">
 					<Code className="h-4 w-4" />
 					<Switch
-						checked={view === "code"}
-						onCheckedChange={(checked) => setView(checked ? "code" : "preview")}
+						checked={view === "preview"}
+						onCheckedChange={(checked) => setView(checked ? "preview" : "code")}
 					/>
 					<EyeIcon className="h-4 w-4" />
 				</div>
@@ -60,17 +53,11 @@ export function EditorLayout({ code, setCode }: EditorLayoutProps) {
 				)}
 			</div>
 			<Preview
-				code={code}
-				setViewerSize={setViewerSize}
 				className={view === "preview" ? "block" : "hidden"}
 				viewerPanelRef={viewerPanelRef}
+				setViewerSize={setViewerSize}
 			/>
-
-			<CodeEditor
-				code={code}
-				setCode={setCode}
-				className={view === "code" ? "block" : "hidden"}
-			/>
+			<CodeEditor className={view === "code" ? "block" : "hidden"} />
 		</div>
 	);
 }
