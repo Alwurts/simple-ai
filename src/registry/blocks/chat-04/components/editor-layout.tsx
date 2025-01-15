@@ -1,22 +1,37 @@
 "use client";
 
 import type { ImperativePanelHandle } from "react-resizable-panels";
-import { Monitor, Smartphone, Tablet, Code, EyeIcon } from "lucide-react";
+import {
+	Monitor,
+	Smartphone,
+	Tablet,
+	Code,
+	EyeIcon,
+	BotMessageSquare,
+} from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useRef, useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 import { Preview } from "./preview";
 import { CodeEditor } from "./code-editor";
+import { useGenerationStore } from "../store";
+import { ChatDialog } from "./chat-dialog";
 
 export function EditorLayout() {
 	const viewerPanelRef = useRef<ImperativePanelHandle>(null);
 	const [viewerSize, setViewerSize] = useState("100");
-	const [view, setView] = useState<"preview" | "code">("preview");
+	const { view, setView } = useGenerationStore();
+	const [chatOpen, setChatOpen] = useState(true);
 
 	return (
 		<div className="flex-1 relative py-3 pl-4 pr-1 flex flex-col gap-2 border-l border-border">
 			<div className="h-10 flex items-center justify-start gap-4">
+				<Button size="icon" variant="outline" onClick={() => setChatOpen(true)}>
+					<BotMessageSquare className="h-4 w-4" />
+				</Button>
+				<Separator orientation="vertical" className="h-6" />
 				<div className="flex items-center gap-1.5">
 					<Code className="h-4 w-4" />
 					<Switch
@@ -58,6 +73,7 @@ export function EditorLayout() {
 				setViewerSize={setViewerSize}
 			/>
 			<CodeEditor className={view === "code" ? "block" : "hidden"} />
+			<ChatDialog open={chatOpen} onOpenChange={setChatOpen} />
 		</div>
 	);
 }

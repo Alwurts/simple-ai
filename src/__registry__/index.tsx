@@ -418,10 +418,6 @@ export const Index: Record<string, any> = {
 			path: "src/registry/blocks/chat-04/page.tsx",
 			type: "registry:page",
 			target: "app/chat/page.tsx"
-		},{
-			path: "src/registry/blocks/chat-04/components/chat.tsx",
-			type: "registry:component",
-			target: ""
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/blocks/chat-04/page.tsx")),

@@ -1,5 +1,5 @@
 import CodeMirror from "@uiw/react-codemirror";
-import { html } from "@codemirror/lang-html";
+import { javascript } from "@codemirror/lang-javascript";
 import { cn } from "@/lib/utils";
 import { useGenerationStore } from "../store";
 
@@ -8,7 +8,12 @@ interface CodeEditorProps {
 }
 
 export function CodeEditor({ className }: CodeEditorProps) {
-	const { versions, currentVersion, addVersion } = useGenerationStore();
+	const versions = useGenerationStore((state) => state.versions);
+	const currentVersion = useGenerationStore((state) => state.currentVersion);
+	const updateCurrentCode = useGenerationStore(
+		(state) => state.updateCurrentCode,
+	);
+
 	const currentCode = versions[currentVersion]?.code ?? "";
 
 	return (
@@ -16,8 +21,8 @@ export function CodeEditor({ className }: CodeEditorProps) {
 			<CodeMirror
 				value={currentCode}
 				height="100%"
-				extensions={[html()]}
-				onChange={addVersion}
+				extensions={[javascript({ jsx: true })]}
+				onChange={updateCurrentCode}
 				theme="dark"
 				className="h-full border rounded-md overflow-hidden"
 			/>

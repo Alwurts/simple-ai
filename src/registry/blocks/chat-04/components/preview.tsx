@@ -2,7 +2,14 @@
 
 import type { ImperativePanelHandle } from "react-resizable-panels";
 import { cn } from "@/lib/utils";
-import { useCallback, useEffect, useRef, type RefObject, type Dispatch, type SetStateAction } from "react";
+import {
+	useCallback,
+	useEffect,
+	useRef,
+	type RefObject,
+	type Dispatch,
+	type SetStateAction,
+} from "react";
 import { useGenerationStore } from "../store";
 import {
 	ResizableHandle,
@@ -21,8 +28,13 @@ interface PreviewProps {
 	setViewerSize: Dispatch<SetStateAction<string>>;
 }
 
-export function Preview({ className, viewerPanelRef, setViewerSize }: PreviewProps) {
-	const { versions, currentVersion } = useGenerationStore();
+export function Preview({
+	className,
+	viewerPanelRef,
+	setViewerSize,
+}: PreviewProps) {
+	const versions = useGenerationStore((state) => state.versions);
+	const currentVersion = useGenerationStore((state) => state.currentVersion);
 	const currentCode = versions[currentVersion]?.code ?? "";
 	const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -40,12 +52,19 @@ export function Preview({ className, viewerPanelRef, setViewerSize }: PreviewPro
 	}, [sendMessageToCanvas, currentCode]);
 
 	return (
-		<div className={cn("flex-1 relative after:absolute after:inset-0 after:right-3 after:z-0 after:rounded-lg after:bg-muted-foreground/25 after:border after:border-border", className)}>
+		<div
+			className={cn(
+				"flex-1 relative after:absolute after:inset-0 after:right-3 after:z-0 after:rounded-lg after:bg-muted-foreground/25 after:border after:border-border",
+				className,
+			)}
+		>
 			<ResizablePanelGroup direction="horizontal" className="relative z-10">
 				<ResizablePanel
 					ref={viewerPanelRef}
 					order={1}
-					className={cn("relative rounded-lg border bg-background border-border")}
+					className={cn(
+						"relative rounded-lg border bg-background border-border",
+					)}
 					defaultSize={100}
 					onResize={(size) => {
 						setViewerSize(size.toString());

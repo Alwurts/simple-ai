@@ -122,10 +122,6 @@ export const blocks: Registry = [
 				target: "app/chat/page.tsx",
 				type: "registry:page",
 			},
-			{
-				path: "blocks/chat-04/components/chat.tsx",
-				type: "registry:component",
-			},
 		],
 	},
 ];
