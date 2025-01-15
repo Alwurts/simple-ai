@@ -17,15 +17,17 @@ export function CodeEditor({ className }: CodeEditorProps) {
 	const currentCode = versions[currentVersion]?.code ?? "";
 
 	return (
-		<div className={cn("flex-1", className)}>
-			<CodeMirror
-				value={currentCode}
-				height="100%"
-				extensions={[javascript({ jsx: true })]}
-				onChange={updateCurrentCode}
-				theme="dark"
-				className="h-full border rounded-md overflow-hidden"
-			/>
+		<div className={cn("flex-1 relative overflow-hidden", className)}>
+			<div className="absolute inset-0">
+				<CodeMirror
+					value={currentCode}
+					height="100%"
+					extensions={[javascript({ jsx: true })]}
+					onChange={updateCurrentCode}
+					theme="dark"
+					className="h-full border rounded-md"
+				/>
+			</div>
 		</div>
 	);
 }

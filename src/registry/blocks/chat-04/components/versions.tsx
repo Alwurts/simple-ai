@@ -3,19 +3,24 @@ import { useGenerationStore } from "../store";
 import type { ComponentPropsWithoutRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { BotMessageSquare } from "lucide-react";
 
 export function Versions({
 	className,
+	onChatOpen,
 	...props
-}: ComponentPropsWithoutRef<"div">) {
+}: ComponentPropsWithoutRef<"div"> & { onChatOpen?: () => void }) {
 	const versions = useGenerationStore((state) => state.versions);
 	const currentVersion = useGenerationStore((state) => state.currentVersion);
+	const currentVersionData = versions[currentVersion];
+	const isGenerating = currentVersionData?.status === "generating";
 
 	return (
 		<div
 			{...props}
 			className={cn(
-				"flex flex-col h-full overflow-y-auto w-[200px] shrink-0 border-r border-border",
+				"flex flex-col h-full w-[200px] shrink-0 border-r border-border",
 				className,
 			)}
 		>
@@ -29,12 +34,10 @@ export function Versions({
 						<Card
 							key={version.versionNumber}
 							className={cn(
-								"transition-all cursor-pointer",
-								version.versionNumber === currentVersion && version.status === "generating"
-									? "border-primary shadow-[0_0_10px_rgba(var(--primary)_/_0.2)] animate-pulse"
-									: version.versionNumber === currentVersion
-									? "border-primary"
-									: "hover:bg-muted/50",
+								"transition-all",
+								version.versionNumber === currentVersion && "border-primary",
+								version.status === "generating" &&
+									"border-primary animate-pulse",
 							)}
 						>
 							<CardContent className="p-3">
@@ -43,11 +46,13 @@ export function Versions({
 										Version {version.versionNumber + 1}
 									</div>
 									{version.versionNumber === currentVersion && (
-										<Badge 
-											variant="secondary" 
+										<Badge
+											variant="secondary"
 											className="text-[10px] px-1 py-0"
 										>
-											{version.status === "generating" ? "Loading..." : "Current"}
+											{version.status === "generating"
+												? "Loading..."
+												: "Current"}
 										</Badge>
 									)}
 								</div>
@@ -55,6 +60,18 @@ export function Versions({
 						</Card>
 					))
 				)}
+			</div>
+			<div className="p-2 border-t">
+				<Button
+					variant="outline"
+					size="sm"
+					className="w-full"
+					onClick={onChatOpen}
+					disabled={isGenerating}
+				>
+					<BotMessageSquare className="h-4 w-4 mr-2" />
+					New generation
+				</Button>
 			</div>
 		</div>
 	);

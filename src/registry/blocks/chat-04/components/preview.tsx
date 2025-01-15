@@ -16,6 +16,7 @@ import {
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { LoaderCircle } from "lucide-react";
 
 interface CanvasMessage {
 	type: string;
@@ -36,6 +37,7 @@ export function Preview({
 	const versions = useGenerationStore((state) => state.versions);
 	const currentVersion = useGenerationStore((state) => state.currentVersion);
 	const currentCode = versions[currentVersion]?.code ?? "";
+	const isGenerating = versions[currentVersion]?.status === "generating";
 	const iframeRef = useRef<HTMLIFrameElement>(null);
 
 	const sendMessageToCanvas = useCallback((message: CanvasMessage) => {
@@ -77,6 +79,11 @@ export function Preview({
 						src={"/canvas"}
 						className="relative z-20 w-full h-full bg-background"
 					/>
+					{isGenerating && (
+						<div className="absolute inset-0 z-30 bg-background/50 backdrop-blur-[1px] flex items-center justify-center pointer-events-auto animate-pulse">
+							<LoaderCircle className="w-10 h-10 animate-spin" />
+						</div>
+					)}
 				</ResizablePanel>
 				<ResizableHandle
 					className={cn(
