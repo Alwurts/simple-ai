@@ -9,7 +9,7 @@ export default function Page() {
 
 	return (
 		<div className="flex w-screen h-screen justify-start">
-			<Versions onChatOpen={() => setChatOpen(true)} />
+			<Versions className="hidden md:flex" onChatOpen={() => setChatOpen(true)} />
 			<EditorLayout chatOpen={chatOpen} onChatOpenChange={setChatOpen} />
 		</div>
 	);
