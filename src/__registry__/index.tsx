@@ -471,7 +471,7 @@ export const Index: Record<string, any> = {
 		meta: undefined,
     },	"jsx-utils": {
 		name: "jsx-utils",
-		description: "A function that completes a JSX string.",
+		description: "A set of utilities for working with JSX.",
 		type: "registry:lib",
 		registryDependencies: undefined,
 		files: [{

@@ -1,10 +1,29 @@
+/**
+ * Matches and extracts information about JSX tags in a string of code.
+ * Handles three tag formats:
+ * 1. Opening tags: <tag attr="value">
+ * 2. Self-closing tags: <tag />
+ * 3. Closing tags: </tag>
+ *
+ * @param code - The string containing JSX code to analyze
+ * @returns Object containing tag details or null if no match is found
+ * @example
+ * matchJsxTag('<div className="container">');
+ * // Returns:
+ * // {
+ * //   tag: '<div className="container">',
+ * //   tagName: 'div',
+ * //   type: 'opening',
+ * //   attributes: 'className="container"',
+ * //   startIndex: 0,
+ * //   endIndex: 27
+ * // }
+ */
 export function matchJsxTag(code: string) {
 	if (code.trim() === "") {
 		return null;
 	}
 
-	// Matches JSX tags in three forms:
-	// 1. <tag attr="value">  2. <tag />  3. </tag>
 	const tagRegex = /<\/?([a-zA-Z][a-zA-Z0-9]*)\s*([^>]*?)(\/)?>/;
 	const match = code.match(tagRegex);
 
@@ -29,12 +48,21 @@ export function matchJsxTag(code: string) {
 	};
 }
 
+/**
+ * Completes any unclosed JSX tags in the provided code by adding their closing tags.
+ * Maintains proper nesting order when adding closing tags.
+ *
+ * @param code - The JSX code string that may contain unclosed tags
+ * @returns The completed JSX code with all necessary closing tags added
+ * @example
+ * completeJsxTag('<div><p);
+ * // Returns: '<div></div>'
+ */
 export function completeJsxTag(code: string) {
 	const stack: string[] = [];
 	let result = "";
 	let currentPosition = 0;
 
-	// Process all JSX tags in the input code
 	while (currentPosition < code.length) {
 		const match = matchJsxTag(code.slice(currentPosition));
 		if (!match) {
@@ -53,7 +81,6 @@ export function completeJsxTag(code: string) {
 		currentPosition += endIndex;
 	}
 
-	// Add any remaining closing tags
 	return (
 		result +
 		stack
@@ -63,18 +90,22 @@ export function completeJsxTag(code: string) {
 	);
 }
 
+/**
+ * Extracts JSX content from inside a return statement in the provided code.
+ *
+ * @param code - The code string containing a return statement with JSX
+ * @returns The extracted JSX content as a string, or null if no content is found
+ * @example
+ * extractJsxContent('function Component() { return (<div>Hello</div>); }');
+ * // Returns: '<div>Hello</div>'
+ */
 export function extractJsxContent(code: string): string | null {
-	// Regular expression to match the content inside the return statement
 	const returnContentRegex = /return\s*\(\s*([\s\S]*?)(?=\s*\);|\s*$)/;
-
-	// Execute the regex on the input string
 	const match = code.match(returnContentRegex);
 
-	// If a match is found, return the content inside the return statement
 	if (match?.[1]) {
 		return match[1].trim();
 	}
 
-	// If no match is found, return null
 	return null;
 }

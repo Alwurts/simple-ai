@@ -6,10 +6,7 @@ export const maxDuration = 30;
 
 export async function POST(req: Request) {
 	const data = await req.json();
-	console.log("data", data);
 	const { prompt, currentCode }: { prompt: string; currentCode: string } = data;
-
-	console.log("prompt", prompt);
 
 	const deepSeekClient = createDeepSeek({
 		baseURL: process.env.AI_GATEWAY_DEEPSEEK_URL,

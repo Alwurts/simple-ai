@@ -39,7 +39,6 @@ export default function PlaygroundPage() {
 
 	const parseCode = (code: string) => {
 		const extractedJsx = extractJsxContent(code);
-		console.log("extracted", extractedJsx);
 		if (!extractedJsx) {
 			return "";
 		}

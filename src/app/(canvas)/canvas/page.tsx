@@ -1,9 +1,27 @@
 "use client";
 
-import { extractJsxContent } from "@/registry/lib/jsx-utils";
-import { JsxRenderer } from "@/registry/ui/jsx-renderer";
+import type * as React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import * as LucideIcons from "lucide-react";
 import Script from "next/script";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { JsxRenderer } from "@/registry/ui/jsx-renderer";
+import { extractJsxContent } from "@/registry/lib/jsx-utils";
 
 export default function Canvas() {
 	const [code, setCode] = useState("");
@@ -24,10 +42,48 @@ export default function Canvas() {
 			window.removeEventListener("message", handleMessageFromCanvasParent);
 	}, [handleMessageFromCanvasParent]);
 
+	const components = useMemo(() => {
+		const iconComponents = Object.keys(LucideIcons).reduce(
+			(acc, iconName) => {
+				if (iconName === "default") {
+					return acc;
+				}
+				//@ts-ignore
+				acc[iconName] = LucideIcons[iconName];
+				return acc;
+			},
+			{} as Record<string, React.ComponentType>,
+		);
+
+		return {
+			...iconComponents,
+			Button,
+			Input,
+			Label,
+			Tabs,
+			TabsContent,
+			TabsList,
+			TabsTrigger,
+			Card,
+			CardContent,
+			CardDescription,
+			CardFooter,
+			CardHeader,
+			CardTitle,
+			Switch,
+			Slider,
+			Badge,
+			Avatar,
+			AvatarImage,
+			AvatarFallback,
+		};
+	}, []);
+
 	return (
 		<>
 			<Script src="https://cdn.tailwindcss.com" />
-			<JsxRenderer jsx={code} />
+			{/* @ts-ignore */}
+			<JsxRenderer jsx={code} components={components} />
 		</>
 	);
 }
