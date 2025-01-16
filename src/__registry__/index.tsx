@@ -5,7 +5,21 @@ import * as React from "react"
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const Index: Record<string, any> = {
-	"chat-input": {
+	"jsx-renderer": {
+		name: "jsx-renderer",
+		description: "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/jsx-renderer.tsx",
+			type: "registry:ui",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/jsx-renderer.tsx")),
+		source: "",
+		meta: undefined,
+    },	"chat-input": {
 		name: "chat-input",
 		description: "",
 		type: "registry:ui",

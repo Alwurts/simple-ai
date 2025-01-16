@@ -18,7 +18,7 @@
   "files": [
     {
       "path": "blocks/chat-04/page.tsx",
-      "content": "\"use client\";\n\nimport { Versions } from \"./components/versions\";\nimport { EditorLayout } from \"./components/editor-layout\";\n\nexport default function Page() {\n\treturn (\n\t\t<div className=\"flex w-screen h-screen justify-start\">\n\t\t\t<Versions />\n\t\t\t<EditorLayout />\n\t\t</div>\n\t);\n}\n",
+      "content": "\"use client\";\n\nimport { Versions } from \"./components/versions\";\nimport { EditorLayout } from \"./components/editor-layout\";\nimport { useState } from \"react\";\n\nexport default function Page() {\n\tconst [chatOpen, setChatOpen] = useState(true);\n\n\treturn (\n\t\t<div className=\"flex w-screen h-screen justify-start\">\n\t\t\t<Versions onChatOpen={() => setChatOpen(true)} />\n\t\t\t<EditorLayout chatOpen={chatOpen} onChatOpenChange={setChatOpen} />\n\t\t</div>\n\t);\n}\n",
       "type": "registry:page",
       "target": "app/chat/page.tsx"
     }

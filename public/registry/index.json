@@ -1,5 +1,19 @@
 [
   {
+    "name": "jsx-renderer",
+    "type": "registry:ui",
+    "description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
+    "dependencies": [
+      "react-jsx-parser"
+    ],
+    "files": [
+      {
+        "path": "ui/jsx-renderer.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
     "name": "chat-input",
     "type": "registry:ui",
     "registryDependencies": [

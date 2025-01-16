@@ -1,0 +1,16 @@
+{
+  "name": "jsx-renderer",
+  "type": "registry:ui",
+  "description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
+  "dependencies": [
+    "react-jsx-parser"
+  ],
+  "files": [
+    {
+      "path": "ui/jsx-renderer.tsx",
+      "content": "import * as React from \"react\";\nimport JsxParser from \"react-jsx-parser\";\nimport * as LucideIcons from \"lucide-react\";\nimport { Button } from \"@/components/ui/button\";\nimport { Input } from \"@/components/ui/input\";\nimport { Label } from \"@/components/ui/label\";\nimport { Tabs, TabsContent, TabsList, TabsTrigger } from \"@/components/ui/tabs\";\nimport {\n\tCard,\n\tCardContent,\n\tCardDescription,\n\tCardFooter,\n\tCardHeader,\n\tCardTitle,\n} from \"@/components/ui/card\";\nimport { Switch } from \"@/components/ui/switch\";\nimport { Slider } from \"@/components/ui/slider\";\nimport { Badge } from \"@/components/ui/badge\";\nimport { Avatar, AvatarImage, AvatarFallback } from \"@/components/ui/avatar\";\nimport { completeJsxTag } from \"@/registry/blocks/chat-04/lib/complete-jsx-string\";\n\ninterface JsxRendererProps extends React.HTMLAttributes<HTMLDivElement> {\n\tjsx: string;\n\tfixIncompleteJsx?: boolean;\n}\n\nconst JsxRenderer = React.forwardRef<HTMLDivElement, JsxRendererProps>(\n\t({ className, jsx, fixIncompleteJsx = true }, ref) => {\n\t\tconst processedJsx = React.useMemo(() => {\n\t\t\treturn fixIncompleteJsx ? completeJsxTag(jsx) : jsx;\n\t\t}, [jsx, fixIncompleteJsx]);\n\n\t\tconst iconComponents = Object.keys(LucideIcons).reduce((acc, iconName) => {\n\t\t\tif (iconName === \"default\") {\n\t\t\t\treturn acc;\n\t\t\t}\n\t\t\t//@ts-ignore\n\t\t\tacc[iconName] = LucideIcons[iconName];\n\t\t\treturn acc;\n\t\t}, {});\n\n\t\tconst components = {\n\t\t\t...iconComponents,\n\t\t\tButton,\n\t\t\tInput,\n\t\t\tLabel,\n\t\t\tTabs,\n\t\t\tTabsContent,\n\t\t\tTabsList,\n\t\t\tTabsTrigger,\n\t\t\tCard,\n\t\t\tCardContent,\n\t\t\tCardDescription,\n\t\t\tCardFooter,\n\t\t\tCardHeader,\n\t\t\tCardTitle,\n\t\t\tSwitch,\n\t\t\tSlider,\n\t\t\tBadge,\n\t\t\tAvatar,\n\t\t\tAvatarImage,\n\t\t\tAvatarFallback,\n\t\t};\n\n\t\treturn (\n\t\t\t/* @ts-ignore */\n\t\t\t<JsxParser\n\t\t\t\tref={ref}\n\t\t\t\tclassName={className}\n\t\t\t\tjsx={processedJsx}\n\t\t\t\tcomponents={components}\n\t\t\t/>\n\t\t);\n\t},\n);\nJsxRenderer.displayName = \"JsxRenderer\";\n\nexport { JsxRenderer };\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

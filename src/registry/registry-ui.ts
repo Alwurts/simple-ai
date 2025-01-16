@@ -2,6 +2,14 @@ import type { Registry } from "./schema";
 
 export const ui: Registry = [
 	{
+		name: "jsx-renderer",
+		description:
+			"A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
+		type: "registry:ui",
+		dependencies: ["react-jsx-parser"],
+		files: [{ type: "registry:ui", path: "ui/jsx-renderer.tsx" }],
+	},
+	{
 		name: "chat-input",
 		type: "registry:ui",
 		registryDependencies: ["textarea"],
