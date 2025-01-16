@@ -9,7 +9,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer",
 		description: "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 		type: "registry:ui",
-		registryDependencies: ["button","input","label","tabs","card","switch","slider","badge","avatar","https://simple-ai.alwurts.com/registry/jsx-utils.json"],
+		registryDependencies: ["https://simple-ai.alwurts.com/registry/jsx-utils.json"],
 		files: [{
 			path: "src/registry/ui/jsx-renderer.tsx",
 			type: "registry:ui",
@@ -427,7 +427,7 @@ export const Index: Record<string, any> = {
 		name: "chat-04",
 		description: "A chat with generative UI capabilities.",
 		type: "registry:block",
-		registryDependencies: ["resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","https://simple-ai.alwurts.com/registry/jsx-utils.json","https://simple-ai.alwurts.com/registry/chat-input.json","https://simple-ai.alwurts.com/registry/chat-message-area.json","https://simple-ai.alwurts.com/registry/chat-message.json","https://simple-ai.alwurts.com/registry/jsx-renderer.json"],
+		registryDependencies: ["avatar","input","label","tabs","resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","https://simple-ai.alwurts.com/registry/chat-input.json","https://simple-ai.alwurts.com/registry/chat-message-area.json","https://simple-ai.alwurts.com/registry/chat-message.json","https://simple-ai.alwurts.com/registry/jsx-renderer.json","https://simple-ai.alwurts.com/registry/jsx-utils.json"],
 		files: [{
 			path: "src/registry/blocks/chat-04/page.tsx",
 			type: "registry:page",
@@ -441,7 +441,7 @@ export const Index: Record<string, any> = {
 			type: "registry:page",
 			target: "app/api/ai/generate/route.ts"
 		},{
-			path: "src/registry/blocks/chat-04/hooks/store.ts",
+			path: "src/registry/blocks/chat-04/hooks/generation-store.ts",
 			type: "registry:hook",
 			target: ""
 		},{
@@ -462,6 +462,10 @@ export const Index: Record<string, any> = {
 			target: ""
 		},{
 			path: "src/registry/blocks/chat-04/components/chat-dialog.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/blocks/chat-04/components/copy-button.tsx",
 			type: "registry:component",
 			target: ""
 		}],

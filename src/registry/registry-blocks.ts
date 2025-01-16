@@ -115,6 +115,10 @@ export const blocks: Registry = [
 			"zustand",
 		],
 		registryDependencies: [
+			"avatar",
+			"input",
+			"label",
+			"tabs",
 			"resizable",
 			"breadcrumb",
 			"button",
@@ -124,11 +128,11 @@ export const blocks: Registry = [
 			"card",
 			"badge",
 			"dialog",
-			"https://simple-ai.alwurts.com/registry/jsx-utils.json",
 			"https://simple-ai.alwurts.com/registry/chat-input.json",
 			"https://simple-ai.alwurts.com/registry/chat-message-area.json",
 			"https://simple-ai.alwurts.com/registry/chat-message.json",
 			"https://simple-ai.alwurts.com/registry/jsx-renderer.json",
+			"https://simple-ai.alwurts.com/registry/jsx-utils.json",
 		],
 		files: [
 			{
@@ -147,7 +151,7 @@ export const blocks: Registry = [
 				type: "registry:page",
 			},
 			{
-				path: "blocks/chat-04/hooks/store.ts",
+				path: "blocks/chat-04/hooks/generation-store.ts",
 				type: "registry:hook",
 			},
 			{
@@ -168,6 +172,10 @@ export const blocks: Registry = [
 			},
 			{
 				path: "blocks/chat-04/components/chat-dialog.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/copy-button.tsx",
 				type: "registry:component",
 			},
 		],

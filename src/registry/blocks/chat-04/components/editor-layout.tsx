@@ -7,7 +7,8 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { ChatDialog } from "@/registry/blocks/chat-04/components/chat-dialog";
 import { CodeEditor } from "@/registry/blocks/chat-04/components/code-editor";
 import { Preview } from "@/registry/blocks/chat-04/components/preview";
-import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/store";
+import { CopyButton } from "@/registry/blocks/chat-04/components/copy-button";
+import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/generation-store";
 import {
 	BotMessageSquare,
 	Code,
@@ -35,13 +36,13 @@ export function EditorLayout({
 	const currentVersion = useGenerationStore((state) => state.currentVersion);
 	const currentVersionData = versions[currentVersion];
 	const isGenerating = currentVersionData?.status === "generating";
+	const currentCode = versions[currentVersion]?.code ?? "";
 
 	return (
 		<div className="flex-1 relative py-3 pl-4 pr-1 flex flex-col gap-2 border-l border-border">
 			<div className="h-10 flex items-center justify-start gap-4">
 				<Button
 					size="icon"
-					variant="outline"
 					onClick={() => onChatOpenChange(true)}
 					disabled={isGenerating}
 				>
@@ -82,6 +83,7 @@ export function EditorLayout({
 						</ToggleGroupItem>
 					</ToggleGroup>
 				)}
+				{view === "code" && <CopyButton value={currentCode} className="h-8" />}
 			</div>
 			<Preview
 				className={view === "preview" ? "block" : "hidden"}

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { javascript } from "@codemirror/lang-javascript";
 import CodeMirror from "@uiw/react-codemirror";
-import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/store";
+import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/generation-store";
 
 interface CodeEditorProps {
 	className?: string;
@@ -18,16 +18,14 @@ export function CodeEditor({ className }: CodeEditorProps) {
 
 	return (
 		<div className={cn("flex-1 relative overflow-hidden", className)}>
-			<div className="absolute inset-0">
-				<CodeMirror
-					value={currentCode}
-					height="100%"
-					extensions={[javascript({ jsx: true })]}
-					onChange={updateCurrentCode}
-					theme="dark"
-					className="h-full border rounded-md"
-				/>
-			</div>
+			<CodeMirror
+				value={currentCode}
+				height="100%"
+				extensions={[javascript({ jsx: true })]}
+				onChange={updateCurrentCode}
+				theme="dark"
+				className="h-full border rounded-md"
+			/>
 		</div>
 	);
 }

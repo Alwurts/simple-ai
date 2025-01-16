@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/store";
+import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/generation-store";
 import { BotMessageSquare } from "lucide-react";
 import type { ComponentPropsWithoutRef } from "react";
 
@@ -63,7 +63,6 @@ export function Versions({
 			</div>
 			<div className="p-2 border-t">
 				<Button
-					variant="outline"
 					size="sm"
 					className="w-full"
 					onClick={onChatOpen}
