@@ -1,6 +1,5 @@
 "use client";
 
-import type * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,11 +16,12 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { extractJsxContent } from "@/registry/lib/jsx-utils";
+import { JsxRenderer } from "@/registry/ui/jsx-renderer";
 import * as LucideIcons from "lucide-react";
 import Script from "next/script";
+import type * as React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { JsxRenderer } from "@/registry/ui/jsx-renderer";
-import { extractJsxContent } from "@/registry/lib/jsx-utils";
 
 export default function Canvas() {
 	const [code, setCode] = useState("");
