@@ -423,55 +423,55 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/blocks/chat-03/page.tsx")),
 		source: "src/__registry__/blocks/chat-03/page.tsx",
 		meta: undefined,
-    },	"chat-04": {
-		name: "chat-04",
+    },	"generative-ui-01": {
+		name: "generative-ui-01",
 		description: "A chat with generative UI capabilities.",
 		type: "registry:block",
 		registryDependencies: ["avatar","input","label","tabs","resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","https://simple-ai.alwurts.com/registry/chat-input.json","https://simple-ai.alwurts.com/registry/chat-message-area.json","https://simple-ai.alwurts.com/registry/chat-message.json","https://simple-ai.alwurts.com/registry/jsx-renderer.json","https://simple-ai.alwurts.com/registry/jsx-utils.json"],
 		files: [{
-			path: "src/registry/blocks/chat-04/page.tsx",
+			path: "src/registry/blocks/generative-ui-01/page.tsx",
 			type: "registry:page",
 			target: "app/generative-ui/page.tsx"
 		},{
-			path: "src/registry/blocks/chat-04/canvas/page.tsx",
+			path: "src/registry/blocks/generative-ui-01/canvas/page.tsx",
 			type: "registry:page",
 			target: "app/canvas/page.tsx"
 		},{
-			path: "src/registry/blocks/chat-04/route.ts",
+			path: "src/registry/blocks/generative-ui-01/route.ts",
 			type: "registry:page",
 			target: "app/api/ai/generate/route.ts"
 		},{
-			path: "src/registry/blocks/chat-04/hooks/generation-store.ts",
+			path: "src/registry/blocks/generative-ui-01/hooks/generation-store.ts",
 			type: "registry:hook",
 			target: ""
 		},{
-			path: "src/registry/blocks/chat-04/components/versions.tsx",
+			path: "src/registry/blocks/generative-ui-01/components/versions.tsx",
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/chat-04/components/editor-layout.tsx",
+			path: "src/registry/blocks/generative-ui-01/components/editor-layout.tsx",
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/chat-04/components/code-editor.tsx",
+			path: "src/registry/blocks/generative-ui-01/components/code-editor.tsx",
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/chat-04/components/preview.tsx",
+			path: "src/registry/blocks/generative-ui-01/components/preview.tsx",
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/chat-04/components/chat-dialog.tsx",
+			path: "src/registry/blocks/generative-ui-01/components/chat-dialog.tsx",
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/chat-04/components/copy-button.tsx",
+			path: "src/registry/blocks/generative-ui-01/components/copy-button.tsx",
 			type: "registry:component",
 			target: ""
 		}],
 		categories: ["chat"],
-		component: React.lazy(() => import("@/registry/blocks/chat-04/page.tsx")),
-		source: "src/__registry__/blocks/chat-04/page.tsx",
+		component: React.lazy(() => import("@/registry/blocks/generative-ui-01/page.tsx")),
+		source: "src/__registry__/blocks/generative-ui-01/page.tsx",
 		meta: undefined,
     },	"jsx-utils": {
 		name: "jsx-utils",

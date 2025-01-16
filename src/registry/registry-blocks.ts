@@ -104,7 +104,7 @@ export const blocks: Registry = [
 		],
 	},
 	{
-		name: "chat-04",
+		name: "generative-ui-01",
 		description: "A chat with generative UI capabilities.",
 		type: "registry:block",
 		dependencies: [
@@ -136,46 +136,46 @@ export const blocks: Registry = [
 		],
 		files: [
 			{
-				path: "blocks/chat-04/page.tsx",
+				path: "blocks/generative-ui-01/page.tsx",
 				target: "app/generative-ui/page.tsx",
 				type: "registry:page",
 			},
 			{
-				path: "blocks/chat-04/canvas/page.tsx",
+				path: "blocks/generative-ui-01/canvas/page.tsx",
 				target: "app/canvas/page.tsx",
 				type: "registry:page",
 			},
 			{
-				path: "blocks/chat-04/route.ts",
+				path: "blocks/generative-ui-01/route.ts",
 				target: "app/api/ai/generate/route.ts",
 				type: "registry:page",
 			},
 			{
-				path: "blocks/chat-04/hooks/generation-store.ts",
+				path: "blocks/generative-ui-01/hooks/generation-store.ts",
 				type: "registry:hook",
 			},
 			{
-				path: "blocks/chat-04/components/versions.tsx",
+				path: "blocks/generative-ui-01/components/versions.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/chat-04/components/editor-layout.tsx",
+				path: "blocks/generative-ui-01/components/editor-layout.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/chat-04/components/code-editor.tsx",
+				path: "blocks/generative-ui-01/components/code-editor.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/chat-04/components/preview.tsx",
+				path: "blocks/generative-ui-01/components/preview.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/chat-04/components/chat-dialog.tsx",
+				path: "blocks/generative-ui-01/components/chat-dialog.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/chat-04/components/copy-button.tsx",
+				path: "blocks/generative-ui-01/components/copy-button.tsx",
 				type: "registry:component",
 			},
 		],

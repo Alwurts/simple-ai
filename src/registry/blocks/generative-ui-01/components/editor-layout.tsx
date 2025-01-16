@@ -4,11 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { ChatDialog } from "@/registry/blocks/chat-04/components/chat-dialog";
-import { CodeEditor } from "@/registry/blocks/chat-04/components/code-editor";
-import { Preview } from "@/registry/blocks/chat-04/components/preview";
-import { CopyButton } from "@/registry/blocks/chat-04/components/copy-button";
-import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/generation-store";
+import { ChatDialog } from "@/registry/blocks/generative-ui-01/components/chat-dialog";
+import { CodeEditor } from "@/registry/blocks/generative-ui-01/components/code-editor";
+import { Preview } from "@/registry/blocks/generative-ui-01/components/preview";
+import { CopyButton } from "@/registry/blocks/generative-ui-01/components/copy-button";
+import { useGenerationStore } from "@/registry/blocks/generative-ui-01/hooks/generation-store";
 import {
 	BotMessageSquare,
 	Code,
