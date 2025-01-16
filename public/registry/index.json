@@ -80,15 +80,5 @@
         "type": "registry:ui"
       }
     ]
-  },
-  {
-    "name": "submit-button",
-    "type": "registry:ui",
-    "files": [
-      {
-        "path": "ui/submit-button.tsx",
-        "type": "registry:ui"
-      }
-    ]
   }
 ]
