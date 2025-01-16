@@ -1,0 +1,13 @@
+{
+  "name": "jsx-utils",
+  "type": "registry:lib",
+  "description": "A function that completes a JSX string.",
+  "files": [
+    {
+      "path": "lib/jsx-utils.ts",
+      "content": "export function matchJsxTag(code: string) {\n\tif (code.trim() === \"\") {\n\t\treturn null;\n\t}\n\n\t// Matches JSX tags in three forms:\n\t// 1. <tag attr=\"value\">  2. <tag />  3. </tag>\n\tconst tagRegex = /<\\/?([a-zA-Z][a-zA-Z0-9]*)\\s*([^>]*?)(\\/)?>/;\n\tconst match = code.match(tagRegex);\n\n\tif (!match || typeof match.index === \"undefined\") {\n\t\treturn null;\n\t}\n\n\tconst [fullMatch, tagName, attributes, selfClosing] = match;\n\tconst type = selfClosing\n\t\t? \"self-closing\"\n\t\t: fullMatch.startsWith(\"</\")\n\t\t\t? \"closing\"\n\t\t\t: \"opening\";\n\n\treturn {\n\t\ttag: fullMatch,\n\t\ttagName,\n\t\ttype,\n\t\tattributes: attributes.trim(),\n\t\tstartIndex: match.index,\n\t\tendIndex: match.index + fullMatch.length,\n\t};\n}\n\nexport function completeJsxTag(code: string) {\n\tconst stack: string[] = [];\n\tlet result = \"\";\n\tlet currentPosition = 0;\n\n\t// Process all JSX tags in the input code\n\twhile (currentPosition < code.length) {\n\t\tconst match = matchJsxTag(code.slice(currentPosition));\n\t\tif (!match) {\n\t\t\tbreak;\n\t\t}\n\n\t\tconst { tagName, type, endIndex } = match;\n\n\t\tif (type === \"opening\") {\n\t\t\tstack.push(tagName);\n\t\t} else if (type === \"closing\") {\n\t\t\tstack.pop();\n\t\t}\n\n\t\tresult += code.slice(currentPosition, currentPosition + endIndex);\n\t\tcurrentPosition += endIndex;\n\t}\n\n\t// Add any remaining closing tags\n\treturn (\n\t\tresult +\n\t\tstack\n\t\t\t.reverse()\n\t\t\t.map((tag) => `</${tag}>`)\n\t\t\t.join(\"\")\n\t);\n}\n\nexport function extractJsxContent(code: string): string | null {\n\t// Regular expression to match the content inside the return statement\n\tconst returnContentRegex = /return\\s*\\(\\s*([\\s\\S]*?)(?=\\s*\\);|\\s*$)/;\n\n\t// Execute the regex on the input string\n\tconst match = code.match(returnContentRegex);\n\n\t// If a match is found, return the content inside the return statement\n\tif (match?.[1]) {\n\t\treturn match[1].trim();\n\t}\n\n\t// If no match is found, return null\n\treturn null;\n}\n",
+      "type": "registry:lib",
+      "target": ""
+    }
+  ]
+}

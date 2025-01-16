@@ -1,22 +1,22 @@
 "use client";
 
-import type { ImperativePanelHandle } from "react-resizable-panels";
-import { cn } from "@/lib/utils";
-import {
-	useCallback,
-	useEffect,
-	useRef,
-	type RefObject,
-	type Dispatch,
-	type SetStateAction,
-} from "react";
-import { useGenerationStore } from "../store";
 import {
 	ResizableHandle,
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { cn } from "@/lib/utils";
+import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/store";
 import { LoaderCircle } from "lucide-react";
+import {
+	type Dispatch,
+	type RefObject,
+	type SetStateAction,
+	useCallback,
+	useEffect,
+	useRef,
+} from "react";
+import type { ImperativePanelHandle } from "react-resizable-panels";
 
 interface CanvasMessage {
 	type: string;

@@ -4,12 +4,12 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/store";
 import {
 	ChatInput,
 	ChatInputSubmit,
 	ChatInputTextArea,
 } from "@/registry/ui/chat-input";
-import { useGenerationStore } from "../store";
 import { useCompletion } from "ai/react";
 import { useEffect } from "react";
 

@@ -1,10 +1,10 @@
-import { cn } from "@/lib/utils";
-import { useGenerationStore } from "../store";
-import type { ComponentPropsWithoutRef } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/store";
 import { BotMessageSquare } from "lucide-react";
+import type { ComponentPropsWithoutRef } from "react";
 
 export function Versions({
 	className,

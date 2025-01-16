@@ -1,30 +1,33 @@
 "use client";
 
-import type { ImperativePanelHandle } from "react-resizable-panels";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { ChatDialog } from "@/registry/blocks/chat-04/components/chat-dialog";
+import { CodeEditor } from "@/registry/blocks/chat-04/components/code-editor";
+import { Preview } from "@/registry/blocks/chat-04/components/preview";
+import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/store";
 import {
+	BotMessageSquare,
+	Code,
+	EyeIcon,
 	Monitor,
 	Smartphone,
 	Tablet,
-	Code,
-	EyeIcon,
-	BotMessageSquare,
 } from "lucide-react";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useRef, useState } from "react";
-import { Switch } from "@/components/ui/switch";
-import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
-import { Preview } from "./preview";
-import { CodeEditor } from "./code-editor";
-import { useGenerationStore } from "../store";
-import { ChatDialog } from "./chat-dialog";
+import type { ImperativePanelHandle } from "react-resizable-panels";
 
 interface EditorLayoutProps {
 	chatOpen: boolean;
 	onChatOpenChange: (open: boolean) => void;
 }
 
-export function EditorLayout({ chatOpen, onChatOpenChange }: EditorLayoutProps) {
+export function EditorLayout({
+	chatOpen,
+	onChatOpenChange,
+}: EditorLayoutProps) {
 	const viewerPanelRef = useRef<ImperativePanelHandle>(null);
 	const [viewerSize, setViewerSize] = useState("100");
 	const { view, setView } = useGenerationStore();
@@ -36,9 +39,9 @@ export function EditorLayout({ chatOpen, onChatOpenChange }: EditorLayoutProps) 
 	return (
 		<div className="flex-1 relative py-3 pl-4 pr-1 flex flex-col gap-2 border-l border-border">
 			<div className="h-10 flex items-center justify-start gap-4">
-				<Button 
-					size="icon" 
-					variant="outline" 
+				<Button
+					size="icon"
+					variant="outline"
 					onClick={() => onChatOpenChange(true)}
 					disabled={isGenerating}
 				>

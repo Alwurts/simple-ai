@@ -1,7 +1,7 @@
-import CodeMirror from "@uiw/react-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
 import { cn } from "@/lib/utils";
-import { useGenerationStore } from "../store";
+import { javascript } from "@codemirror/lang-javascript";
+import CodeMirror from "@uiw/react-codemirror";
+import { useGenerationStore } from "@/registry/blocks/chat-04/hooks/store";
 
 interface CodeEditorProps {
 	className?: string;

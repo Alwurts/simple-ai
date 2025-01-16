@@ -2,10 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Slider } from "@/components/ui/slider";
-import {
-	completeJsxTag,
-	extractJsxContent,
-} from "@/registry/blocks/chat-04/lib/complete-jsx-string";
+import { completeJsxTag, extractJsxContent } from "@/registry/lib/jsx-utils";
 import { useState } from "react";
 
 const SAMPLE_CODE = `function LandingPage() {

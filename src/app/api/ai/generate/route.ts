@@ -1,5 +1,5 @@
 import { createDeepSeek } from "@ai-sdk/deepseek";
-import { streamText, smoothStream } from "ai";
+import { smoothStream, streamText } from "ai";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;

@@ -9,7 +9,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer",
 		description: "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 		type: "registry:ui",
-		registryDependencies: undefined,
+		registryDependencies: ["button","input","label","tabs","card","switch","slider","badge","avatar","https://simple-ai.alwurts.com/registry/jsx-utils.json"],
 		files: [{
 			path: "src/registry/ui/jsx-renderer.tsx",
 			type: "registry:ui",
@@ -427,15 +427,61 @@ export const Index: Record<string, any> = {
 		name: "chat-04",
 		description: "A chat with generative UI capabilities.",
 		type: "registry:block",
-		registryDependencies: ["resizable","breadcrumb","button","https://simple-ai.alwurts.com/registry/chat-input.json","https://simple-ai.alwurts.com/registry/chat-message-area.json","https://simple-ai.alwurts.com/registry/chat-message.json"],
+		registryDependencies: ["resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","https://simple-ai.alwurts.com/registry/jsx-utils.json","https://simple-ai.alwurts.com/registry/chat-input.json","https://simple-ai.alwurts.com/registry/chat-message-area.json","https://simple-ai.alwurts.com/registry/chat-message.json","https://simple-ai.alwurts.com/registry/jsx-renderer.json"],
 		files: [{
 			path: "src/registry/blocks/chat-04/page.tsx",
 			type: "registry:page",
-			target: "app/chat/page.tsx"
+			target: "app/generative-ui/page.tsx"
+		},{
+			path: "src/registry/blocks/chat-04/canvas/page.tsx",
+			type: "registry:page",
+			target: "app/canvas/page.tsx"
+		},{
+			path: "src/registry/blocks/chat-04/route.ts",
+			type: "registry:page",
+			target: "app/api/ai/generate/route.ts"
+		},{
+			path: "src/registry/blocks/chat-04/hooks/store.ts",
+			type: "registry:hook",
+			target: ""
+		},{
+			path: "src/registry/blocks/chat-04/components/versions.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/blocks/chat-04/components/editor-layout.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/blocks/chat-04/components/code-editor.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/blocks/chat-04/components/preview.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/blocks/chat-04/components/chat-dialog.tsx",
+			type: "registry:component",
+			target: ""
 		}],
-		categories: undefined,
+		categories: ["chat"],
 		component: React.lazy(() => import("@/registry/blocks/chat-04/page.tsx")),
 		source: "src/__registry__/blocks/chat-04/page.tsx",
+		meta: undefined,
+    },	"jsx-utils": {
+		name: "jsx-utils",
+		description: "A function that completes a JSX string.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/lib/jsx-utils.ts",
+			type: "registry:lib",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/lib/jsx-utils.ts")),
+		source: "",
 		meta: undefined,
     },
 }

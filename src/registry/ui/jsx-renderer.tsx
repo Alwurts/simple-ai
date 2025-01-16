@@ -1,10 +1,6 @@
-import * as React from "react";
-import JsxParser from "react-jsx-parser";
-import * as LucideIcons from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
 	Card,
 	CardContent,
@@ -13,11 +9,15 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { completeJsxTag } from "@/registry/blocks/chat-04/lib/complete-jsx-string";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { completeJsxTag } from "@/registry/lib/jsx-utils";
+import * as LucideIcons from "lucide-react";
+import * as React from "react";
+import JsxParser from "react-jsx-parser";
 
 interface JsxRendererProps extends React.HTMLAttributes<HTMLDivElement> {
 	jsx: string;

@@ -107,21 +107,70 @@ export const blocks: Registry = [
 		name: "chat-04",
 		description: "A chat with generative UI capabilities.",
 		type: "registry:block",
-		dependencies: ["ai", "@ai-sdk/openai", "@uiw/react-codemirror"],
+		dependencies: [
+			"ai",
+			"@ai-sdk/openai",
+			"@uiw/react-codemirror",
+			"@codemirror/lang-javascript",
+			"zustand",
+		],
 		registryDependencies: [
 			"resizable",
 			"breadcrumb",
 			"button",
+			"toggle-group",
+			"switch",
+			"separator",
+			"card",
+			"badge",
+			"dialog",
+			"https://simple-ai.alwurts.com/registry/jsx-utils.json",
 			"https://simple-ai.alwurts.com/registry/chat-input.json",
 			"https://simple-ai.alwurts.com/registry/chat-message-area.json",
 			"https://simple-ai.alwurts.com/registry/chat-message.json",
+			"https://simple-ai.alwurts.com/registry/jsx-renderer.json",
 		],
 		files: [
 			{
 				path: "blocks/chat-04/page.tsx",
-				target: "app/chat/page.tsx",
+				target: "app/generative-ui/page.tsx",
 				type: "registry:page",
 			},
+			{
+				path: "blocks/chat-04/canvas/page.tsx",
+				target: "app/canvas/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/chat-04/route.ts",
+				target: "app/api/ai/generate/route.ts",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/chat-04/hooks/store.ts",
+				type: "registry:hook",
+			},
+			{
+				path: "blocks/chat-04/components/versions.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/editor-layout.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/code-editor.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/preview.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/chat-dialog.tsx",
+				type: "registry:component",
+			},
 		],
+		categories: ["chat"],
 	},
 ];

@@ -6,6 +6,18 @@
     "dependencies": [
       "react-jsx-parser"
     ],
+    "registryDependencies": [
+      "button",
+      "input",
+      "label",
+      "tabs",
+      "card",
+      "switch",
+      "slider",
+      "badge",
+      "avatar",
+      "https://simple-ai.alwurts.com/registry/jsx-utils.json"
+    ],
     "files": [
       {
         "path": "ui/jsx-renderer.tsx",
