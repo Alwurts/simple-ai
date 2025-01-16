@@ -128,6 +128,7 @@ export const blocks: Registry = [
 			"card",
 			"badge",
 			"dialog",
+			"slider",
 			"https://simple-ai.alwurts.com/registry/chat-input.json",
 			"https://simple-ai.alwurts.com/registry/chat-message-area.json",
 			"https://simple-ai.alwurts.com/registry/chat-message.json",
@@ -160,6 +161,10 @@ export const blocks: Registry = [
 			},
 			{
 				path: "blocks/generative-ui-01/components/editor-layout.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/generative-ui-01/components/editor-toolbar.tsx",
 				type: "registry:component",
 			},
 			{

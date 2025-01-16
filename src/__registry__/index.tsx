@@ -413,7 +413,7 @@ export const Index: Record<string, any> = {
 		name: "generative-ui-01",
 		description: "A chat with generative UI capabilities.",
 		type: "registry:block",
-		registryDependencies: ["avatar","input","label","tabs","resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","https://simple-ai.alwurts.com/registry/chat-input.json","https://simple-ai.alwurts.com/registry/chat-message-area.json","https://simple-ai.alwurts.com/registry/chat-message.json","https://simple-ai.alwurts.com/registry/jsx-renderer.json","https://simple-ai.alwurts.com/registry/jsx-utils.json"],
+		registryDependencies: ["avatar","input","label","tabs","resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","slider","https://simple-ai.alwurts.com/registry/chat-input.json","https://simple-ai.alwurts.com/registry/chat-message-area.json","https://simple-ai.alwurts.com/registry/chat-message.json","https://simple-ai.alwurts.com/registry/jsx-renderer.json","https://simple-ai.alwurts.com/registry/jsx-utils.json"],
 		files: [{
 			path: "src/registry/blocks/generative-ui-01/page.tsx",
 			type: "registry:page",
@@ -436,6 +436,10 @@ export const Index: Record<string, any> = {
 			target: ""
 		},{
 			path: "src/registry/blocks/generative-ui-01/components/editor-layout.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/blocks/generative-ui-01/components/editor-toolbar.tsx",
 			type: "registry:component",
 			target: ""
 		},{

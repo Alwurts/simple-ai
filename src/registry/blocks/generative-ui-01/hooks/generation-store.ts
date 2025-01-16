@@ -13,17 +13,20 @@ interface GenerationStore {
 	versions: Version[];
 	currentVersion: number;
 	view: ViewMode;
+	chatOpen: boolean;
 	addVersion: (code: string, prompt: string) => void;
 	setCurrentVersion: (versionNumber: number) => void;
 	updateCurrentCode: (code: string) => void;
 	updateStatus: (status: Version["status"]) => void;
 	setView: (view: ViewMode) => void;
+	setChatOpen: (open: boolean) => void;
 }
 
 export const useGenerationStore = create<GenerationStore>((set) => ({
 	versions: [],
 	currentVersion: -1,
 	view: "preview",
+	chatOpen: true,
 	addVersion: (code, prompt) =>
 		set((state) => {
 			const newVersion: Version = {
@@ -71,4 +74,5 @@ export const useGenerationStore = create<GenerationStore>((set) => ({
 			};
 		}),
 	setView: (view) => set({ view }),
+	setChatOpen: (open) => set({ chatOpen: open }),
 }));

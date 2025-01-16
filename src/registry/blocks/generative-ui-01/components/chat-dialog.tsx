@@ -13,12 +13,7 @@ import {
 import { useCompletion } from "ai/react";
 import { useEffect } from "react";
 
-interface ChatDialogProps {
-	open: boolean;
-	onOpenChange: (open: boolean) => void;
-}
-
-export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
+export function ChatDialog() {
 	const versions = useGenerationStore((state) => state.versions);
 	const currentVersion = useGenerationStore((state) => state.currentVersion);
 	const setView = useGenerationStore((state) => state.setView);
@@ -27,6 +22,8 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 	);
 	const updateStatus = useGenerationStore((state) => state.updateStatus);
 	const addVersion = useGenerationStore((state) => state.addVersion);
+	const chatOpen = useGenerationStore((state) => state.chatOpen);
+	const setChatOpen = useGenerationStore((state) => state.setChatOpen);
 
 	const {
 		completion,
@@ -42,7 +39,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 			setView("preview");
 			updateCurrentCode(completion);
 			updateStatus("complete");
-			onOpenChange(false);
+			setChatOpen(false);
 		},
 		body: {
 			currentCode: versions[currentVersion]?.code ?? "",
@@ -53,7 +50,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 		addVersion("", input);
 		handleSubmit();
 		setInput("");
-		onOpenChange(false);
+		setChatOpen(false);
 	};
 
 	useEffect(() => {
@@ -63,7 +60,7 @@ export function ChatDialog({ open, onOpenChange }: ChatDialogProps) {
 	}, [completion, updateCurrentCode]);
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={chatOpen} onOpenChange={setChatOpen}>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Generate Code</DialogTitle>

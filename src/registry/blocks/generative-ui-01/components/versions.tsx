@@ -8,11 +8,11 @@ import type { ComponentPropsWithoutRef } from "react";
 
 export function Versions({
 	className,
-	onChatOpen,
 	...props
-}: ComponentPropsWithoutRef<"div"> & { onChatOpen?: () => void }) {
+}: ComponentPropsWithoutRef<"div">) {
 	const versions = useGenerationStore((state) => state.versions);
 	const currentVersion = useGenerationStore((state) => state.currentVersion);
+	const setChatOpen = useGenerationStore((state) => state.setChatOpen);
 	const currentVersionData = versions[currentVersion];
 	const isGenerating = currentVersionData?.status === "generating";
 
@@ -65,7 +65,7 @@ export function Versions({
 				<Button
 					size="sm"
 					className="w-full"
-					onClick={onChatOpen}
+					onClick={() => setChatOpen(true)}
 					disabled={isGenerating}
 				>
 					<BotMessageSquare className="h-4 w-4 mr-2" />

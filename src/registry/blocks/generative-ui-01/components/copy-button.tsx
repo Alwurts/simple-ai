@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
-import { toast } from "sonner";
 
 interface CopyButtonProps {
 	value: string;
@@ -16,7 +15,6 @@ export function CopyButton({ value, className }: CopyButtonProps) {
 	const handleCopy = async () => {
 		await navigator.clipboard.writeText(value);
 		setCopied(true);
-		toast("Code copied to clipboard");
 		setTimeout(() => setCopied(false), 2000);
 	};
 
