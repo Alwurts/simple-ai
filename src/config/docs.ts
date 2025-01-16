@@ -68,6 +68,11 @@ export const docsConfig: DocsConfig = {
 					href: "/docs/components/markdown-content",
 					items: [],
 				},
+				{
+					title: "JSX Renderer",
+					href: "/docs/components/jsx-renderer",
+					items: [],
+				},
 			],
 		},
 	],

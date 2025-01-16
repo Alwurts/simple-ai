@@ -164,4 +164,14 @@ export const examples: Registry = [
 			},
 		],
 	},
+	{
+		name: "jsx-renderer-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/jsx-renderer-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
 ];
