@@ -217,7 +217,7 @@ function BlockViewerToolbar() {
 							track({
 								name: "copy_block_code",
 								properties: {
-									name: item.name,
+									copy_block: item.name,
 								},
 							});
 						}}
@@ -425,8 +425,8 @@ function BlockCopyCodeButton() {
 				track({
 					name: "copy_block_code",
 					properties: {
-						name: item.name,
-						file: file.path,
+						block_copy: item.name,
+						file_copy: file.path,
 					},
 				});
 			}}

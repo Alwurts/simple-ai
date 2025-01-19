@@ -45,6 +45,7 @@ export function useTrackEvent() {
 	const plausible = usePlausible();
 
 	return (input: Event) => {
+		console.log("useTrackEvent", input);
 		const event = eventSchema.parse(input);
 
 		// Track with Google Analytics
@@ -59,6 +60,8 @@ export function useTrackEvent() {
 
 // For non-React contexts
 export function trackEvent(input: Event): void {
+	console.log("inputtrackEvent", input);
+
 	const event = eventSchema.parse(input);
 	// Only track with Google Analytics in non-React contexts
 	trackGoogleAnalytics(event);

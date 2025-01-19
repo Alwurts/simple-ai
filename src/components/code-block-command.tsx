@@ -3,11 +3,12 @@
 import { CheckIcon, ClipboardIcon } from "lucide-react";
 import * as React from "react";
 
-import { copyToClipboardWithMeta } from "@/components/copy-button";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useConfig } from "@/hooks/use-config";
 import type { NpmCommands } from "@/types/unist";
+import { copyToClipboardWithMeta } from "./copy-button";
+import { useTrackEvent } from "@/lib/events";
 
 export function CodeBlockCommand({
 	__npmCommand__,
@@ -17,6 +18,7 @@ export function CodeBlockCommand({
 }: React.ComponentProps<"pre"> & NpmCommands) {
 	const [config, setConfig] = useConfig();
 	const [hasCopied, setHasCopied] = React.useState(false);
+	const track = useTrackEvent();
 
 	React.useEffect(() => {
 		if (hasCopied) {
@@ -42,15 +44,27 @@ export function CodeBlockCommand({
 			return;
 		}
 
-		copyToClipboardWithMeta(command, {
-			name: "copy_npm_command",
-			properties: {
-				command,
-				pm: packageManager,
+		const parsedCommand =
+			command.lastIndexOf("/") > 0
+				? command
+						.slice(command.lastIndexOf("/") + 1)
+						.trim()
+						.replace(".json", "")
+				: command.trim();
+
+		copyToClipboardWithMeta(
+			command,
+			{
+				name: "copy_npm_command",
+				properties: {
+					copy_command: parsedCommand,
+					copy_command_package_manager: packageManager,
+				},
 			},
-		});
+			track,
+		);
 		setHasCopied(true);
-	}, [packageManager, tabs]);
+	}, [packageManager, tabs, track]);
 
 	return (
 		<div className="relative mt-6 max-h-[650px] overflow-x-auto rounded-xl bg-zinc-950 dark:bg-zinc-900">
