@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { usePlausible } from "next-plausible";
 
 declare global {
 	interface Window {
@@ -32,9 +33,33 @@ const eventSchema = z.object({
 
 export type Event = z.infer<typeof eventSchema>;
 
-export function trackEvent(input: Event): void {
-	const event = eventSchema.parse(input);
-	if (event && typeof window !== "undefined") {
+// Track with Google Analytics
+function trackGoogleAnalytics(event: Event) {
+	if (typeof window !== "undefined") {
 		window.gtag("event", event.name, event.properties);
 	}
+}
+
+// Custom hook for tracking events with both GA and Plausible
+export function useTrackEvent() {
+	const plausible = usePlausible();
+
+	return (input: Event) => {
+		const event = eventSchema.parse(input);
+
+		// Track with Google Analytics
+		trackGoogleAnalytics(event);
+
+		// Track with Plausible
+		plausible(event.name, {
+			props: event.properties,
+		});
+	};
+}
+
+// For non-React contexts
+export function trackEvent(input: Event): void {
+	const event = eventSchema.parse(input);
+	// Only track with Google Analytics in non-React contexts
+	trackGoogleAnalytics(event);
 }

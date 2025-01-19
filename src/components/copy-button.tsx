@@ -12,7 +12,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { type Event, trackEvent } from "@/lib/events";
+import { type Event, useTrackEvent } from "@/lib/events";
 import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 
@@ -22,10 +22,14 @@ interface CopyButtonProps extends ButtonProps {
 	event?: Event["name"];
 }
 
-export async function copyToClipboardWithMeta(value: string, event?: Event) {
+export async function copyToClipboardWithMeta(
+	value: string,
+	event?: Event,
+	track?: (event: Event) => void,
+) {
 	navigator.clipboard.writeText(value);
-	if (event) {
-		trackEvent(event);
+	if (event && track) {
+		track(event);
 	}
 }
 
@@ -38,6 +42,7 @@ export function CopyButton({
 	...props
 }: CopyButtonProps) {
 	const [hasCopied, setHasCopied] = React.useState(false);
+	const track = useTrackEvent();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
@@ -65,6 +70,7 @@ export function CopyButton({
 								},
 							}
 						: undefined,
+					track,
 				);
 				setHasCopied(true);
 			}}

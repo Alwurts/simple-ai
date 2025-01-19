@@ -43,7 +43,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
-import { trackEvent } from "@/lib/events";
+import { useTrackEvent } from "@/lib/events";
 import type {
 	FileTree,
 	createFileTreeForRegistryItemFiles,
@@ -126,6 +126,7 @@ function BlockViewerProvider({
 function BlockViewerToolbar() {
 	const { setView, item, resizablePanelRef } = useBlockViewer();
 	const { copyToClipboard, isCopied } = useCopyToClipboard();
+	const track = useTrackEvent();
 
 	return (
 		<div className="flex w-full items-center gap-2 md:pr-[14px]">
@@ -213,7 +214,7 @@ function BlockViewerToolbar() {
 							copyToClipboard(
 								`npx shadcn@latest add https://simple-ai.alwurts.com/registry/${item.name}.json`,
 							);
-							trackEvent({
+							track({
 								name: "copy_block_code",
 								properties: {
 									name: item.name,
@@ -405,6 +406,7 @@ function Tree({ item, index }: { item: FileTree; index: number }) {
 function BlockCopyCodeButton() {
 	const { activeFile, item } = useBlockViewer();
 	const { copyToClipboard, isCopied } = useCopyToClipboard();
+	const track = useTrackEvent();
 
 	const file = React.useMemo(() => {
 		return item.files?.find((file) => file.target === activeFile);
@@ -420,7 +422,7 @@ function BlockCopyCodeButton() {
 		<Button
 			onClick={() => {
 				copyToClipboard(content);
-				trackEvent({
+				track({
 					name: "copy_block_code",
 					properties: {
 						name: item.name,
