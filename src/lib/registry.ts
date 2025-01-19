@@ -87,6 +87,9 @@ async function getFileContent(file: z.infer<typeof registryItemFileSchema>) {
 	removeVariable(sourceFile, "containerClassName");
 	removeVariable(sourceFile, "description");
 
+	// Remove useTrackEvent import and usage
+	removeTrackingCode(sourceFile);
+
 	let code = sourceFile.getFullText();
 
 	// Some registry items uses default export.
@@ -234,4 +237,27 @@ export function createFileTreeForRegistryItemFiles(
 	}
 
 	return root;
+}
+
+function removeTrackingCode(sourceFile: SourceFile) {
+	// Remove the import
+	for (const importDecl of sourceFile.getImportDeclarations()) {
+		if (importDecl.getModuleSpecifierValue() === "@/lib/events") {
+			importDecl.remove();
+		}
+	}
+
+	let code = sourceFile.getFullText();
+
+	// Remove track variable declaration
+	code = code.replace(/const\s+track\s*=\s*useTrackEvent\(\);?\n?/g, "");
+
+	// Remove track function calls - handles multiline with any indentation
+	code = code.replace(
+		/\n(\t|\s)*track\(\{\n(\t|\s)*name:[\s\S]*?\}\s*\)\s*;/g,
+		"",
+	);
+
+	// Update source file with cleaned code
+	sourceFile.replaceWithText(code);
 }

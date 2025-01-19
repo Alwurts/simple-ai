@@ -229,6 +229,31 @@ async function buildStyles(registry: Registry) {
 					sourceFile.getVariableDeclaration("containerClassName")?.remove();
 					sourceFile.getVariableDeclaration("description")?.remove();
 
+					// Remove tracking code
+					// Remove the import
+					for (const importDecl of sourceFile.getImportDeclarations()) {
+						if (importDecl.getModuleSpecifierValue() === "@/lib/events") {
+							importDecl.remove();
+						}
+					}
+
+					let code = sourceFile.getFullText();
+
+					// Remove track variable declaration
+					code = code.replace(
+						/const\s+track\s*=\s*useTrackEvent\(\);?\n?/g,
+						"",
+					);
+
+					// Remove track function calls - handles multiline with any indentation
+					code = code.replace(
+						/\n(\t|\s)*track\(\{\n(\t|\s)*name:[\s\S]*?\}\s*\)\s*;/g,
+						"",
+					);
+
+					// Update source file with cleaned code
+					sourceFile.replaceWithText(code);
+
 					const target = file.target || "";
 
 					return {

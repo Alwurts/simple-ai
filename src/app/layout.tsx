@@ -6,8 +6,8 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import type { ReactNode } from "react";
 import PlausibleProvider from "next-plausible";
+import type { ReactNode } from "react";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",

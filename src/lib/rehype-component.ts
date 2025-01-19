@@ -153,5 +153,21 @@ function cleanCode(code: string) {
 	cleaned = cleaned.replaceAll("@/registry/hooks", "@/hooks");
 	cleaned = cleaned.replaceAll("@/registry/lib", "@/lib");
 	cleaned = cleaned.replaceAll("@/registry/examples", "@/examples");
+
+	// Remove track variable declaration
+	cleaned = cleaned.replace(/const\s+track\s*=\s*useTrackEvent\(\);?\n?/g, "");
+
+	// Remove track function calls - handles multiline with any indentation
+	cleaned = cleaned.replace(
+		/\n(\t|\s)*track\(\{\n(\t|\s)*name:[\s\S]*?\}\s*\)\s*;/g,
+		"",
+	);
+
+	// Remove useTrackEvent import
+	cleaned = cleaned.replace(
+		/import\s*{\s*useTrackEvent\s*}\s*from\s*["']@\/lib\/events["'];?\n?/g,
+		"",
+	);
+
 	return cleaned;
 }

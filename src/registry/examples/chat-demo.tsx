@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from "@/components/ui/card";
+import { useTrackEvent } from "@/lib/events";
 import {
 	ChatInput,
 	ChatInputSubmit,
@@ -31,7 +32,19 @@ export default function ChatDemo() {
 					role: "assistant",
 				},
 			],
+			onFinish: (message) => {
+				//console.log("onFinish", message, completion);
+				track({
+					name: "example_used",
+					properties: {
+						used_example: "chat-demo",
+						used_example_ai_completion: message.content,
+					},
+				});
+			},
 		});
+
+	const track = useTrackEvent();
 
 	const handleSubmitMessage = () => {
 		if (isLoading) {

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTrackEvent } from "@/lib/events";
 import {
 	ChatInput,
 	ChatInputSubmit,
@@ -37,7 +38,18 @@ export function Chat() {
 					role: "assistant",
 				},
 			],
+			onFinish: (message) => {
+				//console.log("onFinish", message, completion);
+				track({
+					name: "block_used",
+					properties: {
+						used_block: "chat-03",
+						used_block_ai_completion: message.content,
+					},
+				});
+			},
 		});
+	const track = useTrackEvent();
 
 	const handleSubmitMessage = () => {
 		if (isLoading) {

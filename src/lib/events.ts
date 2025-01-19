@@ -1,5 +1,5 @@
-import { z } from "zod";
 import { usePlausible } from "next-plausible";
+import { z } from "zod";
 
 declare global {
 	interface Window {
@@ -14,17 +14,9 @@ declare global {
 const eventSchema = z.object({
 	name: z.enum([
 		"copy_npm_command",
-		"copy_usage_import_code",
-		"copy_usage_code",
-		"copy_primitive_code",
-		"copy_theme_code",
 		"copy_block_code",
-		"copy_chunk_code",
-		"enable_lift_mode",
-		"copy_chart_code",
-		"copy_chart_theme",
-		"copy_chart_data",
-		"copy_color",
+		"block_used",
+		"example_used",
 	]),
 	properties: z
 		.record(z.union([z.string(), z.number(), z.boolean(), z.null()]))

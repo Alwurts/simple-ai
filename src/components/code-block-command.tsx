@@ -6,9 +6,9 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useConfig } from "@/hooks/use-config";
+import { useTrackEvent } from "@/lib/events";
 import type { NpmCommands } from "@/types/unist";
 import { copyToClipboardWithMeta } from "./copy-button";
-import { useTrackEvent } from "@/lib/events";
 
 export function CodeBlockCommand({
 	__npmCommand__,

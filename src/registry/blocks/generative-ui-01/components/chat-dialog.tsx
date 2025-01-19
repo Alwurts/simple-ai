@@ -4,6 +4,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
+import { useTrackEvent } from "@/lib/events";
 import { useGenerationStore } from "@/registry/blocks/generative-ui-01/hooks/generation-store";
 import {
 	ChatInput,
@@ -24,6 +25,7 @@ export function ChatDialog() {
 	const addVersion = useGenerationStore((state) => state.addVersion);
 	const chatOpen = useGenerationStore((state) => state.chatOpen);
 	const setChatOpen = useGenerationStore((state) => state.setChatOpen);
+	const track = useTrackEvent();
 
 	const {
 		completion,
@@ -35,11 +37,19 @@ export function ChatDialog() {
 		setInput,
 	} = useCompletion({
 		api: "/api/ai/generate",
-		onFinish: (_, completion) => {
+		onFinish: (prompt, completion) => {
 			setView("preview");
 			updateCurrentCode(completion);
 			updateStatus("complete");
 			setChatOpen(false);
+			track({
+				name: "block_used",
+				properties: {
+					used_block: "generative-ui-01",
+					used_block_ai_prompt: prompt,
+					used_block_ai_completion: completion,
+				},
+			});
 		},
 		body: {
 			currentCode: versions[currentVersion]?.code ?? "",
