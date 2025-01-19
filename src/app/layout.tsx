@@ -76,7 +76,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 			<body
 				className={cn("antialiased", geistSans.variable, geistMono.variable)}
 			>
-				<PlausibleProvider domain="simple-ai.dev" trackOutboundLinks selfHosted>
+				<PlausibleProvider domain="simple-ai.dev">
 					<ThemeProvider
 						attribute="class"
 						defaultTheme="system"
