@@ -7,6 +7,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import type { ReactNode } from "react";
+import PlausibleProvider from "next-plausible";
 
 const geistSans = localFont({
 	src: "./fonts/GeistVF.woff",
@@ -75,17 +76,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
 			<body
 				className={cn("antialiased", geistSans.variable, geistMono.variable)}
 			>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange
-					enableColorScheme
-				>
-					{children}
-					<Toaster />
-				</ThemeProvider>
-				<GoogleAnalytics gaId="G-SJSDG0H2W0" />
+				<PlausibleProvider domain="simple-ai.dev" trackOutboundLinks selfHosted>
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+						disableTransitionOnChange
+						enableColorScheme
+					>
+						{children}
+						<Toaster />
+					</ThemeProvider>
+
+					<GoogleAnalytics gaId="G-SJSDG0H2W0" />
+				</PlausibleProvider>
 			</body>
 		</html>
 	);
