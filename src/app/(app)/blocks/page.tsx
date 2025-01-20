@@ -1,6 +1,12 @@
 import { BlockDisplay } from "@/components/blocks/block-display";
 
-const FEATURED_BLOCKS = ["generative-ui-01", "chat-01", "chat-02", "chat-03"];
+const FEATURED_BLOCKS = [
+	"app-01",
+	"app-02",
+	"chat-01",
+	"chat-02",
+	"chat-03",
+];
 
 export default async function BlocksPage() {
 	return (

@@ -104,7 +104,7 @@ export const blocks: Registry = [
 		],
 	},
 	{
-		name: "generative-ui-01",
+		name: "app-01",
 		description: "A chat with generative UI capabilities.",
 		type: "registry:block",
 		dependencies: [
@@ -137,50 +137,50 @@ export const blocks: Registry = [
 		],
 		files: [
 			{
-				path: "blocks/generative-ui-01/page.tsx",
+				path: "blocks/app-01/page.tsx",
 				target: "app/generative-ui/page.tsx",
 				type: "registry:page",
 			},
 			{
-				path: "blocks/generative-ui-01/canvas/page.tsx",
+				path: "blocks/app-01/canvas/page.tsx",
 				target: "app/canvas/page.tsx",
 				type: "registry:page",
 			},
 			{
-				path: "blocks/generative-ui-01/route.ts",
+				path: "blocks/app-01/route.ts",
 				target: "app/api/ai/generate/route.ts",
 				type: "registry:page",
 			},
 			{
-				path: "blocks/generative-ui-01/hooks/generation-store.ts",
+				path: "blocks/app-01/hooks/generation-store.ts",
 				type: "registry:hook",
 			},
 			{
-				path: "blocks/generative-ui-01/components/versions.tsx",
+				path: "blocks/app-01/components/versions.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/generative-ui-01/components/editor-layout.tsx",
+				path: "blocks/app-01/components/editor-layout.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/generative-ui-01/components/editor-toolbar.tsx",
+				path: "blocks/app-01/components/editor-toolbar.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/generative-ui-01/components/code-editor.tsx",
+				path: "blocks/app-01/components/code-editor.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/generative-ui-01/components/preview.tsx",
+				path: "blocks/app-01/components/preview.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/generative-ui-01/components/chat-dialog.tsx",
+				path: "blocks/app-01/components/chat-dialog.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/generative-ui-01/components/copy-button.tsx",
+				path: "blocks/app-01/components/copy-button.tsx",
 				type: "registry:component",
 			},
 		],

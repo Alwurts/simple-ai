@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/resizable";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
-import { useGenerationStore } from "@/registry/blocks/generative-ui-01/hooks/generation-store";
+import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
 import { LoaderCircle, Monitor, Smartphone, Tablet } from "lucide-react";
 import { useCallback, useEffect, useRef } from "react";
 import type { ImperativePanelHandle } from "react-resizable-panels";

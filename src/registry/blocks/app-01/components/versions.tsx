@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { useGenerationStore } from "@/registry/blocks/generative-ui-01/hooks/generation-store";
+import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
 import { BotMessageSquare } from "lucide-react";
 import type { ComponentPropsWithoutRef } from "react";
 

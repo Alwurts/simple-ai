@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { useGenerationStore } from "@/registry/blocks/generative-ui-01/hooks/generation-store";
+import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
 import { javascript } from "@codemirror/lang-javascript";
 import CodeMirror from "@uiw/react-codemirror";
 

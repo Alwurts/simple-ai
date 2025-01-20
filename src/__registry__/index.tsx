@@ -423,65 +423,65 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/blocks/chat-03/page.tsx")),
 		source: "src/__registry__/blocks/chat-03/page.tsx",
 		meta: undefined,
-    },	"generative-ui-01": {
-		name: "generative-ui-01",
+    },	"app-01": {
+		name: "app-01",
 		description: "A chat with generative UI capabilities.",
 		type: "registry:block",
 		registryDependencies: ["avatar","input","label","tabs","resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","slider","https://simple-ai.dev/registry/chat-input.json","https://simple-ai.dev/registry/chat-message-area.json","https://simple-ai.dev/registry/chat-message.json","https://simple-ai.dev/registry/jsx-renderer.json","https://simple-ai.dev/registry/jsx-utils.json"],
 		files: [{
-			path: "src/registry/blocks/generative-ui-01/page.tsx",
+			path: "src/registry/blocks/app-01/page.tsx",
 			type: "registry:page",
 			target: "app/generative-ui/page.tsx"
 		},{
-			path: "src/registry/blocks/generative-ui-01/canvas/page.tsx",
+			path: "src/registry/blocks/app-01/canvas/page.tsx",
 			type: "registry:page",
 			target: "app/canvas/page.tsx"
 		},{
-			path: "src/registry/blocks/generative-ui-01/route.ts",
+			path: "src/registry/blocks/app-01/route.ts",
 			type: "registry:page",
 			target: "app/api/ai/generate/route.ts"
 		},{
-			path: "src/registry/blocks/generative-ui-01/hooks/generation-store.ts",
+			path: "src/registry/blocks/app-01/hooks/generation-store.ts",
 			type: "registry:hook",
 			target: ""
 		},{
-			path: "src/registry/blocks/generative-ui-01/components/versions.tsx",
+			path: "src/registry/blocks/app-01/components/versions.tsx",
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/generative-ui-01/components/editor-layout.tsx",
+			path: "src/registry/blocks/app-01/components/editor-layout.tsx",
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/generative-ui-01/components/editor-toolbar.tsx",
+			path: "src/registry/blocks/app-01/components/editor-toolbar.tsx",
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/generative-ui-01/components/code-editor.tsx",
+			path: "src/registry/blocks/app-01/components/code-editor.tsx",
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/generative-ui-01/components/preview.tsx",
+			path: "src/registry/blocks/app-01/components/preview.tsx",
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/generative-ui-01/components/chat-dialog.tsx",
+			path: "src/registry/blocks/app-01/components/chat-dialog.tsx",
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/generative-ui-01/components/copy-button.tsx",
+			path: "src/registry/blocks/app-01/components/copy-button.tsx",
 			type: "registry:component",
 			target: ""
 		}],
 		categories: ["chat"],
-		component: React.lazy(() => import("@/registry/blocks/generative-ui-01/page.tsx")),
-		source: "src/__registry__/blocks/generative-ui-01/page.tsx",
+		component: React.lazy(() => import("@/registry/blocks/app-01/page.tsx")),
+		source: "src/__registry__/blocks/app-01/page.tsx",
 		meta: undefined,
     },	"app-02": {
 		name: "app-02",
-		description: "A persona generator app.",
+		description: "A persona generator app with structured outputs.",
 		type: "registry:block",
-		registryDependencies: undefined,
+		registryDependencies: ["dialog","button","input","textarea","label","scroll-area","form","skeleton","card","avatar"],
 		files: [{
 			path: "src/registry/blocks/app-02/page.tsx",
 			type: "registry:page",
@@ -498,6 +498,10 @@ export const Index: Record<string, any> = {
 			path: "src/registry/blocks/app-02/types/persona.ts",
 			type: "registry:lib",
 			target: "app/types/persona.ts"
+		},{
+			path: "src/registry/blocks/app-02/lib/example-businesses.ts",
+			type: "registry:lib",
+			target: ""
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/blocks/app-02/page.tsx")),

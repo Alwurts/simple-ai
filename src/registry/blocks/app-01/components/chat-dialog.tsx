@@ -5,7 +5,7 @@ import {
 	DialogTitle,
 } from "@/components/ui/dialog";
 import { useTrackEvent } from "@/lib/events";
-import { useGenerationStore } from "@/registry/blocks/generative-ui-01/hooks/generation-store";
+import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
 import {
 	ChatInput,
 	ChatInputSubmit,
@@ -45,7 +45,7 @@ export function ChatDialog() {
 			track({
 				name: "block_used",
 				properties: {
-					used_block: "generative-ui-01",
+					used_block: "app-01",
 					used_block_ai_prompt: prompt,
 					used_block_ai_completion: completion,
 				},

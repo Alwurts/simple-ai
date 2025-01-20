@@ -1,14 +1,14 @@
 "use client";
 
-import { ChatDialog } from "@/registry/blocks/generative-ui-01/components/chat-dialog";
-import { CodeEditor } from "@/registry/blocks/generative-ui-01/components/code-editor";
-import { CopyButton } from "@/registry/blocks/generative-ui-01/components/copy-button";
-import { EditorToolbar } from "@/registry/blocks/generative-ui-01/components/editor-toolbar";
+import { ChatDialog } from "@/registry/blocks/app-01/components/chat-dialog";
+import { CodeEditor } from "@/registry/blocks/app-01/components/code-editor";
+import { CopyButton } from "@/registry/blocks/app-01/components/copy-button";
+import { EditorToolbar } from "@/registry/blocks/app-01/components/editor-toolbar";
 import {
 	Preview,
 	PreviewControls,
-} from "@/registry/blocks/generative-ui-01/components/preview";
-import { useGenerationStore } from "@/registry/blocks/generative-ui-01/hooks/generation-store";
+} from "@/registry/blocks/app-01/components/preview";
+import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
 import { useMemo, useState } from "react";
 
 export const EditorLayout = () => {

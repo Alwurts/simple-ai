@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
-import { useGenerationStore } from "@/registry/blocks/generative-ui-01/hooks/generation-store";
+import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
 import { BotMessageSquare, Code, EyeIcon } from "lucide-react";
 import type { FC, ReactNode } from "react";
 
