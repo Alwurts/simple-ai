@@ -186,4 +186,47 @@ export const blocks: Registry = [
 		],
 		categories: ["chat"],
 	},
+	{
+		name: "app-02",
+		description: "A persona generator app with structured outputs.",
+		type: "registry:block",
+		registryDependencies: [
+			"dialog",
+			"button",
+			"input",
+			"textarea",
+			"label",
+			"scroll-area",
+			"form",
+			"skeleton",
+			"card",
+			"avatar",
+		],
+		dependencies: ["ai", "@ai-sdk/openai", "zod"],
+		files: [
+			{
+				path: "blocks/app-02/page.tsx",
+				target: "app/persona/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/app-02/route.ts",
+				target: "app/api/ai/persona/route.ts",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/app-02/components/persona-display.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/app-02/types/persona.ts",
+				target: "app/types/persona.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/app-02/lib/example-businesses.ts",
+				type: "registry:lib",
+			},
+		],
+	},
 ];

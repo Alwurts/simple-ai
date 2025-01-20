@@ -477,6 +477,32 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/blocks/generative-ui-01/page.tsx")),
 		source: "src/__registry__/blocks/generative-ui-01/page.tsx",
 		meta: undefined,
+    },	"app-02": {
+		name: "app-02",
+		description: "A persona generator app.",
+		type: "registry:block",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/blocks/app-02/page.tsx",
+			type: "registry:page",
+			target: "app/persona/page.tsx"
+		},{
+			path: "src/registry/blocks/app-02/route.ts",
+			type: "registry:page",
+			target: "app/api/ai/persona/route.ts"
+		},{
+			path: "src/registry/blocks/app-02/components/persona-display.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/blocks/app-02/types/persona.ts",
+			type: "registry:lib",
+			target: "app/types/persona.ts"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/blocks/app-02/page.tsx")),
+		source: "src/__registry__/blocks/app-02/page.tsx",
+		meta: undefined,
     },	"jsx-utils": {
 		name: "jsx-utils",
 		description: "A set of utilities for working with JSX.",
