@@ -73,20 +73,19 @@ export function ChatDialog() {
 		<Dialog open={chatOpen} onOpenChange={setChatOpen}>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Generate Code</DialogTitle>
+					<DialogTitle>What UI do you want to build?</DialogTitle>
 				</DialogHeader>
-				<div className="py-4">
-					<ChatInput
-						value={input}
-						onChange={handleInputChange}
-						onSubmit={handleGenerate}
-						loading={isLoading}
-						onStop={stop}
-					>
-						<ChatInputTextArea placeholder="Type your code generation prompt..." />
-						<ChatInputSubmit />
-					</ChatInput>
-				</div>
+
+				<ChatInput
+					value={input}
+					onChange={handleInputChange}
+					onSubmit={handleGenerate}
+					loading={isLoading}
+					onStop={stop}
+				>
+					<ChatInputTextArea placeholder="Type your code generation prompt..." />
+					<ChatInputSubmit />
+				</ChatInput>
 			</DialogContent>
 		</Dialog>
 	);
