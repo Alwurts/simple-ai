@@ -1,10 +1,10 @@
+import {
+	ProductPersonaSchema,
+	UserPersonaSchema,
+} from "@/registry/blocks/app-02/types/persona";
 import { createDeepSeek } from "@ai-sdk/deepseek";
 import { streamObject } from "ai";
 import { z } from "zod";
-import {
-	UserPersonaSchema,
-	ProductPersonaSchema,
-} from "@/registry/blocks/app-02/types/persona";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;

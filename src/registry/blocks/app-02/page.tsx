@@ -1,24 +1,24 @@
 "use client";
 
-import { useState } from "react";
 import { experimental_useObject as useObject } from "ai/react";
+import { useState } from "react";
 import { z } from "zod";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Textarea } from "@/components/ui/textarea";
+import { PersonaDisplay } from "@/registry/blocks/app-02/components/persona-display";
+import { getRandomExample } from "@/registry/blocks/app-02/lib/example-businesses";
 import {
-	UserPersonaSchema,
 	ProductPersonaSchema,
+	UserPersonaSchema,
 } from "@/registry/blocks/app-02/types/persona";
+import { formSchema } from "@/registry/blocks/app-02/types/persona";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { formSchema } from "@/registry/blocks/app-02/types/persona";
-import { getRandomExample } from "@/registry/blocks/app-02/lib/example-businesses";
-import { PersonaDisplay } from "@/registry/blocks/app-02/components/persona-display";
 
 type FormData = z.infer<typeof formSchema>;
 

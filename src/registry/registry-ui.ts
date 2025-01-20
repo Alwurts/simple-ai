@@ -7,9 +7,7 @@ export const ui: Registry = [
 			"A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 		type: "registry:ui",
 		dependencies: ["react-jsx-parser"],
-		registryDependencies: [
-			"https://simple-ai.dev/r/jsx-utils.json",
-		],
+		registryDependencies: ["https://simple-ai.dev/r/jsx-utils.json"],
 		files: [{ type: "registry:ui", path: "ui/jsx-renderer.tsx" }],
 	},
 	{
@@ -33,9 +31,7 @@ export const ui: Registry = [
 	{
 		name: "chat-message",
 		type: "registry:ui",
-		registryDependencies: [
-			"https://simple-ai.dev/r/markdown-content.json",
-		],
+		registryDependencies: ["https://simple-ai.dev/r/markdown-content.json"],
 		files: [{ type: "registry:ui", path: "ui/chat-message.tsx" }],
 	},
 	{

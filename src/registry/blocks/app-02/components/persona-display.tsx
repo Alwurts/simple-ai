@@ -1,13 +1,13 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import type {
-	UserPersona,
 	ProductPersona,
+	UserPersona,
 } from "@/registry/blocks/app-02/types/persona";
 import type { DeepPartial } from "ai";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
-import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
 function DisplayField({
 	label,
