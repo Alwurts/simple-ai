@@ -8,7 +8,7 @@ export const ui: Registry = [
 		type: "registry:ui",
 		dependencies: ["react-jsx-parser"],
 		registryDependencies: [
-			"https://simple-ai.alwurts.com/registry/jsx-utils.json",
+			"https://simple-ai.dev/registry/jsx-utils.json",
 		],
 		files: [{ type: "registry:ui", path: "ui/jsx-renderer.tsx" }],
 	},
@@ -34,7 +34,7 @@ export const ui: Registry = [
 		name: "chat-message",
 		type: "registry:ui",
 		registryDependencies: [
-			"https://simple-ai.alwurts.com/registry/markdown-content.json",
+			"https://simple-ai.dev/registry/markdown-content.json",
 		],
 		files: [{ type: "registry:ui", path: "ui/chat-message.tsx" }],
 	},

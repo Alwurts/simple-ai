@@ -212,7 +212,7 @@ function BlockViewerToolbar() {
 						size="sm"
 						onClick={() => {
 							copyToClipboard(
-								`npx shadcn@latest add https://simple-ai.alwurts.com/registry/${item.name}.json`,
+								`npx shadcn@latest add https://simple-ai.dev/registry/${item.name}.json`,
 							);
 							track({
 								name: "copy_block_code",
@@ -224,7 +224,7 @@ function BlockViewerToolbar() {
 					>
 						{isCopied ? <Check /> : <Terminal />}
 						<span className="hidden lg:inline">
-							npx shadcn add https://simple-ai.alwurts.com/registry/{item.name}
+							npx shadcn add https://simple-ai.dev/registry/{item.name}
 							.json
 						</span>
 					</Button>

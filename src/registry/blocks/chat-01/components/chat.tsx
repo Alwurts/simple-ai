@@ -74,7 +74,7 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 				track({
 					name: "block_used",
 					properties: {
-						used_block: "chat-03",
+						used_block: "chat-01",
 						used_block_ai_completion: message.content,
 					},
 				});

@@ -2,7 +2,7 @@
   "name": "chat-message",
   "type": "registry:ui",
   "registryDependencies": [
-    "https://simple-ai.alwurts.com/registry/markdown-content.json"
+    "https://simple-ai.dev/registry/markdown-content.json"
   ],
   "files": [
     {

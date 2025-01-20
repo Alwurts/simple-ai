@@ -71,7 +71,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				track({
 					name: "block_used",
 					properties: {
-						used_block: "chat-03",
+						used_block: "chat-02",
 						used_block_ai_completion: message.content,
 					},
 				});
