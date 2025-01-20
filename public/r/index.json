@@ -7,7 +7,7 @@
       "react-jsx-parser"
     ],
     "registryDependencies": [
-      "https://simple-ai.dev/registry/jsx-utils.json"
+      "https://simple-ai.dev/r/jsx-utils.json"
     ],
     "files": [
       {
@@ -55,7 +55,7 @@
     "name": "chat-message",
     "type": "registry:ui",
     "registryDependencies": [
-      "https://simple-ai.dev/registry/markdown-content.json"
+      "https://simple-ai.dev/r/markdown-content.json"
     ],
     "files": [
       {

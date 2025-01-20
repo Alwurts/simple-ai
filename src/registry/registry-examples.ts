@@ -15,7 +15,7 @@ export const examples: Registry = [
 		name: "chat-input-demo",
 		type: "registry:example",
 		registryDependencies: [
-			"https://simple-ai.dev/registry/chat-input.json",
+			"https://simple-ai.dev/r/chat-input.json",
 		],
 		files: [
 			{

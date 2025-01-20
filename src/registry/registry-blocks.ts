@@ -15,9 +15,9 @@ export const blocks: Registry = [
 			"button",
 			"avatar",
 			"dropdown-menu",
-			"https://simple-ai.dev/registry/chat-input.json",
-			"https://simple-ai.dev/registry/chat-message-area.json",
-			"https://simple-ai.dev/registry/chat-message.json",
+			"https://simple-ai.dev/r/chat-input.json",
+			"https://simple-ai.dev/r/chat-message-area.json",
+			"https://simple-ai.dev/r/chat-message.json",
 		],
 		files: [
 			{
@@ -53,9 +53,9 @@ export const blocks: Registry = [
 		registryDependencies: [
 			"sidebar",
 			"breadcrumb",
-			"https://simple-ai.dev/registry/chat-input.json",
-			"https://simple-ai.dev/registry/chat-message-area.json",
-			"https://simple-ai.dev/registry/chat-message.json",
+			"https://simple-ai.dev/r/chat-input.json",
+			"https://simple-ai.dev/r/chat-message-area.json",
+			"https://simple-ai.dev/r/chat-message.json",
 		],
 		files: [
 			{
@@ -82,9 +82,9 @@ export const blocks: Registry = [
 		registryDependencies: [
 			"popover",
 			"button",
-			"https://simple-ai.dev/registry/chat-input.json",
-			"https://simple-ai.dev/registry/chat-message-area.json",
-			"https://simple-ai.dev/registry/chat-message.json",
+			"https://simple-ai.dev/r/chat-input.json",
+			"https://simple-ai.dev/r/chat-message-area.json",
+			"https://simple-ai.dev/r/chat-message.json",
 		],
 		files: [
 			{
@@ -129,11 +129,11 @@ export const blocks: Registry = [
 			"badge",
 			"dialog",
 			"slider",
-			"https://simple-ai.dev/registry/chat-input.json",
-			"https://simple-ai.dev/registry/chat-message-area.json",
-			"https://simple-ai.dev/registry/chat-message.json",
-			"https://simple-ai.dev/registry/jsx-renderer.json",
-			"https://simple-ai.dev/registry/jsx-utils.json",
+			"https://simple-ai.dev/r/chat-input.json",
+			"https://simple-ai.dev/r/chat-message-area.json",
+			"https://simple-ai.dev/r/chat-message.json",
+			"https://simple-ai.dev/r/jsx-renderer.json",
+			"https://simple-ai.dev/r/jsx-utils.json",
 		],
 		files: [
 			{

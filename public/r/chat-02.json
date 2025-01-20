@@ -9,9 +9,9 @@
   "registryDependencies": [
     "sidebar",
     "breadcrumb",
-    "https://simple-ai.dev/registry/chat-input.json",
-    "https://simple-ai.dev/registry/chat-message-area.json",
-    "https://simple-ai.dev/registry/chat-message.json"
+    "https://simple-ai.dev/r/chat-input.json",
+    "https://simple-ai.dev/r/chat-message-area.json",
+    "https://simple-ai.dev/r/chat-message.json"
   ],
   "files": [
     {

@@ -24,7 +24,7 @@ const REGISTRY_INDEX_WHITELIST: z.infer<typeof registryItemTypeSchema>[] = [
 ];
 
 const REGISTRY_BASE_PATH = "src/registry";
-const REGISTRY_PUBLIC_PATH = "public/registry";
+const REGISTRY_PUBLIC_PATH = "public/r";
 const REGISTRY_GENERATED_PATH = "src/__registry__";
 
 const project = new Project({

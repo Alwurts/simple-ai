@@ -6,7 +6,7 @@
     "react-jsx-parser"
   ],
   "registryDependencies": [
-    "https://simple-ai.dev/registry/jsx-utils.json"
+    "https://simple-ai.dev/r/jsx-utils.json"
   ],
   "files": [
     {

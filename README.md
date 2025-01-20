@@ -26,7 +26,7 @@ Visit [simple-ai.dev/docs](https://simple-ai.dev/docs) to view the documentation
 npx shadcn-ui@latest init
 
 # Then you can add simple-ai components
-npx shadcn@latest add https://simple-ai.dev/registry/chat-message.json
+npx shadcn@latest add https://simple-ai.dev/r/chat-message.json
 ```
 
 ## License

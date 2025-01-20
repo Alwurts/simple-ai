@@ -9,7 +9,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer",
 		description: "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 		type: "registry:ui",
-		registryDependencies: ["https://simple-ai.dev/registry/jsx-utils.json"],
+		registryDependencies: ["https://simple-ai.dev/r/jsx-utils.json"],
 		files: [{
 			path: "src/registry/ui/jsx-renderer.tsx",
 			type: "registry:ui",
@@ -59,7 +59,7 @@ export const Index: Record<string, any> = {
 		name: "chat-message",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["https://simple-ai.dev/registry/markdown-content.json"],
+		registryDependencies: ["https://simple-ai.dev/r/markdown-content.json"],
 		files: [{
 			path: "src/registry/ui/chat-message.tsx",
 			type: "registry:ui",
@@ -101,7 +101,7 @@ export const Index: Record<string, any> = {
 		name: "chat-input-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["https://simple-ai.dev/registry/chat-input.json"],
+		registryDependencies: ["https://simple-ai.dev/r/chat-input.json"],
 		files: [{
 			path: "src/registry/examples/chat-input-demo.tsx",
 			type: "registry:example",
@@ -353,7 +353,7 @@ export const Index: Record<string, any> = {
 		name: "chat-01",
 		description: "A simple chat page.",
 		type: "registry:block",
-		registryDependencies: ["card","breadcrumb","separator","sidebar","tooltip","button","avatar","dropdown-menu","https://simple-ai.dev/registry/chat-input.json","https://simple-ai.dev/registry/chat-message-area.json","https://simple-ai.dev/registry/chat-message.json"],
+		registryDependencies: ["card","breadcrumb","separator","sidebar","tooltip","button","avatar","dropdown-menu","https://simple-ai.dev/r/chat-input.json","https://simple-ai.dev/r/chat-message-area.json","https://simple-ai.dev/r/chat-message.json"],
 		files: [{
 			path: "src/registry/blocks/chat-01/page.tsx",
 			type: "registry:page",
@@ -383,7 +383,7 @@ export const Index: Record<string, any> = {
 		name: "chat-02",
 		description: "A chat in a sidebar.",
 		type: "registry:block",
-		registryDependencies: ["sidebar","breadcrumb","https://simple-ai.dev/registry/chat-input.json","https://simple-ai.dev/registry/chat-message-area.json","https://simple-ai.dev/registry/chat-message.json"],
+		registryDependencies: ["sidebar","breadcrumb","https://simple-ai.dev/r/chat-input.json","https://simple-ai.dev/r/chat-message-area.json","https://simple-ai.dev/r/chat-message.json"],
 		files: [{
 			path: "src/registry/blocks/chat-02/page.tsx",
 			type: "registry:page",
@@ -405,7 +405,7 @@ export const Index: Record<string, any> = {
 		name: "chat-03",
 		description: "A chat in a popover.",
 		type: "registry:block",
-		registryDependencies: ["popover","button","https://simple-ai.dev/registry/chat-input.json","https://simple-ai.dev/registry/chat-message-area.json","https://simple-ai.dev/registry/chat-message.json"],
+		registryDependencies: ["popover","button","https://simple-ai.dev/r/chat-input.json","https://simple-ai.dev/r/chat-message-area.json","https://simple-ai.dev/r/chat-message.json"],
 		files: [{
 			path: "src/registry/blocks/chat-03/page.tsx",
 			type: "registry:page",
@@ -427,7 +427,7 @@ export const Index: Record<string, any> = {
 		name: "app-01",
 		description: "A chat with generative UI capabilities.",
 		type: "registry:block",
-		registryDependencies: ["avatar","input","label","tabs","resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","slider","https://simple-ai.dev/registry/chat-input.json","https://simple-ai.dev/registry/chat-message-area.json","https://simple-ai.dev/registry/chat-message.json","https://simple-ai.dev/registry/jsx-renderer.json","https://simple-ai.dev/registry/jsx-utils.json"],
+		registryDependencies: ["avatar","input","label","tabs","resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","slider","https://simple-ai.dev/r/chat-input.json","https://simple-ai.dev/r/chat-message-area.json","https://simple-ai.dev/r/chat-message.json","https://simple-ai.dev/r/jsx-renderer.json","https://simple-ai.dev/r/jsx-utils.json"],
 		files: [{
 			path: "src/registry/blocks/app-01/page.tsx",
 			type: "registry:page",
