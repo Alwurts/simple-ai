@@ -397,7 +397,7 @@ export const Index: Record<string, any> = {
 			type: "registry:component",
 			target: ""
 		}],
-		categories: undefined,
+		categories: ["chat"],
 		component: React.lazy(() => import("@/registry/blocks/chat-02/page.tsx")),
 		source: "src/__registry__/blocks/chat-02/page.tsx",
 		meta: undefined,
@@ -419,7 +419,7 @@ export const Index: Record<string, any> = {
 			type: "registry:component",
 			target: ""
 		}],
-		categories: undefined,
+		categories: ["chat"],
 		component: React.lazy(() => import("@/registry/blocks/chat-03/page.tsx")),
 		source: "src/__registry__/blocks/chat-03/page.tsx",
 		meta: undefined,
@@ -473,7 +473,7 @@ export const Index: Record<string, any> = {
 			type: "registry:component",
 			target: ""
 		}],
-		categories: ["chat"],
+		categories: ["app"],
 		component: React.lazy(() => import("@/registry/blocks/app-01/page.tsx")),
 		source: "src/__registry__/blocks/app-01/page.tsx",
 		meta: undefined,
@@ -503,7 +503,7 @@ export const Index: Record<string, any> = {
 			type: "registry:lib",
 			target: ""
 		}],
-		categories: undefined,
+		categories: ["app"],
 		component: React.lazy(() => import("@/registry/blocks/app-02/page.tsx")),
 		source: "src/__registry__/blocks/app-02/page.tsx",
 		meta: undefined,
@@ -549,7 +549,7 @@ export const Index: Record<string, any> = {
 			type: "registry:lib",
 			target: ""
 		}],
-		categories: undefined,
+		categories: ["app"],
 		component: React.lazy(() => import("@/registry/blocks/app-03/page.tsx")),
 		source: "src/__registry__/blocks/app-03/page.tsx",
 		meta: undefined,

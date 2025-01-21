@@ -4,4 +4,9 @@ export const registryCategories = [
 		slug: "chat",
 		hidden: false,
 	},
+	{
+		name: "App",
+		slug: "app",
+		hidden: false,
+	},
 ];

@@ -50,5 +50,8 @@
       "type": "registry:lib",
       "target": ""
     }
+  ],
+  "categories": [
+    "app"
   ]
 }

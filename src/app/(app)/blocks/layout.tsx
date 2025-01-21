@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 import "@/styles/mdx.css";
+import { BlocksNav } from "@/components/blocks/blocks-nav";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -46,6 +47,13 @@ export default function BlocksLayout({
 					</Button>
 				</PageActions>
 			</PageHeader>
+			<div id="blocks" className="border-grid scroll-mt-24 border-b">
+				<div className="container-wrapper">
+					<div className="container flex items-center py-4">
+						<BlocksNav />
+					</div>
+				</div>
+			</div>
 			<div className="container-wrapper flex-1">{children}</div>
 		</>
 	);

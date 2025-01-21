@@ -73,6 +73,7 @@ export const blocks: Registry = [
 				type: "registry:component",
 			},
 		],
+		categories: ["chat"],
 	},
 	{
 		name: "chat-03",
@@ -102,6 +103,7 @@ export const blocks: Registry = [
 				type: "registry:component",
 			},
 		],
+		categories: ["chat"],
 	},
 	{
 		name: "app-01",
@@ -184,7 +186,7 @@ export const blocks: Registry = [
 				type: "registry:component",
 			},
 		],
-		categories: ["chat"],
+		categories: ["app"],
 	},
 	{
 		name: "app-02",
@@ -228,6 +230,7 @@ export const blocks: Registry = [
 				type: "registry:lib",
 			},
 		],
+		categories: ["app"],
 	},
 	{
 		name: "app-03",
@@ -287,5 +290,6 @@ export const blocks: Registry = [
 				type: "registry:lib",
 			},
 		],
+		categories: ["app"],
 	},
 ];
