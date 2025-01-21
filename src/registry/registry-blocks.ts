@@ -105,7 +105,7 @@ export const blocks: Registry = [
 	},
 	{
 		name: "app-01",
-		description: "A chat with generative UI capabilities.",
+		description: "A app with generative UI capabilities.",
 		type: "registry:block",
 		dependencies: [
 			"ai",
@@ -225,6 +225,65 @@ export const blocks: Registry = [
 			},
 			{
 				path: "blocks/app-02/lib/example-businesses.ts",
+				type: "registry:lib",
+			},
+		],
+	},
+	{
+		name: "app-03",
+		description: "An X profile bio generator app.",
+		type: "registry:block",
+		dependencies: ["ai", "@ai-sdk/openai", "zod", "next-themes"],
+		registryDependencies: [
+			"button",
+			"dialog",
+			"input",
+			"textarea",
+			"form",
+			"label",
+			"select",
+			"skeleton",
+			"avatar",
+		],
+		files: [
+			{
+				path: "blocks/app-03/page.tsx",
+				target: "app/x-profile/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/app-03/layout.tsx",
+				target: "app/x-profile/layout.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/app-03/route.ts",
+				target: "app/api/ai/x-profile/route.ts",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/app-03/components/profile-generate-dialog.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/app-03/components/x-preview.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/app-03/components/toolbar.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/app-03/components/theme-toggle.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/app-03/types/x.ts",
+				target: "app/types/x.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/app-03/lib/profile-examples.ts",
 				type: "registry:lib",
 			},
 		],

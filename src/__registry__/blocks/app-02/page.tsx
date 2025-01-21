@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
+import { useTrackEvent } from "@/lib/events";
 import { PersonaDisplay } from "@/registry/blocks/app-02/components/persona-display";
 import { getRandomExample } from "@/registry/blocks/app-02/lib/example-businesses";
 import {
@@ -24,6 +25,7 @@ type FormData = z.infer<typeof formSchema>;
 
 export default function PersonaGenerator() {
 	const [showDialog, setShowDialog] = useState(false);
+	const track = useTrackEvent();
 
 	const {
 		register,
@@ -40,6 +42,15 @@ export default function PersonaGenerator() {
 			userPersona: UserPersonaSchema,
 			productPersona: ProductPersonaSchema,
 		}),
+		onFinish: ({ object }) => {
+			track({
+				name: "block_used",
+				properties: {
+					used_block: "app-02",
+					used_block_ai_completion: JSON.stringify(object),
+				},
+			});
+		},
 	});
 
 	const onSubmit = async (data: FormData) => {

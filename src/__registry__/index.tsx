@@ -425,7 +425,7 @@ export const Index: Record<string, any> = {
 		meta: undefined,
     },	"app-01": {
 		name: "app-01",
-		description: "A chat with generative UI capabilities.",
+		description: "A app with generative UI capabilities.",
 		type: "registry:block",
 		registryDependencies: ["avatar","input","label","tabs","resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","slider","https://simple-ai.dev/r/chat-input.json","https://simple-ai.dev/r/chat-message-area.json","https://simple-ai.dev/r/chat-message.json","https://simple-ai.dev/r/jsx-renderer.json","https://simple-ai.dev/r/jsx-utils.json"],
 		files: [{
@@ -506,6 +506,52 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/blocks/app-02/page.tsx")),
 		source: "src/__registry__/blocks/app-02/page.tsx",
+		meta: undefined,
+    },	"app-03": {
+		name: "app-03",
+		description: "An X profile bio generator app.",
+		type: "registry:block",
+		registryDependencies: ["button","dialog","input","textarea","form","label","select","skeleton","avatar"],
+		files: [{
+			path: "src/registry/blocks/app-03/page.tsx",
+			type: "registry:page",
+			target: "app/x-profile/page.tsx"
+		},{
+			path: "src/registry/blocks/app-03/layout.tsx",
+			type: "registry:page",
+			target: "app/x-profile/layout.tsx"
+		},{
+			path: "src/registry/blocks/app-03/route.ts",
+			type: "registry:page",
+			target: "app/api/ai/x-profile/route.ts"
+		},{
+			path: "src/registry/blocks/app-03/components/profile-generate-dialog.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/blocks/app-03/components/x-preview.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/blocks/app-03/components/toolbar.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/blocks/app-03/components/theme-toggle.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/blocks/app-03/types/x.ts",
+			type: "registry:lib",
+			target: "app/types/x.ts"
+		},{
+			path: "src/registry/blocks/app-03/lib/profile-examples.ts",
+			type: "registry:lib",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/blocks/app-03/page.tsx")),
+		source: "src/__registry__/blocks/app-03/page.tsx",
 		meta: undefined,
     },	"jsx-utils": {
 		name: "jsx-utils",

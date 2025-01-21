@@ -1,7 +1,7 @@
 {
   "name": "app-01",
   "type": "registry:block",
-  "description": "A chat with generative UI capabilities.",
+  "description": "A app with generative UI capabilities.",
   "dependencies": [
     "ai",
     "@ai-sdk/openai",
