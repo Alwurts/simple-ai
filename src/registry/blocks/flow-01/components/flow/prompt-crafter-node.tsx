@@ -39,7 +39,6 @@ import {
 	useUpdateNodeInternals,
 } from "@xyflow/react";
 import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
-import { nanoid } from "nanoid";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -92,7 +91,7 @@ export function PromptCrafterNode({
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 	const editorViewRef = useRef<EditorView>();
 
-	const handleTextChange = useCallback(
+	const handlePromptTextChange = useCallback(
 		(value: string) => {
 			updateNode(id, { text: value });
 		},
@@ -115,12 +114,17 @@ export function PromptCrafterNode({
 	}, []);
 
 	const addInput = useCallback(() => {
-		const newId = nanoid();
-		updateNode(id, {
-			inputs: [...(data.inputs || []), { id: newId, label: "" }],
-		});
+		useStore.getState().addDynamicInput(id);
 		updateNodeInternals(id);
-	}, [id, data.inputs, updateNode, updateNodeInternals]);
+	}, [id, updateNodeInternals]);
+
+	const removeInput = useCallback(
+		(handleId: string) => {
+			useStore.getState().removeDynamicInput(id, handleId);
+			updateNodeInternals(id);
+		},
+		[id, updateNodeInternals],
+	);
 
 	const updateInputName = useCallback(
 		(handleId: string, newLabel: string): boolean => {
@@ -156,18 +160,6 @@ export function PromptCrafterNode({
 			return true;
 		},
 		[id, data.inputs, data.text, updateNode, updateNodeInternals],
-	);
-
-	const removeInput = useCallback(
-		(handleId: string) => {
-			const removeEdgesForHandle = useStore.getState().removeEdgesForHandle;
-			removeEdgesForHandle(id, handleId);
-			updateNode(id, {
-				inputs: (data.inputs || []).filter((input) => input.id !== handleId),
-			});
-			updateNodeInternals(id);
-		},
-		[id, data.inputs, updateNode, updateNodeInternals],
 	);
 
 	// Create language with current inputs
@@ -244,7 +236,7 @@ export function PromptCrafterNode({
 					height="150px"
 					theme={promptTheme}
 					extensions={extensions}
-					onChange={handleTextChange}
+					onChange={handlePromptTextChange}
 					onCreateEditor={(view) => {
 						editorViewRef.current = view;
 					}}

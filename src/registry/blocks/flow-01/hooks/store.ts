@@ -7,6 +7,7 @@ import type {
 	NodeChange,
 } from "@xyflow/react";
 import { createWithEqualityFn } from "zustand/traditional";
+import { nanoid } from "nanoid";
 
 export const MODELS = [
 	"gpt-4o",
@@ -98,7 +99,12 @@ export interface StoreState {
 	onConnect: (connection: Edge | Connection) => void;
 	updateNode: (id: string, data: Partial<AppNode["data"]>) => void;
 	deleteNode: (id: string) => void;
-	removeEdgesForHandle: (nodeId: string, handleId: string) => void;
+	addDynamicInput: (nodeId: string) => string;
+	removeDynamicInput: (nodeId: string, handleId: string) => void;
+	createNode: (
+		type: AppNode["type"],
+		position: { x: number; y: number },
+	) => AppNode;
 	// Flow execution
 	startExecution: () => Promise<void>;
 	getNodeInputs: (nodeId: string) => Promise<string[]>;
@@ -355,12 +361,101 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		});
 	},
 
-	removeEdgesForHandle(nodeId: string, handleId: string) {
+	addDynamicInput(nodeId: string) {
+		const newId = nanoid();
 		set({
+			nodes: get().nodes.map((node) => {
+				if (node.id === nodeId && node.type === "prompt-crafter") {
+					return {
+						...node,
+						data: {
+							...node.data,
+							inputs: [...(node.data.inputs || []), { id: newId, label: "" }],
+						},
+					};
+				}
+				return node;
+			}) as AppNode[],
+		});
+		return newId;
+	},
+
+	removeDynamicInput(nodeId: string, handleId: string) {
+		set({
+			nodes: get().nodes.map((node) => {
+				if (node.id === nodeId && node.type === "prompt-crafter") {
+					return {
+						...node,
+						data: {
+							...node.data,
+							inputs: (node.data.inputs || []).filter(
+								(input) => input.id !== handleId,
+							),
+						},
+					};
+				}
+				return node;
+			}) as AppNode[],
 			edges: get().edges.filter(
 				(edge) => !(edge.target === nodeId && edge.targetHandle === handleId),
 			),
 		});
+	},
+
+	createNode(type: AppNode["type"], position: { x: number; y: number }) {
+		let newNode: AppNode;
+
+		switch (type) {
+			case "generate-text":
+				newNode = {
+					id: nanoid(),
+					type,
+					position,
+					data: {
+						config: { model: "gpt-4o" },
+					},
+				};
+				break;
+			case "prompt-crafter":
+				newNode = {
+					id: nanoid(),
+					type,
+					position,
+					data: {
+						text: "",
+						inputs: [],
+					},
+				};
+				break;
+			case "visualize-text":
+				newNode = {
+					id: nanoid(),
+					type,
+					position,
+					data: {
+						text: "",
+					},
+				};
+				break;
+			case "text-input":
+				newNode = {
+					id: nanoid(),
+					type,
+					position,
+					data: {
+						text: "",
+					},
+				};
+				break;
+			default:
+				throw new Error(`Unknown node type: ${type}`);
+		}
+
+		set({
+			nodes: [...get().nodes, newNode],
+		});
+
+		return newNode;
 	},
 
 	// Flow execution functions
