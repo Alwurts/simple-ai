@@ -1,7 +1,8 @@
 "use client";
 
+import type React from "react";
 import { type NodeTypes, ReactFlowProvider } from "@xyflow/react";
-import { ReactFlow, Background, Panel } from "@xyflow/react";
+import { ReactFlow, Background, Panel, useReactFlow } from "@xyflow/react";
 import { shallow } from "zustand/shallow";
 import "@xyflow/react/dist/style.css";
 import { DevTools } from "@/components/flow/devtools";
@@ -11,6 +12,8 @@ import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/vis
 import { TextInputNode } from "@/registry/blocks/flow-01/components/flow/text-input-node";
 import { PromptCrafterNode } from "@/registry/blocks/flow-01/components/flow/prompt-crafter-node";
 import { Button } from "@/components/ui/button";
+import { NodesPanel } from "@/registry/blocks/flow-01/components/flow/nodes-panel";
+import type { AppNode } from "@/registry/blocks/flow-01/hooks/store";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNode,
@@ -19,7 +22,7 @@ const nodeTypes: NodeTypes = {
 	"prompt-crafter": PromptCrafterNode,
 };
 
-export default function Flow01Page() {
+function Flow() {
 	const store = useStore(
 		(store) => ({
 			nodes: store.nodes,
@@ -33,34 +36,106 @@ export default function Flow01Page() {
 		shallow,
 	);
 
+	const { screenToFlowPosition } = useReactFlow();
+
+	const onDragOver = (event: React.DragEvent) => {
+		event.preventDefault();
+		event.dataTransfer.dropEffect = "move";
+	};
+
+	const onDrop = (event: React.DragEvent) => {
+		event.preventDefault();
+
+		const type = event.dataTransfer.getData("application/reactflow");
+
+		// Check if the dropped element is valid
+		if (!type) {
+			return;
+		}
+
+		// Get the position of the drop
+		const position = screenToFlowPosition({
+			x: event.clientX,
+			y: event.clientY,
+		});
+
+		let newNode: AppNode;
+
+		switch (type) {
+			case "generate-text":
+				newNode = {
+					id: crypto.randomUUID(),
+					type,
+					position,
+					data: { model: "gpt-4o" },
+				};
+				break;
+			case "prompt-crafter":
+				newNode = {
+					id: crypto.randomUUID(),
+					type,
+					position,
+					data: { text: "", inputs: [] },
+				};
+				break;
+			case "visualize-text":
+			case "text-input":
+				newNode = {
+					id: crypto.randomUUID(),
+					type,
+					position,
+					data: { text: "" },
+				};
+				break;
+			default:
+				return;
+		}
+
+		store.onNodesChange([
+			{
+				type: "add",
+				item: newNode,
+			},
+		]);
+	};
+
+	return (
+		<ReactFlow
+			nodes={store.nodes}
+			edges={store.edges}
+			onNodesChange={store.onNodesChange}
+			onEdgesChange={store.onEdgesChange}
+			onConnect={store.onConnect}
+			nodeTypes={nodeTypes}
+			onDragOver={onDragOver}
+			onDrop={onDrop}
+			fitView
+		>
+			<Background />
+			<DevTools />
+			<NodesPanel />
+			<Panel position="top-right" className="flex gap-2 items-center">
+				{store.runtime.currentNodeId && (
+					<div className="text-sm text-muted-foreground">
+						Processing node: {store.runtime.currentNodeId}
+					</div>
+				)}
+				<Button
+					onClick={() => store.startExecution()}
+					disabled={store.runtime.isRunning}
+				>
+					{store.runtime.isRunning ? "Running..." : "Run Flow"}
+				</Button>
+			</Panel>
+		</ReactFlow>
+	);
+}
+
+export default function Flow01Page() {
 	return (
 		<div className="w-screen h-screen">
 			<ReactFlowProvider>
-				<ReactFlow
-					nodes={store.nodes}
-					edges={store.edges}
-					onNodesChange={store.onNodesChange}
-					onEdgesChange={store.onEdgesChange}
-					onConnect={store.onConnect}
-					nodeTypes={nodeTypes}
-					fitView
-				>
-					<Background />
-					<DevTools />
-					<Panel position="top-right" className="flex gap-2 items-center">
-						{store.runtime.currentNodeId && (
-							<div className="text-sm text-muted-foreground">
-								Processing node: {store.runtime.currentNodeId}
-							</div>
-						)}
-						<Button
-							onClick={() => store.startExecution()}
-							disabled={store.runtime.isRunning}
-						>
-							{store.runtime.isRunning ? "Running..." : "Run Flow"}
-						</Button>
-					</Panel>
-				</ReactFlow>
+				<Flow />
 			</ReactFlowProvider>
 		</div>
 	);

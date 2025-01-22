@@ -51,7 +51,7 @@ export type TVisualizeTextNode = Node<VisualizeTextData, "visualize-text">;
 export type TTextInputNode = Node<TextInputData, "text-input">;
 export type TPromptCrafterNode = Node<PromptCrafterData, "prompt-crafter">;
 
-type AppNode =
+export type AppNode =
 	| TGenerateTextNode
 	| TVisualizeTextNode
 	| TTextInputNode
@@ -249,7 +249,13 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
 			// Process nodes in order
 			for (const nodeId of sortedNodeIds) {
-				set({ runtime: { isRunning: true, currentNodeId: nodeId, lastRunTime: runTime } });
+				set({
+					runtime: {
+						isRunning: true,
+						currentNodeId: nodeId,
+						lastRunTime: runTime,
+					},
+				});
 				const inputs = await get().getNodeInputs(nodeId);
 				await get().processNode(nodeId, inputs);
 			}
@@ -300,7 +306,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	},
 
 	async processNode(nodeId: string, inputs: string[]) {
-		await delay(500); // Simulate processing time
+		await delay(200); // Simulate processing time
 		const { nodes } = get();
 		const node = nodes.find((n) => n.id === nodeId);
 		if (!node) {
