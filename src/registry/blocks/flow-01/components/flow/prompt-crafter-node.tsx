@@ -1,5 +1,4 @@
 import { BaseNode } from "@/components/flow/base-node";
-import { EditableLabeledHandle } from "@/components/flow/editable-labeled-handle";
 import { LabeledHandle } from "@/components/flow/labeled-handle";
 import {
 	NodeHeaderAction,
@@ -39,6 +38,7 @@ import {
 import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
+import { EditableLabeledHandle } from "@/registry/blocks/flow-01/components/flow/editable-labeled-handle";
 
 // Custom theme that matches your app's design
 const promptTheme = createTheme({
@@ -112,36 +112,41 @@ export function PromptCrafterNode({
 	}, []);
 
 	const addInput = useCallback(() => {
+		const newId = crypto.randomUUID();
 		updateNode(id, {
-			inputs: [...(data.inputs || []), ""],
+			inputs: [...(data.inputs || []), { id: newId, label: "" }],
 		});
 		updateNodeInternals(id);
 	}, [id, data.inputs, updateNode, updateNodeInternals]);
 
 	const updateInputName = useCallback(
-		(oldName: string, newName: string): boolean => {
-			if (!newName) {
+		(handleId: string, newLabel: string): boolean => {
+			if (!newLabel) {
 				toast.error("Input name cannot be empty");
 				return false;
 			}
 
-			if (oldName === newName) {
-				return true;
+			const existingInput = data.inputs?.find(
+				(input) => input.label === newLabel,
+			);
+			if (existingInput && existingInput.id !== handleId) {
+				toast.error("Input name already exists");
+				return false;
 			}
 
-			if (data.inputs?.includes(newName)) {
-				toast.error("Input name already exists");
+			const oldInput = data.inputs?.find((input) => input.id === handleId);
+			if (!oldInput) {
 				return false;
 			}
 
 			updateNode(id, {
 				inputs: (data.inputs || []).map((input) =>
-					input === oldName ? newName : input,
+					input.id === handleId ? { ...input, label: newLabel } : input,
 				),
 				// Also update references in the text
 				text: (data.text || "").replace(
-					new RegExp(`{${oldName}}`, "g"),
-					`{${newName}}`,
+					new RegExp(`{${oldInput.label}}`, "g"),
+					`{${newLabel}}`,
 				),
 			});
 			updateNodeInternals(id);
@@ -151,9 +156,11 @@ export function PromptCrafterNode({
 	);
 
 	const removeInput = useCallback(
-		(inputName: string) => {
+		(handleId: string) => {
+			const removeEdgesForHandle = useStore.getState().removeEdgesForHandle;
+			removeEdgesForHandle(id, handleId);
 			updateNode(id, {
-				inputs: (data.inputs || []).filter((input) => input !== inputName),
+				inputs: (data.inputs || []).filter((input) => input.id !== handleId),
 			});
 			updateNodeInternals(id);
 		},
@@ -162,7 +169,8 @@ export function PromptCrafterNode({
 
 	// Create language with current inputs
 	const extensions = useMemo(() => {
-		return [createPromptLanguage(data.inputs || [])];
+		const validLabels = (data.inputs || []).map((input) => input.label);
+		return [createPromptLanguage(validLabels)];
 	}, [data.inputs]);
 
 	return (
@@ -198,13 +206,13 @@ export function PromptCrafterNode({
 									<CommandGroup>
 										{data.inputs?.map(
 											(input) =>
-												input && (
+												input.label && (
 													<CommandItem
-														key={input}
-														onSelect={() => insertInputAtCursor(input)}
+														key={input.id}
+														onSelect={() => insertInputAtCursor(input.label)}
 														className="text-base"
 													>
-														{input}
+														{input.label}
 													</CommandItem>
 												),
 										)}
@@ -233,11 +241,6 @@ export function PromptCrafterNode({
 						indentOnInput: false,
 					}}
 				/>
-				{/* {data.output && (
-					<div className="mt-4 text-sm text-muted-foreground border rounded-md p-2 max-h-[100px] overflow-y-auto">
-						{data.output}
-					</div>
-				)} */}
 			</div>
 			<div className="grid grid-cols-[2fr,1fr] gap-2 pt-2 pb-4 text-sm">
 				<div className="flex flex-col gap-2 min-w-0">
@@ -250,17 +253,17 @@ export function PromptCrafterNode({
 						<Plus className="h-4 w-4 mr-1" />
 						New Input
 					</Button>
-					{data.inputs?.map((input, index) => (
+					{data.inputs?.map((input) => (
 						<EditableLabeledHandle
-							key={`${index}-${input}`}
+							key={input.id}
 							nodeId={id}
-							id={input}
-							title={input}
+							handleId={input.id}
+							label={input.label}
 							type="target"
 							position={Position.Left}
 							wrapperClassName="w-full"
-							onTitleChange={(newTitle) => updateInputName(input, newTitle)}
-							onDelete={() => removeInput(input)}
+							onLabelChange={updateInputName}
+							onDelete={removeInput}
 						/>
 					))}
 				</div>

@@ -42,7 +42,7 @@ interface TextInputData extends Record<string, unknown> {
 
 interface PromptCrafterData extends Record<string, unknown> {
 	text: string;
-	inputs: string[];
+	inputs: Array<{ id: string; label: string }>;
 	output?: string;
 }
 
@@ -66,6 +66,7 @@ export interface StoreState {
 	onConnect: (connection: Edge | Connection) => void;
 	updateNode: (id: string, data: Partial<AppNode["data"]>) => void;
 	deleteNode: (id: string) => void;
+	removeEdgesForHandle: (nodeId: string, handleId: string) => void;
 	// Flow execution
 	startExecution: () => Promise<void>;
 	getNodeInputs: (nodeId: string) => Promise<string[]>;
@@ -155,7 +156,10 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		{
 			type: "prompt-crafter",
 			id: "d",
-			data: { text: "Hello, {input1}!", inputs: ["input1"] },
+			data: {
+				text: "Hello, {input1}!",
+				inputs: [{ id: "input1", label: "input1" }],
+			},
 			position: { x: 0, y: 150 },
 		},
 	],
@@ -223,6 +227,14 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	deleteNode(id) {
 		set({
 			nodes: get().nodes.filter((node) => node.id !== id),
+		});
+	},
+
+	removeEdgesForHandle(nodeId: string, handleId: string) {
+		set({
+			edges: get().edges.filter(
+				(edge) => !(edge.target === nodeId && edge.targetHandle === handleId),
+			),
 		});
 	},
 
@@ -297,7 +309,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		// For prompt-crafter nodes, maintain input order based on defined inputs array
 		if (node?.type === "prompt-crafter") {
 			return node.data.inputs.map((inputName) => {
-				return inputsByHandle.get(inputName) || "";
+				return inputsByHandle.get(inputName.id) || "";
 			});
 		}
 
@@ -327,7 +339,10 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			case "prompt-crafter": {
 				let text = node.data.text;
 				for (let i = 0; i < inputs.length; i++) {
-					text = text.replace(`{${node.data.inputs[i]}}`, inputs[i] || "");
+					text = text.replace(
+						`{${node.data.inputs[i].label}}`,
+						inputs[i] || "",
+					);
 				}
 				output = text;
 				break;

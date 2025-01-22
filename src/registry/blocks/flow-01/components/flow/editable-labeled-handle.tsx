@@ -21,12 +21,13 @@ const flexDirections = {
 type EditableLabeledHandleProps = HandleProps &
 	React.HTMLAttributes<HTMLDivElement> & {
 		nodeId: string;
-		title: string;
+		handleId: string;
+		label: string;
 		handleClassName?: string;
 		labelClassName?: string;
 		wrapperClassName?: string;
-		onTitleChange: (newTitle: string) => boolean;
-		onDelete: () => void;
+		onLabelChange: (handleId: string, newLabel: string) => boolean;
+		onDelete: (handleId: string) => void;
 	};
 
 const EditableLabeledHandle = React.forwardRef<
@@ -36,19 +37,20 @@ const EditableLabeledHandle = React.forwardRef<
 	(
 		{
 			nodeId,
+			handleId,
 			labelClassName,
 			handleClassName,
-			title,
+			label,
 			position,
 			wrapperClassName,
-			onTitleChange,
+			onLabelChange,
 			onDelete,
 			...handleProps
 		},
 		ref,
 	) => {
-		const [localTitle, setLocalTitle] = useState(title);
-		const [isEditing, setIsEditing] = useState(title.length === 0);
+		const [localLabel, setLocalLabel] = useState(label);
+		const [isEditing, setIsEditing] = useState(label.length === 0);
 		const inputRef = useRef<HTMLInputElement>(null);
 
 		const handleSelectionChange = useCallback(
@@ -73,23 +75,23 @@ const EditableLabeledHandle = React.forwardRef<
 		};
 
 		const resetEditing = () => {
-			if (title.length === 0) {
-				onDelete();
+			if (label.length === 0) {
+				onDelete(handleId);
 				return;
 			}
 
-			setLocalTitle(title);
+			setLocalLabel(label);
 			setIsEditing(false);
 		};
 
 		const handleSave = () => {
-			// Trim and validate the title has no spaces
-			const trimmedTitle = localTitle.trim();
-			if (trimmedTitle.includes(" ")) {
-				toast.error("Title cannot contain spaces");
+			// Trim and validate the label has no spaces
+			const trimmedLabel = localLabel.trim();
+			if (trimmedLabel.includes(" ")) {
+				toast.error("Label cannot contain spaces");
 				return;
 			}
-			const success = onTitleChange(trimmedTitle);
+			const success = onLabelChange(handleId, trimmedLabel);
 			if (success) {
 				setIsEditing(false);
 			}
@@ -97,14 +99,14 @@ const EditableLabeledHandle = React.forwardRef<
 
 		const handleStartEditing = () => {
 			setIsEditing(true);
-			// Reset local title to current title when starting edit
-			setLocalTitle(title);
+			// Reset local label to current label when starting edit
+			setLocalLabel(label);
 		};
 
 		return (
 			<div
 				ref={ref}
-				title={title}
+				title={label}
 				className={cn(
 					"relative flex items-center group",
 					flexDirections[position],
@@ -114,14 +116,15 @@ const EditableLabeledHandle = React.forwardRef<
 				<BaseHandle
 					position={position}
 					className={handleClassName}
+					id={handleId}
 					{...handleProps}
 				/>
 				{isEditing ? (
 					<div className="flex items-center px-2 gap-2 nodrag">
 						<Input
 							ref={inputRef}
-							value={localTitle}
-							onChange={(e) => setLocalTitle(e.target.value)}
+							value={localLabel}
+							onChange={(e) => setLocalLabel(e.target.value)}
 							onKeyDown={handleKeyDown}
 							className={cn("px-2 h-6", labelClassName)}
 							autoFocus
@@ -154,7 +157,7 @@ const EditableLabeledHandle = React.forwardRef<
 								labelClassName,
 							)}
 						>
-							{title}
+							{label}
 						</label>
 						<div className="flex items-center gap-1 shrink-0">
 							<Button
@@ -169,7 +172,7 @@ const EditableLabeledHandle = React.forwardRef<
 								variant="ghost"
 								size="icon"
 								className="size-4 [&_svg]:size-3.5"
-								onClick={onDelete}
+								onClick={() => onDelete(handleId)}
 							>
 								<Trash />
 							</Button>
