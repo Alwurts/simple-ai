@@ -1,0 +1,24 @@
+{
+  "name": "flow-01",
+  "type": "registry:block",
+  "description": "A flow chart builder.",
+  "dependencies": [
+    "@xyflow/react",
+    "zustand"
+  ],
+  "registryDependencies": [
+    "button",
+    "card",
+    "dialog",
+    "input",
+    "textarea"
+  ],
+  "files": [
+    {
+      "path": "blocks/flow-01/page.tsx",
+      "content": "\"use client\";\n\nimport { type NodeTypes, ReactFlowProvider } from \"@xyflow/react\";\nimport { ReactFlow, Background } from \"@xyflow/react\";\nimport { shallow } from \"zustand/shallow\";\nimport \"@xyflow/react/dist/style.css\";\nimport { useStore } from \"@/registry/blocks/flow-01/hooks/store\";\nimport { GenerateTextNode } from \"@/components/flow/generate-text-node\";\nimport { DevTools } from \"@/components/flow/devtools\";\n\nconst nodeTypes: NodeTypes = {\n\t\"generate-text\": GenerateTextNode,\n};\n\nexport default function Flow01Page() {\n\tconst store = useStore(\n\t\t(store) => ({\n\t\t\tnodes: store.nodes,\n\t\t\tedges: store.edges,\n\t\t\tonNodesChange: store.onNodesChange,\n\t\t\tonEdgesChange: store.onEdgesChange,\n\t\t\tonConnect: store.onConnect,\n\t\t}),\n\t\tshallow,\n\t);\n\n\treturn (\n\t\t<div className=\"w-screen h-screen\">\n\t\t\t<ReactFlowProvider>\n\t\t\t\t<ReactFlow\n\t\t\t\t\tnodes={store.nodes}\n\t\t\t\t\tedges={store.edges}\n\t\t\t\t\tonNodesChange={store.onNodesChange}\n\t\t\t\t\tonEdgesChange={store.onEdgesChange}\n\t\t\t\t\tonConnect={store.onConnect}\n\t\t\t\t\tnodeTypes={nodeTypes}\n\t\t\t\t\tfitView\n\t\t\t\t>\n\t\t\t\t\t<Background />\n\t\t\t\t\t<DevTools />\n\t\t\t\t</ReactFlow>\n\t\t\t</ReactFlowProvider>\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:page",
+      "target": "app/flow/page.tsx"
+    }
+  ]
+}

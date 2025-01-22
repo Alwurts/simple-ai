@@ -292,4 +292,18 @@ export const blocks: Registry = [
 		],
 		categories: ["app"],
 	},
+	{
+		name: "flow-01",
+		description: "A flow chart builder.",
+		type: "registry:block",
+		dependencies: ["@xyflow/react", "zustand"],
+		registryDependencies: ["button", "card", "dialog", "input", "textarea"],
+		files: [
+			{
+				path: "blocks/flow-01/page.tsx",
+				target: "app/flow/page.tsx",
+				type: "registry:page",
+			},
+		],
+	},
 ];

@@ -553,6 +553,20 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/blocks/app-03/page.tsx")),
 		source: "src/__registry__/blocks/app-03/page.tsx",
 		meta: undefined,
+    },	"flow-01": {
+		name: "flow-01",
+		description: "A flow chart builder.",
+		type: "registry:block",
+		registryDependencies: ["button","card","dialog","input","textarea"],
+		files: [{
+			path: "src/registry/blocks/flow-01/page.tsx",
+			type: "registry:page",
+			target: "app/flow/page.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/blocks/flow-01/page.tsx")),
+		source: "src/__registry__/blocks/flow-01/page.tsx",
+		meta: undefined,
     },	"jsx-utils": {
 		name: "jsx-utils",
 		description: "A set of utilities for working with JSX.",
