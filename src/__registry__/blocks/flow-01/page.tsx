@@ -1,6 +1,11 @@
 "use client";
 
-import { type NodeTypes, ReactFlowProvider } from "@xyflow/react";
+import {
+	Controls,
+	MiniMap,
+	type NodeTypes,
+	ReactFlowProvider,
+} from "@xyflow/react";
 import { Background, Panel, ReactFlow, useReactFlow } from "@xyflow/react";
 import type React from "react";
 import { shallow } from "zustand/shallow";
@@ -14,7 +19,6 @@ import { TextInputNode } from "@/registry/blocks/flow-01/components/flow/text-in
 import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/visualize-text-node";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { AppNode } from "@/registry/blocks/flow-01/hooks/store";
-import { nanoid } from "nanoid";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNode,
@@ -33,6 +37,7 @@ function Flow() {
 			onConnect: store.onConnect,
 			runtime: store.runtime,
 			startExecution: store.startExecution,
+			createNode: store.createNode,
 		}),
 		shallow,
 	);
@@ -47,7 +52,9 @@ function Flow() {
 	const onDrop = (event: React.DragEvent) => {
 		event.preventDefault();
 
-		const type = event.dataTransfer.getData("application/reactflow");
+		const type = event.dataTransfer.getData(
+			"application/reactflow",
+		) as AppNode["type"];
 
 		// Check if the dropped element is valid
 		if (!type) {
@@ -60,60 +67,7 @@ function Flow() {
 			y: event.clientY,
 		});
 
-		let newNode: AppNode;
-
-		switch (type) {
-			case "generate-text":
-				newNode = {
-					id: nanoid(),
-					type,
-					position,
-					data: {
-						config: { model: "gpt-4o" },
-					},
-				};
-				break;
-			case "prompt-crafter":
-				newNode = {
-					id: nanoid(),
-					type,
-					position,
-					data: {
-						text: "",
-						inputs: [],
-					},
-				};
-				break;
-			case "visualize-text":
-				newNode = {
-					id: nanoid(),
-					type,
-					position,
-					data: {
-						text: "",
-					},
-				};
-				break;
-			case "text-input":
-				newNode = {
-					id: nanoid(),
-					type,
-					position,
-					data: {
-						text: "",
-					},
-				};
-				break;
-			default:
-				return;
-		}
-
-		store.onNodesChange([
-			{
-				type: "add",
-				item: newNode,
-			},
-		]);
+		store.createNode(type, position);
 	};
 
 	return (
@@ -130,11 +84,13 @@ function Flow() {
 		>
 			<Background />
 			<DevTools />
+			<Controls />
+			<MiniMap />
 			<NodesPanel />
 			<Panel position="top-right" className="flex gap-2 items-center">
-				{store.runtime.currentNodeId && (
+				{store.runtime.currentNodeIds.length > 0 && (
 					<div className="text-sm text-muted-foreground">
-						Processing node: {store.runtime.currentNodeId}
+						Processing node: {store.runtime.currentNodeIds.join(", ")}
 					</div>
 				)}
 				<Button

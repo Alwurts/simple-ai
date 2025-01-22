@@ -1,4 +1,8 @@
-import { type NodeProps, Position } from "@xyflow/react";
+import {
+	type NodeProps,
+	Position,
+	useUpdateNodeInternals,
+} from "@xyflow/react";
 
 import { BaseNode } from "@/components/flow/base-node";
 import { LabeledHandle } from "@/components/flow/labeled-handle";
@@ -9,6 +13,7 @@ import {
 } from "@/components/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
 	Select,
 	SelectContent,
@@ -18,14 +23,16 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { EditableToolHandle } from "@/registry/blocks/flow-01/components/flow/editable-tool-handle";
 import {
 	MODELS,
 	type TGenerateTextNode,
 	type TModel,
 	useStore,
 } from "@/registry/blocks/flow-01/hooks/store";
-import { Bot, Trash } from "lucide-react";
+import { Bot, Plus, Trash } from "lucide-react";
 import { useCallback } from "react";
+import { toast } from "sonner";
 
 export function GenerateTextNode({
 	id,
@@ -34,16 +41,66 @@ export function GenerateTextNode({
 	data,
 }: NodeProps<TGenerateTextNode>) {
 	const updateNode = useStore((state) => state.updateNode);
+	const addDynamicTool = useStore((state) => state.addDynamicTool);
+	const removeDynamicTool = useStore((state) => state.removeDynamicTool);
 	const runtime = useStore((state) => state.runtime);
 	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
+	const updateNodeInternals = useUpdateNodeInternals();
 
 	const handleModelChange = useCallback(
 		(value: string) => {
 			updateNode(id, {
-				config: { model: value as TModel },
+				config: {
+					...data.config,
+					model: value as TModel,
+				},
 			});
 		},
-		[id, updateNode],
+		[id, data.config, updateNode],
+	);
+
+	const addTool = useCallback(() => {
+		addDynamicTool(id);
+		updateNodeInternals(id);
+	}, [id, addDynamicTool, updateNodeInternals]);
+
+	const removeTool = useCallback(
+		(toolId: string) => {
+			removeDynamicTool(id, toolId);
+			updateNodeInternals(id);
+		},
+		[id, removeDynamicTool, updateNodeInternals],
+	);
+
+	const updateTool = useCallback(
+		(toolId: string, newName: string, newDescription: string): boolean => {
+			if (!newName) {
+				toast.error("Tool name cannot be empty");
+				return false;
+			}
+
+			const existingTool = data.config.tools.find(
+				(tool) => tool.name === newName && tool.id !== toolId,
+			);
+			if (existingTool) {
+				toast.error("Tool name already exists");
+				return false;
+			}
+
+			updateNode(id, {
+				config: {
+					...data.config,
+					tools: data.config.tools.map((tool) =>
+						tool.id === toolId
+							? { ...tool, name: newName, description: newDescription }
+							: tool,
+					),
+				},
+			});
+			updateNodeInternals(id);
+			return true;
+		},
+		[id, data.config, updateNode, updateNodeInternals],
 	);
 
 	const executionStatus = data.lastRun?.status || "idle";
@@ -58,7 +115,7 @@ export function GenerateTextNode({
 		<BaseNode
 			selected={selected}
 			isProcessing={isProcessing}
-			className="px-0 pb-0 flex flex-col min-w-[350px]"
+			className="px-0 pb-0 flex flex-col w-[350px]"
 		>
 			<NodeHeader className="px-8 mb-0">
 				<NodeHeaderIcon>
@@ -90,8 +147,8 @@ export function GenerateTextNode({
 					</SelectContent>
 				</Select>
 			</div>
-			<div className="grid grid-cols-2 gap-2 pt-2 pb-4 text-sm">
-				<div className="flex flex-col gap-2">
+			<div className="grid grid-cols-[2fr,1fr] gap-2 pt-2 text-sm">
+				<div className="flex flex-col gap-2 min-w-0">
 					<LabeledHandle
 						id="system"
 						title="System"
@@ -109,10 +166,42 @@ export function GenerateTextNode({
 				<div className="justify-self-end">
 					<LabeledHandle
 						id="output"
-						title="Output"
+						title="Result"
 						type="source"
 						position={Position.Right}
 					/>
+				</div>
+			</div>
+			<div className="border-t border-border mt-2">
+				<div>
+					<div className="flex items-center justify-between py-2 px-4 bg-muted">
+						<span className="text-sm font-medium">Tools</span>
+						<Button
+							variant="outline"
+							size="sm"
+							className="h-7 px-2"
+							onClick={addTool}
+						>
+							<Plus className="h-4 w-4 mr-1" />
+							New Tool
+						</Button>
+					</div>
+					<div className="flex flex-col">
+						{data.config.tools.map((tool) => (
+							<EditableToolHandle
+								key={tool.id}
+								nodeId={id}
+								handleId={tool.id}
+								name={tool.name}
+								description={tool.description}
+								type="source"
+								position={Position.Right}
+								wrapperClassName="w-full"
+								onToolChange={updateTool}
+								onDelete={removeTool}
+							/>
+						))}
+					</div>
 				</div>
 			</div>
 		</BaseNode>

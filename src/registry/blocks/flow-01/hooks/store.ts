@@ -10,11 +10,10 @@ import { createWithEqualityFn } from "zustand/traditional";
 import { nanoid } from "nanoid";
 
 export const MODELS = [
-	"gpt-4o",
-	"gpt-40-mini",
-	"claude-3-5-sonnet",
-	"llama-3-8b",
-];
+	"deepseek-chat",
+	"llama-3.3-70b-versatile",
+	"llama-3.1-8b-instant",
+] as const;
 
 export type TModel = (typeof MODELS)[number];
 
@@ -34,13 +33,22 @@ interface NodeExecutionState<TInput = unknown, TOutput = unknown> {
 	error?: string;
 }
 
+export interface Tool {
+	id: string;
+	name: string;
+	description: string;
+	result?: string;
+}
+
 interface ApiResponse {
 	text: string;
 	tokens_used?: number;
+	toolResults?: Tool[];
 }
 
 interface GenerateTextOutput {
 	result: string;
+	toolResults?: Tool[];
 	metadata: {
 		model: TModel;
 		tokens_used: number;
@@ -49,6 +57,7 @@ interface GenerateTextOutput {
 
 interface GenerateTextConfig {
 	model: TModel;
+	tools: Tool[];
 }
 
 interface GenerateTextInput {
@@ -103,6 +112,8 @@ export interface StoreState {
 	deleteNode: (id: string) => void;
 	addDynamicInput: (nodeId: string) => string;
 	removeDynamicInput: (nodeId: string, handleId: string) => void;
+	addDynamicTool: (nodeId: string) => string;
+	removeDynamicTool: (nodeId: string, toolId: string) => void;
 	createNode: (
 		type: AppNode["type"],
 		position: { x: number; y: number },
@@ -225,6 +236,38 @@ async function processNodesIndependently(
 			const node = get().nodes.find((n) => n.id === nodeId);
 			if (node?.data.lastRun?.status === "error") {
 				failedNodes.add(nodeId);
+			} else if (node?.type === "generate-text" && node.data.lastRun?.output) {
+				const output = node.data.lastRun.output as GenerateTextOutput;
+
+				// Process tool results if they exist
+				if (output.toolResults?.length) {
+					// Find edges that connect from this node's tool handles
+					const toolEdges = edges.filter(
+						(edge) => edge.source === nodeId && edge.sourceHandle !== "output",
+					);
+
+					// For each tool result, find matching edge and mark target node as ready
+					for (const toolResult of output.toolResults) {
+						if (!toolResult.id || !toolResult.result) {
+							continue;
+						}
+						const matchingEdge = toolEdges.find(
+							(edge) => edge.sourceHandle === toolResult.id,
+						);
+						if (matchingEdge) {
+							const targetState = nodeStates.get(matchingEdge.target);
+							if (targetState) {
+								targetState.dependencies.delete(nodeId);
+								targetState.isReady = Array.from(
+									targetState.dependencies,
+								).every((depId) => nodeStates.get(depId)?.processed);
+								if (targetState.isReady && !targetState.processed) {
+									void processNode(matchingEdge.target);
+								}
+							}
+						}
+					}
+				}
 			}
 
 			// Mark node as processed
@@ -235,7 +278,7 @@ async function processNodesIndependently(
 
 			// Update dependent nodes' readiness and start them if ready
 			for (const edge of edges) {
-				if (edge.source === nodeId) {
+				if (edge.source === nodeId && edge.sourceHandle === "output") {
 					const targetState = nodeStates.get(edge.target);
 					if (targetState) {
 						targetState.dependencies.delete(nodeId);
@@ -301,26 +344,35 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			type: "text-input",
 			id: "a",
 			data: {
-				text: "Alwurts",
+				text: "Hey, how are you?",
 			},
 			position: { x: -400, y: 200 },
-		} as TTextInputNode,
+		},
 		{
 			type: "text-input",
 			id: "x",
 			data: {
-				text: "You are a helpful assistant.",
+				text: "You are a helpful assistant that always uses the tool to respond.",
 			},
 			position: { x: 0, y: -150 },
-		} as TTextInputNode,
+		},
 		{
 			type: "generate-text",
 			id: "b",
 			data: {
-				config: { model: "gpt-4o" },
+				config: {
+					model: "llama-3.1-8b-instant",
+					tools: [
+						{
+							id: "xyz", // printValue as id works, but xyz doesn't
+							name: "printValue",
+							description: "Use this to respond",
+						},
+					],
+				},
 			},
 			position: { x: 450, y: 50 },
-		} as TGenerateTextNode,
+		},
 		{
 			type: "visualize-text",
 			id: "c",
@@ -328,16 +380,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				text: "",
 			},
 			position: { x: 900, y: -100 },
-		} as TVisualizeTextNode,
-		/* {
-			type: "prompt-crafter",
-			id: "d",
-			data: {
-				text: "Hello, {input1}!",
-				inputs: [{ id: "input1", label: "input1" }],
-			},
-			position: { x: 0, y: 150 },
-		} as TPromptCrafterNode, */
+		},
 	],
 	edges: [
 		{
@@ -365,7 +408,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			id: "e4",
 			source: "b",
 			target: "c",
-			sourceHandle: "output",
+			sourceHandle: "xyz", // printValue works, but xyz doesn't
 			targetHandle: "input",
 		},
 	],
@@ -450,6 +493,56 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		});
 	},
 
+	addDynamicTool(nodeId: string) {
+		const newId = nanoid();
+		set({
+			nodes: get().nodes.map((node) => {
+				if (node.id === nodeId && node.type === "generate-text") {
+					return {
+						...node,
+						data: {
+							...node.data,
+							config: {
+								...node.data.config,
+								tools: [
+									...node.data.config.tools,
+									{ id: newId, name: "", description: "" },
+								],
+							},
+						},
+					};
+				}
+				return node;
+			}) as AppNode[],
+		});
+		return newId;
+	},
+
+	removeDynamicTool(nodeId: string, toolId: string) {
+		set({
+			nodes: get().nodes.map((node) => {
+				if (node.id === nodeId && node.type === "generate-text") {
+					return {
+						...node,
+						data: {
+							...node.data,
+							config: {
+								...node.data.config,
+								tools: node.data.config.tools.filter(
+									(tool) => tool.id !== toolId,
+								),
+							},
+						},
+					};
+				}
+				return node;
+			}) as AppNode[],
+			edges: get().edges.filter(
+				(edge) => !(edge.target === nodeId && edge.targetHandle === toolId),
+			),
+		});
+	},
+
 	createNode(type: AppNode["type"], position: { x: number; y: number }) {
 		let newNode: AppNode;
 
@@ -460,7 +553,10 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					type,
 					position,
 					data: {
-						config: { model: "gpt-4o" },
+						config: {
+							model: "llama-3.1-8b-instant",
+							tools: [],
+						},
 					},
 				};
 				break;
@@ -562,12 +658,27 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		for (const edge of incomingEdges) {
 			const sourceNode = nodes.find((n) => n.id === edge.source);
 			if (sourceNode?.data.lastRun?.output) {
-				inputsByHandle.set(
-					edge.targetHandle || "",
-					typeof sourceNode.data.lastRun.output === "string"
-						? sourceNode.data.lastRun.output
-						: sourceNode.data.lastRun.output.result,
-				);
+				if (sourceNode.type === "generate-text") {
+					const output = sourceNode.data.lastRun.output as GenerateTextOutput;
+					if (edge.sourceHandle === "output") {
+						inputsByHandle.set(edge.targetHandle || "", output.result);
+					} else {
+						// If connected to a tool handle, find the matching tool result
+						const toolResult = output.toolResults?.find(
+							(t) => t.id === edge.sourceHandle,
+						);
+						if (toolResult?.result) {
+							inputsByHandle.set(edge.targetHandle || "", toolResult.result);
+						}
+					}
+				} else {
+					inputsByHandle.set(
+						edge.targetHandle || "",
+						typeof sourceNode.data.lastRun.output === "string"
+							? sourceNode.data.lastRun.output
+							: sourceNode.data.lastRun.output.result,
+					);
+				}
 			}
 		}
 
@@ -634,6 +745,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 								model: node.data.config.model,
 								tokens_used: 100, // Mock value
 							},
+							toolResults: [],
 						};
 					} else {
 						// Make actual API call
@@ -646,6 +758,8 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 								body: JSON.stringify({
 									system: inputs[0],
 									prompt: inputs[1],
+									model: node.data.config.model,
+									tools: node.data.config.tools,
 								}),
 							});
 
@@ -654,12 +768,14 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 							}
 
 							const data = (await response.json()) as ApiResponse;
+							console.log("data", data);
 							output = {
 								result: data.text,
 								metadata: {
 									model: node.data.config.model,
 									tokens_used: data.tokens_used || 0,
 								},
+								toolResults: data.toolResults,
 							};
 						} catch (error) {
 							throw new Error(

@@ -1,37 +1,104 @@
+import type { Tool } from "@/registry/blocks/flow-01/hooks/store";
 import { createDeepSeek } from "@ai-sdk/deepseek";
-/* import { createGroq } from "@ai-sdk/groq"; */
-import { generateText } from "ai";
+import { createGroq } from "@ai-sdk/groq";
+import { generateText, tool } from "ai";
 import { NextResponse } from "next/server";
+import { z } from "zod";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
 	const data = await req.json();
-	const { prompt, system }: { prompt: string; system: string } = data;
+	const {
+		prompt,
+		system,
+		model,
+		tools,
+	}: {
+		prompt: string;
+		system: string;
+		model: string;
+		tools: Tool[];
+	} = data;
 
-	const deepSeekClient = createDeepSeek({
-		baseURL: process.env.AI_GATEWAY_DEEPSEEK_URL,
-	});
+	let client: ReturnType<typeof createDeepSeek> | ReturnType<typeof createGroq>;
+	switch (model) {
+		case "deepseek-chat":
+			client = createDeepSeek({
+				baseURL: process.env.AI_GATEWAY_DEEPSEEK_URL,
+			});
+			break;
+		case "llama-3.3-70b-versatile":
+		case "llama-3.1-8b-instant":
+			client = createGroq({
+				baseURL: process.env.AI_GATEWAY_GROQ_URL,
+			});
+			break;
+		default:
+			throw new Error(`Unsupported model: ${model}`);
+	}
 
-	console.log("prompt", { prompt, system });
+	console.log("ai request", { prompt, system, model, tools });
 
-	/* const groqClient = createGroq({
-		baseURL: process.env.AI_GATEWAY_GROQ_URL,
-	}); */
+	// Map tools to the format expected by the AI SDK
+	const mappedTools = Object.fromEntries(
+		tools.map((toolToMap) => [
+			toolToMap.name,
+			tool({
+				description: toolToMap.description,
+				parameters: z.object({
+					toolValue: z.string(),
+				}),
+				execute: async ({ toolValue }) => {
+					/* console.log("tool execution", {
+						name: toolToMap.name,
+						value: toolValue,
+					}); */
+					return toolValue;
+				},
+			}),
+		]),
+	);
+
+	console.log("mappedTools", mappedTools);
 
 	try {
 		const result = await generateText({
-			model: deepSeekClient("deepseek-chat"),
+			model: client(model),
 			system: system,
 			prompt: prompt,
+			...(tools.length > 0 && {
+				tools: mappedTools,
+				maxSteps: 1,
+				toolChoice: "required",
+			}),
 		});
-		/* const throwError = Math.random() < 0.5;
-		if (throwError) {
-			throw new Error("Mock error");
-		} */
 
-		return NextResponse.json(result);
+		let toolResults: Tool[] = [];
+		if (tools.length > 0 && result.toolResults) {
+			toolResults = result.toolResults.map((step) => {
+				const originalTool = tools.find((tool) => tool.name === step.toolName);
+				return {
+					id: originalTool?.id || "",
+					name: step.toolName,
+					description: originalTool?.description || "",
+					result: step.result,
+				};
+			});
+		}
+
+		console.log("ai response", {
+			text: result.text,
+			tokens_used: result.usage?.totalTokens,
+			toolResults: toolResults,
+		});
+
+		return NextResponse.json({
+			text: result.text,
+			tokens_used: result.usage?.totalTokens,
+			toolResults: toolResults,
+		});
 	} catch (error) {
 		console.error(error);
 		return new Response("Internal Server Error", { status: 500 });
