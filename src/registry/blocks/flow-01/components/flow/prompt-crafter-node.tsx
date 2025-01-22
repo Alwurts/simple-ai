@@ -83,6 +83,8 @@ export function PromptCrafterNode({
 	data,
 }: NodeProps<TPromptCrafterNode>) {
 	const updateNode = useStore((state) => state.updateNode);
+	const runtime = useStore((state) => state.runtime);
+	const isProcessing = runtime.isRunning && runtime.currentNodeId === id;
 	const updateNodeInternals = useUpdateNodeInternals();
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 	const editorViewRef = useRef<EditorView>();
@@ -164,7 +166,11 @@ export function PromptCrafterNode({
 	}, [data.inputs]);
 
 	return (
-		<BaseNode selected={selected} className="px-0 pb-0 flex flex-col w-[350px]">
+		<BaseNode
+			selected={selected}
+			isProcessing={isProcessing}
+			className="px-0 pb-0 flex flex-col w-[350px]"
+		>
 			<NodeHeader className="px-8 mb-0">
 				<NodeHeaderIcon>
 					<PencilRuler />
@@ -227,6 +233,11 @@ export function PromptCrafterNode({
 						indentOnInput: false,
 					}}
 				/>
+				{/* {data.output && (
+					<div className="mt-4 text-sm text-muted-foreground border rounded-md p-2 max-h-[100px] overflow-y-auto">
+						{data.output}
+					</div>
+				)} */}
 			</div>
 			<div className="grid grid-cols-[2fr,1fr] gap-2 pt-2 pb-4 text-sm">
 				<div className="flex flex-col gap-2 min-w-0">

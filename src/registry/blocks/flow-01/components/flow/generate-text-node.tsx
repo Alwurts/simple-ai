@@ -32,6 +32,8 @@ export function GenerateTextNode({
 	data,
 }: NodeProps<TGenerateTextNode>) {
 	const updateNode = useStore((state) => state.updateNode);
+	const runtime = useStore((state) => state.runtime);
+	const isProcessing = runtime.isRunning && runtime.currentNodeId === id;
 
 	const handleModelChange = useCallback(
 		(value: string) => {
@@ -43,7 +45,11 @@ export function GenerateTextNode({
 	);
 
 	return (
-		<BaseNode selected={selected} className="px-0 pb-0 flex flex-col">
+		<BaseNode
+			selected={selected}
+			isProcessing={isProcessing}
+			className="px-0 pb-0 flex flex-col"
+		>
 			<NodeHeader className="px-8 mb-0">
 				<NodeHeaderIcon>
 					<Bot />
@@ -54,7 +60,7 @@ export function GenerateTextNode({
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
-			<div className="p-4">
+			<div className="p-4 flex flex-col gap-4">
 				<Select value={data.model} onValueChange={handleModelChange}>
 					<SelectTrigger className="w-full nodrag">
 						<SelectValue placeholder="Select model" />
@@ -67,6 +73,11 @@ export function GenerateTextNode({
 						))}
 					</SelectContent>
 				</Select>
+				{/* {data.output && (
+					<div className="text-sm text-muted-foreground border rounded-md p-2 max-h-[100px] overflow-y-auto">
+						{data.output}
+					</div>
+				)} */}
 			</div>
 			<div className="grid grid-cols-2 gap-2 pt-2 pb-4 text-sm">
 				<div className="flex flex-col gap-2">

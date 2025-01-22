@@ -24,6 +24,8 @@ export function TextInputNode({
 	deletable,
 }: NodeProps<TTextInputNode>) {
 	const updateNode = useStore((state) => state.updateNode);
+	const runtime = useStore((state) => state.runtime);
+	const isProcessing = runtime.isRunning && runtime.currentNodeId === id;
 
 	const handleTextChange = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -33,7 +35,11 @@ export function TextInputNode({
 	);
 
 	return (
-		<BaseNode selected={selected} className="px-0 pb-0 flex flex-col">
+		<BaseNode
+			selected={selected}
+			isProcessing={isProcessing}
+			className="px-0 pb-0 flex flex-col"
+		>
 			<NodeHeader className="px-8 mb-0">
 				<NodeHeaderIcon>
 					<PenLine />
@@ -44,13 +50,18 @@ export function TextInputNode({
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
-			<div className="p-2 w-[300px]">
+			<div className="p-2 w-[300px] flex flex-col gap-4">
 				<Textarea
 					value={data.text || ""}
 					onChange={handleTextChange}
 					className="w-full h-[150px] resize-none nodrag"
 					placeholder="Enter your text here..."
 				/>
+				{/* {data.output && (
+					<div className="text-sm text-muted-foreground border rounded-md p-2 max-h-[100px] overflow-y-auto">
+						{data.output}
+					</div>
+				)} */}
 			</div>
 			<div className="flex justify-end pt-2 pb-4 text-sm">
 				<LabeledHandle

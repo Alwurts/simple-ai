@@ -1,7 +1,7 @@
 "use client";
 
 import { type NodeTypes, ReactFlowProvider } from "@xyflow/react";
-import { ReactFlow, Background } from "@xyflow/react";
+import { ReactFlow, Background, Panel } from "@xyflow/react";
 import { shallow } from "zustand/shallow";
 import "@xyflow/react/dist/style.css";
 import { DevTools } from "@/components/flow/devtools";
@@ -10,6 +10,7 @@ import { GenerateTextNode } from "@/registry/blocks/flow-01/components/flow/gene
 import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/visualize-text-node";
 import { TextInputNode } from "@/registry/blocks/flow-01/components/flow/text-input-node";
 import { PromptCrafterNode } from "@/registry/blocks/flow-01/components/flow/prompt-crafter-node";
+import { Button } from "@/components/ui/button";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNode,
@@ -26,6 +27,8 @@ export default function Flow01Page() {
 			onNodesChange: store.onNodesChange,
 			onEdgesChange: store.onEdgesChange,
 			onConnect: store.onConnect,
+			runtime: store.runtime,
+			startExecution: store.startExecution,
 		}),
 		shallow,
 	);
@@ -44,6 +47,19 @@ export default function Flow01Page() {
 				>
 					<Background />
 					<DevTools />
+					<Panel position="top-right" className="flex gap-2 items-center">
+						{store.runtime.currentNodeId && (
+							<div className="text-sm text-muted-foreground">
+								Processing node: {store.runtime.currentNodeId}
+							</div>
+						)}
+						<Button
+							onClick={() => store.startExecution()}
+							disabled={store.runtime.isRunning}
+						>
+							{store.runtime.isRunning ? "Running..." : "Run Flow"}
+						</Button>
+					</Panel>
 				</ReactFlow>
 			</ReactFlowProvider>
 		</div>

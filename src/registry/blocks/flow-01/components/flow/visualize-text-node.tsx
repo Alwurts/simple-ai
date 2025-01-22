@@ -23,8 +23,15 @@ export function VisualizeTextNode({
 	data,
 	deletable,
 }: NodeProps<TVisualizeTextNode>) {
+	const runtime = useStore((state) => state.runtime);
+	const isProcessing = runtime.isRunning && runtime.currentNodeId === id;
+
 	return (
-		<BaseNode selected={selected} className="px-0 pb-0 flex flex-col">
+		<BaseNode
+			selected={selected}
+			isProcessing={isProcessing}
+			className="px-0 pb-0 flex flex-col"
+		>
 			<NodeHeader className="px-8 mb-0">
 				<NodeHeaderIcon>
 					<Eye />
