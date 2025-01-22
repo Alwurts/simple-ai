@@ -28,6 +28,7 @@ import {
 export function GenerateTextNode({
 	id,
 	selected,
+	deletable,
 	data,
 }: NodeProps<TGenerateTextNode>) {
 	const updateNode = useStore((state) => state.updateNode);
@@ -49,13 +50,13 @@ export function GenerateTextNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Generate Text</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<NodeHeaderDeleteAction id={id} />
+					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
 			<div className="p-4">
 				<Select value={data.model} onValueChange={handleModelChange}>
-					<SelectTrigger className="w-full">
+					<SelectTrigger className="w-full nodrag">
 						<SelectValue placeholder="Select model" />
 					</SelectTrigger>
 					<SelectContent>
@@ -67,27 +68,30 @@ export function GenerateTextNode({
 					</SelectContent>
 				</Select>
 			</div>
-			<div className="grid grid-cols-2 gap-2 py-2 text-sm">
-				<LabeledHandle
-					id="system"
-					title="System"
-					type="target"
-					position={Position.Left}
-				/>
-				<LabeledHandle
-					id="output"
-					title="Output"
-					type="source"
-					position={Position.Right}
-					className="justify-self-end"
-				/>
-				<LabeledHandle
-					id="prompt"
-					title="Prompt"
-					type="target"
-					position={Position.Left}
-					className="col-span-2"
-				/>
+			<div className="grid grid-cols-2 gap-2 pt-2 pb-4 text-sm">
+				<div className="flex flex-col gap-2">
+					<LabeledHandle
+						id="system"
+						title="System"
+						type="target"
+						position={Position.Left}
+					/>
+					<LabeledHandle
+						id="prompt"
+						title="Prompt"
+						type="target"
+						position={Position.Left}
+						className="col-span-2"
+					/>
+				</div>
+				<div className="justify-self-end">
+					<LabeledHandle
+						id="output"
+						title="Output"
+						type="source"
+						position={Position.Right}
+					/>
+				</div>
 			</div>
 		</BaseNode>
 	);

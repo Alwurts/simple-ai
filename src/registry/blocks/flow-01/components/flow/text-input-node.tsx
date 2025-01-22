@@ -15,11 +15,13 @@ import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { PenLine, Trash } from "lucide-react";
 import { LabeledHandle } from "@/components/flow/labeled-handle";
 import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 
 export function TextInputNode({
 	id,
 	selected,
 	data,
+	deletable,
 }: NodeProps<TTextInputNode>) {
 	const updateNode = useStore((state) => state.updateNode);
 
@@ -38,19 +40,19 @@ export function TextInputNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Text Input</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<NodeHeaderDeleteAction id={id} />
+					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
 			<div className="p-2 w-[300px]">
-				<textarea
+				<Textarea
 					value={data.text || ""}
 					onChange={handleTextChange}
-					className="w-full h-[150px] resize-none border border-border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-ring"
+					className="w-full h-[150px] resize-none nodrag"
 					placeholder="Enter your text here..."
 				/>
 			</div>
-			<div className="flex justify-end py-2 text-sm">
+			<div className="flex justify-end pt-2 pb-4 text-sm">
 				<LabeledHandle
 					id="output"
 					title="Output"

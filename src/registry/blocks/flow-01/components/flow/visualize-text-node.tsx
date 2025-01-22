@@ -21,6 +21,7 @@ export function VisualizeTextNode({
 	id,
 	selected,
 	data,
+	deletable,
 }: NodeProps<TVisualizeTextNode>) {
 	return (
 		<BaseNode selected={selected} className="px-0 pb-0 flex flex-col">
@@ -30,7 +31,7 @@ export function VisualizeTextNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Visualize Text</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<NodeHeaderDeleteAction id={id} />
+					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
@@ -42,7 +43,7 @@ export function VisualizeTextNode({
 					/>
 				</div>
 			</div>
-			<div className="grid grid-cols-2 gap-2 py-2 text-sm">
+			<div className="flex justify-start pt-2 pb-4 text-sm">
 				<LabeledHandle
 					id="input"
 					title="Input"
