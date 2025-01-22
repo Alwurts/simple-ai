@@ -14,6 +14,7 @@ import { TextInputNode } from "@/registry/blocks/flow-01/components/flow/text-in
 import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/visualize-text-node";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { AppNode } from "@/registry/blocks/flow-01/hooks/store";
+import { nanoid } from "nanoid";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNode,
@@ -64,27 +65,43 @@ function Flow() {
 		switch (type) {
 			case "generate-text":
 				newNode = {
-					id: crypto.randomUUID(),
+					id: nanoid(),
 					type,
 					position,
-					data: { model: "gpt-4o" },
+					data: {
+						config: { model: "gpt-4o" },
+					},
 				};
 				break;
 			case "prompt-crafter":
 				newNode = {
-					id: crypto.randomUUID(),
+					id: nanoid(),
 					type,
 					position,
-					data: { text: "", inputs: [] },
+					data: {
+						text: "",
+						inputs: [],
+					},
 				};
 				break;
 			case "visualize-text":
-			case "text-input":
 				newNode = {
-					id: crypto.randomUUID(),
+					id: nanoid(),
 					type,
 					position,
-					data: { text: "" },
+					data: {
+						text: "",
+					},
+				};
+				break;
+			case "text-input":
+				newNode = {
+					id: nanoid(),
+					type,
+					position,
+					data: {
+						text: "",
+					},
 				};
 				break;
 			default:

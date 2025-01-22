@@ -6,8 +6,10 @@ import {
 	NodeHeaderTitle,
 } from "@/components/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
+import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import { cn } from "@/lib/utils";
 import {
 	type TTextInputNode,
 	useStore,
@@ -25,7 +27,7 @@ export function TextInputNode({
 }: NodeProps<TTextInputNode>) {
 	const updateNode = useStore((state) => state.updateNode);
 	const runtime = useStore((state) => state.runtime);
-	const isProcessing = runtime.isRunning && runtime.currentNodeId === id;
+	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
 
 	const handleTextChange = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -33,6 +35,14 @@ export function TextInputNode({
 		},
 		[id, updateNode],
 	);
+
+	const executionStatus = data.lastRun?.status || "idle";
+	const statusColors = {
+		idle: "bg-muted text-muted-foreground",
+		processing: "bg-orange-500 text-white",
+		success: "bg-green-500 text-white",
+		error: "bg-red-500 text-white",
+	};
 
 	return (
 		<BaseNode
@@ -46,6 +56,12 @@ export function TextInputNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Text Input</NodeHeaderTitle>
 				<NodeHeaderActions>
+					<Badge
+						variant="secondary"
+						className={cn("mr-2 font-normal", statusColors[executionStatus])}
+					>
+						{executionStatus}
+					</Badge>
 					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>
@@ -57,11 +73,6 @@ export function TextInputNode({
 					className="w-full h-[150px] resize-none nodrag"
 					placeholder="Enter your text here..."
 				/>
-				{/* {data.output && (
-					<div className="text-sm text-muted-foreground border rounded-md p-2 max-h-[100px] overflow-y-auto">
-						{data.output}
-					</div>
-				)} */}
 			</div>
 			<div className="flex justify-end pt-2 pb-4 text-sm">
 				<LabeledHandle

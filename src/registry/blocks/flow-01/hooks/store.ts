@@ -22,28 +22,60 @@ export type TModel = (typeof MODELS)[number];
 
 interface RuntimeState {
 	isRunning: boolean;
-	currentNodeId: string | null;
-	lastRunTime: string | null; // ISO timestamp of last execution
+	currentNodeIds: string[];
+	lastRunTime: string | null;
+}
+
+type NodeExecutionStatus = "success" | "error" | "processing" | "idle";
+
+interface NodeExecutionState<TInput = unknown, TOutput = unknown> {
+	timestamp: string;
+	inputs: TInput;
+	output?: TOutput;
+	status: NodeExecutionStatus;
+	error?: string;
+}
+
+interface GenerateTextConfig {
+	model: TModel;
+}
+
+interface GenerateTextInput {
+	system: string;
+	prompt: string;
+}
+
+interface GenerateTextOutput {
+	result: string;
+	metadata: {
+		model: TModel;
+		tokens_used: number;
+	};
 }
 
 interface GenerateTextData extends Record<string, unknown> {
-	model: TModel;
-	output?: string;
+	config: GenerateTextConfig;
+	lastRun?: NodeExecutionState<GenerateTextInput, GenerateTextOutput>;
 }
 
 interface VisualizeTextData extends Record<string, unknown> {
 	text: string;
+	lastRun?: NodeExecutionState<string, never>;
 }
 
 interface TextInputData extends Record<string, unknown> {
 	text: string;
-	output?: string;
+	lastRun?: NodeExecutionState<never, string>;
+}
+
+interface PromptCrafterInput {
+	[key: string]: string;
 }
 
 interface PromptCrafterData extends Record<string, unknown> {
 	text: string;
 	inputs: Array<{ id: string; label: string }>;
-	output?: string;
+	lastRun?: NodeExecutionState<PromptCrafterInput, string>;
 }
 
 export type TGenerateTextNode = Node<GenerateTextData, "generate-text">;
@@ -75,84 +107,177 @@ export interface StoreState {
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Helper function to perform topological sort
-function topologicalSort(nodes: AppNode[], edges: Edge[]): string[] {
-	const graph = new Map<string, Set<string>>();
-	const inDegree = new Map<string, number>();
+interface NodeDependencyState {
+	nodeId: string;
+	isReady: boolean;
+	dependencies: Set<string>;
+	processed: boolean;
+}
 
-	// Initialize graph and in-degree
+async function processNodesIndependently(
+	nodes: AppNode[],
+	edges: Edge[],
+	runTime: string,
+	set: (state: Partial<StoreState>) => void,
+	get: () => StoreState,
+) {
+	// Track dependency state for each node
+	const nodeStates = new Map<string, NodeDependencyState>();
+	const processingNodes = new Set<string>();
+
+	// Initialize node states and dependencies
 	for (const node of nodes) {
-		graph.set(node.id, new Set());
-		inDegree.set(node.id, 0);
+		const incomingEdges = edges.filter((edge) => edge.target === node.id);
+		const dependencies = new Set(incomingEdges.map((edge) => edge.source));
+
+		nodeStates.set(node.id, {
+			nodeId: node.id,
+			isReady: dependencies.size === 0, // Nodes with no dependencies are ready immediately
+			dependencies,
+			processed: false,
+		});
 	}
 
-	// Build graph and calculate in-degrees
-	for (const edge of edges) {
-		const source = edge.source;
-		const target = edge.target;
-		graph.get(source)?.add(target);
-		inDegree.set(target, (inDegree.get(target) || 0) + 1);
-	}
-
-	// Find nodes with no dependencies
-	const queue: string[] = [];
-	for (const node of nodes) {
-		if ((inDegree.get(node.id) || 0) === 0) {
-			queue.push(node.id);
+	// Function to process a single node
+	const processNode = async (nodeId: string) => {
+		if (processingNodes.has(nodeId)) {
+			return;
 		}
-	}
+		processingNodes.add(nodeId);
 
-	const result: string[] = [];
-	while (queue.length > 0) {
-		const nodeId = queue[0];
-		if (!nodeId) {
+		try {
+			// Set node to processing state
+			get().updateNode(nodeId, {
+				lastRun: {
+					timestamp: runTime,
+					inputs: {},
+					status: "processing",
+				},
+			});
+
+			const inputs = await get().getNodeInputs(nodeId);
+			await get().processNode(nodeId, inputs);
+
+			// Mark node as processed
+			const nodeState = nodeStates.get(nodeId);
+			if (nodeState) {
+				nodeState.processed = true;
+			}
+
+			// Update dependent nodes' readiness and start them if ready
+			for (const edge of edges) {
+				if (edge.source === nodeId) {
+					const targetState = nodeStates.get(edge.target);
+					if (targetState) {
+						targetState.dependencies.delete(nodeId);
+						// Check if all dependencies are processed
+						targetState.isReady = Array.from(targetState.dependencies).every(
+							(depId) => nodeStates.get(depId)?.processed,
+						);
+						// If node becomes ready, start processing it
+						if (targetState.isReady && !targetState.processed) {
+							void processNode(edge.target);
+						}
+					}
+				}
+			}
+		} catch (error) {
+			console.error(`Error processing node ${nodeId}:`, error);
+			// Mark node as processed even if it failed to avoid deadlock
+			const nodeState = nodeStates.get(nodeId);
+			if (nodeState) {
+				nodeState.processed = true;
+			}
+		} finally {
+			processingNodes.delete(nodeId);
+			// Update currently running nodes
+			set({
+				runtime: {
+					isRunning: true,
+					currentNodeIds: Array.from(processingNodes),
+					lastRunTime: runTime,
+				},
+			});
+		}
+	};
+
+	// Start processing all initially ready nodes
+	const initialNodes = Array.from(nodeStates.values()).filter(
+		(state) => state.isReady,
+	);
+	await Promise.all(initialNodes.map((state) => processNode(state.nodeId)));
+
+	// Wait until all nodes are processed or we detect a cycle
+	while (Array.from(nodeStates.values()).some((state) => !state.processed)) {
+		const remainingNodes = Array.from(nodeStates.values()).filter(
+			(state) => !state.processed,
+		);
+		const readyNodes = remainingNodes.filter((state) => state.isReady);
+
+		if (readyNodes.length === 0 && processingNodes.size === 0) {
+			// No nodes are ready and none are processing - might be a cycle
 			break;
 		}
-		queue.shift();
-		result.push(nodeId);
 
-		const neighbors = graph.get(nodeId);
-		if (!neighbors) {
-			continue;
-		}
-
-		for (const neighbor of Array.from(neighbors)) {
-			inDegree.set(neighbor, (inDegree.get(neighbor) || 0) - 1);
-			if ((inDegree.get(neighbor) || 0) === 0) {
-				queue.push(neighbor);
-			}
-		}
+		// Small delay to prevent tight loop
+		await delay(100);
 	}
-
-	return result;
 }
+
+const DELAY_TIMES = {
+	INSTANT: 100,
+	QUICK: 100,
+	GENERATION: 1500,
+} as const;
+
+const getNodeDelay = (nodeType: AppNode["type"]): number => {
+	switch (nodeType) {
+		case "text-input":
+		case "visualize-text":
+			return DELAY_TIMES.INSTANT;
+		case "prompt-crafter":
+			return DELAY_TIMES.QUICK;
+		case "generate-text":
+			return DELAY_TIMES.GENERATION;
+		default:
+			return DELAY_TIMES.QUICK;
+	}
+};
 
 const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	nodes: [
 		{
 			type: "text-input",
 			id: "a",
-			data: { text: "Alwurts" },
+			data: {
+				text: "Alwurts",
+			},
 			position: { x: -400, y: 200 },
-		},
+		} as TTextInputNode,
 		{
 			type: "text-input",
 			id: "x",
-			data: { text: "You are a helpful assistant." },
+			data: {
+				text: "You are a helpful assistant.",
+			},
 			position: { x: 0, y: -150 },
-		},
+		} as TTextInputNode,
 		{
 			type: "generate-text",
 			id: "b",
-			data: { model: "gpt-4o" },
+			data: {
+				config: { model: "gpt-4o" },
+			},
 			position: { x: 450, y: 50 },
-		},
+		} as TGenerateTextNode,
 		{
 			type: "visualize-text",
 			id: "c",
-			data: { text: "### Hello, world!" },
-			position: { x: 800, y: -100 },
-		},
+			data: {
+				text: "### Hello, world!",
+			},
+			position: { x: 900, y: -100 },
+		} as TVisualizeTextNode,
 		{
 			type: "prompt-crafter",
 			id: "d",
@@ -161,7 +286,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				inputs: [{ id: "input1", label: "input1" }],
 			},
 			position: { x: 0, y: 150 },
-		},
+		} as TPromptCrafterNode,
 	],
 	edges: [
 		{
@@ -195,7 +320,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	],
 	runtime: {
 		isRunning: false,
-		currentNodeId: null,
+		currentNodeIds: [],
 		lastRunTime: null,
 	},
 
@@ -246,36 +371,33 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		}
 
 		const runTime = new Date().toISOString();
-		set({ runtime: { ...runtime, isRunning: true, lastRunTime: runTime } });
+		set({
+			runtime: {
+				...runtime,
+				isRunning: true,
+				lastRunTime: runTime,
+				currentNodeIds: [],
+			},
+		});
 
 		try {
-			// Clear previous outputs
+			// Reset all nodes to idle state
 			for (const node of nodes) {
-				if (node.type !== "visualize-text") {
-					get().updateNode(node.id, { output: undefined });
-				}
-			}
-
-			// Get nodes in topological order
-			const sortedNodeIds = topologicalSort(nodes, edges);
-
-			// Process nodes in order
-			for (const nodeId of sortedNodeIds) {
-				set({
-					runtime: {
-						isRunning: true,
-						currentNodeId: nodeId,
-						lastRunTime: runTime,
+				get().updateNode(node.id, {
+					lastRun: {
+						timestamp: runTime,
+						inputs: {},
+						status: "idle",
 					},
 				});
-				const inputs = await get().getNodeInputs(nodeId);
-				await get().processNode(nodeId, inputs);
 			}
+
+			await processNodesIndependently(nodes, edges, runTime, set, get);
 		} finally {
 			set({
 				runtime: {
 					isRunning: false,
-					currentNodeId: null,
+					currentNodeIds: [],
 					lastRunTime: runTime,
 				},
 			});
@@ -289,10 +411,12 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
 		for (const edge of incomingEdges) {
 			const sourceNode = nodes.find((n) => n.id === edge.source);
-			if (sourceNode?.data.output) {
+			if (sourceNode?.data.lastRun?.output) {
 				inputsByHandle.set(
 					edge.targetHandle || "",
-					sourceNode.data.output as string,
+					typeof sourceNode.data.lastRun.output === "string"
+						? sourceNode.data.lastRun.output
+						: sourceNode.data.lastRun.output.result,
 				);
 			}
 		}
@@ -308,8 +432,8 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
 		// For prompt-crafter nodes, maintain input order based on defined inputs array
 		if (node?.type === "prompt-crafter") {
-			return node.data.inputs.map((inputName) => {
-				return inputsByHandle.get(inputName.id) || "";
+			return node.data.inputs.map((input) => {
+				return inputsByHandle.get(input.id) || "";
 			});
 		}
 
@@ -318,47 +442,133 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	},
 
 	async processNode(nodeId: string, inputs: string[]) {
-		await delay(200); // Simulate processing time
-		const { nodes } = get();
-		const node = nodes.find((n) => n.id === nodeId);
+		const node = get().nodes.find((n) => n.id === nodeId);
 		if (!node) {
 			return "";
 		}
 
-		let output = "";
+		const timestamp = new Date().toISOString();
+		let output:
+			| string
+			| { result: string; metadata: { model: TModel; tokens_used: number } } =
+			"";
 
-		switch (node.type) {
-			case "text-input": {
-				output = node.data.text;
-				break;
-			}
-			case "generate-text": {
-				output = `Model: ${node.data.model}\nSystem: ${inputs[0] || ""}\nPrompt: ${inputs[1] || ""}`;
-				break;
-			}
-			case "prompt-crafter": {
-				let text = node.data.text;
-				for (let i = 0; i < inputs.length; i++) {
-					text = text.replace(
-						`{${node.data.inputs[i].label}}`,
-						inputs[i] || "",
-					);
+		try {
+			// Apply appropriate delay based on node type
+			await delay(getNodeDelay(node.type));
+
+			switch (node.type) {
+				case "text-input": {
+					output = node.data.text;
+					get().updateNode(nodeId, {
+						lastRun: {
+							timestamp,
+							inputs: {},
+							output,
+							status: "success",
+						},
+					});
+					break;
 				}
-				output = text;
-				break;
-			}
-			case "visualize-text": {
-				output = inputs[0] || "";
-				get().updateNode(nodeId, { text: output });
-				break;
-			}
-		}
+				case "generate-text": {
+					// Mock generation with metadata
+					output = {
+						result: `Model: ${node.data.config.model}\nSystem: ${inputs[0] || ""}\nPrompt: ${inputs[1] || ""}`,
+						metadata: {
+							model: node.data.config.model,
+							tokens_used: 100, // Mock value
+						},
+					};
+					get().updateNode(nodeId, {
+						lastRun: {
+							timestamp,
+							inputs: {
+								system: inputs[0] || "",
+								prompt: inputs[1] || "",
+							},
+							output,
+							status: "success",
+						},
+					});
+					break;
+				}
+				case "prompt-crafter": {
+					const inputsMap: Record<string, string> = {};
+					node.data.inputs.forEach((input, index) => {
+						inputsMap[input.label] = inputs[index] || "";
+					});
 
-		// Store the output in the node's data if it's not a visualize-text node
-		if (node.type !== "visualize-text") {
-			get().updateNode(nodeId, { output });
+					let text = node.data.text;
+					for (const [label, value] of Object.entries(inputsMap)) {
+						text = text.replace(`{${label}}`, value);
+					}
+					output = text;
+
+					get().updateNode(nodeId, {
+						lastRun: {
+							timestamp,
+							inputs: inputsMap,
+							output,
+							status: "success",
+						},
+					});
+					break;
+				}
+				case "visualize-text": {
+					output = inputs[0] || "";
+					get().updateNode(nodeId, {
+						text: output,
+						lastRun: {
+							timestamp,
+							inputs: inputs[0] || "",
+							status: "success",
+						},
+					});
+					break;
+				}
+			}
+
+			return typeof output === "string" ? output : output.result;
+		} catch (error) {
+			// Update node with error state
+			const errorInputs = (() => {
+				switch (node.type) {
+					case "generate-text": {
+						return {
+							system: inputs[0] || "",
+							prompt: inputs[1] || "",
+						};
+					}
+					case "prompt-crafter": {
+						const inputsMap: Record<string, string> = {};
+						node.data.inputs.forEach((input, index) => {
+							inputsMap[input.label] = inputs[index] || "";
+						});
+						return inputsMap;
+					}
+					case "text-input": {
+						return {};
+					}
+					case "visualize-text": {
+						return inputs[0] || "";
+					}
+					default: {
+						return {};
+					}
+				}
+			})();
+
+			get().updateNode(nodeId, {
+				lastRun: {
+					timestamp,
+					// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+					inputs: errorInputs as any,
+					status: "error",
+					error: error instanceof Error ? error.message : "Unknown error",
+				},
+			});
+			return "";
 		}
-		return output;
 	},
 }));
 

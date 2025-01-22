@@ -8,7 +8,9 @@ import {
 	NodeHeaderTitle,
 } from "@/components/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
+import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 import {
 	type TVisualizeTextNode,
 	useStore,
@@ -24,7 +26,15 @@ export function VisualizeTextNode({
 	deletable,
 }: NodeProps<TVisualizeTextNode>) {
 	const runtime = useStore((state) => state.runtime);
-	const isProcessing = runtime.isRunning && runtime.currentNodeId === id;
+	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
+
+	const executionStatus = data.lastRun?.status || "idle";
+	const statusColors = {
+		idle: "bg-muted text-muted-foreground",
+		processing: "bg-orange-500 text-white",
+		success: "bg-green-500 text-white",
+		error: "bg-red-500 text-white",
+	} as const;
 
 	return (
 		<BaseNode
@@ -38,11 +48,17 @@ export function VisualizeTextNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Visualize Text</NodeHeaderTitle>
 				<NodeHeaderActions>
+					<Badge
+						variant="secondary"
+						className={cn("mr-2 font-normal", statusColors[executionStatus])}
+					>
+						{executionStatus}
+					</Badge>
 					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
-			<div className="p-2 h-[250px] w-[300px] overflow-y-auto flex flex-col">
+			<div className="p-2 h-[250px] w-[300px] overflow-y-auto flex flex-col gap-4">
 				<div className="flex-1 border border-border rounded-md p-2">
 					<MarkdownContent
 						id={id}

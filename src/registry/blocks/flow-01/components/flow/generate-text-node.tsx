@@ -8,6 +8,7 @@ import {
 	NodeHeaderTitle,
 } from "@/components/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
+import { Badge } from "@/components/ui/badge";
 import {
 	Select,
 	SelectContent,
@@ -16,6 +17,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 import {
 	MODELS,
 	type TGenerateTextNode,
@@ -33,22 +35,30 @@ export function GenerateTextNode({
 }: NodeProps<TGenerateTextNode>) {
 	const updateNode = useStore((state) => state.updateNode);
 	const runtime = useStore((state) => state.runtime);
-	const isProcessing = runtime.isRunning && runtime.currentNodeId === id;
+	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
 
 	const handleModelChange = useCallback(
 		(value: string) => {
 			updateNode(id, {
-				model: value as TModel,
+				config: { model: value as TModel },
 			});
 		},
 		[id, updateNode],
 	);
 
+	const executionStatus = data.lastRun?.status || "idle";
+	const statusColors = {
+		idle: "bg-muted text-muted-foreground",
+		processing: "bg-orange-500 text-white",
+		success: "bg-green-500 text-white",
+		error: "bg-red-500 text-white",
+	};
+
 	return (
 		<BaseNode
 			selected={selected}
 			isProcessing={isProcessing}
-			className="px-0 pb-0 flex flex-col"
+			className="px-0 pb-0 flex flex-col min-w-[350px]"
 		>
 			<NodeHeader className="px-8 mb-0">
 				<NodeHeaderIcon>
@@ -56,12 +66,18 @@ export function GenerateTextNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Generate Text</NodeHeaderTitle>
 				<NodeHeaderActions>
+					<Badge
+						variant="secondary"
+						className={cn("mr-2 font-normal", statusColors[executionStatus])}
+					>
+						{executionStatus}
+					</Badge>
 					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
 			<div className="p-4 flex flex-col gap-4">
-				<Select value={data.model} onValueChange={handleModelChange}>
+				<Select value={data.config.model} onValueChange={handleModelChange}>
 					<SelectTrigger className="w-full nodrag">
 						<SelectValue placeholder="Select model" />
 					</SelectTrigger>
@@ -73,11 +89,6 @@ export function GenerateTextNode({
 						))}
 					</SelectContent>
 				</Select>
-				{/* {data.output && (
-					<div className="text-sm text-muted-foreground border rounded-md p-2 max-h-[100px] overflow-y-auto">
-						{data.output}
-					</div>
-				)} */}
 			</div>
 			<div className="grid grid-cols-2 gap-2 pt-2 pb-4 text-sm">
 				<div className="flex flex-col gap-2">

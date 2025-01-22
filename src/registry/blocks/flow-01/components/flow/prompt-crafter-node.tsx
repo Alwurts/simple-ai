@@ -6,6 +6,7 @@ import {
 	NodeHeaderTitle,
 } from "@/components/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Command,
@@ -21,6 +22,8 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import { EditableLabeledHandle } from "@/registry/blocks/flow-01/components/flow/editable-labeled-handle";
 import {
 	type TPromptCrafterNode,
 	useStore,
@@ -36,9 +39,9 @@ import {
 	useUpdateNodeInternals,
 } from "@xyflow/react";
 import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
+import { nanoid } from "nanoid";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
-import { EditableLabeledHandle } from "@/registry/blocks/flow-01/components/flow/editable-labeled-handle";
 
 // Custom theme that matches your app's design
 const promptTheme = createTheme({
@@ -84,7 +87,7 @@ export function PromptCrafterNode({
 }: NodeProps<TPromptCrafterNode>) {
 	const updateNode = useStore((state) => state.updateNode);
 	const runtime = useStore((state) => state.runtime);
-	const isProcessing = runtime.isRunning && runtime.currentNodeId === id;
+	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
 	const updateNodeInternals = useUpdateNodeInternals();
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 	const editorViewRef = useRef<EditorView>();
@@ -112,7 +115,7 @@ export function PromptCrafterNode({
 	}, []);
 
 	const addInput = useCallback(() => {
-		const newId = crypto.randomUUID();
+		const newId = nanoid();
 		updateNode(id, {
 			inputs: [...(data.inputs || []), { id: newId, label: "" }],
 		});
@@ -173,6 +176,14 @@ export function PromptCrafterNode({
 		return [createPromptLanguage(validLabels)];
 	}, [data.inputs]);
 
+	const executionStatus = data.lastRun?.status || "idle";
+	const statusColors = {
+		idle: "bg-muted text-muted-foreground",
+		processing: "bg-orange-500 text-white",
+		success: "bg-green-500 text-white",
+		error: "bg-red-500 text-white",
+	} as const;
+
 	return (
 		<BaseNode
 			selected={selected}
@@ -185,6 +196,12 @@ export function PromptCrafterNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Prompt Crafter</NodeHeaderTitle>
 				<NodeHeaderActions>
+					<Badge
+						variant="secondary"
+						className={cn("mr-2 font-normal", statusColors[executionStatus])}
+					>
+						{executionStatus}
+					</Badge>
 					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>
