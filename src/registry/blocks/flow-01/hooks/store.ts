@@ -16,9 +16,6 @@ export const MODELS = [
 	"llama-3-8b",
 ];
 
-export const MOCK_GENERATION =
-	"This is a mock generated text. It simulates AI output based on the inputs provided.";
-
 export type TModel = (typeof MODELS)[number];
 
 interface RuntimeState {
@@ -37,13 +34,9 @@ interface NodeExecutionState<TInput = unknown, TOutput = unknown> {
 	error?: string;
 }
 
-interface GenerateTextConfig {
-	model: TModel;
-}
-
-interface GenerateTextInput {
-	system: string;
-	prompt: string;
+interface ApiResponse {
+	text: string;
+	tokens_used?: number;
 }
 
 interface GenerateTextOutput {
@@ -52,6 +45,15 @@ interface GenerateTextOutput {
 		model: TModel;
 		tokens_used: number;
 	};
+}
+
+interface GenerateTextConfig {
+	model: TModel;
+}
+
+interface GenerateTextInput {
+	system: string;
+	prompt: string;
 }
 
 interface GenerateTextData extends Record<string, unknown> {
@@ -111,7 +113,31 @@ export interface StoreState {
 	processNode: (nodeId: string, inputs: string[]) => Promise<string>;
 }
 
+export const MOCK_GENERATION =
+	"This is a mock generated text. It simulates AI output based on the inputs provided.";
+
+// Global flag for mocking AI responses
+export const MOCK_AI_RESPONSE = false;
+
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const DELAY_TIMES = {
+	QUICK: 100,
+	GENERATION: 1500,
+} as const;
+
+const getNodeDelay = (nodeType: AppNode["type"]): number | undefined => {
+	switch (nodeType) {
+		case "text-input":
+		case "visualize-text":
+		case "prompt-crafter":
+			return DELAY_TIMES.QUICK;
+		case "generate-text":
+			return MOCK_AI_RESPONSE ? DELAY_TIMES.GENERATION : undefined;
+		default:
+			return DELAY_TIMES.QUICK;
+	}
+};
 
 interface NodeDependencyState {
 	nodeId: string;
@@ -230,26 +256,6 @@ async function processNodesIndependently(
 	}
 }
 
-const DELAY_TIMES = {
-	INSTANT: 100,
-	QUICK: 100,
-	GENERATION: 1500,
-} as const;
-
-const getNodeDelay = (nodeType: AppNode["type"]): number => {
-	switch (nodeType) {
-		case "text-input":
-		case "visualize-text":
-			return DELAY_TIMES.INSTANT;
-		case "prompt-crafter":
-			return DELAY_TIMES.QUICK;
-		case "generate-text":
-			return DELAY_TIMES.GENERATION;
-		default:
-			return DELAY_TIMES.QUICK;
-	}
-};
-
 const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	nodes: [
 		{
@@ -280,7 +286,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			type: "visualize-text",
 			id: "c",
 			data: {
-				text: "### Hello, world!",
+				text: "",
 			},
 			position: { x: 900, y: -100 },
 		} as TVisualizeTextNode,
@@ -550,7 +556,10 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
 		try {
 			// Apply appropriate delay based on node type
-			await delay(getNodeDelay(node.type));
+			const delayForNode = getNodeDelay(node.type);
+			if (delayForNode && delayForNode > 0) {
+				await delay(delayForNode);
+			}
 
 			switch (node.type) {
 				case "text-input": {
@@ -566,14 +575,50 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					break;
 				}
 				case "generate-text": {
-					// Mock generation with metadata
-					output = {
-						result: `Model: ${node.data.config.model}\nSystem: ${inputs[0] || ""}\nPrompt: ${inputs[1] || ""}`,
-						metadata: {
-							model: node.data.config.model,
-							tokens_used: 100, // Mock value
-						},
-					};
+					let output: GenerateTextOutput;
+
+					if (MOCK_AI_RESPONSE) {
+						// Mock generation with metadata
+						output = {
+							result: `Model: ${node.data.config.model}\nSystem: ${inputs[0] || ""}\nPrompt: ${inputs[1] || ""}`,
+							metadata: {
+								model: node.data.config.model,
+								tokens_used: 100, // Mock value
+							},
+						};
+					} else {
+						// Make actual API call
+						try {
+							const response = await fetch("/api/ai/flow/generate-text", {
+								method: "POST",
+								headers: {
+									"Content-Type": "application/json",
+								},
+								body: JSON.stringify({
+									system: inputs[0],
+									prompt: inputs[1],
+								}),
+							});
+
+							if (!response.ok) {
+								throw new Error(`API call failed: ${response.statusText}`);
+							}
+
+							const data = (await response.json()) as ApiResponse;
+							output = {
+								result: data.text,
+								metadata: {
+									model: node.data.config.model,
+									tokens_used: data.tokens_used || 0,
+								},
+							};
+						} catch (error) {
+							throw new Error(
+								`Failed to generate text: ${error instanceof Error ? error.message : "Unknown error"}`,
+							);
+						}
+					}
+
 					get().updateNode(nodeId, {
 						lastRun: {
 							timestamp,
@@ -623,7 +668,9 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				}
 			}
 
-			return typeof output === "string" ? output : output.result;
+			return typeof output === "string"
+				? output
+				: (output as GenerateTextOutput).result;
 		} catch (error) {
 			// Update node with error state
 			const errorInputs = (() => {
