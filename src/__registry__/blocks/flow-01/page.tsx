@@ -1,15 +1,15 @@
 "use client";
 
 import { type NodeTypes, ReactFlowProvider } from "@xyflow/react";
-import { ReactFlow, Background } from "@xyflow/react";
+import { Background, ReactFlow } from "@xyflow/react";
 import { shallow } from "zustand/shallow";
 import "@xyflow/react/dist/style.css";
 import { DevTools } from "@/components/flow/devtools";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import { GenerateTextNode } from "@/registry/blocks/flow-01/components/flow/generate-text-node";
-import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/visualize-text-node";
-import { TextInputNode } from "@/registry/blocks/flow-01/components/flow/text-input-node";
 import { PromptCrafterNode } from "@/registry/blocks/flow-01/components/flow/prompt-crafter-node";
+import { TextInputNode } from "@/registry/blocks/flow-01/components/flow/text-input-node";
+import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/visualize-text-node";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNode,

@@ -1,12 +1,12 @@
-import { applyNodeChanges, applyEdgeChanges, addEdge } from "@xyflow/react";
-import { createWithEqualityFn } from "zustand/traditional";
+import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
 import type {
-	Node,
+	Connection,
 	Edge,
 	EdgeChange,
+	Node,
 	NodeChange,
-	Connection,
 } from "@xyflow/react";
+import { createWithEqualityFn } from "zustand/traditional";
 
 export const MODELS = [
 	"gpt-4o",

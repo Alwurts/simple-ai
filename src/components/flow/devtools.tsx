@@ -1,21 +1,21 @@
 import {
-	useEffect,
-	useState,
 	type Dispatch,
 	type SetStateAction,
 	useCallback,
+	useEffect,
+	useState,
 } from "react";
 
 import {
-	useNodes,
+	type NodeChange,
+	type OnNodesChange,
 	Panel,
+	ViewportPortal,
+	type XYPosition,
+	useNodes,
+	useReactFlow,
 	useStore,
 	useStoreApi,
-	type OnNodesChange,
-	type NodeChange,
-	type XYPosition,
-	ViewportPortal,
-	useReactFlow,
 } from "@xyflow/react";
 
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";

@@ -1,7 +1,7 @@
-import type { MetadataRoute } from "next";
+import { docsConfig } from "@/config/docs";
 import { siteConfig } from "@/config/site";
 import { registryCategories } from "@/registry/registry-categories";
-import { docsConfig } from "@/config/docs";
+import type { MetadataRoute } from "next";
 
 function getAllDocRoutes(
 	items: (typeof docsConfig.sidebarNav)[number]["items"],

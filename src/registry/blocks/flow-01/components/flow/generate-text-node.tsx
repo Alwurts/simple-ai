@@ -1,22 +1,13 @@
-import { Position, type NodeProps } from "@xyflow/react";
+import { type NodeProps, Position } from "@xyflow/react";
 
-import {
-	type TModel,
-	useStore,
-	type TGenerateTextNode,
-	MODELS,
-} from "@/registry/blocks/flow-01/hooks/store";
+import { BaseNode } from "@/components/flow/base-node";
+import { LabeledHandle } from "@/components/flow/labeled-handle";
 import {
 	NodeHeaderAction,
 	NodeHeaderIcon,
 	NodeHeaderTitle,
 } from "@/components/flow/node-header";
-import { BaseNode } from "@/components/flow/base-node";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
-import { Bot, Trash } from "lucide-react";
-import { useCallback } from "react";
-import { LabeledHandle } from "@/components/flow/labeled-handle";
-import { Separator } from "@/components/ui/separator";
 import {
 	Select,
 	SelectContent,
@@ -24,6 +15,15 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import {
+	MODELS,
+	type TGenerateTextNode,
+	type TModel,
+	useStore,
+} from "@/registry/blocks/flow-01/hooks/store";
+import { Bot, Trash } from "lucide-react";
+import { useCallback } from "react";
 
 export function GenerateTextNode({
 	id,

@@ -1,21 +1,21 @@
-import { Position, type NodeProps } from "@xyflow/react";
+import { type NodeProps, Position } from "@xyflow/react";
 
-import {
-	useStore,
-	type TVisualizeTextNode,
-} from "@/registry/blocks/flow-01/hooks/store";
+import { BaseNode } from "@/components/flow/base-node";
+import { LabeledHandle } from "@/components/flow/labeled-handle";
 import {
 	NodeHeaderAction,
 	NodeHeaderIcon,
 	NodeHeaderTitle,
 } from "@/components/flow/node-header";
-import { BaseNode } from "@/components/flow/base-node";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
+import { Separator } from "@/components/ui/separator";
+import {
+	type TVisualizeTextNode,
+	useStore,
+} from "@/registry/blocks/flow-01/hooks/store";
+import { MarkdownContent } from "@/registry/ui/markdown-content";
 import { Eye, Trash } from "lucide-react";
 import { useCallback } from "react";
-import { LabeledHandle } from "@/components/flow/labeled-handle";
-import { Separator } from "@/components/ui/separator";
-import { MarkdownContent } from "@/registry/ui/markdown-content";
 
 export function VisualizeTextNode({
 	id,

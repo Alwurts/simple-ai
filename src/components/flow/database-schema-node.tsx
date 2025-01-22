@@ -1,4 +1,4 @@
-import { Position, type Node, type NodeProps } from "@xyflow/react";
+import { type Node, type NodeProps, Position } from "@xyflow/react";
 
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 

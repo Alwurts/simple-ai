@@ -1,23 +1,12 @@
-import {
-	Position,
-	type NodeProps,
-	useUpdateNodeInternals,
-} from "@xyflow/react";
-import { useCallback, useMemo, useRef, useState } from "react";
-import {
-	useStore,
-	type TPromptCrafterNode,
-} from "@/registry/blocks/flow-01/hooks/store";
+import { BaseNode } from "@/components/flow/base-node";
+import { EditableLabeledHandle } from "@/components/flow/editable-labeled-handle";
+import { LabeledHandle } from "@/components/flow/labeled-handle";
 import {
 	NodeHeaderAction,
 	NodeHeaderIcon,
 	NodeHeaderTitle,
 } from "@/components/flow/node-header";
-import { BaseNode } from "@/components/flow/base-node";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
-import { Trash, Plus, BetweenVerticalEnd, PencilRuler } from "lucide-react";
-import { EditableLabeledHandle } from "@/components/flow/editable-labeled-handle";
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import {
 	Command,
@@ -32,13 +21,24 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { LabeledHandle } from "@/components/flow/labeled-handle";
-import { toast } from "sonner";
-import CodeMirror from "@uiw/react-codemirror";
+import { Separator } from "@/components/ui/separator";
+import {
+	type TPromptCrafterNode,
+	useStore,
+} from "@/registry/blocks/flow-01/hooks/store";
 import { StreamLanguage } from "@codemirror/language";
-import { createTheme } from "@uiw/codemirror-themes";
-import { tags as t } from "@lezer/highlight";
 import type { EditorView } from "@codemirror/view";
+import { tags as t } from "@lezer/highlight";
+import { createTheme } from "@uiw/codemirror-themes";
+import CodeMirror from "@uiw/react-codemirror";
+import {
+	type NodeProps,
+	Position,
+	useUpdateNodeInternals,
+} from "@xyflow/react";
+import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { toast } from "sonner";
 
 // Custom theme that matches your app's design
 const promptTheme = createTheme({

@@ -1,18 +1,18 @@
 "use client";
 
-import type React from "react";
 import { type NodeTypes, ReactFlowProvider } from "@xyflow/react";
-import { ReactFlow, Background, Panel, useReactFlow } from "@xyflow/react";
+import { Background, Panel, ReactFlow, useReactFlow } from "@xyflow/react";
+import type React from "react";
 import { shallow } from "zustand/shallow";
 import "@xyflow/react/dist/style.css";
 import { DevTools } from "@/components/flow/devtools";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import { GenerateTextNode } from "@/registry/blocks/flow-01/components/flow/generate-text-node";
-import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/visualize-text-node";
-import { TextInputNode } from "@/registry/blocks/flow-01/components/flow/text-input-node";
-import { PromptCrafterNode } from "@/registry/blocks/flow-01/components/flow/prompt-crafter-node";
 import { Button } from "@/components/ui/button";
+import { GenerateTextNode } from "@/registry/blocks/flow-01/components/flow/generate-text-node";
 import { NodesPanel } from "@/registry/blocks/flow-01/components/flow/nodes-panel";
+import { PromptCrafterNode } from "@/registry/blocks/flow-01/components/flow/prompt-crafter-node";
+import { TextInputNode } from "@/registry/blocks/flow-01/components/flow/text-input-node";
+import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/visualize-text-node";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { AppNode } from "@/registry/blocks/flow-01/hooks/store";
 
 const nodeTypes: NodeTypes = {

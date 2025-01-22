@@ -1,21 +1,21 @@
-import { Position, type NodeProps } from "@xyflow/react";
-import type React from "react";
-import { useCallback } from "react";
-import {
-	useStore,
-	type TTextInputNode,
-} from "@/registry/blocks/flow-01/hooks/store";
+import { BaseNode } from "@/components/flow/base-node";
+import { LabeledHandle } from "@/components/flow/labeled-handle";
 import {
 	NodeHeaderAction,
 	NodeHeaderIcon,
 	NodeHeaderTitle,
 } from "@/components/flow/node-header";
-import { BaseNode } from "@/components/flow/base-node";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
-import { PenLine, Trash } from "lucide-react";
-import { LabeledHandle } from "@/components/flow/labeled-handle";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
+import {
+	type TTextInputNode,
+	useStore,
+} from "@/registry/blocks/flow-01/hooks/store";
+import { type NodeProps, Position } from "@xyflow/react";
+import { PenLine, Trash } from "lucide-react";
+import type React from "react";
+import { useCallback } from "react";
 
 export function TextInputNode({
 	id,
