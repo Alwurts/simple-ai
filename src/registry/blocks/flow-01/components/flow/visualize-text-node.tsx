@@ -58,7 +58,7 @@ export function VisualizeTextNode({
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
-			<div className="p-2 h-[250px] w-[300px] overflow-y-auto flex flex-col gap-4">
+			<div className="p-2 h-[450px] w-[600px] overflow-y-auto flex flex-col gap-4">
 				<div className="flex-1 border border-border rounded-md p-2">
 					<MarkdownContent
 						id={id}

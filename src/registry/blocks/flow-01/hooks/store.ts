@@ -156,6 +156,7 @@ async function processNodesIndependently(
 	// Track dependency state for each node
 	const nodeStates = new Map<string, NodeDependencyState>();
 	const processingNodes = new Set<string>();
+	const failedNodes = new Set<string>();
 
 	// Initialize node states and dependencies
 	for (const node of nodes) {
@@ -170,11 +171,41 @@ async function processNodesIndependently(
 		});
 	}
 
+	// Function to check if any upstream nodes have failed
+	const hasUpstreamFailure = (nodeId: string): boolean => {
+		const upstreamNodes = edges
+			.filter((edge) => edge.target === nodeId)
+			.map((edge) => edge.source);
+
+		return upstreamNodes.some(
+			(id) => failedNodes.has(id) || hasUpstreamFailure(id),
+		);
+	};
+
 	// Function to process a single node
 	const processNode = async (nodeId: string) => {
 		if (processingNodes.has(nodeId)) {
 			return;
 		}
+
+		// Skip processing if any upstream nodes have failed
+		if (hasUpstreamFailure(nodeId)) {
+			// Mark node as processed but don't run it
+			const nodeState = nodeStates.get(nodeId);
+			if (nodeState) {
+				nodeState.processed = true;
+			}
+			// Update node to idle state since we're skipping it
+			get().updateNode(nodeId, {
+				lastRun: {
+					timestamp: runTime,
+					inputs: {},
+					status: "idle",
+				},
+			});
+			return;
+		}
+
 		processingNodes.add(nodeId);
 
 		try {
@@ -189,6 +220,12 @@ async function processNodesIndependently(
 
 			const inputs = await get().getNodeInputs(nodeId);
 			await get().processNode(nodeId, inputs);
+
+			// Check if the node failed during processing
+			const node = get().nodes.find((n) => n.id === nodeId);
+			if (node?.data.lastRun?.status === "error") {
+				failedNodes.add(nodeId);
+			}
 
 			// Mark node as processed
 			const nodeState = nodeStates.get(nodeId);
@@ -215,6 +252,8 @@ async function processNodesIndependently(
 			}
 		} catch (error) {
 			console.error(`Error processing node ${nodeId}:`, error);
+			// Mark node as failed
+			failedNodes.add(nodeId);
 			// Mark node as processed even if it failed to avoid deadlock
 			const nodeState = nodeStates.get(nodeId);
 			if (nodeState) {
@@ -290,7 +329,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			},
 			position: { x: 900, y: -100 },
 		} as TVisualizeTextNode,
-		{
+		/* {
 			type: "prompt-crafter",
 			id: "d",
 			data: {
@@ -298,15 +337,15 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				inputs: [{ id: "input1", label: "input1" }],
 			},
 			position: { x: 0, y: 150 },
-		} as TPromptCrafterNode,
+		} as TPromptCrafterNode, */
 	],
 	edges: [
 		{
 			id: "e1",
 			source: "a",
-			target: "d",
+			target: "b",
 			sourceHandle: "output",
-			targetHandle: "input1",
+			targetHandle: "prompt",
 		},
 		{
 			id: "e2",
@@ -315,13 +354,13 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			sourceHandle: "output",
 			targetHandle: "system",
 		},
-		{
+		/* {
 			id: "e3",
 			source: "d",
 			target: "b",
 			sourceHandle: "output",
 			targetHandle: "prompt",
-		},
+		}, */
 		{
 			id: "e4",
 			source: "b",
@@ -364,6 +403,9 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	deleteNode(id) {
 		set({
 			nodes: get().nodes.filter((node) => node.id !== id),
+			edges: get().edges.filter(
+				(edge) => edge.source !== id && edge.target !== id,
+			),
 		});
 	},
 
@@ -482,15 +524,22 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		});
 
 		try {
-			// Reset all nodes to idle state
+			// Reset all nodes to idle state and clear visualization text
 			for (const node of nodes) {
-				get().updateNode(node.id, {
+				const updates: Partial<AppNode["data"]> = {
 					lastRun: {
 						timestamp: runTime,
 						inputs: {},
 						status: "idle",
 					},
-				});
+				};
+
+				// Reset text only for visualization nodes
+				if (node.type === "visualize-text") {
+					updates.text = "";
+				}
+
+				get().updateNode(node.id, updates);
 			}
 
 			await processNodesIndependently(nodes, edges, runTime, set, get);
