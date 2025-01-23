@@ -54,40 +54,57 @@ interface GenerateTextOutput {
 		tokens_used: number;
 	};
 }
-
-interface GenerateTextConfig {
-	model: TModel;
-	tools: Tool[];
-}
-
 interface GenerateTextInput {
 	system: string;
 	prompt: string;
-}
-
-interface GenerateTextData extends Record<string, unknown> {
-	config: GenerateTextConfig;
-	lastRun?: NodeExecutionState<GenerateTextInput, GenerateTextOutput>;
-}
-
-interface VisualizeTextData extends Record<string, unknown> {
-	text: string;
-	lastRun?: NodeExecutionState<string, never>;
-}
-
-interface TextInputData extends Record<string, unknown> {
-	text: string;
-	lastRun?: NodeExecutionState<never, string>;
 }
 
 interface PromptCrafterInput {
 	[key: string]: string;
 }
 
-interface PromptCrafterData extends Record<string, unknown> {
-	text: string;
+// Node configurations
+interface GenerateTextConfig {
+	model: TModel;
+	tools: Tool[];
+}
+
+interface PromptCrafterConfig {
+	template: string;
 	inputs: Array<{ id: string; label: string }>;
+}
+
+interface TextInputConfig {
+	text: string;
+}
+
+interface VisualizeTextConfig {
+	text: string;
+}
+
+// Base interfaces for node data
+interface BaseNodeData extends Record<string, unknown> {
+	lastRun?: NodeExecutionState;
+}
+
+interface GenerateTextData extends BaseNodeData {
+	config: GenerateTextConfig;
+	lastRun?: NodeExecutionState<GenerateTextInput, GenerateTextOutput>;
+}
+
+interface PromptCrafterData extends BaseNodeData {
+	config: PromptCrafterConfig;
 	lastRun?: NodeExecutionState<PromptCrafterInput, string>;
+}
+
+interface TextInputData extends BaseNodeData {
+	config: TextInputConfig;
+	lastRun?: NodeExecutionState<undefined, string>;
+}
+
+interface VisualizeTextData extends BaseNodeData {
+	config: VisualizeTextConfig;
+	lastRun?: NodeExecutionState<string, undefined>;
 }
 
 export type TGenerateTextNode = Node<GenerateTextData, "generate-text">;
@@ -95,11 +112,44 @@ export type TVisualizeTextNode = Node<VisualizeTextData, "visualize-text">;
 export type TTextInputNode = Node<TextInputData, "text-input">;
 export type TPromptCrafterNode = Node<PromptCrafterData, "prompt-crafter">;
 
-export type AppNode =
+type AppNodeTypeUndefined =
 	| TGenerateTextNode
 	| TVisualizeTextNode
 	| TTextInputNode
 	| TPromptCrafterNode;
+
+export type AppNode = AppNodeTypeUndefined & {
+	type: Exclude<AppNodeTypeUndefined["type"], undefined>;
+};
+
+// Type guards for better type safety
+function isGenerateTextOutput(output: unknown): output is GenerateTextOutput {
+	return (
+		!!output &&
+		typeof output === "object" &&
+		"result" in output &&
+		typeof (output as GenerateTextOutput).result === "string" &&
+		"metadata" in output &&
+		typeof (output as GenerateTextOutput).metadata === "object"
+	);
+}
+
+// Type guards for node types
+/* function isGenerateTextNode(node: AppNode): node is TGenerateTextNode {
+	return node.type === "generate-text";
+}
+
+function isPromptCrafterNode(node: AppNode): node is TPromptCrafterNode {
+	return node.type === "prompt-crafter";
+}
+
+function isTextInputNode(node: AppNode): node is TTextInputNode {
+	return node.type === "text-input";
+}
+
+function isVisualizeTextNode(node: AppNode): node is TVisualizeTextNode {
+	return node.type === "visualize-text";
+} */
 
 export interface StoreState {
 	nodes: AppNode[];
@@ -137,17 +187,11 @@ const DELAY_TIMES = {
 	GENERATION: 1500,
 } as const;
 
-const getNodeDelay = (nodeType: AppNode["type"]): number | undefined => {
-	switch (nodeType) {
-		case "text-input":
-		case "visualize-text":
-		case "prompt-crafter":
-			return DELAY_TIMES.QUICK;
-		case "generate-text":
-			return MOCK_AI_RESPONSE ? DELAY_TIMES.GENERATION : undefined;
-		default:
-			return DELAY_TIMES.QUICK;
-	}
+const NODE_DELAYS: Record<AppNode["type"], number> = {
+	"text-input": DELAY_TIMES.QUICK,
+	"visualize-text": DELAY_TIMES.QUICK,
+	"prompt-crafter": DELAY_TIMES.QUICK,
+	"generate-text": MOCK_AI_RESPONSE ? DELAY_TIMES.GENERATION : 0,
 };
 
 interface NodeDependencyState {
@@ -344,7 +388,9 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			type: "text-input",
 			id: "a",
 			data: {
-				text: "Hey, how are you?",
+				config: {
+					text: "Hey, how are you?",
+				},
 			},
 			position: { x: -400, y: 200 },
 		},
@@ -352,7 +398,9 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			type: "text-input",
 			id: "x",
 			data: {
-				text: "You are a helpful assistant that always uses the tool to respond.",
+				config: {
+					text: "You are a helpful assistant that always uses the tool to respond.",
+				},
 			},
 			position: { x: 0, y: -150 },
 		},
@@ -377,7 +425,9 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			type: "visualize-text",
 			id: "c",
 			data: {
-				text: "",
+				config: {
+					text: "",
+				},
 			},
 			position: { x: 900, y: -100 },
 		},
@@ -420,7 +470,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
 	onNodesChange: (changes) => {
 		set({
-			nodes: applyNodeChanges(changes, get().nodes) as AppNode[],
+			nodes: applyNodeChanges<AppNode>(changes, get().nodes),
 		});
 	},
 	onEdgesChange: (changes) => {
@@ -452,7 +502,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		});
 	},
 
-	addDynamicInput(nodeId: string) {
+	addDynamicInput(nodeId) {
 		const newId = nanoid();
 		set({
 			nodes: get().nodes.map((node) => {
@@ -461,7 +511,14 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 						...node,
 						data: {
 							...node.data,
-							inputs: [...(node.data.inputs || []), { id: newId, label: "" }],
+							//inputs: [...(node.data.inputs || []), { id: newId, label: "" }],
+							config: {
+								...node.data.config,
+								inputs: [
+									...(node.data.config.inputs || []),
+									{ id: newId, label: "" },
+								],
+							},
 						},
 					};
 				}
@@ -471,7 +528,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		return newId;
 	},
 
-	removeDynamicInput(nodeId: string, handleId: string) {
+	removeDynamicInput(nodeId, handleId) {
 		set({
 			nodes: get().nodes.map((node) => {
 				if (node.id === nodeId && node.type === "prompt-crafter") {
@@ -479,9 +536,12 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 						...node,
 						data: {
 							...node.data,
-							inputs: (node.data.inputs || []).filter(
-								(input) => input.id !== handleId,
-							),
+							config: {
+								...node.data.config,
+								inputs: (node.data.config.inputs || []).filter(
+									(input) => input.id !== handleId,
+								),
+							},
 						},
 					};
 				}
@@ -493,7 +553,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		});
 	},
 
-	addDynamicTool(nodeId: string) {
+	addDynamicTool(nodeId) {
 		const newId = nanoid();
 		set({
 			nodes: get().nodes.map((node) => {
@@ -513,12 +573,12 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					};
 				}
 				return node;
-			}) as AppNode[],
+			}),
 		});
 		return newId;
 	},
 
-	removeDynamicTool(nodeId: string, toolId: string) {
+	removeDynamicTool(nodeId, toolId) {
 		set({
 			nodes: get().nodes.map((node) => {
 				if (node.id === nodeId && node.type === "generate-text") {
@@ -536,14 +596,14 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					};
 				}
 				return node;
-			}) as AppNode[],
+			}),
 			edges: get().edges.filter(
-				(edge) => !(edge.target === nodeId && edge.targetHandle === toolId),
+				(edge) => !(edge.source === nodeId && edge.sourceHandle === toolId),
 			),
 		});
 	},
 
-	createNode(type: AppNode["type"], position: { x: number; y: number }) {
+	createNode(type, position) {
 		let newNode: AppNode;
 
 		switch (type) {
@@ -566,8 +626,10 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					type,
 					position,
 					data: {
-						text: "",
-						inputs: [],
+						config: {
+							template: "",
+							inputs: [],
+						},
 					},
 				};
 				break;
@@ -577,7 +639,9 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					type,
 					position,
 					data: {
-						text: "",
+						config: {
+							text: "",
+						},
 					},
 				};
 				break;
@@ -587,7 +651,9 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					type,
 					position,
 					data: {
-						text: "",
+						config: {
+							text: "",
+						},
 					},
 				};
 				break;
@@ -650,7 +716,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		}
 	},
 
-	async getNodeInputs(nodeId: string) {
+	async getNodeInputs(nodeId) {
 		const { nodes, edges } = get();
 		const incomingEdges = edges.filter((edge) => edge.target === nodeId);
 		const inputsByHandle = new Map<string, string>();
@@ -659,7 +725,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			const sourceNode = nodes.find((n) => n.id === edge.source);
 			if (sourceNode?.data.lastRun?.output) {
 				if (sourceNode.type === "generate-text") {
-					const output = sourceNode.data.lastRun.output as GenerateTextOutput;
+					const output = sourceNode.data.lastRun.output;
 					if (edge.sourceHandle === "output") {
 						inputsByHandle.set(edge.targetHandle || "", output.result);
 					} else {
@@ -676,7 +742,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 						edge.targetHandle || "",
 						typeof sourceNode.data.lastRun.output === "string"
 							? sourceNode.data.lastRun.output
-							: sourceNode.data.lastRun.output.result,
+							: (sourceNode.data.lastRun.output as GenerateTextOutput).result,
 					);
 				}
 			}
@@ -686,14 +752,14 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		const node = nodes.find((n) => n.id === nodeId);
 		if (node?.type === "generate-text") {
 			return [
-				inputsByHandle.get("system") || "",
-				inputsByHandle.get("prompt") || "",
+				inputsByHandle.get("system") ?? "",
+				inputsByHandle.get("prompt") ?? "",
 			];
 		}
 
 		// For prompt-crafter nodes, maintain input order based on defined inputs array
 		if (node?.type === "prompt-crafter") {
-			return node.data.inputs.map((input) => {
+			return node.data.config.inputs.map((input) => {
 				return inputsByHandle.get(input.id) || "";
 			});
 		}
@@ -702,29 +768,26 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		return Array.from(inputsByHandle.values());
 	},
 
-	async processNode(nodeId: string, inputs: string[]) {
+	async processNode(nodeId, inputs) {
 		const node = get().nodes.find((n) => n.id === nodeId);
 		if (!node) {
 			return "";
 		}
+		const updateNode = get().updateNode;
 
 		const timestamp = new Date().toISOString();
-		let output:
-			| string
-			| { result: string; metadata: { model: TModel; tokens_used: number } } =
-			"";
+		let output: string | GenerateTextOutput = "";
 
 		try {
-			// Apply appropriate delay based on node type
-			const delayForNode = getNodeDelay(node.type);
-			if (delayForNode && delayForNode > 0) {
+			const delayForNode = NODE_DELAYS[node.type];
+			if (delayForNode > 0) {
 				await delay(delayForNode);
 			}
 
 			switch (node.type) {
 				case "text-input": {
-					output = node.data.text;
-					get().updateNode(nodeId, {
+					output = node.data.config.text;
+					updateNode(nodeId, {
 						lastRun: {
 							timestamp,
 							inputs: {},
@@ -735,81 +798,73 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					break;
 				}
 				case "generate-text": {
-					let output: GenerateTextOutput;
+					let result: GenerateTextOutput;
 
 					if (MOCK_AI_RESPONSE) {
-						// Mock generation with metadata
-						output = {
+						result = {
 							result: `Model: ${node.data.config.model}\nSystem: ${inputs[0] || ""}\nPrompt: ${inputs[1] || ""}`,
 							metadata: {
 								model: node.data.config.model,
-								tokens_used: 100, // Mock value
+								tokens_used: 100,
 							},
 							toolResults: [],
 						};
 					} else {
-						// Make actual API call
-						try {
-							const response = await fetch("/api/ai/flow/generate-text", {
-								method: "POST",
-								headers: {
-									"Content-Type": "application/json",
-								},
-								body: JSON.stringify({
-									system: inputs[0],
-									prompt: inputs[1],
-									model: node.data.config.model,
-									tools: node.data.config.tools,
-								}),
-							});
+						const response = await fetch("/api/ai/flow/generate-text", {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								system: inputs[0],
+								prompt: inputs[1],
+								model: node.data.config.model,
+								tools: node.data.config.tools,
+							}),
+						});
 
-							if (!response.ok) {
-								throw new Error(`API call failed: ${response.statusText}`);
-							}
-
-							const data = (await response.json()) as ApiResponse;
-							console.log("data", data);
-							output = {
-								result: data.text,
-								metadata: {
-									model: node.data.config.model,
-									tokens_used: data.tokens_used || 0,
-								},
-								toolResults: data.toolResults,
-							};
-						} catch (error) {
-							throw new Error(
-								`Failed to generate text: ${error instanceof Error ? error.message : "Unknown error"}`,
-							);
+						if (!response.ok) {
+							throw new Error(`API call failed: ${response.statusText}`);
 						}
+
+						const data = (await response.json()) as ApiResponse;
+						result = {
+							result: data.text,
+							metadata: {
+								model: node.data.config.model,
+								tokens_used: data.tokens_used || 0,
+							},
+							toolResults: data.toolResults,
+						};
 					}
 
-					get().updateNode(nodeId, {
+					updateNode(nodeId, {
 						lastRun: {
 							timestamp,
 							inputs: {
 								system: inputs[0] || "",
 								prompt: inputs[1] || "",
 							},
-							output,
+							output: result,
 							status: "success",
 						},
 					});
+					output = result;
 					break;
 				}
 				case "prompt-crafter": {
 					const inputsMap: Record<string, string> = {};
-					node.data.inputs.forEach((input, index) => {
+					node.data.config.inputs.forEach((input, index) => {
 						inputsMap[input.label] = inputs[index] || "";
 					});
 
-					let text = node.data.text;
+					let text = node.data.config.template;
 					for (const [label, value] of Object.entries(inputsMap)) {
 						text = text.replace(`{${label}}`, value);
 					}
 					output = text;
 
-					get().updateNode(nodeId, {
+					updateNode(nodeId, {
 						lastRun: {
 							timestamp,
 							inputs: inputsMap,
@@ -821,8 +876,10 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				}
 				case "visualize-text": {
 					output = inputs[0] || "";
-					get().updateNode(nodeId, {
-						text: output,
+					updateNode(nodeId, {
+						config: {
+							text: output,
+						},
 						lastRun: {
 							timestamp,
 							inputs: inputs[0] || "",
@@ -833,43 +890,22 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				}
 			}
 
-			return typeof output === "string"
-				? output
-				: (output as GenerateTextOutput).result;
+			return isGenerateTextOutput(output) ? output.result : output;
 		} catch (error) {
-			// Update node with error state
-			const errorInputs = (() => {
-				switch (node.type) {
-					case "generate-text": {
-						return {
-							system: inputs[0] || "",
-							prompt: inputs[1] || "",
-						};
-					}
-					case "prompt-crafter": {
-						const inputsMap: Record<string, string> = {};
-						node.data.inputs.forEach((input, index) => {
-							inputsMap[input.label] = inputs[index] || "";
-						});
-						return inputsMap;
-					}
-					case "text-input": {
-						return {};
-					}
-					case "visualize-text": {
-						return inputs[0] || "";
-					}
-					default: {
-						return {};
-					}
-				}
-			})();
-
-			get().updateNode(nodeId, {
+			updateNode(nodeId, {
 				lastRun: {
 					timestamp,
-					// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-					inputs: errorInputs as any,
+					inputs: {
+						system: inputs[0] || "",
+						prompt: inputs[1] || "",
+					},
+					/* inputs:
+						node.type === "generate-text"
+							? {
+									system: inputs[0] || "",
+									prompt: inputs[1] || "",
+								}
+							: inputs[0] || "", */
 					status: "error",
 					error: error instanceof Error ? error.message : "Unknown error",
 				},

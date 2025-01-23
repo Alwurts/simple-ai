@@ -133,7 +133,7 @@ export function PromptCrafterNode({
 				return false;
 			}
 
-			const existingInput = data.inputs?.find(
+			const existingInput = data.config.inputs?.find(
 				(input) => input.label === newLabel,
 			);
 			if (existingInput && existingInput.id !== handleId) {
@@ -141,17 +141,22 @@ export function PromptCrafterNode({
 				return false;
 			}
 
-			const oldInput = data.inputs?.find((input) => input.id === handleId);
+			const oldInput = data.config.inputs?.find(
+				(input) => input.id === handleId,
+			);
 			if (!oldInput) {
 				return false;
 			}
 
 			updateNode(id, {
-				inputs: (data.inputs || []).map((input) =>
-					input.id === handleId ? { ...input, label: newLabel } : input,
-				),
+				config: {
+					...data.config,
+					inputs: (data.config.inputs || []).map((input) =>
+						input.id === handleId ? { ...input, label: newLabel } : input,
+					),
+				},
 				// Also update references in the text
-				text: (data.text || "").replace(
+				template: (data.config.template || "").replace(
 					new RegExp(`{${oldInput.label}}`, "g"),
 					`{${newLabel}}`,
 				),
@@ -159,14 +164,14 @@ export function PromptCrafterNode({
 			updateNodeInternals(id);
 			return true;
 		},
-		[id, data.inputs, data.text, updateNode, updateNodeInternals],
+		[id, data.config, updateNode, updateNodeInternals],
 	);
 
 	// Create language with current inputs
 	const extensions = useMemo(() => {
-		const validLabels = (data.inputs || []).map((input) => input.label);
+		const validLabels = (data.config.inputs || []).map((input) => input.label);
 		return [createPromptLanguage(validLabels)];
-	}, [data.inputs]);
+	}, [data.config.inputs]);
 
 	const executionStatus = data.lastRun?.status || "idle";
 	const statusColors = {
@@ -213,7 +218,7 @@ export function PromptCrafterNode({
 								<CommandList>
 									<CommandEmpty>No inputs found.</CommandEmpty>
 									<CommandGroup>
-										{data.inputs?.map(
+										{data.config.inputs?.map(
 											(input) =>
 												input.label && (
 													<CommandItem
@@ -232,7 +237,7 @@ export function PromptCrafterNode({
 					</Popover>
 				</div>
 				<CodeMirror
-					value={data.text || ""}
+					value={data.config.template || ""}
 					height="150px"
 					theme={promptTheme}
 					extensions={extensions}
@@ -262,7 +267,7 @@ export function PromptCrafterNode({
 						<Plus className="h-4 w-4 mr-1" />
 						New Input
 					</Button>
-					{data.inputs?.map((input) => (
+					{data.config.inputs?.map((input) => (
 						<EditableLabeledHandle
 							key={input.id}
 							nodeId={id}

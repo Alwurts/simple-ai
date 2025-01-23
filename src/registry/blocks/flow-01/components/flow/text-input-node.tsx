@@ -68,7 +68,7 @@ export function TextInputNode({
 			<Separator />
 			<div className="p-2 w-[300px] flex flex-col gap-4">
 				<Textarea
-					value={data.text || ""}
+					value={data.config.text || ""}
 					onChange={handleTextChange}
 					className="w-full h-[150px] resize-none nodrag"
 					placeholder="Enter your text here..."

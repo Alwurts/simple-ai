@@ -62,7 +62,7 @@ export function VisualizeTextNode({
 				<div className="flex-1 border border-border rounded-md p-2">
 					<MarkdownContent
 						id={id}
-						content={data.text || "No text to display"}
+						content={data.config.text || "No text to display"}
 					/>
 				</div>
 			</div>
