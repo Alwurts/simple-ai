@@ -14,7 +14,7 @@ import {
 	type TTextInputNode,
 	useStore,
 } from "@/registry/blocks/flow-01/hooks/store";
-import { type NodeProps, Position, NodeResizer } from "@xyflow/react";
+import { type NodeProps, NodeResizer, Position } from "@xyflow/react";
 import { PenLine, Trash } from "lucide-react";
 import type React from "react";
 import { useCallback } from "react";

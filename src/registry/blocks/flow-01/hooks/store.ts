@@ -6,8 +6,8 @@ import type {
 	Node,
 	NodeChange,
 } from "@xyflow/react";
-import { createWithEqualityFn } from "zustand/traditional";
 import { nanoid } from "nanoid";
+import { createWithEqualityFn } from "zustand/traditional";
 
 export const MODELS = [
 	"deepseek-chat",

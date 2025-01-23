@@ -1,4 +1,4 @@
-import { type NodeProps, Position, NodeResizer } from "@xyflow/react";
+import { type NodeProps, NodeResizer, Position } from "@xyflow/react";
 
 import { BaseNode } from "@/components/flow/base-node";
 import { LabeledHandle } from "@/components/flow/labeled-handle";
@@ -69,9 +69,7 @@ export function VisualizeTextNode({
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
-			<div
-				className="p-2 flex-1 overflow-auto flex flex-col"
-			>
+			<div className="p-2 flex-1 overflow-auto flex flex-col">
 				<div className="flex-1 overflow-auto nodrag nopan nowheel border border-border rounded-md p-2 select-text cursor-auto">
 					<MarkdownContent
 						id={id}
