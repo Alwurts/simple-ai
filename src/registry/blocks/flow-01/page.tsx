@@ -18,7 +18,8 @@ import { PromptCrafterNode } from "@/registry/blocks/flow-01/components/flow/pro
 import { TextInputNode } from "@/registry/blocks/flow-01/components/flow/text-input-node";
 import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/visualize-text-node";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import type { AppNode } from "@/registry/blocks/flow-01/hooks/store";
+import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
+import { prepareWorkflow } from "./lib/workflow";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNode,
@@ -36,7 +37,7 @@ function Flow() {
 			onEdgesChange: store.onEdgesChange,
 			onConnect: store.onConnect,
 			runtime: store.runtime,
-			startExecution: store.startExecution,
+			//startExecution: store.startExecution,
 			createNode: store.createNode,
 		}),
 		shallow,
@@ -54,7 +55,7 @@ function Flow() {
 
 		const type = event.dataTransfer.getData(
 			"application/reactflow",
-		) as AppNode["type"];
+		) as FlowNode["type"];
 
 		// Check if the dropped element is valid
 		if (!type) {
@@ -94,7 +95,10 @@ function Flow() {
 					</div>
 				)}
 				<Button
-					onClick={() => store.startExecution()}
+					onClick={() => {
+						const workflow = prepareWorkflow(store.nodes, store.edges);
+						console.log(workflow);
+					}}
 					disabled={store.runtime.isRunning}
 				>
 					{store.runtime.isRunning ? "Running..." : "Run Flow"}

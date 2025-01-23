@@ -1,4 +1,4 @@
-import type { Node } from "@xyflow/react";
+import type { Edge, Node } from "@xyflow/react";
 import type { Model } from "@/registry/blocks/flow-01/types/ai";
 
 type NodeExecutionStatus = "success" | "error" | "processing" | "idle";
@@ -123,6 +123,11 @@ export type FlowNode =
 	| TextInputNode
 	| PromptCrafterNode
 	| GenerateTextNode;
+
+export type FlowEdge = Edge & {
+	targetHandle: string;
+	sourceHandle: string;
+};
 
 /* export type FlowNode = FlowNodeUndefined & {
 	type: Exclude<FlowNodeUndefined["type"], undefined>;
