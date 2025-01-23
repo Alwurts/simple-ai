@@ -24,10 +24,6 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { EditableLabeledHandle } from "@/registry/blocks/flow-01/components/flow/editable-labeled-handle";
-import {
-	type TPromptCrafterNode,
-	useStore,
-} from "@/registry/blocks/flow-01/hooks/store";
 import { StreamLanguage } from "@codemirror/language";
 import type { EditorView } from "@codemirror/view";
 import { tags as t } from "@lezer/highlight";
@@ -41,6 +37,8 @@ import {
 import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
+import type { PromptCrafterNode as TPromptCrafterNode } from "@/registry/blocks/flow-01/types/flow";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 
 // Custom theme that matches your app's design
 const promptTheme = createTheme({
@@ -86,6 +84,9 @@ export function PromptCrafterNode({
 }: NodeProps<TPromptCrafterNode>) {
 	const updateNode = useStore((state) => state.updateNode);
 	const runtime = useStore((state) => state.runtime);
+	const addDynamicHandle = useStore((state) => state.addDynamicHandle);
+	const removeDynamicHandle = useStore((state) => state.removeDynamicHandle);
+
 	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
 	const updateNodeInternals = useUpdateNodeInternals();
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -93,7 +94,7 @@ export function PromptCrafterNode({
 
 	const handlePromptTextChange = useCallback(
 		(value: string) => {
-			updateNode(id, { text: value });
+			updateNode(id, "prompt-crafter", { config: { template: value } });
 		},
 		[id, updateNode],
 	);
@@ -114,16 +115,18 @@ export function PromptCrafterNode({
 	}, []);
 
 	const addInput = useCallback(() => {
-		useStore.getState().addDynamicInput(id);
+		addDynamicHandle(id, "prompt-crafter", "template-tags", {
+			name: "New Input",
+		});
 		updateNodeInternals(id);
-	}, [id, updateNodeInternals]);
+	}, [id, updateNodeInternals, addDynamicHandle]);
 
 	const removeInput = useCallback(
 		(handleId: string) => {
-			useStore.getState().removeDynamicInput(id, handleId);
+			removeDynamicHandle(id, "prompt-crafter", "template-tags", handleId);
 			updateNodeInternals(id);
 		},
-		[id, updateNodeInternals],
+		[id, updateNodeInternals, removeDynamicHandle],
 	);
 
 	const updateInputName = useCallback(
@@ -133,47 +136,52 @@ export function PromptCrafterNode({
 				return false;
 			}
 
-			const existingInput = data.config.inputs?.find(
-				(input) => input.label === newLabel,
+			const existingInput = data.dynamicHandles["template-tags"]?.find(
+				(input) => input.name === newLabel,
 			);
 			if (existingInput && existingInput.id !== handleId) {
 				toast.error("Input name already exists");
 				return false;
 			}
 
-			const oldInput = data.config.inputs?.find(
+			const oldInput = data.dynamicHandles["template-tags"]?.find(
 				(input) => input.id === handleId,
 			);
 			if (!oldInput) {
 				return false;
 			}
 
-			updateNode(id, {
+			updateNode(id, "prompt-crafter", {
 				config: {
 					...data.config,
-					inputs: (data.config.inputs || []).map((input) =>
-						input.id === handleId ? { ...input, label: newLabel } : input,
+					template: (data.config.template || "").replace(
+						new RegExp(`{${oldInput.name}}`, "g"),
+						`{${newLabel}}`,
 					),
 				},
-				// Also update references in the text
-				template: (data.config.template || "").replace(
-					new RegExp(`{${oldInput.label}}`, "g"),
-					`{${newLabel}}`,
-				),
+				dynamicHandles: {
+					...data.dynamicHandles,
+					"template-tags": (data.dynamicHandles["template-tags"] || []).map(
+						(input) =>
+							input.id === handleId ? { ...input, name: newLabel } : input,
+					),
+				},
 			});
 			updateNodeInternals(id);
 			return true;
 		},
-		[id, data.config, updateNode, updateNodeInternals],
+		[id, data.dynamicHandles, data.config, updateNode, updateNodeInternals],
 	);
 
 	// Create language with current inputs
 	const extensions = useMemo(() => {
-		const validLabels = (data.config.inputs || []).map((input) => input.label);
+		const validLabels = (data.dynamicHandles["template-tags"] || []).map(
+			(input) => input.name,
+		);
 		return [createPromptLanguage(validLabels)];
-	}, [data.config.inputs]);
+	}, [data.dynamicHandles["template-tags"]]);
 
-	const executionStatus = data.lastRun?.status || "idle";
+	const executionStatus = data.executionState?.status || "idle";
 	const statusColors = {
 		idle: "bg-muted text-muted-foreground",
 		processing: "bg-orange-500 text-white",
@@ -218,15 +226,15 @@ export function PromptCrafterNode({
 								<CommandList>
 									<CommandEmpty>No inputs found.</CommandEmpty>
 									<CommandGroup>
-										{data.config.inputs?.map(
+										{data.dynamicHandles["template-tags"]?.map(
 											(input) =>
-												input.label && (
+												input.name && (
 													<CommandItem
 														key={input.id}
-														onSelect={() => insertInputAtCursor(input.label)}
+														onSelect={() => insertInputAtCursor(input.name)}
 														className="text-base"
 													>
-														{input.label}
+														{input.name}
 													</CommandItem>
 												),
 										)}
@@ -267,12 +275,12 @@ export function PromptCrafterNode({
 						<Plus className="h-4 w-4 mr-1" />
 						New Input
 					</Button>
-					{data.config.inputs?.map((input) => (
+					{data.dynamicHandles["template-tags"]?.map((input) => (
 						<EditableLabeledHandle
 							key={input.id}
 							nodeId={id}
 							handleId={input.id}
-							label={input.label}
+							label={input.name}
 							type="target"
 							position={Position.Left}
 							wrapperClassName="w-full"

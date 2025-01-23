@@ -1,193 +1,73 @@
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
-import type {
-	Connection,
-	Edge,
-	EdgeChange,
-	Node,
-	NodeChange,
-} from "@xyflow/react";
+import type { Connection, Edge, EdgeChange, NodeChange } from "@xyflow/react";
 import { nanoid } from "nanoid";
 import { createWithEqualityFn } from "zustand/traditional";
-
-export const MODELS = [
-	"deepseek-chat",
-	"llama-3.3-70b-versatile",
-	"llama-3.1-8b-instant",
-] as const;
-
-export type TModel = (typeof MODELS)[number];
+import {
+	type DynamicHandle,
+	isNodeWithDynamicHandles,
+	isNodeOfType,
+	type FlowNode,
+	type FlowNodeDataTypeMap,
+	type GenerateTextNode,
+	type TextInputNode,
+	type VisualizeTextNode,
+	type PromptCrafterNode,
+} from "@/registry/blocks/flow-01/types/flow";
+import { generateText } from "../lib/ai";
 
 interface RuntimeState {
 	isRunning: boolean;
 	currentNodeIds: string[];
 	lastRunTime: string | null;
 }
-
-type NodeExecutionStatus = "success" | "error" | "processing" | "idle";
-
-interface NodeExecutionState<TInput = unknown, TOutput = unknown> {
-	timestamp: string;
-	inputs: TInput;
-	output?: TOutput;
-	status: NodeExecutionStatus;
-	error?: string;
-}
-
-export interface Tool {
-	id: string;
-	name: string;
-	description: string;
-	result?: string;
-}
-
-interface ApiResponse {
-	text: string;
-	tokens_used?: number;
-	toolResults?: Tool[];
-}
-
-interface GenerateTextOutput {
-	result: string;
-	toolResults?: Tool[];
-	metadata: {
-		model: TModel;
-		tokens_used: number;
-	};
-}
-interface GenerateTextInput {
-	system: string;
-	prompt: string;
-}
-
-interface PromptCrafterInput {
-	[key: string]: string;
-}
-
-// Node configurations
-interface GenerateTextConfig {
-	model: TModel;
-	tools: Tool[];
-}
-
-interface PromptCrafterConfig {
-	template: string;
-	inputs: Array<{ id: string; label: string }>;
-}
-
-interface TextInputConfig {
-	text: string;
-}
-
-// Base interfaces for node data
-interface BaseNodeData extends Record<string, unknown> {
-	lastRun?: NodeExecutionState;
-}
-
-interface GenerateTextData extends BaseNodeData {
-	config: GenerateTextConfig;
-	lastRun?: NodeExecutionState<GenerateTextInput, GenerateTextOutput>;
-}
-
-interface PromptCrafterData extends BaseNodeData {
-	config: PromptCrafterConfig;
-	lastRun?: NodeExecutionState<PromptCrafterInput, string>;
-}
-
-interface TextInputData extends BaseNodeData {
-	config: TextInputConfig;
-	lastRun?: NodeExecutionState<undefined, string>;
-}
-
-interface VisualizeTextData extends BaseNodeData {
-	lastRun?: NodeExecutionState<string, undefined>;
-}
-
-export type TGenerateTextNode = Node<GenerateTextData, "generate-text">;
-export type TVisualizeTextNode = Node<VisualizeTextData, "visualize-text">;
-export type TTextInputNode = Node<TextInputData, "text-input">;
-export type TPromptCrafterNode = Node<PromptCrafterData, "prompt-crafter">;
-
-type AppNodeTypeUndefined =
-	| TGenerateTextNode
-	| TVisualizeTextNode
-	| TTextInputNode
-	| TPromptCrafterNode;
-
-export type AppNode = AppNodeTypeUndefined & {
-	type: Exclude<AppNodeTypeUndefined["type"], undefined>;
-};
-
-// Type guards for better type safety
-function isGenerateTextOutput(output: unknown): output is GenerateTextOutput {
-	return (
-		!!output &&
-		typeof output === "object" &&
-		"result" in output &&
-		typeof (output as GenerateTextOutput).result === "string" &&
-		"metadata" in output &&
-		typeof (output as GenerateTextOutput).metadata === "object"
-	);
-}
-
-// Type guards for node types
-/* function isGenerateTextNode(node: AppNode): node is TGenerateTextNode {
-	return node.type === "generate-text";
-}
-
-function isPromptCrafterNode(node: AppNode): node is TPromptCrafterNode {
-	return node.type === "prompt-crafter";
-}
-
-function isTextInputNode(node: AppNode): node is TTextInputNode {
-	return node.type === "text-input";
-}
-
-function isVisualizeTextNode(node: AppNode): node is TVisualizeTextNode {
-	return node.type === "visualize-text";
-} */
-
 export interface StoreState {
-	nodes: AppNode[];
+	nodes: FlowNode[];
 	edges: Edge[];
-	runtime: RuntimeState;
-	onNodesChange: (changes: NodeChange<AppNode>[]) => void;
+	onNodesChange: (changes: NodeChange<FlowNode>[]) => void;
 	onEdgesChange: (changes: EdgeChange<Edge>[]) => void;
 	onConnect: (connection: Edge | Connection) => void;
-	updateNode: (id: string, data: Partial<AppNode["data"]>) => void;
+	updateNode: <T extends FlowNode["type"]>(
+		id: string,
+		nodeType: T,
+		data: Partial<FlowNodeDataTypeMap[T]>,
+	) => void;
 	deleteNode: (id: string) => void;
-	addDynamicInput: (nodeId: string) => string;
-	removeDynamicInput: (nodeId: string, handleId: string) => void;
-	addDynamicTool: (nodeId: string) => string;
-	removeDynamicTool: (nodeId: string, toolId: string) => void;
 	createNode: (
-		type: AppNode["type"],
+		nodeType: FlowNode["type"],
 		position: { x: number; y: number },
-	) => AppNode;
+	) => FlowNode;
+	addDynamicHandle: <T extends FlowNode["type"]>(
+		nodeId: string,
+		nodeType: T,
+		handleCategory: string, // Change to more specific type depending on node type
+		handle: Omit<DynamicHandle, "id">,
+	) => string;
+	removeDynamicHandle: <T extends FlowNode["type"]>(
+		nodeId: string,
+		nodeType: T,
+		handleCategory: string, // Change to more specific type depending on node type
+		handleId: string,
+	) => void;
 	// Flow execution
+	runtime: RuntimeState;
 	startExecution: () => Promise<void>;
 	getNodeInputs: (nodeId: string) => Promise<string[]>;
 	processNode: (nodeId: string, inputs: string[]) => Promise<string>;
 }
 
-export const MOCK_GENERATION =
-	"This is a mock generated text. It simulates AI output based on the inputs provided.";
-
-// Global flag for mocking AI responses
-export const MOCK_AI_RESPONSE = false;
-
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const DELAY_TIMES = {
+/* const DELAY_TIMES = {
 	QUICK: 100,
 	GENERATION: 1500,
-} as const;
+} as const; */
 
-const NODE_DELAYS: Record<AppNode["type"], number> = {
+/* const NODE_DELAYS: Record<AppNode["type"], number> = {
 	"text-input": DELAY_TIMES.QUICK,
 	"visualize-text": DELAY_TIMES.QUICK,
 	"prompt-crafter": DELAY_TIMES.QUICK,
 	"generate-text": MOCK_AI_RESPONSE ? DELAY_TIMES.GENERATION : 0,
-};
+}; */
 
 interface NodeDependencyState {
 	nodeId: string;
@@ -196,8 +76,14 @@ interface NodeDependencyState {
 	processed: boolean;
 }
 
+// Add type for sources
+type NodeSources = {
+	result: string;
+	[key: string]: string;
+};
+
 async function processNodesIndependently(
-	nodes: AppNode[],
+	nodes: FlowNode[],
 	edges: Edge[],
 	runTime: string,
 	set: (state: Partial<StoreState>) => void,
@@ -238,6 +124,11 @@ async function processNodesIndependently(
 			return;
 		}
 
+		const node = nodes.find((n) => n.id === nodeId);
+		if (!node) {
+			return;
+		}
+
 		// Skip processing if any upstream nodes have failed
 		if (hasUpstreamFailure(nodeId)) {
 			// Mark node as processed but don't run it
@@ -246,10 +137,9 @@ async function processNodesIndependently(
 				nodeState.processed = true;
 			}
 			// Update node to idle state since we're skipping it
-			get().updateNode(nodeId, {
-				lastRun: {
-					timestamp: runTime,
-					inputs: {},
+			get().updateNode(nodeId, node.type, {
+				executionState: {
+					timestamp: new Date().toISOString(),
 					status: "idle",
 				},
 			});
@@ -260,10 +150,9 @@ async function processNodesIndependently(
 
 		try {
 			// Set node to processing state
-			get().updateNode(nodeId, {
-				lastRun: {
-					timestamp: runTime,
-					inputs: {},
+			get().updateNode(nodeId, node.type, {
+				executionState: {
+					timestamp: new Date().toISOString(),
 					status: "processing",
 				},
 			});
@@ -272,26 +161,26 @@ async function processNodesIndependently(
 			await get().processNode(nodeId, inputs);
 
 			// Check if the node failed during processing
-			const node = get().nodes.find((n) => n.id === nodeId);
-			if (node?.data.lastRun?.status === "error") {
+			const updatedNode = get().nodes.find((n) => n.id === nodeId);
+			if (updatedNode?.data.executionState?.status === "error") {
 				failedNodes.add(nodeId);
-			} else if (node?.type === "generate-text" && node.data.lastRun?.output) {
-				const output = node.data.lastRun.output as GenerateTextOutput;
-
-				// Process tool results if they exist
-				if (output.toolResults?.length) {
+			} else if (updatedNode?.type === "generate-text") {
+				const sources = updatedNode.data.executionState?.sources as
+					| NodeSources
+					| undefined;
+				if (sources) {
 					// Find edges that connect from this node's tool handles
 					const toolEdges = edges.filter(
 						(edge) => edge.source === nodeId && edge.sourceHandle !== "output",
 					);
 
-					// For each tool result, find matching edge and mark target node as ready
-					for (const toolResult of output.toolResults) {
-						if (!toolResult.id || !toolResult.result) {
+					// For each tool source, find matching edge and mark target node as ready
+					for (const [sourceId, _] of Object.entries(sources)) {
+						if (sourceId === "result") {
 							continue;
 						}
 						const matchingEdge = toolEdges.find(
-							(edge) => edge.sourceHandle === toolResult.id,
+							(edge) => edge.sourceHandle === sourceId,
 						);
 						if (matchingEdge) {
 							const targetState = nodeStates.get(matchingEdge.target);
@@ -384,7 +273,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			id: "a",
 			data: {
 				config: {
-					text: "Hey, how are you?",
+					value: "Hey, how are you?",
 				},
 			},
 			position: { x: -400, y: 200 },
@@ -394,7 +283,8 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			id: "x",
 			data: {
 				config: {
-					text: "You are a helpful assistant that always uses the tool to respond. You always use printValueA and printValueB at the same time to respond to the user. Always use the same value for both tools. Only call each tool one time. GIve your full responsee all at once in a single tool call. IN addition to using the tools you also provide your response normally without tools all at the same time",
+					value:
+						"You are a helpful assistant that always uses the tool to respond. You always use printValueA and printValueB at the same time to respond to the user. Always use the same value for both tools. Only call each tool one time. GIve your full responsee all at once in a single tool call. IN addition to using the tools you also provide your response normally without tools all at the same time",
 				},
 			},
 			position: { x: 0, y: -150 },
@@ -403,20 +293,24 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			type: "generate-text",
 			id: "b",
 			data: {
-				config: {
-					model: "llama-3.1-8b-instant",
+				dynamicHandles: {
 					tools: [
 						{
 							id: "xyz", // printValue as id works, but xyz doesn't
 							name: "printValueA",
 							description: "Use this to respond to the user",
+							type: "source",
 						},
 						{
 							id: "tgh", // printValue as id works, but xyz doesn't
 							name: "printValueB",
 							description: "Use this to respond to the user",
+							type: "source",
 						},
 					],
+				},
+				config: {
+					model: "llama-3.1-8b-instant",
 				},
 			},
 			position: { x: 450, y: 50 },
@@ -479,7 +373,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
 	onNodesChange: (changes) => {
 		set({
-			nodes: applyNodeChanges<AppNode>(changes, get().nodes),
+			nodes: applyNodeChanges<FlowNode>(changes, get().nodes),
 		});
 	},
 	onEdgesChange: (changes) => {
@@ -492,15 +386,21 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			edges: addEdge(connection, get().edges),
 		});
 	},
-	updateNode(id, data) {
-		set({
-			nodes: get().nodes.map((node) => {
-				if (node.id === id) {
-					return { ...node, data: { ...node.data, ...data } };
+	updateNode(id, type, data) {
+		set((state) => ({
+			nodes: state.nodes.map((node) => {
+				if (node.id === id && isNodeOfType(node, type)) {
+					return {
+						...node,
+						data: {
+							...node.data,
+							...data,
+						},
+					};
 				}
 				return node;
-			}) as AppNode[],
-		});
+			}),
+		}));
 	},
 	deleteNode(id) {
 		set({
@@ -510,171 +410,155 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			),
 		});
 	},
-
-	addDynamicInput(nodeId) {
+	addDynamicHandle(nodeId, type, handleCategory, handle) {
 		const newId = nanoid();
 		set({
 			nodes: get().nodes.map((node) => {
-				if (node.id === nodeId && node.type === "prompt-crafter") {
+				if (
+					node.id === nodeId &&
+					isNodeWithDynamicHandles(node) &&
+					isNodeOfType(node, type)
+				) {
 					return {
 						...node,
 						data: {
 							...node.data,
-							//inputs: [...(node.data.inputs || []), { id: newId, label: "" }],
 							config: {
 								...node.data.config,
-								inputs: [
-									...(node.data.config.inputs || []),
-									{ id: newId, label: "" },
-								],
+								dynamicHandles: {
+									...node.data.dynamicHandles,
+									[handleCategory]: [
+										...node.data.dynamicHandles[
+											handleCategory as keyof typeof node.data.dynamicHandles // Change to more specific type
+										],
+										{
+											...handle,
+											id: newId,
+										},
+									],
+								},
 							},
 						},
 					};
 				}
+
 				return node;
-			}) as AppNode[],
+			}),
 		});
 		return newId;
 	},
-
-	removeDynamicInput(nodeId, handleId) {
+	removeDynamicHandle(nodeId, type, handleCategory, handleId) {
 		set({
 			nodes: get().nodes.map((node) => {
-				if (node.id === nodeId && node.type === "prompt-crafter") {
+				if (
+					node.id === nodeId &&
+					isNodeWithDynamicHandles(node) &&
+					isNodeOfType(node, type)
+				) {
+					const dynamicHandles = node.data.dynamicHandles;
+					const handles = dynamicHandles[
+						handleCategory as keyof typeof dynamicHandles
+					] as DynamicHandle[]; // Remove with type guard or more specific type
+					const newHandles = handles.filter((handle) => handle.id !== handleId);
+
 					return {
 						...node,
 						data: {
 							...node.data,
 							config: {
 								...node.data.config,
-								inputs: (node.data.config.inputs || []).filter(
-									(input) => input.id !== handleId,
-								),
-							},
-						},
-					};
-				}
-				return node;
-			}) as AppNode[],
-			edges: get().edges.filter(
-				(edge) => !(edge.target === nodeId && edge.targetHandle === handleId),
-			),
-		});
-	},
-
-	addDynamicTool(nodeId) {
-		const newId = nanoid();
-		set({
-			nodes: get().nodes.map((node) => {
-				if (node.id === nodeId && node.type === "generate-text") {
-					return {
-						...node,
-						data: {
-							...node.data,
-							config: {
-								...node.data.config,
-								tools: [
-									...node.data.config.tools,
-									{ id: newId, name: "", description: "" },
-								],
+								dynamicHandles: {
+									...node.data.dynamicHandles,
+									[handleCategory]: newHandles,
+								},
 							},
 						},
 					};
 				}
 				return node;
 			}),
-		});
-		return newId;
-	},
-
-	removeDynamicTool(nodeId, toolId) {
-		set({
-			nodes: get().nodes.map((node) => {
-				if (node.id === nodeId && node.type === "generate-text") {
-					return {
-						...node,
-						data: {
-							...node.data,
-							config: {
-								...node.data.config,
-								tools: node.data.config.tools.filter(
-									(tool) => tool.id !== toolId,
-								),
-							},
-						},
-					};
+			edges: get().edges.filter((edge) => {
+				if (edge.source === nodeId && edge.sourceHandle === handleId) {
+					return false;
 				}
-				return node;
+				if (edge.target === nodeId && edge.targetHandle === handleId) {
+					return false;
+				}
+				return true;
 			}),
-			edges: get().edges.filter(
-				(edge) => !(edge.source === nodeId && edge.sourceHandle === toolId),
-			),
 		});
 	},
-
-	createNode(type, position) {
-		let newNode: AppNode;
-
-		switch (type) {
-			case "generate-text":
-				newNode = {
+	createNode(nodeType, position) {
+		switch (nodeType) {
+			case "generate-text": {
+				const newNode: GenerateTextNode = {
 					id: nanoid(),
-					type,
+					type: nodeType,
 					position,
 					data: {
 						config: {
 							model: "llama-3.1-8b-instant",
+						},
+						dynamicHandles: {
 							tools: [],
 						},
 					},
 				};
-				break;
-			case "prompt-crafter":
-				newNode = {
+				set((state) => ({
+					nodes: [...state.nodes, newNode],
+				}));
+				return newNode;
+			}
+			case "prompt-crafter": {
+				const newNode: PromptCrafterNode = {
 					id: nanoid(),
-					type,
+					type: nodeType,
 					position,
 					data: {
 						config: {
 							template: "",
-							inputs: [],
+						},
+						dynamicHandles: {
+							"template-tags": [],
 						},
 					},
 				};
-				break;
-			case "visualize-text":
-				newNode = {
+				set((state) => ({
+					nodes: [...state.nodes, newNode],
+				}));
+				return newNode;
+			}
+			case "visualize-text": {
+				const newNode: VisualizeTextNode = {
 					id: nanoid(),
-					type,
+					type: nodeType,
+					position,
+					data: {},
+				};
+				set((state) => ({
+					nodes: [...state.nodes, newNode],
+				}));
+				return newNode;
+			}
+			case "text-input": {
+				const newNode: TextInputNode = {
+					id: nanoid(),
+					type: nodeType,
 					position,
 					data: {
 						config: {
-							text: "",
+							value: "",
 						},
 					},
 				};
-				break;
-			case "text-input":
-				newNode = {
-					id: nanoid(),
-					type,
-					position,
-					data: {
-						config: {
-							text: "",
-						},
-					},
-				};
-				break;
+				set((state) => ({
+					nodes: [...state.nodes, newNode],
+				}));
+				return newNode;
+			}
 			default:
-				throw new Error(`Unknown node type: ${type}`);
+				throw new Error(`Unknown node type: ${nodeType}`);
 		}
-
-		set({
-			nodes: [...get().nodes, newNode],
-		});
-
-		return newNode;
 	},
 
 	// Flow execution functions
@@ -697,20 +581,19 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		try {
 			// Reset all nodes to idle state and clear visualization text
 			for (const node of nodes) {
-				const updates: Partial<AppNode["data"]> = {
-					lastRun: {
+				const updates: Partial<FlowNode["data"]> = {
+					executionState: {
 						timestamp: runTime,
-						inputs: {},
 						status: "idle",
 					},
 				};
 
 				// Reset text only for visualization nodes
-				if (node.type === "visualize-text") {
+				/* if (node.type === "visualize-text") {
 					updates.text = "";
-				}
+				} */
 
-				get().updateNode(node.id, updates);
+				get().updateNode(node.id, node.type, updates);
 			}
 
 			await processNodesIndependently(nodes, edges, runTime, set, get);
@@ -732,27 +615,21 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
 		for (const edge of incomingEdges) {
 			const sourceNode = nodes.find((n) => n.id === edge.source);
-			if (sourceNode?.data.lastRun?.output) {
+			if (sourceNode?.data.executionState?.sources) {
+				const sources = sourceNode.data.executionState.sources as NodeSources;
 				if (sourceNode.type === "generate-text") {
-					const output = sourceNode.data.lastRun.output;
 					if (edge.sourceHandle === "output") {
-						inputsByHandle.set(edge.targetHandle || "", output.result);
-					} else {
-						// If connected to a tool handle, find the matching tool result
-						const toolResult = output.toolResults?.find(
-							(t) => t.id === edge.sourceHandle,
+						inputsByHandle.set(edge.targetHandle || "", sources.result);
+					} else if (edge.sourceHandle && sources[edge.sourceHandle]) {
+						// If connected to a tool handle, get the tool source
+						inputsByHandle.set(
+							edge.targetHandle || "",
+							sources[edge.sourceHandle],
 						);
-						if (toolResult?.result) {
-							inputsByHandle.set(edge.targetHandle || "", toolResult.result);
-						}
 					}
 				} else {
-					inputsByHandle.set(
-						edge.targetHandle || "",
-						typeof sourceNode.data.lastRun.output === "string"
-							? sourceNode.data.lastRun.output
-							: (sourceNode.data.lastRun.output as GenerateTextOutput).result,
-					);
+					// For other nodes, just get the result source
+					inputsByHandle.set(edge.targetHandle || "", sources.result);
 				}
 			}
 		}
@@ -766,10 +643,10 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			];
 		}
 
-		// For prompt-crafter nodes, maintain input order based on defined inputs array
+		// For prompt-crafter nodes, maintain input order based on template tags
 		if (node?.type === "prompt-crafter") {
-			return node.data.config.inputs.map((input) => {
-				return inputsByHandle.get(input.id) || "";
+			return node.data.dynamicHandles["template-tags"].map((tag) => {
+				return inputsByHandle.get(tag.id) || "";
 			});
 		}
 
@@ -777,7 +654,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		return Array.from(inputsByHandle.values());
 	},
 
-	async processNode(nodeId, inputs) {
+	async processNode(nodeId: string, inputs: string[]) {
 		const node = get().nodes.find((n) => n.id === nodeId);
 		if (!node) {
 			return "";
@@ -785,99 +662,78 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		const updateNode = get().updateNode;
 
 		const timestamp = new Date().toISOString();
-		let output: string | GenerateTextOutput = "";
+		let output = "";
 
 		try {
-			const delayForNode = NODE_DELAYS[node.type];
-			if (delayForNode > 0) {
-				await delay(delayForNode);
-			}
-
 			switch (node.type) {
 				case "text-input": {
-					output = node.data.config.text;
-					updateNode(nodeId, {
-						lastRun: {
+					output = node.data.config.value;
+					updateNode(nodeId, node.type, {
+						executionState: {
 							timestamp,
-							inputs: {},
-							output,
+							sources: {
+								result: output,
+							},
 							status: "success",
 						},
 					});
 					break;
 				}
 				case "generate-text": {
-					let result: GenerateTextOutput;
+					const response = await generateText({
+						model: node.data.config.model,
+						system: inputs[0] || "",
+						prompt: inputs[1] || "",
+						tools: node.data.dynamicHandles.tools,
+					});
 
-					if (MOCK_AI_RESPONSE) {
-						result = {
-							result: `Model: ${node.data.config.model}\nSystem: ${inputs[0] || ""}\nPrompt: ${inputs[1] || ""}`,
-							metadata: {
-								model: node.data.config.model,
-								tokens_used: 100,
-							},
-							toolResults: [],
-						};
-					} else {
-						const response = await fetch("/api/ai/flow/generate-text", {
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify({
-								system: inputs[0],
-								prompt: inputs[1],
-								model: node.data.config.model,
-								tools: node.data.config.tools,
-							}),
-						});
+					// Create sources object with result and tool results
+					const sources: NodeSources = {
+						result: response.text,
+					};
 
-						if (!response.ok) {
-							throw new Error(`API call failed: ${response.statusText}`);
+					// Add tool results to sources
+					if (response.toolResults?.length) {
+						for (const toolResult of response.toolResults) {
+							if (toolResult.id && toolResult.result) {
+								sources[toolResult.id] = toolResult.result;
+							}
 						}
-
-						const data = (await response.json()) as ApiResponse;
-						result = {
-							result: data.text,
-							metadata: {
-								model: node.data.config.model,
-								tokens_used: data.tokens_used || 0,
-							},
-							toolResults: data.toolResults,
-						};
 					}
 
-					updateNode(nodeId, {
-						lastRun: {
+					updateNode(nodeId, node.type, {
+						executionState: {
 							timestamp,
-							inputs: {
-								system: inputs[0] || "",
-								prompt: inputs[1] || "",
-							},
-							output: result,
+							sources,
 							status: "success",
 						},
 					});
-					output = result;
+					output = response.text;
 					break;
 				}
 				case "prompt-crafter": {
+					const templateTags = node.data.dynamicHandles["template-tags"];
 					const inputsMap: Record<string, string> = {};
-					node.data.config.inputs.forEach((input, index) => {
-						inputsMap[input.label] = inputs[index] || "";
+					templateTags.forEach((tag, index) => {
+						inputsMap[tag.id] = inputs[index] || "";
 					});
 
 					let text = node.data.config.template;
-					for (const [label, value] of Object.entries(inputsMap)) {
-						text = text.replace(`{${label}}`, value);
+					for (const [id, value] of Object.entries(inputsMap)) {
+						const tag = templateTags.find((t) => t.id === id);
+						if (tag) {
+							text = text.replace(`{${tag.name}}`, value);
+						}
 					}
 					output = text;
 
-					updateNode(nodeId, {
-						lastRun: {
+					updateNode(nodeId, node.type, {
+						executionState: {
 							timestamp,
-							inputs: inputsMap,
-							output,
+							targets: inputsMap,
+							sources: {
+								result: output,
+							},
 							status: "success",
 						},
 					});
@@ -885,13 +741,12 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				}
 				case "visualize-text": {
 					output = inputs[0] || "";
-					updateNode(nodeId, {
-						config: {
-							text: output,
-						},
-						lastRun: {
+					updateNode(nodeId, node.type, {
+						executionState: {
 							timestamp,
-							inputs: inputs[0] || "",
+							targets: {
+								input: inputs[0] || "",
+							},
 							status: "success",
 						},
 					});
@@ -899,22 +754,11 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				}
 			}
 
-			return isGenerateTextOutput(output) ? output.result : output;
+			return output;
 		} catch (error) {
-			updateNode(nodeId, {
-				lastRun: {
+			updateNode(nodeId, node.type, {
+				executionState: {
 					timestamp,
-					inputs: {
-						system: inputs[0] || "",
-						prompt: inputs[1] || "",
-					},
-					/* inputs:
-						node.type === "generate-text"
-							? {
-									system: inputs[0] || "",
-									prompt: inputs[1] || "",
-								}
-							: inputs[0] || "", */
 					status: "error",
 					error: error instanceof Error ? error.message : "Unknown error",
 				},

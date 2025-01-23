@@ -24,7 +24,7 @@ type EditableToolHandleProps = HandleProps &
 		nodeId: string;
 		handleId: string;
 		name: string;
-		description: string;
+		description?: string;
 		handleClassName?: string;
 		nameClassName?: string;
 		wrapperClassName?: string;
@@ -106,7 +106,7 @@ const EditableToolHandle = React.forwardRef<
 			const success = onToolChange(
 				handleId,
 				trimmedName,
-				localDescription.trim(),
+				localDescription?.trim() || "",
 			);
 			if (success) {
 				setIsEditing(false);

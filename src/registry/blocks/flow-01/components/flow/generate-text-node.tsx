@@ -23,16 +23,13 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import { EditableToolHandle } from "@/registry/blocks/flow-01/components/flow/editable-tool-handle";
-import {
-	MODELS,
-	type TGenerateTextNode,
-	type TModel,
-	useStore,
-} from "@/registry/blocks/flow-01/hooks/store";
 import { Bot, Plus, Trash } from "lucide-react";
 import { useCallback } from "react";
 import { toast } from "sonner";
+import { EditableToolHandle } from "@/registry/blocks/flow-01/components/flow/editable-tool-handle";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
+import type { GenerateTextNode as TGenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
+import { MODELS, type Model } from "@/registry/blocks/flow-01/types/ai";
 
 export function GenerateTextNode({
 	id,
@@ -41,35 +38,38 @@ export function GenerateTextNode({
 	data,
 }: NodeProps<TGenerateTextNode>) {
 	const updateNode = useStore((state) => state.updateNode);
-	const addDynamicTool = useStore((state) => state.addDynamicTool);
-	const removeDynamicTool = useStore((state) => state.removeDynamicTool);
+	const addDynamicHandle = useStore((state) => state.addDynamicHandle);
+	const removeDynamicHandle = useStore((state) => state.removeDynamicHandle);
 	const runtime = useStore((state) => state.runtime);
 	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
 	const updateNodeInternals = useUpdateNodeInternals();
 
 	const handleModelChange = useCallback(
 		(value: string) => {
-			updateNode(id, {
+			updateNode(id, "generate-text", {
 				config: {
 					...data.config,
-					model: value as TModel,
+					model: value as Model,
 				},
 			});
 		},
 		[id, data.config, updateNode],
 	);
 
-	const addTool = useCallback(() => {
-		addDynamicTool(id);
+	const addHandle = useCallback(() => {
+		addDynamicHandle(id, "generate-text", "tools", {
+			name: "",
+			description: "",
+		});
 		updateNodeInternals(id);
-	}, [id, addDynamicTool, updateNodeInternals]);
+	}, [id, addDynamicHandle, updateNodeInternals]);
 
-	const removeTool = useCallback(
-		(toolId: string) => {
-			removeDynamicTool(id, toolId);
+	const removeHandle = useCallback(
+		(handleId: string) => {
+			removeDynamicHandle(id, "generate-text", "tools", handleId);
 			updateNodeInternals(id);
 		},
-		[id, removeDynamicTool, updateNodeInternals],
+		[id, removeDynamicHandle, updateNodeInternals],
 	);
 
 	const updateTool = useCallback(
@@ -79,7 +79,7 @@ export function GenerateTextNode({
 				return false;
 			}
 
-			const existingTool = data.config.tools.find(
+			const existingTool = data.dynamicHandles.tools.find(
 				(tool) => tool.name === newName && tool.id !== toolId,
 			);
 			if (existingTool) {
@@ -87,10 +87,13 @@ export function GenerateTextNode({
 				return false;
 			}
 
-			updateNode(id, {
+			updateNode(id, "generate-text", {
 				config: {
 					...data.config,
-					tools: data.config.tools.map((tool) =>
+				},
+				dynamicHandles: {
+					...data.dynamicHandles,
+					tools: data.dynamicHandles.tools.map((tool) =>
 						tool.id === toolId
 							? { ...tool, name: newName, description: newDescription }
 							: tool,
@@ -100,10 +103,10 @@ export function GenerateTextNode({
 			updateNodeInternals(id);
 			return true;
 		},
-		[id, data.config, updateNode, updateNodeInternals],
+		[id, data.dynamicHandles, data.config, updateNode, updateNodeInternals],
 	);
 
-	const executionStatus = data.lastRun?.status || "idle";
+	const executionStatus = data.executionState?.status || "idle";
 	const statusColors = {
 		idle: "bg-muted text-muted-foreground",
 		processing: "bg-orange-500 text-white",
@@ -180,14 +183,14 @@ export function GenerateTextNode({
 							variant="outline"
 							size="sm"
 							className="h-7 px-2"
-							onClick={addTool}
+							onClick={addHandle}
 						>
 							<Plus className="h-4 w-4 mr-1" />
 							New Tool
 						</Button>
 					</div>
 					<div className="flex flex-col">
-						{data.config.tools.map((tool) => (
+						{data.dynamicHandles.tools.map((tool) => (
 							<EditableToolHandle
 								key={tool.id}
 								nodeId={id}
@@ -198,7 +201,7 @@ export function GenerateTextNode({
 								position={Position.Right}
 								wrapperClassName="w-full"
 								onToolChange={updateTool}
-								onDelete={removeTool}
+								onDelete={removeHandle}
 							/>
 						))}
 					</div>

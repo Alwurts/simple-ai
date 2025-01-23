@@ -10,10 +10,8 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import {
-	type TTextInputNode,
-	useStore,
-} from "@/registry/blocks/flow-01/hooks/store";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
+import type { TextInputNode as TTextInputNode } from "@/registry/blocks/flow-01/types/flow";
 import { type NodeProps, NodeResizer, Position } from "@xyflow/react";
 import { PenLine, Trash } from "lucide-react";
 import type React from "react";
@@ -31,12 +29,12 @@ export function TextInputNode({
 
 	const handleTextChange = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-			updateNode(id, { config: { text: e.target.value } });
+			updateNode(id, "text-input", { config: { value: e.target.value } });
 		},
 		[id, updateNode],
 	);
 
-	const executionStatus = data.lastRun?.status || "idle";
+	const executionStatus = data.executionState?.status || "idle";
 	const statusColors = {
 		idle: "bg-muted text-muted-foreground",
 		processing: "bg-orange-500 text-white",
@@ -76,7 +74,7 @@ export function TextInputNode({
 			<Separator />
 			<div className="p-2 flex-1 overflow-auto flex flex-col gap-4">
 				<Textarea
-					value={data.config.text || ""}
+					value={data.config.value || ""}
 					onChange={handleTextChange}
 					className="w-full flex-1 min-h-[150px] resize-none nodrag"
 					placeholder="Enter your text here..."

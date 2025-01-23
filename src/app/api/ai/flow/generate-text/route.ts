@@ -1,4 +1,5 @@
-import type { Tool } from "@/registry/blocks/flow-01/hooks/store";
+import type { Model, ToolResult } from "@/registry/blocks/flow-01/types/ai";
+import type { GenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
 import { createDeepSeek } from "@ai-sdk/deepseek";
 import { createGroq } from "@ai-sdk/groq";
 import { generateText, tool } from "ai";
@@ -18,8 +19,8 @@ export async function POST(req: Request) {
 	}: {
 		prompt: string;
 		system: string;
-		model: string;
-		tools: Tool[];
+		model: Model;
+		tools: GenerateTextNode["data"]["dynamicHandles"]["tools"];
 	} = data;
 
 	let client: ReturnType<typeof createDeepSeek> | ReturnType<typeof createGroq>;
@@ -75,7 +76,7 @@ export async function POST(req: Request) {
 			}),
 		});
 
-		let toolResults: Tool[] = [];
+		let toolResults: ToolResult[] = [];
 		if (tools.length > 0 && result.toolResults) {
 			toolResults = result.toolResults.map((step) => {
 				const originalTool = tools.find((tool) => tool.name === step.toolName);
@@ -90,14 +91,14 @@ export async function POST(req: Request) {
 
 		console.log("ai response", {
 			text: result.text,
-			tokens_used: result.usage?.totalTokens,
 			toolResults: toolResults,
+			totalTokens: result.usage?.totalTokens,
 		});
 
 		return NextResponse.json({
 			text: result.text,
-			tokens_used: result.usage?.totalTokens,
 			toolResults: toolResults,
+			totalTokens: result.usage?.totalTokens,
 		});
 	} catch (error) {
 		console.error(error);

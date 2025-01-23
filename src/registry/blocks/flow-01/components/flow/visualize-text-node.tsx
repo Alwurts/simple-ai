@@ -11,10 +11,8 @@ import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import {
-	type TVisualizeTextNode,
-	useStore,
-} from "@/registry/blocks/flow-01/hooks/store";
+import type { VisualizeTextNode as TVisualizeTextNode } from "@/registry/blocks/flow-01/types/flow";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import { MarkdownContent } from "@/registry/ui/markdown-content";
 import { Eye, Trash } from "lucide-react";
 import { useCallback } from "react";
@@ -28,7 +26,7 @@ export function VisualizeTextNode({
 	const runtime = useStore((state) => state.runtime);
 	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
 
-	const executionStatus = data.lastRun?.status || "idle";
+	const executionStatus = data.executionState?.status || "idle";
 	const statusColors = {
 		idle: "bg-muted text-muted-foreground",
 		processing: "bg-orange-500 text-white",
@@ -74,8 +72,8 @@ export function VisualizeTextNode({
 					<MarkdownContent
 						id={id}
 						content={
-							data.lastRun?.inputs.length
-								? data.lastRun?.inputs
+							data.executionState?.targets?.input
+								? data.executionState?.targets?.input
 								: "No text to display"
 						}
 					/>
