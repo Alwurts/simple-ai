@@ -1,4 +1,4 @@
-import { type NodeProps, Position } from "@xyflow/react";
+import { type NodeProps, Position, NodeResizer } from "@xyflow/react";
 
 import { BaseNode } from "@/components/flow/base-node";
 import { LabeledHandle } from "@/components/flow/labeled-handle";
@@ -40,8 +40,19 @@ export function VisualizeTextNode({
 		<BaseNode
 			selected={selected}
 			isProcessing={isProcessing}
-			className="px-0 pb-0 flex flex-col"
+			className="px-0 pb-0 flex flex-col h-full"
+			style={{ minHeight: 250, minWidth: 300, maxHeight: 800, maxWidth: 800 }}
 		>
+			<NodeResizer
+				nodeId={id}
+				minWidth={250}
+				maxWidth={800}
+				minHeight={200}
+				maxHeight={800}
+				isVisible={selected}
+				//lineClassName="border-blue-400"
+				//handleClassName="bg-white border-2 border-blue-400 rounded-sm h-3 w-3"
+			/>
 			<NodeHeader className="px-8 mb-0">
 				<NodeHeaderIcon>
 					<Eye />
@@ -58,11 +69,17 @@ export function VisualizeTextNode({
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
-			<div className="p-2 h-[450px] w-[600px] overflow-y-auto flex flex-col gap-4">
-				<div className="flex-1 border border-border rounded-md p-2">
+			<div
+				className="p-2 flex-1 overflow-auto flex flex-col"
+			>
+				<div className="flex-1 overflow-auto nodrag nopan nowheel border border-border rounded-md p-2 select-text cursor-auto">
 					<MarkdownContent
 						id={id}
-						content={data.config.text || "No text to display"}
+						content={
+							data.lastRun?.inputs.length
+								? data.lastRun?.inputs
+								: "No text to display"
+						}
 					/>
 				</div>
 			</div>

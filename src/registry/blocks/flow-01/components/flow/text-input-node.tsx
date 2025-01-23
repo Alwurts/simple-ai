@@ -14,7 +14,7 @@ import {
 	type TTextInputNode,
 	useStore,
 } from "@/registry/blocks/flow-01/hooks/store";
-import { type NodeProps, Position } from "@xyflow/react";
+import { type NodeProps, Position, NodeResizer } from "@xyflow/react";
 import { PenLine, Trash } from "lucide-react";
 import type React from "react";
 import { useCallback } from "react";
@@ -31,7 +31,7 @@ export function TextInputNode({
 
 	const handleTextChange = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-			updateNode(id, { text: e.target.value });
+			updateNode(id, { config: { text: e.target.value } });
 		},
 		[id, updateNode],
 	);
@@ -48,8 +48,16 @@ export function TextInputNode({
 		<BaseNode
 			selected={selected}
 			isProcessing={isProcessing}
-			className="px-0 pb-0 flex flex-col"
+			className="px-0 pb-0 flex flex-col h-full"
+			style={{ minHeight: 250, minWidth: 300 }}
 		>
+			<NodeResizer
+				minWidth={250}
+				maxWidth={800}
+				minHeight={200}
+				maxHeight={800}
+				isVisible={selected}
+			/>
 			<NodeHeader className="px-8 mb-0">
 				<NodeHeaderIcon>
 					<PenLine />
@@ -66,11 +74,11 @@ export function TextInputNode({
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
-			<div className="p-2 w-[300px] flex flex-col gap-4">
+			<div className="p-2 flex-1 overflow-auto flex flex-col gap-4">
 				<Textarea
 					value={data.config.text || ""}
 					onChange={handleTextChange}
-					className="w-full h-[150px] resize-none nodrag"
+					className="w-full flex-1 min-h-[150px] resize-none nodrag"
 					placeholder="Enter your text here..."
 				/>
 			</div>

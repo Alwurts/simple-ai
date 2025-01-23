@@ -78,10 +78,6 @@ interface TextInputConfig {
 	text: string;
 }
 
-interface VisualizeTextConfig {
-	text: string;
-}
-
 // Base interfaces for node data
 interface BaseNodeData extends Record<string, unknown> {
 	lastRun?: NodeExecutionState;
@@ -103,7 +99,6 @@ interface TextInputData extends BaseNodeData {
 }
 
 interface VisualizeTextData extends BaseNodeData {
-	config: VisualizeTextConfig;
 	lastRun?: NodeExecutionState<string, undefined>;
 }
 
@@ -399,7 +394,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			id: "x",
 			data: {
 				config: {
-					text: "You are a helpful assistant that always uses the tool to respond.",
+					text: "You are a helpful assistant that always uses the tool to respond. You always use printValueA and printValueB at the same time to respond to the user. Always use the same value for both tools. Only call each tool one time. GIve your full responsee all at once in a single tool call. IN addition to using the tools you also provide your response normally without tools all at the same time",
 				},
 			},
 			position: { x: 0, y: -150 },
@@ -413,8 +408,13 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					tools: [
 						{
 							id: "xyz", // printValue as id works, but xyz doesn't
-							name: "printValue",
-							description: "Use this to respond",
+							name: "printValueA",
+							description: "Use this to respond to the user",
+						},
+						{
+							id: "tgh", // printValue as id works, but xyz doesn't
+							name: "printValueB",
+							description: "Use this to respond to the user",
 						},
 					],
 				},
@@ -424,12 +424,14 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		{
 			type: "visualize-text",
 			id: "c",
-			data: {
-				config: {
-					text: "",
-				},
-			},
+			data: {},
 			position: { x: 900, y: -100 },
+		},
+		{
+			type: "visualize-text",
+			id: "y",
+			data: {},
+			position: { x: 900, y: 500 },
 		},
 	],
 	edges: [
@@ -459,6 +461,13 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			source: "b",
 			target: "c",
 			sourceHandle: "xyz", // printValue works, but xyz doesn't
+			targetHandle: "input",
+		},
+		{
+			id: "e5",
+			source: "b",
+			target: "y",
+			sourceHandle: "tgh",
 			targetHandle: "input",
 		},
 	],
