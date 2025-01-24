@@ -142,7 +142,7 @@ export const PROMPT_CRAFTER_WORKFLOW: {
 			type: "prompt-crafter",
 			id: "c",
 			data: {
-				config: { template: "{input1}, {input2}!" },
+				config: { template: "{{input1}}, {{input2}}!" },
 				dynamicHandles: {
 					"template-tags": [
 						{ id: "c-a", name: "input1" },

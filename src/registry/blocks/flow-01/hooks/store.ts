@@ -18,7 +18,6 @@ import {
 } from "@/registry/blocks/flow-01/types/flow";
 import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
-import { executeWorkflow } from "@/registry/blocks/flow-01/lib/execution";
 import { PROMPT_CRAFTER_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples";
 import { generateText } from "../lib/ai";
 
@@ -409,21 +408,47 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		const workflow = get().prepareWorkflow();
 
 		if (workflow.errors.length > 0) {
-			// Later: show error on UI highlighting the edge
 			throw new Error(workflow.errors.map((error) => error.message).join("\n"));
 		}
 
-		await executeWorkflow(workflow, {
-			updateNodeExecutionState: (nodeId, nodeType, state) => {
-				get().updateNode(nodeId, nodeType, {
-					executionState: state,
-				});
-			},
-			getNodeTargetsData: (nodeId) => get().getNodeTargetsData(nodeId),
+		for (const nodeId of workflow.executionOrder) {
+			const node = workflow.nodes.find((n) => n.id === nodeId);
+			if (!node) {
+				throw new Error(`Node with id ${nodeId} not found in workflow`);
+			}
 
-			processNode: (nodeId, targetsData) =>
-				get().processNode(nodeId, targetsData),
-		});
+			try {
+				const targetsData = get().getNodeTargetsData(nodeId);
+
+				get().updateNode(nodeId, node.type, {
+					executionState: {
+						timestamp: new Date().toISOString(),
+						status: "processing",
+						targets: targetsData,
+					},
+				});
+
+				const result = await get().processNode(nodeId, targetsData);
+
+				get().updateNode(nodeId, node.type, {
+					executionState: {
+						timestamp: new Date().toISOString(),
+						targets: targetsData,
+						sources: result,
+						status: "success",
+					},
+				});
+			} catch (error) {
+				get().updateNode(nodeId, node.type, {
+					executionState: {
+						timestamp: new Date().toISOString(),
+						status: "error",
+						error: error instanceof Error ? error.message : "Unknown error",
+					},
+				});
+				console.error(error);
+			}
+		}
 	},
 }));
 

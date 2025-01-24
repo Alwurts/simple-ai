@@ -62,12 +62,9 @@ const promptTheme = createTheme({
 const createPromptLanguage = (validInputs: string[] = []) =>
 	StreamLanguage.define({
 		token(stream) {
-			if (stream.match(/{[^}]*}/)) {
+			if (stream.match(/{{[^}]*}}/)) {
 				const match = stream.current();
-				const inputName = match.slice(1, -1);
-				console.log("inputName", inputName);
-				console.log("validInputs", validInputs);
-				console.log("validInputsXXX", validInputs.includes(inputName));
+				const inputName = match.slice(2, -2);
 				// Check if the input name is valid
 				if (validInputs.includes(inputName)) {
 					return "variableName";
