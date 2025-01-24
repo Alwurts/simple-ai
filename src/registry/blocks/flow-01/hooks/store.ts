@@ -72,7 +72,6 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		});
 	},
 	onConnect: (connection) => {
-		console.log("connection", connection);
 		const newEdge = addEdge(connection, get().edges);
 		const sourceNode = get().nodes.find((n) => n.id === connection.source);
 		if (!sourceNode) {
@@ -85,14 +84,10 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
 		const sourceExecutionState = sourceNode.data.executionState;
 
-		//console.log("sourceExecutionState", sourceExecutionState);
-
 		if (sourceExecutionState?.sources) {
 			const sourceHandleData =
 				sourceExecutionState.sources[connection.sourceHandle];
-			console.log("sourceHandleData", sourceHandleData);
 			const nodes = get().nodes.map((node) => {
-				console.log("node", node);
 				if (node.id === connection.target && connection.targetHandle) {
 					return {
 						...node,
@@ -118,7 +113,6 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				}
 				return node;
 			});
-			console.log("nodesPost", nodes);
 
 			set({
 				nodes: nodes as FlowNode[],
@@ -381,7 +375,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				const system = targetsData?.system;
 				const prompt = targetsData?.prompt;
 				if (!prompt) {
-					throw new Error("System or prompt not found");
+					throw new Error("Prompt not found");
 				}
 				const result = await generateText({
 					tools: node.data.dynamicHandles.tools,
@@ -411,7 +405,30 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			throw new Error(workflow.errors.map((error) => error.message).join("\n"));
 		}
 
-		for (const nodeId of workflow.executionOrder) {
+		// Reset execution state for all nodes
+		set((state) => ({
+			nodes: state.nodes.map((node) => ({
+				...node,
+				data: {
+					...node.data,
+					executionState: undefined,
+				},
+			})) as FlowNode[],
+		}));
+
+		// Keep track of completed nodes
+		const completedNodes = new Set<string>();
+		// Keep track of currently processing nodes
+		const processingNodes = new Set<string>();
+
+		// Helper function to check if a node's dependencies are completed
+		const canProcessNode = (nodeId: string) => {
+			const nodeDependencies = workflow.dependencies[nodeId] || [];
+			return nodeDependencies.every((dep) => completedNodes.has(dep.node));
+		};
+
+		// Helper function to process a single node
+		const processNode = async (nodeId: string) => {
 			const node = workflow.nodes.find((n) => n.id === nodeId);
 			if (!node) {
 				throw new Error(`Node with id ${nodeId} not found in workflow`);
@@ -438,6 +455,9 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 						status: "success",
 					},
 				});
+
+				completedNodes.add(nodeId);
+				processingNodes.delete(nodeId);
 			} catch (error) {
 				get().updateNode(nodeId, node.type, {
 					executionState: {
@@ -447,7 +467,38 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					},
 				});
 				console.error(error);
+				processingNodes.delete(nodeId);
+				completedNodes.add(nodeId);
 			}
+		};
+
+		// Process nodes in parallel when possible
+		while (completedNodes.size < workflow.nodes.length) {
+			const availableNodes = workflow.executionOrder.filter(
+				(nodeId) =>
+					!completedNodes.has(nodeId) &&
+					!processingNodes.has(nodeId) &&
+					canProcessNode(nodeId),
+			);
+
+			if (availableNodes.length === 0) {
+				// If no nodes are available and we're still processing some, wait
+				if (processingNodes.size > 0) {
+					await new Promise((resolve) => setTimeout(resolve, 100));
+					continue;
+				}
+				// If no nodes are available and none are processing, we have a problem
+				throw new Error("Unable to complete workflow execution");
+			}
+
+			// Start processing all available nodes in parallel
+			const processingPromises = availableNodes.map((nodeId) => {
+				processingNodes.add(nodeId);
+				return processNode(nodeId);
+			});
+
+			// Wait for at least one node to complete before checking for more nodes
+			await Promise.race(processingPromises);
 		}
 	},
 }));

@@ -177,7 +177,6 @@ export function PromptCrafterNode({
 		const validLabels = (data.dynamicHandles["template-tags"] || []).map(
 			(input) => input.name,
 		);
-		console.log("validLabels", validLabels);
 		return [createPromptLanguage(validLabels)];
 	}, [data.dynamicHandles["template-tags"]]);
 
