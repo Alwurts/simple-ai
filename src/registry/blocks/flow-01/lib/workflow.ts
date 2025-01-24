@@ -1,7 +1,7 @@
 import type { FlowEdge, FlowNode } from "@/registry/blocks/flow-01/types/flow";
 import type {
-	WorkflowDefinition,
 	WorkFlowResult,
+	WorkflowDefinition,
 } from "@/registry/blocks/flow-01/types/workflow";
 import { nanoid } from "nanoid";
 

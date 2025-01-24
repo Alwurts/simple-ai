@@ -1,5 +1,5 @@
-import type { Edge, Node } from "@xyflow/react";
 import type { Model } from "@/registry/blocks/flow-01/types/ai";
+import type { Edge, Node } from "@xyflow/react";
 
 type NodeExecutionStatus = "success" | "error" | "processing" | "idle";
 

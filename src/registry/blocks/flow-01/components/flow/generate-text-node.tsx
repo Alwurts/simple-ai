@@ -23,13 +23,13 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { EditableToolHandle } from "@/registry/blocks/flow-01/components/flow/editable-tool-handle";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
+import { MODELS, type Model } from "@/registry/blocks/flow-01/types/ai";
+import type { GenerateTextNode as TGenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
 import { Bot, Plus, Trash } from "lucide-react";
 import { useCallback } from "react";
 import { toast } from "sonner";
-import { EditableToolHandle } from "@/registry/blocks/flow-01/components/flow/editable-tool-handle";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import type { GenerateTextNode as TGenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
-import { MODELS, type Model } from "@/registry/blocks/flow-01/types/ai";
 
 export function GenerateTextNode({
 	id,

@@ -24,6 +24,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { EditableLabeledHandle } from "@/registry/blocks/flow-01/components/flow/editable-labeled-handle";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
+import type { PromptCrafterNode as TPromptCrafterNode } from "@/registry/blocks/flow-01/types/flow";
 import { StreamLanguage } from "@codemirror/language";
 import type { EditorView } from "@codemirror/view";
 import { tags as t } from "@lezer/highlight";
@@ -37,8 +39,6 @@ import {
 import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
-import type { PromptCrafterNode as TPromptCrafterNode } from "@/registry/blocks/flow-01/types/flow";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 
 // Custom theme that matches your app's design
 const promptTheme = createTheme({

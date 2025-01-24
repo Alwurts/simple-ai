@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import type {
 	FlowNode,
 	GenerateTextNode,
@@ -6,6 +5,7 @@ import type {
 	TextInputNode,
 	VisualizeTextNode,
 } from "@/registry/blocks/flow-01/types/flow";
+import { nanoid } from "nanoid";
 
 export type NodePosition = {
 	x: number;

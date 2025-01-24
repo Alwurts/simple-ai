@@ -4,7 +4,10 @@ import type {
 	PromptCrafterNode,
 	TextInputNode,
 } from "@/registry/blocks/flow-01/types/flow";
-import { generateText } from "@/registry/blocks/flow-01/lib/ai";
+import { createDeepSeek } from "@ai-sdk/deepseek";
+import { createGroq } from "@ai-sdk/groq";
+import { generateText } from "ai";
+import { z } from "zod";
 
 export type NodeProcessor = (
 	node: FlowNode,
@@ -51,19 +54,62 @@ export const nodeProcessors: Record<FlowNode["type"], NodeProcessor> = {
 			throw new Error("Prompt not found");
 		}
 
+		let client:
+			| ReturnType<typeof createDeepSeek>
+			| ReturnType<typeof createGroq>;
+		switch (generateNode.data.config.model) {
+			case "deepseek-chat":
+				client = createDeepSeek({
+					baseURL: process.env.AI_GATEWAY_DEEPSEEK_URL,
+				});
+				break;
+			case "llama-3.3-70b-versatile":
+			case "llama-3.1-8b-instant":
+				client = createGroq({
+					baseURL: process.env.AI_GATEWAY_GROQ_URL,
+				});
+				break;
+			default:
+				throw new Error(`Unsupported model: ${generateNode.data.config.model}`);
+		}
+
+		// Map tools to the format expected by the AI SDK
+		const mappedTools = Object.fromEntries(
+			generateNode.data.dynamicHandles.tools.map((toolToMap) => [
+				toolToMap.name,
+				{
+					description: toolToMap.description,
+					parameters: z.object({
+						toolValue: z.string(),
+					}),
+					execute: async ({ toolValue }: { toolValue: string }) => toolValue,
+				},
+			]),
+		);
+
 		const result = await generateText({
-			tools: generateNode.data.dynamicHandles.tools,
-			model: generateNode.data.config.model,
+			model: client(generateNode.data.config.model),
 			system,
 			prompt,
+			...(generateNode.data.dynamicHandles.tools.length > 0 && {
+				tools: mappedTools,
+				maxSteps: 1,
+				toolChoice: "required",
+			}),
 		});
 
 		const parsedResult: Record<string, string> = {
 			result: result.text,
 		};
+
 		if (result.toolResults) {
 			for (const toolResult of result.toolResults) {
-				parsedResult[toolResult.id] = toolResult.result;
+				const originalTool = generateNode.data.dynamicHandles.tools.find(
+					(tool) => tool.name === toolResult.toolName,
+				);
+				if (originalTool) {
+					parsedResult[originalTool.id] = toolResult.result;
+				}
 			}
 		}
 

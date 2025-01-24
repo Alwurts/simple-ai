@@ -1,22 +1,25 @@
-import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
-import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
-import { nanoid } from "nanoid";
-import { createWithEqualityFn } from "zustand/traditional";
+import { PROMPT_CRAFTER_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples";
+import { createExecutionEngine } from "@/registry/blocks/flow-01/lib/execution/core-engine";
+import { createNode } from "@/registry/blocks/flow-01/lib/node-factory";
+import { nodeProcessors } from "@/registry/blocks/flow-01/lib/node-processors-client";
+import { WorkflowSSEClient } from "@/registry/blocks/flow-01/lib/sse-client";
+import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
 import {
-	isNodeWithDynamicHandles,
-	isNodeOfType,
-	hasTargets,
 	type DynamicHandle,
 	type FlowEdge,
 	type FlowNode,
 	type FlowNodeDataTypeMap,
 	type NodeExecutionState,
+	hasTargets,
+	isNodeOfType,
+	isNodeWithDynamicHandles,
 } from "@/registry/blocks/flow-01/types/flow";
-import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
-import { PROMPT_CRAFTER_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples";
-import { createExecutionEngine } from "@/registry/blocks/flow-01/lib/execution/core-engine";
-import { createNode } from "@/registry/blocks/flow-01/lib/node-factory";
-import { nodeProcessors } from "../lib/node-processors";
+import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
+import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
+import { nanoid } from "nanoid";
+import { createWithEqualityFn } from "zustand/traditional";
+
+export type ExecutionMode = "client" | "server";
 
 export interface StoreState {
 	nodes: FlowNode[];
@@ -51,6 +54,8 @@ export interface StoreState {
 		handleCategory: string,
 		handleId: string,
 	) => void;
+	executionMode: ExecutionMode;
+	setExecutionMode: (mode: ExecutionMode) => void;
 	// execution
 	startExecution: () => Promise<void>;
 	getNodeTargetsData: (nodeId: string) => Record<string, string> | undefined;
@@ -58,6 +63,7 @@ export interface StoreState {
 
 const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	...PROMPT_CRAFTER_WORKFLOW,
+	executionMode: "server",
 	onNodesChange: (changes) => {
 		set({
 			nodes: applyNodeChanges<FlowNode>(changes, get().nodes),
@@ -158,7 +164,8 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 							executionState: {
 								...n.data.executionState,
 								...state,
-							},
+								timestamp: state.timestamp || new Date().toISOString(),
+							} as NodeExecutionState,
 						},
 					} as FlowNode;
 				}
@@ -187,20 +194,17 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 						...node,
 						data: {
 							...node.data,
-							config: {
-								...node.data.config,
-								dynamicHandles: {
-									...node.data.dynamicHandles,
-									[handleCategory]: [
-										...node.data.dynamicHandles[
-											handleCategory as keyof typeof node.data.dynamicHandles // Change to more specific type
-										],
-										{
-											...handle,
-											id: newId,
-										},
-									],
-								},
+							dynamicHandles: {
+								...node.data.dynamicHandles,
+								[handleCategory]: [
+									...(node.data.dynamicHandles[
+										handleCategory as keyof typeof node.data.dynamicHandles
+									] || []),
+									{
+										...handle,
+										id: newId,
+									},
+								],
 							},
 						},
 					};
@@ -222,7 +226,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					const dynamicHandles = node.data.dynamicHandles;
 					const handles = dynamicHandles[
 						handleCategory as keyof typeof dynamicHandles
-					] as DynamicHandle[]; // Remove with type guard or more specific type
+					] as DynamicHandle[];
 					const newHandles = handles.filter((handle) => handle.id !== handleId);
 
 					return {
@@ -252,8 +256,10 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			}),
 		});
 	},
+	setExecutionMode: (mode) => {
+		set({ executionMode: mode });
+	},
 	// Runtime
-
 	getNodeTargetsData: (nodeId) => {
 		const node = get().getNodeById(nodeId);
 		if (!hasTargets(node)) {
@@ -278,7 +284,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		return targetsData;
 	},
 	async startExecution() {
-		const { nodes, edges } = get();
+		const { nodes, edges, executionMode } = get();
 		const workflow = prepareWorkflow(nodes, edges);
 
 		if (workflow.errors.length > 0) {
@@ -291,26 +297,62 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				...node,
 				data: {
 					...node.data,
-					executionState: undefined,
+					executionState: {
+						...node.data.executionState,
+						status: "idle",
+					},
 				},
 			})) as FlowNode[],
 		}));
 
-		const { getNodeTargetsData, updateNodeExecutionState, getNodeById } = get();
+		if (executionMode === "client") {
+			const { getNodeTargetsData, updateNodeExecutionState, getNodeById } =
+				get();
 
-		const engine = createExecutionEngine({
-			workflow,
-			getNodeTargetsData,
-			updateNodeExecutionState,
-			getNodeById,
-			processNode: async (nodeId, targetsData) => {
-				const node = get().getNodeById(nodeId);
-				const processor = nodeProcessors[node.type];
-				return await processor(node, targetsData);
-			},
-		});
+			const engine = createExecutionEngine({
+				workflow,
+				getNodeTargetsData,
+				updateNodeExecutionState,
+				getNodeById,
+				processNode: async (nodeId, targetsData) => {
+					const node = get().getNodeById(nodeId);
+					const processor = nodeProcessors[node.type];
+					return await processor(node, targetsData);
+				},
+			});
 
-		await engine.execute(workflow.executionOrder);
+			await engine.execute(workflow.executionOrder);
+		} else {
+			const sseClient = new WorkflowSSEClient();
+			const { updateNodeExecutionState } = get();
+
+			return new Promise((resolve, reject) => {
+				sseClient.connect(workflow, {
+					onProgress: (progress) => {
+						updateNodeExecutionState(progress.nodeId, {
+							status: progress.status,
+							timestamp: progress.timestamp,
+						});
+					},
+					onNodeUpdate: (nodeId, state) => {
+						updateNodeExecutionState(nodeId, state);
+					},
+					onError: (error, nodeId) => {
+						if (nodeId) {
+							updateNodeExecutionState(nodeId, {
+								status: "error",
+								error: error.message,
+								timestamp: new Date().toISOString(),
+							});
+						}
+						reject(error);
+					},
+					onComplete: () => {
+						resolve();
+					},
+				});
+			});
+		}
 	},
 }));
 
