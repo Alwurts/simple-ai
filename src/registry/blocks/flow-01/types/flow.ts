@@ -3,7 +3,7 @@ import type { Model } from "@/registry/blocks/flow-01/types/ai";
 
 type NodeExecutionStatus = "success" | "error" | "processing" | "idle";
 
-type NodeExecutionState = {
+export type NodeExecutionState = {
 	timestamp: string;
 	targets?: Record<string, string>;
 	sources?: Record<string, string>;

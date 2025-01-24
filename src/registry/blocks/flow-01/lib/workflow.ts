@@ -1,10 +1,14 @@
 import type { FlowEdge, FlowNode } from "@/registry/blocks/flow-01/types/flow";
-import type { WorkFlowResult } from "@/registry/blocks/flow-01/types/workflow";
+import type {
+	WorkflowDefinition,
+	WorkFlowResult,
+} from "@/registry/blocks/flow-01/types/workflow";
+import { nanoid } from "nanoid";
 
 export function prepareWorkflow(
 	nodes: FlowNode[],
 	edges: FlowEdge[],
-): WorkFlowResult {
+): WorkflowDefinition {
 	const dependencies = new Map<
 		string,
 		WorkFlowResult["dependencies"][number]
@@ -100,6 +104,9 @@ export function prepareWorkflow(
 
 	// Convert Maps to plain objects for JSON serialization
 	return {
+		id: nanoid(),
+		nodes,
+		edges,
 		executionOrder,
 		dependencies: Object.fromEntries(dependencies),
 		dependents: Object.fromEntries(dependents),
