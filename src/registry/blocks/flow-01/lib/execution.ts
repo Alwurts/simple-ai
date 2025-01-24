@@ -27,11 +27,6 @@ export async function executeWorkflow(
 		try {
 			const targetsData = handlers.getNodeTargetsData(nodeId);
 
-			console.log("targetsData", {
-				nodeId,
-				targetsData,
-			});
-
 			handlers.updateNodeExecutionState(nodeId, node.type, {
 				timestamp: new Date().toISOString(),
 				status: "processing",
@@ -39,11 +34,6 @@ export async function executeWorkflow(
 			});
 
 			const result = await handlers.processNode(nodeId, targetsData);
-
-			console.log("result", {
-				nodeId,
-				result,
-			});
 
 			// Process node with type-specific handler
 
@@ -69,27 +59,3 @@ export async function executeWorkflow(
 		}
 	}
 }
-
-/* function processToolResults(
-	sourceId: string,
-	toolResults: ToolResult[],
-	workflow: WorkflowDefinition,
-	handlers: ExecutionHandlers,
-) {
-	const toolEdges = workflow.edges.filter(
-		(edge) => edge.source === sourceId && edge.sourceHandle !== "output",
-	);
-
-	for (const tool of toolResults) {
-		const matchingEdge = toolEdges.find((e) => e.sourceHandle === tool.id);
-		if (matchingEdge) {
-			handlers.updateNodeState(matchingEdge.target, {
-				timestamp: new Date().toISOString(),
-				targets: {
-					[matchingEdge.targetHandle]: tool.result,
-				},
-				status: "success",
-			});
-		}
-	}
-} */

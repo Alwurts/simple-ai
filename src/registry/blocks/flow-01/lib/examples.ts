@@ -80,13 +80,6 @@ export const TOOL_USE_CASES: {
 			sourceHandle: "result",
 			targetHandle: "system",
 		},
-		/* {
-        id: "e3",
-        source: "d",
-        target: "b",
-        sourceHandle: "output",
-        targetHandle: "prompt",
-    }, */
 		{
 			id: "e4",
 			source: "b",
@@ -122,6 +115,113 @@ export const SIMPLE_INPUT_OUTPUT_WORKFLOW: {
 			id: "e1",
 			source: "a",
 			target: "b",
+			sourceHandle: "result",
+			targetHandle: "input",
+		},
+	],
+};
+
+export const PROMPT_CRAFTER_WORKFLOW: {
+	nodes: FlowNode[];
+	edges: FlowEdge[];
+} = {
+	nodes: [
+		{
+			type: "text-input",
+			id: "a",
+			data: { config: { value: "Hello" } },
+			position: { x: -0, y: 0 },
+		},
+		{
+			type: "text-input",
+			id: "b",
+			data: { config: { value: "World" } },
+			position: { x: -0, y: 300 },
+		},
+		{
+			type: "prompt-crafter",
+			id: "c",
+			data: {
+				config: { template: "{input1}, {input2}!" },
+				dynamicHandles: {
+					"template-tags": [
+						{ id: "c-a", name: "input1" },
+						{ id: "c-b", name: "input2" },
+					],
+				},
+			},
+			position: { x: 500, y: 0 },
+		},
+		{
+			type: "visualize-text",
+			id: "d",
+			data: {},
+			position: { x: 1000, y: 0 },
+		},
+		{
+			type: "text-input",
+			id: "e",
+			data: { config: { value: "You only answer in German" } },
+			position: { x: 600, y: 400 },
+		},
+		{
+			type: "generate-text",
+			id: "f",
+			data: {
+				config: { model: "llama-3.1-8b-instant" },
+				dynamicHandles: {
+					tools: [],
+				},
+			},
+			position: { x: 1000, y: 300 },
+		},
+		{
+			type: "visualize-text",
+			id: "g",
+			data: {},
+			position: { x: 1500, y: 200 },
+		},
+	],
+	edges: [
+		{
+			id: "a-c",
+			source: "a",
+			target: "c",
+			sourceHandle: "result",
+			targetHandle: "c-a",
+		},
+		{
+			id: "b-c",
+			source: "b",
+			target: "c",
+			sourceHandle: "result",
+			targetHandle: "c-b",
+		},
+		{
+			id: "c-d",
+			source: "c",
+			target: "d",
+			sourceHandle: "result",
+			targetHandle: "input",
+		},
+		{
+			id: "e-f",
+			source: "e",
+			target: "f",
+			sourceHandle: "result",
+			targetHandle: "system",
+		},
+		{
+			id: "f-d",
+			source: "c",
+			target: "f",
+			sourceHandle: "result",
+			targetHandle: "prompt",
+		},
+		{
+			id: "f-g",
+			source: "f",
+			target: "g",
 			sourceHandle: "result",
 			targetHandle: "input",
 		},

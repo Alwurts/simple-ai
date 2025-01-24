@@ -19,7 +19,7 @@ import {
 import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
 import { executeWorkflow } from "@/registry/blocks/flow-01/lib/execution";
-import { TOOL_USE_CASES } from "@/registry/blocks/flow-01/lib/examples";
+import { PROMPT_CRAFTER_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples";
 import { generateText } from "../lib/ai";
 
 export interface StoreState {
@@ -27,7 +27,7 @@ export interface StoreState {
 	edges: FlowEdge[];
 	onNodesChange: (changes: NodeChange<FlowNode>[]) => void;
 	onEdgesChange: (changes: EdgeChange<FlowEdge>[]) => void;
-	onConnect: (connection: FlowEdge | Connection) => void;
+	onConnect: (connection: Connection) => void;
 	updateNode: <T extends FlowNode["type"]>(
 		id: string,
 		nodeType: T,
@@ -61,7 +61,7 @@ export interface StoreState {
 }
 
 const useStore = createWithEqualityFn<StoreState>((set, get) => ({
-	...TOOL_USE_CASES,
+	...PROMPT_CRAFTER_WORKFLOW,
 	onNodesChange: (changes) => {
 		set({
 			nodes: applyNodeChanges<FlowNode>(changes, get().nodes),
@@ -73,8 +73,60 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		});
 	},
 	onConnect: (connection) => {
+		console.log("connection", connection);
+		const newEdge = addEdge(connection, get().edges);
+		const sourceNode = get().nodes.find((n) => n.id === connection.source);
+		if (!sourceNode) {
+			throw new Error(`Source node with id ${connection.source} not found`);
+		}
+
+		if (!connection.sourceHandle) {
+			throw new Error("Source handle not found");
+		}
+
+		const sourceExecutionState = sourceNode.data.executionState;
+
+		//console.log("sourceExecutionState", sourceExecutionState);
+
+		if (sourceExecutionState?.sources) {
+			const sourceHandleData =
+				sourceExecutionState.sources[connection.sourceHandle];
+			console.log("sourceHandleData", sourceHandleData);
+			const nodes = get().nodes.map((node) => {
+				console.log("node", node);
+				if (node.id === connection.target && connection.targetHandle) {
+					return {
+						...node,
+						data: {
+							...node.data,
+							executionState: node.data.executionState
+								? {
+										...node.data.executionState,
+										targets: {
+											...node.data.executionState.targets,
+											[connection.targetHandle]: sourceHandleData,
+										},
+									}
+								: {
+										status: "success",
+										timestamp: new Date().toISOString(),
+										targets: {
+											[connection.targetHandle]: sourceHandleData,
+										},
+									},
+						},
+					};
+				}
+				return node;
+			});
+			console.log("nodesPost", nodes);
+
+			set({
+				nodes: nodes as FlowNode[],
+			});
+		}
 		set({
-			edges: addEdge(connection, get().edges),
+			edges: newEdge,
 		});
 	},
 	updateNode(id, type, data) {
@@ -280,7 +332,6 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			if (!sourceNode) {
 				throw new Error(`Source node with id ${edge.source} not found`);
 			}
-			console.log("sourceNode", JSON.parse(JSON.stringify(sourceNode)));
 			const sourceNodeExecutionState = sourceNode.data.executionState;
 			if (!sourceNodeExecutionState?.sources) {
 				throw new Error(
@@ -301,19 +352,32 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		if (!hasSources(node)) {
 			return undefined;
 		}
-		console.log("processNode", {
-			node,
-			targetsData,
-		});
 		switch (node.type) {
 			case "text-input":
 				return {
 					result: node.data.config.value,
 				};
-			case "prompt-crafter":
+			case "prompt-crafter": {
+				if (!targetsData) {
+					throw new Error("Targets data not found");
+				}
+				let parsedTemplate = node.data.config.template;
+				for (const [targetId, targetValue] of Object.entries(targetsData)) {
+					const tag = node.data.dynamicHandles["template-tags"].find(
+						(handle) => handle.id === targetId,
+					);
+					if (!tag) {
+						throw new Error(`Tag with id ${targetId} not found`);
+					}
+					parsedTemplate = parsedTemplate.replaceAll(
+						`{{${tag.name}}}`,
+						targetValue,
+					);
+				}
 				return {
-					result: node.data.config.template,
+					result: parsedTemplate,
 				};
+			}
 			case "generate-text": {
 				const system = targetsData?.system;
 				const prompt = targetsData?.prompt;

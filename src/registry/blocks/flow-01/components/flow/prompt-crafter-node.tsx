@@ -65,6 +65,9 @@ const createPromptLanguage = (validInputs: string[] = []) =>
 			if (stream.match(/{[^}]*}/)) {
 				const match = stream.current();
 				const inputName = match.slice(1, -1);
+				console.log("inputName", inputName);
+				console.log("validInputs", validInputs);
+				console.log("validInputsXXX", validInputs.includes(inputName));
 				// Check if the input name is valid
 				if (validInputs.includes(inputName)) {
 					return "variableName";
@@ -177,6 +180,7 @@ export function PromptCrafterNode({
 		const validLabels = (data.dynamicHandles["template-tags"] || []).map(
 			(input) => input.name,
 		);
+		console.log("validLabels", validLabels);
 		return [createPromptLanguage(validLabels)];
 	}, [data.dynamicHandles["template-tags"]]);
 
@@ -290,8 +294,8 @@ export function PromptCrafterNode({
 				</div>
 				<div className="justify-self-end">
 					<LabeledHandle
-						id="output"
-						title="Output"
+						id="result"
+						title="Result"
 						type="source"
 						position={Position.Right}
 					/>

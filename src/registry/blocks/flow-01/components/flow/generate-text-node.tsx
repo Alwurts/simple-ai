@@ -166,7 +166,7 @@ export function GenerateTextNode({
 				</div>
 				<div className="justify-self-end">
 					<LabeledHandle
-						id="output"
+						id="result"
 						title="Result"
 						type="source"
 						position={Position.Right}
