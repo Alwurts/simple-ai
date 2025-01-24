@@ -1,20 +1,17 @@
 import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
-import type { ToolResult } from "@/registry/blocks/flow-01/types/ai";
 
 type ExecutionHandlers = {
-	getNodeInputs: (nodeId: string) => Promise<Record<string, string>>;
-	processNode: (
-		node: FlowNode,
-		inputs: Record<string, string>,
-	) => Promise<{
-		sources: Record<string, string>;
-		toolResults?: ToolResult[];
-	}>;
-	updateNodeState: (
+	getNodeTargetsData: (nodeId: string) => Record<string, string> | undefined;
+	updateNodeExecutionState: (
 		nodeId: string,
+		type: FlowNode["type"],
 		state: FlowNode["data"]["executionState"],
 	) => void;
+	processNode: (
+		nodeId: string,
+		targetsData: Record<string, string> | undefined,
+	) => Promise<Record<string, string> | undefined>;
 };
 
 export async function executeWorkflow(
@@ -28,22 +25,33 @@ export async function executeWorkflow(
 		}
 
 		try {
-			// Update node to processing state
-			handlers.updateNodeState(nodeId, {
-				timestamp: new Date().toISOString(),
-				status: "processing",
+			const targetsData = handlers.getNodeTargetsData(nodeId);
+
+			console.log("targetsData", {
+				nodeId,
+				targetsData,
 			});
 
-			// Get inputs from connected nodes
-			const inputs = await handlers.getNodeInputs(nodeId);
+			handlers.updateNodeExecutionState(nodeId, node.type, {
+				timestamp: new Date().toISOString(),
+				status: "processing",
+				targets: targetsData,
+			});
+
+			const result = await handlers.processNode(nodeId, targetsData);
+
+			console.log("result", {
+				nodeId,
+				result,
+			});
 
 			// Process node with type-specific handler
-			const result = await handlers.processNode(node, inputs);
 
 			// Update node state with results
-			handlers.updateNodeState(nodeId, {
+			handlers.updateNodeExecutionState(nodeId, node.type, {
 				timestamp: new Date().toISOString(),
-				sources: result.sources,
+				targets: targetsData,
+				sources: result,
 				status: "success",
 			});
 
@@ -52,11 +60,12 @@ export async function executeWorkflow(
 				processToolResults(nodeId, result.toolResults, workflow, handlers);
 			} */
 		} catch (error) {
-			handlers.updateNodeState(nodeId, {
+			handlers.updateNodeExecutionState(nodeId, node.type, {
 				timestamp: new Date().toISOString(),
 				status: "error",
 				error: error instanceof Error ? error.message : "Unknown error",
 			});
+			console.error(error);
 		}
 	}
 }

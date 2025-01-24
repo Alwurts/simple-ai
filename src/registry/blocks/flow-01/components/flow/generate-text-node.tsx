@@ -40,8 +40,6 @@ export function GenerateTextNode({
 	const updateNode = useStore((state) => state.updateNode);
 	const addDynamicHandle = useStore((state) => state.addDynamicHandle);
 	const removeDynamicHandle = useStore((state) => state.removeDynamicHandle);
-	const runtime = useStore((state) => state.runtime);
-	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
 	const updateNodeInternals = useUpdateNodeInternals();
 
 	const handleModelChange = useCallback(
@@ -117,7 +115,7 @@ export function GenerateTextNode({
 	return (
 		<BaseNode
 			selected={selected}
-			isProcessing={isProcessing}
+			//isProcessing={isProcessing}
 			className="px-0 pb-0 flex flex-col w-[350px]"
 		>
 			<NodeHeader className="px-8 mb-0">

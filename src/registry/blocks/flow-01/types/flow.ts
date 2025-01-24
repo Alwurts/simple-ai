@@ -3,17 +3,10 @@ import type { Model } from "@/registry/blocks/flow-01/types/ai";
 
 type NodeExecutionStatus = "success" | "error" | "processing" | "idle";
 
-type NodeExecutionState<
-	TTargetType extends string | undefined,
-	TSourceType extends string | undefined,
-> = {
+type NodeExecutionState = {
 	timestamp: string;
-	targets?: TTargetType extends string
-		? Record<TTargetType, string>
-		: undefined;
-	sources?: TSourceType extends string
-		? Record<TSourceType, string>
-		: undefined;
+	targets?: Record<string, string>;
+	sources?: Record<string, string>;
 	status: NodeExecutionStatus;
 	error?: string;
 };
@@ -33,11 +26,11 @@ type DynamicHandles<THandleCategory extends string> = {
 
 // Visualize Text
 
-const VISUALIZE_TEXT_TARGETS = ["input"] as const;
-type VisualizeTextTargets = (typeof VISUALIZE_TEXT_TARGETS)[number];
+/* export const VISUALIZE_TEXT_TARGETS = ["input"] as const;
+type VisualizeTextTargets = (typeof VISUALIZE_TEXT_TARGETS)[number]; */
 
 type VisualizeTextData = {
-	executionState?: NodeExecutionState<VisualizeTextTargets, undefined>;
+	executionState?: NodeExecutionState;
 };
 
 export type VisualizeTextNode = Node<VisualizeTextData, "visualize-text"> & {
@@ -46,8 +39,8 @@ export type VisualizeTextNode = Node<VisualizeTextData, "visualize-text"> & {
 
 // Text Input
 
-const TEXT_INPUT_SOURCES = ["result"] as const;
-type TextInputSources = (typeof TEXT_INPUT_SOURCES)[number];
+/* const TEXT_INPUT_SOURCES = ["result"] as const;
+type TextInputSources = (typeof TEXT_INPUT_SOURCES)[number]; */
 
 type TextInputConfig = {
 	value: string;
@@ -55,7 +48,7 @@ type TextInputConfig = {
 
 type TextInputData = {
 	config: TextInputConfig;
-	executionState?: NodeExecutionState<undefined, TextInputSources>;
+	executionState?: NodeExecutionState;
 };
 
 export type TextInputNode = Node<TextInputData, "text-input"> & {
@@ -67,8 +60,8 @@ export type TextInputNode = Node<TextInputData, "text-input"> & {
 /* const PROMPT_CRAFTER_TARGETS = ["input"] as const;
 type PromptCrafterTargets = (typeof PROMPT_CRAFTER_TARGETS)[number]; */
 
-const PROMPT_CRAFTER_SOURCES = ["result"] as const;
-type PromptCrafterSources = (typeof PROMPT_CRAFTER_SOURCES)[number];
+/* const PROMPT_CRAFTER_SOURCES = ["result"] as const;
+type PromptCrafterSources = (typeof PROMPT_CRAFTER_SOURCES)[number]; */
 
 type PromptCrafterConfig = {
 	template: string;
@@ -77,7 +70,7 @@ type PromptCrafterConfig = {
 type PromptCrafterData = {
 	config: PromptCrafterConfig;
 	dynamicHandles: DynamicHandles<"template-tags">;
-	executionState?: NodeExecutionState<string, PromptCrafterSources>;
+	executionState?: NodeExecutionState;
 };
 
 export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter"> & {
@@ -86,11 +79,11 @@ export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter"> & {
 
 // Generate Text
 
-const GENERATE_TEXT_TARGETS = ["system", "prompt"] as const;
+/* const GENERATE_TEXT_TARGETS = ["system", "prompt"] as const;
 type GenerateTextTargets = (typeof GENERATE_TEXT_TARGETS)[number];
 
 const GENERATE_TEXT_SOURCES = ["result"] as const;
-type GenerateTextSources = (typeof GENERATE_TEXT_SOURCES)[number];
+type GenerateTextSources = (typeof GENERATE_TEXT_SOURCES)[number]; */
 
 type GenerateTextConfig = {
 	model: Model;
@@ -99,10 +92,7 @@ type GenerateTextConfig = {
 type GenerateTextData = {
 	config: GenerateTextConfig;
 	dynamicHandles: DynamicHandles<"tools">;
-	executionState?: NodeExecutionState<
-		GenerateTextTargets | string,
-		GenerateTextSources
-	>;
+	executionState?: NodeExecutionState;
 };
 
 export type GenerateTextNode = Node<GenerateTextData, "generate-text"> & {
@@ -134,6 +124,38 @@ export type FlowEdge = Edge & {
 }; */
 
 // Type Guards
+
+export function hasTargets(
+	node: FlowNode,
+): node is Extract<
+	FlowNode,
+	VisualizeTextNode | PromptCrafterNode | GenerateTextNode
+> {
+	switch (node.type) {
+		case "visualize-text":
+		case "prompt-crafter":
+		case "generate-text":
+			return true;
+		default:
+			return false;
+	}
+}
+
+export function hasSources(
+	node: FlowNode,
+): node is Extract<
+	FlowNode,
+	TextInputNode | PromptCrafterNode | GenerateTextNode
+> {
+	switch (node.type) {
+		case "text-input":
+		case "prompt-crafter":
+		case "generate-text":
+			return true;
+		default:
+			return false;
+	}
+}
 
 export function isNodeOfType<T extends FlowNode["type"]>(
 	node: FlowNode,

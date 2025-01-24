@@ -31,8 +31,4 @@ export interface WorkflowDefinition extends WorkFlowResult {
 	id: string;
 	nodes: FlowNode[];
 	edges: FlowEdge[];
-	metadata: {
-		createdAt: string;
-		updatedAt: string;
-	};
 }

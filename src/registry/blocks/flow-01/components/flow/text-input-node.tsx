@@ -24,8 +24,6 @@ export function TextInputNode({
 	deletable,
 }: NodeProps<TTextInputNode>) {
 	const updateNode = useStore((state) => state.updateNode);
-	const runtime = useStore((state) => state.runtime);
-	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
 
 	const handleTextChange = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -45,7 +43,7 @@ export function TextInputNode({
 	return (
 		<BaseNode
 			selected={selected}
-			isProcessing={isProcessing}
+			//isProcessing={isProcessing}
 			className="px-0 pb-0 flex flex-col h-full"
 			style={{ minHeight: 250, minWidth: 300 }}
 		>
@@ -82,8 +80,8 @@ export function TextInputNode({
 			</div>
 			<div className="flex justify-end pt-2 pb-4 text-sm">
 				<LabeledHandle
-					id="output"
-					title="Output"
+					id="result"
+					title="Result"
 					type="source"
 					position={Position.Right}
 					className="justify-self-end"

@@ -3,9 +3,10 @@ import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
 import { nanoid } from "nanoid";
 import { createWithEqualityFn } from "zustand/traditional";
 import {
-	type DynamicHandle,
 	isNodeWithDynamicHandles,
 	isNodeOfType,
+	hasTargets,
+	type DynamicHandle,
 	type FlowEdge,
 	type FlowNode,
 	type FlowNodeDataTypeMap,
@@ -13,12 +14,14 @@ import {
 	type TextInputNode,
 	type VisualizeTextNode,
 	type PromptCrafterNode,
+	hasSources,
 } from "@/registry/blocks/flow-01/types/flow";
+import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
+import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
+import { executeWorkflow } from "@/registry/blocks/flow-01/lib/execution";
+import { TOOL_USE_CASES } from "@/registry/blocks/flow-01/lib/examples";
+import { generateText } from "../lib/ai";
 
-interface RuntimeState {
-	isRunning: boolean;
-	currentNodeIds: string[];
-}
 export interface StoreState {
 	nodes: FlowNode[];
 	edges: FlowEdge[];
@@ -47,114 +50,18 @@ export interface StoreState {
 		handleCategory: string, // Change to more specific type depending on node type
 		handleId: string,
 	) => void;
-	runtime: RuntimeState;
+	// execution
+	prepareWorkflow: () => WorkflowDefinition;
+	startExecution: () => Promise<void>;
+	getNodeTargetsData: (nodeId: string) => Record<string, string> | undefined;
+	processNode: (
+		nodeId: string,
+		targetsData: Record<string, string> | undefined,
+	) => Promise<Record<string, string> | undefined>;
 }
 
 const useStore = createWithEqualityFn<StoreState>((set, get) => ({
-	nodes: [
-		{
-			type: "text-input",
-			id: "a",
-			data: {
-				config: {
-					value: "Hey, how are you?",
-				},
-			},
-			position: { x: -400, y: 200 },
-		},
-		{
-			type: "text-input",
-			id: "x",
-			data: {
-				config: {
-					value:
-						"You are a helpful assistant that always uses the tool to respond. You always use printValueA and printValueB at the same time to respond to the user. Always use the same value for both tools. Only call each tool one time. GIve your full responsee all at once in a single tool call. IN addition to using the tools you also provide your response normally without tools all at the same time",
-				},
-			},
-			position: { x: 0, y: -150 },
-		},
-		{
-			type: "generate-text",
-			id: "b",
-			data: {
-				dynamicHandles: {
-					tools: [
-						{
-							id: "xyz", // printValue as id works, but xyz doesn't
-							name: "printValueA",
-							description: "Use this to respond to the user",
-							type: "source",
-						},
-						{
-							id: "tgh", // printValue as id works, but xyz doesn't
-							name: "printValueB",
-							description: "Use this to respond to the user",
-							type: "source",
-						},
-					],
-				},
-				config: {
-					model: "llama-3.1-8b-instant",
-				},
-			},
-			position: { x: 450, y: 50 },
-		},
-		{
-			type: "visualize-text",
-			id: "c",
-			data: {},
-			position: { x: 900, y: -100 },
-		},
-		{
-			type: "visualize-text",
-			id: "y",
-			data: {},
-			position: { x: 900, y: 500 },
-		},
-	],
-	edges: [
-		{
-			id: "e1",
-			source: "a",
-			target: "b",
-			sourceHandle: "output",
-			targetHandle: "prompt",
-		},
-		{
-			id: "e2",
-			source: "x",
-			target: "b",
-			sourceHandle: "output",
-			targetHandle: "system",
-		},
-		/* {
-			id: "e3",
-			source: "d",
-			target: "b",
-			sourceHandle: "output",
-			targetHandle: "prompt",
-		}, */
-		{
-			id: "e4",
-			source: "b",
-			target: "c",
-			sourceHandle: "xyz", // printValue works, but xyz doesn't
-			targetHandle: "input",
-		},
-		{
-			id: "e5",
-			source: "b",
-			target: "y",
-			sourceHandle: "tgh",
-			targetHandle: "input",
-		},
-	],
-	runtime: {
-		isRunning: false,
-		currentNodeIds: [],
-		lastRunTime: null,
-	},
-
+	...TOOL_USE_CASES,
 	onNodesChange: (changes) => {
 		set({
 			nodes: applyNodeChanges<FlowNode>(changes, get().nodes),
@@ -343,6 +250,116 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			default:
 				throw new Error(`Unknown node type: ${nodeType}`);
 		}
+	},
+	prepareWorkflow() {
+		const { nodes, edges } = get();
+		const workflow = prepareWorkflow(nodes, edges);
+		return {
+			nodes: nodes,
+			edges: edges,
+			id: nanoid(),
+			...workflow,
+		};
+	},
+	// Runtime
+
+	getNodeTargetsData: (nodeId) => {
+		const node = get().nodes.find((n) => n.id === nodeId);
+		if (!node) {
+			throw new Error(`Node with id ${nodeId} not found`);
+		}
+		if (!hasTargets(node)) {
+			return undefined;
+		}
+		const edgesConnectedToNode = get().edges.filter(
+			(edge) => edge.target === nodeId,
+		);
+		const targetsData: Record<string, string> = {};
+		for (const edge of edgesConnectedToNode) {
+			const sourceNode = get().nodes.find((n) => n.id === edge.source);
+			if (!sourceNode) {
+				throw new Error(`Source node with id ${edge.source} not found`);
+			}
+			console.log("sourceNode", JSON.parse(JSON.stringify(sourceNode)));
+			const sourceNodeExecutionState = sourceNode.data.executionState;
+			if (!sourceNodeExecutionState?.sources) {
+				throw new Error(
+					`Execution state not found for source node with id ${edge.source}`,
+				);
+			}
+			const sourceNodeResult =
+				sourceNodeExecutionState.sources[edge.sourceHandle];
+			targetsData[edge.targetHandle] = sourceNodeResult;
+		}
+		return targetsData;
+	},
+	processNode: async (nodeId, targetsData) => {
+		const node = get().nodes.find((n) => n.id === nodeId);
+		if (!node) {
+			throw new Error(`Node with id ${nodeId} not found`);
+		}
+		if (!hasSources(node)) {
+			return undefined;
+		}
+		console.log("processNode", {
+			node,
+			targetsData,
+		});
+		switch (node.type) {
+			case "text-input":
+				return {
+					result: node.data.config.value,
+				};
+			case "prompt-crafter":
+				return {
+					result: node.data.config.template,
+				};
+			case "generate-text": {
+				const system = targetsData?.system;
+				const prompt = targetsData?.prompt;
+				if (!prompt) {
+					throw new Error("System or prompt not found");
+				}
+				const result = await generateText({
+					tools: node.data.dynamicHandles.tools,
+					model: node.data.config.model,
+					system,
+					prompt,
+				});
+				const parsedResult: Record<string, string> = {
+					result: result.text,
+				};
+				if (result.toolResults) {
+					for (const toolResult of result.toolResults) {
+						parsedResult[toolResult.id] = toolResult.result;
+					}
+				}
+
+				return parsedResult;
+			}
+			default:
+				return undefined;
+		}
+	},
+	async startExecution() {
+		const workflow = get().prepareWorkflow();
+
+		if (workflow.errors.length > 0) {
+			// Later: show error on UI highlighting the edge
+			throw new Error(workflow.errors.map((error) => error.message).join("\n"));
+		}
+
+		await executeWorkflow(workflow, {
+			updateNodeExecutionState: (nodeId, nodeType, state) => {
+				get().updateNode(nodeId, nodeType, {
+					executionState: state,
+				});
+			},
+			getNodeTargetsData: (nodeId) => get().getNodeTargetsData(nodeId),
+
+			processNode: (nodeId, targetsData) =>
+				get().processNode(nodeId, targetsData),
+		});
 	},
 }));
 

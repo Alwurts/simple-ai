@@ -23,9 +23,6 @@ export function VisualizeTextNode({
 	data,
 	deletable,
 }: NodeProps<TVisualizeTextNode>) {
-	const runtime = useStore((state) => state.runtime);
-	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
-
 	const executionStatus = data.executionState?.status || "idle";
 	const statusColors = {
 		idle: "bg-muted text-muted-foreground",
@@ -37,7 +34,7 @@ export function VisualizeTextNode({
 	return (
 		<BaseNode
 			selected={selected}
-			isProcessing={isProcessing}
+			//isProcessing={isProcessing}
 			className="px-0 pb-0 flex flex-col h-full"
 			style={{ minHeight: 250, minWidth: 300, maxHeight: 800, maxWidth: 800 }}
 		>

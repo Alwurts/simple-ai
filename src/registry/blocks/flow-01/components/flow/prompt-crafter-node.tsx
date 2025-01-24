@@ -83,11 +83,10 @@ export function PromptCrafterNode({
 	data,
 }: NodeProps<TPromptCrafterNode>) {
 	const updateNode = useStore((state) => state.updateNode);
-	const runtime = useStore((state) => state.runtime);
+
 	const addDynamicHandle = useStore((state) => state.addDynamicHandle);
 	const removeDynamicHandle = useStore((state) => state.removeDynamicHandle);
 
-	const isProcessing = runtime.isRunning && runtime.currentNodeIds.includes(id);
 	const updateNodeInternals = useUpdateNodeInternals();
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 	const editorViewRef = useRef<EditorView>();
@@ -192,7 +191,7 @@ export function PromptCrafterNode({
 	return (
 		<BaseNode
 			selected={selected}
-			isProcessing={isProcessing}
+			//isProcessing={isProcessing}
 			className="px-0 pb-0 flex flex-col w-[350px]"
 		>
 			<NodeHeader className="px-8 mb-0">

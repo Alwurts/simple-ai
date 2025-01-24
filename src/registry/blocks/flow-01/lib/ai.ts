@@ -11,7 +11,7 @@ export async function generateText({
 }: {
 	tools: GenerateTextNode["data"]["dynamicHandles"]["tools"];
 	model: Model;
-	system: string;
+	system?: string;
 	prompt: string;
 }): Promise<ApiResponse> {
 	if (MOCK_AI_RESPONSE) {
@@ -48,7 +48,7 @@ function mockGenerateText({
 }: {
 	tools: GenerateTextNode["data"]["dynamicHandles"]["tools"];
 	model: Model;
-	system: string;
+	system?: string;
 	prompt: string;
 }): ApiResponse {
 	return {

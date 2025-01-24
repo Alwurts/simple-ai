@@ -19,7 +19,6 @@ import { TextInputNode } from "@/registry/blocks/flow-01/components/flow/text-in
 import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/visualize-text-node";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
-import { prepareWorkflow } from "./lib/workflow";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNode,
@@ -36,8 +35,7 @@ function Flow() {
 			onNodesChange: store.onNodesChange,
 			onEdgesChange: store.onEdgesChange,
 			onConnect: store.onConnect,
-			runtime: store.runtime,
-			//startExecution: store.startExecution,
+			startExecution: store.startExecution,
 			createNode: store.createNode,
 		}),
 		shallow,
@@ -89,19 +87,19 @@ function Flow() {
 			<MiniMap />
 			<NodesPanel />
 			<Panel position="top-right" className="flex gap-2 items-center">
-				{store.runtime.currentNodeIds.length > 0 && (
+				{/* {store.runtime.currentNodeIds.length > 0 && (
 					<div className="text-sm text-muted-foreground">
 						Processing node: {store.runtime.currentNodeIds.join(", ")}
 					</div>
-				)}
+				)} */}
 				<Button
 					onClick={() => {
-						const workflow = prepareWorkflow(store.nodes, store.edges);
-						console.log(workflow);
+						store.startExecution();
 					}}
-					disabled={store.runtime.isRunning}
+					//disabled={store.runtime.isRunning}
 				>
-					{store.runtime.isRunning ? "Running..." : "Run Flow"}
+					{/* {store.runtime.isRunning ? "Running..." : "Run Flow"} */}
+					Run Flow
 				</Button>
 			</Panel>
 		</ReactFlow>
