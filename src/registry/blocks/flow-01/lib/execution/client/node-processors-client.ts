@@ -1,14 +1,10 @@
+import type { NodeProcessor } from "@/registry/blocks/flow-01/types/execution";
 import type {
 	FlowNode,
 	GenerateTextNode,
 	PromptCrafterNode,
 	TextInputNode,
 } from "@/registry/blocks/flow-01/types/flow";
-
-export type NodeProcessor = (
-	node: FlowNode,
-	targetsData: Record<string, string> | undefined,
-) => Promise<Record<string, string> | undefined>;
 
 export const nodeProcessors: Record<FlowNode["type"], NodeProcessor> = {
 	"text-input": async (node) => {
@@ -50,7 +46,7 @@ export const nodeProcessors: Record<FlowNode["type"], NodeProcessor> = {
 			throw new Error("Prompt not found");
 		}
 
-		const response = await fetch("/api/ai/flow/generate-text", {
+		const response = await fetch("/api/workflow/flow/generate-text", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -68,17 +64,7 @@ export const nodeProcessors: Record<FlowNode["type"], NodeProcessor> = {
 		}
 
 		const result = await response.json();
-
-		const parsedResult: Record<string, string> = {
-			result: result.text,
-		};
-		if (result.toolResults) {
-			for (const toolResult of result.toolResults) {
-				parsedResult[toolResult.id] = toolResult.result;
-			}
-		}
-
-		return parsedResult;
+		return result.parsedResult;
 	},
 
 	"visualize-text": async () => {

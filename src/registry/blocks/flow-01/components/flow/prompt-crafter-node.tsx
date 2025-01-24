@@ -191,7 +191,7 @@ export function PromptCrafterNode({
 	return (
 		<BaseNode
 			selected={selected}
-			//isProcessing={isProcessing}
+			isProcessing={executionStatus === "processing"}
 			className="px-0 pb-0 flex flex-col w-[350px]"
 		>
 			<NodeHeader className="px-8 mb-0">

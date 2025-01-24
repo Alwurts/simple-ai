@@ -1,15 +1,6 @@
 import type { Model } from "@/registry/blocks/flow-01/types/ai";
+import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
 import type { Edge, Node } from "@xyflow/react";
-
-type NodeExecutionStatus = "success" | "error" | "processing" | "idle";
-
-export type NodeExecutionState = {
-	timestamp: string;
-	targets?: Record<string, string>;
-	sources?: Record<string, string>;
-	status: NodeExecutionStatus;
-	error?: string;
-};
 
 // Dynamic Handles
 

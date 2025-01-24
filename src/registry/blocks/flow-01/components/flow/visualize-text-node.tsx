@@ -34,7 +34,7 @@ export function VisualizeTextNode({
 	return (
 		<BaseNode
 			selected={selected}
-			//isProcessing={isProcessing}
+			isProcessing={executionStatus === "processing"}
 			className="px-0 pb-0 flex flex-col h-full"
 			style={{ minHeight: 250, minWidth: 300, maxHeight: 800, maxWidth: 800 }}
 		>

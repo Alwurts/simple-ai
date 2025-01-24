@@ -1,26 +1,26 @@
-import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/flow";
+import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
 import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 
-export interface ExecutionProgress {
+interface ServerExecutionProgress {
 	nodeId: string;
 	status: "processing" | "success" | "error";
 	timestamp: string;
 }
 
-export interface WorkflowEventHandlers {
-	onProgress: (progress: ExecutionProgress) => void;
+export interface ServerExecutionEventHandlers {
+	onProgress: (progress: ServerExecutionProgress) => void;
 	onNodeUpdate: (nodeId: string, state: NodeExecutionState) => void;
 	onError: (error: Error, nodeId?: string) => void;
 	onComplete: () => void;
 }
 
-export class WorkflowSSEClient {
+export class ServerExecutionClient {
 	private abortController: AbortController | null = null;
 	private reader: ReadableStreamDefaultReader<Uint8Array> | null = null;
 
 	async connect(
 		workflow: WorkflowDefinition,
-		handlers: WorkflowEventHandlers,
+		handlers: ServerExecutionEventHandlers,
 	): Promise<void> {
 		try {
 			this.abortController = new AbortController();

@@ -1,19 +1,19 @@
 import { PROMPT_CRAFTER_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples";
-import { createExecutionEngine } from "@/registry/blocks/flow-01/lib/execution/core-engine";
+import { createClientExecutionEngine } from "@/registry/blocks/flow-01/lib/execution/client/client-execution-engine";
+import { nodeProcessors } from "@/registry/blocks/flow-01/lib/execution/client/node-processors-client";
+import { ServerExecutionClient } from "@/registry/blocks/flow-01/lib/execution/client/server-execution-client";
 import { createNode } from "@/registry/blocks/flow-01/lib/node-factory";
-import { nodeProcessors } from "@/registry/blocks/flow-01/lib/node-processors-client";
-import { WorkflowSSEClient } from "@/registry/blocks/flow-01/lib/sse-client";
 import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
 import {
 	type DynamicHandle,
 	type FlowEdge,
 	type FlowNode,
 	type FlowNodeDataTypeMap,
-	type NodeExecutionState,
 	hasTargets,
 	isNodeOfType,
 	isNodeWithDynamicHandles,
 } from "@/registry/blocks/flow-01/types/flow";
+import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
 import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
 import { nanoid } from "nanoid";
@@ -63,7 +63,7 @@ export interface StoreState {
 
 const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	...PROMPT_CRAFTER_WORKFLOW,
-	executionMode: "server",
+	executionMode: "client",
 	onNodesChange: (changes) => {
 		set({
 			nodes: applyNodeChanges<FlowNode>(changes, get().nodes),
@@ -291,7 +291,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			throw new Error(workflow.errors.map((error) => error.message).join("\n"));
 		}
 
-		// Reset execution state for all nodes
+		// Reset execution status for all nodes
 		set((state) => ({
 			nodes: state.nodes.map((node) => ({
 				...node,
@@ -309,7 +309,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			const { getNodeTargetsData, updateNodeExecutionState, getNodeById } =
 				get();
 
-			const engine = createExecutionEngine({
+			const engine = createClientExecutionEngine({
 				workflow,
 				getNodeTargetsData,
 				updateNodeExecutionState,
@@ -323,7 +323,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
 			await engine.execute(workflow.executionOrder);
 		} else {
-			const sseClient = new WorkflowSSEClient();
+			const sseClient = new ServerExecutionClient();
 			const { updateNodeExecutionState } = get();
 
 			return new Promise((resolve, reject) => {
