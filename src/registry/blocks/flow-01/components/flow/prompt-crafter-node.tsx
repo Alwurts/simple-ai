@@ -1,12 +1,7 @@
 import { BaseNode } from "@/components/flow/base-node";
 import { LabeledHandle } from "@/components/flow/labeled-handle";
-import {
-	NodeHeaderAction,
-	NodeHeaderIcon,
-	NodeHeaderTitle,
-} from "@/components/flow/node-header";
+import { NodeHeaderIcon, NodeHeaderTitle } from "@/components/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Command,
@@ -22,10 +17,11 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
 import { EditableLabeledHandle } from "@/registry/blocks/flow-01/components/flow/editable-labeled-handle";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { PromptCrafterNode as TPromptCrafterNode } from "@/registry/blocks/flow-01/types/flow";
+import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
+import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
 import { StreamLanguage } from "@codemirror/language";
 import type { EditorView } from "@codemirror/view";
 import { tags as t } from "@lezer/highlight";
@@ -36,7 +32,7 @@ import {
 	Position,
 	useUpdateNodeInternals,
 } from "@xyflow/react";
-import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
+import { BetweenVerticalEnd, PencilRuler, Plus } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -180,13 +176,7 @@ export function PromptCrafterNode({
 		return [createPromptLanguage(validLabels)];
 	}, [data.dynamicHandles["template-tags"]]);
 
-	const executionStatus = data.executionState?.status || "idle";
-	const statusColors = {
-		idle: "bg-muted text-muted-foreground",
-		processing: "bg-orange-500 text-white",
-		success: "bg-green-500 text-white",
-		error: "bg-red-500 text-white",
-	} as const;
+	const executionStatus = data.executionState?.status;
 
 	return (
 		<BaseNode
@@ -200,12 +190,7 @@ export function PromptCrafterNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Prompt Crafter</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<Badge
-						variant="secondary"
-						className={cn("mr-2 font-normal", statusColors[executionStatus])}
-					>
-						{executionStatus}
-					</Badge>
+					<StatusBadge status={executionStatus} />
 					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>
@@ -300,16 +285,3 @@ export function PromptCrafterNode({
 		</BaseNode>
 	);
 }
-
-const NodeHeaderDeleteAction = ({ id }: { id: string }) => {
-	const deleteNode = useStore((state) => state.deleteNode);
-	const handleClick = useCallback(() => {
-		deleteNode(id);
-	}, [id, deleteNode]);
-
-	return (
-		<NodeHeaderAction onClick={handleClick} variant="ghost" label="Delete node">
-			<Trash />
-		</NodeHeaderAction>
-	);
-};

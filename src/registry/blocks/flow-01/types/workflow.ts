@@ -14,17 +14,50 @@ type Dependent = {
 
 type Dependents = Record<string, Dependent[]>;
 
-export interface WorkflowError {
-	type: "multiple-sources-for-target-handle" | "cycle";
+export type DependencyGraph = {
+	dependencies: Map<string, { node: string; sourceHandle: string }[]>;
+	dependents: Map<string, { node: string; targetHandle: string }[]>;
+};
+
+export type ConnectionMap = Map<string, FlowEdge[]>;
+
+// Error types
+
+type EdgeErrorInfo = {
+	id: string;
+	source: string;
+	target: string;
+	sourceHandle: string;
+	targetHandle: string;
+};
+
+export type MultipleSourcesError = {
 	message: string;
-	edges: {
-		id: string;
-		source: string;
-		target: string;
-		sourceHandle: string;
-		targetHandle: string;
-	}[];
-}
+	type: "multiple-sources-for-target-handle";
+	edges: EdgeErrorInfo[];
+};
+
+export type CycleError = {
+	message: string;
+	type: "cycle";
+	edges: EdgeErrorInfo[];
+};
+
+type NodeErrorInfo = {
+	id: string;
+	handleId: string;
+};
+
+export type MissingConnectionError = {
+	message: string;
+	type: "missing-required-connection";
+	node: NodeErrorInfo;
+};
+
+export type WorkflowError =
+	| MultipleSourcesError
+	| CycleError
+	| MissingConnectionError;
 
 export interface WorkflowDefinition {
 	id: string;

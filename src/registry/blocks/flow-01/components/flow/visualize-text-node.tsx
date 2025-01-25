@@ -2,20 +2,14 @@ import { type NodeProps, NodeResizer, Position } from "@xyflow/react";
 
 import { BaseNode } from "@/components/flow/base-node";
 import { LabeledHandle } from "@/components/flow/labeled-handle";
-import {
-	NodeHeaderAction,
-	NodeHeaderIcon,
-	NodeHeaderTitle,
-} from "@/components/flow/node-header";
+import { NodeHeaderIcon, NodeHeaderTitle } from "@/components/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { VisualizeTextNode as TVisualizeTextNode } from "@/registry/blocks/flow-01/types/flow";
+import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
 import { MarkdownContent } from "@/registry/ui/markdown-content";
-import { Eye, Trash } from "lucide-react";
-import { useCallback } from "react";
+import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
+import { Eye } from "lucide-react";
 
 export function VisualizeTextNode({
 	id,
@@ -23,13 +17,7 @@ export function VisualizeTextNode({
 	data,
 	deletable,
 }: NodeProps<TVisualizeTextNode>) {
-	const executionStatus = data.executionState?.status || "idle";
-	const statusColors = {
-		idle: "bg-muted text-muted-foreground",
-		processing: "bg-orange-500 text-white",
-		success: "bg-green-500 text-white",
-		error: "bg-red-500 text-white",
-	} as const;
+	const executionStatus = data.executionState?.status;
 
 	return (
 		<BaseNode
@@ -54,12 +42,7 @@ export function VisualizeTextNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Visualize Text</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<Badge
-						variant="secondary"
-						className={cn("mr-2 font-normal", statusColors[executionStatus])}
-					>
-						{executionStatus}
-					</Badge>
+					<StatusBadge status={executionStatus} />
 					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>
@@ -87,16 +70,3 @@ export function VisualizeTextNode({
 		</BaseNode>
 	);
 }
-
-const NodeHeaderDeleteAction = ({ id }: { id: string }) => {
-	const deleteNode = useStore((state) => state.deleteNode);
-	const handleClick = useCallback(() => {
-		deleteNode(id);
-	}, [id, deleteNode]);
-
-	return (
-		<NodeHeaderAction onClick={handleClick} variant="ghost" label="Delete node">
-			<Trash />
-		</NodeHeaderAction>
-	);
-};

@@ -1,19 +1,15 @@
 import { BaseNode } from "@/components/flow/base-node";
 import { LabeledHandle } from "@/components/flow/labeled-handle";
-import {
-	NodeHeaderAction,
-	NodeHeaderIcon,
-	NodeHeaderTitle,
-} from "@/components/flow/node-header";
+import { NodeHeaderIcon, NodeHeaderTitle } from "@/components/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { TextInputNode as TTextInputNode } from "@/registry/blocks/flow-01/types/flow";
+import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
+import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
 import { type NodeProps, NodeResizer, Position } from "@xyflow/react";
-import { PenLine, Trash } from "lucide-react";
+import { PenLine } from "lucide-react";
 import type React from "react";
 import { useCallback } from "react";
 
@@ -32,14 +28,7 @@ export function TextInputNode({
 		[id, updateNode],
 	);
 
-	const executionStatus = data.executionState?.status || "idle";
-	const statusColors = {
-		idle: "bg-muted text-muted-foreground",
-		processing: "bg-orange-500 text-white",
-		success: "bg-green-500 text-white",
-		error: "bg-red-500 text-white",
-	};
-
+	const executionStatus = data.executionState?.status;
 	return (
 		<BaseNode
 			selected={selected}
@@ -60,12 +49,7 @@ export function TextInputNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Text Input</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<Badge
-						variant="secondary"
-						className={cn("mr-2 font-normal", statusColors[executionStatus])}
-					>
-						{executionStatus}
-					</Badge>
+					<StatusBadge status={executionStatus} />
 					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>
@@ -90,16 +74,3 @@ export function TextInputNode({
 		</BaseNode>
 	);
 }
-
-const NodeHeaderDeleteAction = ({ id }: { id: string }) => {
-	const deleteNode = useStore((state) => state.deleteNode);
-	const handleClick = useCallback(() => {
-		deleteNode(id);
-	}, [id, deleteNode]);
-
-	return (
-		<NodeHeaderAction onClick={handleClick} variant="ghost" label="Delete node">
-			<Trash />
-		</NodeHeaderAction>
-	);
-};

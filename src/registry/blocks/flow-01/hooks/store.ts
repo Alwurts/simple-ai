@@ -91,16 +91,32 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			get().updateEdgeExecutionState(edge.id, undefined);
 		}
 
-		// Update edge states for errors if any
+		// Reset node execution states
+		for (const node of workflow.nodes) {
+			get().updateNodeExecutionState(node.id, undefined);
+		}
+
+		// Update states for errors if any
 		if (workflow.errors.length > 0) {
 			for (const error of workflow.errors) {
-				for (const edge of error.edges) {
-					get().updateEdgeExecutionState(edge.id, {
-						error: {
-							type: error.type,
-							message: error.message,
-						},
-					});
+				switch (error.type) {
+					case "multiple-sources-for-target-handle":
+					case "cycle":
+						// These errors affect edges
+						for (const edge of error.edges) {
+							get().updateEdgeExecutionState(edge.id, {
+								error,
+							});
+						}
+						break;
+					case "missing-required-connection":
+						// These errors affect nodes
+						get().updateNodeExecutionState(error.node.id, {
+							status: "idle",
+							timestamp: new Date().toISOString(),
+							error,
+						});
+						break;
 				}
 			}
 		}
@@ -338,7 +354,10 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				...node,
 				data: {
 					...node.data,
-					executionState: undefined,
+					executionState: {
+						status: "idle",
+						timestamp: new Date().toISOString(),
+					},
 				},
 			})) as FlowNode[],
 		}));

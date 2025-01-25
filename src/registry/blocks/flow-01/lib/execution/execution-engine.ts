@@ -84,7 +84,10 @@ export const createExecutionEngine = (context: ExecutionContext) => {
 			context.updateNodeExecutionState(nodeId, {
 				timestamp: new Date().toISOString(),
 				status: "error",
-				error: error instanceof Error ? error.message : "Unknown error",
+				error: {
+					type: "processing-node",
+					message: error instanceof Error ? error.message : "Unknown error",
+				},
 			});
 			console.error(error);
 			processingNodes.delete(nodeId);

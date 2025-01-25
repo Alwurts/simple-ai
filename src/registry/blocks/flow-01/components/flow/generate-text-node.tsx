@@ -6,13 +6,8 @@ import {
 
 import { BaseNode } from "@/components/flow/base-node";
 import { LabeledHandle } from "@/components/flow/labeled-handle";
-import {
-	NodeHeaderAction,
-	NodeHeaderIcon,
-	NodeHeaderTitle,
-} from "@/components/flow/node-header";
+import { NodeHeaderIcon, NodeHeaderTitle } from "@/components/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Select,
@@ -22,14 +17,15 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import { EditableToolHandle } from "@/registry/blocks/flow-01/components/flow/editable-tool-handle";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import { MODELS, type Model } from "@/registry/blocks/flow-01/types/ai";
-import type { GenerateTextNode as TGenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
-import { Bot, Plus, Trash } from "lucide-react";
+import { Bot, Plus } from "lucide-react";
 import { useCallback } from "react";
 import { toast } from "sonner";
+import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
+import { MODELS, type Model } from "@/registry/blocks/flow-01/types/ai";
+import { EditableToolHandle } from "@/registry/blocks/flow-01/components/flow/editable-tool-handle";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
+import type { GenerateTextNode as TGenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
+import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
 
 export function GenerateTextNode({
 	id,
@@ -104,13 +100,7 @@ export function GenerateTextNode({
 		[id, data.dynamicHandles, data.config, updateNode, updateNodeInternals],
 	);
 
-	const executionStatus = data.executionState?.status || "idle";
-	const statusColors = {
-		idle: "bg-muted text-muted-foreground",
-		processing: "bg-orange-500 text-white",
-		success: "bg-green-500 text-white",
-		error: "bg-red-500 text-white",
-	};
+	const executionStatus = data.executionState?.status;
 
 	return (
 		<BaseNode
@@ -124,12 +114,7 @@ export function GenerateTextNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Generate Text</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<Badge
-						variant="secondary"
-						className={cn("mr-2 font-normal", statusColors[executionStatus])}
-					>
-						{executionStatus}
-					</Badge>
+					<StatusBadge status={executionStatus} />
 					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>
@@ -176,7 +161,7 @@ export function GenerateTextNode({
 			<div className="border-t border-border mt-2">
 				<div>
 					<div className="flex items-center justify-between py-2 px-4 bg-muted">
-						<span className="text-sm font-medium">Tools</span>
+						<span className="text-sm font-medium">Tool outputs</span>
 						<Button
 							variant="outline"
 							size="sm"
@@ -184,7 +169,7 @@ export function GenerateTextNode({
 							onClick={addHandle}
 						>
 							<Plus className="h-4 w-4 mr-1" />
-							New Tool
+							New tool output
 						</Button>
 					</div>
 					<div className="flex flex-col">
@@ -208,16 +193,3 @@ export function GenerateTextNode({
 		</BaseNode>
 	);
 }
-
-const NodeHeaderDeleteAction = ({ id }: { id: string }) => {
-	const deleteNode = useStore((state) => state.deleteNode);
-	const handleClick = useCallback(() => {
-		deleteNode(id);
-	}, [id, deleteNode]);
-
-	return (
-		<NodeHeaderAction onClick={handleClick} variant="ghost" label="Delete node">
-			<Trash />
-		</NodeHeaderAction>
-	);
-};

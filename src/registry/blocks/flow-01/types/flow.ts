@@ -23,9 +23,57 @@ type DynamicHandles<THandleCategory extends string> = {
 /* export const VISUALIZE_TEXT_TARGETS = ["input"] as const;
 type VisualizeTextTargets = (typeof VISUALIZE_TEXT_TARGETS)[number]; */
 
-type VisualizeTextData = {
+// Node Configuration
+export type NodeHandleRequirements = {
+	required: string[];
+	optional: string[];
+};
+
+export type NodeTypeConfig = {
+	targets?: NodeHandleRequirements;
+	sources?: NodeHandleRequirements;
+};
+
+export const NODE_TYPE_CONFIG: Record<FlowNode["type"], NodeTypeConfig> = {
+	"generate-text": {
+		targets: {
+			required: ["prompt"],
+			optional: ["system"],
+		},
+		sources: {
+			required: [],
+			optional: ["result"],
+		},
+	},
+	"visualize-text": {
+		targets: {
+			required: [],
+			optional: ["input"],
+		},
+	},
+	"text-input": {
+		sources: {
+			required: [],
+			optional: ["result"],
+		},
+	},
+	"prompt-crafter": {
+		targets: {
+			required: [],
+			optional: [], // template-tags are dynamic
+		},
+		sources: {
+			required: [],
+			optional: ["result"],
+		},
+	},
+};
+
+type BaseNodeData = {
 	executionState?: NodeExecutionState;
 };
+
+type VisualizeTextData = BaseNodeData;
 
 export type VisualizeTextNode = Node<VisualizeTextData, "visualize-text"> & {
 	type: "visualize-text";
@@ -33,16 +81,12 @@ export type VisualizeTextNode = Node<VisualizeTextData, "visualize-text"> & {
 
 // Text Input
 
-/* const TEXT_INPUT_SOURCES = ["result"] as const;
-type TextInputSources = (typeof TEXT_INPUT_SOURCES)[number]; */
-
 type TextInputConfig = {
 	value: string;
 };
 
-type TextInputData = {
+type TextInputData = BaseNodeData & {
 	config: TextInputConfig;
-	executionState?: NodeExecutionState;
 };
 
 export type TextInputNode = Node<TextInputData, "text-input"> & {
@@ -51,20 +95,13 @@ export type TextInputNode = Node<TextInputData, "text-input"> & {
 
 // Prompt Crafter
 
-/* const PROMPT_CRAFTER_TARGETS = ["input"] as const;
-type PromptCrafterTargets = (typeof PROMPT_CRAFTER_TARGETS)[number]; */
-
-/* const PROMPT_CRAFTER_SOURCES = ["result"] as const;
-type PromptCrafterSources = (typeof PROMPT_CRAFTER_SOURCES)[number]; */
-
 type PromptCrafterConfig = {
 	template: string;
 };
 
-type PromptCrafterData = {
+type PromptCrafterData = BaseNodeData & {
 	config: PromptCrafterConfig;
 	dynamicHandles: DynamicHandles<"template-tags">;
-	executionState?: NodeExecutionState;
 };
 
 export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter"> & {
@@ -73,20 +110,13 @@ export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter"> & {
 
 // Generate Text
 
-/* const GENERATE_TEXT_TARGETS = ["system", "prompt"] as const;
-type GenerateTextTargets = (typeof GENERATE_TEXT_TARGETS)[number];
-
-const GENERATE_TEXT_SOURCES = ["result"] as const;
-type GenerateTextSources = (typeof GENERATE_TEXT_SOURCES)[number]; */
-
 type GenerateTextConfig = {
 	model: Model;
 };
 
-type GenerateTextData = {
+type GenerateTextData = BaseNodeData & {
 	config: GenerateTextConfig;
 	dynamicHandles: DynamicHandles<"tools">;
-	executionState?: NodeExecutionState;
 };
 
 export type GenerateTextNode = Node<GenerateTextData, "generate-text"> & {
