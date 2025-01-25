@@ -170,8 +170,8 @@ export function PromptCrafterNode({
 				config: {
 					...data.config,
 					template: (data.config.template || "").replace(
-						new RegExp(`{${oldInput.name}}`, "g"),
-						`{${newLabel}}`,
+						new RegExp(`{{${oldInput.name}}}`, "g"),
+						`{{${newLabel}}}`,
 					),
 				},
 				dynamicHandles: {

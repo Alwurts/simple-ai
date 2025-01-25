@@ -1,7 +1,4 @@
-import type {
-	CustomFlowEdge,
-	FlowEdge,
-} from "@/registry/blocks/flow-01/types/flow";
+import type { CustomFlowEdge } from "@/registry/blocks/flow-01/types/flow";
 import { BaseEdge, type EdgeProps, getBezierPath } from "@xyflow/react";
 import type { CSSProperties } from "react";
 
@@ -24,7 +21,7 @@ export function CustomEdge({
 		targetPosition,
 	});
 
-	const flowEdgeData = data as FlowEdge["data"];
+	const flowEdgeData = data;
 	const hasError = flowEdgeData?.executionState?.error !== undefined;
 
 	const edgeStyle: CSSProperties = {
@@ -33,10 +30,5 @@ export function CustomEdge({
 		transition: "stroke 0.2s, stroke-width 0.2s",
 	};
 
-	return (
-		<BaseEdge
-			path={edgePath}
-			style={edgeStyle}
-		/>
-	);
+	return <BaseEdge path={edgePath} style={edgeStyle} />;
 }
