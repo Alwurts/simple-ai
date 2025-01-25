@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 	title: "Building Blocks for AI.",
 	description:
 		"Beautifully designed. Copy and paste into your apps. Open Source.",
+	keywords: ["ai", "blocks", "open source", "ai blocks", "ai blocks for ai"],
 };
 
 export default function BlocksLayout({
