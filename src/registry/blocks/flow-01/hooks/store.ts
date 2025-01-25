@@ -1,4 +1,3 @@
-import { PROMPT_CRAFTER_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples";
 import { ServerExecutionClient } from "@/registry/blocks/flow-01/lib/execution/client/server-execution-client";
 import { createNode } from "@/registry/blocks/flow-01/lib/node-factory";
 import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
@@ -22,6 +21,7 @@ import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
 import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
 import { nanoid } from "nanoid";
 import { createWithEqualityFn } from "zustand/traditional";
+import { NEWS_SUMMARY_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/news-summarization-chain";
 
 export type ExecutionMode = "client" | "server";
 
@@ -76,7 +76,7 @@ export interface StoreState {
 }
 
 const useStore = createWithEqualityFn<StoreState>((set, get) => ({
-	...PROMPT_CRAFTER_WORKFLOW,
+	...NEWS_SUMMARY_WORKFLOW,
 	workflowExecutionState: {
 		isRunning: false,
 		finishedAt: null,
@@ -88,12 +88,9 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
 		// Reset edge execution states
 		for (const edge of workflow.edges) {
-			get().updateEdgeExecutionState(edge.id, undefined);
-		}
-
-		// Reset node execution states
-		for (const node of workflow.nodes) {
-			get().updateNodeExecutionState(node.id, undefined);
+			get().updateEdgeExecutionState(edge.id, {
+				error: undefined,
+			});
 		}
 
 		// Update states for errors if any

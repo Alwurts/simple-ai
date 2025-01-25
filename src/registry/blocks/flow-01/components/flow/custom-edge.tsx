@@ -12,9 +12,8 @@ export function CustomEdge({
 	targetY,
 	sourcePosition,
 	targetPosition,
-	style,
-	markerEnd,
 	data,
+	selected,
 }: EdgeProps<CustomFlowEdge>) {
 	const [edgePath] = getBezierPath({
 		sourceX,
@@ -29,10 +28,15 @@ export function CustomEdge({
 	const hasError = flowEdgeData?.executionState?.error !== undefined;
 
 	const edgeStyle: CSSProperties = {
-		...(style as CSSProperties),
-		stroke: hasError ? "#ef4444" : "#b1b1b7",
-		strokeWidth: hasError ? 3 : 2,
+		stroke: hasError ? "#ef4444" : selected ? "#3b82f6" : "#b1b1b7",
+		strokeWidth: selected ? 3 : 2,
+		transition: "stroke 0.2s, stroke-width 0.2s",
 	};
 
-	return <BaseEdge path={edgePath} style={edgeStyle} markerEnd={markerEnd} />;
+	return (
+		<BaseEdge
+			path={edgePath}
+			style={edgeStyle}
+		/>
+	);
 }

@@ -5,7 +5,6 @@ import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
-import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { TextInputNode as TTextInputNode } from "@/registry/blocks/flow-01/types/flow";
 import { type NodeProps, NodeResizer, Position } from "@xyflow/react";
@@ -49,7 +48,6 @@ export function TextInputNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Text Input</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<StatusBadge status={executionStatus} />
 					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>

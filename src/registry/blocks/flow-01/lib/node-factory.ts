@@ -46,6 +46,8 @@ export const nodeFactory = {
 		type: "visualize-text",
 		position,
 		data: {},
+		width: 350,
+		height: 300,
 	}),
 
 	"text-input": (position: NodePosition): TextInputNode => ({
@@ -57,6 +59,8 @@ export const nodeFactory = {
 				value: "",
 			},
 		},
+		width: 350,
+		height: 300,
 	}),
 };
 

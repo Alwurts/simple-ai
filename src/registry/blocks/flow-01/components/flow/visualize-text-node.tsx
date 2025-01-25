@@ -6,7 +6,6 @@ import { NodeHeaderIcon, NodeHeaderTitle } from "@/components/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Separator } from "@/components/ui/separator";
 import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
-import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
 import type { VisualizeTextNode as TVisualizeTextNode } from "@/registry/blocks/flow-01/types/flow";
 import { MarkdownContent } from "@/registry/ui/markdown-content";
 import { Eye } from "lucide-react";
@@ -33,6 +32,7 @@ export function VisualizeTextNode({
 				minHeight={200}
 				maxHeight={800}
 				isVisible={selected}
+				shouldResize={() => selected}
 				//lineClassName="border-blue-400"
 				//handleClassName="bg-white border-2 border-blue-400 rounded-sm h-3 w-3"
 			/>
@@ -42,7 +42,7 @@ export function VisualizeTextNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Visualize Text</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<StatusBadge status={executionStatus} />
+					{/* <StatusBadge status={executionStatus} /> */}
 					{deletable && <NodeHeaderDeleteAction id={id} />}
 				</NodeHeaderActions>
 			</NodeHeader>

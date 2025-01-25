@@ -27,7 +27,7 @@ import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/vis
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
 import type { WorkflowError } from "@/registry/blocks/flow-01/types/workflow";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Copy } from "lucide-react";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNode,
@@ -116,6 +116,30 @@ function Flow() {
 		store.createNode(type, position);
 	};
 
+	const handleExport = () => {
+		const exportData = {
+			nodes: store.nodes.map((node) => ({
+				type: node.type,
+				id: node.id,
+				data: {
+					...node.data,
+					executionState: undefined,
+				},
+				position: node.position,
+				width: node.width,
+				height: node.height,
+			})),
+			edges: store.edges.map((edge) => ({
+				...edge,
+				data: {
+					...edge.data,
+					executionState: undefined,
+				},
+			})),
+		};
+		navigator.clipboard.writeText(JSON.stringify(exportData, null, 2));
+	};
+
 	return (
 		<ReactFlow
 			nodes={store.nodes}
@@ -136,6 +160,14 @@ function Flow() {
 			<NodesPanel />
 			<Panel position="top-right" className="flex gap-2 items-center">
 				<ErrorIndicator errors={store.workflowExecutionState.errors} />
+				<Button
+					onClick={handleExport}
+					variant="outline"
+					className="flex gap-2 items-center"
+				>
+					<Copy className="h-4 w-4" />
+					Export Flow
+				</Button>
 				<Button
 					onClick={() => {
 						store.startExecution();
