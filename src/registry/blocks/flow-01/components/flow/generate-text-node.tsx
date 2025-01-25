@@ -22,7 +22,7 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
 import { MODELS, type Model } from "@/registry/blocks/flow-01/types/ai";
-import { EditableToolHandle } from "@/registry/blocks/flow-01/components/flow/editable-tool-handle";
+import { EditableHandle, HandleEditor } from "@/registry/blocks/flow-01/components/flow/editable-handle";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { GenerateTextNode as TGenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
 import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
@@ -50,13 +50,27 @@ export function GenerateTextNode({
 		[id, data.config, updateNode],
 	);
 
-	const addHandle = useCallback(() => {
+	const handleCreateTool = useCallback((name: string, description?: string) => {
+		if (!name) {
+			toast.error("Tool name cannot be empty");
+			return false;
+		}
+
+		const existingTool = data.dynamicHandles.tools.find(
+			(tool) => tool.name === name,
+		);
+		if (existingTool) {
+			toast.error("Tool name already exists");
+			return false;
+		}
+
 		addDynamicHandle(id, "generate-text", "tools", {
-			name: "",
-			description: "",
+			name,
+			description,
 		});
 		updateNodeInternals(id);
-	}, [id, addDynamicHandle, updateNodeInternals]);
+		return true;
+	}, [id, data.dynamicHandles.tools, addDynamicHandle, updateNodeInternals]);
 
 	const removeHandle = useCallback(
 		(handleId: string) => {
@@ -67,7 +81,7 @@ export function GenerateTextNode({
 	);
 
 	const updateTool = useCallback(
-		(toolId: string, newName: string, newDescription: string): boolean => {
+		(toolId: string, newName: string, newDescription?: string): boolean => {
 			if (!newName) {
 				toast.error("Tool name cannot be empty");
 				return false;
@@ -82,9 +96,6 @@ export function GenerateTextNode({
 			}
 
 			updateNode(id, "generate-text", {
-				config: {
-					...data.config,
-				},
 				dynamicHandles: {
 					...data.dynamicHandles,
 					tools: data.dynamicHandles.tools.map((tool) =>
@@ -97,7 +108,7 @@ export function GenerateTextNode({
 			updateNodeInternals(id);
 			return true;
 		},
-		[id, data.dynamicHandles, data.config, updateNode, updateNodeInternals],
+		[id, data.dynamicHandles, updateNode, updateNodeInternals],
 	);
 
 	const executionStatus = data.executionState?.status;
@@ -162,19 +173,26 @@ export function GenerateTextNode({
 				<div>
 					<div className="flex items-center justify-between py-2 px-4 bg-muted">
 						<span className="text-sm font-medium">Tool outputs</span>
-						<Button
-							variant="outline"
-							size="sm"
-							className="h-7 px-2"
-							onClick={addHandle}
+						<HandleEditor
+							variant="create"
+							label=""
+							onSave={handleCreateTool}
+							onCancel={() => {}}
+							align="end"
 						>
-							<Plus className="h-4 w-4 mr-1" />
-							New tool output
-						</Button>
+							<Button
+								variant="outline"
+								size="sm"
+								className="h-7 px-2"
+							>
+								<Plus className="h-4 w-4 mr-1" />
+								New tool output
+							</Button>
+						</HandleEditor>
 					</div>
 					<div className="flex flex-col">
 						{data.dynamicHandles.tools.map((tool) => (
-							<EditableToolHandle
+							<EditableHandle
 								key={tool.id}
 								nodeId={id}
 								handleId={tool.id}
@@ -183,7 +201,7 @@ export function GenerateTextNode({
 								type="source"
 								position={Position.Right}
 								wrapperClassName="w-full"
-								onToolChange={updateTool}
+								onNameChange={updateTool}
 								onDelete={removeHandle}
 							/>
 						))}

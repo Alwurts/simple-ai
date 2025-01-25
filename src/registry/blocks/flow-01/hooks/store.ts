@@ -322,12 +322,9 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 						...node,
 						data: {
 							...node.data,
-							config: {
-								...node.data.config,
-								dynamicHandles: {
-									...node.data.dynamicHandles,
-									[handleCategory]: newHandles,
-								},
+							dynamicHandles: {
+								...node.data.dynamicHandles,
+								[handleCategory]: newHandles,
 							},
 						},
 					};

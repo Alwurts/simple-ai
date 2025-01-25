@@ -17,7 +17,7 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { EditableLabeledHandle } from "@/registry/blocks/flow-01/components/flow/editable-labeled-handle";
+import { EditableHandle, HandleEditor } from "@/registry/blocks/flow-01/components/flow/editable-handle";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { PromptCrafterNode as TPromptCrafterNode } from "@/registry/blocks/flow-01/types/flow";
 import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
@@ -109,12 +109,26 @@ export function PromptCrafterNode({
 		setIsPopoverOpen(false);
 	}, []);
 
-	const addInput = useCallback(() => {
+	const handleCreateInput = useCallback((name: string) => {
+		if (!name) {
+			toast.error("Input name cannot be empty");
+			return false;
+		}
+
+		const existingInput = data.dynamicHandles["template-tags"]?.find(
+			(input) => input.name === name,
+		);
+		if (existingInput) {
+			toast.error("Input name already exists");
+			return false;
+		}
+
 		addDynamicHandle(id, "prompt-crafter", "template-tags", {
-			name: "New Input",
+			name,
 		});
 		updateNodeInternals(id);
-	}, [id, updateNodeInternals, addDynamicHandle]);
+		return true;
+	}, [id, data.dynamicHandles, addDynamicHandle, updateNodeInternals]);
 
 	const removeInput = useCallback(
 		(handleId: string) => {
@@ -248,32 +262,42 @@ export function PromptCrafterNode({
 					}}
 				/>
 			</div>
-			<div className="grid grid-cols-[2fr,1fr] gap-2 pt-2 pb-4 text-sm">
-				<div className="flex flex-col gap-2 min-w-0">
-					<Button
-						variant="ghost"
-						size="sm"
-						className="w-fit h-7 px-2 mx-1"
-						onClick={addInput}
-					>
-						<Plus className="h-4 w-4 mr-1" />
-						New Input
-					</Button>
+			<div className="grid grid-cols-[2fr,1fr] pb-2 text-sm gap-4">
+				<div className="flex flex-col min-w-0">
+					<div className="flex items-center justify-between py-2 px-4 bg-muted rounded-r-xl">
+						<span className="text-sm font-medium">Inputs</span>
+						<HandleEditor
+							variant="create"
+							label=""
+							onSave={handleCreateInput}
+							onCancel={() => {}}
+							align="end"
+						>
+							<Button
+								variant="outline"
+								size="sm"
+								className="w-fit h-7 px-2 mx-1"
+							>
+								<Plus className="h-4 w-4 mr-1" />
+								New Input
+							</Button>
+						</HandleEditor>
+					</div>
 					{data.dynamicHandles["template-tags"]?.map((input) => (
-						<EditableLabeledHandle
+						<EditableHandle
 							key={input.id}
 							nodeId={id}
 							handleId={input.id}
-							label={input.name}
+							name={input.name}
 							type="target"
 							position={Position.Left}
 							wrapperClassName="w-full"
-							onLabelChange={updateInputName}
+							onNameChange={updateInputName}
 							onDelete={removeInput}
 						/>
 					))}
 				</div>
-				<div className="justify-self-end">
+				<div className="self-stretch border-l border-border flex items-center justify-end">
 					<LabeledHandle
 						id="result"
 						title="Result"
