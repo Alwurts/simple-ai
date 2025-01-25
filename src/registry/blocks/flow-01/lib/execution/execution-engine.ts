@@ -48,14 +48,19 @@ export const createExecutionEngine = (context: ExecutionContext) => {
 	const processingNodes = new Set<string>();
 
 	const canProcessNode = (nodeId: string) => {
-		const nodeDependencies =
-			context.workflow.dependencies[nodeId]?.map((dep) => dep.node) || [];
+		const nodeDependencies = context.workflow.dependencies[nodeId] || [];
 		return nodeDependencies.every((dep) => {
 			// Check if any dependency has failed
-			if (failedNodes.has(dep)) {
+			if (failedNodes.has(dep.node)) {
 				return false;
 			}
-			return completedNodes.has(dep);
+			// Check if the node is completed AND the specific source handle has data
+			const sourceNode = context.workflow.nodes.find((n) => n.id === dep.node);
+			if (!sourceNode?.data.executionState?.sources) {
+				return false;
+			}
+			const sourceHandleData = sourceNode.data.executionState.sources[dep.sourceHandle];
+			return completedNodes.has(dep.node) && sourceHandleData !== undefined;
 		});
 	};
 

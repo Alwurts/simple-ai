@@ -15,8 +15,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: -38.0560774345179,
-				y: -109.87553535480401,
+				x: -488.0560774345179,
+				y: 18.124464645195985,
 			},
 			width: 300,
 			height: 477,
@@ -27,12 +27,12 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			data: {
 				config: {
 					value:
-						"You take in as input a news article and summarize it into a very short paragraph.",
+						"You take in as input a news article and summarize it into a very short paragraph.\n",
 				},
 			},
 			position: {
-				x: -33.82133100040154,
-				y: -428.64829255424223,
+				x: -483.8213310004015,
+				y: -392.64829255424223,
 			},
 		},
 		{
@@ -47,8 +47,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 306.0257483270164,
-				y: -227.61111431352475,
+				x: -57.756486691485975,
+				y: -136.92385456193998,
 			},
 		},
 		{
@@ -56,8 +56,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "visualizeSummary",
 			data: {},
 			position: {
-				x: 439.74362152661683,
-				y: -634.7962605458365,
+				x: 171.74362152661683,
+				y: -526.7962605458365,
 			},
 			width: 350,
 			height: 300,
@@ -72,8 +72,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1322.8378159076065,
-				y: -610.3736613323931,
+				x: 1092.8378159076065,
+				y: -452.3736613323931,
 			},
 			width: 382,
 			height: 340,
@@ -83,7 +83,7 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "validateLLM",
 			data: {
 				config: {
-					model: "llama-3.3-70b-versatile",
+					model: "deepseek-chat",
 				},
 				dynamicHandles: {
 					tools: [
@@ -101,8 +101,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1349.9996002512978,
-				y: -198.77562774341615,
+				x: 1535.9996002512978,
+				y: -218.77562774341615,
 			},
 		},
 		{
@@ -127,8 +127,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 844.6092567404837,
-				y: -304.54232285618434,
+				x: 592.6092567404837,
+				y: -200.54232285618434,
 			},
 		},
 		{
@@ -143,8 +143,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1989.2506773435518,
-				y: 15.219251715458086,
+				x: 2669.2506773435516,
+				y: -94.78074828454191,
 			},
 		},
 		{
@@ -157,8 +157,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 2001.6462694831678,
-				y: -270.67685548996974,
+				x: 2273.646269483168,
+				y: -254.67685548996974,
 			},
 			width: 334,
 			height: 219,
@@ -168,8 +168,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "PqH1msuO-XKcAzeKmY72Y",
 			data: {},
 			position: {
-				x: 2451.215005731411,
-				y: -348.5503560681139,
+				x: 3067.215005731411,
+				y: -436.5503560681139,
 			},
 			width: 375,
 			height: 636,
@@ -179,8 +179,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "V8U4CEFnwsLZNM13DoRPn",
 			data: {},
 			position: {
-				x: 639.7694087977897,
-				y: 152.18320786105468,
+				x: 765.7694087977897,
+				y: 250.1832078610547,
 			},
 			width: 634,
 			height: 369,
@@ -190,8 +190,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "lo9ImZY7ZBHw2xTEhj2X_",
 			data: {},
 			position: {
-				x: 1913.0107151060429,
-				y: -617.0772160629892,
+				x: 1805.0107151060429,
+				y: -573.0772160629892,
 			},
 			width: 313,
 			height: 262,
@@ -201,8 +201,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "eYRTRKwrUcn_fmuMKuUEl",
 			data: {},
 			position: {
-				x: 1573.6214230141882,
-				y: 196.37857698581186,
+				x: 1921.6214230141882,
+				y: 198.37857698581183,
 			},
 			width: 350,
 			height: 300,

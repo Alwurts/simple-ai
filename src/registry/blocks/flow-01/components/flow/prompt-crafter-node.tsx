@@ -257,8 +257,8 @@ export function PromptCrafterNode({
 					onCreateEditor={(view) => {
 						editorViewRef.current = view;
 					}}
-					className="nodrag border rounded-md overflow-hidden [&_.cm-content]:!cursor-text [&_.cm-line]:!cursor-text"
-					placeholder="Craft your prompt here... Use {input-name} to reference inputs"
+					className="nodrag border rounded-md overflow-hidden [&_.cm-content]:!cursor-text [&_.cm-line]:!cursor-text nodrag nopan nowheel"
+					placeholder="Craft your prompt here... Use {{input-name}} to reference inputs"
 					basicSetup={{
 						lineNumbers: false,
 						foldGutter: false,

@@ -56,7 +56,7 @@ export function TextInputNode({
 				<Textarea
 					value={data.config.value || ""}
 					onChange={handleTextChange}
-					className="w-full flex-1 min-h-[150px] resize-none nodrag"
+					className="w-full flex-1 min-h-[150px] resize-none nodrag nopan nowheel"
 					placeholder="Enter your text here..."
 				/>
 			</div>

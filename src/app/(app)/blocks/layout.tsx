@@ -15,7 +15,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-	title: "Building Blocks for AI.",
+	title: "Building Blocks for AI",
 	description:
 		"Beautifully designed. Copy and paste into your apps. Open Source.",
 };
