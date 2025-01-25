@@ -1,13 +1,13 @@
 import type { FlowEdge, FlowNode } from "@/registry/blocks/flow-01/types/flow";
 import { NODE_TYPE_CONFIG } from "@/registry/blocks/flow-01/types/flow";
 import type {
+	ConnectionMap,
+	CycleError,
+	DependencyGraph,
+	MissingConnectionError,
+	MultipleSourcesError,
 	WorkflowDefinition,
 	WorkflowError,
-	MultipleSourcesError,
-	CycleError,
-	MissingConnectionError,
-	DependencyGraph,
-	ConnectionMap,
 } from "@/registry/blocks/flow-01/types/workflow";
 import { nanoid } from "nanoid";
 

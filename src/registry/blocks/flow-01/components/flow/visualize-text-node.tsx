@@ -5,10 +5,10 @@ import { LabeledHandle } from "@/components/flow/labeled-handle";
 import { NodeHeaderIcon, NodeHeaderTitle } from "@/components/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Separator } from "@/components/ui/separator";
-import type { VisualizeTextNode as TVisualizeTextNode } from "@/registry/blocks/flow-01/types/flow";
-import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
-import { MarkdownContent } from "@/registry/ui/markdown-content";
 import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
+import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
+import type { VisualizeTextNode as TVisualizeTextNode } from "@/registry/blocks/flow-01/types/flow";
+import { MarkdownContent } from "@/registry/ui/markdown-content";
 import { Eye } from "lucide-react";
 
 export function VisualizeTextNode({

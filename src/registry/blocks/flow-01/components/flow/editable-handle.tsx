@@ -3,12 +3,12 @@
 import { BaseHandle } from "@/components/flow/base-handle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import type { HandleProps, Node } from "@xyflow/react";
 import { useOnSelectionChange } from "@xyflow/react";

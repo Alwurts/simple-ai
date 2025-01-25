@@ -1,6 +1,6 @@
 import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
-import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 import { hasTargets } from "@/registry/blocks/flow-01/types/flow";
+import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 
 export interface ExecutionContext {
 	workflow: WorkflowDefinition;

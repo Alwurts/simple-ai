@@ -1,9 +1,9 @@
-import { BaseEdge, type EdgeProps, getBezierPath } from "@xyflow/react";
-import type { CSSProperties } from "react";
 import type {
 	CustomFlowEdge,
 	FlowEdge,
 } from "@/registry/blocks/flow-01/types/flow";
+import { BaseEdge, type EdgeProps, getBezierPath } from "@xyflow/react";
+import type { CSSProperties } from "react";
 
 export function CustomEdge({
 	sourceX,

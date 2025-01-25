@@ -17,15 +17,18 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import {
+	EditableHandle,
+	HandleEditor,
+} from "@/registry/blocks/flow-01/components/flow/editable-handle";
+import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
+import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
+import { MODELS, type Model } from "@/registry/blocks/flow-01/types/ai";
+import type { GenerateTextNode as TGenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
 import { Bot, Plus } from "lucide-react";
 import { useCallback } from "react";
 import { toast } from "sonner";
-import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
-import { MODELS, type Model } from "@/registry/blocks/flow-01/types/ai";
-import { EditableHandle, HandleEditor } from "@/registry/blocks/flow-01/components/flow/editable-handle";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import type { GenerateTextNode as TGenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
-import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
 
 export function GenerateTextNode({
 	id,
@@ -50,27 +53,30 @@ export function GenerateTextNode({
 		[id, data.config, updateNode],
 	);
 
-	const handleCreateTool = useCallback((name: string, description?: string) => {
-		if (!name) {
-			toast.error("Tool name cannot be empty");
-			return false;
-		}
+	const handleCreateTool = useCallback(
+		(name: string, description?: string) => {
+			if (!name) {
+				toast.error("Tool name cannot be empty");
+				return false;
+			}
 
-		const existingTool = data.dynamicHandles.tools.find(
-			(tool) => tool.name === name,
-		);
-		if (existingTool) {
-			toast.error("Tool name already exists");
-			return false;
-		}
+			const existingTool = data.dynamicHandles.tools.find(
+				(tool) => tool.name === name,
+			);
+			if (existingTool) {
+				toast.error("Tool name already exists");
+				return false;
+			}
 
-		addDynamicHandle(id, "generate-text", "tools", {
-			name,
-			description,
-		});
-		updateNodeInternals(id);
-		return true;
-	}, [id, data.dynamicHandles.tools, addDynamicHandle, updateNodeInternals]);
+			addDynamicHandle(id, "generate-text", "tools", {
+				name,
+				description,
+			});
+			updateNodeInternals(id);
+			return true;
+		},
+		[id, data.dynamicHandles.tools, addDynamicHandle, updateNodeInternals],
+	);
 
 	const removeHandle = useCallback(
 		(handleId: string) => {
@@ -180,11 +186,7 @@ export function GenerateTextNode({
 							onCancel={() => {}}
 							align="end"
 						>
-							<Button
-								variant="outline"
-								size="sm"
-								className="h-7 px-2"
-							>
+							<Button variant="outline" size="sm" className="h-7 px-2">
 								<Plus className="h-4 w-4 mr-1" />
 								New tool output
 							</Button>

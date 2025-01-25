@@ -17,11 +17,14 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { EditableHandle, HandleEditor } from "@/registry/blocks/flow-01/components/flow/editable-handle";
+import {
+	EditableHandle,
+	HandleEditor,
+} from "@/registry/blocks/flow-01/components/flow/editable-handle";
+import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
+import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { PromptCrafterNode as TPromptCrafterNode } from "@/registry/blocks/flow-01/types/flow";
-import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
-import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
 import { StreamLanguage } from "@codemirror/language";
 import type { EditorView } from "@codemirror/view";
 import { tags as t } from "@lezer/highlight";
@@ -109,26 +112,29 @@ export function PromptCrafterNode({
 		setIsPopoverOpen(false);
 	}, []);
 
-	const handleCreateInput = useCallback((name: string) => {
-		if (!name) {
-			toast.error("Input name cannot be empty");
-			return false;
-		}
+	const handleCreateInput = useCallback(
+		(name: string) => {
+			if (!name) {
+				toast.error("Input name cannot be empty");
+				return false;
+			}
 
-		const existingInput = data.dynamicHandles["template-tags"]?.find(
-			(input) => input.name === name,
-		);
-		if (existingInput) {
-			toast.error("Input name already exists");
-			return false;
-		}
+			const existingInput = data.dynamicHandles["template-tags"]?.find(
+				(input) => input.name === name,
+			);
+			if (existingInput) {
+				toast.error("Input name already exists");
+				return false;
+			}
 
-		addDynamicHandle(id, "prompt-crafter", "template-tags", {
-			name,
-		});
-		updateNodeInternals(id);
-		return true;
-	}, [id, data.dynamicHandles, addDynamicHandle, updateNodeInternals]);
+			addDynamicHandle(id, "prompt-crafter", "template-tags", {
+				name,
+			});
+			updateNodeInternals(id);
+			return true;
+		},
+		[id, data.dynamicHandles, addDynamicHandle, updateNodeInternals],
+	);
 
 	const removeInput = useCallback(
 		(handleId: string) => {

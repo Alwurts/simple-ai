@@ -1,7 +1,7 @@
 import { createExecutionEngine } from "@/registry/blocks/flow-01/lib/execution/execution-engine";
 import { serverNodeProcessors } from "@/registry/blocks/flow-01/lib/execution/server/server-node-processors";
-import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
+import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 
 function createEvent(type: string, data: Record<string, unknown>) {
 	return `data: ${JSON.stringify({ type, ...data })}\n\n`;

@@ -2,6 +2,10 @@ import { PROMPT_CRAFTER_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples"
 import { ServerExecutionClient } from "@/registry/blocks/flow-01/lib/execution/client/server-execution-client";
 import { createNode } from "@/registry/blocks/flow-01/lib/node-factory";
 import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
+import type {
+	EdgeExecutionState,
+	NodeExecutionState,
+} from "@/registry/blocks/flow-01/types/execution";
 import {
 	type DynamicHandle,
 	type FlowEdge,
@@ -10,10 +14,6 @@ import {
 	isNodeOfType,
 	isNodeWithDynamicHandles,
 } from "@/registry/blocks/flow-01/types/flow";
-import type {
-	EdgeExecutionState,
-	NodeExecutionState,
-} from "@/registry/blocks/flow-01/types/execution";
 import type {
 	WorkflowDefinition,
 	WorkflowError,
