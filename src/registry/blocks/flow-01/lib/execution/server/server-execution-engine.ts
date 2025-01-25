@@ -14,48 +14,13 @@ function createServerExecutionEngine(
 	return createExecutionEngine({
 		workflow,
 		processNode: async (nodeId, targetsData) => {
-			// Send processing start event
-			controller.enqueue(
-				createEvent("progress", {
-					nodeId,
-					status: "processing",
-					timestamp: new Date().toISOString(),
-				}),
-			);
-
-			try {
-				const node = workflow.nodes.find((n) => n.id === nodeId);
-				if (!node) {
-					throw new Error(`Node ${nodeId} not found`);
-				}
-
-				const processor = serverNodeProcessors[node.type];
-				const result = await processor(node, targetsData);
-
-				// Send node update event
-				controller.enqueue(
-					createEvent("nodeUpdate", {
-						nodeId,
-						executionState: {
-							status: "success",
-							sources: result,
-							targets: targetsData,
-							timestamp: new Date().toISOString(),
-						},
-					}),
-				);
-
-				return result;
-			} catch (error) {
-				// Send error event
-				controller.enqueue(
-					createEvent("error", {
-						nodeId,
-						error: error instanceof Error ? error.message : "Unknown error",
-					}),
-				);
-				throw error;
+			const node = workflow.nodes.find((n) => n.id === nodeId);
+			if (!node) {
+				throw new Error(`Node ${nodeId} not found`);
 			}
+
+			const processor = serverNodeProcessors[node.type];
+			return await processor(node, targetsData);
 		},
 		updateNodeExecutionState: (nodeId, state: Partial<NodeExecutionState>) => {
 			const node = workflow.nodes.find((n) => n.id === nodeId);
@@ -66,8 +31,23 @@ function createServerExecutionEngine(
 			node.data.executionState = {
 				...node.data.executionState,
 				...state,
-				timestamp: state.timestamp || new Date().toISOString(),
 			} as NodeExecutionState;
+
+			// Send node update event
+			controller.enqueue(
+				createEvent("nodeUpdate", {
+					nodeId,
+					executionState: node.data.executionState,
+				}),
+			);
+
+			if (state.status === "error") {
+				controller.enqueue(
+					createEvent("error", {
+						error: state.error,
+					}),
+				);
+			}
 		},
 	});
 }

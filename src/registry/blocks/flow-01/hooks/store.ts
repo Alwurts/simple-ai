@@ -49,7 +49,7 @@ export interface StoreState {
 	) => void;
 	updateNodeExecutionState: (
 		nodeId: string,
-		state: Partial<NodeExecutionState>,
+		state: Partial<NodeExecutionState> | undefined,
 	) => void;
 	updateEdgeExecutionState: (
 		edgeId: string,
@@ -332,6 +332,17 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	// Runtime
 
 	async startExecution() {
+		// Reset execution state for all nodes
+		set((state) => ({
+			nodes: state.nodes.map((node) => ({
+				...node,
+				data: {
+					...node.data,
+					executionState: undefined,
+				},
+			})) as FlowNode[],
+		}));
+
 		const workflow = get().validateWorkflow();
 
 		if (workflow.errors.length > 0) {
@@ -347,20 +358,6 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		}));
 
 		try {
-			// Reset execution status for all nodes
-			set((state) => ({
-				nodes: state.nodes.map((node) => ({
-					...node,
-					data: {
-						...node.data,
-						executionState: {
-							...node.data.executionState,
-							status: "idle",
-						},
-					},
-				})) as FlowNode[],
-			}));
-
 			const sseClient = new ServerExecutionClient();
 			const { updateNodeExecutionState } = get();
 
@@ -369,14 +366,8 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					onNodeUpdate: (nodeId, state) => {
 						updateNodeExecutionState(nodeId, state);
 					},
-					onError: (error, nodeId) => {
-						if (nodeId) {
-							updateNodeExecutionState(nodeId, {
-								status: "error",
-								error: error.message,
-								timestamp: new Date().toISOString(),
-							});
-						}
+					onError: (error) => {
+						console.error("Error in execution:", error);
 						reject(error);
 					},
 					onComplete: ({ timestamp }) => {

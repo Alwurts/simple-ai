@@ -57,19 +57,12 @@ export class ServerExecutionClient {
 							const data = JSON.parse(line.slice(6));
 
 							switch (data.type) {
-								case "progress": {
-									handlers.onNodeUpdate(data.nodeId, {
-										status: data.status,
-										timestamp: data.timestamp,
-									});
-									break;
-								}
 								case "nodeUpdate": {
 									handlers.onNodeUpdate(data.nodeId, data.executionState);
 									break;
 								}
 								case "error": {
-									handlers.onError(new Error(data.error), data.nodeId);
+									handlers.onError(new Error(data.error));
 									break;
 								}
 								case "complete": {
