@@ -57,30 +57,6 @@ function createServerExecutionEngine(
 				throw error;
 			}
 		},
-		getNodeTargetsData: (nodeId) => {
-			const node = workflow.nodes.find((n) => n.id === nodeId);
-			if (!node) {
-				return undefined;
-			}
-
-			const edgesConnectedToNode = workflow.edges.filter(
-				(edge) => edge.target === nodeId,
-			);
-
-			const targetsData: Record<string, string> = {};
-			for (const edge of edgesConnectedToNode) {
-				const sourceNode = workflow.nodes.find((n) => n.id === edge.source);
-				if (!sourceNode?.data.executionState?.sources) {
-					continue;
-				}
-
-				const sourceNodeResult =
-					sourceNode.data.executionState.sources[edge.sourceHandle];
-				targetsData[edge.targetHandle] = sourceNodeResult;
-			}
-
-			return targetsData;
-		},
 		updateNodeExecutionState: (nodeId, state: Partial<NodeExecutionState>) => {
 			const node = workflow.nodes.find((n) => n.id === nodeId);
 			if (!node) {

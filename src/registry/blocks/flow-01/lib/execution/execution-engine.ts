@@ -1,5 +1,6 @@
 import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
 import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
+import { hasTargets } from "@/registry/blocks/flow-01/types/flow";
 
 export interface ExecutionContext {
 	workflow: WorkflowDefinition;
@@ -7,12 +8,39 @@ export interface ExecutionContext {
 		nodeId: string,
 		targetsData: Record<string, string> | undefined,
 	) => Promise<Record<string, string> | undefined>;
-	getNodeTargetsData: (nodeId: string) => Record<string, string> | undefined;
 	updateNodeExecutionState: (
 		nodeId: string,
 		state: Partial<NodeExecutionState>,
 	) => void;
 }
+
+const getNodeTargetsData = (
+	workflow: WorkflowDefinition,
+	nodeId: string,
+): Record<string, string> | undefined => {
+	const node = workflow.nodes.find((n) => n.id === nodeId);
+	if (!node || !hasTargets(node)) {
+		return undefined;
+	}
+
+	const edgesConnectedToNode = workflow.edges.filter(
+		(edge) => edge.target === nodeId,
+	);
+
+	const targetsData: Record<string, string> = {};
+	for (const edge of edgesConnectedToNode) {
+		const sourceNode = workflow.nodes.find((n) => n.id === edge.source);
+		if (!sourceNode?.data.executionState?.sources) {
+			continue;
+		}
+
+		const sourceNodeResult =
+			sourceNode.data.executionState.sources[edge.sourceHandle];
+		targetsData[edge.targetHandle] = sourceNodeResult;
+	}
+
+	return targetsData;
+};
 
 export const createExecutionEngine = (context: ExecutionContext) => {
 	const completedNodes = new Set<string>();
@@ -26,7 +54,7 @@ export const createExecutionEngine = (context: ExecutionContext) => {
 
 	const processNode = async (nodeId: string) => {
 		try {
-			const targetsData = context.getNodeTargetsData(nodeId);
+			const targetsData = getNodeTargetsData(context.workflow, nodeId);
 
 			context.updateNodeExecutionState(nodeId, {
 				timestamp: new Date().toISOString(),

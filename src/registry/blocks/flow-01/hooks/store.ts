@@ -1,6 +1,4 @@
 import { PROMPT_CRAFTER_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples";
-import { createExecutionEngine } from "@/registry/blocks/flow-01/lib/execution/execution-engine";
-import { nodeProcessors } from "@/registry/blocks/flow-01/lib/execution/client/node-processors-client";
 import { ServerExecutionClient } from "@/registry/blocks/flow-01/lib/execution/client/server-execution-client";
 import { createNode } from "@/registry/blocks/flow-01/lib/node-factory";
 import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
@@ -9,7 +7,6 @@ import {
 	type FlowEdge,
 	type FlowNode,
 	type FlowNodeDataTypeMap,
-	hasTargets,
 	isNodeOfType,
 	isNodeWithDynamicHandles,
 } from "@/registry/blocks/flow-01/types/flow";
@@ -30,6 +27,7 @@ export type ExecutionMode = "client" | "server";
 
 export type WorkflowExecutionState = {
 	isRunning: boolean;
+	finishedAt: string | null;
 	errors: WorkflowError[];
 };
 
@@ -73,18 +71,15 @@ export interface StoreState {
 	// Workflow validation and execution state
 	validateWorkflow: () => WorkflowDefinition;
 	workflowExecutionState: WorkflowExecutionState;
-	executionMode: ExecutionMode;
-	setExecutionMode: (mode: ExecutionMode) => void;
 	// execution
 	startExecution: () => Promise<void>;
-	getNodeTargetsData: (nodeId: string) => Record<string, string> | undefined;
 }
 
 const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	...PROMPT_CRAFTER_WORKFLOW,
-	executionMode: "server",
 	workflowExecutionState: {
 		isRunning: false,
+		finishedAt: null,
 		errors: [],
 	},
 	validateWorkflow: () => {
@@ -184,7 +179,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		get().validateWorkflow();
 	},
 	getNodeById: (nodeId) => {
-		const node = get().nodes.find((n) => n.id === nodeId);
+		const node = get().nodes.find((node) => node.id === nodeId);
 		if (!node) {
 			throw new Error(`Node with id ${nodeId} not found`);
 		}
@@ -215,37 +210,39 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	},
 	updateNodeExecutionState: (nodeId, state) => {
 		set((currentState) => ({
-			nodes: currentState.nodes.map((n) => {
-				if (n.id === nodeId) {
+			nodes: currentState.nodes.map((node) => {
+				if (node.id === nodeId) {
 					return {
-						...n,
+						...node,
 						data: {
-							...n.data,
+							...node.data,
 							executionState: {
-								...n.data.executionState,
+								...node.data?.executionState,
 								...state,
-								timestamp: state.timestamp || new Date().toISOString(),
-							} as NodeExecutionState,
+							},
 						},
 					} as FlowNode;
 				}
-				return n;
+				return node;
 			}),
 		}));
 	},
 	updateEdgeExecutionState: (edgeId, state) => {
 		set((currentState) => ({
-			edges: currentState.edges.map((e) => {
-				if (e.id === edgeId) {
+			edges: currentState.edges.map((edge) => {
+				if (edge.id === edgeId) {
 					return {
-						...e,
+						...edge,
 						data: {
-							...e.data,
-							executionState: state as EdgeExecutionState,
+							...edge.data,
+							executionState: {
+								...edge.data?.executionState,
+								...state,
+							},
 						},
 					};
 				}
-				return e;
+				return edge;
 			}),
 		}));
 	},
@@ -332,13 +329,9 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			}),
 		});
 	},
-	setExecutionMode: (mode) => {
-		set({ executionMode: mode });
-	},
 	// Runtime
 
 	async startExecution() {
-		const { executionMode } = get();
 		const workflow = get().validateWorkflow();
 
 		if (workflow.errors.length > 0) {
@@ -368,53 +361,35 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				})) as FlowNode[],
 			}));
 
-			if (executionMode === "client") {
-				const { getNodeTargetsData, updateNodeExecutionState } =
-					get();
+			const sseClient = new ServerExecutionClient();
+			const { updateNodeExecutionState } = get();
 
-				const engine = createExecutionEngine({
-					workflow,
-					getNodeTargetsData,
-					updateNodeExecutionState,
-					processNode: async (nodeId, targetsData) => {
-						const node = get().getNodeById(nodeId);
-						const processor = nodeProcessors[node.type];
-						return await processor(node, targetsData);
+			await new Promise((resolve, reject) => {
+				sseClient.connect(workflow, {
+					onNodeUpdate: (nodeId, state) => {
+						updateNodeExecutionState(nodeId, state);
+					},
+					onError: (error, nodeId) => {
+						if (nodeId) {
+							updateNodeExecutionState(nodeId, {
+								status: "error",
+								error: error.message,
+								timestamp: new Date().toISOString(),
+							});
+						}
+						reject(error);
+					},
+					onComplete: ({ timestamp }) => {
+						set((state) => ({
+							workflowExecutionState: {
+								...state.workflowExecutionState,
+								finishedAt: timestamp,
+							},
+						}));
+						resolve(undefined);
 					},
 				});
-
-				await engine.execute(workflow.executionOrder);
-			} else {
-				const sseClient = new ServerExecutionClient();
-				const { updateNodeExecutionState } = get();
-
-				await new Promise((resolve, reject) => {
-					sseClient.connect(workflow, {
-						onProgress: (progress) => {
-							updateNodeExecutionState(progress.nodeId, {
-								status: progress.status,
-								timestamp: progress.timestamp,
-							});
-						},
-						onNodeUpdate: (nodeId, state) => {
-							updateNodeExecutionState(nodeId, state);
-						},
-						onError: (error, nodeId) => {
-							if (nodeId) {
-								updateNodeExecutionState(nodeId, {
-									status: "error",
-									error: error.message,
-									timestamp: new Date().toISOString(),
-								});
-							}
-							reject(error);
-						},
-						onComplete: () => {
-							resolve(undefined);
-						},
-					});
-				});
-			}
+			});
 		} finally {
 			// Reset execution state when done
 			set((state) => ({
@@ -424,29 +399,6 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 				},
 			}));
 		}
-	},
-	getNodeTargetsData: (nodeId) => {
-		const node = get().getNodeById(nodeId);
-		if (!hasTargets(node)) {
-			return undefined;
-		}
-		const edgesConnectedToNode = get().edges.filter(
-			(edge) => edge.target === nodeId,
-		);
-		const targetsData: Record<string, string> = {};
-		for (const edge of edgesConnectedToNode) {
-			const sourceNode = get().getNodeById(edge.source);
-			const sourceNodeExecutionState = sourceNode.data.executionState;
-			if (!sourceNodeExecutionState?.sources) {
-				throw new Error(
-					`Execution state not found for source node with id ${edge.source}`,
-				);
-			}
-			const sourceNodeResult =
-				sourceNodeExecutionState.sources[edge.sourceHandle];
-			targetsData[edge.targetHandle] = sourceNodeResult;
-		}
-		return targetsData;
 	},
 }));
 

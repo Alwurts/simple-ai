@@ -1,17 +1,10 @@
 import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
 import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 
-interface ServerExecutionProgress {
-	nodeId: string;
-	status: "processing" | "success" | "error";
-	timestamp: string;
-}
-
 export interface ServerExecutionEventHandlers {
-	onProgress: (progress: ServerExecutionProgress) => void;
 	onNodeUpdate: (nodeId: string, state: NodeExecutionState) => void;
 	onError: (error: Error, nodeId?: string) => void;
-	onComplete: () => void;
+	onComplete: ({ timestamp }: { timestamp: string }) => void;
 }
 
 export class ServerExecutionClient {
@@ -65,8 +58,7 @@ export class ServerExecutionClient {
 
 							switch (data.type) {
 								case "progress": {
-									handlers.onProgress({
-										nodeId: data.nodeId,
+									handlers.onNodeUpdate(data.nodeId, {
 										status: data.status,
 										timestamp: data.timestamp,
 									});
@@ -81,7 +73,7 @@ export class ServerExecutionClient {
 									break;
 								}
 								case "complete": {
-									handlers.onComplete();
+									handlers.onComplete({ timestamp: data.timestamp });
 									this.disconnect();
 									break;
 								}
