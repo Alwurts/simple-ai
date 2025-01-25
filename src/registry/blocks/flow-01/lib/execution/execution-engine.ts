@@ -44,12 +44,19 @@ const getNodeTargetsData = (
 
 export const createExecutionEngine = (context: ExecutionContext) => {
 	const completedNodes = new Set<string>();
+	const failedNodes = new Set<string>();
 	const processingNodes = new Set<string>();
 
 	const canProcessNode = (nodeId: string) => {
 		const nodeDependencies =
 			context.workflow.dependencies[nodeId]?.map((dep) => dep.node) || [];
-		return nodeDependencies.every((dep) => completedNodes.has(dep));
+		return nodeDependencies.every((dep) => {
+			// Check if any dependency has failed
+			if (failedNodes.has(dep)) {
+				return false;
+			}
+			return completedNodes.has(dep);
+		});
 	};
 
 	const processNode = async (nodeId: string) => {
@@ -81,7 +88,7 @@ export const createExecutionEngine = (context: ExecutionContext) => {
 			});
 			console.error(error);
 			processingNodes.delete(nodeId);
-			completedNodes.add(nodeId);
+			failedNodes.add(nodeId); // Track failed nodes separately
 		}
 	};
 
@@ -89,12 +96,14 @@ export const createExecutionEngine = (context: ExecutionContext) => {
 		async execute(executionOrder: string[]) {
 			// Reset tracking sets
 			completedNodes.clear();
+			failedNodes.clear();
 			processingNodes.clear();
 
-			while (completedNodes.size < executionOrder.length) {
+			while (completedNodes.size + failedNodes.size < executionOrder.length) {
 				const availableNodes = executionOrder.filter(
 					(nodeId) =>
 						!completedNodes.has(nodeId) &&
+						!failedNodes.has(nodeId) &&
 						!processingNodes.has(nodeId) &&
 						canProcessNode(nodeId),
 				);
@@ -104,7 +113,10 @@ export const createExecutionEngine = (context: ExecutionContext) => {
 						await new Promise((resolve) => setTimeout(resolve, 100));
 						continue;
 					}
-					throw new Error("Unable to complete workflow execution");
+					// If there are no available nodes and nothing is processing,
+					// but we haven't completed all nodes, it means some nodes
+					// couldn't execute due to failed dependencies
+					break;
 				}
 
 				const processingPromises = availableNodes.map((nodeId) => {
