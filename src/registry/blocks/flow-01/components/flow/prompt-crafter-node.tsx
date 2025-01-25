@@ -104,7 +104,7 @@ export function PromptCrafterNode({
 			return;
 		}
 
-		const inputTag = `{${inputName}}`;
+		const inputTag = `{{${inputName}}}`;
 		const from = view.state.selection.main.from;
 		view.dispatch({
 			changes: { from, insert: inputTag },

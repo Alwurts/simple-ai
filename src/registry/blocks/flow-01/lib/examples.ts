@@ -67,6 +67,7 @@ export const TOOL_USE_CASES: {
 	],
 	edges: [
 		{
+			type: "custom-edge",
 			id: "e1",
 			source: "a",
 			target: "b",
@@ -74,6 +75,7 @@ export const TOOL_USE_CASES: {
 			targetHandle: "prompt",
 		},
 		{
+			type: "custom-edge",
 			id: "e2",
 			source: "x",
 			target: "b",
@@ -81,6 +83,7 @@ export const TOOL_USE_CASES: {
 			targetHandle: "system",
 		},
 		{
+			type: "custom-edge",
 			id: "e4",
 			source: "b",
 			target: "c",
@@ -88,6 +91,7 @@ export const TOOL_USE_CASES: {
 			targetHandle: "input",
 		},
 		{
+			type: "custom-edge",
 			id: "e5",
 			source: "b",
 			target: "y",
@@ -112,6 +116,7 @@ export const SIMPLE_INPUT_OUTPUT_WORKFLOW: {
 	],
 	edges: [
 		{
+			type: "custom-edge",
 			id: "e1",
 			source: "a",
 			target: "b",
@@ -184,6 +189,7 @@ export const PROMPT_CRAFTER_WORKFLOW: {
 	],
 	edges: [
 		{
+			type: "custom-edge",
 			id: "a-c",
 			source: "a",
 			target: "c",
@@ -191,6 +197,7 @@ export const PROMPT_CRAFTER_WORKFLOW: {
 			targetHandle: "c-a",
 		},
 		{
+			type: "custom-edge",
 			id: "b-c",
 			source: "b",
 			target: "c",
@@ -198,6 +205,7 @@ export const PROMPT_CRAFTER_WORKFLOW: {
 			targetHandle: "c-b",
 		},
 		{
+			type: "custom-edge",
 			id: "c-d",
 			source: "c",
 			target: "d",
@@ -205,6 +213,7 @@ export const PROMPT_CRAFTER_WORKFLOW: {
 			targetHandle: "input",
 		},
 		{
+			type: "custom-edge",
 			id: "e-f",
 			source: "e",
 			target: "f",
@@ -212,6 +221,7 @@ export const PROMPT_CRAFTER_WORKFLOW: {
 			targetHandle: "system",
 		},
 		{
+			type: "custom-edge",
 			id: "f-d",
 			source: "c",
 			target: "f",
@@ -219,6 +229,7 @@ export const PROMPT_CRAFTER_WORKFLOW: {
 			targetHandle: "prompt",
 		},
 		{
+			type: "custom-edge",
 			id: "f-g",
 			source: "f",
 			target: "g",

@@ -1,5 +1,8 @@
 import type { Model } from "@/registry/blocks/flow-01/types/ai";
-import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
+import type {
+	EdgeExecutionState,
+	NodeExecutionState,
+} from "@/registry/blocks/flow-01/types/execution";
 import type { Edge, Node } from "@xyflow/react";
 
 // Dynamic Handles
@@ -105,14 +108,20 @@ export type FlowNode =
 	| PromptCrafterNode
 	| GenerateTextNode;
 
-export type FlowEdge = Edge & {
-	targetHandle: string;
-	sourceHandle: string;
+// Edges
+
+type FlowEdgeData = {
+	executionState?: EdgeExecutionState;
 };
 
-/* export type FlowNode = FlowNodeUndefined & {
-	type: Exclude<FlowNodeUndefined["type"], undefined>;
-}; */
+export type CustomFlowEdge = Edge<FlowEdgeData, "custom-edge"> & {
+	type: "custom-edge";
+};
+
+export type FlowEdge = CustomFlowEdge & {
+	sourceHandle: string;
+	targetHandle: string;
+};
 
 // Type Guards
 

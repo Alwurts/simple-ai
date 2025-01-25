@@ -1,5 +1,4 @@
 import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
-import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
 import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 
 export interface ExecutionContext {
@@ -13,10 +12,9 @@ export interface ExecutionContext {
 		nodeId: string,
 		state: Partial<NodeExecutionState>,
 	) => void;
-	getNodeById: (nodeId: string) => FlowNode;
 }
 
-export const createClientExecutionEngine = (context: ExecutionContext) => {
+export const createExecutionEngine = (context: ExecutionContext) => {
 	const completedNodes = new Set<string>();
 	const processingNodes = new Set<string>();
 

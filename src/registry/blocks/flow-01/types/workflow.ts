@@ -14,21 +14,24 @@ type Dependent = {
 
 type Dependents = Record<string, Dependent[]>;
 
-type WorkflowError = {
-	type: "cycle" | "multiple-sources-for-target-handle";
+export interface WorkflowError {
+	type: "multiple-sources-for-target-handle" | "cycle";
 	message: string;
-	edge: FlowEdge;
-};
+	edges: {
+		id: string;
+		source: string;
+		target: string;
+		sourceHandle: string;
+		targetHandle: string;
+	}[];
+}
 
-export type WorkFlowResult = {
+export interface WorkflowDefinition {
+	id: string;
+	nodes: FlowNode[];
+	edges: FlowEdge[];
 	executionOrder: string[];
 	dependencies: Dependencies;
 	dependents: Dependents;
 	errors: WorkflowError[];
-};
-
-export interface WorkflowDefinition extends WorkFlowResult {
-	id: string;
-	nodes: FlowNode[];
-	edges: FlowEdge[];
 }

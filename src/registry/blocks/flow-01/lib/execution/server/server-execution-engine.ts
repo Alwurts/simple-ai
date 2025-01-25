@@ -1,4 +1,4 @@
-import { createClientExecutionEngine } from "@/registry/blocks/flow-01/lib/execution/client/client-execution-engine";
+import { createExecutionEngine } from "@/registry/blocks/flow-01/lib/execution/execution-engine";
 import { serverNodeProcessors } from "@/registry/blocks/flow-01/lib/execution/server/server-node-processors";
 import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
@@ -11,7 +11,7 @@ function createServerExecutionEngine(
 	workflow: WorkflowDefinition,
 	controller: ReadableStreamDefaultController,
 ) {
-	return createClientExecutionEngine({
+	return createExecutionEngine({
 		workflow,
 		processNode: async (nodeId, targetsData) => {
 			// Send processing start event
@@ -92,13 +92,6 @@ function createServerExecutionEngine(
 				...state,
 				timestamp: state.timestamp || new Date().toISOString(),
 			} as NodeExecutionState;
-		},
-		getNodeById: (nodeId) => {
-			const node = workflow.nodes.find((n) => n.id === nodeId);
-			if (!node) {
-				throw new Error(`Node ${nodeId} not found`);
-			}
-			return node;
 		},
 	});
 }

@@ -14,3 +14,11 @@ export type NodeExecutionState = {
 	status: NodeExecutionStatus;
 	error?: string;
 };
+
+// Edge Execution State
+export type EdgeExecutionState = {
+	error?: {
+		type: "multiple-sources-for-target-handle" | "cycle";
+		message: string;
+	};
+};

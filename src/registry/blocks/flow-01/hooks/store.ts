@@ -1,5 +1,5 @@
 import { PROMPT_CRAFTER_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples";
-import { createClientExecutionEngine } from "@/registry/blocks/flow-01/lib/execution/client/client-execution-engine";
+import { createExecutionEngine } from "@/registry/blocks/flow-01/lib/execution/execution-engine";
 import { nodeProcessors } from "@/registry/blocks/flow-01/lib/execution/client/node-processors-client";
 import { ServerExecutionClient } from "@/registry/blocks/flow-01/lib/execution/client/server-execution-client";
 import { createNode } from "@/registry/blocks/flow-01/lib/node-factory";
@@ -13,13 +13,25 @@ import {
 	isNodeOfType,
 	isNodeWithDynamicHandles,
 } from "@/registry/blocks/flow-01/types/flow";
-import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
+import type {
+	EdgeExecutionState,
+	NodeExecutionState,
+} from "@/registry/blocks/flow-01/types/execution";
+import type {
+	WorkflowDefinition,
+	WorkflowError,
+} from "@/registry/blocks/flow-01/types/workflow";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
 import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
 import { nanoid } from "nanoid";
 import { createWithEqualityFn } from "zustand/traditional";
 
 export type ExecutionMode = "client" | "server";
+
+export type WorkflowExecutionState = {
+	isRunning: boolean;
+	errors: WorkflowError[];
+};
 
 export interface StoreState {
 	nodes: FlowNode[];
@@ -41,6 +53,10 @@ export interface StoreState {
 		nodeId: string,
 		state: Partial<NodeExecutionState>,
 	) => void;
+	updateEdgeExecutionState: (
+		edgeId: string,
+		state: Partial<EdgeExecutionState> | undefined,
+	) => void;
 	deleteNode: (id: string) => void;
 	addDynamicHandle: <T extends FlowNode["type"]>(
 		nodeId: string,
@@ -54,6 +70,9 @@ export interface StoreState {
 		handleCategory: string,
 		handleId: string,
 	) => void;
+	// Workflow validation and execution state
+	validateWorkflow: () => WorkflowDefinition;
+	workflowExecutionState: WorkflowExecutionState;
 	executionMode: ExecutionMode;
 	setExecutionMode: (mode: ExecutionMode) => void;
 	// execution
@@ -63,19 +82,59 @@ export interface StoreState {
 
 const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	...PROMPT_CRAFTER_WORKFLOW,
-	executionMode: "client",
+	executionMode: "server",
+	workflowExecutionState: {
+		isRunning: false,
+		errors: [],
+	},
+	validateWorkflow: () => {
+		const { nodes, edges } = get();
+		const workflow = prepareWorkflow(nodes, edges);
+
+		// Reset edge execution states
+		for (const edge of workflow.edges) {
+			get().updateEdgeExecutionState(edge.id, undefined);
+		}
+
+		// Update edge states for errors if any
+		if (workflow.errors.length > 0) {
+			for (const error of workflow.errors) {
+				for (const edge of error.edges) {
+					get().updateEdgeExecutionState(edge.id, {
+						error: {
+							type: error.type,
+							message: error.message,
+						},
+					});
+				}
+			}
+		}
+
+		set((state) => ({
+			workflowExecutionState: {
+				...state.workflowExecutionState,
+				errors: workflow.errors,
+			},
+		}));
+		return workflow;
+	},
 	onNodesChange: (changes) => {
 		set({
 			nodes: applyNodeChanges<FlowNode>(changes, get().nodes),
 		});
+		get().validateWorkflow();
 	},
 	onEdgesChange: (changes) => {
 		set({
 			edges: applyEdgeChanges(changes, get().edges),
 		});
+		get().validateWorkflow();
 	},
 	onConnect: (connection) => {
-		const newEdge = addEdge(connection, get().edges);
+		const newEdge = addEdge(
+			{ ...connection, type: "custom-edge" },
+			get().edges,
+		);
 		const sourceNode = get().getNodeById(connection.source);
 
 		if (!connection.sourceHandle) {
@@ -122,6 +181,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		set({
 			edges: newEdge,
 		});
+		get().validateWorkflow();
 	},
 	getNodeById: (nodeId) => {
 		const node = get().nodes.find((n) => n.id === nodeId);
@@ -170,6 +230,22 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 					} as FlowNode;
 				}
 				return n;
+			}),
+		}));
+	},
+	updateEdgeExecutionState: (edgeId, state) => {
+		set((currentState) => ({
+			edges: currentState.edges.map((e) => {
+				if (e.id === edgeId) {
+					return {
+						...e,
+						data: {
+							...e.data,
+							executionState: state as EdgeExecutionState,
+						},
+					};
+				}
+				return e;
 			}),
 		}));
 	},
@@ -260,6 +336,95 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		set({ executionMode: mode });
 	},
 	// Runtime
+
+	async startExecution() {
+		const { executionMode } = get();
+		const workflow = get().validateWorkflow();
+
+		if (workflow.errors.length > 0) {
+			return;
+		}
+
+		// Set execution state to running
+		set((state) => ({
+			workflowExecutionState: {
+				...state.workflowExecutionState,
+				isRunning: true,
+			},
+		}));
+
+		try {
+			// Reset execution status for all nodes
+			set((state) => ({
+				nodes: state.nodes.map((node) => ({
+					...node,
+					data: {
+						...node.data,
+						executionState: {
+							...node.data.executionState,
+							status: "idle",
+						},
+					},
+				})) as FlowNode[],
+			}));
+
+			if (executionMode === "client") {
+				const { getNodeTargetsData, updateNodeExecutionState } =
+					get();
+
+				const engine = createExecutionEngine({
+					workflow,
+					getNodeTargetsData,
+					updateNodeExecutionState,
+					processNode: async (nodeId, targetsData) => {
+						const node = get().getNodeById(nodeId);
+						const processor = nodeProcessors[node.type];
+						return await processor(node, targetsData);
+					},
+				});
+
+				await engine.execute(workflow.executionOrder);
+			} else {
+				const sseClient = new ServerExecutionClient();
+				const { updateNodeExecutionState } = get();
+
+				await new Promise((resolve, reject) => {
+					sseClient.connect(workflow, {
+						onProgress: (progress) => {
+							updateNodeExecutionState(progress.nodeId, {
+								status: progress.status,
+								timestamp: progress.timestamp,
+							});
+						},
+						onNodeUpdate: (nodeId, state) => {
+							updateNodeExecutionState(nodeId, state);
+						},
+						onError: (error, nodeId) => {
+							if (nodeId) {
+								updateNodeExecutionState(nodeId, {
+									status: "error",
+									error: error.message,
+									timestamp: new Date().toISOString(),
+								});
+							}
+							reject(error);
+						},
+						onComplete: () => {
+							resolve(undefined);
+						},
+					});
+				});
+			}
+		} finally {
+			// Reset execution state when done
+			set((state) => ({
+				workflowExecutionState: {
+					...state.workflowExecutionState,
+					isRunning: false,
+				},
+			}));
+		}
+	},
 	getNodeTargetsData: (nodeId) => {
 		const node = get().getNodeById(nodeId);
 		if (!hasTargets(node)) {
@@ -282,77 +447,6 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 			targetsData[edge.targetHandle] = sourceNodeResult;
 		}
 		return targetsData;
-	},
-	async startExecution() {
-		const { nodes, edges, executionMode } = get();
-		const workflow = prepareWorkflow(nodes, edges);
-
-		if (workflow.errors.length > 0) {
-			throw new Error(workflow.errors.map((error) => error.message).join("\n"));
-		}
-
-		// Reset execution status for all nodes
-		set((state) => ({
-			nodes: state.nodes.map((node) => ({
-				...node,
-				data: {
-					...node.data,
-					executionState: {
-						...node.data.executionState,
-						status: "idle",
-					},
-				},
-			})) as FlowNode[],
-		}));
-
-		if (executionMode === "client") {
-			const { getNodeTargetsData, updateNodeExecutionState, getNodeById } =
-				get();
-
-			const engine = createClientExecutionEngine({
-				workflow,
-				getNodeTargetsData,
-				updateNodeExecutionState,
-				getNodeById,
-				processNode: async (nodeId, targetsData) => {
-					const node = get().getNodeById(nodeId);
-					const processor = nodeProcessors[node.type];
-					return await processor(node, targetsData);
-				},
-			});
-
-			await engine.execute(workflow.executionOrder);
-		} else {
-			const sseClient = new ServerExecutionClient();
-			const { updateNodeExecutionState } = get();
-
-			return new Promise((resolve, reject) => {
-				sseClient.connect(workflow, {
-					onProgress: (progress) => {
-						updateNodeExecutionState(progress.nodeId, {
-							status: progress.status,
-							timestamp: progress.timestamp,
-						});
-					},
-					onNodeUpdate: (nodeId, state) => {
-						updateNodeExecutionState(nodeId, state);
-					},
-					onError: (error, nodeId) => {
-						if (nodeId) {
-							updateNodeExecutionState(nodeId, {
-								status: "error",
-								error: error.message,
-								timestamp: new Date().toISOString(),
-							});
-						}
-						reject(error);
-					},
-					onComplete: () => {
-						resolve();
-					},
-				});
-			});
-		}
 	},
 }));
 
