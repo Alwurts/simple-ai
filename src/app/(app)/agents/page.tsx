@@ -31,9 +31,9 @@ export default async function BlocksPage() {
 					<div className="w-full max-w-[60ch] xl:min-w-[60ch] xl:flex-1">
 						<h1 className="text-2xl font-bold mb-4">Routing Workflow</h1>
 						<p className="text-muted-foreground">
-							The Routing Workflow is a strategic approach where incoming inputs
-							are classified and directed to specialized processes or models
-							best suited to handle them. This workflow enables efficient
+							The Routing Workflow is a strategic approach where a incoming
+							input is classified and directed to specialized processes or
+							models best suited to handle it. This workflow enables efficient
 							separation of concerns, allowing for more targeted and optimized
 							processing of different input types. It's particularly valuable
 							when dealing with diverse input categories that require distinct
@@ -53,15 +53,11 @@ export default async function BlocksPage() {
 						</h1>
 						<p className="text-muted-foreground">
 							The Parallelization Workflow enables simultaneous processing of
-							tasks through two main approaches: Sectioning and Voting.
-							Sectioning breaks down tasks into independent subtasks that can be
-							processed in parallel, while Voting runs the same task multiple
-							times to gather diverse perspectives. This workflow is
-							particularly effective when tasks can be divided into independent
-							components or when multiple perspectives are needed for higher
-							confidence results. It allows for focused attention on specific
-							aspects of complex tasks through separate LLM calls, often leading
-							to better overall performance.
+							tasks.This workflow is particularly effective when tasks can be
+							divided into independent components or when multiple perspectives
+							are needed for higher confidence results. It allows for focused
+							attention on specific aspects of complex tasks through separate
+							LLM calls, often leading to better overall performance.
 						</p>
 					</div>
 					<ParallelizationWorkflow className="border border-border w-full h-fit" />
@@ -71,16 +67,19 @@ export default async function BlocksPage() {
 			<div className="border-grid container border-b py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
 				<div className="flex flex-col items-stretch xl:flex-row px-2 gap-8">
 					<div className="w-full max-w-[60ch] xl:min-w-[60ch] xl:flex-1">
-						<h1 className="text-2xl font-bold mb-4">Orchestrator-Workers Workflow</h1>
+						<h1 className="text-2xl font-bold mb-4">
+							Orchestrator-Workers Workflow
+						</h1>
 						<p className="text-muted-foreground">
-							The Orchestrator-Workers Workflow employs a central LLM to dynamically
-							analyze and decompose complex tasks, delegate subtasks to specialized
-							worker LLMs, and synthesize their results. This workflow excels in
-							handling unpredictable tasks where the required subtasks and their
-							nature cannot be predetermined. Unlike parallelization, the
-							orchestrator determines the necessary subtasks based on the specific
-							input, providing greater flexibility and adaptability for complex,
-							multi-faceted challenges.
+							The Orchestrator-Workers Workflow employs a central LLM to
+							dynamically analyze and decompose complex tasks, delegate subtasks
+							to specialized worker LLMs, and synthesize their results. This
+							workflow excels in handling unpredictable tasks where the required
+							subtasks and their nature cannot be predetermined. Unlike
+							parallelization, the orchestrator determines the necessary
+							subtasks based on the specific input, providing greater
+							flexibility and adaptability for complex, multi-faceted
+							challenges.
 						</p>
 					</div>
 					<OrchestratorWorkflow className="border border-border w-full h-fit" />
