@@ -13,6 +13,7 @@ export function createAIClient(model: Model) {
 			});
 		case "llama-3.3-70b-versatile":
 		case "llama-3.1-8b-instant":
+		case "deepseek-r1-distill-llama-70b":
 			return createGroq({
 				baseURL: process.env.AI_GATEWAY_GROQ_URL,
 			});

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import { Announcement } from "@/components/announcement";
 import {
 	PageActions,
 	PageHeader,
@@ -28,7 +27,6 @@ export default function BlocksLayout({
 	return (
 		<>
 			<PageHeader>
-				<Announcement />
 				<PageHeaderHeading>Building Blocks for AI</PageHeaderHeading>
 				<PageHeaderDescription>
 					Building blocks for AI. Copy and paste into your apps. Works with all

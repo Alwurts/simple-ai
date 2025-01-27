@@ -21,7 +21,8 @@ import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
 import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
 import { nanoid } from "nanoid";
 import { createWithEqualityFn } from "zustand/traditional";
-import { EXAM_CREATOR_PARALLELIZATION_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/exam-creator-parallelization";
+/* import { EXAM_CREATOR_PARALLELIZATION_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/exam-creator-parallelization"; */
+import { NEWS_SUMMARY_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/news-summarization-chain";
 
 export type ExecutionMode = "client" | "server";
 
@@ -76,7 +77,7 @@ export interface StoreState {
 }
 
 const useStore = createWithEqualityFn<StoreState>((set, get) => ({
-	...EXAM_CREATOR_PARALLELIZATION_WORKFLOW,
+	...NEWS_SUMMARY_WORKFLOW,
 	workflowExecutionState: {
 		isRunning: false,
 		finishedAt: null,
