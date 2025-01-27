@@ -80,5 +80,135 @@
         "type": "registry:ui"
       }
     ]
+  },
+  {
+    "name": "base-node",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/base-node.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/flow/base-node.tsx"
+      }
+    ]
+  },
+  {
+    "name": "base-resizable-node",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "registryDependencies": [
+      "https://simple-ai.dev/r/base-node.json"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/base-resizable-node.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/flow/base-resizable-node.tsx"
+      }
+    ]
+  },
+  {
+    "name": "node-header",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "registryDependencies": [
+      "button",
+      "dropdown-menu",
+      "badge"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/node-header.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/flow/node-header.tsx"
+      }
+    ]
+  },
+  {
+    "name": "base-handle",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/base-handle.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/flow/base-handle.tsx"
+      }
+    ]
+  },
+  {
+    "name": "labeled-handle",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/labeled-handle.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/flow/labeled-handle.tsx"
+      }
+    ]
+  },
+  {
+    "name": "editable-handle",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "registryDependencies": [
+      "button",
+      "input",
+      "textarea",
+      "popover",
+      "toast"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/editable-handle.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/flow/editable-handle.tsx"
+      }
+    ]
+  },
+  {
+    "name": "nodes-panel",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "registryDependencies": [
+      "button"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/nodes-panel.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/flow/nodes-panel.tsx"
+      }
+    ]
+  },
+  {
+    "name": "base-edge",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/base-edge.tsx",
+        "type": "registry:ui",
+        "target": "components/ui/flow/base-edge.tsx"
+      }
+    ]
   }
 ]

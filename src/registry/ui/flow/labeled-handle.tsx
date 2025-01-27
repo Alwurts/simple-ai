@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import type { HandleProps } from "@xyflow/react";
 import React from "react";
 
-import { BaseHandle } from "@/components/flow/base-handle";
+import { BaseHandle } from "@/registry/ui/flow/base-handle";
 
 const flexDirections = {
 	top: "flex-col",

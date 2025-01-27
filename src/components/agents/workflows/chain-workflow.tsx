@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type HTMLAttributes } from "react";
+import { type HTMLAttributes, useRef } from "react";
 import { useWorkflowAnimation } from "./hooks/use-workflow-animation";
 
 const workflows = [

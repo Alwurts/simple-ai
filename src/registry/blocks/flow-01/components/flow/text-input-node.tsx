@@ -1,14 +1,17 @@
-import { BaseNode } from "@/components/flow/base-node";
-import { LabeledHandle } from "@/components/flow/labeled-handle";
-import { NodeHeaderIcon, NodeHeaderTitle } from "@/components/flow/node-header";
-import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { TextInputNode as TTextInputNode } from "@/registry/blocks/flow-01/types/flow";
-import { type NodeProps, NodeResizer, Position } from "@xyflow/react";
-import { PenLine } from "lucide-react";
+import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
+import {
+	NodeHeaderAction,
+	NodeHeaderIcon,
+	NodeHeaderTitle,
+} from "@/registry/ui/flow/node-header";
+import { NodeHeader, NodeHeaderActions } from "@/registry/ui/flow/node-header";
+import { ResizableNode } from "@/registry/ui/flow/resizable-node";
+import { type NodeProps, Position } from "@xyflow/react";
+import { PenLine, Trash } from "lucide-react";
 import type React from "react";
 import { useCallback } from "react";
 
@@ -19,7 +22,7 @@ export function TextInputNode({
 	deletable,
 }: NodeProps<TTextInputNode>) {
 	const updateNode = useStore((state) => state.updateNode);
-
+	const deleteNode = useStore((state) => state.deleteNode);
 	const handleTextChange = useCallback(
 		(e: React.ChangeEvent<HTMLTextAreaElement>) => {
 			updateNode(id, "text-input", { config: { value: e.target.value } });
@@ -29,26 +32,26 @@ export function TextInputNode({
 
 	const executionStatus = data.executionState?.status;
 	return (
-		<BaseNode
+		<ResizableNode
 			selected={selected}
-			isProcessing={executionStatus === "processing"}
-			className="px-0 pb-0 flex flex-col h-full"
-			style={{ minHeight: 250, minWidth: 300 }}
+			executionStatus={executionStatus}
+			className="flex flex-col h-full"
 		>
-			<NodeResizer
-				minWidth={250}
-				maxWidth={800}
-				minHeight={200}
-				maxHeight={800}
-				isVisible={selected}
-			/>
-			<NodeHeader className="px-8 mb-0">
+			<NodeHeader>
 				<NodeHeaderIcon>
 					<PenLine />
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Text Input</NodeHeaderTitle>
 				<NodeHeaderActions>
-					{deletable && <NodeHeaderDeleteAction id={id} />}
+					{deletable && (
+						<NodeHeaderAction
+							onClick={() => deleteNode(id)}
+							variant="ghost"
+							label="Delete node"
+						>
+							<Trash />
+						</NodeHeaderAction>
+					)}
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
@@ -56,7 +59,7 @@ export function TextInputNode({
 				<Textarea
 					value={data.config.value || ""}
 					onChange={handleTextChange}
-					className="w-full flex-1 min-h-[150px] resize-none nodrag nopan nowheel"
+					className="w-full flex-1 resize-none nodrag nopan nowheel"
 					placeholder="Enter your text here..."
 				/>
 			</div>
@@ -69,6 +72,6 @@ export function TextInputNode({
 					className="justify-self-end"
 				/>
 			</div>
-		</BaseNode>
+		</ResizableNode>
 	);
 }

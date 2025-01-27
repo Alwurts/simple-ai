@@ -15,8 +15,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: -488.0560774345179,
-				y: 18.124464645195985,
+				x: -492.5530762397845,
+				y: -146.76549154791428,
 			},
 			width: 300,
 			height: 477,
@@ -31,8 +31,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: -483.8213310004015,
-				y: -392.64829255424223,
+				x: -489.81732940742376,
+				y: -464.60027343850857,
 			},
 		},
 		{
@@ -52,17 +52,6 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			},
 		},
 		{
-			type: "visualize-text",
-			id: "visualizeSummary",
-			data: {},
-			position: {
-				x: 171.74362152661683,
-				y: -526.7962605458365,
-			},
-			width: 350,
-			height: 300,
-		},
-		{
 			type: "text-input",
 			id: "validationSystemPrompt",
 			data: {
@@ -72,8 +61,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1092.8378159076065,
-				y: -452.3736613323931,
+				x: 845.9258239612989,
+				y: -411.2216626746752,
 			},
 			width: 382,
 			height: 340,
@@ -101,8 +90,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1535.9996002512978,
-				y: -218.77562774341615,
+				x: 847.3894893788176,
+				y: -48.68069995818201,
 			},
 		},
 		{
@@ -127,8 +116,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 592.6092567404837,
-				y: -200.54232285618434,
+				x: 374.5036638545787,
+				y: -275.98765372866717,
 			},
 		},
 		{
@@ -143,8 +132,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 2669.2506773435516,
-				y: -94.78074828454191,
+				x: 1878.1931731336394,
+				y: 57.544579232235805,
 			},
 		},
 		{
@@ -157,8 +146,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 2273.646269483168,
-				y: -254.67685548996974,
+				x: 1489.4272387459412,
+				y: -99.32679562863902,
 			},
 			width: 334,
 			height: 219,
@@ -168,44 +157,22 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "PqH1msuO-XKcAzeKmY72Y",
 			data: {},
 			position: {
-				x: 3067.215005731411,
-				y: -436.5503560681139,
+				x: 2303.850763181079,
+				y: -388.8330231822079,
 			},
 			width: 375,
 			height: 636,
 		},
 		{
 			type: "visualize-text",
-			id: "V8U4CEFnwsLZNM13DoRPn",
-			data: {},
-			position: {
-				x: 765.7694087977897,
-				y: 250.1832078610547,
-			},
-			width: 634,
-			height: 369,
-		},
-		{
-			type: "visualize-text",
 			id: "lo9ImZY7ZBHw2xTEhj2X_",
 			data: {},
 			position: {
-				x: 1805.0107151060429,
-				y: -573.0772160629892,
+				x: 1489.3002039483688,
+				y: -425.53815630480557,
 			},
 			width: 313,
 			height: 262,
-		},
-		{
-			type: "visualize-text",
-			id: "eYRTRKwrUcn_fmuMKuUEl",
-			data: {},
-			position: {
-				x: 1921.6214230141882,
-				y: 198.37857698581183,
-			},
-			width: 350,
-			height: 300,
 		},
 	],
 	edges: [
@@ -225,15 +192,6 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			target: "summarizeLLM",
 			sourceHandle: "result",
 			targetHandle: "system",
-			data: {},
-		},
-		{
-			type: "custom-edge",
-			id: "summarizeLLM-to-visualizeSummary",
-			source: "summarizeLLM",
-			target: "visualizeSummary",
-			sourceHandle: "result",
-			targetHandle: "input",
 			data: {},
 		},
 		{
@@ -300,30 +258,12 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			data: {},
 		},
 		{
-			source: "93I9QA0fcq6Mqb_EP6wYx",
-			sourceHandle: "result",
-			target: "V8U4CEFnwsLZNM13DoRPn",
-			targetHandle: "input",
-			type: "custom-edge",
-			id: "xy-edge__93I9QA0fcq6Mqb_EP6wYxresult-V8U4CEFnwsLZNM13DoRPninput",
-			data: {},
-		},
-		{
 			source: "validateLLM",
 			sourceHandle: "IKir5iiq4F3eurd1ApK--",
 			target: "lo9ImZY7ZBHw2xTEhj2X_",
 			targetHandle: "input",
 			type: "custom-edge",
 			id: "xy-edge__validateLLMIKir5iiq4F3eurd1ApK---lo9ImZY7ZBHw2xTEhj2X_input",
-			data: {},
-		},
-		{
-			source: "validateLLM",
-			sourceHandle: "77ew80gSbzRhvwhf3fnpa",
-			target: "eYRTRKwrUcn_fmuMKuUEl",
-			targetHandle: "input",
-			type: "custom-edge",
-			id: "xy-edge__validateLLM77ew80gSbzRhvwhf3fnpa-eYRTRKwrUcn_fmuMKuUElinput",
 			data: {},
 		},
 	],

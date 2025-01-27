@@ -9,13 +9,14 @@ import {
 } from "@/components/layout/page-header";
 
 import "@/styles/mdx.css";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
 	title: "AI Agents Workflows",
-	description: "Example implementations of AI Agents using Vercel AI SDK and React Flow",
+	description:
+		"Example implementations of AI Agents using Vercel AI SDK and React Flow",
 };
 
 export default function BlocksLayout({
@@ -29,8 +30,9 @@ export default function BlocksLayout({
 				<Announcement />
 				<PageHeaderHeading>AI Agents Workflows</PageHeaderHeading>
 				<PageHeaderDescription>
-					Explore example implementations of AI Agents using Vercel AI SDK and React Flow.
-					These workflows are inspired by Anthropic's research on building effective agents.
+					Explore example implementations of AI Agents using Vercel AI SDK and
+					React Flow. These workflows are inspired by Anthropic's research on
+					building effective agents.
 				</PageHeaderDescription>
 				<PageHeaderDescription>
 					For deeper reference and more information, check out the{" "}
@@ -41,7 +43,8 @@ export default function BlocksLayout({
 						rel="noopener noreferrer"
 					>
 						Anthropic article
-					</a>.
+					</a>
+					.
 				</PageHeaderDescription>
 				<PageActions>
 					<Button asChild size="sm">

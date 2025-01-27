@@ -8,4 +8,5 @@ export const BaseHandle = React.forwardRef<
 >(({ className, ...props }, ref) => (
 	<Handle ref={ref} className={cn("", className)} {...props} />
 ));
+
 BaseHandle.displayName = "BaseHandle";

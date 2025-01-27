@@ -1,14 +1,18 @@
-import { type NodeProps, NodeResizer, Position } from "@xyflow/react";
+import { type NodeProps, Position } from "@xyflow/react";
 
-import { BaseNode } from "@/components/flow/base-node";
-import { LabeledHandle } from "@/components/flow/labeled-handle";
-import { NodeHeaderIcon, NodeHeaderTitle } from "@/components/flow/node-header";
-import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Separator } from "@/components/ui/separator";
-import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { VisualizeTextNode as TVisualizeTextNode } from "@/registry/blocks/flow-01/types/flow";
+import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
+import {
+	NodeHeaderAction,
+	NodeHeaderIcon,
+	NodeHeaderTitle,
+} from "@/registry/ui/flow/node-header";
+import { NodeHeader, NodeHeaderActions } from "@/registry/ui/flow/node-header";
+import { ResizableNode } from "@/registry/ui/flow/resizable-node";
 import { MarkdownContent } from "@/registry/ui/markdown-content";
-import { Eye } from "lucide-react";
+import { Eye, Trash } from "lucide-react";
 
 export function VisualizeTextNode({
 	id,
@@ -16,34 +20,30 @@ export function VisualizeTextNode({
 	data,
 	deletable,
 }: NodeProps<TVisualizeTextNode>) {
+	const deleteNode = useStore((state) => state.deleteNode);
 	const executionStatus = data.executionState?.status;
 
 	return (
-		<BaseNode
+		<ResizableNode
 			selected={selected}
-			isProcessing={executionStatus === "processing"}
-			className="px-0 pb-0 flex flex-col h-full"
-			style={{ minHeight: 250, minWidth: 300, maxHeight: 800, maxWidth: 800 }}
+			executionStatus={executionStatus}
+			className="flex flex-col"
 		>
-			<NodeResizer
-				nodeId={id}
-				minWidth={250}
-				maxWidth={800}
-				minHeight={200}
-				maxHeight={800}
-				isVisible={selected}
-				shouldResize={() => selected}
-				//lineClassName="border-blue-400"
-				//handleClassName="bg-white border-2 border-blue-400 rounded-sm h-3 w-3"
-			/>
-			<NodeHeader className="px-8 mb-0">
+			<NodeHeader>
 				<NodeHeaderIcon>
 					<Eye />
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Visualize Text</NodeHeaderTitle>
 				<NodeHeaderActions>
-					{/* <StatusBadge status={executionStatus} /> */}
-					{deletable && <NodeHeaderDeleteAction id={id} />}
+					{deletable && (
+						<NodeHeaderAction
+							onClick={() => deleteNode(id)}
+							variant="ghost"
+							label="Delete node"
+						>
+							<Trash />
+						</NodeHeaderAction>
+					)}
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
@@ -67,6 +67,6 @@ export function VisualizeTextNode({
 					position={Position.Left}
 				/>
 			</div>
-		</BaseNode>
+		</ResizableNode>
 	);
 }

@@ -1,7 +1,3 @@
-import { BaseNode } from "@/components/flow/base-node";
-import { LabeledHandle } from "@/components/flow/labeled-handle";
-import { NodeHeaderIcon, NodeHeaderTitle } from "@/components/flow/node-header";
-import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Button } from "@/components/ui/button";
 import {
 	Command,
@@ -17,14 +13,21 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { useStore } from "@/registry/blocks/flow-01/hooks/store";
+import type { PromptCrafterNode as TPromptCrafterNode } from "@/registry/blocks/flow-01/types/flow";
+import { BaseNode } from "@/registry/ui/flow/base-node";
 import {
 	EditableHandle,
 	HandleEditor,
-} from "@/registry/blocks/flow-01/components/flow/editable-handle";
-import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
-import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import type { PromptCrafterNode as TPromptCrafterNode } from "@/registry/blocks/flow-01/types/flow";
+} from "@/registry/ui/flow/editable-handle";
+import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
+import {
+	NodeHeaderAction,
+	NodeHeaderIcon,
+	NodeHeaderStatus,
+	NodeHeaderTitle,
+} from "@/registry/ui/flow/node-header";
+import { NodeHeader, NodeHeaderActions } from "@/registry/ui/flow/node-header";
 import { StreamLanguage } from "@codemirror/language";
 import type { EditorView } from "@codemirror/view";
 import { tags as t } from "@lezer/highlight";
@@ -35,7 +38,7 @@ import {
 	Position,
 	useUpdateNodeInternals,
 } from "@xyflow/react";
-import { BetweenVerticalEnd, PencilRuler, Plus } from "lucide-react";
+import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -82,7 +85,7 @@ export function PromptCrafterNode({
 	data,
 }: NodeProps<TPromptCrafterNode>) {
 	const updateNode = useStore((state) => state.updateNode);
-
+	const deleteNode = useStore((state) => state.deleteNode);
 	const addDynamicHandle = useStore((state) => state.addDynamicHandle);
 	const removeDynamicHandle = useStore((state) => state.removeDynamicHandle);
 
@@ -201,17 +204,25 @@ export function PromptCrafterNode({
 	return (
 		<BaseNode
 			selected={selected}
-			isProcessing={executionStatus === "processing"}
-			className="px-0 pb-0 flex flex-col w-[350px]"
+			executionStatus={executionStatus}
+			className="w-[350px]"
 		>
-			<NodeHeader className="px-8 mb-0">
+			<NodeHeader>
 				<NodeHeaderIcon>
 					<PencilRuler />
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Prompt Crafter</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<StatusBadge status={executionStatus} />
-					{deletable && <NodeHeaderDeleteAction id={id} />}
+					<NodeHeaderStatus status={executionStatus} />
+					{deletable && (
+						<NodeHeaderAction
+							onClick={() => deleteNode(id)}
+							variant="ghost"
+							label="Delete node"
+						>
+							<Trash />
+						</NodeHeaderAction>
+					)}
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />

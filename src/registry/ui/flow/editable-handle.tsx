@@ -1,6 +1,5 @@
 "use client";
 
-import { BaseHandle } from "@/components/flow/base-handle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,6 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { BaseHandle } from "@/registry/ui/flow/base-handle";
 import type { HandleProps, Node } from "@xyflow/react";
 import { useOnSelectionChange } from "@xyflow/react";
 import { Edit2, Trash } from "lucide-react";

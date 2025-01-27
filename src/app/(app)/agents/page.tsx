@@ -1,6 +1,6 @@
 import { ChainWorkflow } from "@/components/agents/workflows/chain-workflow";
-import { ParallelizationWorkflow } from "@/components/agents/workflows/parallelization-workflow";
 import { OrchestratorWorkflow } from "@/components/agents/workflows/orchestrator-workflow";
+import { ParallelizationWorkflow } from "@/components/agents/workflows/parallelization-workflow";
 import { RoutingWorkflow } from "@/components/agents/workflows/routing-workflow";
 import { BlockDisplay } from "@/components/blocks/block-display";
 

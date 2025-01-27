@@ -4,10 +4,6 @@ import {
 	useUpdateNodeInternals,
 } from "@xyflow/react";
 
-import { BaseNode } from "@/components/flow/base-node";
-import { LabeledHandle } from "@/components/flow/labeled-handle";
-import { NodeHeaderIcon, NodeHeaderTitle } from "@/components/flow/node-header";
-import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Button } from "@/components/ui/button";
 import {
 	Select,
@@ -17,16 +13,23 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import {
-	EditableHandle,
-	HandleEditor,
-} from "@/registry/blocks/flow-01/components/flow/editable-handle";
-import { NodeHeaderDeleteAction } from "@/registry/blocks/flow-01/components/flow/node-header-delete-action";
-import { StatusBadge } from "@/registry/blocks/flow-01/components/flow/status-badge";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import { MODELS, type Model } from "@/registry/blocks/flow-01/types/ai";
 import type { GenerateTextNode as TGenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
-import { Bot, Plus } from "lucide-react";
+import { BaseNode } from "@/registry/ui/flow/base-node";
+import {
+	EditableHandle,
+	HandleEditor,
+} from "@/registry/ui/flow/editable-handle";
+import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
+import {
+	NodeHeaderAction,
+	NodeHeaderIcon,
+	NodeHeaderStatus,
+	NodeHeaderTitle,
+} from "@/registry/ui/flow/node-header";
+import { NodeHeader, NodeHeaderActions } from "@/registry/ui/flow/node-header";
+import { Bot, Plus, Trash } from "lucide-react";
 import { useCallback } from "react";
 import { toast } from "sonner";
 
@@ -39,6 +42,7 @@ export function GenerateTextNode({
 	const updateNode = useStore((state) => state.updateNode);
 	const addDynamicHandle = useStore((state) => state.addDynamicHandle);
 	const removeDynamicHandle = useStore((state) => state.removeDynamicHandle);
+	const deleteNode = useStore((state) => state.deleteNode);
 	const updateNodeInternals = useUpdateNodeInternals();
 
 	const handleModelChange = useCallback(
@@ -122,17 +126,25 @@ export function GenerateTextNode({
 	return (
 		<BaseNode
 			selected={selected}
-			isProcessing={executionStatus === "processing"}
-			className="px-0 pb-0 flex flex-col w-[350px]"
+			executionStatus={executionStatus}
+			className="w-[350px]"
 		>
-			<NodeHeader className="px-8 mb-0">
+			<NodeHeader>
 				<NodeHeaderIcon>
 					<Bot />
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Generate Text</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<StatusBadge status={executionStatus} />
-					{deletable && <NodeHeaderDeleteAction id={id} />}
+					<NodeHeaderStatus status={executionStatus} />
+					{deletable && (
+						<NodeHeaderAction
+							onClick={() => deleteNode(id)}
+							variant="ghost"
+							label="Delete node"
+						>
+							<Trash />
+						</NodeHeaderAction>
+					)}
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />

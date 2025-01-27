@@ -59,7 +59,8 @@ export const createExecutionEngine = (context: ExecutionContext) => {
 			if (!sourceNode?.data.executionState?.sources) {
 				return false;
 			}
-			const sourceHandleData = sourceNode.data.executionState.sources[dep.sourceHandle];
+			const sourceHandleData =
+				sourceNode.data.executionState.sources[dep.sourceHandle];
 			return completedNodes.has(dep.node) && sourceHandleData !== undefined;
 		});
 	};

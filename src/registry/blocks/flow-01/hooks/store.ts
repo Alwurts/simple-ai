@@ -1,3 +1,5 @@
+/* import { EXAM_CREATOR_PARALLELIZATION_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/exam-creator-parallelization"; */
+import { NEWS_SUMMARY_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/news-summarization-chain";
 import { ServerExecutionClient } from "@/registry/blocks/flow-01/lib/execution/client/server-execution-client";
 import { createNode } from "@/registry/blocks/flow-01/lib/node-factory";
 import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
@@ -21,8 +23,6 @@ import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
 import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
 import { nanoid } from "nanoid";
 import { createWithEqualityFn } from "zustand/traditional";
-/* import { EXAM_CREATOR_PARALLELIZATION_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/exam-creator-parallelization"; */
-import { NEWS_SUMMARY_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/news-summarization-chain";
 
 export type ExecutionMode = "client" | "server";
 

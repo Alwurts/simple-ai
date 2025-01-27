@@ -41,4 +41,104 @@ export const ui: Registry = [
 		dependencies: ["react-markdown", "marked", "remark-gfm", "shiki"],
 		files: [{ type: "registry:ui", path: "ui/markdown-content.tsx" }],
 	},
+	{
+		name: "base-node",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		files: [
+			{
+				type: "registry:ui",
+				path: "ui/flow/base-node.tsx",
+				target: "components/ui/flow/base-node.tsx",
+			},
+		],
+	},
+	{
+		name: "resizable-node",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		registryDependencies: ["https://simple-ai.dev/r/base-node.json"],
+		files: [
+			{
+				type: "registry:ui",
+				path: "ui/flow/resizable-node.tsx",
+				target: "components/ui/flow/resizable-node.tsx",
+			},
+		],
+	},
+	{
+		name: "node-header",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		registryDependencies: ["button", "dropdown-menu", "badge"],
+		files: [
+			{
+				type: "registry:ui",
+				path: "ui/flow/node-header.tsx",
+				target: "components/ui/flow/node-header.tsx",
+			},
+		],
+	},
+	{
+		name: "base-handle",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		files: [
+			{
+				type: "registry:ui",
+				path: "ui/flow/base-handle.tsx",
+				target: "components/ui/flow/base-handle.tsx",
+			},
+		],
+	},
+	{
+		name: "labeled-handle",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		files: [
+			{
+				type: "registry:ui",
+				path: "ui/flow/labeled-handle.tsx",
+				target: "components/ui/flow/labeled-handle.tsx",
+			},
+		],
+	},
+	{
+		name: "editable-handle",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		registryDependencies: ["button", "input", "textarea", "popover", "toast"],
+		files: [
+			{
+				type: "registry:ui",
+				path: "ui/flow/editable-handle.tsx",
+				target: "components/ui/flow/editable-handle.tsx",
+			},
+		],
+	},
+	{
+		name: "nodes-panel",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		registryDependencies: ["button"],
+		files: [
+			{
+				type: "registry:ui",
+				path: "ui/flow/nodes-panel.tsx",
+				target: "components/ui/flow/nodes-panel.tsx",
+			},
+		],
+	},
+	{
+		name: "base-edge",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		files: [
+			{
+				type: "registry:ui",
+				path: "ui/flow/base-edge.tsx",
+				target: "components/ui/flow/base-edge.tsx",
+			},
+		],
+	},
 ];
