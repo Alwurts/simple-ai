@@ -1,13 +1,44 @@
-import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
-import { hasTargets } from "@/registry/blocks/flow-01/types/flow";
-import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
+import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
+import type {
+	CycleError,
+	MissingConnectionError,
+	MultipleSourcesError,
+	WorkflowDefinition,
+} from "@/registry/blocks/flow-01/types/workflow";
+
+export type ProcessingNodeError = {
+	message: string;
+	type: "processing-node";
+};
+
+export type ProcessedData = Record<string, string> | undefined;
+
+export type NodeProcessor = (
+	node: FlowNode,
+	targetsData: ProcessedData,
+) => Promise<ProcessedData>;
+
+export type NodeExecutionStatus = "success" | "error" | "processing" | "idle";
+
+export type NodeExecutionState = {
+	timestamp: string;
+	targets?: Record<string, string>;
+	sources?: Record<string, string>;
+	status: NodeExecutionStatus;
+	error?: MissingConnectionError | ProcessingNodeError;
+};
+
+// Edge Execution State
+export type EdgeExecutionState = {
+	error?: MultipleSourcesError | CycleError;
+};
 
 export interface ExecutionContext {
 	workflow: WorkflowDefinition;
 	processNode: (
 		nodeId: string,
-		targetsData: Record<string, string> | undefined,
-	) => Promise<Record<string, string> | undefined>;
+		targetsData: ProcessedData,
+	) => Promise<ProcessedData>;
 	updateNodeExecutionState: (
 		nodeId: string,
 		state: Partial<NodeExecutionState>,
@@ -17,9 +48,9 @@ export interface ExecutionContext {
 const getNodeTargetsData = (
 	workflow: WorkflowDefinition,
 	nodeId: string,
-): Record<string, string> | undefined => {
+): ProcessedData => {
 	const node = workflow.nodes.find((n) => n.id === nodeId);
-	if (!node || !hasTargets(node)) {
+	if (!node) {
 		return undefined;
 	}
 
@@ -27,7 +58,7 @@ const getNodeTargetsData = (
 		(edge) => edge.target === nodeId,
 	);
 
-	const targetsData: Record<string, string> = {};
+	const targetsData: ProcessedData = {};
 	for (const edge of edgesConnectedToNode) {
 		const sourceNode = workflow.nodes.find((n) => n.id === edge.source);
 		if (!sourceNode?.data.executionState?.sources) {
@@ -42,7 +73,7 @@ const getNodeTargetsData = (
 	return targetsData;
 };
 
-export const createExecutionEngine = (context: ExecutionContext) => {
+export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 	const completedNodes = new Set<string>();
 	const failedNodes = new Set<string>();
 	const processingNodes = new Set<string>();

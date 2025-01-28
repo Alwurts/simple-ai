@@ -1,17 +1,22 @@
-import { createExecutionEngine } from "@/registry/blocks/flow-01/lib/execution/execution-engine";
-import { serverNodeProcessors } from "@/registry/blocks/flow-01/lib/execution/server/server-node-processors";
-import type { NodeExecutionState } from "@/registry/blocks/flow-01/types/execution";
+import {
+	type NodeExecutionState,
+	type NodeProcessor,
+	createWorkflowExecutionEngine,
+} from "@/registry/lib/flow/workflow-execution-engine";
+
+import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
 import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
 
 function createEvent(type: string, data: Record<string, unknown>) {
 	return `data: ${JSON.stringify({ type, ...data })}\n\n`;
 }
 
-function createServerExecutionEngine(
+function createSSEWorkflowExecutionEngine(
 	workflow: WorkflowDefinition,
+	nodeProcessor: Record<FlowNode["type"], NodeProcessor>,
 	controller: ReadableStreamDefaultController,
 ) {
-	return createExecutionEngine({
+	return createWorkflowExecutionEngine({
 		workflow,
 		processNode: async (nodeId, targetsData) => {
 			const node = workflow.nodes.find((n) => n.id === nodeId);
@@ -19,7 +24,7 @@ function createServerExecutionEngine(
 				throw new Error(`Node ${nodeId} not found`);
 			}
 
-			const processor = serverNodeProcessors[node.type];
+			const processor = nodeProcessor[node.type];
 			return await processor(node, targetsData);
 		},
 		updateNodeExecutionState: (nodeId, state: Partial<NodeExecutionState>) => {
@@ -54,9 +59,14 @@ function createServerExecutionEngine(
 
 export async function executeServerWorkflow(
 	workflow: WorkflowDefinition,
+	nodeProcessor: Record<FlowNode["type"], NodeProcessor>,
 	controller: ReadableStreamDefaultController,
 ) {
-	const engine = createServerExecutionEngine(workflow, controller);
+	const engine = createSSEWorkflowExecutionEngine(
+		workflow,
+		nodeProcessor,
+		controller,
+	);
 
 	try {
 		await engine.execute(workflow.executionOrder);

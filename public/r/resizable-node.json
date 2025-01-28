@@ -1,0 +1,18 @@
+{
+  "name": "resizable-node",
+  "type": "registry:ui",
+  "dependencies": [
+    "@xyflow/react"
+  ],
+  "registryDependencies": [
+    "https://simple-ai.dev/r/base-node.json"
+  ],
+  "files": [
+    {
+      "path": "ui/flow/resizable-node.tsx",
+      "content": "import { cn } from \"@/lib/utils\";\nimport { BaseNode, type BaseNodeProps } from \"@/components/ui/flow/base-node\";\nimport { NodeResizer } from \"@xyflow/react\";\nimport React from \"react\";\n\nexport const ResizableNode = React.forwardRef<HTMLDivElement, BaseNodeProps>(\n\t(\n\t\t{ className, selected, executionStatus, style, children, ...props },\n\t\tref,\n\t) => (\n\t\t<BaseNode\n\t\t\tref={ref}\n\t\t\tstyle={{\n\t\t\t\t...style,\n\t\t\t\tminHeight: 200,\n\t\t\t\tminWidth: 250,\n\t\t\t\tmaxHeight: 800,\n\t\t\t\tmaxWidth: 800,\n\t\t\t}}\n\t\t\tclassName={cn(className, \"h-full\")}\n\t\t\t{...props}\n\t\t>\n\t\t\t<NodeResizer\n\t\t\t\t/* minHeight={200}\n\t\t\t\tminWidth={250}\n\t\t\t\tmaxHeight={800}\n\t\t\t\tmaxWidth={800} */\n\t\t\t\tisVisible={selected}\n\t\t\t/>\n\t\t\t{children}\n\t\t</BaseNode>\n\t),\n);\nResizableNode.displayName = \"ResizableNode\";\n",
+      "type": "registry:ui",
+      "target": "components/ui/flow/resizable-node.tsx"
+    }
+  ]
+}

@@ -1,12 +1,21 @@
-import type { CustomFlowEdge } from "@/registry/blocks/flow-01/types/flow";
+import type { BaseFlowEdgeData } from "@/registry/blocks/flow-01/types/flow";
 import {
-	BaseEdge as BaseFlowEdge,
+	BaseEdge,
+	type Edge,
 	type EdgeProps,
 	getBezierPath,
 } from "@xyflow/react";
 import type { CSSProperties } from "react";
 
-export function CustomEdge({
+type ConnectionEdgeData = BaseFlowEdgeData;
+
+export type ConnectionEdge = Edge<ConnectionEdgeData, "connection"> & {
+	type: "connection";
+	sourceHandle: string;
+	targetHandle: string;
+};
+
+export function Connection({
 	sourceX,
 	sourceY,
 	targetX,
@@ -15,7 +24,7 @@ export function CustomEdge({
 	targetPosition,
 	data,
 	selected,
-}: EdgeProps<CustomFlowEdge>) {
+}: EdgeProps<ConnectionEdge>) {
 	const [edgePath] = getBezierPath({
 		sourceX,
 		sourceY,
@@ -26,7 +35,7 @@ export function CustomEdge({
 	});
 
 	const edgeStyle: CSSProperties = {
-		stroke: !data?.executionState?.error
+		stroke: data?.executionState?.error
 			? "#ef4444"
 			: selected
 				? "#3b82f6"
@@ -35,5 +44,5 @@ export function CustomEdge({
 		transition: "stroke 0.2s, stroke-width 0.2s",
 	};
 
-	return <BaseFlowEdge path={edgePath} style={edgeStyle} />;
+	return <BaseEdge path={edgePath} style={edgeStyle} />;
 }

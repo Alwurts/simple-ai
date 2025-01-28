@@ -1,5 +1,5 @@
 import type { Model, ToolResult } from "@/registry/blocks/flow-01/types/ai";
-import type { GenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
+import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
 import { createDeepSeek } from "@ai-sdk/deepseek";
 import { createGroq } from "@ai-sdk/groq";
 import { generateText } from "ai";

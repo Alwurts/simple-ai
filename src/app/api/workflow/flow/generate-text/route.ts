@@ -1,4 +1,4 @@
-import { generateAIText } from "@/registry/blocks/flow-01/lib/execution/server/generate-ai-text";
+import { generateAIText } from "@/registry/blocks/flow-01/lib/server/generate-ai-text";
 import type { Model } from "@/registry/blocks/flow-01/types/ai";
 import type { GenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
 import { NextResponse } from "next/server";

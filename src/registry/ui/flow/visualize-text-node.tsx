@@ -1,8 +1,8 @@
-import { type NodeProps, Position } from "@xyflow/react";
+import { type Node, type NodeProps, Position } from "@xyflow/react";
 
 import { Separator } from "@/components/ui/separator";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import type { VisualizeTextNode as TVisualizeTextNode } from "@/registry/blocks/flow-01/types/flow";
+import type { BaseNodeData } from "@/registry/blocks/flow-01/types/flow";
 import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
 import {
 	NodeHeaderAction,
@@ -14,12 +14,18 @@ import { ResizableNode } from "@/registry/ui/flow/resizable-node";
 import { MarkdownContent } from "@/registry/ui/markdown-content";
 import { Eye, Trash } from "lucide-react";
 
-export function VisualizeTextNode({
+type VisualizeTextData = BaseNodeData;
+
+export type VisualizeTextNode = Node<VisualizeTextData, "visualize-text"> & {
+	type: "visualize-text";
+};
+
+export function VisualizeText({
 	id,
 	selected,
 	data,
 	deletable,
-}: NodeProps<TVisualizeTextNode>) {
+}: NodeProps<VisualizeTextNode>) {
 	const deleteNode = useStore((state) => state.deleteNode);
 	const executionStatus = data.executionState?.status;
 

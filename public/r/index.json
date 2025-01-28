@@ -96,7 +96,7 @@
     ]
   },
   {
-    "name": "base-resizable-node",
+    "name": "resizable-node",
     "type": "registry:ui",
     "dependencies": [
       "@xyflow/react"
@@ -106,9 +106,9 @@
     ],
     "files": [
       {
-        "path": "ui/flow/base-resizable-node.tsx",
+        "path": "ui/flow/resizable-node.tsx",
         "type": "registry:ui",
-        "target": "components/ui/flow/base-resizable-node.tsx"
+        "target": "components/ui/flow/resizable-node.tsx"
       }
     ]
   },

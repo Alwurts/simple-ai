@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import type { TextInputNode as TTextInputNode } from "@/registry/blocks/flow-01/types/flow";
+import type { BaseNodeData } from "@/registry/blocks/flow-01/types/flow";
 import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
 import {
 	NodeHeaderAction,
@@ -10,17 +10,31 @@ import {
 } from "@/registry/ui/flow/node-header";
 import { NodeHeader, NodeHeaderActions } from "@/registry/ui/flow/node-header";
 import { ResizableNode } from "@/registry/ui/flow/resizable-node";
-import { type NodeProps, Position } from "@xyflow/react";
+import { type Node, type NodeProps, Position } from "@xyflow/react";
 import { PenLine, Trash } from "lucide-react";
 import type React from "react";
 import { useCallback } from "react";
 
-export function TextInputNode({
+// Text Input
+
+type TextInputConfig = {
+	value: string;
+};
+
+export type TextInputData = BaseNodeData & {
+	config: TextInputConfig;
+};
+
+export type TextInputNode = Node<TextInputData, "text-input"> & {
+	type: "text-input";
+};
+
+export function TextInput({
 	id,
 	selected,
 	data,
 	deletable,
-}: NodeProps<TTextInputNode>) {
+}: NodeProps<TextInputNode>) {
 	const updateNode = useStore((state) => state.updateNode);
 	const deleteNode = useStore((state) => state.deleteNode);
 	const handleTextChange = useCallback(

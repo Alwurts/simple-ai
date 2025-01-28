@@ -118,20 +118,22 @@ export const Index: Record<string, any> = {
 		source: "",
 		meta: undefined,
 	},
-	"base-resizable-node": {
-		name: "base-resizable-node",
+	"resizable-node": {
+		name: "resizable-node",
 		description: "",
 		type: "registry:ui",
 		registryDependencies: ["https://simple-ai.dev/r/base-node.json"],
 		files: [
 			{
-				path: "src/registry/ui/flow/base-resizable-node.tsx",
+				path: "src/registry/ui/flow/resizable-node.tsx",
 				type: "registry:ui",
-				target: "components/ui/flow/base-resizable-node.tsx",
+				target: "components/ui/flow/resizable-node.tsx",
 			},
 		],
 		categories: undefined,
-		component: React.lazy(() => import("@/registry/ui/flow/resizable-node")),
+		component: React.lazy(
+			() => import("@/registry/ui/flow/resizable-node.tsx"),
+		),
 		source: "",
 		meta: undefined,
 	},

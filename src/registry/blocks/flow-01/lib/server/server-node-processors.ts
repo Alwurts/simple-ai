@@ -1,11 +1,9 @@
-import { generateAIText } from "@/registry/blocks/flow-01/lib/execution/server/generate-ai-text";
-import type { NodeProcessor } from "@/registry/blocks/flow-01/types/execution";
-import type {
-	FlowNode,
-	GenerateTextNode,
-	PromptCrafterNode,
-	TextInputNode,
-} from "@/registry/blocks/flow-01/types/flow";
+import { generateAIText } from "@/registry/blocks/flow-01/lib/server/generate-ai-text";
+import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
+import type { NodeProcessor } from "@/registry/lib/flow/workflow-execution-engine";
+import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
+import type { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
+import type { TextInputNode } from "@/registry/ui/flow/text-input-node";
 
 export const serverNodeProcessors: Record<FlowNode["type"], NodeProcessor> = {
 	"text-input": async (node) => {

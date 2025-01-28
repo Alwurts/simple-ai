@@ -1,5 +1,6 @@
-import { executeServerWorkflow } from "@/registry/blocks/flow-01/lib/execution/server/server-execution-engine";
+import { serverNodeProcessors } from "@/registry/blocks/flow-01/lib/server/server-node-processors";
 import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
+import { executeServerWorkflow } from "@/registry/lib/flow/sse-workflow-execution-engine";
 import { NextResponse } from "next/server";
 
 export const maxDuration = 30;
@@ -20,7 +21,11 @@ export async function POST(req: Request) {
 		// Create a stream for SSE
 		const stream = new ReadableStream({
 			async start(controller) {
-				await executeServerWorkflow(workflowDefinition, controller);
+				await executeServerWorkflow(
+					workflowDefinition,
+					serverNodeProcessors,
+					controller,
+				);
 			},
 		});
 

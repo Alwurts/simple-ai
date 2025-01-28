@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import type { PromptCrafterNode as TPromptCrafterNode } from "@/registry/blocks/flow-01/types/flow";
+import type { BaseNodeData } from "@/registry/blocks/flow-01/types/flow";
 import { BaseNode } from "@/registry/ui/flow/base-node";
 import {
 	EditableHandle,
@@ -33,6 +33,7 @@ import type { EditorView } from "@codemirror/view";
 import { tags as t } from "@lezer/highlight";
 import { createTheme } from "@uiw/codemirror-themes";
 import CodeMirror from "@uiw/react-codemirror";
+import type { Node } from "@xyflow/react";
 import {
 	type NodeProps,
 	Position,
@@ -41,6 +42,26 @@ import {
 import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
+
+// Prompt Crafter
+
+type PromptCrafterConfig = {
+	template: string;
+};
+
+type PromptCrafterData = BaseNodeData & {
+	config: PromptCrafterConfig;
+	dynamicHandles: {
+		"template-tags": {
+			id: string;
+			name: string;
+		}[];
+	};
+};
+
+export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter"> & {
+	type: "prompt-crafter";
+};
 
 // Custom theme that matches your app's design
 const promptTheme = createTheme({
@@ -78,12 +99,12 @@ const createPromptLanguage = (validInputs: string[] = []) =>
 		},
 	});
 
-export function PromptCrafterNode({
+export function PromptCrafter({
 	id,
 	selected,
 	deletable,
 	data,
-}: NodeProps<TPromptCrafterNode>) {
+}: NodeProps<PromptCrafterNode>) {
 	const updateNode = useStore((state) => state.updateNode);
 	const deleteNode = useStore((state) => state.deleteNode);
 	const addDynamicHandle = useStore((state) => state.addDynamicHandle);

@@ -1,12 +1,7 @@
 /* import { EXAM_CREATOR_PARALLELIZATION_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/exam-creator-parallelization"; */
 import { NEWS_SUMMARY_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/news-summarization-chain";
-import { ServerExecutionClient } from "@/registry/blocks/flow-01/lib/execution/client/server-execution-client";
 import { createNode } from "@/registry/blocks/flow-01/lib/node-factory";
 import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
-import type {
-	EdgeExecutionState,
-	NodeExecutionState,
-} from "@/registry/blocks/flow-01/types/execution";
 import {
 	type DynamicHandle,
 	type FlowEdge,
@@ -19,6 +14,11 @@ import type {
 	WorkflowDefinition,
 	WorkflowError,
 } from "@/registry/blocks/flow-01/types/workflow";
+import { SSEWorkflowExecutionClient } from "@/registry/lib/flow/sse-workflow-execution-client";
+import type {
+	EdgeExecutionState,
+	NodeExecutionState,
+} from "@/registry/lib/flow/workflow-execution-engine";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
 import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
 import { nanoid } from "nanoid";
@@ -140,10 +140,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		get().validateWorkflow();
 	},
 	onConnect: (connection) => {
-		const newEdge = addEdge(
-			{ ...connection, type: "custom-edge" },
-			get().edges,
-		);
+		const newEdge = addEdge({ ...connection, type: "connection" }, get().edges);
 		const sourceNode = get().getNodeById(connection.source);
 
 		if (!connection.sourceHandle) {
@@ -372,7 +369,7 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 		}));
 
 		try {
-			const sseClient = new ServerExecutionClient();
+			const sseClient = new SSEWorkflowExecutionClient();
 			const { updateNodeExecutionState } = get();
 
 			await new Promise((resolve, reject) => {

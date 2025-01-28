@@ -1,9 +1,12 @@
-import type { Model } from "@/registry/blocks/flow-01/types/ai";
 import type {
 	EdgeExecutionState,
 	NodeExecutionState,
-} from "@/registry/blocks/flow-01/types/execution";
-import type { Edge, Node } from "@xyflow/react";
+} from "@/registry/lib/flow/workflow-execution-engine";
+import type { ConnectionEdge } from "@/registry/ui/flow/connection";
+import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
+import type { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
+import type { TextInputNode } from "@/registry/ui/flow/text-input-node";
+import type { VisualizeTextNode } from "@/registry/ui/flow/visualize-text-node";
 
 // Dynamic Handles
 
@@ -11,10 +14,9 @@ export type DynamicHandle = {
 	id: string;
 	name: string;
 	description?: string;
-	//type: THandleType;
 };
 
-type DynamicHandles<THandleCategory extends string> = {
+export type DynamicHandles<THandleCategory extends string> = {
 	[key in THandleCategory]: DynamicHandle[];
 };
 
@@ -69,67 +71,17 @@ export const NODE_TYPE_CONFIG: Record<FlowNode["type"], NodeTypeConfig> = {
 	},
 };
 
-type BaseNodeData = {
+export type BaseNodeData = {
 	executionState?: NodeExecutionState;
-};
-
-type VisualizeTextData = BaseNodeData;
-
-export type VisualizeTextNode = Node<VisualizeTextData, "visualize-text"> & {
-	type: "visualize-text";
-};
-
-// Text Input
-
-type TextInputConfig = {
-	value: string;
-};
-
-type TextInputData = BaseNodeData & {
-	config: TextInputConfig;
-};
-
-export type TextInputNode = Node<TextInputData, "text-input"> & {
-	type: "text-input";
-};
-
-// Prompt Crafter
-
-type PromptCrafterConfig = {
-	template: string;
-};
-
-type PromptCrafterData = BaseNodeData & {
-	config: PromptCrafterConfig;
-	dynamicHandles: DynamicHandles<"template-tags">;
-};
-
-export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter"> & {
-	type: "prompt-crafter";
-};
-
-// Generate Text
-
-type GenerateTextConfig = {
-	model: Model;
-};
-
-type GenerateTextData = BaseNodeData & {
-	config: GenerateTextConfig;
-	dynamicHandles: DynamicHandles<"tools">;
-};
-
-export type GenerateTextNode = Node<GenerateTextData, "generate-text"> & {
-	type: "generate-text";
 };
 
 // Flow
 
 export type FlowNodeDataTypeMap = {
-	"visualize-text": VisualizeTextData;
-	"text-input": TextInputData;
-	"prompt-crafter": PromptCrafterData;
-	"generate-text": GenerateTextData;
+	"visualize-text": VisualizeTextNode["data"];
+	"text-input": TextInputNode["data"];
+	"prompt-crafter": PromptCrafterNode["data"];
+	"generate-text": GenerateTextNode["data"];
 };
 
 export type FlowNode =
@@ -140,52 +92,13 @@ export type FlowNode =
 
 // Edges
 
-type FlowEdgeData = {
+export type BaseFlowEdgeData = {
 	executionState?: EdgeExecutionState;
 };
 
-export type CustomFlowEdge = Edge<FlowEdgeData, "custom-edge"> & {
-	type: "custom-edge";
-};
-
-export type FlowEdge = CustomFlowEdge & {
-	sourceHandle: string;
-	targetHandle: string;
-};
+export type FlowEdge = ConnectionEdge;
 
 // Type Guards
-
-export function hasTargets(
-	node: FlowNode,
-): node is Extract<
-	FlowNode,
-	VisualizeTextNode | PromptCrafterNode | GenerateTextNode
-> {
-	switch (node.type) {
-		case "visualize-text":
-		case "prompt-crafter":
-		case "generate-text":
-			return true;
-		default:
-			return false;
-	}
-}
-
-export function hasSources(
-	node: FlowNode,
-): node is Extract<
-	FlowNode,
-	TextInputNode | PromptCrafterNode | GenerateTextNode
-> {
-	switch (node.type) {
-		case "text-input":
-		case "prompt-crafter":
-		case "generate-text":
-			return true;
-		default:
-			return false;
-	}
-}
 
 export function isNodeOfType<T extends FlowNode["type"]>(
 	node: FlowNode,

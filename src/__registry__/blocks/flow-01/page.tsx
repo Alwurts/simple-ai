@@ -11,33 +11,33 @@ import { Background, Panel, ReactFlow, useReactFlow } from "@xyflow/react";
 import type React from "react";
 import { shallow } from "zustand/shallow";
 import "@xyflow/react/dist/style.css";
-import { DevTools } from "@/components/flow/devtools";
+/* import { DevTools } from "@/components/flow/devtools"; */
 import { Button } from "@/components/ui/button";
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { GenerateTextNode } from "@/registry/blocks/flow-01/components/flow/generate-text-node";
-import { PromptCrafterNode } from "@/registry/blocks/flow-01/components/flow/prompt-crafter-node";
-import { TextInputNode } from "@/registry/blocks/flow-01/components/flow/text-input-node";
-import { VisualizeTextNode } from "@/registry/blocks/flow-01/components/flow/visualize-text-node";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
 import type { WorkflowError } from "@/registry/blocks/flow-01/types/workflow";
-import { CustomEdge } from "@/registry/ui/flow/base-edge";
+import { Connection } from "@/registry/ui/flow/connection";
+import { GenerateText } from "@/registry/ui/flow/generate-text-node";
 import { NodesPanel } from "@/registry/ui/flow/nodes-panel";
+import { PromptCrafter } from "@/registry/ui/flow/prompt-crafter-node";
+import { TextInput } from "@/registry/ui/flow/text-input-node";
+import { VisualizeText } from "@/registry/ui/flow/visualize-text-node";
 import { AlertCircle, Copy } from "lucide-react";
 
 const nodeTypes: NodeTypes = {
-	"generate-text": GenerateTextNode,
-	"visualize-text": VisualizeTextNode,
-	"text-input": TextInputNode,
-	"prompt-crafter": PromptCrafterNode,
+	"generate-text": GenerateText,
+	"visualize-text": VisualizeText,
+	"text-input": TextInput,
+	"prompt-crafter": PromptCrafter,
 };
 
 const edgeTypes: EdgeTypes = {
-	"custom-edge": CustomEdge,
+	connection: Connection,
 };
 
 function ErrorIndicator({
@@ -154,7 +154,7 @@ function Flow() {
 			fitView
 		>
 			<Background />
-			<DevTools />
+			{/* <DevTools /> */}
 			<Controls />
 			<MiniMap />
 			<NodesPanel />

@@ -7,7 +7,7 @@
   "files": [
     {
       "path": "ui/flow/base-handle.tsx",
-      "content": "import { cn } from \"@/lib/utils\";\nimport { Handle, type HandleProps } from \"@xyflow/react\";\nimport React from \"react\";\n\nexport const BaseHandle = React.forwardRef<\n\tHTMLDivElement,\n\tReact.HTMLAttributes<HTMLDivElement> & HandleProps\n>(({ className, ...props }, ref) => (\n\t<Handle ref={ref} className={cn(\"\", className)} {...props} />\n));\nBaseHandle.displayName = \"BaseHandle\";\n",
+      "content": "import { cn } from \"@/lib/utils\";\nimport { Handle, type HandleProps } from \"@xyflow/react\";\nimport React from \"react\";\n\nexport const BaseHandle = React.forwardRef<\n\tHTMLDivElement,\n\tReact.HTMLAttributes<HTMLDivElement> & HandleProps\n>(({ className, ...props }, ref) => (\n\t<Handle ref={ref} className={cn(\"\", className)} {...props} />\n));\n\nBaseHandle.displayName = \"BaseHandle\";\n",
       "type": "registry:ui",
       "target": "components/ui/flow/base-handle.tsx"
     }

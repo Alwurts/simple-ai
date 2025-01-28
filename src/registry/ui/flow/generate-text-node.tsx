@@ -1,4 +1,5 @@
 import {
+	type Node,
 	type NodeProps,
 	Position,
 	useUpdateNodeInternals,
@@ -15,7 +16,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { useStore } from "@/registry/blocks/flow-01/hooks/store";
 import { MODELS, type Model } from "@/registry/blocks/flow-01/types/ai";
-import type { GenerateTextNode as TGenerateTextNode } from "@/registry/blocks/flow-01/types/flow";
+import type { BaseNodeData } from "@/registry/blocks/flow-01/types/flow";
 import { BaseNode } from "@/registry/ui/flow/base-node";
 import {
 	EditableHandle,
@@ -33,12 +34,31 @@ import { Bot, Plus, Trash } from "lucide-react";
 import { useCallback } from "react";
 import { toast } from "sonner";
 
-export function GenerateTextNode({
+type GenerateTextConfig = {
+	model: Model;
+};
+
+type GenerateTextData = BaseNodeData & {
+	config: GenerateTextConfig;
+	dynamicHandles: {
+		tools: {
+			id: string;
+			name: string;
+			description?: string;
+		}[];
+	};
+};
+
+export type GenerateTextNode = Node<GenerateTextData, "generate-text"> & {
+	type: "generate-text";
+};
+
+export function GenerateText({
 	id,
 	selected,
 	deletable,
 	data,
-}: NodeProps<TGenerateTextNode>) {
+}: NodeProps<GenerateTextNode>) {
 	const updateNode = useStore((state) => state.updateNode);
 	const addDynamicHandle = useStore((state) => state.addDynamicHandle);
 	const removeDynamicHandle = useStore((state) => state.removeDynamicHandle);
