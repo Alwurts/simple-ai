@@ -153,6 +153,62 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/ui/flow/status-edge.tsx")),
 		source: "",
 		meta: undefined,
+    },	"generate-text-node": {
+		name: "generate-text-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/flow/generate-text-node.tsx",
+			type: "registry:ui",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/generate-text-node.tsx")),
+		source: "",
+		meta: undefined,
+    },	"prompt-crafter-node": {
+		name: "prompt-crafter-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/flow/prompt-crafter-node.tsx",
+			type: "registry:ui",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/prompt-crafter-node.tsx")),
+		source: "",
+		meta: undefined,
+    },	"text-input-node": {
+		name: "text-input-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/flow/text-input-node.tsx",
+			type: "registry:ui",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/text-input-node.tsx")),
+		source: "",
+		meta: undefined,
+    },	"visualize-text-node": {
+		name: "visualize-text-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/flow/visualize-text-node.tsx",
+			type: "registry:ui",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/visualize-text-node.tsx")),
+		source: "",
+		meta: undefined,
     },	"chat-demo": {
 		name: "chat-demo",
 		description: "",
@@ -419,6 +475,76 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/examples/model-selector-disabled-demo.tsx")),
 		source: "",
 		meta: undefined,
+    },	"resizable-node-demo": {
+		name: "resizable-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/resizable-node-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/resizable-node-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"visualize-text-node-demo": {
+		name: "visualize-text-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/visualize-text-node-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/visualize-text-node-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"prompt-crafter-node-demo": {
+		name: "prompt-crafter-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/prompt-crafter-node-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/prompt-crafter-node-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"text-input-node-demo": {
+		name: "text-input-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/text-input-node-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/text-input-node-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"generate-text-node-demo": {
+		name: "generate-text-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/generate-text-node-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/generate-text-node-demo.tsx")),
+		source: "",
+		meta: undefined,
     },	"use-textarea-resize": {
 		name: "use-textarea-resize",
 		description: "",
@@ -659,17 +785,13 @@ export const Index: Record<string, any> = {
 		files: [{
 			path: "src/registry/blocks/flow-01/page.tsx",
 			type: "registry:page",
-			target: "app/flow/page.tsx"
+			target: "app/workflow/page.tsx"
 		},{
 			path: "src/registry/blocks/flow-01/components/nodes-panel.tsx",
 			type: "registry:component",
 			target: ""
 		},{
 			path: "src/registry/ui/flow/status-edge-controller.tsx",
-			type: "registry:component",
-			target: ""
-		},{
-			path: "src/registry/ui/flow/status-edge.tsx",
 			type: "registry:component",
 			target: ""
 		},{

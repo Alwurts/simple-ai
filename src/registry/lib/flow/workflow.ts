@@ -1,8 +1,8 @@
 import type { GenerateTextNodeController } from "@/registry/ui/flow/generate-text-node-controller";
 import type { PromptCrafterNodeController } from "@/registry/ui/flow/prompt-crafter-node-controller";
+import type { StatusEdgeController } from "@/registry/ui/flow/status-edge-controller";
 import type { TextInputNodeController } from "@/registry/ui/flow/text-input-node-controller";
 import type { VisualizeTextNodeController } from "@/registry/ui/flow/visualize-text-node-controller";
-import type { StatusEdgeController } from "@/registry/ui/flow/status-edge-controller";
 import { nanoid } from "nanoid";
 
 type Dependency = {

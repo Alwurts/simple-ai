@@ -85,11 +85,31 @@ export const docsConfig: DocsConfig = {
 			],
 		},
 		{
-			title: "React Flow",
+			title: "React Flow Components",
 			items: [
 				{
-					title: "Base Node",
-					href: "/docs/react-flow/base-node",
+					title: "Generate Text Node",
+					href: "/docs/components/react-flow/generate-text-node",
+					items: [],
+				},
+				{
+					title: "Prompt Crafter Node",
+					href: "/docs/components/react-flow/prompt-crafter-node",
+					items: [],
+				},
+				{
+					title: "Resizable Node",
+					href: "/docs/components/react-flow/resizable-node",
+					items: [],
+				},
+				{
+					title: "Text Input Node",
+					href: "/docs/components/react-flow/text-input-node",
+					items: [],
+				},
+				{
+					title: "Visualize Text Node",
+					href: "/docs/components/react-flow/visualize-text-node",
 					items: [],
 				},
 			],

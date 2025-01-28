@@ -159,5 +159,57 @@
         "target": "components/ui/flow/status-edge.tsx"
       }
     ]
+  },
+  {
+    "name": "generate-text-node",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/generate-text-node.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "prompt-crafter-node",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/prompt-crafter-node.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "text-input-node",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/text-input-node.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "visualize-text-node",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/visualize-text-node.tsx",
+        "type": "registry:ui"
+      }
+    ]
   }
 ]

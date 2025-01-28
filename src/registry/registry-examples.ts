@@ -192,4 +192,54 @@ export const examples: Registry = [
 			},
 		],
 	},
+	{
+		name: "resizable-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/resizable-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "visualize-text-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/visualize-text-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "prompt-crafter-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/prompt-crafter-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "text-input-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/text-input-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "generate-text-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/generate-text-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
 ];

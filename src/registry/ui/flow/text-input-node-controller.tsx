@@ -2,10 +2,7 @@
 
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
-import {
-	TextInputNode,
-	type TextInputNode,
-} from "@/registry/ui/flow/text-input-node";
+import { TextInputNode } from "@/registry/ui/flow/text-input-node";
 import type { NodeProps } from "@xyflow/react";
 import { useCallback } from "react";
 

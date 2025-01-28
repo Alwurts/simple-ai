@@ -2,10 +2,7 @@
 
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
-import {
-	PromptCrafterNode,
-	type PromptCrafterNode,
-} from "@/registry/ui/flow/prompt-crafter-node";
+import { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
 import type { NodeProps } from "@xyflow/react";
 import { useCallback } from "react";
 import { toast } from "sonner";

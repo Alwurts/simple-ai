@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Panel } from "@xyflow/react";
-import { Eye } from "lucide-react";
+import { Eye, PenLine } from "lucide-react";
 import type React from "react";
 
 const nodeTypes = [
@@ -8,6 +8,11 @@ const nodeTypes = [
 		type: "visualize-text",
 		label: "Visualize Text",
 		icon: Eye,
+	},
+	{
+		type: "text-input",
+		label: "Text Input",
+		icon: PenLine,
 	},
 ];
 

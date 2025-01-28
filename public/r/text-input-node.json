@@ -1,0 +1,15 @@
+{
+  "name": "text-input-node",
+  "type": "registry:ui",
+  "dependencies": [
+    "@xyflow/react"
+  ],
+  "files": [
+    {
+      "path": "ui/flow/text-input-node.tsx",
+      "content": "import { LabeledHandle } from \"@/components/flow/labeled-handle\";\nimport {\n\tNodeHeaderAction,\n\tNodeHeaderIcon,\n\tNodeHeaderTitle,\n} from \"@/components/flow/node-header\";\nimport { NodeHeader, NodeHeaderActions } from \"@/components/flow/node-header\";\nimport { Separator } from \"@/components/ui/separator\";\nimport { Textarea } from \"@/components/ui/textarea\";\nimport { cn } from \"@/lib/utils\";\nimport { ResizableNode } from \"@/components/ui/flow/resizable-node\";\nimport { type Node, type NodeProps, Position } from \"@xyflow/react\";\nimport { PenLine, Trash } from \"lucide-react\";\n\nexport type TextInputData = {\n\tstatus: \"processing\" | \"error\" | \"success\" | \"idle\" | undefined;\n\tconfig: {\n\t\tvalue: string;\n\t};\n};\n\nexport type TextInputNode = Node<TextInputData, \"text-input\">;\n\nexport interface TextInputProps extends NodeProps<TextInputNode> {\n\tonTextChange: (value: string) => void;\n\tonDeleteNode: () => void;\n}\n\nexport function TextInputNode({\n\tid,\n\tselected,\n\tdata,\n\tdeletable,\n\tonTextChange,\n\tonDeleteNode,\n}: TextInputProps) {\n\treturn (\n\t\t<ResizableNode\n\t\t\tid={id}\n\t\t\tselected={selected}\n\t\t\tclassName={cn(\"flex flex-col h-full\", {\n\t\t\t\t\"border-orange-500\": data.status === \"processing\",\n\t\t\t\t\"border-red-500\": data.status === \"error\",\n\t\t\t})}\n\t\t>\n\t\t\t<NodeHeader className=\"m-0\">\n\t\t\t\t<NodeHeaderIcon>\n\t\t\t\t\t<PenLine />\n\t\t\t\t</NodeHeaderIcon>\n\t\t\t\t<NodeHeaderTitle>Text Input</NodeHeaderTitle>\n\t\t\t\t<NodeHeaderActions>\n\t\t\t\t\t{deletable && (\n\t\t\t\t\t\t<NodeHeaderAction\n\t\t\t\t\t\t\tonClick={onDeleteNode}\n\t\t\t\t\t\t\tvariant=\"ghost\"\n\t\t\t\t\t\t\tlabel=\"Delete node\"\n\t\t\t\t\t\t>\n\t\t\t\t\t\t\t<Trash />\n\t\t\t\t\t\t</NodeHeaderAction>\n\t\t\t\t\t)}\n\t\t\t\t</NodeHeaderActions>\n\t\t\t</NodeHeader>\n\t\t\t<Separator />\n\t\t\t<div className=\"p-2 flex-1 overflow-auto flex flex-col gap-4\">\n\t\t\t\t<Textarea\n\t\t\t\t\tvalue={data.config.value || \"\"}\n\t\t\t\t\tonChange={(e) => onTextChange(e.target.value)}\n\t\t\t\t\tclassName=\"w-full flex-1 resize-none nodrag nopan nowheel\"\n\t\t\t\t\tplaceholder=\"Enter your text here...\"\n\t\t\t\t/>\n\t\t\t</div>\n\t\t\t<div className=\"flex justify-end pt-2 pb-4 text-sm\">\n\t\t\t\t<LabeledHandle\n\t\t\t\t\tid=\"result\"\n\t\t\t\t\ttitle=\"Result\"\n\t\t\t\t\ttype=\"source\"\n\t\t\t\t\tposition={Position.Right}\n\t\t\t\t\tclassName=\"justify-self-end\"\n\t\t\t\t/>\n\t\t\t</div>\n\t\t</ResizableNode>\n\t);\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ]
+}

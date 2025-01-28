@@ -14,15 +14,14 @@ import "@xyflow/react/dist/style.css";
 /* import { DevTools } from "@/components/flow/devtools"; */
 import { Button } from "@/components/ui/button";
 import { ErrorIndicator } from "@/registry/blocks/flow-01/components/error-indicator";
-import { GenerateTextNodeController } from "@/registry/ui/flow/generate-text-node-controller";
 import { NodesPanel } from "@/registry/blocks/flow-01/components/nodes-panel";
-import { PromptCrafterNodeController } from "@/registry/ui/flow/prompt-crafter-node-controller";
-import { TextInputNodeController } from "@/registry/ui/flow/text-input-node-controller";
-import { VisualizeTextNodeController } from "@/registry/ui/flow/visualize-text-node-controller";
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { FlowNode } from "@/registry/lib/flow/workflow";
+import { GenerateTextNodeController } from "@/registry/ui/flow/generate-text-node-controller";
+import { PromptCrafterNodeController } from "@/registry/ui/flow/prompt-crafter-node-controller";
 import { StatusEdgeController } from "@/registry/ui/flow/status-edge-controller";
-import { Copy } from "lucide-react";
+import { TextInputNodeController } from "@/registry/ui/flow/text-input-node-controller";
+import { VisualizeTextNodeController } from "@/registry/ui/flow/visualize-text-node-controller";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNodeController,
@@ -35,7 +34,7 @@ const edgeTypes: EdgeTypes = {
 	status: StatusEdgeController,
 };
 
-function Flow() {
+export function Flow() {
 	const store = useWorkflow(
 		(store) => ({
 			nodes: store.nodes,
@@ -78,7 +77,7 @@ function Flow() {
 		store.createNode(type, position);
 	};
 
-	const handleExport = () => {
+	/* const handleExport = () => {
 		const exportData = {
 			nodes: store.nodes.map((node) => ({
 				type: node.type,
@@ -100,7 +99,7 @@ function Flow() {
 			})),
 		};
 		navigator.clipboard.writeText(JSON.stringify(exportData, null, 2));
-	};
+	}; */
 
 	return (
 		<ReactFlow

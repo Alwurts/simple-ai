@@ -1,3 +1,5 @@
+"use client";
+
 import { BaseNode } from "@/components/flow/base-node";
 import { LabeledHandle } from "@/components/flow/labeled-handle";
 import {
