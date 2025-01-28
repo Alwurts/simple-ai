@@ -9,38 +9,34 @@ import {
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import { ResizableNode } from "@/registry/ui/flow/resizable-node";
 import { MarkdownContent } from "@/registry/ui/markdown-content";
 import { Eye, Trash } from "lucide-react";
 
-type VisualizeTextData = {
-	executionState?: NodeExecutionState;
-};
+export type VisualizeTextNode = Node<
+	{
+		status: "processing" | "error" | "success" | "idle" | undefined;
+		input: string | undefined;
+	},
+	"visualize-text"
+>;
 
-export type VisualizeTextNode = Node<VisualizeTextData, "visualize-text"> & {
-	type: "visualize-text";
-};
-
-export interface VisualizeTextProps extends NodeProps<VisualizeTextNode> {
+interface VisualizeTextProps extends NodeProps<VisualizeTextNode> {
 	onDeleteNode: () => void;
 }
 
-export function VisualizeText({
+export function VisualizeTextNode({
 	id,
 	selected,
 	data,
-	deletable,
 	onDeleteNode,
 }: VisualizeTextProps) {
-	const executionStatus = data.executionState?.status;
-
 	return (
 		<ResizableNode
 			selected={selected}
 			className={cn("flex flex-col", {
-				"border-orange-500": executionStatus === "processing",
-				"border-red-500": executionStatus === "error",
+				"border-orange-500": data.status === "processing",
+				"border-red-500": data.status === "error",
 			})}
 		>
 			<NodeHeader className="m-0">
@@ -49,15 +45,13 @@ export function VisualizeText({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Visualize Text</NodeHeaderTitle>
 				<NodeHeaderActions>
-					{deletable && (
-						<NodeHeaderAction
-							onClick={onDeleteNode}
-							variant="ghost"
-							label="Delete node"
-						>
-							<Trash />
-						</NodeHeaderAction>
-					)}
+					<NodeHeaderAction
+						onClick={onDeleteNode}
+						variant="ghost"
+						label="Delete node"
+					>
+						<Trash />
+					</NodeHeaderAction>
 				</NodeHeaderActions>
 			</NodeHeader>
 			<Separator />
@@ -65,11 +59,7 @@ export function VisualizeText({
 				<div className="flex-1 overflow-auto nodrag nopan nowheel border border-border rounded-md p-2 select-text cursor-auto">
 					<MarkdownContent
 						id={id}
-						content={
-							data.executionState?.targets?.input
-								? data.executionState?.targets?.input
-								: "No text to display"
-						}
+						content={data.input ? data.input : "No text to display"}
 					/>
 				</div>
 			</div>

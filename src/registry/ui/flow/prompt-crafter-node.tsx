@@ -22,7 +22,6 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import {
 	EditableHandle,
 	EditableHandleDialog,
@@ -42,26 +41,20 @@ import {
 import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 
-// Prompt Crafter
-
-type PromptCrafterConfig = {
-	template: string;
-};
-
-type PromptCrafterData = {
-	config: PromptCrafterConfig;
+export type PromptCrafterData = {
+	status: "processing" | "error" | "success" | "idle" | undefined;
+	config: {
+		template: string;
+	};
 	dynamicHandles: {
 		"template-tags": {
 			id: string;
 			name: string;
 		}[];
 	};
-	executionState?: NodeExecutionState;
 };
 
-export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter"> & {
-	type: "prompt-crafter";
-};
+export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter">;
 
 export interface PromptCrafterProps extends NodeProps<PromptCrafterNode> {
 	onPromptTextChange: (value: string) => void;
@@ -174,14 +167,12 @@ export function PromptCrafter({
 		return [createPromptLanguage(validLabels)];
 	}, [data.dynamicHandles["template-tags"]]);
 
-	const executionStatus = data.executionState?.status;
-
 	return (
 		<BaseNode
 			selected={selected}
 			className={cn("w-[350px] p-0 hover:ring-orange-500", {
-				"border-orange-500": executionStatus === "processing",
-				"border-red-500": executionStatus === "error",
+				"border-orange-500": data.status === "processing",
+				"border-red-500": data.status === "error",
 			})}
 		>
 			<NodeHeader className="m-0">
@@ -190,7 +181,7 @@ export function PromptCrafter({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Prompt Crafter</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<NodeHeaderStatus status={executionStatus} />
+					<NodeHeaderStatus status={data.status} />
 					{deletable && (
 						<NodeHeaderAction
 							onClick={onDeleteNode}

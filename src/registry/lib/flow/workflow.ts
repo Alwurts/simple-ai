@@ -1,8 +1,8 @@
+import type { GenerateTextNodeController } from "@/registry/blocks/flow-01/components/generate-text-node-controller";
+import type { PromptCrafterNodeController } from "@/registry/blocks/flow-01/components/prompt-crafter-node-controller";
+import type { TextInputNodeController } from "@/registry/blocks/flow-01/components/text-input-node-controller";
+import type { VisualizeTextNodeController } from "@/registry/blocks/flow-01/components/visualize-text-node-controller";
 import type { ConnectionEdge } from "@/registry/ui/flow/connection";
-import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
-import type { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
-import type { TextInputNode } from "@/registry/ui/flow/text-input-node";
-import type { VisualizeTextNode } from "@/registry/ui/flow/visualize-text-node";
 import { nanoid } from "nanoid";
 
 type Dependency = {
@@ -100,10 +100,10 @@ const NODES_CONFIG: Partial<
 // Nodes
 
 export type FlowNode =
-	| VisualizeTextNode
-	| TextInputNode
-	| PromptCrafterNode
-	| GenerateTextNode;
+	| VisualizeTextNodeController
+	| TextInputNodeController
+	| PromptCrafterNodeController
+	| GenerateTextNodeController;
 
 // Edges
 

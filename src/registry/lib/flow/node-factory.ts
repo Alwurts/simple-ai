@@ -1,8 +1,8 @@
+import type { GenerateTextNodeController } from "@/registry/blocks/flow-01/components/generate-text-node-controller";
+import type { PromptCrafterNodeController } from "@/registry/blocks/flow-01/components/prompt-crafter-node-controller";
+import type { TextInputNodeController } from "@/registry/blocks/flow-01/components/text-input-node-controller";
+import type { VisualizeTextNodeController } from "@/registry/blocks/flow-01/components/visualize-text-node-controller";
 import type { FlowNode } from "@/registry/lib/flow/workflow";
-import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
-import type { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
-import type { TextInputNode } from "@/registry/ui/flow/text-input-node";
-import type { VisualizeTextNode } from "@/registry/ui/flow/visualize-text-node";
 import { nanoid } from "nanoid";
 
 export type NodePosition = {
@@ -11,7 +11,7 @@ export type NodePosition = {
 };
 
 export const nodeFactory = {
-	"generate-text": (position: NodePosition): GenerateTextNode => ({
+	"generate-text": (position: NodePosition): GenerateTextNodeController => ({
 		id: nanoid(),
 		type: "generate-text",
 		position,
@@ -25,7 +25,7 @@ export const nodeFactory = {
 		},
 	}),
 
-	"prompt-crafter": (position: NodePosition): PromptCrafterNode => ({
+	"prompt-crafter": (position: NodePosition): PromptCrafterNodeController => ({
 		id: nanoid(),
 		type: "prompt-crafter",
 		position,
@@ -39,7 +39,7 @@ export const nodeFactory = {
 		},
 	}),
 
-	"visualize-text": (position: NodePosition): VisualizeTextNode => ({
+	"visualize-text": (position: NodePosition): VisualizeTextNodeController => ({
 		id: nanoid(),
 		type: "visualize-text",
 		position,
@@ -48,7 +48,7 @@ export const nodeFactory = {
 		height: 300,
 	}),
 
-	"text-input": (position: NodePosition): TextInputNode => ({
+	"text-input": (position: NodePosition): TextInputNodeController => ({
 		id: nanoid(),
 		type: "text-input",
 		position,
@@ -66,6 +66,9 @@ export function createNode(
 	nodeType: FlowNode["type"],
 	position: NodePosition,
 ): FlowNode {
+	if (!nodeType) {
+		throw new Error("Node type is required");
+	}
 	const factory = nodeFactory[nodeType];
 	if (!factory) {
 		throw new Error(`Unknown node type: ${nodeType}`);

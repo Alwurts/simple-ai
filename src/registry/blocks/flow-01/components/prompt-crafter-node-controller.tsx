@@ -1,6 +1,7 @@
 "use client";
 
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
+import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import {
 	PromptCrafter,
 	type PromptCrafterNode,
@@ -9,11 +10,18 @@ import type { NodeProps } from "@xyflow/react";
 import { useCallback } from "react";
 import { toast } from "sonner";
 
+export type PromptCrafterNodeController = Omit<PromptCrafterNode, "data"> & {
+	type: "prompt-crafter";
+	data: Omit<PromptCrafterNode["data"], "status"> & {
+		executionState?: NodeExecutionState;
+	};
+};
+
 export function PromptCrafterNodeController({
 	id,
 	data,
 	...props
-}: NodeProps<PromptCrafterNode>) {
+}: NodeProps<PromptCrafterNodeController>) {
 	const updateNode = useWorkflow((state) => state.updateNode);
 	const addDynamicHandle = useWorkflow((state) => state.addDynamicHandle);
 	const removeDynamicHandle = useWorkflow((state) => state.removeDynamicHandle);
@@ -106,7 +114,7 @@ export function PromptCrafterNodeController({
 	return (
 		<PromptCrafter
 			id={id}
-			data={data}
+			data={{ ...data, status: data.executionState?.status }}
 			{...props}
 			onPromptTextChange={handlePromptTextChange}
 			onCreateInput={handleCreateInput}

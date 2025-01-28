@@ -13,16 +13,16 @@ import { shallow } from "zustand/shallow";
 import "@xyflow/react/dist/style.css";
 /* import { DevTools } from "@/components/flow/devtools"; */
 import { Button } from "@/components/ui/button";
+import { ErrorIndicator } from "@/registry/blocks/flow-01/components/error-indicator";
+import { GenerateTextNodeController } from "@/registry/blocks/flow-01/components/generate-text-node-controller";
 import { NodesPanel } from "@/registry/blocks/flow-01/components/nodes-panel";
 import { PromptCrafterNodeController } from "@/registry/blocks/flow-01/components/prompt-crafter-node-controller";
+import { TextInputNodeController } from "@/registry/blocks/flow-01/components/text-input-node-controller";
+import { VisualizeTextNodeController } from "@/registry/blocks/flow-01/components/visualize-text-node-controller";
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { FlowNode } from "@/registry/lib/flow/workflow";
 import { Connection } from "@/registry/ui/flow/connection";
 import { Copy } from "lucide-react";
-import { ErrorIndicator } from "@/registry/blocks/flow-01/components/error-indicator";
-import { GenerateTextNodeController } from "@/registry/blocks/flow-01/components/generate-text-node-controller";
-import { TextInputNodeController } from "@/registry/blocks/flow-01/components/text-input-node-controller";
-import { VisualizeTextNodeController } from "@/registry/blocks/flow-01/components/visualize-text-node-controller";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNodeController,

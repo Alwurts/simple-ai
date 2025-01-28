@@ -17,7 +17,6 @@ import {
 import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import {
 	EditableHandle,
 	EditableHandleDialog,
@@ -27,7 +26,8 @@ import { type Model, ModelSelector } from "@/registry/ui/model-selector";
 import { Bot, Plus, Trash } from "lucide-react";
 import { useCallback } from "react";
 
-type GenerateTextData = {
+export type GenerateTextData = {
+	status: "processing" | "error" | "success" | "idle" | undefined;
 	config: {
 		model: Model;
 	};
@@ -38,14 +38,11 @@ type GenerateTextData = {
 			description?: string;
 		}[];
 	};
-	executionState?: NodeExecutionState;
 };
 
-export type GenerateTextNode = Node<GenerateTextData, "generate-text"> & {
-	type: "generate-text";
-};
+export type GenerateTextNode = Node<GenerateTextData, "generate-text">;
 
-export interface GenerateTextNodeProps extends NodeProps<GenerateTextNode> {
+interface GenerateTextNodeProps extends NodeProps<GenerateTextNode> {
 	onModelChange: (model: Model) => void;
 	onCreateTool: (name: string, description?: string) => boolean;
 	onRemoveTool: (handleId: string) => void;
@@ -99,14 +96,12 @@ export function GenerateTextNode({
 		[onRemoveTool, id, updateNodeInternals],
 	);
 
-	const executionStatus = data.executionState?.status;
-
 	return (
 		<BaseNode
 			selected={selected}
 			className={cn("w-[350px] p-0 hover:ring-orange-500", {
-				"border-orange-500": executionStatus === "processing",
-				"border-red-500": executionStatus === "error",
+				"border-orange-500": data.status === "processing",
+				"border-red-500": data.status === "error",
 			})}
 		>
 			<NodeHeader className="m-0">
@@ -115,7 +110,7 @@ export function GenerateTextNode({
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Generate Text</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<NodeHeaderStatus status={executionStatus} />
+					<NodeHeaderStatus status={data.status} />
 					{deletable && (
 						<NodeHeaderAction
 							onClick={onDeleteNode}

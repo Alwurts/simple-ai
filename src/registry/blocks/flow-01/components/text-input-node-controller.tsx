@@ -1,6 +1,7 @@
 "use client";
 
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
+import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import {
 	TextInput,
 	type TextInputNode,
@@ -8,11 +9,18 @@ import {
 import type { NodeProps } from "@xyflow/react";
 import { useCallback } from "react";
 
+export type TextInputNodeController = Omit<TextInputNode, "data"> & {
+	type: "text-input";
+	data: Omit<TextInputNode["data"], "status"> & {
+		executionState?: NodeExecutionState;
+	};
+};
+
 export function TextInputNodeController({
 	id,
 	data,
 	...props
-}: NodeProps<TextInputNode>) {
+}: NodeProps<TextInputNodeController>) {
 	const updateNode = useWorkflow((state) => state.updateNode);
 	const deleteNode = useWorkflow((state) => state.deleteNode);
 
@@ -30,7 +38,10 @@ export function TextInputNodeController({
 	return (
 		<TextInput
 			id={id}
-			data={data}
+			data={{
+				status: data.executionState?.status,
+				config: data.config,
+			}}
 			{...props}
 			onTextChange={handleTextChange}
 			onDeleteNode={handleDeleteNode}
