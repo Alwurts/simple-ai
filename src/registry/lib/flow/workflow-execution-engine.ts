@@ -1,10 +1,12 @@
-import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
+import type { FlowNode } from "@/registry/hooks/flow/use-workflow";
 import type {
 	CycleError,
 	MissingConnectionError,
 	MultipleSourcesError,
 	WorkflowDefinition,
-} from "@/registry/blocks/flow-01/types/workflow";
+} from "@/registry/lib/flow/workflow";
+
+// Processing
 
 export type ProcessingNodeError = {
 	message: string;
@@ -18,6 +20,8 @@ export type NodeProcessor = (
 	targetsData: ProcessedData,
 ) => Promise<ProcessedData>;
 
+// Node Execution State
+
 export type NodeExecutionStatus = "success" | "error" | "processing" | "idle";
 
 export type NodeExecutionState = {
@@ -29,11 +33,14 @@ export type NodeExecutionState = {
 };
 
 // Edge Execution State
+
 export type EdgeExecutionState = {
 	error?: MultipleSourcesError | CycleError;
 };
 
-export interface ExecutionContext {
+// Excution Engine
+
+interface ExecutionContext {
 	workflow: WorkflowDefinition;
 	processNode: (
 		nodeId: string,
@@ -45,38 +52,38 @@ export interface ExecutionContext {
 	) => void;
 }
 
-const getNodeTargetsData = (
-	workflow: WorkflowDefinition,
-	nodeId: string,
-): ProcessedData => {
-	const node = workflow.nodes.find((n) => n.id === nodeId);
-	if (!node) {
-		return undefined;
-	}
-
-	const edgesConnectedToNode = workflow.edges.filter(
-		(edge) => edge.target === nodeId,
-	);
-
-	const targetsData: ProcessedData = {};
-	for (const edge of edgesConnectedToNode) {
-		const sourceNode = workflow.nodes.find((n) => n.id === edge.source);
-		if (!sourceNode?.data.executionState?.sources) {
-			continue;
-		}
-
-		const sourceNodeResult =
-			sourceNode.data.executionState.sources[edge.sourceHandle];
-		targetsData[edge.targetHandle] = sourceNodeResult;
-	}
-
-	return targetsData;
-};
-
 export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 	const completedNodes = new Set<string>();
 	const failedNodes = new Set<string>();
 	const processingNodes = new Set<string>();
+
+	const getNodeTargetsData = (
+		workflow: WorkflowDefinition,
+		nodeId: string,
+	): ProcessedData => {
+		const node = workflow.nodes.find((n) => n.id === nodeId);
+		if (!node) {
+			return undefined;
+		}
+
+		const edgesConnectedToNode = workflow.edges.filter(
+			(edge) => edge.target === nodeId,
+		);
+
+		const targetsData: ProcessedData = {};
+		for (const edge of edgesConnectedToNode) {
+			const sourceNode = workflow.nodes.find((n) => n.id === edge.source);
+			if (!sourceNode?.data.executionState?.sources) {
+				continue;
+			}
+
+			const sourceNodeResult =
+				sourceNode.data.executionState.sources[edge.sourceHandle];
+			targetsData[edge.targetHandle] = sourceNodeResult;
+		}
+
+		return targetsData;
+	};
 
 	const canProcessNode = (nodeId: string) => {
 		const nodeDependencies = context.workflow.dependencies[nodeId] || [];

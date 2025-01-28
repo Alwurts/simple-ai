@@ -1,15 +1,78 @@
-import type { FlowEdge, FlowNode } from "@/registry/blocks/flow-01/types/flow";
-import { NODE_TYPE_CONFIG } from "@/registry/blocks/flow-01/types/flow";
-import type {
-	ConnectionMap,
-	CycleError,
-	DependencyGraph,
-	MissingConnectionError,
-	MultipleSourcesError,
-	WorkflowDefinition,
-	WorkflowError,
-} from "@/registry/blocks/flow-01/types/workflow";
+import {
+	NODES_CONFIG,
+	type FlowEdge,
+	type FlowNode,
+} from "@/registry/hooks/flow/use-workflow";
 import { nanoid } from "nanoid";
+
+type Dependency = {
+	node: string;
+	sourceHandle: string;
+};
+
+type Dependencies = Record<string, Dependency[]>;
+
+type Dependent = {
+	node: string;
+	targetHandle: string;
+};
+
+type Dependents = Record<string, Dependent[]>;
+
+export type DependencyGraph = {
+	dependencies: Map<string, { node: string; sourceHandle: string }[]>;
+	dependents: Map<string, { node: string; targetHandle: string }[]>;
+};
+
+export type ConnectionMap = Map<string, FlowEdge[]>;
+
+// Error types
+
+type EdgeErrorInfo = {
+	id: string;
+	source: string;
+	target: string;
+	sourceHandle: string;
+	targetHandle: string;
+};
+
+export type MultipleSourcesError = {
+	message: string;
+	type: "multiple-sources-for-target-handle";
+	edges: EdgeErrorInfo[];
+};
+
+export type CycleError = {
+	message: string;
+	type: "cycle";
+	edges: EdgeErrorInfo[];
+};
+
+type NodeErrorInfo = {
+	id: string;
+	handleId: string;
+};
+
+export type MissingConnectionError = {
+	message: string;
+	type: "missing-required-connection";
+	node: NodeErrorInfo;
+};
+
+export type WorkflowError =
+	| MultipleSourcesError
+	| CycleError
+	| MissingConnectionError;
+
+export interface WorkflowDefinition {
+	id: string;
+	nodes: FlowNode[];
+	edges: FlowEdge[];
+	executionOrder: string[];
+	dependencies: Dependencies;
+	dependents: Dependents;
+	errors: WorkflowError[];
+}
 
 function buildDependencyGraph(edges: FlowEdge[]): {
 	dependencies: DependencyGraph["dependencies"];
@@ -217,11 +280,15 @@ function validateRequiredHandles(
 
 	// Check each node against its type configuration
 	for (const node of nodes) {
-		const config = NODE_TYPE_CONFIG[node.type];
+		const config = NODES_CONFIG[node.type];
+
+		if (!config) {
+			continue;
+		}
 
 		// Check required target handles
-		if (config.targets?.required) {
-			for (const targetHandle of config.targets.required) {
+		if (config.requiredTargets) {
+			for (const targetHandle of config.requiredTargets) {
 				const key = `${node.id}-${targetHandle}`;
 				const connections = connectionsByTarget.get(key);
 
@@ -232,25 +299,6 @@ function validateRequiredHandles(
 						node: {
 							id: node.id,
 							handleId: targetHandle,
-						},
-					});
-				}
-			}
-		}
-
-		// Check required source handles
-		if (config.sources?.required) {
-			for (const sourceHandle of config.sources.required) {
-				const key = `${node.id}-${sourceHandle}`;
-				const connections = connectionsBySource.get(key);
-
-				if (!connections || connections.length === 0) {
-					errors.push({
-						type: "missing-required-connection",
-						message: `Node "${node.id}" requires a connection from its "${sourceHandle}" output.`,
-						node: {
-							id: node.id,
-							handleId: sourceHandle,
 						},
 					});
 				}
@@ -278,7 +326,7 @@ export function prepareWorkflow(
 	// Second pass: Validate multiple sources for single target handle
 	errors.push(...validateMultipleSources(connectionMap));
 
-	// Third pass: Detect cycles and get execution order
+	// Third pass: Detect cycles
 	const cycleErrors = detectCycles(nodes, dependencies, dependents, edges);
 	errors.push(...cycleErrors);
 

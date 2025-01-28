@@ -6,17 +6,9 @@ import {
 } from "@xyflow/react";
 
 import { Button } from "@/components/ui/button";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
+
 import { Separator } from "@/components/ui/separator";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import { MODELS, type Model } from "@/registry/blocks/flow-01/types/ai";
-import type { BaseNodeData } from "@/registry/blocks/flow-01/types/flow";
+import { useStore } from "@/registry/hooks/flow/use-workflow";
 import { BaseNode } from "@/registry/ui/flow/base-node";
 import {
 	EditableHandle,
@@ -33,13 +25,16 @@ import { NodeHeader, NodeHeaderActions } from "@/registry/ui/flow/node-header";
 import { Bot, Plus, Trash } from "lucide-react";
 import { useCallback } from "react";
 import { toast } from "sonner";
+import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
+import {
+	AIModelSelector,
+	type Model,
+} from "@/registry/ui/flow/ai-model-selector";
 
-type GenerateTextConfig = {
-	model: Model;
-};
-
-type GenerateTextData = BaseNodeData & {
-	config: GenerateTextConfig;
+type GenerateTextData = {
+	config: {
+		model: Model;
+	};
 	dynamicHandles: {
 		tools: {
 			id: string;
@@ -47,13 +42,14 @@ type GenerateTextData = BaseNodeData & {
 			description?: string;
 		}[];
 	};
+	executionState: NodeExecutionState;
 };
 
 export type GenerateTextNode = Node<GenerateTextData, "generate-text"> & {
 	type: "generate-text";
 };
 
-export function GenerateText({
+export function GenerateTextNode({
 	id,
 	selected,
 	deletable,
@@ -169,18 +165,15 @@ export function GenerateText({
 			</NodeHeader>
 			<Separator />
 			<div className="p-4 flex flex-col gap-4">
-				<Select value={data.config.model} onValueChange={handleModelChange}>
-					<SelectTrigger className="w-full nodrag">
-						<SelectValue placeholder="Select model" />
-					</SelectTrigger>
-					<SelectContent>
-						{MODELS.map((model) => (
-							<SelectItem key={model} value={model}>
-								{model}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
+				<AIModelSelector
+					value={data.config.model}
+					onChange={handleModelChange}
+					disabledModels={[
+						"gpt-4o",
+						"gpt-4o-mini",
+						"deepseek-r1-distill-llama-70b",
+					]}
+				/>
 			</div>
 			<div className="grid grid-cols-[2fr,1fr] gap-2 pt-2 text-sm">
 				<div className="flex flex-col gap-2 min-w-0">

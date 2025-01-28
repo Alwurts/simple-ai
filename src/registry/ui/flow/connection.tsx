@@ -1,4 +1,3 @@
-import type { BaseFlowEdgeData } from "@/registry/blocks/flow-01/types/flow";
 import {
 	BaseEdge,
 	type Edge,
@@ -6,8 +5,11 @@ import {
 	getBezierPath,
 } from "@xyflow/react";
 import type { CSSProperties } from "react";
+import type { EdgeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 
-type ConnectionEdgeData = BaseFlowEdgeData;
+type ConnectionEdgeData = {
+	executionState?: EdgeExecutionState;
+};
 
 export type ConnectionEdge = Edge<ConnectionEdgeData, "connection"> & {
 	type: "connection";

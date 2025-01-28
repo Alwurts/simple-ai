@@ -3,9 +3,8 @@ import {
 	type NodeProcessor,
 	createWorkflowExecutionEngine,
 } from "@/registry/lib/flow/workflow-execution-engine";
-
-import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
-import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
+import type { FlowNode } from "@/registry/hooks/flow/use-workflow";
+import type { WorkflowDefinition } from "@/registry/lib/flow/workflow";
 
 function createEvent(type: string, data: Record<string, unknown>) {
 	return `data: ${JSON.stringify({ type, ...data })}\n\n`;

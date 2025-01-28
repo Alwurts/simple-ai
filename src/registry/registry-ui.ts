@@ -117,27 +117,14 @@ export const ui: Registry = [
 		],
 	},
 	{
-		name: "nodes-panel",
-		type: "registry:ui",
-		dependencies: ["@xyflow/react"],
-		registryDependencies: ["button"],
-		files: [
-			{
-				type: "registry:ui",
-				path: "ui/flow/nodes-panel.tsx",
-				target: "components/ui/flow/nodes-panel.tsx",
-			},
-		],
-	},
-	{
-		name: "base-edge",
+		name: "connection",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
 		files: [
 			{
 				type: "registry:ui",
-				path: "ui/flow/base-edge.tsx",
-				target: "components/ui/flow/base-edge.tsx",
+				path: "ui/flow/connection.tsx",
+				target: "components/ui/flow/connection.tsx",
 			},
 		],
 	},

@@ -1,11 +1,17 @@
-import type { Model, ToolResult } from "@/registry/blocks/flow-01/types/ai";
+import type { Model } from "@/registry/ui/flow/ai-model-selector";
 import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
 import { createDeepSeek } from "@ai-sdk/deepseek";
 import { createGroq } from "@ai-sdk/groq";
 import { generateText } from "ai";
 import { z } from "zod";
 
-export function createAIClient(model: Model) {
+interface ToolResult {
+	id: string;
+	name: string;
+	result: string;
+}
+
+function createAIClient(model: Model) {
 	switch (model) {
 		case "deepseek-chat":
 			return createDeepSeek({
@@ -22,7 +28,7 @@ export function createAIClient(model: Model) {
 	}
 }
 
-export function mapToolsForAI(
+function mapToolsForAI(
 	tools: GenerateTextNode["data"]["dynamicHandles"]["tools"],
 ) {
 	return Object.fromEntries(

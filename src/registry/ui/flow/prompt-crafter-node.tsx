@@ -13,8 +13,8 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import type { BaseNodeData } from "@/registry/blocks/flow-01/types/flow";
+import { useStore } from "@/registry/hooks/flow/use-workflow";
+import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import { BaseNode } from "@/registry/ui/flow/base-node";
 import {
 	EditableHandle,
@@ -49,7 +49,7 @@ type PromptCrafterConfig = {
 	template: string;
 };
 
-type PromptCrafterData = BaseNodeData & {
+type PromptCrafterData = {
 	config: PromptCrafterConfig;
 	dynamicHandles: {
 		"template-tags": {
@@ -57,6 +57,7 @@ type PromptCrafterData = BaseNodeData & {
 			name: string;
 		}[];
 	};
+	executionState: NodeExecutionState;
 };
 
 export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter"> & {

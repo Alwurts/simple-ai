@@ -1,4 +1,4 @@
-import type { WorkflowDefinition } from "@/registry/blocks/flow-01/types/workflow";
+import type { WorkflowDefinition } from "@/registry/lib/flow/workflow";
 import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 
 export interface SSEWorkflowExecutionEventHandlers {

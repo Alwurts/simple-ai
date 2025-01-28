@@ -1,19 +1,11 @@
 /* import { EXAM_CREATOR_PARALLELIZATION_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/exam-creator-parallelization"; */
 import { NEWS_SUMMARY_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/news-summarization-chain";
 import { createNode } from "@/registry/blocks/flow-01/lib/node-factory";
-import { prepareWorkflow } from "@/registry/blocks/flow-01/lib/workflow";
 import {
-	type DynamicHandle,
-	type FlowEdge,
-	type FlowNode,
-	type FlowNodeDataTypeMap,
-	isNodeOfType,
-	isNodeWithDynamicHandles,
-} from "@/registry/blocks/flow-01/types/flow";
-import type {
-	WorkflowDefinition,
-	WorkflowError,
-} from "@/registry/blocks/flow-01/types/workflow";
+	prepareWorkflow,
+	type WorkflowDefinition,
+	type WorkflowError,
+} from "@/registry/lib/flow/workflow";
 import { SSEWorkflowExecutionClient } from "@/registry/lib/flow/sse-workflow-execution-client";
 import type {
 	EdgeExecutionState,
@@ -23,16 +15,72 @@ import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
 import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
 import { nanoid } from "nanoid";
 import { createWithEqualityFn } from "zustand/traditional";
+import type { ConnectionEdge } from "@/registry/ui/flow/connection";
+import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
+import type { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
+import type { TextInputNode } from "@/registry/ui/flow/text-input-node";
+import type { VisualizeTextNode } from "@/registry/ui/flow/visualize-text-node";
 
-export type ExecutionMode = "client" | "server";
+// Dynamic Handles
 
-export type WorkflowExecutionState = {
-	isRunning: boolean;
-	finishedAt: string | null;
-	errors: WorkflowError[];
+export type DynamicHandle = {
+	id: string;
+	name: string;
+	description?: string;
 };
 
-export interface StoreState {
+// Node Configuration
+
+export const NODES_CONFIG: Partial<
+	Record<
+		FlowNode["type"],
+		{
+			requiredTargets: string[];
+		}
+	>
+> = {
+	"generate-text": {
+		requiredTargets: ["prompt"],
+	},
+};
+
+// Nodes
+
+export type FlowNode =
+	| VisualizeTextNode
+	| TextInputNode
+	| PromptCrafterNode
+	| GenerateTextNode;
+
+// Edges
+
+export type FlowEdge = ConnectionEdge;
+
+// Type Guards
+
+export function isNodeOfType<T extends FlowNode["type"]>(
+	node: FlowNode,
+	type: T,
+): node is Extract<FlowNode, { type: T }> {
+	return node.type === type;
+}
+
+export function isNodeWithDynamicHandles<T extends FlowNode>(
+	node: T,
+): node is Extract<
+	T,
+	{
+		data: {
+			dynamicHandles: {
+				[key in string]: DynamicHandle[];
+			};
+		};
+	}
+> {
+	return "dynamicHandles" in node.data;
+}
+
+export interface WorkflowState {
 	nodes: FlowNode[];
 	edges: FlowEdge[];
 	onNodesChange: (changes: NodeChange<FlowNode>[]) => void;
@@ -46,7 +94,7 @@ export interface StoreState {
 	updateNode: <T extends FlowNode["type"]>(
 		id: string,
 		nodeType: T,
-		data: Partial<FlowNodeDataTypeMap[T]>,
+		data: Partial<FlowNode["data"]>,
 	) => void;
 	updateNodeExecutionState: (
 		nodeId: string,
@@ -71,12 +119,16 @@ export interface StoreState {
 	) => void;
 	// Workflow validation and execution state
 	validateWorkflow: () => WorkflowDefinition;
-	workflowExecutionState: WorkflowExecutionState;
+	workflowExecutionState: {
+		isRunning: boolean;
+		finishedAt: string | null;
+		errors: WorkflowError[];
+	};
 	// execution
 	startExecution: () => Promise<void>;
 }
 
-const useStore = createWithEqualityFn<StoreState>((set, get) => ({
+const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 	...NEWS_SUMMARY_WORKFLOW,
 	workflowExecutionState: {
 		isRunning: false,
@@ -404,4 +456,4 @@ const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 	},
 }));
 
-export { useStore };
+export { useWorkflow as useStore };

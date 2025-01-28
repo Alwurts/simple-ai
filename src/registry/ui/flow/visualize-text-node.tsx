@@ -1,8 +1,7 @@
 import { type Node, type NodeProps, Position } from "@xyflow/react";
 
 import { Separator } from "@/components/ui/separator";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import type { BaseNodeData } from "@/registry/blocks/flow-01/types/flow";
+import { useStore } from "@/registry/hooks/flow/use-workflow";
 import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
 import {
 	NodeHeaderAction,
@@ -13,8 +12,11 @@ import { NodeHeader, NodeHeaderActions } from "@/registry/ui/flow/node-header";
 import { ResizableNode } from "@/registry/ui/flow/resizable-node";
 import { MarkdownContent } from "@/registry/ui/markdown-content";
 import { Eye, Trash } from "lucide-react";
+import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 
-type VisualizeTextData = BaseNodeData;
+type VisualizeTextData = {
+	executionState: NodeExecutionState;
+};
 
 export type VisualizeTextNode = Node<VisualizeTextData, "visualize-text"> & {
 	type: "visualize-text";

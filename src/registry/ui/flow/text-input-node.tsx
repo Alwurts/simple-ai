@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import { useStore } from "@/registry/blocks/flow-01/hooks/store";
-import type { BaseNodeData } from "@/registry/blocks/flow-01/types/flow";
+import { useStore } from "@/registry/hooks/flow/use-workflow";
+import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
 import {
 	NodeHeaderAction,
@@ -21,8 +21,9 @@ type TextInputConfig = {
 	value: string;
 };
 
-export type TextInputData = BaseNodeData & {
+export type TextInputData = {
 	config: TextInputConfig;
+	executionState: NodeExecutionState;
 };
 
 export type TextInputNode = Node<TextInputData, "text-input"> & {
