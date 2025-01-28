@@ -99,7 +99,7 @@ const createPromptLanguage = (validInputs: string[] = []) =>
 		},
 	});
 
-export function PromptCrafter({
+export function PromptCrafterNode({
 	id,
 	selected,
 	deletable,

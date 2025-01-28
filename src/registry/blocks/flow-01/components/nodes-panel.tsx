@@ -1,28 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Panel } from "@xyflow/react";
-import { Bot, Eye, PenLine, PencilRuler } from "lucide-react";
+import { Eye } from "lucide-react";
 import type React from "react";
 
 const nodeTypes = [
 	{
-		type: "generate-text",
-		label: "Generate Text",
-		icon: Bot,
-	},
-	{
 		type: "visualize-text",
 		label: "Visualize Text",
 		icon: Eye,
-	},
-	{
-		type: "text-input",
-		label: "Text Input",
-		icon: PenLine,
-	},
-	{
-		type: "prompt-crafter",
-		label: "Prompt Crafter",
-		icon: PencilRuler,
 	},
 ];
 

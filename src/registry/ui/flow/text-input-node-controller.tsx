@@ -3,7 +3,7 @@
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import {
-	TextInput,
+	TextInputNode,
 	type TextInputNode,
 } from "@/registry/ui/flow/text-input-node";
 import type { NodeProps } from "@xyflow/react";
@@ -36,7 +36,7 @@ export function TextInputNodeController({
 	}, [id, deleteNode]);
 
 	return (
-		<TextInput
+		<TextInputNode
 			id={id}
 			data={{
 				status: data.executionState?.status,

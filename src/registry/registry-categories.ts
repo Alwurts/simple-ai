@@ -9,4 +9,9 @@ export const registryCategories = [
 		slug: "app",
 		hidden: false,
 	},
+	{
+		name: "Flow",
+		slug: "flow",
+		hidden: true,
+	},
 ];

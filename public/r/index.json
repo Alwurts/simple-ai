@@ -147,16 +147,16 @@
     ]
   },
   {
-    "name": "connection",
+    "name": "status-edge",
     "type": "registry:ui",
     "dependencies": [
       "@xyflow/react"
     ],
     "files": [
       {
-        "path": "ui/flow/connection.tsx",
+        "path": "ui/flow/status-edge.tsx",
         "type": "registry:ui",
-        "target": "components/ui/flow/connection.tsx"
+        "target": "components/ui/flow/status-edge.tsx"
       }
     ]
   }

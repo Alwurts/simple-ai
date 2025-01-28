@@ -133,7 +133,7 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		get().validateWorkflow();
 	},
 	onConnect: (connection) => {
-		const newEdge = addEdge({ ...connection, type: "connection" }, get().edges);
+		const newEdge = addEdge({ ...connection, type: "status" }, get().edges);
 		const sourceNode = get().getNodeById(connection.source);
 
 		if (!connection.sourceHandle) {

@@ -1,4 +1,3 @@
-import type { EdgeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import {
 	type Edge,
 	type EdgeProps,
@@ -7,17 +6,18 @@ import {
 } from "@xyflow/react";
 import type { CSSProperties } from "react";
 
-type ConnectionEdgeData = {
-	executionState?: EdgeExecutionState;
-};
-
-export type ConnectionEdge = Edge<ConnectionEdgeData, "connection"> & {
-	type: "connection";
+export type StatusEdge = Edge<
+	{
+		error?: boolean;
+	},
+	"status"
+> & {
+	type: "status";
 	sourceHandle: string;
 	targetHandle: string;
 };
 
-export function Connection({
+export function StatusEdge({
 	sourceX,
 	sourceY,
 	targetX,
@@ -26,7 +26,7 @@ export function Connection({
 	targetPosition,
 	data,
 	selected,
-}: EdgeProps<ConnectionEdge>) {
+}: EdgeProps<StatusEdge>) {
 	const [edgePath] = getBezierPath({
 		sourceX,
 		sourceY,
@@ -37,11 +37,7 @@ export function Connection({
 	});
 
 	const edgeStyle: CSSProperties = {
-		stroke: data?.executionState?.error
-			? "#ef4444"
-			: selected
-				? "#3b82f6"
-				: "#b1b1b7",
+		stroke: data?.error ? "#ef4444" : selected ? "#3b82f6" : "#b1b1b7",
 		strokeWidth: selected ? 3 : 2,
 		transition: "stroke 0.2s, stroke-width 0.2s",
 	};

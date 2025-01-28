@@ -3,7 +3,7 @@
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import {
-	PromptCrafter,
+	PromptCrafterNode,
 	type PromptCrafterNode,
 } from "@/registry/ui/flow/prompt-crafter-node";
 import type { NodeProps } from "@xyflow/react";
@@ -112,7 +112,7 @@ export function PromptCrafterNodeController({
 	}, [id, deleteNode]);
 
 	return (
-		<PromptCrafter
+		<PromptCrafterNode
 			id={id}
 			data={{ ...data, status: data.executionState?.status }}
 			{...props}

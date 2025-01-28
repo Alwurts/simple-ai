@@ -139,18 +139,18 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/ui/flow/editable-handle.tsx")),
 		source: "",
 		meta: undefined,
-    },	"connection": {
-		name: "connection",
+    },	"status-edge": {
+		name: "status-edge",
 		description: "",
 		type: "registry:ui",
 		registryDependencies: undefined,
 		files: [{
-			path: "src/registry/ui/flow/connection.tsx",
+			path: "src/registry/ui/flow/status-edge.tsx",
 			type: "registry:ui",
-			target: "components/ui/flow/connection.tsx"
+			target: "components/ui/flow/status-edge.tsx"
 		}],
 		categories: undefined,
-		component: React.lazy(() => import("@/registry/ui/flow/connection.tsx")),
+		component: React.lazy(() => import("@/registry/ui/flow/status-edge.tsx")),
 		source: "",
 		meta: undefined,
     },	"chat-demo": {
@@ -660,8 +660,68 @@ export const Index: Record<string, any> = {
 			path: "src/registry/blocks/flow-01/page.tsx",
 			type: "registry:page",
 			target: "app/flow/page.tsx"
+		},{
+			path: "src/registry/blocks/flow-01/components/nodes-panel.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/status-edge-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/status-edge.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/text-input-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/hooks/flow/use-workflow.ts",
+			type: "registry:hook",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-client.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/server-node-processors.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/node-factory.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/generate-ai-text.ts",
+			type: "registry:lib",
+			target: ""
 		}],
-		categories: undefined,
+		categories: ["flow"],
 		component: React.lazy(() => import("@/registry/blocks/flow-01/page.tsx")),
 		source: "src/__registry__/blocks/flow-01/page.tsx",
 		meta: undefined,

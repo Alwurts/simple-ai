@@ -86,15 +86,39 @@ export const ui: Registry = [
 		],
 	},
 	{
-		name: "connection",
+		name: "status-edge",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
 		files: [
 			{
 				type: "registry:ui",
-				path: "ui/flow/connection.tsx",
-				target: "components/ui/flow/connection.tsx",
+				path: "ui/flow/status-edge.tsx",
+				target: "components/ui/flow/status-edge.tsx",
 			},
 		],
+	},
+	{
+		name: "generate-text-node",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		files: [{ type: "registry:ui", path: "ui/flow/generate-text-node.tsx" }],
+	},
+	{
+		name: "prompt-crafter-node",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		files: [{ type: "registry:ui", path: "ui/flow/prompt-crafter-node.tsx" }],
+	},
+	{
+		name: "text-input-node",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		files: [{ type: "registry:ui", path: "ui/flow/text-input-node.tsx" }],
+	},
+	{
+		name: "visualize-text-node",
+		type: "registry:ui",
+		dependencies: ["@xyflow/react"],
+		files: [{ type: "registry:ui", path: "ui/flow/visualize-text-node.tsx" }],
 	},
 ];

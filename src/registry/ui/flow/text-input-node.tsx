@@ -26,7 +26,7 @@ export interface TextInputProps extends NodeProps<TextInputNode> {
 	onDeleteNode: () => void;
 }
 
-export function TextInput({
+export function TextInputNode({
 	id,
 	selected,
 	data,
