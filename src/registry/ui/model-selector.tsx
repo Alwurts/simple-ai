@@ -19,19 +19,20 @@ export const MODELS = [
 
 export type Model = (typeof MODELS)[number];
 
-interface AIModelSelectorProps extends SelectProps {
+interface ModelSelectorProps extends SelectProps {
 	value: Model;
 	onChange: (value: Model) => void;
 	disabledModels?: Model[];
 }
 
-export function AIModelSelector({
+export function ModelSelector({
 	value,
 	onChange,
 	disabledModels,
-}: AIModelSelectorProps) {
+	...props
+}: ModelSelectorProps) {
 	return (
-		<Select value={value} onValueChange={onChange}>
+		<Select value={value} onValueChange={onChange} {...props}>
 			<SelectTrigger className="w-full nodrag">
 				<SelectValue placeholder="Select model" />
 			</SelectTrigger>

@@ -18,9 +18,8 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import type { FlowNode } from "@/registry/hooks/flow/use-workflow";
 import { useStore } from "@/registry/hooks/flow/use-workflow";
-import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
-import type { WorkflowError } from "@/registry/blocks/flow-01/types/workflow";
 import { Connection } from "@/registry/ui/flow/connection";
 import { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
 import { NodesPanel } from "@/registry/blocks/flow-01/components/nodes-panel";
@@ -28,6 +27,7 @@ import { PromptCrafter } from "@/registry/ui/flow/prompt-crafter-node";
 import { TextInput } from "@/registry/ui/flow/text-input-node";
 import { VisualizeText } from "@/registry/ui/flow/visualize-text-node";
 import { AlertCircle, Copy } from "lucide-react";
+import type { WorkflowError } from "@/registry/lib/flow/workflow";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNode,

@@ -83,6 +83,20 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/ui/markdown-content.tsx")),
 		source: "",
 		meta: undefined,
+    },	"model-selector": {
+		name: "model-selector",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/model-selector.tsx",
+			type: "registry:ui",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/model-selector.tsx")),
+		source: "",
+		meta: undefined,
     },	"base-node": {
 		name: "base-node",
 		description: "",
@@ -417,6 +431,34 @@ export const Index: Record<string, any> = {
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/examples/jsx-renderer-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"model-selector-demo": {
+		name: "model-selector-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/model-selector-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/model-selector-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"model-selector-disabled-demo": {
+		name: "model-selector-disabled-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/model-selector-disabled-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/model-selector-disabled-demo.tsx")),
 		source: "",
 		meta: undefined,
     },	"use-textarea-resize": {

@@ -172,4 +172,24 @@ export const examples: Registry = [
 			},
 		],
 	},
+	{
+		name: "model-selector-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/model-selector-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "model-selector-disabled-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/model-selector-disabled-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
 ];

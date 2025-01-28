@@ -42,6 +42,11 @@ export const ui: Registry = [
 		files: [{ type: "registry:ui", path: "ui/markdown-content.tsx" }],
 	},
 	{
+		name: "model-selector",
+		type: "registry:ui",
+		files: [{ type: "registry:ui", path: "ui/model-selector.tsx" }],
+	},
+	{
 		name: "base-node",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],

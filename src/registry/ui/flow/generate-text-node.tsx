@@ -27,9 +27,9 @@ import { useCallback } from "react";
 import { toast } from "sonner";
 import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import {
-	AIModelSelector,
+	ModelSelector,
 	type Model,
-} from "@/registry/ui/flow/ai-model-selector";
+} from "@/registry/ui/model-selector";
 
 type GenerateTextData = {
 	config: {
@@ -165,7 +165,7 @@ export function GenerateTextNode({
 			</NodeHeader>
 			<Separator />
 			<div className="p-4 flex flex-col gap-4">
-				<AIModelSelector
+				<ModelSelector
 					value={data.config.model}
 					onChange={handleModelChange}
 					disabledModels={[

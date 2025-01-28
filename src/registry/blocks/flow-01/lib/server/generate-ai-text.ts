@@ -1,4 +1,4 @@
-import type { Model } from "@/registry/ui/flow/ai-model-selector";
+import type { Model } from "@/registry/ui/model-selector";
 import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
 import { createDeepSeek } from "@ai-sdk/deepseek";
 import { createGroq } from "@ai-sdk/groq";

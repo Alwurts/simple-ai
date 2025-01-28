@@ -82,6 +82,16 @@
     ]
   },
   {
+    "name": "model-selector",
+    "type": "registry:ui",
+    "files": [
+      {
+        "path": "ui/model-selector.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
     "name": "base-node",
     "type": "registry:ui",
     "dependencies": [

@@ -68,13 +68,18 @@ export const docsConfig: DocsConfig = {
 					items: [],
 				},
 				{
+					title: "JSX Renderer",
+					href: "/docs/components/jsx-renderer",
+					items: [],
+				},
+				{
 					title: "Markdown Content",
 					href: "/docs/components/markdown-content",
 					items: [],
 				},
 				{
-					title: "JSX Renderer",
-					href: "/docs/components/jsx-renderer",
+					title: "Model Selector",
+					href: "/docs/components/model-selector",
 					items: [],
 				},
 			],
