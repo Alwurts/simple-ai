@@ -1,4 +1,4 @@
-import type { FlowEdge, FlowNode } from "@/registry/blocks/flow-01/types/flow";
+import type { FlowEdge, FlowNode } from "@/registry/lib/flow/workflow";
 
 export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 	nodes: FlowNode[];

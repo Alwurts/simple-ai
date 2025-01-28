@@ -7,29 +7,25 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-import { Separator } from "@/components/ui/separator";
-import { useStore } from "@/registry/hooks/flow/use-workflow";
-import { BaseNode } from "@/registry/ui/flow/base-node";
-import {
-	EditableHandle,
-	HandleEditor,
-} from "@/registry/ui/flow/editable-handle";
-import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
+import { BaseNode } from "@/components/flow/base-node";
+import { LabeledHandle } from "@/components/flow/labeled-handle";
 import {
 	NodeHeaderAction,
 	NodeHeaderIcon,
-	NodeHeaderStatus,
 	NodeHeaderTitle,
-} from "@/registry/ui/flow/node-header";
-import { NodeHeader, NodeHeaderActions } from "@/registry/ui/flow/node-header";
-import { Bot, Plus, Trash } from "lucide-react";
-import { useCallback } from "react";
-import { toast } from "sonner";
+} from "@/components/flow/node-header";
+import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import {
-	ModelSelector,
-	type Model,
-} from "@/registry/ui/model-selector";
+	EditableHandle,
+	EditableHandleDialog,
+} from "@/registry/ui/flow/editable-handle";
+import { NodeHeaderStatus } from "@/registry/ui/flow/node-header-status";
+import { type Model, ModelSelector } from "@/registry/ui/model-selector";
+import { Bot, Plus, Trash } from "lucide-react";
+import { useCallback } from "react";
 
 type GenerateTextData = {
 	config: {
@@ -42,99 +38,65 @@ type GenerateTextData = {
 			description?: string;
 		}[];
 	};
-	executionState: NodeExecutionState;
+	executionState?: NodeExecutionState;
 };
 
 export type GenerateTextNode = Node<GenerateTextData, "generate-text"> & {
 	type: "generate-text";
 };
 
+export interface GenerateTextNodeProps extends NodeProps<GenerateTextNode> {
+	onModelChange: (model: Model) => void;
+	onCreateTool: (name: string, description?: string) => boolean;
+	onRemoveTool: (handleId: string) => void;
+	onUpdateTool: (
+		toolId: string,
+		newName: string,
+		newDescription?: string,
+	) => boolean;
+	onDeleteNode: () => void;
+}
+
 export function GenerateTextNode({
 	id,
 	selected,
 	deletable,
 	data,
-}: NodeProps<GenerateTextNode>) {
-	const updateNode = useStore((state) => state.updateNode);
-	const addDynamicHandle = useStore((state) => state.addDynamicHandle);
-	const removeDynamicHandle = useStore((state) => state.removeDynamicHandle);
-	const deleteNode = useStore((state) => state.deleteNode);
+	onModelChange,
+	onCreateTool,
+	onRemoveTool,
+	onUpdateTool,
+	onDeleteNode,
+}: GenerateTextNodeProps) {
 	const updateNodeInternals = useUpdateNodeInternals();
 
 	const handleModelChange = useCallback(
 		(value: string) => {
-			updateNode(id, "generate-text", {
-				config: {
-					...data.config,
-					model: value as Model,
-				},
-			});
+			onModelChange?.(value as Model);
 		},
-		[id, data.config, updateNode],
+		[onModelChange],
 	);
 
 	const handleCreateTool = useCallback(
 		(name: string, description?: string) => {
-			if (!name) {
-				toast.error("Tool name cannot be empty");
+			if (!onCreateTool) {
 				return false;
 			}
-
-			const existingTool = data.dynamicHandles.tools.find(
-				(tool) => tool.name === name,
-			);
-			if (existingTool) {
-				toast.error("Tool name already exists");
-				return false;
+			const result = onCreateTool(name, description);
+			if (result) {
+				updateNodeInternals(id);
 			}
-
-			addDynamicHandle(id, "generate-text", "tools", {
-				name,
-				description,
-			});
-			updateNodeInternals(id);
-			return true;
+			return result;
 		},
-		[id, data.dynamicHandles.tools, addDynamicHandle, updateNodeInternals],
+		[onCreateTool, id, updateNodeInternals],
 	);
 
 	const removeHandle = useCallback(
 		(handleId: string) => {
-			removeDynamicHandle(id, "generate-text", "tools", handleId);
+			onRemoveTool?.(handleId);
 			updateNodeInternals(id);
 		},
-		[id, removeDynamicHandle, updateNodeInternals],
-	);
-
-	const updateTool = useCallback(
-		(toolId: string, newName: string, newDescription?: string): boolean => {
-			if (!newName) {
-				toast.error("Tool name cannot be empty");
-				return false;
-			}
-
-			const existingTool = data.dynamicHandles.tools.find(
-				(tool) => tool.name === newName && tool.id !== toolId,
-			);
-			if (existingTool) {
-				toast.error("Tool name already exists");
-				return false;
-			}
-
-			updateNode(id, "generate-text", {
-				dynamicHandles: {
-					...data.dynamicHandles,
-					tools: data.dynamicHandles.tools.map((tool) =>
-						tool.id === toolId
-							? { ...tool, name: newName, description: newDescription }
-							: tool,
-					),
-				},
-			});
-			updateNodeInternals(id);
-			return true;
-		},
-		[id, data.dynamicHandles, updateNode, updateNodeInternals],
+		[onRemoveTool, id, updateNodeInternals],
 	);
 
 	const executionStatus = data.executionState?.status;
@@ -142,10 +104,12 @@ export function GenerateTextNode({
 	return (
 		<BaseNode
 			selected={selected}
-			executionStatus={executionStatus}
-			className="w-[350px]"
+			className={cn("w-[350px] p-0 hover:ring-orange-500", {
+				"border-orange-500": executionStatus === "processing",
+				"border-red-500": executionStatus === "error",
+			})}
 		>
-			<NodeHeader>
+			<NodeHeader className="m-0">
 				<NodeHeaderIcon>
 					<Bot />
 				</NodeHeaderIcon>
@@ -154,7 +118,7 @@ export function GenerateTextNode({
 					<NodeHeaderStatus status={executionStatus} />
 					{deletable && (
 						<NodeHeaderAction
-							onClick={() => deleteNode(id)}
+							onClick={onDeleteNode}
 							variant="ghost"
 							label="Delete node"
 						>
@@ -204,18 +168,17 @@ export function GenerateTextNode({
 				<div>
 					<div className="flex items-center justify-between py-2 px-4 bg-muted">
 						<span className="text-sm font-medium">Tool outputs</span>
-						<HandleEditor
+						<EditableHandleDialog
 							variant="create"
 							label=""
 							onSave={handleCreateTool}
-							onCancel={() => {}}
 							align="end"
 						>
 							<Button variant="outline" size="sm" className="h-7 px-2">
 								<Plus className="h-4 w-4 mr-1" />
 								New tool output
 							</Button>
-						</HandleEditor>
+						</EditableHandleDialog>
 					</div>
 					<div className="flex flex-col">
 						{data.dynamicHandles.tools.map((tool) => (
@@ -228,7 +191,7 @@ export function GenerateTextNode({
 								type="source"
 								position={Position.Right}
 								wrapperClassName="w-full"
-								onNameChange={updateTool}
+								onUpdateTool={onUpdateTool}
 								onDelete={removeHandle}
 							/>
 						))}

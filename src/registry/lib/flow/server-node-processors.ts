@@ -1,5 +1,5 @@
-import { generateAIText } from "@/registry/blocks/flow-01/lib/server/generate-ai-text";
-import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
+import { generateAIText } from "@/registry/lib/flow/generate-ai-text";
+import type { FlowNode } from "@/registry/lib/flow/workflow";
 import type { NodeProcessor } from "@/registry/lib/flow/workflow-execution-engine";
 import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
 import type { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";

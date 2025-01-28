@@ -97,20 +97,6 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/ui/model-selector.tsx")),
 		source: "",
 		meta: undefined,
-    },	"base-node": {
-		name: "base-node",
-		description: "",
-		type: "registry:ui",
-		registryDependencies: undefined,
-		files: [{
-			path: "src/registry/ui/flow/base-node.tsx",
-			type: "registry:ui",
-			target: "components/ui/flow/base-node.tsx"
-		}],
-		categories: undefined,
-		component: React.lazy(() => import("@/registry/ui/flow/base-node.tsx")),
-		source: "",
-		meta: undefined,
     },	"resizable-node": {
 		name: "resizable-node",
 		description: "",
@@ -125,46 +111,18 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/ui/flow/resizable-node.tsx")),
 		source: "",
 		meta: undefined,
-    },	"node-header": {
-		name: "node-header",
+    },	"node-header-status": {
+		name: "node-header-status",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["button","dropdown-menu","badge"],
+		registryDependencies: ["badge"],
 		files: [{
-			path: "src/registry/ui/flow/node-header.tsx",
+			path: "src/registry/ui/flow/node-header-status.tsx",
 			type: "registry:ui",
-			target: "components/ui/flow/node-header.tsx"
+			target: "components/ui/flow/node-header-status.tsx"
 		}],
 		categories: undefined,
-		component: React.lazy(() => import("@/registry/ui/flow/node-header.tsx")),
-		source: "",
-		meta: undefined,
-    },	"base-handle": {
-		name: "base-handle",
-		description: "",
-		type: "registry:ui",
-		registryDependencies: undefined,
-		files: [{
-			path: "src/registry/ui/flow/base-handle.tsx",
-			type: "registry:ui",
-			target: "components/ui/flow/base-handle.tsx"
-		}],
-		categories: undefined,
-		component: React.lazy(() => import("@/registry/ui/flow/base-handle.tsx")),
-		source: "",
-		meta: undefined,
-    },	"labeled-handle": {
-		name: "labeled-handle",
-		description: "",
-		type: "registry:ui",
-		registryDependencies: undefined,
-		files: [{
-			path: "src/registry/ui/flow/labeled-handle.tsx",
-			type: "registry:ui",
-			target: "components/ui/flow/labeled-handle.tsx"
-		}],
-		categories: undefined,
-		component: React.lazy(() => import("@/registry/ui/flow/labeled-handle.tsx")),
+		component: React.lazy(() => import("@/registry/ui/flow/node-header-status.tsx")),
 		source: "",
 		meta: undefined,
     },	"editable-handle": {

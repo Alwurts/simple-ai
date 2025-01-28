@@ -13,68 +13,30 @@ import { shallow } from "zustand/shallow";
 import "@xyflow/react/dist/style.css";
 /* import { DevTools } from "@/components/flow/devtools"; */
 import { Button } from "@/components/ui/button";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
-import type { FlowNode } from "@/registry/hooks/flow/use-workflow";
-import { useStore } from "@/registry/hooks/flow/use-workflow";
-import { Connection } from "@/registry/ui/flow/connection";
-import { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
 import { NodesPanel } from "@/registry/blocks/flow-01/components/nodes-panel";
-import { PromptCrafter } from "@/registry/ui/flow/prompt-crafter-node";
-import { TextInput } from "@/registry/ui/flow/text-input-node";
-import { VisualizeText } from "@/registry/ui/flow/visualize-text-node";
-import { AlertCircle, Copy } from "lucide-react";
-import type { WorkflowError } from "@/registry/lib/flow/workflow";
+import { PromptCrafterNodeController } from "@/registry/blocks/flow-01/components/prompt-crafter-node-controller";
+import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
+import type { FlowNode } from "@/registry/lib/flow/workflow";
+import { Connection } from "@/registry/ui/flow/connection";
+import { Copy } from "lucide-react";
+import { ErrorIndicator } from "@/registry/blocks/flow-01/components/error-indicator";
+import { GenerateTextNodeController } from "@/registry/blocks/flow-01/components/generate-text-node-controller";
+import { TextInputNodeController } from "@/registry/blocks/flow-01/components/text-input-node-controller";
+import { VisualizeTextNodeController } from "@/registry/blocks/flow-01/components/visualize-text-node-controller";
 
 const nodeTypes: NodeTypes = {
-	"generate-text": GenerateTextNode,
-	"visualize-text": VisualizeText,
-	"text-input": TextInput,
-	"prompt-crafter": PromptCrafter,
+	"generate-text": GenerateTextNodeController,
+	"visualize-text": VisualizeTextNodeController,
+	"text-input": TextInputNodeController,
+	"prompt-crafter": PromptCrafterNodeController,
 };
 
 const edgeTypes: EdgeTypes = {
 	connection: Connection,
 };
 
-function ErrorIndicator({
-	errors,
-}: { errors: WorkflowError[] }): React.ReactElement | null {
-	if (errors.length === 0) {
-		return null;
-	}
-
-	return (
-		<Popover>
-			<PopoverTrigger asChild>
-				<Button variant="ghost" size="icon" className="text-red-500">
-					<AlertCircle className="h-5 w-5" />
-				</Button>
-			</PopoverTrigger>
-			<PopoverContent align="center" className="w-80 mt-4 mr-4">
-				<div className="space-y-2">
-					<h4 className="font-medium">Workflow Errors</h4>
-					<div className="space-y-1">
-						{errors.map((error) => (
-							<div
-								key={`${error.type}-${error.message}`}
-								className="text-sm text-red-500"
-							>
-								{error.message}
-							</div>
-						))}
-					</div>
-				</div>
-			</PopoverContent>
-		</Popover>
-	);
-}
-
 function Flow() {
-	const store = useStore(
+	const store = useWorkflow(
 		(store) => ({
 			nodes: store.nodes,
 			edges: store.edges,

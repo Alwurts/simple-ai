@@ -1,6 +1,5 @@
 import React from "react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -26,7 +25,10 @@ export const NodeHeader = React.forwardRef<HTMLElement, NodeHeaderProps>(
 				ref={ref}
 				{...props}
 				className={cn(
-					"flex items-center justify-between gap-2 px-4 py-2",
+					"mb-4 flex items-center justify-between gap-2 px-3 py-2",
+					// Remove or modify these classes if you modify the padding in the
+					// `<BaseNode />` component.
+					"-mx-5 -mt-5",
 					className,
 				)}
 			/>
@@ -78,30 +80,6 @@ export const NodeHeaderIcon = React.forwardRef<
 });
 
 NodeHeaderIcon.displayName = "NodeHeaderIcon";
-
-/* NODE HEADER STATUS ------------------------------------------------------ */
-export const NodeHeaderStatus = ({
-	status,
-}: {
-	status?: "idle" | "processing" | "success" | "error";
-}) => {
-	const statusColors = {
-		idle: "bg-muted text-muted-foreground",
-		processing: "bg-orange-500 text-white",
-		success: "bg-green-500 text-white",
-		error: "bg-red-500 text-white",
-	};
-	return (
-		<Badge
-			variant="secondary"
-			className={cn("mr-2 font-normal", status && statusColors[status])}
-		>
-			{status ? status : "idle"}
-		</Badge>
-	);
-};
-
-NodeHeaderStatus.displayName = "NodeHeaderStatus";
 
 /* NODE HEADER ACTIONS ------------------------------------------------------ */
 

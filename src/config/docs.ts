@@ -84,5 +84,15 @@ export const docsConfig: DocsConfig = {
 				},
 			],
 		},
+		{
+			title: "React Flow",
+			items: [
+				{
+					title: "Base Node",
+					href: "/docs/react-flow/base-node",
+					items: [],
+				},
+			],
+		},
 	],
 };

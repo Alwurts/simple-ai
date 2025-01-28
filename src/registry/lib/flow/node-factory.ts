@@ -1,4 +1,4 @@
-import type { FlowNode } from "@/registry/blocks/flow-01/types/flow";
+import type { FlowNode } from "@/registry/lib/flow/workflow";
 import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
 import type { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
 import type { TextInputNode } from "@/registry/ui/flow/text-input-node";

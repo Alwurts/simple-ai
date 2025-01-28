@@ -1,7 +1,7 @@
 "use client";
 
+import { type Model, ModelSelector } from "@/registry/ui/model-selector";
 import { useState } from "react";
-import { ModelSelector, type Model } from "@/registry/ui/model-selector";
 
 export default function ModelSelectorDemo() {
 	const [model, setModel] = useState<Model>("deepseek-chat");

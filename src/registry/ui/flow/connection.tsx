@@ -1,11 +1,11 @@
+import type { EdgeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import {
-	BaseEdge,
 	type Edge,
 	type EdgeProps,
+	BaseEdge as FlowBaseEdge,
 	getBezierPath,
 } from "@xyflow/react";
 import type { CSSProperties } from "react";
-import type { EdgeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 
 type ConnectionEdgeData = {
 	executionState?: EdgeExecutionState;
@@ -46,5 +46,5 @@ export function Connection({
 		transition: "stroke 0.2s, stroke-width 0.2s",
 	};
 
-	return <BaseEdge path={edgePath} style={edgeStyle} />;
+	return <FlowBaseEdge path={edgePath} style={edgeStyle} />;
 }

@@ -47,18 +47,6 @@ export const ui: Registry = [
 		files: [{ type: "registry:ui", path: "ui/model-selector.tsx" }],
 	},
 	{
-		name: "base-node",
-		type: "registry:ui",
-		dependencies: ["@xyflow/react"],
-		files: [
-			{
-				type: "registry:ui",
-				path: "ui/flow/base-node.tsx",
-				target: "components/ui/flow/base-node.tsx",
-			},
-		],
-	},
-	{
 		name: "resizable-node",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
@@ -72,39 +60,15 @@ export const ui: Registry = [
 		],
 	},
 	{
-		name: "node-header",
+		name: "node-header-status",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
-		registryDependencies: ["button", "dropdown-menu", "badge"],
+		registryDependencies: ["badge"],
 		files: [
 			{
 				type: "registry:ui",
-				path: "ui/flow/node-header.tsx",
-				target: "components/ui/flow/node-header.tsx",
-			},
-		],
-	},
-	{
-		name: "base-handle",
-		type: "registry:ui",
-		dependencies: ["@xyflow/react"],
-		files: [
-			{
-				type: "registry:ui",
-				path: "ui/flow/base-handle.tsx",
-				target: "components/ui/flow/base-handle.tsx",
-			},
-		],
-	},
-	{
-		name: "labeled-handle",
-		type: "registry:ui",
-		dependencies: ["@xyflow/react"],
-		files: [
-			{
-				type: "registry:ui",
-				path: "ui/flow/labeled-handle.tsx",
-				target: "components/ui/flow/labeled-handle.tsx",
+				path: "ui/flow/node-header-status.tsx",
+				target: "components/ui/flow/node-header-status.tsx",
 			},
 		],
 	},

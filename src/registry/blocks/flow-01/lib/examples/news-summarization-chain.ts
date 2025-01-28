@@ -1,4 +1,4 @@
-import type { FlowEdge, FlowNode } from "@/registry/blocks/flow-01/types/flow";
+import type { FlowEdge, FlowNode } from "@/registry/lib/flow/workflow";
 
 export const NEWS_SUMMARY_WORKFLOW: {
 	nodes: FlowNode[];

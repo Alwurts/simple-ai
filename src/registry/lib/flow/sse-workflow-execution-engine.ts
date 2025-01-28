@@ -1,10 +1,10 @@
+import type { FlowNode } from "@/registry/lib/flow/workflow";
+import type { WorkflowDefinition } from "@/registry/lib/flow/workflow";
 import {
 	type NodeExecutionState,
 	type NodeProcessor,
 	createWorkflowExecutionEngine,
 } from "@/registry/lib/flow/workflow-execution-engine";
-import type { FlowNode } from "@/registry/hooks/flow/use-workflow";
-import type { WorkflowDefinition } from "@/registry/lib/flow/workflow";
 
 function createEvent(type: string, data: Record<string, unknown>) {
 	return `data: ${JSON.stringify({ type, ...data })}\n\n`;

@@ -1,3 +1,11 @@
+import { BaseNode } from "@/components/flow/base-node";
+import { LabeledHandle } from "@/components/flow/labeled-handle";
+import {
+	NodeHeaderAction,
+	NodeHeaderIcon,
+	NodeHeaderTitle,
+} from "@/components/flow/node-header";
+import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Button } from "@/components/ui/button";
 import {
 	Command,
@@ -13,21 +21,13 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { useStore } from "@/registry/hooks/flow/use-workflow";
+import { cn } from "@/lib/utils";
 import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
-import { BaseNode } from "@/registry/ui/flow/base-node";
 import {
 	EditableHandle,
-	HandleEditor,
+	EditableHandleDialog,
 } from "@/registry/ui/flow/editable-handle";
-import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
-import {
-	NodeHeaderAction,
-	NodeHeaderIcon,
-	NodeHeaderStatus,
-	NodeHeaderTitle,
-} from "@/registry/ui/flow/node-header";
-import { NodeHeader, NodeHeaderActions } from "@/registry/ui/flow/node-header";
+import { NodeHeaderStatus } from "@/registry/ui/flow/node-header-status";
 import { StreamLanguage } from "@codemirror/language";
 import type { EditorView } from "@codemirror/view";
 import { tags as t } from "@lezer/highlight";
@@ -41,7 +41,6 @@ import {
 } from "@xyflow/react";
 import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { toast } from "sonner";
 
 // Prompt Crafter
 
@@ -57,12 +56,20 @@ type PromptCrafterData = {
 			name: string;
 		}[];
 	};
-	executionState: NodeExecutionState;
+	executionState?: NodeExecutionState;
 };
 
 export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter"> & {
 	type: "prompt-crafter";
 };
+
+export interface PromptCrafterProps extends NodeProps<PromptCrafterNode> {
+	onPromptTextChange: (value: string) => void;
+	onCreateInput: (name: string) => boolean;
+	onRemoveInput: (handleId: string) => void;
+	onUpdateInputName: (handleId: string, newLabel: string) => boolean;
+	onDeleteNode: () => void;
+}
 
 // Custom theme that matches your app's design
 const promptTheme = createTheme({
@@ -72,7 +79,6 @@ const promptTheme = createTheme({
 		foreground: "hsl(var(--foreground))",
 		caret: "black",
 		selection: "#3B82F6",
-		//selectionMatch: "#3B82F6",
 		lineHighlight: "transparent",
 	},
 	styles: [
@@ -105,21 +111,44 @@ export function PromptCrafter({
 	selected,
 	deletable,
 	data,
-}: NodeProps<PromptCrafterNode>) {
-	const updateNode = useStore((state) => state.updateNode);
-	const deleteNode = useStore((state) => state.deleteNode);
-	const addDynamicHandle = useStore((state) => state.addDynamicHandle);
-	const removeDynamicHandle = useStore((state) => state.removeDynamicHandle);
-
+	onPromptTextChange,
+	onCreateInput,
+	onRemoveInput,
+	onUpdateInputName,
+	onDeleteNode,
+}: PromptCrafterProps) {
 	const updateNodeInternals = useUpdateNodeInternals();
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 	const editorViewRef = useRef<EditorView>();
 
-	const handlePromptTextChange = useCallback(
-		(value: string) => {
-			updateNode(id, "prompt-crafter", { config: { template: value } });
+	const handleCreateInput = useCallback(
+		(name: string) => {
+			const result = onCreateInput(name);
+			if (result) {
+				updateNodeInternals(id);
+			}
+			return result;
 		},
-		[id, updateNode],
+		[onCreateInput, id, updateNodeInternals],
+	);
+
+	const handleRemoveInput = useCallback(
+		(handleId: string) => {
+			onRemoveInput(handleId);
+			updateNodeInternals(id);
+		},
+		[onRemoveInput, id, updateNodeInternals],
+	);
+
+	const handleUpdateInputName = useCallback(
+		(handleId: string, newLabel: string) => {
+			const result = onUpdateInputName(handleId, newLabel);
+			if (result) {
+				updateNodeInternals(id);
+			}
+			return result;
+		},
+		[onUpdateInputName, id, updateNodeInternals],
 	);
 
 	const insertInputAtCursor = useCallback((inputName: string) => {
@@ -137,82 +166,6 @@ export function PromptCrafter({
 		setIsPopoverOpen(false);
 	}, []);
 
-	const handleCreateInput = useCallback(
-		(name: string) => {
-			if (!name) {
-				toast.error("Input name cannot be empty");
-				return false;
-			}
-
-			const existingInput = data.dynamicHandles["template-tags"]?.find(
-				(input) => input.name === name,
-			);
-			if (existingInput) {
-				toast.error("Input name already exists");
-				return false;
-			}
-
-			addDynamicHandle(id, "prompt-crafter", "template-tags", {
-				name,
-			});
-			updateNodeInternals(id);
-			return true;
-		},
-		[id, data.dynamicHandles, addDynamicHandle, updateNodeInternals],
-	);
-
-	const removeInput = useCallback(
-		(handleId: string) => {
-			removeDynamicHandle(id, "prompt-crafter", "template-tags", handleId);
-			updateNodeInternals(id);
-		},
-		[id, updateNodeInternals, removeDynamicHandle],
-	);
-
-	const updateInputName = useCallback(
-		(handleId: string, newLabel: string): boolean => {
-			if (!newLabel) {
-				toast.error("Input name cannot be empty");
-				return false;
-			}
-
-			const existingInput = data.dynamicHandles["template-tags"]?.find(
-				(input) => input.name === newLabel,
-			);
-			if (existingInput && existingInput.id !== handleId) {
-				toast.error("Input name already exists");
-				return false;
-			}
-
-			const oldInput = data.dynamicHandles["template-tags"]?.find(
-				(input) => input.id === handleId,
-			);
-			if (!oldInput) {
-				return false;
-			}
-
-			updateNode(id, "prompt-crafter", {
-				config: {
-					...data.config,
-					template: (data.config.template || "").replace(
-						new RegExp(`{{${oldInput.name}}}`, "g"),
-						`{{${newLabel}}}`,
-					),
-				},
-				dynamicHandles: {
-					...data.dynamicHandles,
-					"template-tags": (data.dynamicHandles["template-tags"] || []).map(
-						(input) =>
-							input.id === handleId ? { ...input, name: newLabel } : input,
-					),
-				},
-			});
-			updateNodeInternals(id);
-			return true;
-		},
-		[id, data.dynamicHandles, data.config, updateNode, updateNodeInternals],
-	);
-
 	// Create language with current inputs
 	const extensions = useMemo(() => {
 		const validLabels = (data.dynamicHandles["template-tags"] || []).map(
@@ -226,10 +179,12 @@ export function PromptCrafter({
 	return (
 		<BaseNode
 			selected={selected}
-			executionStatus={executionStatus}
-			className="w-[350px]"
+			className={cn("w-[350px] p-0 hover:ring-orange-500", {
+				"border-orange-500": executionStatus === "processing",
+				"border-red-500": executionStatus === "error",
+			})}
 		>
-			<NodeHeader>
+			<NodeHeader className="m-0">
 				<NodeHeaderIcon>
 					<PencilRuler />
 				</NodeHeaderIcon>
@@ -238,7 +193,7 @@ export function PromptCrafter({
 					<NodeHeaderStatus status={executionStatus} />
 					{deletable && (
 						<NodeHeaderAction
-							onClick={() => deleteNode(id)}
+							onClick={onDeleteNode}
 							variant="ghost"
 							label="Delete node"
 						>
@@ -286,7 +241,7 @@ export function PromptCrafter({
 					height="150px"
 					theme={promptTheme}
 					extensions={extensions}
-					onChange={handlePromptTextChange}
+					onChange={onPromptTextChange}
 					onCreateEditor={(view) => {
 						editorViewRef.current = view;
 					}}
@@ -305,7 +260,7 @@ export function PromptCrafter({
 				<div className="flex flex-col min-w-0">
 					<div className="flex items-center justify-between py-2 px-4 bg-muted rounded-r-xl">
 						<span className="text-sm font-medium">Inputs</span>
-						<HandleEditor
+						<EditableHandleDialog
 							variant="create"
 							label=""
 							onSave={handleCreateInput}
@@ -320,7 +275,7 @@ export function PromptCrafter({
 								<Plus className="h-4 w-4 mr-1" />
 								New Input
 							</Button>
-						</HandleEditor>
+						</EditableHandleDialog>
 					</div>
 					{data.dynamicHandles["template-tags"]?.map((input) => (
 						<EditableHandle
@@ -331,8 +286,8 @@ export function PromptCrafter({
 							type="target"
 							position={Position.Left}
 							wrapperClassName="w-full"
-							onNameChange={updateInputName}
-							onDelete={removeInput}
+							onUpdateTool={handleUpdateInputName}
+							onDelete={handleRemoveInput}
 						/>
 					))}
 				</div>

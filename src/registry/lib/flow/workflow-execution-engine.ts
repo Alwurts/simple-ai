@@ -1,4 +1,4 @@
-import type { FlowNode } from "@/registry/hooks/flow/use-workflow";
+import type { FlowNode } from "@/registry/lib/flow/workflow";
 import type {
 	CycleError,
 	MissingConnectionError,

@@ -1,8 +1,8 @@
-import {
-	NODES_CONFIG,
-	type FlowEdge,
-	type FlowNode,
-} from "@/registry/hooks/flow/use-workflow";
+import type { ConnectionEdge } from "@/registry/ui/flow/connection";
+import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
+import type { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
+import type { TextInputNode } from "@/registry/ui/flow/text-input-node";
+import type { VisualizeTextNode } from "@/registry/ui/flow/visualize-text-node";
 import { nanoid } from "nanoid";
 
 type Dependency = {
@@ -72,6 +72,65 @@ export interface WorkflowDefinition {
 	dependencies: Dependencies;
 	dependents: Dependents;
 	errors: WorkflowError[];
+}
+
+// Dynamic Handles
+
+export type DynamicHandle = {
+	id: string;
+	name: string;
+	description?: string;
+};
+
+// Node Configuration
+
+const NODES_CONFIG: Partial<
+	Record<
+		FlowNode["type"],
+		{
+			requiredTargets: string[];
+		}
+	>
+> = {
+	"generate-text": {
+		requiredTargets: ["prompt"],
+	},
+};
+
+// Nodes
+
+export type FlowNode =
+	| VisualizeTextNode
+	| TextInputNode
+	| PromptCrafterNode
+	| GenerateTextNode;
+
+// Edges
+
+export type FlowEdge = ConnectionEdge;
+
+// Type Guards
+
+export function isNodeOfType<T extends FlowNode["type"]>(
+	node: FlowNode,
+	type: T,
+): node is Extract<FlowNode, { type: T }> {
+	return node.type === type;
+}
+
+export function isNodeWithDynamicHandles<T extends FlowNode>(
+	node: T,
+): node is Extract<
+	T,
+	{
+		data: {
+			dynamicHandles: {
+				[key in string]: DynamicHandle[];
+			};
+		};
+	}
+> {
+	return "dynamicHandles" in node.data;
 }
 
 function buildDependencyGraph(edges: FlowEdge[]): {

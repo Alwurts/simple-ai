@@ -1,43 +1,49 @@
 import { type Node, type NodeProps, Position } from "@xyflow/react";
 
-import { Separator } from "@/components/ui/separator";
-import { useStore } from "@/registry/hooks/flow/use-workflow";
-import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
+import { LabeledHandle } from "@/components/flow/labeled-handle";
 import {
 	NodeHeaderAction,
 	NodeHeaderIcon,
 	NodeHeaderTitle,
-} from "@/registry/ui/flow/node-header";
-import { NodeHeader, NodeHeaderActions } from "@/registry/ui/flow/node-header";
+} from "@/components/flow/node-header";
+import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import { ResizableNode } from "@/registry/ui/flow/resizable-node";
 import { MarkdownContent } from "@/registry/ui/markdown-content";
 import { Eye, Trash } from "lucide-react";
-import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 
 type VisualizeTextData = {
-	executionState: NodeExecutionState;
+	executionState?: NodeExecutionState;
 };
 
 export type VisualizeTextNode = Node<VisualizeTextData, "visualize-text"> & {
 	type: "visualize-text";
 };
 
+export interface VisualizeTextProps extends NodeProps<VisualizeTextNode> {
+	onDeleteNode: () => void;
+}
+
 export function VisualizeText({
 	id,
 	selected,
 	data,
 	deletable,
-}: NodeProps<VisualizeTextNode>) {
-	const deleteNode = useStore((state) => state.deleteNode);
+	onDeleteNode,
+}: VisualizeTextProps) {
 	const executionStatus = data.executionState?.status;
 
 	return (
 		<ResizableNode
 			selected={selected}
-			executionStatus={executionStatus}
-			className="flex flex-col"
+			className={cn("flex flex-col", {
+				"border-orange-500": executionStatus === "processing",
+				"border-red-500": executionStatus === "error",
+			})}
 		>
-			<NodeHeader>
+			<NodeHeader className="m-0">
 				<NodeHeaderIcon>
 					<Eye />
 				</NodeHeaderIcon>
@@ -45,7 +51,7 @@ export function VisualizeText({
 				<NodeHeaderActions>
 					{deletable && (
 						<NodeHeaderAction
-							onClick={() => deleteNode(id)}
+							onClick={onDeleteNode}
 							variant="ghost"
 							label="Delete node"
 						>

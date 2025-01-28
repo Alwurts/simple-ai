@@ -1,5 +1,6 @@
 "use client";
 
+import { BaseHandle } from "@/components/flow/base-handle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,7 +10,6 @@ import {
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { BaseHandle } from "@/registry/ui/flow/base-handle";
 import type { HandleProps, Node } from "@xyflow/react";
 import { useOnSelectionChange } from "@xyflow/react";
 import { Edit2, Trash } from "lucide-react";
@@ -22,12 +22,12 @@ type HandleEditorProps = {
 	label: string;
 	description?: string;
 	onSave: (newLabel: string, newDescription?: string) => boolean;
-	onCancel: () => void;
+	onCancel?: () => void;
 	align?: "start" | "end";
 	children: React.ReactNode;
 };
 
-function HandleEditor({
+const EditableHandleDialog = ({
 	variant,
 	label,
 	description,
@@ -35,7 +35,7 @@ function HandleEditor({
 	onCancel,
 	align = "start",
 	children,
-}: HandleEditorProps) {
+}: HandleEditorProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [localLabel, setLocalLabel] = useState(label);
 	const [localDescription, setLocalDescription] = useState(description);
@@ -61,7 +61,7 @@ function HandleEditor({
 		if (variant === "create") {
 			reset();
 		}
-		onCancel();
+		onCancel?.();
 	};
 
 	const reset = () => {
@@ -111,7 +111,9 @@ function HandleEditor({
 			</PopoverContent>
 		</Popover>
 	);
-}
+};
+
+EditableHandleDialog.displayName = "EditableHandleDialog";
 
 type EditableHandleProps = HandleProps &
 	React.HTMLAttributes<HTMLDivElement> & {
@@ -122,7 +124,7 @@ type EditableHandleProps = HandleProps &
 		handleClassName?: string;
 		labelClassName?: string;
 		wrapperClassName?: string;
-		onNameChange: (
+		onUpdateTool: (
 			handleId: string,
 			newName: string,
 			newDescription?: string,
@@ -141,7 +143,7 @@ const EditableHandle = React.forwardRef<HTMLDivElement, EditableHandleProps>(
 			description,
 			position,
 			wrapperClassName,
-			onNameChange,
+			onUpdateTool,
 			onDelete,
 			...handleProps
 		},
@@ -172,7 +174,7 @@ const EditableHandle = React.forwardRef<HTMLDivElement, EditableHandleProps>(
 		};
 
 		const handleSave = (newLabel: string, newDescription?: string) => {
-			return onNameChange(handleId, newLabel, newDescription);
+			return onUpdateTool(handleId, newLabel, newDescription);
 		};
 
 		return (
@@ -209,7 +211,7 @@ const EditableHandle = React.forwardRef<HTMLDivElement, EditableHandleProps>(
 						)}
 					</div>
 					<div className="flex items-center gap-1 shrink-0">
-						<HandleEditor
+						<EditableHandleDialog
 							variant="edit"
 							label={label}
 							description={description}
@@ -224,7 +226,7 @@ const EditableHandle = React.forwardRef<HTMLDivElement, EditableHandleProps>(
 							>
 								<Edit2 />
 							</Button>
-						</HandleEditor>
+						</EditableHandleDialog>
 						<Button
 							variant="ghost"
 							size="icon"
@@ -242,4 +244,4 @@ const EditableHandle = React.forwardRef<HTMLDivElement, EditableHandleProps>(
 
 EditableHandle.displayName = "EditableHandle";
 
-export { EditableHandle, HandleEditor };
+export { EditableHandle, EditableHandleDialog };
