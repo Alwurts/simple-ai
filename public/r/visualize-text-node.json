@@ -6,10 +6,10 @@
   ],
   "registryDependencies": [
     "separator",
-    "http://localhost:4567/r/markdown-content.json",
-    "http://localhost:4567/r/labeled-handle.json",
-    "http://localhost:4567/r/node-header.json",
-    "http://localhost:4567/r/resizable-node.json"
+    "https://simple-ai.dev/r/markdown-content.json",
+    "https://simple-ai.dev/r/labeled-handle.json",
+    "https://simple-ai.dev/r/node-header.json",
+    "https://simple-ai.dev/r/resizable-node.json"
   ],
   "files": [
     {

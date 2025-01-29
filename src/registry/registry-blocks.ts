@@ -312,10 +312,10 @@ export const blocks: Registry = [
 			"input",
 			"textarea",
 			"sonner",
-			"http://localhost:4567/r/generate-text-node.json",
-			"http://localhost:4567/r/prompt-crafter-node.json",
-			"http://localhost:4567/r/text-input-node.json",
-			"http://localhost:4567/r/visualize-text-node.json",
+			"https://simple-ai.dev/r/generate-text-node.json",
+			"https://simple-ai.dev/r/prompt-crafter-node.json",
+			"https://simple-ai.dev/r/text-input-node.json",
+			"https://simple-ai.dev/r/visualize-text-node.json",
 		],
 		files: [
 			{
@@ -417,10 +417,10 @@ export const blocks: Registry = [
 			"input",
 			"textarea",
 			"sonner",
-			"http://localhost:4567/r/generate-text-node.json",
-			"http://localhost:4567/r/prompt-crafter-node.json",
-			"http://localhost:4567/r/text-input-node.json",
-			"http://localhost:4567/r/visualize-text-node.json",
+			"https://simple-ai.dev/r/generate-text-node.json",
+			"https://simple-ai.dev/r/prompt-crafter-node.json",
+			"https://simple-ai.dev/r/text-input-node.json",
+			"https://simple-ai.dev/r/visualize-text-node.json",
 		],
 		files: [
 			{
@@ -523,10 +523,10 @@ export const blocks: Registry = [
 			"input",
 			"textarea",
 			"sonner",
-			"http://localhost:4567/r/generate-text-node.json",
-			"http://localhost:4567/r/prompt-crafter-node.json",
-			"http://localhost:4567/r/text-input-node.json",
-			"http://localhost:4567/r/visualize-text-node.json",
+			"https://simple-ai.dev/r/generate-text-node.json",
+			"https://simple-ai.dev/r/prompt-crafter-node.json",
+			"https://simple-ai.dev/r/text-input-node.json",
+			"https://simple-ai.dev/r/visualize-text-node.json",
 		],
 		files: [
 			{
@@ -628,10 +628,10 @@ export const blocks: Registry = [
 			"input",
 			"textarea",
 			"sonner",
-			"http://localhost:4567/r/generate-text-node.json",
-			"http://localhost:4567/r/prompt-crafter-node.json",
-			"http://localhost:4567/r/text-input-node.json",
-			"http://localhost:4567/r/visualize-text-node.json",
+			"https://simple-ai.dev/r/generate-text-node.json",
+			"https://simple-ai.dev/r/prompt-crafter-node.json",
+			"https://simple-ai.dev/r/text-input-node.json",
+			"https://simple-ai.dev/r/visualize-text-node.json",
 		],
 		files: [
 			{
