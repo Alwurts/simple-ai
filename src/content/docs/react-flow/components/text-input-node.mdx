@@ -6,3 +6,78 @@ component: true
 ---
 
 <ComponentPreview name="text-input-node-demo" description="A text input node that you can use to create your own nodes" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/text-input-node.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="text-input-node" />
+
+<Step>Install the input component from shadcn/ui.</Step>
+
+<a href="https://ui.shadcn.com/docs/components/input">https://ui.shadcn.com/docs/components/input</a>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { TextInputNode } from "@/components/ui/text-input-node"
+```
+
+The Text Input Node component is a specialized node for React Flow that allows users to input and edit text. It includes:
+
+- Built-in text input functionality
+- Customizable placeholder text
+- Value and change handlers
+- Integration with React Flow's node system
+
+```tsx
+import { useState } from "react";
+import { TextInputNode } from "@/components/ui/text-input-node";
+
+function MyFlowComponent() {
+    const [text, setText] = useState<string>("");
+    return (
+        <TextInputNode
+            id="text-node-1"
+            data={{ text }}
+            onTextChange={(newText) => setText(newText)}
+        />
+    );
+}
+```
+
+### Customization
+
+You can customize the text input node with these props:
+
+- `placeholder`: Set custom placeholder text
+- `className`: Add custom styles using Tailwind CSS
+- `disabled`: Disable the text input
+- `onTextChange`: Handle text changes
+

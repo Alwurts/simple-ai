@@ -6,3 +6,80 @@ component: true
 ---
 
 <ComponentPreview name="status-edge-demo" description="A status edge that you can use to create your own edges" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/status-edge.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="status-edge" />
+
+<Step>Install the required dependencies from react-flow.</Step>
+
+<a href="https://reactflow.dev/docs">https://reactflow.dev/docs</a>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { StatusEdge } from "@/components/react-flow/status-edge"
+```
+
+The Status Edge component is a custom edge component for React Flow that includes:
+
+- Different status states (success, error, warning, processing)
+- Animated progress indicator
+- Customizable colors and styles
+- Built-in edge types and markers
+
+```tsx
+import { useEdgesState } from "reactflow";
+import { StatusEdge } from "@/components/react-flow/status-edge";
+
+function MyFlowComponent() {
+    const [edges, setEdges] = useEdgesState([]);
+    return (
+        <ReactFlow
+            edges={edges}
+            edgeTypes={{
+                status: StatusEdge
+            }}
+        />
+    );
+}
+```
+
+### Available Statuses
+
+The component includes these predefined status states:
+
+- `success` - Green color with checkmark
+- `error` - Red color with cross
+- `warning` - Yellow color with exclamation
+- `processing` - Blue color with animated spinner
+
+Each status has a corresponding visual indicator that appears along the edge.

@@ -6,3 +6,76 @@ component: true
 ---
 
 <ComponentPreview name="resizable-node-demo" description="A resizable node that you can use to create your own nodes" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/resizable-node.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="resizable-node" />
+
+<Step>Install the resizable component from shadcn/ui.</Step>
+
+<a href="https://ui.shadcn.com/docs/components/resizable">https://ui.shadcn.com/docs/components/resizable</a>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { ResizableNode } from "@/components/ui/resizable-node"
+```
+
+The Resizable Node component is a wrapper around the shadcn/ui Resizable component that allows users to create resizable nodes in React Flow. It includes:
+
+- Smooth resizing handles on all sides
+- Minimum and maximum size constraints
+- Customizable content area
+- Built-in support for React Flow node types
+
+```tsx
+import { useState } from "react";
+import { ResizableNode } from "@/components/ui/resizable-node";
+
+function MyComponent() {
+    const [size, setSize] = useState({ width: 200, height: 150 });
+    return (
+        <ResizableNode
+            size={size}
+            onSizeChange={setSize}
+            minWidth={100}
+            minHeight={100}
+            maxWidth={500}
+            maxHeight={400}
+        >
+            <div className="p-4">
+                <h3>Resizable Content</h3>
+                <p>This area can be resized</p>
+            </div>
+        </ResizableNode>
+    );
+}
+```

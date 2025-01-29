@@ -7,3 +7,81 @@ component: true
 
 <ComponentPreview name="generate-text-node-demo" description="A generate text node that you can use to create your own nodes" />
 
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/generate-text-node.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="generate-text-node" />
+
+<Step>Install the required components from shadcn/ui.</Step>
+
+<a href="https://ui.shadcn.com/docs/components/button">https://ui.shadcn.com/docs/components/button</a>
+<a href="https://ui.shadcn.com/docs/components/input">https://ui.shadcn.com/docs/components/input</a>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { GenerateTextNode } from "@/components/ui/generate-text-node"
+```
+
+The Generate Text Node component is a React Flow node that allows users to generate text content. It includes:
+
+- Editable text input field
+- Generate button with loading state
+- Customizable node styling
+- Built-in error handling
+
+```tsx
+import { useState } from "react";
+import { GenerateTextNode } from "@/components/ui/generate-text-node";
+
+function MyFlowComponent() {
+    const [text, setText] = useState<string>("");
+    return (
+        <GenerateTextNode
+            id="text-node-1"
+            data={{ text }}
+            onTextChange={(newText) => setText(newText)}
+            onGenerate={() => {
+                // Handle text generation logic
+            }}
+        />
+    );
+}
+```
+
+### Node Properties
+
+The component accepts these props:
+
+- `id: string` - Unique identifier for the node
+- `data: { text: string }` - Current text content
+- `onTextChange: (text: string) => void` - Callback when text changes
+- `onGenerate: () => void` - Callback when generate button is clicked
+- `isGenerating?: boolean` - Loading state for the generate button

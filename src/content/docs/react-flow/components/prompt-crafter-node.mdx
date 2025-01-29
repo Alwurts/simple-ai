@@ -6,3 +6,82 @@ component: true
 ---
 
 <ComponentPreview name="prompt-crafter-node-demo" description="A prompt crafter node that you can use to create your own nodes" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/prompt-crafter-node.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="prompt-crafter-node" />
+
+<Step>Install the required components from shadcn/ui.</Step>
+
+<a href="https://ui.shadcn.com/docs/components/textarea">https://ui.shadcn.com/docs/components/textarea</a>
+<a href="https://ui.shadcn.com/docs/components/button">https://ui.shadcn.com/docs/components/button</a>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { PromptCrafterNode } from "@/components/react-flow/prompt-crafter-node"
+```
+
+The Prompt Crafter Node is a React Flow node component that allows users to craft and edit prompts. It includes:
+
+- Editable text area for prompt creation
+- Save and cancel buttons
+- Customizable node styling
+- Integration with React Flow's node system
+
+```tsx
+import { useNodesState } from "reactflow";
+import { PromptCrafterNode } from "@/components/react-flow/prompt-crafter-node";
+
+function MyFlow() {
+    const [nodes, setNodes] = useNodesState([]);
+    
+    return (
+        <ReactFlow nodes={nodes} onNodesChange={setNodes}>
+            <PromptCrafterNode
+                id="prompt-1"
+                data={{ prompt: "Initial prompt text" }}
+                position={{ x: 100, y: 100 }}
+            />
+        </ReactFlow>
+    );
+}
+```
+
+### Node Properties
+
+The component accepts these standard React Flow node properties:
+
+- `id`: Unique identifier for the node
+- `data`: Object containing the prompt text
+- `position`: X and Y coordinates for node placement
+- `selected`: Boolean indicating if node is selected
+- `type`: Node type (default: 'promptCrafter')

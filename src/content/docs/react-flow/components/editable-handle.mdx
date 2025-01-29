@@ -6,3 +6,89 @@ component: true
 ---
 
 <ComponentPreview name="editable-handle-demo" description="An editable handle node that you can use to create your own nodes" />
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/editable-handle.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="editable-handle" />
+
+<Step>Install the required dependencies from shadcn/ui.</Step>
+
+<a href="https://ui.shadcn.com/docs/components/input">https://ui.shadcn.com/docs/components/input</a>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { EditableHandle } from "@/components/ui/editable-handle"
+```
+
+The Editable Handle component is a customizable node handle for React Flow that allows users to:
+
+- Edit the handle label directly
+- Customize handle position and type
+- Add custom styling
+- Integrate with React Flow's node system
+
+```tsx
+import { useState } from "react";
+import { EditableHandle } from "@/components/ui/editable-handle";
+
+function MyComponent() {
+    const [label, setLabel] = useState("Input");
+    return (
+        <EditableHandle
+            id="input-1"
+            type="target"
+            position="left"
+            label={label}
+            onLabelChange={setLabel}
+        />
+    );
+}
+```
+
+### Handle Types
+
+The component supports these handle types:
+
+- `source` - Output handle
+- `target` - Input handle
+- `custom` - Custom handle type
+
+### Positioning
+
+You can position the handle using these positions:
+
+- `top`
+- `bottom`
+- `left`
+- `right`
+
