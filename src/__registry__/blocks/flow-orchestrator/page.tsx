@@ -12,6 +12,7 @@ import { type DragEvent, useEffect } from "react";
 import { shallow } from "zustand/shallow";
 import "@xyflow/react/dist/style.css";
 import { Button } from "@/components/ui/button";
+import { useTrackEvent } from "@/lib/events";
 import { ErrorIndicator } from "@/registry/blocks/flow-orchestrator/components/error-indicator";
 import { NodesPanel } from "@/registry/blocks/flow-orchestrator/components/nodes-panel";
 import { DEVELOPER_TASKS_ORCHESTRATOR_WORKFLOW } from "@/registry/blocks/flow-orchestrator/lib/developer-tasks-orchestrator";
@@ -49,6 +50,7 @@ export function Flow() {
 		}),
 		shallow,
 	);
+	const track = useTrackEvent();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We want to initialize the workflow only once
 	useEffect(() => {
@@ -84,6 +86,19 @@ export function Flow() {
 		store.createNode(type, position);
 	};
 
+	const onStartExecution = async () => {
+		const result = await store.startExecution();
+		if (result.status === "error") {
+			console.error(result.error);
+			track({
+				name: "ai_agent_used",
+				properties: {
+					used_block_ai_agent: "flow-orchestrator",
+				},
+			});
+		}
+	};
+
 	return (
 		<ReactFlow
 			nodes={store.nodes}
@@ -104,9 +119,7 @@ export function Flow() {
 			<Panel position="top-right" className="flex gap-2 items-center">
 				<ErrorIndicator errors={store.workflowExecutionState.errors} />
 				<Button
-					onClick={() => {
-						store.startExecution();
-					}}
+					onClick={onStartExecution}
 					title={
 						store.workflowExecutionState.timesRun > 1
 							? "Disabled for now"
@@ -125,7 +138,7 @@ export function Flow() {
 	);
 }
 
-export default function Flow01Page() {
+export default function Page() {
 	return (
 		<div className="w-screen h-screen">
 			<ReactFlowProvider>

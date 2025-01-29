@@ -16,6 +16,7 @@ const eventSchema = z.object({
 		"copy_npm_command",
 		"copy_block_code",
 		"block_used",
+		"ai_agent_used",
 		"example_used",
 	]),
 	properties: z

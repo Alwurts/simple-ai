@@ -65,7 +65,12 @@ export interface WorkflowState {
 		timesRun: number;
 	};
 	// execution
-	startExecution: () => Promise<void>;
+	startExecution: () => Promise<{
+		status: "success" | "error";
+		message: string;
+		error?: Error;
+		validationErrors?: WorkflowError[];
+	}>;
 	// Initialize workflow with nodes and edges
 	initializeWorkflow: (nodes: FlowNode[], edges: FlowEdge[]) => void;
 }
@@ -340,10 +345,14 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 	async startExecution() {
 		// Check if workflow has already run successfully
 		if (get().workflowExecutionState.timesRun > 3) {
-			console.warn(
-				"Workflow has already run successfully and cannot be run again",
-			);
-			return;
+			const message =
+				"Workflow has already run successfully and cannot be run again";
+			console.warn(message);
+			return {
+				status: "error",
+				message,
+				error: new Error(message),
+			};
 		}
 
 		// Reset execution state for all nodes
@@ -363,7 +372,13 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		const workflow = get().validateWorkflow();
 
 		if (workflow.errors.length > 0) {
-			return;
+			const message = "Workflow validation failed";
+			return {
+				status: "error",
+				message,
+				error: new Error(message),
+				validationErrors: workflow.errors,
+			};
 		}
 
 		// Set execution state to running
@@ -399,6 +414,18 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 					},
 				});
 			});
+
+			return {
+				status: "success",
+				message: "Workflow executed successfully",
+			};
+		} catch (error) {
+			console.error("Workflow execution failed:", error);
+			return {
+				status: "error",
+				message: "Workflow execution failed",
+				error: error instanceof Error ? error : new Error(String(error)),
+			};
 		} finally {
 			// Reset execution state when done
 			set((state) => ({

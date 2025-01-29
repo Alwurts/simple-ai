@@ -12,6 +12,7 @@ import { type DragEvent, useEffect } from "react";
 import { shallow } from "zustand/shallow";
 import "@xyflow/react/dist/style.css";
 import { Button } from "@/components/ui/button";
+import { useTrackEvent } from "@/lib/events";
 import { ErrorIndicator } from "@/registry/blocks/flow-chain/components/error-indicator";
 import { NodesPanel } from "@/registry/blocks/flow-chain/components/nodes-panel";
 import { NEWS_SUMMARY_WORKFLOW } from "@/registry/blocks/flow-chain/lib/news-summarization-chain";
@@ -49,6 +50,7 @@ export function Flow() {
 		}),
 		shallow,
 	);
+	const track = useTrackEvent();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We want to initialize the workflow only once
 	useEffect(() => {
@@ -84,28 +86,17 @@ export function Flow() {
 		store.createNode(type, position);
 	};
 
-	const handleExport = () => {
-		const exportData = {
-			nodes: store.nodes.map((node) => ({
-				type: node.type,
-				id: node.id,
-				data: {
-					...node.data,
-					executionState: undefined,
+	const onStartExecution = async () => {
+		const result = await store.startExecution();
+		if (result.status === "error") {
+			console.error(result.error);
+			track({
+				name: "ai_agent_used",
+				properties: {
+					used_block_ai_agent: "flow-chain",
 				},
-				position: node.position,
-				width: node.width,
-				height: node.height,
-			})),
-			edges: store.edges.map((edge) => ({
-				...edge,
-				data: {
-					...edge.data,
-					executionState: undefined,
-				},
-			})),
-		};
-		navigator.clipboard.writeText(JSON.stringify(exportData, null, 2));
+			});
+		}
 	};
 
 	return (
@@ -128,16 +119,7 @@ export function Flow() {
 			<Panel position="top-right" className="flex gap-2 items-center">
 				<ErrorIndicator errors={store.workflowExecutionState.errors} />
 				<Button
-					onClick={handleExport}
-					variant="outline"
-					className="flex gap-2 items-center"
-				>
-					Export Flow
-				</Button>
-				<Button
-					onClick={() => {
-						store.startExecution();
-					}}
+					onClick={onStartExecution}
 					title={
 						store.workflowExecutionState.timesRun > 1
 							? "Disabled for now"
@@ -156,7 +138,7 @@ export function Flow() {
 	);
 }
 
-export default function Flow01Page() {
+export default function Page() {
 	return (
 		<div className="w-screen h-screen">
 			<ReactFlowProvider>
