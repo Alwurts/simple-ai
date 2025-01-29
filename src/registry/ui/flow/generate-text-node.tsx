@@ -7,20 +7,21 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-import { BaseNode } from "@/components/flow/base-node";
-import { LabeledHandle } from "@/components/flow/labeled-handle";
-import {
-	NodeHeaderAction,
-	NodeHeaderIcon,
-	NodeHeaderTitle,
-} from "@/components/flow/node-header";
-import { NodeHeader, NodeHeaderActions } from "@/components/flow/node-header";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { BaseNode } from "@/registry/ui/flow/base-node";
 import {
 	EditableHandle,
 	EditableHandleDialog,
 } from "@/registry/ui/flow/editable-handle";
+import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
+import {
+	NodeHeader,
+	NodeHeaderAction,
+	NodeHeaderActions,
+	NodeHeaderIcon,
+	NodeHeaderTitle,
+} from "@/registry/ui/flow/node-header";
 import { NodeHeaderStatus } from "@/registry/ui/flow/node-header-status";
 import { type Model, ModelSelector } from "@/registry/ui/model-selector";
 import { Bot, Plus, Trash } from "lucide-react";

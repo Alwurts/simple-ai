@@ -1,6 +1,9 @@
 {
   "name": "model-selector",
   "type": "registry:ui",
+  "registryDependencies": [
+    "select"
+  ],
   "files": [
     {
       "path": "ui/model-selector.tsx",

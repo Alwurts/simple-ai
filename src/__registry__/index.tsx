@@ -9,7 +9,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer",
 		description: "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 		type: "registry:ui",
-		registryDependencies: ["https://simple-ai.dev/r/jsx-utils.json"],
+		registryDependencies: ["http://localhost:4567/r/jsx-utils.json"],
 		files: [{
 			path: "src/registry/ui/jsx-renderer.tsx",
 			type: "registry:ui",
@@ -59,7 +59,7 @@ export const Index: Record<string, any> = {
 		name: "chat-message",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["https://simple-ai.dev/r/markdown-content.json"],
+		registryDependencies: ["http://localhost:4567/r/markdown-content.json"],
 		files: [{
 			path: "src/registry/ui/chat-message.tsx",
 			type: "registry:ui",
@@ -87,7 +87,7 @@ export const Index: Record<string, any> = {
 		name: "model-selector",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: undefined,
+		registryDependencies: ["select"],
 		files: [{
 			path: "src/registry/ui/model-selector.tsx",
 			type: "registry:ui",
@@ -101,11 +101,11 @@ export const Index: Record<string, any> = {
 		name: "resizable-node",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["https://simple-ai.dev/r/base-node.json"],
+		registryDependencies: ["http://localhost:4567/r/base-node.json"],
 		files: [{
 			path: "src/registry/ui/flow/resizable-node.tsx",
 			type: "registry:ui",
-			target: "components/ui/flow/resizable-node.tsx"
+			target: "components/flow/resizable-node.tsx"
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/ui/flow/resizable-node.tsx")),
@@ -119,7 +119,7 @@ export const Index: Record<string, any> = {
 		files: [{
 			path: "src/registry/ui/flow/node-header-status.tsx",
 			type: "registry:ui",
-			target: "components/ui/flow/node-header-status.tsx"
+			target: "components/flow/node-header-status.tsx"
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/ui/flow/node-header-status.tsx")),
@@ -129,11 +129,11 @@ export const Index: Record<string, any> = {
 		name: "editable-handle",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["button","input","textarea","popover","toast"],
+		registryDependencies: ["button","input","textarea","popover","http://localhost:4567/r/base-handle.json"],
 		files: [{
 			path: "src/registry/ui/flow/editable-handle.tsx",
 			type: "registry:ui",
-			target: "components/ui/flow/editable-handle.tsx"
+			target: "components/flow/editable-handle.tsx"
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/ui/flow/editable-handle.tsx")),
@@ -147,7 +147,7 @@ export const Index: Record<string, any> = {
 		files: [{
 			path: "src/registry/ui/flow/status-edge.tsx",
 			type: "registry:ui",
-			target: "components/ui/flow/status-edge.tsx"
+			target: "components/flow/status-edge.tsx"
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/ui/flow/status-edge.tsx")),
@@ -157,11 +157,11 @@ export const Index: Record<string, any> = {
 		name: "generate-text-node",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: undefined,
+		registryDependencies: ["button","separator","http://localhost:4567/r/model-selector.json","http://localhost:4567/r/node-header-status.json","http://localhost:4567/r/editable-handle.json","http://localhost:4567/r/labeled-handle.json","http://localhost:4567/r/base-node.json","http://localhost:4567/r/node-header.json"],
 		files: [{
 			path: "src/registry/ui/flow/generate-text-node.tsx",
 			type: "registry:ui",
-			target: ""
+			target: "components/flow/generate-text-node.tsx"
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/ui/flow/generate-text-node.tsx")),
@@ -171,11 +171,11 @@ export const Index: Record<string, any> = {
 		name: "prompt-crafter-node",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: undefined,
+		registryDependencies: ["button","separator","popover","command","http://localhost:4567/r/node-header-status.json","http://localhost:4567/r/editable-handle.json","http://localhost:4567/r/node-header.json","http://localhost:4567/r/labeled-handle.json","http://localhost:4567/r/base-node.json"],
 		files: [{
 			path: "src/registry/ui/flow/prompt-crafter-node.tsx",
 			type: "registry:ui",
-			target: ""
+			target: "components/flow/prompt-crafter-node.tsx"
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/ui/flow/prompt-crafter-node.tsx")),
@@ -185,11 +185,11 @@ export const Index: Record<string, any> = {
 		name: "text-input-node",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: undefined,
+		registryDependencies: ["textarea","separator","http://localhost:4567/r/labeled-handle.json","http://localhost:4567/r/node-header.json","http://localhost:4567/r/resizable-node.json"],
 		files: [{
 			path: "src/registry/ui/flow/text-input-node.tsx",
 			type: "registry:ui",
-			target: ""
+			target: "components/flow/text-input-node.tsx"
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/ui/flow/text-input-node.tsx")),
@@ -199,14 +199,70 @@ export const Index: Record<string, any> = {
 		name: "visualize-text-node",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: undefined,
+		registryDependencies: ["separator","http://localhost:4567/r/markdown-content.json","http://localhost:4567/r/labeled-handle.json","http://localhost:4567/r/node-header.json","http://localhost:4567/r/resizable-node.json"],
 		files: [{
 			path: "src/registry/ui/flow/visualize-text-node.tsx",
 			type: "registry:ui",
-			target: ""
+			target: "components/flow/visualize-text-node.tsx"
 		}],
 		categories: undefined,
 		component: React.lazy(() => import("@/registry/ui/flow/visualize-text-node.tsx")),
+		source: "",
+		meta: undefined,
+    },	"base-handle": {
+		name: "base-handle",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/flow/base-handle.tsx",
+			type: "registry:ui",
+			target: "components/flow/base-handle.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/base-handle.tsx")),
+		source: "",
+		meta: undefined,
+    },	"labeled-handle": {
+		name: "labeled-handle",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/flow/labeled-handle.tsx",
+			type: "registry:ui",
+			target: "components/flow/labeled-handle.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/labeled-handle.tsx")),
+		source: "",
+		meta: undefined,
+    },	"base-node": {
+		name: "base-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/flow/base-node.tsx",
+			type: "registry:ui",
+			target: "components/flow/base-node.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/base-node.tsx")),
+		source: "",
+		meta: undefined,
+    },	"node-header": {
+		name: "node-header",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["button","dropdown-menu"],
+		files: [{
+			path: "src/registry/ui/flow/node-header.tsx",
+			type: "registry:ui",
+			target: "components/flow/node-header.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/node-header.tsx")),
 		source: "",
 		meta: undefined,
     },	"chat-demo": {

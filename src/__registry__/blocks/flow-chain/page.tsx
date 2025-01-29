@@ -138,9 +138,15 @@ export function Flow() {
 					onClick={() => {
 						store.startExecution();
 					}}
+					title={
+						store.workflowExecutionState.timesRun > 1
+							? "Disabled for now"
+							: "Run the workflow"
+					}
 					disabled={
 						store.workflowExecutionState.errors.length > 0 ||
-						store.workflowExecutionState.isRunning
+						store.workflowExecutionState.isRunning ||
+						store.workflowExecutionState.timesRun > 1
 					}
 				>
 					{store.workflowExecutionState.isRunning ? "Running..." : "Run Flow"}

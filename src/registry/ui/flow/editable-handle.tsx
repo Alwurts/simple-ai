@@ -1,6 +1,5 @@
 "use client";
 
-import { BaseHandle } from "@/components/flow/base-handle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,12 +9,12 @@ import {
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { BaseHandle } from "@/registry/ui/flow/base-handle";
 import type { HandleProps, Node } from "@xyflow/react";
 import { useOnSelectionChange } from "@xyflow/react";
 import { Edit2, Trash } from "lucide-react";
 import React, { useState } from "react";
 import { useCallback } from "react";
-import { toast } from "sonner";
 
 type HandleEditorProps = {
 	variant: "edit" | "create";
@@ -44,7 +43,7 @@ const EditableHandleDialog = ({
 		// Trim and validate the label has no spaces
 		const trimmedLabel = localLabel.trim();
 		if (trimmedLabel.includes(" ")) {
-			toast.error("Label cannot contain spaces");
+			alert("Label cannot contain spaces");
 			return;
 		}
 		const success = onSave(trimmedLabel, localDescription?.trim());
