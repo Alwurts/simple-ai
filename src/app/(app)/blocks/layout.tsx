@@ -12,6 +12,7 @@ import "@/styles/mdx.css";
 import { BlocksNav } from "@/components/blocks/blocks-nav";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Announcement } from "@/components/announcement";
 
 export const metadata: Metadata = {
 	title: "Building Blocks for AI",
@@ -27,6 +28,7 @@ export default function BlocksLayout({
 	return (
 		<>
 			<PageHeader>
+				<Announcement />
 				<PageHeaderHeading>Building Blocks for AI</PageHeaderHeading>
 				<PageHeaderDescription>
 					Building blocks for AI. Copy and paste into your apps. Works with all

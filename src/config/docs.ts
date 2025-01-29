@@ -47,6 +47,11 @@ export const docsConfig: DocsConfig = {
 					href: "/docs/blocks",
 					items: [],
 				},
+				{
+					title: "React Flow",
+					href: "/docs/react-flow",
+					items: [],
+				},
 			],
 		},
 		{
@@ -89,37 +94,37 @@ export const docsConfig: DocsConfig = {
 			items: [
 				{
 					title: "Editable Handle",
-					href: "/docs/components/react-flow/editable-handle",
+					href: "/docs/react-flow/components/editable-handle",
 					items: [],
 				},
 				{
 					title: "Generate Text Node",
-					href: "/docs/components/react-flow/generate-text-node",
+					href: "/docs/react-flow/components/generate-text-node",
 					items: [],
 				},
 				{
 					title: "Prompt Crafter Node",
-					href: "/docs/components/react-flow/prompt-crafter-node",
+					href: "/docs/react-flow/components/prompt-crafter-node",
 					items: [],
 				},
 				{
 					title: "Resizable Node",
-					href: "/docs/components/react-flow/resizable-node",
+					href: "/docs/react-flow/components/resizable-node",
 					items: [],
 				},
 				{
 					title: "Status Edge",
-					href: "/docs/components/react-flow/status-edge",
+					href: "/docs/react-flow/components/status-edge",
 					items: [],
 				},
 				{
 					title: "Text Input Node",
-					href: "/docs/components/react-flow/text-input-node",
+					href: "/docs/react-flow/components/text-input-node",
 					items: [],
 				},
 				{
 					title: "Visualize Text Node",
-					href: "/docs/components/react-flow/visualize-text-node",
+					href: "/docs/react-flow/components/visualize-text-node",
 					items: [],
 				},
 			],
