@@ -242,4 +242,24 @@ export const examples: Registry = [
 			},
 		],
 	},
+	{
+		name: "editable-handle-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/editable-handle-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "status-edge-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/status-edge-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
 ];

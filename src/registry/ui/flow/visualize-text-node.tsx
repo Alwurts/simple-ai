@@ -22,7 +22,7 @@ export type VisualizeTextNode = Node<
 >;
 
 interface VisualizeTextProps extends NodeProps<VisualizeTextNode> {
-	onDeleteNode: () => void;
+	onDeleteNode?: () => void;
 }
 
 export function VisualizeTextNode({

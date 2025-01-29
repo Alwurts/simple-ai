@@ -19,7 +19,7 @@ import {
 
 import { nanoid } from "nanoid";
 import { useCallback, useState } from "react";
-import { PromptCrafterNode } from "../ui/flow/prompt-crafter-node";
+import { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
 
 const PromptCrafterNodeController = ({
 	id,

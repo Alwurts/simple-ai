@@ -545,6 +545,34 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/examples/generate-text-node-demo.tsx")),
 		source: "",
 		meta: undefined,
+    },	"editable-handle-demo": {
+		name: "editable-handle-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/editable-handle-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/editable-handle-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"status-edge-demo": {
+		name: "status-edge-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/status-edge-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/status-edge-demo.tsx")),
+		source: "",
+		meta: undefined,
     },	"use-textarea-resize": {
 		name: "use-textarea-resize",
 		description: "",

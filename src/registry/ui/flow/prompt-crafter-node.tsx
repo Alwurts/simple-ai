@@ -43,7 +43,7 @@ import {
 import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
 import { useCallback, useMemo, useRef, useState } from "react";
 
-export type PromptCrafterData = {
+type PromptCrafterData = {
 	status: "processing" | "error" | "success" | "idle" | undefined;
 	config: {
 		template: string;
@@ -58,7 +58,7 @@ export type PromptCrafterData = {
 
 export type PromptCrafterNode = Node<PromptCrafterData, "prompt-crafter">;
 
-export interface PromptCrafterProps extends NodeProps<PromptCrafterNode> {
+interface PromptCrafterProps extends NodeProps<PromptCrafterNode> {
 	onPromptTextChange: (value: string) => void;
 	onCreateInput: (name: string) => boolean;
 	onRemoveInput: (handleId: string) => void;

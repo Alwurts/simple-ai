@@ -8,7 +8,6 @@ import {
 	type EdgeChange,
 	type Node,
 	type NodeChange,
-	type NodeProps,
 	type NodeTypes,
 	ReactFlow,
 	ReactFlowProvider,
@@ -20,28 +19,8 @@ import {
 import { VisualizeTextNode } from "@/registry/ui/flow/visualize-text-node";
 import { useCallback, useState } from "react";
 
-const VisualizeTextNodeController = ({
-	id,
-	data,
-	...props
-}: NodeProps<Node>) => {
-	return (
-		<VisualizeTextNode
-			id={id}
-			data={{
-				input:
-					"### I support markdown\n\nVisualize text coming from other nodes\n\n- 1\n- 2\n- 3",
-				status: "success",
-			}}
-			onDeleteNode={() => {}}
-			{...props}
-			type="visualize-text"
-		/>
-	);
-};
-
 const nodeTypes: NodeTypes = {
-	"visualize-text": VisualizeTextNodeController,
+	"visualize-text": VisualizeTextNode,
 };
 
 const initialNodes = [
@@ -49,11 +28,15 @@ const initialNodes = [
 		id: "node-1",
 		type: "visualize-text",
 		position: { x: 0, y: -50 },
-		data: { value: 123 },
+		data: {
+			input:
+				"### I support markdown\n\nVisualize text coming from other nodes\n\n- 1\n- 2\n- 3",
+			status: "success",
+		},
 	},
 ];
 
-export default function ResizableNodeDemo() {
+export default function VisualizeTextNodeDemo() {
 	const [nodes, setNodes] = useState<Node[]>(initialNodes);
 	const [edges, setEdges] = useState([]);
 

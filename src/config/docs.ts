@@ -88,6 +88,11 @@ export const docsConfig: DocsConfig = {
 			title: "React Flow Components",
 			items: [
 				{
+					title: "Editable Handle",
+					href: "/docs/components/react-flow/editable-handle",
+					items: [],
+				},
+				{
 					title: "Generate Text Node",
 					href: "/docs/components/react-flow/generate-text-node",
 					items: [],
@@ -100,6 +105,11 @@ export const docsConfig: DocsConfig = {
 				{
 					title: "Resizable Node",
 					href: "/docs/components/react-flow/resizable-node",
+					items: [],
+				},
+				{
+					title: "Status Edge",
+					href: "/docs/components/react-flow/status-edge",
 					items: [],
 				},
 				{

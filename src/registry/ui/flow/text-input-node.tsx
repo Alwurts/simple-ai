@@ -22,8 +22,8 @@ export type TextInputData = {
 export type TextInputNode = Node<TextInputData, "text-input">;
 
 export interface TextInputProps extends NodeProps<TextInputNode> {
-	onTextChange: (value: string) => void;
-	onDeleteNode: () => void;
+	onTextChange?: (value: string) => void;
+	onDeleteNode?: () => void;
 }
 
 export function TextInputNode({
@@ -64,7 +64,7 @@ export function TextInputNode({
 			<div className="p-2 flex-1 overflow-auto flex flex-col gap-4">
 				<Textarea
 					value={data.config.value || ""}
-					onChange={(e) => onTextChange(e.target.value)}
+					onChange={(e) => onTextChange?.(e.target.value)}
 					className="w-full flex-1 resize-none nodrag nopan nowheel"
 					placeholder="Enter your text here..."
 				/>
