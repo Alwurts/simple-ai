@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import { Announcement } from "@/components/announcement";
 import {
 	PageActions,
 	PageHeader,
@@ -27,31 +26,31 @@ export default function BlocksLayout({
 	return (
 		<>
 			<PageHeader>
-				<Announcement />
 				<PageHeaderHeading>AI Agents Workflows</PageHeaderHeading>
 				<PageHeaderDescription>
 					Explore example implementations of AI Agents using Vercel AI SDK and
-					React Flow. These workflows are inspired by Anthropic's research on
-					building effective agents.
+					React Flow.
 				</PageHeaderDescription>
 				<PageHeaderDescription>
-					For deeper reference and more information, check out the{" "}
+					These workflows are inspired by{" "}
 					<a
 						href="https://www.anthropic.com/research/building-effective-agents"
 						className="underline"
 						target="_blank"
 						rel="noopener noreferrer"
 					>
-						Anthropic article
-					</a>
-					.
+						Anthropic's article
+					</a>{" "}
+					on building effective agents.
 				</PageHeaderDescription>
 				<PageActions>
 					<Button asChild size="sm">
-						<Link href="/docs">Get More Information</Link>
+						<Link href="/docs/react-flow">Get More Information</Link>
 					</Button>
 					<Button asChild size="sm" variant="ghost">
-						<Link href="/blocks">See Flow Components</Link>
+						<Link href="/docs/components/react-flow/generate-text-node">
+							See React Flow Components
+						</Link>
 					</Button>
 				</PageActions>
 			</PageHeader>

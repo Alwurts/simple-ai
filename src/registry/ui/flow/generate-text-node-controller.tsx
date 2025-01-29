@@ -110,6 +110,7 @@ export function GenerateTextNodeController({
 				dynamicHandles: data.dynamicHandles,
 			}}
 			{...props}
+			disableModelSelector
 			onModelChange={handleModelChange}
 			onCreateTool={handleCreateTool}
 			onRemoveTool={handleRemoveTool}

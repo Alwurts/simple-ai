@@ -15,8 +15,8 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 				},
 			},
 			position: {
-				x: -652.6461457291937,
-				y: -390.6932570236203,
+				x: -630.950179662337,
+				y: -272.9151555178262,
 			},
 			width: 382,
 			height: 340,
@@ -52,8 +52,8 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 				},
 			},
 			position: {
-				x: -209.95405360286856,
-				y: -88.53439790144577,
+				x: -216.1529010505419,
+				y: -90.08410976336413,
 			},
 		},
 		{
@@ -68,8 +68,8 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1217.8387898303356,
-				y: -2.3596820341372418,
+				x: 1131.0549255629082,
+				y: -8.558529481810613,
 			},
 		},
 		{
@@ -82,19 +82,19 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 765.9499125359606,
-				y: -16.743770385171608,
+				x: 755.1019295025321,
+				y: -21.392905970926638,
 			},
 			width: 334,
-			height: 219,
+			height: 270,
 		},
 		{
 			type: "visualize-text",
 			id: "lo9ImZY7ZBHw2xTEhj2X_",
 			data: {},
 			position: {
-				x: 262.3353867497116,
-				y: -388.208455140857,
+				x: 184.84979365379445,
+				y: -363.4130653501635,
 			},
 			width: 361,
 			height: 291,
@@ -104,8 +104,8 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 			id: "eYRTRKwrUcn_fmuMKuUEl",
 			data: {},
 			position: {
-				x: 264.1259570702413,
-				y: -34.849254372347374,
+				x: 186.64036397432417,
+				y: -10.053864581653889,
 			},
 			width: 350,
 			height: 300,
@@ -122,8 +122,8 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1217.0253929558507,
-				y: -346.5940157431416,
+				x: 1137.9900879980153,
+				y: -360.54142250040667,
 			},
 		},
 		{
@@ -154,8 +154,8 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1222.200034748433,
-				y: 351.1572977920281,
+				x: 1118.3693399999038,
+				y: 355.8064333777831,
 			},
 		},
 		{
@@ -168,10 +168,10 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 768.4866105796553,
-				y: 327.0877819949345,
+				x: 752.9894919604718,
+				y: 333.28662944260793,
 			},
-			width: 350,
+			width: 332,
 			height: 300,
 		},
 		{
@@ -179,8 +179,8 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 			id: "gPDWeyLIVbkoWEffGe9Xh",
 			data: {},
 			position: {
-				x: 266.36708609545377,
-				y: 334.2073064791364,
+				x: 184.2323574137816,
+				y: 335.75701834105473,
 			},
 			width: 350,
 			height: 300,
@@ -190,8 +190,8 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 			id: "kaTYJV52ljshMg0uClQl1",
 			data: {},
 			position: {
-				x: 1699.1267962149054,
-				y: -395.89022907079095,
+				x: 1534.857338851561,
+				y: -403.6387883803827,
 			},
 			width: 350,
 			height: 300,
@@ -201,8 +201,8 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 			id: "s5NSuCUuEByh_BTCSSMDU",
 			data: {},
 			position: {
-				x: 1711.2548333419554,
-				y: -43.00975355499272,
+				x: 1531.4882573594275,
+				y: -41.46004169307438,
 			},
 			width: 350,
 			height: 300,
@@ -212,40 +212,8 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 			id: "9cLCaECGGL5t21iQ3TDc9",
 			data: {},
 			position: {
-				x: 1722.007271730704,
-				y: 316.0682748849491,
-			},
-			width: 350,
-			height: 300,
-		},
-		{
-			type: "text-input",
-			id: "pLJp8g-pUzecEkaz8vq6r",
-			data: {
-				config: {
-					value:
-						"I want to optimize a blog post for launching my new website simple-ai.dev",
-				},
-			},
-			position: {
-				x: -738.458131432607,
-				y: -25.91825657532753,
-			},
-			width: 350,
-			height: 300,
-		},
-		{
-			type: "text-input",
-			id: "C8C2e4J9Ekl0_O4wRX-Hz",
-			data: {
-				config: {
-					value:
-						"I want to create a blog post for launching my new website simple-ai.dev",
-				},
-			},
-			position: {
-				x: -754.6134530672476,
-				y: 318.16027889772874,
+				x: 1532.942424576666,
+				y: 309.86942743727576,
 			},
 			width: 350,
 			height: 300,
@@ -260,8 +228,8 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 				},
 			},
 			position: {
-				x: -1188.5840131952539,
-				y: 146.07068308280319,
+				x: -621.3894717331403,
+				y: 147.6203949447215,
 			},
 			width: 350,
 			height: 300,

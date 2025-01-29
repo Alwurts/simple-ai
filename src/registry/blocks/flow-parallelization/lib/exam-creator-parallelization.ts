@@ -45,7 +45,7 @@ export const EXAM_CREATOR_PARALLELIZATION_WORKFLOW: {
 				x: 648.6394983132599,
 				y: -252.7402610767247,
 			},
-			width: 501,
+			width: 379,
 			height: 300,
 		},
 		{
@@ -76,8 +76,8 @@ export const EXAM_CREATOR_PARALLELIZATION_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1997.6356762551877,
-				y: 476.12419869600916,
+				x: 1687.7585469555088,
+				y: 418.93136565541863,
 			},
 		},
 		{
@@ -90,11 +90,11 @@ export const EXAM_CREATOR_PARALLELIZATION_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1595.5570452614952,
-				y: -110.15951545121847,
+				x: 1250.9578657920588,
+				y: -224.79053213173495,
 			},
 			width: 350,
-			height: 704,
+			height: 417,
 		},
 		{
 			type: "visualize-text",
@@ -104,7 +104,7 @@ export const EXAM_CREATOR_PARALLELIZATION_WORKFLOW: {
 				x: 649.7252565724999,
 				y: 107.18165405549195,
 			},
-			width: 498,
+			width: 377,
 			height: 300,
 		},
 		{
@@ -115,7 +115,7 @@ export const EXAM_CREATOR_PARALLELIZATION_WORKFLOW: {
 				x: 646.3721167044031,
 				y: 456.0475192259633,
 			},
-			width: 497,
+			width: 377,
 			height: 300,
 		},
 		{
@@ -123,8 +123,8 @@ export const EXAM_CREATOR_PARALLELIZATION_WORKFLOW: {
 			id: "9cLCaECGGL5t21iQ3TDc9",
 			data: {},
 			position: {
-				x: 1992.768890355997,
-				y: -195.01430701723,
+				x: 1695.1459958597898,
+				y: -234.91904513607875,
 			},
 			width: 518,
 			height: 614,
@@ -138,8 +138,8 @@ export const EXAM_CREATOR_PARALLELIZATION_WORKFLOW: {
 				},
 			},
 			position: {
-				x: -668.6289801933517,
-				y: 63.560075686237326,
+				x: -722.022355638326,
+				y: 62.42404642145064,
 			},
 			width: 350,
 			height: 300,
@@ -218,8 +218,8 @@ export const EXAM_CREATOR_PARALLELIZATION_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1179.7690687907677,
-				y: -19.0855902071698,
+				x: 1251.6723866635305,
+				y: 232.25256033640713,
 			},
 		},
 	],

@@ -24,7 +24,7 @@ export default async function BlocksPage() {
 					</div>
 					<ChainWorkflow className="border border-border w-full h-fit" />
 				</div>
-				<BlockDisplay name={"flow-01"} />
+				<BlockDisplay name={"flow-chain"} />
 			</div>
 			<div className="border-grid container border-b py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
 				<div className="flex flex-col items-stretch xl:flex-row px-2 gap-8">
@@ -43,7 +43,7 @@ export default async function BlocksPage() {
 					</div>
 					<RoutingWorkflow className="border border-border w-full h-fit" />
 				</div>
-				<BlockDisplay name={"flow-01"} />
+				<BlockDisplay name={"flow-routing"} />
 			</div>
 			<div className="border-grid container border-b py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
 				<div className="flex flex-col items-stretch xl:flex-row px-2 gap-8">
@@ -62,7 +62,7 @@ export default async function BlocksPage() {
 					</div>
 					<ParallelizationWorkflow className="border border-border w-full h-fit" />
 				</div>
-				<BlockDisplay name={"flow-01"} />
+				<BlockDisplay name={"flow-parallelization"} />
 			</div>
 			<div className="border-grid container border-b py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
 				<div className="flex flex-col items-stretch xl:flex-row px-2 gap-8">
@@ -84,7 +84,7 @@ export default async function BlocksPage() {
 					</div>
 					<OrchestratorWorkflow className="border border-border w-full h-fit" />
 				</div>
-				<BlockDisplay name={"flow-01"} />
+				<BlockDisplay name={"flow-orchestrator"} />
 			</div>
 		</div>
 	);

@@ -43,6 +43,7 @@ export type GenerateTextData = {
 export type GenerateTextNode = Node<GenerateTextData, "generate-text">;
 
 interface GenerateTextNodeProps extends NodeProps<GenerateTextNode> {
+	disableModelSelector?: boolean;
 	onModelChange: (model: Model) => void;
 	onCreateTool: (name: string, description?: string) => boolean;
 	onRemoveTool: (handleId: string) => void;
@@ -58,6 +59,7 @@ export function GenerateTextNode({
 	id,
 	selected,
 	deletable,
+	disableModelSelector,
 	data,
 	onModelChange,
 	onCreateTool,
@@ -127,6 +129,7 @@ export function GenerateTextNode({
 				<ModelSelector
 					value={data.config.model}
 					onChange={handleModelChange}
+					disabled={disableModelSelector}
 					disabledModels={[
 						"gpt-4o",
 						"gpt-4o-mini",

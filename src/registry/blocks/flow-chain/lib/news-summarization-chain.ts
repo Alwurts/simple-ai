@@ -32,8 +32,10 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			},
 			position: {
 				x: -489.81732940742376,
-				y: -464.60027343850857,
+				y: -376.60027343850857,
 			},
+			width: 302,
+			height: 200,
 		},
 		{
 			type: "generate-text",
@@ -47,8 +49,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: -57.756486691485975,
-				y: -136.92385456193998,
+				x: -162.17724674945998,
+				y: -158.77936248105084,
 			},
 		},
 		{
@@ -61,18 +63,18 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 845.9258239612989,
-				y: -411.2216626746752,
+				x: 752.1489201749794,
+				y: -241.14814501576132,
 			},
-			width: 382,
-			height: 340,
+			width: 329,
+			height: 348,
 		},
 		{
 			type: "generate-text",
 			id: "validateLLM",
 			data: {
 				config: {
-					model: "deepseek-chat",
+					model: "llama-3.3-70b-versatile",
 				},
 				dynamicHandles: {
 					tools: [
@@ -90,8 +92,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 847.3894893788176,
-				y: -48.68069995818201,
+				x: 1108.5149071826668,
+				y: -243.03048559418076,
 			},
 		},
 		{
@@ -116,8 +118,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 374.5036638545787,
-				y: -275.98765372866717,
+				x: 227.58608284277807,
+				y: -279.63023838185234,
 			},
 		},
 		{
@@ -132,8 +134,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1878.1931731336394,
-				y: 57.544579232235805,
+				x: 2015.475799203071,
+				y: 151.25305183351878,
 			},
 		},
 		{
@@ -146,8 +148,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 				},
 			},
 			position: {
-				x: 1489.4272387459412,
-				y: -99.32679562863902,
+				x: 1655.4221522720638,
+				y: 164.22701194400003,
 			},
 			width: 334,
 			height: 219,
@@ -157,8 +159,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "PqH1msuO-XKcAzeKmY72Y",
 			data: {},
 			position: {
-				x: 2303.850763181079,
-				y: -388.8330231822079,
+				x: 2423.6352966782147,
+				y: -362.9090840780605,
 			},
 			width: 375,
 			height: 636,
@@ -168,8 +170,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "lo9ImZY7ZBHw2xTEhj2X_",
 			data: {},
 			position: {
-				x: 1489.3002039483688,
-				y: -425.53815630480557,
+				x: 1660.8667277057014,
+				y: -501.6750186748787,
 			},
 			width: 313,
 			height: 262,

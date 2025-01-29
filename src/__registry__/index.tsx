@@ -805,17 +805,17 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/blocks/app-03/page.tsx")),
 		source: "src/__registry__/blocks/app-03/page.tsx",
 		meta: undefined,
-    },	"flow-01": {
-		name: "flow-01",
-		description: "A flow chart builder.",
+    },	"flow-chain": {
+		name: "flow-chain",
+		description: "Agentic chain workflow.",
 		type: "registry:block",
 		registryDependencies: ["button","card","dialog","input","textarea"],
 		files: [{
-			path: "src/registry/blocks/flow-01/page.tsx",
+			path: "src/registry/blocks/flow-chain/page.tsx",
 			type: "registry:page",
 			target: "app/workflow/page.tsx"
 		},{
-			path: "src/registry/blocks/flow-01/components/nodes-panel.tsx",
+			path: "src/registry/blocks/flow-chain/components/nodes-panel.tsx",
 			type: "registry:component",
 			target: ""
 		},{
@@ -872,8 +872,218 @@ export const Index: Record<string, any> = {
 			target: ""
 		}],
 		categories: ["flow"],
-		component: React.lazy(() => import("@/registry/blocks/flow-01/page.tsx")),
-		source: "src/__registry__/blocks/flow-01/page.tsx",
+		component: React.lazy(() => import("@/registry/blocks/flow-chain/page.tsx")),
+		source: "src/__registry__/blocks/flow-chain/page.tsx",
+		meta: undefined,
+    },	"flow-routing": {
+		name: "flow-routing",
+		description: "Agentic routing workflow.",
+		type: "registry:block",
+		registryDependencies: ["button","card","dialog","input","textarea"],
+		files: [{
+			path: "src/registry/blocks/flow-routing/page.tsx",
+			type: "registry:page",
+			target: "app/workflow/page.tsx"
+		},{
+			path: "src/registry/blocks/flow-routing/components/nodes-panel.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/status-edge-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/text-input-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/hooks/flow/use-workflow.ts",
+			type: "registry:hook",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-client.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/server-node-processors.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/node-factory.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/generate-ai-text.ts",
+			type: "registry:lib",
+			target: ""
+		}],
+		categories: ["flow"],
+		component: React.lazy(() => import("@/registry/blocks/flow-routing/page.tsx")),
+		source: "src/__registry__/blocks/flow-routing/page.tsx",
+		meta: undefined,
+    },	"flow-parallelization": {
+		name: "flow-parallelization",
+		description: "Agentic parallelization workflow.",
+		type: "registry:block",
+		registryDependencies: ["button","card","dialog","input","textarea"],
+		files: [{
+			path: "src/registry/blocks/flow-parallelization/page.tsx",
+			type: "registry:page",
+			target: "app/workflow/page.tsx"
+		},{
+			path: "src/registry/blocks/flow-parallelization/components/nodes-panel.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/status-edge-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/text-input-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/hooks/flow/use-workflow.ts",
+			type: "registry:hook",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-client.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/server-node-processors.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/node-factory.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/generate-ai-text.ts",
+			type: "registry:lib",
+			target: ""
+		}],
+		categories: ["flow"],
+		component: React.lazy(() => import("@/registry/blocks/flow-parallelization/page.tsx")),
+		source: "src/__registry__/blocks/flow-parallelization/page.tsx",
+		meta: undefined,
+    },	"flow-orchestrator": {
+		name: "flow-orchestrator",
+		description: "Agentic orchestrator workflow.",
+		type: "registry:block",
+		registryDependencies: ["button","card","dialog","input","textarea"],
+		files: [{
+			path: "src/registry/blocks/flow-orchestrator/page.tsx",
+			type: "registry:page",
+			target: "app/workflow/page.tsx"
+		},{
+			path: "src/registry/blocks/flow-orchestrator/components/nodes-panel.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/status-edge-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/text-input-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
+			type: "registry:component",
+			target: ""
+		},{
+			path: "src/registry/hooks/flow/use-workflow.ts",
+			type: "registry:hook",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-client.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/server-node-processors.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/node-factory.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/generate-ai-text.ts",
+			type: "registry:lib",
+			target: ""
+		}],
+		categories: ["flow"],
+		component: React.lazy(() => import("@/registry/blocks/flow-orchestrator/page.tsx")),
+		source: "src/__registry__/blocks/flow-orchestrator/page.tsx",
 		meta: undefined,
     },	"jsx-utils": {
 		name: "jsx-utils",

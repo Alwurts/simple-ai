@@ -1,5 +1,3 @@
-/* import { EXAM_CREATOR_PARALLELIZATION_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/exam-creator-parallelization"; */
-import { NEWS_SUMMARY_WORKFLOW } from "@/registry/blocks/flow-01/lib/examples/news-summarization-chain";
 import { createNode } from "@/registry/lib/flow/node-factory";
 import { SSEWorkflowExecutionClient } from "@/registry/lib/flow/sse-workflow-execution-client";
 import {
@@ -67,14 +65,21 @@ export interface WorkflowState {
 	};
 	// execution
 	startExecution: () => Promise<void>;
+	// Initialize workflow with nodes and edges
+	initializeWorkflow: (nodes: FlowNode[], edges: FlowEdge[]) => void;
 }
 
 const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
-	...NEWS_SUMMARY_WORKFLOW,
+	nodes: [],
+	edges: [],
 	workflowExecutionState: {
 		isRunning: false,
 		finishedAt: null,
 		errors: [],
+	},
+	initializeWorkflow: (nodes: FlowNode[], edges: FlowEdge[]) => {
+		set({ nodes, edges });
+		get().validateWorkflow();
 	},
 	validateWorkflow: () => {
 		const { nodes, edges } = get();
@@ -93,7 +98,6 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 				switch (error.type) {
 					case "multiple-sources-for-target-handle":
 					case "cycle":
-						// These errors affect edges
 						for (const edge of error.edges) {
 							get().updateEdgeExecutionState(edge.id, {
 								error,
@@ -101,7 +105,6 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 						}
 						break;
 					case "missing-required-connection":
-						// These errors affect nodes
 						get().updateNodeExecutionState(error.node.id, {
 							status: "idle",
 							timestamp: new Date().toISOString(),

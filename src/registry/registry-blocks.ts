@@ -293,19 +293,274 @@ export const blocks: Registry = [
 		categories: ["app"],
 	},
 	{
-		name: "flow-01",
-		description: "A flow chart builder.",
+		name: "flow-chain",
+		description: "Agentic chain workflow.",
 		type: "registry:block",
 		dependencies: ["@xyflow/react", "zustand"],
 		registryDependencies: ["button", "card", "dialog", "input", "textarea"],
 		files: [
 			{
-				path: "blocks/flow-01/page.tsx",
+				path: "blocks/flow-chain/page.tsx",
 				target: "app/workflow/page.tsx",
 				type: "registry:page",
 			},
 			{
-				path: "blocks/flow-01/components/nodes-panel.tsx",
+				path: "blocks/flow-chain/components/nodes-panel.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/status-edge-controller.tsx",
+				//target: "components/status-edge-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/visualize-text-node-controller.tsx",
+				//target: "components/ui/visualize-text-node-controller.tsx",
+				type: "registry:component",
+			},
+
+			{
+				path: "ui/flow/text-input-node-controller.tsx",
+				//target: "components/ui/text-input-node-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/prompt-crafter-node-controller.tsx",
+				//target: "components/ui/prompt-crafter-node-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/generate-text-node-controller.tsx",
+				//target: "components/ui/generate-text-node-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "hooks/flow/use-workflow.ts",
+				//target: "hooks/flow/use-workflow.ts",
+				type: "registry:hook",
+			},
+			{
+				path: "lib/flow/workflow.ts",
+				//target: "lib/flow/workflow.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/workflow-execution-engine.ts",
+				//target: "lib/flow/workflow-execution-engine.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/sse-workflow-execution-client.ts",
+				//target: "lib/flow/sse-workflow-execution-client.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/sse-workflow-execution-engine.ts",
+				//target: "lib/flow/sse-workflow-execution-engine.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/server-node-processors.ts",
+				//target: "lib/flow/server-node-processors.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/node-factory.ts",
+				//target: "lib/flow/node-factory.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/generate-ai-text.ts",
+				//target: "lib/flow/generate-ai-text.ts",
+				type: "registry:lib",
+			},
+		],
+		categories: ["flow"],
+	},
+	{
+		name: "flow-routing",
+		description: "Agentic routing workflow.",
+		type: "registry:block",
+		dependencies: ["@xyflow/react", "zustand"],
+		registryDependencies: ["button", "card", "dialog", "input", "textarea"],
+		files: [
+			{
+				path: "blocks/flow-routing/page.tsx",
+				target: "app/workflow/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/flow-routing/components/nodes-panel.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/status-edge-controller.tsx",
+				//target: "components/status-edge-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/visualize-text-node-controller.tsx",
+				//target: "components/ui/visualize-text-node-controller.tsx",
+				type: "registry:component",
+			},
+
+			{
+				path: "ui/flow/text-input-node-controller.tsx",
+				//target: "components/ui/text-input-node-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/prompt-crafter-node-controller.tsx",
+				//target: "components/ui/prompt-crafter-node-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/generate-text-node-controller.tsx",
+				//target: "components/ui/generate-text-node-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "hooks/flow/use-workflow.ts",
+				//target: "hooks/flow/use-workflow.ts",
+				type: "registry:hook",
+			},
+			{
+				path: "lib/flow/workflow.ts",
+				//target: "lib/flow/workflow.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/workflow-execution-engine.ts",
+				//target: "lib/flow/workflow-execution-engine.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/sse-workflow-execution-client.ts",
+				//target: "lib/flow/sse-workflow-execution-client.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/sse-workflow-execution-engine.ts",
+				//target: "lib/flow/sse-workflow-execution-engine.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/server-node-processors.ts",
+				//target: "lib/flow/server-node-processors.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/node-factory.ts",
+				//target: "lib/flow/node-factory.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/generate-ai-text.ts",
+				//target: "lib/flow/generate-ai-text.ts",
+				type: "registry:lib",
+			},
+		],
+		categories: ["flow"],
+	},
+	{
+		name: "flow-parallelization",
+		description: "Agentic parallelization workflow.",
+		type: "registry:block",
+		dependencies: ["@xyflow/react", "zustand"],
+		registryDependencies: ["button", "card", "dialog", "input", "textarea"],
+		files: [
+			{
+				path: "blocks/flow-parallelization/page.tsx",
+				target: "app/workflow/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/flow-parallelization/components/nodes-panel.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/status-edge-controller.tsx",
+				//target: "components/status-edge-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/visualize-text-node-controller.tsx",
+				//target: "components/ui/visualize-text-node-controller.tsx",
+				type: "registry:component",
+			},
+
+			{
+				path: "ui/flow/text-input-node-controller.tsx",
+				//target: "components/ui/text-input-node-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/prompt-crafter-node-controller.tsx",
+				//target: "components/ui/prompt-crafter-node-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/generate-text-node-controller.tsx",
+				//target: "components/ui/generate-text-node-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "hooks/flow/use-workflow.ts",
+				//target: "hooks/flow/use-workflow.ts",
+				type: "registry:hook",
+			},
+			{
+				path: "lib/flow/workflow.ts",
+				//target: "lib/flow/workflow.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/workflow-execution-engine.ts",
+				//target: "lib/flow/workflow-execution-engine.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/sse-workflow-execution-client.ts",
+				//target: "lib/flow/sse-workflow-execution-client.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/sse-workflow-execution-engine.ts",
+				//target: "lib/flow/sse-workflow-execution-engine.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/server-node-processors.ts",
+				//target: "lib/flow/server-node-processors.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/node-factory.ts",
+				//target: "lib/flow/node-factory.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "lib/flow/generate-ai-text.ts",
+				//target: "lib/flow/generate-ai-text.ts",
+				type: "registry:lib",
+			},
+		],
+		categories: ["flow"],
+	},
+	{
+		name: "flow-orchestrator",
+		description: "Agentic orchestrator workflow.",
+		type: "registry:block",
+		dependencies: ["@xyflow/react", "zustand"],
+		registryDependencies: ["button", "card", "dialog", "input", "textarea"],
+		files: [
+			{
+				path: "blocks/flow-orchestrator/page.tsx",
+				target: "app/workflow/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/flow-orchestrator/components/nodes-panel.tsx",
 				type: "registry:component",
 			},
 			{
