@@ -62,6 +62,7 @@ export interface WorkflowState {
 		isRunning: boolean;
 		finishedAt: string | null;
 		errors: WorkflowError[];
+		timesRun: number;
 	};
 	// execution
 	startExecution: () => Promise<void>;
@@ -76,6 +77,7 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		isRunning: false,
 		finishedAt: null,
 		errors: [],
+		timesRun: 0,
 	},
 	initializeWorkflow: (nodes: FlowNode[], edges: FlowEdge[]) => {
 		set({ nodes, edges });
@@ -336,6 +338,14 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 	// Runtime
 
 	async startExecution() {
+		// Check if workflow has already run successfully
+		if (get().workflowExecutionState.timesRun > 3) {
+			console.warn(
+				"Workflow has already run successfully and cannot be run again",
+			);
+			return;
+		}
+
 		// Reset execution state for all nodes
 		set((state) => ({
 			nodes: state.nodes.map((node) => ({
@@ -382,6 +392,7 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 							workflowExecutionState: {
 								...state.workflowExecutionState,
 								finishedAt: timestamp,
+								timesRun: state.workflowExecutionState.timesRun + 1,
 							},
 						}));
 						resolve(undefined);

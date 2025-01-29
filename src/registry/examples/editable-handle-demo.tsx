@@ -18,14 +18,14 @@ import {
 	useUpdateNodeInternals,
 } from "@xyflow/react";
 
-import { nanoid } from "nanoid";
-import { useCallback, useState } from "react";
-import { Position } from "@xyflow/react";
+import { Button } from "@/components/ui/button";
 import {
 	EditableHandle,
 	EditableHandleDialog,
 } from "@/registry/ui/flow/editable-handle";
-import { Button } from "@/components/ui/button";
+import { Position } from "@xyflow/react";
+import { nanoid } from "nanoid";
+import { useCallback, useState } from "react";
 
 const DynamicHandlesNode = ({ id }: NodeProps<Node>) => {
 	const updateNodeInternals = useUpdateNodeInternals();
@@ -78,7 +78,9 @@ const DynamicHandlesNode = ({ id }: NodeProps<Node>) => {
 
 	return (
 		<div className="py-4 border rounded-lg bg-background w-[300px]">
-			<h2 className="text-lg font-semibold mb-4 px-4">Node with dynamic Handles</h2>
+			<h2 className="text-lg font-semibold mb-4 px-4">
+				Node with dynamic Handles
+			</h2>
 
 			<EditableHandleDialog
 				variant="create"

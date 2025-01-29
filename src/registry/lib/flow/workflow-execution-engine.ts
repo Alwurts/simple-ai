@@ -103,7 +103,7 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 
 		// Get all nodes that this node depends on
 		const dependencies = context.workflow.dependencies[nodeId] || [];
-		
+
 		// If this node has no dependencies, check its own status
 		if (dependencies.length === 0) {
 			if (completedNodes.has(nodeId) && node.data.executionState?.sources) {
@@ -129,7 +129,10 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 		return "idle";
 	};
 
-	const getBranchStatus = (nodeId: string, handleId: string): NodeExecutionStatus => {
+	const getBranchStatus = (
+		nodeId: string,
+		handleId: string,
+	): NodeExecutionStatus => {
 		const node = context.workflow.nodes.find((n) => n.id === nodeId);
 		if (!node) {
 			return "idle";
@@ -137,7 +140,7 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 
 		// Get all edges that connect to this handle
 		const incomingEdges = context.workflow.edges.filter(
-			(edge) => edge.target === nodeId && edge.targetHandle === handleId
+			(edge) => edge.target === nodeId && edge.targetHandle === handleId,
 		);
 
 		// For each incoming edge, check the status of its source node and all its descendants
@@ -160,15 +163,22 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 		// Special handling for prompt-crafter nodes
 		if (node.type === "prompt-crafter") {
 			// Get all target handles from dynamic handles
-			const targetHandles = (node.data.dynamicHandles?.["template-tags"] || [])
-				.map((handle) => handle.id);
+			const targetHandles = (
+				node.data.dynamicHandles?.["template-tags"] || []
+			).map((handle) => handle.id);
 
 			// Check each target handle's branch status
-			const branchStatuses = targetHandles.map((handleId) => getBranchStatus(nodeId, handleId));
+			const branchStatuses = targetHandles.map((handleId) =>
+				getBranchStatus(nodeId, handleId),
+			);
 
 			// Node can process if at least one branch is complete and none are processing
-			const hasCompleteBranch = branchStatuses.some((status) => status === "success");
-			const hasProcessingBranch = branchStatuses.some((status) => status === "processing");
+			const hasCompleteBranch = branchStatuses.some(
+				(status) => status === "success",
+			);
+			const hasProcessingBranch = branchStatuses.some(
+				(status) => status === "processing",
+			);
 
 			return hasCompleteBranch && !hasProcessingBranch;
 		}

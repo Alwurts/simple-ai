@@ -14,6 +14,7 @@ import "@xyflow/react/dist/style.css";
 import { Button } from "@/components/ui/button";
 import { ErrorIndicator } from "@/registry/blocks/flow-routing/components/error-indicator";
 import { NodesPanel } from "@/registry/blocks/flow-routing/components/nodes-panel";
+import { CONTENT_CREATOR_ROUTING_WORKFLOW } from "@/registry/blocks/flow-routing/lib/content-creator-routing";
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { FlowNode } from "@/registry/lib/flow/workflow";
 import { GenerateTextNodeController } from "@/registry/ui/flow/generate-text-node-controller";
@@ -21,7 +22,6 @@ import { PromptCrafterNodeController } from "@/registry/ui/flow/prompt-crafter-n
 import { StatusEdgeController } from "@/registry/ui/flow/status-edge-controller";
 import { TextInputNodeController } from "@/registry/ui/flow/text-input-node-controller";
 import { VisualizeTextNodeController } from "@/registry/ui/flow/visualize-text-node-controller";
-import { CONTENT_CREATOR_ROUTING_WORKFLOW } from "@/registry/blocks/flow-routing/lib/content-creator-routing";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNodeController,
@@ -84,30 +84,6 @@ export function Flow() {
 		store.createNode(type, position);
 	};
 
-	/* const handleExport = () => {
-		const exportData = {
-			nodes: store.nodes.map((node) => ({
-				type: node.type,
-				id: node.id,
-				data: {
-					...node.data,
-					executionState: undefined,
-				},
-				position: node.position,
-				width: node.width,
-				height: node.height,
-			})),
-			edges: store.edges.map((edge) => ({
-				...edge,
-				data: {
-					...edge.data,
-					executionState: undefined,
-				},
-			})),
-		};
-		navigator.clipboard.writeText(JSON.stringify(exportData, null, 2));
-	}; */
-
 	return (
 		<ReactFlow
 			nodes={store.nodes}
@@ -127,14 +103,6 @@ export function Flow() {
 			<NodesPanel />
 			<Panel position="top-right" className="flex gap-2 items-center">
 				<ErrorIndicator errors={store.workflowExecutionState.errors} />
-				{/* <Button
-					onClick={handleExport}
-					variant="outline"
-					className="flex gap-2 items-center"
-				>
-					<Copy className="h-4 w-4" />
-					Export Flow
-				</Button> */}
 				<Button
 					onClick={() => {
 						store.startExecution();

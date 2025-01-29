@@ -14,9 +14,9 @@ import "@xyflow/react/dist/style.css";
 import { Button } from "@/components/ui/button";
 import { ErrorIndicator } from "@/registry/blocks/flow-chain/components/error-indicator";
 import { NodesPanel } from "@/registry/blocks/flow-chain/components/nodes-panel";
+import { NEWS_SUMMARY_WORKFLOW } from "@/registry/blocks/flow-chain/lib/news-summarization-chain";
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { FlowNode } from "@/registry/lib/flow/workflow";
-import { NEWS_SUMMARY_WORKFLOW } from "@/registry/blocks/flow-chain/lib/news-summarization-chain";
 import { GenerateTextNodeController } from "@/registry/ui/flow/generate-text-node-controller";
 import { PromptCrafterNodeController } from "@/registry/ui/flow/prompt-crafter-node-controller";
 import { StatusEdgeController } from "@/registry/ui/flow/status-edge-controller";
@@ -84,7 +84,7 @@ export function Flow() {
 		store.createNode(type, position);
 	};
 
-	/* const handleExport = () => {
+	const handleExport = () => {
 		const exportData = {
 			nodes: store.nodes.map((node) => ({
 				type: node.type,
@@ -106,7 +106,7 @@ export function Flow() {
 			})),
 		};
 		navigator.clipboard.writeText(JSON.stringify(exportData, null, 2));
-	}; */
+	};
 
 	return (
 		<ReactFlow
@@ -127,14 +127,13 @@ export function Flow() {
 			<NodesPanel />
 			<Panel position="top-right" className="flex gap-2 items-center">
 				<ErrorIndicator errors={store.workflowExecutionState.errors} />
-				{/* <Button
+				<Button
 					onClick={handleExport}
 					variant="outline"
 					className="flex gap-2 items-center"
 				>
-					<Copy className="h-4 w-4" />
 					Export Flow
-				</Button> */}
+				</Button>
 				<Button
 					onClick={() => {
 						store.startExecution();

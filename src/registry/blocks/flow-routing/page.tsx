@@ -14,6 +14,7 @@ import "@xyflow/react/dist/style.css";
 import { Button } from "@/components/ui/button";
 import { ErrorIndicator } from "@/registry/blocks/flow-routing/components/error-indicator";
 import { NodesPanel } from "@/registry/blocks/flow-routing/components/nodes-panel";
+import { CONTENT_CREATOR_ROUTING_WORKFLOW } from "@/registry/blocks/flow-routing/lib/content-creator-routing";
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { FlowNode } from "@/registry/lib/flow/workflow";
 import { GenerateTextNodeController } from "@/registry/ui/flow/generate-text-node-controller";
@@ -21,7 +22,6 @@ import { PromptCrafterNodeController } from "@/registry/ui/flow/prompt-crafter-n
 import { StatusEdgeController } from "@/registry/ui/flow/status-edge-controller";
 import { TextInputNodeController } from "@/registry/ui/flow/text-input-node-controller";
 import { VisualizeTextNodeController } from "@/registry/ui/flow/visualize-text-node-controller";
-import { CONTENT_CREATOR_ROUTING_WORKFLOW } from "@/registry/blocks/flow-routing/lib/content-creator-routing";
 
 const nodeTypes: NodeTypes = {
 	"generate-text": GenerateTextNodeController,
@@ -107,9 +107,15 @@ export function Flow() {
 					onClick={() => {
 						store.startExecution();
 					}}
+					title={
+						store.workflowExecutionState.timesRun > 1
+							? "Disabled for now"
+							: "Run the workflow"
+					}
 					disabled={
 						store.workflowExecutionState.errors.length > 0 ||
-						store.workflowExecutionState.isRunning
+						store.workflowExecutionState.isRunning ||
+						store.workflowExecutionState.timesRun > 1
 					}
 				>
 					{store.workflowExecutionState.isRunning ? "Running..." : "Run Flow"}

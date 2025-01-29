@@ -17,9 +17,9 @@ import {
 	applyNodeChanges,
 } from "@xyflow/react";
 
+import { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
 import { nanoid } from "nanoid";
 import { useCallback, useState } from "react";
-import { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
 
 const PromptCrafterNodeController = ({
 	id,

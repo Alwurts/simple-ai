@@ -25,7 +25,7 @@ export const docsConfig: DocsConfig = {
 		},
 		{
 			title: "Agents",
-			href: "/agents",
+			href: "/ai-agents",
 		},
 	],
 	sidebarNav: [
