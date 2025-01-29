@@ -169,9 +169,9 @@ export function GenerateTextNode({
 						<span className="text-sm font-medium">Tool outputs</span>
 						<EditableHandleDialog
 							variant="create"
-							label=""
 							onSave={handleCreateTool}
 							align="end"
+							showDescription
 						>
 							<Button variant="outline" size="sm" className="h-7 px-2">
 								<Plus className="h-4 w-4 mr-1" />
@@ -192,6 +192,7 @@ export function GenerateTextNode({
 								wrapperClassName="w-full"
 								onUpdateTool={onUpdateTool}
 								onDelete={removeHandle}
+								showDescription
 							/>
 						))}
 					</div>

@@ -18,12 +18,13 @@ import { useCallback } from "react";
 
 type HandleEditorProps = {
 	variant: "edit" | "create";
-	label: string;
+	label?: string;
 	description?: string;
 	onSave: (newLabel: string, newDescription?: string) => boolean;
 	onCancel?: () => void;
 	align?: "start" | "end";
 	children: React.ReactNode;
+	showDescription?: boolean;
 };
 
 const EditableHandleDialog = ({
@@ -34,9 +35,10 @@ const EditableHandleDialog = ({
 	onCancel,
 	align = "start",
 	children,
+	showDescription = false,
 }: HandleEditorProps) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [localLabel, setLocalLabel] = useState(label);
+	const [localLabel, setLocalLabel] = useState(label ?? "");
 	const [localDescription, setLocalDescription] = useState(description);
 
 	const handleSave = () => {
@@ -86,18 +88,20 @@ const EditableHandleDialog = ({
 							autoFocus
 						/>
 					</div>
-					<div className="flex flex-col gap-2">
-						<label htmlFor="description" className="text-sm font-medium">
-							Description (optional)
-						</label>
-						<Textarea
-							id="description"
-							value={localDescription}
-							onChange={(e) => setLocalDescription(e.target.value)}
-							placeholder="Enter description"
-							className="resize-none h-20"
-						/>
-					</div>
+					{showDescription && (
+						<div className="flex flex-col gap-2">
+							<label htmlFor="description" className="text-sm font-medium">
+								Description (optional)
+							</label>
+							<Textarea
+								id="description"
+								value={localDescription}
+								onChange={(e) => setLocalDescription(e.target.value)}
+								placeholder="Enter description"
+								className="resize-none h-20"
+							/>
+						</div>
+					)}
 					<div className="flex justify-end gap-2">
 						<Button variant="outline" size="sm" onClick={handleCancel}>
 							Cancel
@@ -129,6 +133,7 @@ type EditableHandleProps = HandleProps &
 			newDescription?: string,
 		) => boolean;
 		onDelete: (handleId: string) => void;
+		showDescription?: boolean;
 	};
 
 const EditableHandle = React.forwardRef<HTMLDivElement, EditableHandleProps>(
@@ -144,6 +149,7 @@ const EditableHandle = React.forwardRef<HTMLDivElement, EditableHandleProps>(
 			wrapperClassName,
 			onUpdateTool,
 			onDelete,
+			showDescription = false,
 			...handleProps
 		},
 		ref,
@@ -203,7 +209,7 @@ const EditableHandle = React.forwardRef<HTMLDivElement, EditableHandleProps>(
 						>
 							{label}
 						</span>
-						{description && (
+						{showDescription && description && (
 							<p className="text-muted-foreground text-sm line-clamp-1">
 								{description}
 							</p>
@@ -217,6 +223,7 @@ const EditableHandle = React.forwardRef<HTMLDivElement, EditableHandleProps>(
 							onSave={handleSave}
 							onCancel={resetEditing}
 							align={position === "left" ? "start" : "end"}
+							showDescription={showDescription}
 						>
 							<Button
 								variant="ghost"

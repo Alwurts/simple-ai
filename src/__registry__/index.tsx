@@ -865,35 +865,43 @@ export const Index: Record<string, any> = {
 		name: "flow-chain",
 		description: "Agentic chain workflow.",
 		type: "registry:block",
-		registryDependencies: ["button","card","dialog","input","textarea"],
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","http://localhost:4567/r/generate-text-node.json","http://localhost:4567/r/prompt-crafter-node.json","http://localhost:4567/r/text-input-node.json","http://localhost:4567/r/visualize-text-node.json"],
 		files: [{
 			path: "src/registry/blocks/flow-chain/page.tsx",
 			type: "registry:page",
 			target: "app/workflow/page.tsx"
 		},{
+			path: "src/registry/blocks/flow-chain/route.ts",
+			type: "registry:page",
+			target: "app/api/workflow/execute/route.ts"
+		},{
 			path: "src/registry/blocks/flow-chain/components/nodes-panel.tsx",
 			type: "registry:component",
+			target: "components/flow/nodes-panel.tsx"
+		},{
+			path: "src/registry/blocks/flow-chain/lib/news-summarization-chain.ts",
+			type: "registry:lib",
 			target: ""
 		},{
 			path: "src/registry/ui/flow/status-edge-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/status-edge-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/visualize-text-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/text-input-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/text-input-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/prompt-crafter-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/generate-text-node-controller.tsx"
 		},{
 			path: "src/registry/hooks/flow/use-workflow.ts",
 			type: "registry:hook",
@@ -935,35 +943,43 @@ export const Index: Record<string, any> = {
 		name: "flow-routing",
 		description: "Agentic routing workflow.",
 		type: "registry:block",
-		registryDependencies: ["button","card","dialog","input","textarea"],
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","http://localhost:4567/r/generate-text-node.json","http://localhost:4567/r/prompt-crafter-node.json","http://localhost:4567/r/text-input-node.json","http://localhost:4567/r/visualize-text-node.json"],
 		files: [{
 			path: "src/registry/blocks/flow-routing/page.tsx",
 			type: "registry:page",
 			target: "app/workflow/page.tsx"
 		},{
+			path: "src/registry/blocks/flow-routing/route.ts",
+			type: "registry:page",
+			target: "app/api/workflow/execute/route.ts"
+		},{
 			path: "src/registry/blocks/flow-routing/components/nodes-panel.tsx",
 			type: "registry:component",
+			target: "components/flow/nodes-panel.tsx"
+		},{
+			path: "src/registry/blocks/flow-routing/lib/content-creator-routing.ts",
+			type: "registry:lib",
 			target: ""
 		},{
 			path: "src/registry/ui/flow/status-edge-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/status-edge-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/visualize-text-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/text-input-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/text-input-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/prompt-crafter-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/generate-text-node-controller.tsx"
 		},{
 			path: "src/registry/hooks/flow/use-workflow.ts",
 			type: "registry:hook",
@@ -1005,35 +1021,43 @@ export const Index: Record<string, any> = {
 		name: "flow-parallelization",
 		description: "Agentic parallelization workflow.",
 		type: "registry:block",
-		registryDependencies: ["button","card","dialog","input","textarea"],
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","http://localhost:4567/r/generate-text-node.json","http://localhost:4567/r/prompt-crafter-node.json","http://localhost:4567/r/text-input-node.json","http://localhost:4567/r/visualize-text-node.json"],
 		files: [{
 			path: "src/registry/blocks/flow-parallelization/page.tsx",
 			type: "registry:page",
 			target: "app/workflow/page.tsx"
 		},{
+			path: "src/registry/blocks/flow-parallelization/route.ts",
+			type: "registry:page",
+			target: "app/api/workflow/execute/route.ts"
+		},{
 			path: "src/registry/blocks/flow-parallelization/components/nodes-panel.tsx",
 			type: "registry:component",
+			target: "components/flow/nodes-panel.tsx"
+		},{
+			path: "src/registry/blocks/flow-parallelization/lib/exam-creator-parallelization.ts",
+			type: "registry:lib",
 			target: ""
 		},{
 			path: "src/registry/ui/flow/status-edge-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/status-edge-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/visualize-text-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/text-input-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/text-input-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/prompt-crafter-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/generate-text-node-controller.tsx"
 		},{
 			path: "src/registry/hooks/flow/use-workflow.ts",
 			type: "registry:hook",
@@ -1075,35 +1099,43 @@ export const Index: Record<string, any> = {
 		name: "flow-orchestrator",
 		description: "Agentic orchestrator workflow.",
 		type: "registry:block",
-		registryDependencies: ["button","card","dialog","input","textarea"],
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","http://localhost:4567/r/generate-text-node.json","http://localhost:4567/r/prompt-crafter-node.json","http://localhost:4567/r/text-input-node.json","http://localhost:4567/r/visualize-text-node.json"],
 		files: [{
 			path: "src/registry/blocks/flow-orchestrator/page.tsx",
 			type: "registry:page",
 			target: "app/workflow/page.tsx"
 		},{
+			path: "src/registry/blocks/flow-orchestrator/route.ts",
+			type: "registry:page",
+			target: "app/api/workflow/execute/route.ts"
+		},{
 			path: "src/registry/blocks/flow-orchestrator/components/nodes-panel.tsx",
 			type: "registry:component",
+			target: "components/flow/nodes-panel.tsx"
+		},{
+			path: "src/registry/blocks/flow-orchestrator/lib/developer-tasks-orchestrator.ts",
+			type: "registry:lib",
 			target: ""
 		},{
 			path: "src/registry/ui/flow/status-edge-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/status-edge-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/visualize-text-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/text-input-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/text-input-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/prompt-crafter-node-controller.tsx"
 		},{
 			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
 			type: "registry:component",
-			target: ""
+			target: "components/flow/generate-text-node-controller.tsx"
 		},{
 			path: "src/registry/hooks/flow/use-workflow.ts",
 			type: "registry:hook",

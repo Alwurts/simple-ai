@@ -1,8 +1,7 @@
 import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
 import type { Model } from "@/registry/ui/model-selector";
-import { deepseek } from "@ai-sdk/deepseek";
-import { groq } from "@ai-sdk/groq";
-import { openai } from "@ai-sdk/openai";
+import { createDeepSeek } from "@ai-sdk/deepseek";
+import { createGroq } from "@ai-sdk/groq";
 import { generateText } from "ai";
 import { z } from "zod";
 
@@ -15,14 +14,15 @@ interface ToolResult {
 function createAIClient(model: Model) {
 	switch (model) {
 		case "deepseek-chat":
-			return deepseek;
+			return createDeepSeek({
+				baseURL: process.env.AI_GATEWAY_DEEPSEEK_URL,
+			});
 		case "llama-3.3-70b-versatile":
 		case "llama-3.1-8b-instant":
 		case "deepseek-r1-distill-llama-70b":
-			return groq;
-		case "gpt-4o":
-		case "gpt-4o-mini":
-			return openai;
+			return createGroq({
+				baseURL: process.env.AI_GATEWAY_GROQ_URL,
+			});
 		default:
 			throw new Error(`Unsupported model: ${model}`);
 	}
@@ -45,7 +45,7 @@ function mapToolsForAI(
 	);
 }
 
-export async function generateAIText({
+export async function generateAITextInternal({
 	prompt,
 	system,
 	model,
