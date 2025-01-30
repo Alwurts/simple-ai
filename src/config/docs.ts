@@ -23,6 +23,10 @@ export const docsConfig: DocsConfig = {
 			title: "Blocks",
 			href: "/blocks",
 		},
+		{
+			title: "Agents",
+			href: "/ai-agents",
+		},
 	],
 	sidebarNav: [
 		{
@@ -41,6 +45,11 @@ export const docsConfig: DocsConfig = {
 				{
 					title: "Blocks",
 					href: "/docs/blocks",
+					items: [],
+				},
+				{
+					title: "React Flow",
+					href: "/docs/react-flow",
 					items: [],
 				},
 			],
@@ -64,13 +73,58 @@ export const docsConfig: DocsConfig = {
 					items: [],
 				},
 				{
+					title: "JSX Renderer",
+					href: "/docs/components/jsx-renderer",
+					items: [],
+				},
+				{
 					title: "Markdown Content",
 					href: "/docs/components/markdown-content",
 					items: [],
 				},
 				{
-					title: "JSX Renderer",
-					href: "/docs/components/jsx-renderer",
+					title: "Model Selector",
+					href: "/docs/components/model-selector",
+					items: [],
+				},
+			],
+		},
+		{
+			title: "React Flow Components",
+			items: [
+				{
+					title: "Editable Handle",
+					href: "/docs/react-flow/components/editable-handle",
+					items: [],
+				},
+				{
+					title: "Generate Text Node",
+					href: "/docs/react-flow/components/generate-text-node",
+					items: [],
+				},
+				{
+					title: "Prompt Crafter Node",
+					href: "/docs/react-flow/components/prompt-crafter-node",
+					items: [],
+				},
+				{
+					title: "Resizable Node",
+					href: "/docs/react-flow/components/resizable-node",
+					items: [],
+				},
+				{
+					title: "Status Edge",
+					href: "/docs/react-flow/components/status-edge",
+					items: [],
+				},
+				{
+					title: "Text Input Node",
+					href: "/docs/react-flow/components/text-input-node",
+					items: [],
+				},
+				{
+					title: "Visualize Text Node",
+					href: "/docs/react-flow/components/visualize-text-node",
 					items: [],
 				},
 			],

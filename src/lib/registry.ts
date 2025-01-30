@@ -162,7 +162,8 @@ function fixFilePaths(files: z.infer<typeof registryItemSchema>["files"]) {
 }
 
 export function fixImport(content: string) {
-	const regex = /@\/(.+?)\/((?:.*?\/)?(?:components|ui|hooks|lib))\/([\w-]+)/g;
+	const regex =
+		/@\/(.+?)\/((?:.*?\/)?(?:components|ui\/flow|ui|hooks|lib))\/([\w-]+)/g;
 
 	const replacement = (
 		match: string,
@@ -170,11 +171,18 @@ export function fixImport(content: string) {
 		type: string,
 		component: string,
 	) => {
-		if (type.endsWith("components")) {
-			return `@/components/${component}`;
+		// Special case for registry/ui/flow
+		if (type.endsWith("ui/flow")) {
+			return `@/components/flow/${component}`;
 		}
+
+		// General case for registry/ui
 		if (type.endsWith("ui")) {
 			return `@/components/ui/${component}`;
+		}
+
+		if (type.endsWith("components")) {
+			return `@/components/${component}`;
 		}
 
 		if (type.endsWith("hooks")) {

@@ -196,7 +196,18 @@ async function buildStyles(registry: Registry) {
 					// Replace @/registry/ui imports with @/components/ui
 					for (const importDecl of sourceFile.getImportDeclarations()) {
 						const moduleSpecifier = importDecl.getModuleSpecifierValue();
-						if (moduleSpecifier.startsWith("@/registry/ui")) {
+
+						// Handle @/registry/ui/flow imports first
+						if (moduleSpecifier.startsWith("@/registry/ui/flow")) {
+							importDecl.setModuleSpecifier(
+								moduleSpecifier.replace(
+									"@/registry/ui/flow",
+									"@/components/flow",
+								),
+							);
+						}
+						// Handle other @/registry/ui imports
+						else if (moduleSpecifier.startsWith("@/registry/ui")) {
 							importDecl.setModuleSpecifier(
 								moduleSpecifier.replace("@/registry/ui", "@/components/ui"),
 							);

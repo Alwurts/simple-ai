@@ -83,6 +83,188 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/ui/markdown-content.tsx")),
 		source: "",
 		meta: undefined,
+    },	"model-selector": {
+		name: "model-selector",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["select"],
+		files: [{
+			path: "src/registry/ui/model-selector.tsx",
+			type: "registry:ui",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/model-selector.tsx")),
+		source: "",
+		meta: undefined,
+    },	"resizable-node": {
+		name: "resizable-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["https://simple-ai.dev/r/base-node.json"],
+		files: [{
+			path: "src/registry/ui/flow/resizable-node.tsx",
+			type: "registry:ui",
+			target: "components/flow/resizable-node.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/resizable-node.tsx")),
+		source: "",
+		meta: undefined,
+    },	"node-header-status": {
+		name: "node-header-status",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["badge"],
+		files: [{
+			path: "src/registry/ui/flow/node-header-status.tsx",
+			type: "registry:ui",
+			target: "components/flow/node-header-status.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/node-header-status.tsx")),
+		source: "",
+		meta: undefined,
+    },	"editable-handle": {
+		name: "editable-handle",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["button","input","textarea","popover","https://simple-ai.dev/r/base-handle.json"],
+		files: [{
+			path: "src/registry/ui/flow/editable-handle.tsx",
+			type: "registry:ui",
+			target: "components/flow/editable-handle.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/editable-handle.tsx")),
+		source: "",
+		meta: undefined,
+    },	"status-edge": {
+		name: "status-edge",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/flow/status-edge.tsx",
+			type: "registry:ui",
+			target: "components/flow/status-edge.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/status-edge.tsx")),
+		source: "",
+		meta: undefined,
+    },	"generate-text-node": {
+		name: "generate-text-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["button","separator","https://simple-ai.dev/r/model-selector.json","https://simple-ai.dev/r/node-header-status.json","https://simple-ai.dev/r/editable-handle.json","https://simple-ai.dev/r/labeled-handle.json","https://simple-ai.dev/r/base-node.json","https://simple-ai.dev/r/node-header.json"],
+		files: [{
+			path: "src/registry/ui/flow/generate-text-node.tsx",
+			type: "registry:ui",
+			target: "components/flow/generate-text-node.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/generate-text-node.tsx")),
+		source: "",
+		meta: undefined,
+    },	"prompt-crafter-node": {
+		name: "prompt-crafter-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["button","separator","popover","command","https://simple-ai.dev/r/node-header-status.json","https://simple-ai.dev/r/editable-handle.json","https://simple-ai.dev/r/node-header.json","https://simple-ai.dev/r/labeled-handle.json","https://simple-ai.dev/r/base-node.json"],
+		files: [{
+			path: "src/registry/ui/flow/prompt-crafter-node.tsx",
+			type: "registry:ui",
+			target: "components/flow/prompt-crafter-node.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/prompt-crafter-node.tsx")),
+		source: "",
+		meta: undefined,
+    },	"text-input-node": {
+		name: "text-input-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["textarea","separator","https://simple-ai.dev/r/labeled-handle.json","https://simple-ai.dev/r/node-header.json","https://simple-ai.dev/r/resizable-node.json"],
+		files: [{
+			path: "src/registry/ui/flow/text-input-node.tsx",
+			type: "registry:ui",
+			target: "components/flow/text-input-node.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/text-input-node.tsx")),
+		source: "",
+		meta: undefined,
+    },	"visualize-text-node": {
+		name: "visualize-text-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["separator","https://simple-ai.dev/r/markdown-content.json","https://simple-ai.dev/r/labeled-handle.json","https://simple-ai.dev/r/node-header.json","https://simple-ai.dev/r/resizable-node.json"],
+		files: [{
+			path: "src/registry/ui/flow/visualize-text-node.tsx",
+			type: "registry:ui",
+			target: "components/flow/visualize-text-node.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/visualize-text-node.tsx")),
+		source: "",
+		meta: undefined,
+    },	"base-handle": {
+		name: "base-handle",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/flow/base-handle.tsx",
+			type: "registry:ui",
+			target: "components/flow/base-handle.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/base-handle.tsx")),
+		source: "",
+		meta: undefined,
+    },	"labeled-handle": {
+		name: "labeled-handle",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/flow/labeled-handle.tsx",
+			type: "registry:ui",
+			target: "components/flow/labeled-handle.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/labeled-handle.tsx")),
+		source: "",
+		meta: undefined,
+    },	"base-node": {
+		name: "base-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/ui/flow/base-node.tsx",
+			type: "registry:ui",
+			target: "components/flow/base-node.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/base-node.tsx")),
+		source: "",
+		meta: undefined,
+    },	"node-header": {
+		name: "node-header",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["button","dropdown-menu"],
+		files: [{
+			path: "src/registry/ui/flow/node-header.tsx",
+			type: "registry:ui",
+			target: "components/flow/node-header.tsx"
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/ui/flow/node-header.tsx")),
+		source: "",
+		meta: undefined,
     },	"chat-demo": {
 		name: "chat-demo",
 		description: "",
@@ -321,6 +503,132 @@ export const Index: Record<string, any> = {
 		component: React.lazy(() => import("@/registry/examples/jsx-renderer-demo.tsx")),
 		source: "",
 		meta: undefined,
+    },	"model-selector-demo": {
+		name: "model-selector-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/model-selector-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/model-selector-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"model-selector-disabled-demo": {
+		name: "model-selector-disabled-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/model-selector-disabled-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/model-selector-disabled-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"resizable-node-demo": {
+		name: "resizable-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/resizable-node-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/resizable-node-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"visualize-text-node-demo": {
+		name: "visualize-text-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/visualize-text-node-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/visualize-text-node-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"prompt-crafter-node-demo": {
+		name: "prompt-crafter-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/prompt-crafter-node-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/prompt-crafter-node-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"text-input-node-demo": {
+		name: "text-input-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/text-input-node-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/text-input-node-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"generate-text-node-demo": {
+		name: "generate-text-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/generate-text-node-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/generate-text-node-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"editable-handle-demo": {
+		name: "editable-handle-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/editable-handle-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/editable-handle-demo.tsx")),
+		source: "",
+		meta: undefined,
+    },	"status-edge-demo": {
+		name: "status-edge-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [{
+			path: "src/registry/examples/status-edge-demo.tsx",
+			type: "registry:example",
+			target: ""
+		}],
+		categories: undefined,
+		component: React.lazy(() => import("@/registry/examples/status-edge-demo.tsx")),
+		source: "",
+		meta: undefined,
     },	"use-textarea-resize": {
 		name: "use-textarea-resize",
 		description: "",
@@ -552,6 +860,318 @@ export const Index: Record<string, any> = {
 		categories: ["app"],
 		component: React.lazy(() => import("@/registry/blocks/app-03/page.tsx")),
 		source: "src/__registry__/blocks/app-03/page.tsx",
+		meta: undefined,
+    },	"flow-chain": {
+		name: "flow-chain",
+		description: "Agentic chain workflow.",
+		type: "registry:block",
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","https://simple-ai.dev/r/generate-text-node.json","https://simple-ai.dev/r/prompt-crafter-node.json","https://simple-ai.dev/r/text-input-node.json","https://simple-ai.dev/r/visualize-text-node.json"],
+		files: [{
+			path: "src/registry/blocks/flow-chain/page.tsx",
+			type: "registry:page",
+			target: "app/workflow/page.tsx"
+		},{
+			path: "src/registry/blocks/flow-chain/route.ts",
+			type: "registry:page",
+			target: "app/api/workflow/execute/route.ts"
+		},{
+			path: "src/registry/blocks/flow-chain/components/nodes-panel.tsx",
+			type: "registry:component",
+			target: "components/flow/nodes-panel.tsx"
+		},{
+			path: "src/registry/blocks/flow-chain/lib/news-summarization-chain.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/status-edge-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/status-edge-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/visualize-text-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/text-input-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/text-input-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/prompt-crafter-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/generate-text-node-controller.tsx"
+		},{
+			path: "src/registry/hooks/flow/use-workflow.ts",
+			type: "registry:hook",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-client.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/server-node-processors.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/node-factory.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/generate-ai-text.ts",
+			type: "registry:lib",
+			target: ""
+		}],
+		categories: ["flow"],
+		component: React.lazy(() => import("@/registry/blocks/flow-chain/page.tsx")),
+		source: "src/__registry__/blocks/flow-chain/page.tsx",
+		meta: undefined,
+    },	"flow-routing": {
+		name: "flow-routing",
+		description: "Agentic routing workflow.",
+		type: "registry:block",
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","https://simple-ai.dev/r/generate-text-node.json","https://simple-ai.dev/r/prompt-crafter-node.json","https://simple-ai.dev/r/text-input-node.json","https://simple-ai.dev/r/visualize-text-node.json"],
+		files: [{
+			path: "src/registry/blocks/flow-routing/page.tsx",
+			type: "registry:page",
+			target: "app/workflow/page.tsx"
+		},{
+			path: "src/registry/blocks/flow-routing/route.ts",
+			type: "registry:page",
+			target: "app/api/workflow/execute/route.ts"
+		},{
+			path: "src/registry/blocks/flow-routing/components/nodes-panel.tsx",
+			type: "registry:component",
+			target: "components/flow/nodes-panel.tsx"
+		},{
+			path: "src/registry/blocks/flow-routing/lib/content-creator-routing.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/status-edge-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/status-edge-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/visualize-text-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/text-input-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/text-input-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/prompt-crafter-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/generate-text-node-controller.tsx"
+		},{
+			path: "src/registry/hooks/flow/use-workflow.ts",
+			type: "registry:hook",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-client.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/server-node-processors.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/node-factory.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/generate-ai-text.ts",
+			type: "registry:lib",
+			target: ""
+		}],
+		categories: ["flow"],
+		component: React.lazy(() => import("@/registry/blocks/flow-routing/page.tsx")),
+		source: "src/__registry__/blocks/flow-routing/page.tsx",
+		meta: undefined,
+    },	"flow-parallelization": {
+		name: "flow-parallelization",
+		description: "Agentic parallelization workflow.",
+		type: "registry:block",
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","https://simple-ai.dev/r/generate-text-node.json","https://simple-ai.dev/r/prompt-crafter-node.json","https://simple-ai.dev/r/text-input-node.json","https://simple-ai.dev/r/visualize-text-node.json"],
+		files: [{
+			path: "src/registry/blocks/flow-parallelization/page.tsx",
+			type: "registry:page",
+			target: "app/workflow/page.tsx"
+		},{
+			path: "src/registry/blocks/flow-parallelization/route.ts",
+			type: "registry:page",
+			target: "app/api/workflow/execute/route.ts"
+		},{
+			path: "src/registry/blocks/flow-parallelization/components/nodes-panel.tsx",
+			type: "registry:component",
+			target: "components/flow/nodes-panel.tsx"
+		},{
+			path: "src/registry/blocks/flow-parallelization/lib/exam-creator-parallelization.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/status-edge-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/status-edge-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/visualize-text-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/text-input-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/text-input-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/prompt-crafter-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/generate-text-node-controller.tsx"
+		},{
+			path: "src/registry/hooks/flow/use-workflow.ts",
+			type: "registry:hook",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-client.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/server-node-processors.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/node-factory.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/generate-ai-text.ts",
+			type: "registry:lib",
+			target: ""
+		}],
+		categories: ["flow"],
+		component: React.lazy(() => import("@/registry/blocks/flow-parallelization/page.tsx")),
+		source: "src/__registry__/blocks/flow-parallelization/page.tsx",
+		meta: undefined,
+    },	"flow-orchestrator": {
+		name: "flow-orchestrator",
+		description: "Agentic orchestrator workflow.",
+		type: "registry:block",
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","https://simple-ai.dev/r/generate-text-node.json","https://simple-ai.dev/r/prompt-crafter-node.json","https://simple-ai.dev/r/text-input-node.json","https://simple-ai.dev/r/visualize-text-node.json"],
+		files: [{
+			path: "src/registry/blocks/flow-orchestrator/page.tsx",
+			type: "registry:page",
+			target: "app/workflow/page.tsx"
+		},{
+			path: "src/registry/blocks/flow-orchestrator/route.ts",
+			type: "registry:page",
+			target: "app/api/workflow/execute/route.ts"
+		},{
+			path: "src/registry/blocks/flow-orchestrator/components/nodes-panel.tsx",
+			type: "registry:component",
+			target: "components/flow/nodes-panel.tsx"
+		},{
+			path: "src/registry/blocks/flow-orchestrator/lib/developer-tasks-orchestrator.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/ui/flow/status-edge-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/status-edge-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/visualize-text-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/visualize-text-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/text-input-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/text-input-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/prompt-crafter-node-controller.tsx"
+		},{
+			path: "src/registry/ui/flow/generate-text-node-controller.tsx",
+			type: "registry:component",
+			target: "components/flow/generate-text-node-controller.tsx"
+		},{
+			path: "src/registry/hooks/flow/use-workflow.ts",
+			type: "registry:hook",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-client.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/sse-workflow-execution-engine.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/server-node-processors.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/node-factory.ts",
+			type: "registry:lib",
+			target: ""
+		},{
+			path: "src/registry/lib/flow/generate-ai-text.ts",
+			type: "registry:lib",
+			target: ""
+		}],
+		categories: ["flow"],
+		component: React.lazy(() => import("@/registry/blocks/flow-orchestrator/page.tsx")),
+		source: "src/__registry__/blocks/flow-orchestrator/page.tsx",
 		meta: undefined,
     },	"jsx-utils": {
 		name: "jsx-utils",

@@ -1,0 +1,12 @@
+{
+  "name": "status-edge-demo",
+  "type": "registry:example",
+  "files": [
+    {
+      "path": "examples/status-edge-demo.tsx",
+      "content": "\"use client\";\n\nimport \"@xyflow/react/dist/style.css\";\n\nimport { Background, ReactFlow, ReactFlowProvider } from \"@xyflow/react\";\n\nimport { StatusEdge } from \"@/components/flow/status-edge\";\n\nconst defaultNodes = [\n\t{\n\t\tid: \"1\",\n\t\tposition: { x: 200, y: 200 },\n\t\tdata: { label: \"Node\" },\n\t},\n\t{\n\t\tid: \"2\",\n\t\tposition: { x: 400, y: 400 },\n\t\tdata: { label: \"Node\" },\n\t},\n];\n\nconst defaultEdges = [\n\t{\n\t\tid: \"e1-2\",\n\t\tsource: \"1\",\n\t\ttarget: \"2\",\n\t\ttype: \"status\",\n\t\tdata: {\n\t\t\terror: true,\n\t\t},\n\t},\n];\n\nconst edgeTypes = {\n\tstatus: StatusEdge,\n};\n\nexport default function StatusEdgeDemo() {\n\tconst defaultViewport = { x: -150, y: -50, zoom: 1.1 };\n\n\treturn (\n\t\t<div className=\"w-[600px] h-[600px] border border-border rounded-md\">\n\t\t\t<ReactFlowProvider>\n\t\t\t\t<ReactFlow\n\t\t\t\t\tdefaultNodes={defaultNodes}\n\t\t\t\t\tdefaultEdges={defaultEdges}\n\t\t\t\t\tedgeTypes={edgeTypes}\n\t\t\t\t\tdefaultViewport={defaultViewport}\n\t\t\t\t>\n\t\t\t\t\t<Background />\n\t\t\t\t</ReactFlow>\n\t\t\t</ReactFlowProvider>\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:example",
+      "target": ""
+    }
+  ]
+}

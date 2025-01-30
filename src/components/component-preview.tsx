@@ -101,7 +101,7 @@ export function ComponentPreview({
 					)}
 					<div
 						className={cn(
-							"preview flex min-h-[350px] w-full justify-center p-10",
+							"preview flex min-h-[350px] w-full justify-center p-10 max-w-full overflow-hidden",
 							{
 								"items-center": align === "center",
 								"items-start": align === "start",
@@ -117,7 +117,7 @@ export function ComponentPreview({
 								</div>
 							}
 						>
-							{Preview}
+							<div className="w-full max-w-full overflow-hidden">{Preview}</div>
 						</React.Suspense>
 					</div>
 				</TabsContent>

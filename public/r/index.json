@@ -80,5 +80,237 @@
         "type": "registry:ui"
       }
     ]
+  },
+  {
+    "name": "model-selector",
+    "type": "registry:ui",
+    "registryDependencies": [
+      "select"
+    ],
+    "files": [
+      {
+        "path": "ui/model-selector.tsx",
+        "type": "registry:ui"
+      }
+    ]
+  },
+  {
+    "name": "resizable-node",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "registryDependencies": [
+      "https://simple-ai.dev/r/base-node.json"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/resizable-node.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/resizable-node.tsx"
+      }
+    ]
+  },
+  {
+    "name": "node-header-status",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "registryDependencies": [
+      "badge"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/node-header-status.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/node-header-status.tsx"
+      }
+    ]
+  },
+  {
+    "name": "editable-handle",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "registryDependencies": [
+      "button",
+      "input",
+      "textarea",
+      "popover",
+      "https://simple-ai.dev/r/base-handle.json"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/editable-handle.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/editable-handle.tsx"
+      }
+    ]
+  },
+  {
+    "name": "status-edge",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/status-edge.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/status-edge.tsx"
+      }
+    ]
+  },
+  {
+    "name": "generate-text-node",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "registryDependencies": [
+      "button",
+      "separator",
+      "https://simple-ai.dev/r/model-selector.json",
+      "https://simple-ai.dev/r/node-header-status.json",
+      "https://simple-ai.dev/r/editable-handle.json",
+      "https://simple-ai.dev/r/labeled-handle.json",
+      "https://simple-ai.dev/r/base-node.json",
+      "https://simple-ai.dev/r/node-header.json"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/generate-text-node.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/generate-text-node.tsx"
+      }
+    ]
+  },
+  {
+    "name": "prompt-crafter-node",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react",
+      "@uiw/react-codemirror",
+      "@uiw/codemirror-themes",
+      "@lezer/highlight",
+      "@codemirror/language",
+      "@codemirror/view"
+    ],
+    "registryDependencies": [
+      "button",
+      "separator",
+      "popover",
+      "command",
+      "https://simple-ai.dev/r/node-header-status.json",
+      "https://simple-ai.dev/r/editable-handle.json",
+      "https://simple-ai.dev/r/node-header.json",
+      "https://simple-ai.dev/r/labeled-handle.json",
+      "https://simple-ai.dev/r/base-node.json"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/prompt-crafter-node.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/prompt-crafter-node.tsx"
+      }
+    ]
+  },
+  {
+    "name": "text-input-node",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "registryDependencies": [
+      "textarea",
+      "separator",
+      "https://simple-ai.dev/r/labeled-handle.json",
+      "https://simple-ai.dev/r/node-header.json",
+      "https://simple-ai.dev/r/resizable-node.json"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/text-input-node.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/text-input-node.tsx"
+      }
+    ]
+  },
+  {
+    "name": "visualize-text-node",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "registryDependencies": [
+      "separator",
+      "https://simple-ai.dev/r/markdown-content.json",
+      "https://simple-ai.dev/r/labeled-handle.json",
+      "https://simple-ai.dev/r/node-header.json",
+      "https://simple-ai.dev/r/resizable-node.json"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/visualize-text-node.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/visualize-text-node.tsx"
+      }
+    ]
+  },
+  {
+    "name": "base-handle",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/base-handle.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/base-handle.tsx"
+      }
+    ]
+  },
+  {
+    "name": "labeled-handle",
+    "type": "registry:ui",
+    "dependencies": [
+      "@xyflow/react"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/labeled-handle.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/labeled-handle.tsx"
+      }
+    ]
+  },
+  {
+    "name": "base-node",
+    "type": "registry:ui",
+    "files": [
+      {
+        "path": "ui/flow/base-node.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/base-node.tsx"
+      }
+    ]
+  },
+  {
+    "name": "node-header",
+    "type": "registry:ui",
+    "registryDependencies": [
+      "button",
+      "dropdown-menu"
+    ],
+    "files": [
+      {
+        "path": "ui/flow/node-header.tsx",
+        "type": "registry:ui",
+        "target": "components/flow/node-header.tsx"
+      }
+    ]
   }
 ]

@@ -172,4 +172,94 @@ export const examples: Registry = [
 			},
 		],
 	},
+	{
+		name: "model-selector-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/model-selector-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "model-selector-disabled-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/model-selector-disabled-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "resizable-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/resizable-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "visualize-text-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/visualize-text-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "prompt-crafter-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/prompt-crafter-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "text-input-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/text-input-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "generate-text-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/generate-text-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "editable-handle-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/editable-handle-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "status-edge-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/status-edge-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
 ];

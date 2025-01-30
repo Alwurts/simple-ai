@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 
-import { Announcement } from "@/components/announcement";
 import {
 	PageActions,
 	PageHeader,
@@ -10,12 +9,13 @@ import {
 import { Button } from "@/components/ui/button";
 
 import "@/styles/mdx.css";
+import { Announcement } from "@/components/announcement";
 import { BlocksNav } from "@/components/blocks/blocks-nav";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-	title: "Building Blocks for AI.",
+	title: "Building Blocks for AI",
 	description:
 		"Beautifully designed. Copy and paste into your apps. Open Source.",
 	keywords: ["ai", "blocks", "open source", "ai blocks", "ai blocks for ai"],
