@@ -1,15 +1,21 @@
 ---
 title: Editable Handle
-description: A customizable editable handle component for creating dynamic handles in React Flow nodes, enabling interactive handle management with labels and descriptions.
+description: A React Flow component that allows you to dynamically add, edit, or remove input/output handles on your nodes - perfect for building nodes with flexible connection points.
 featured: true
 component: true
 ---
 
-<ComponentPreview name="editable-handle-demo" description="An example of a node with dynamic editable handles that can be created, edited, and deleted" />
+<ComponentPreview name="editable-handle-demo" description="An example of a node with dynamic handles - try adding new inputs or outputs, editing their labels, or removing them" />
 
 ## Overview
 
-The Editable Handle component is built on top of React Flow's [Base Handle](https://reactflow.dev/components/handles/base-handle) component, extending its functionality to provide an interactive way to manage handles in your nodes. It allows users to create, edit, and delete handles dynamically, with support for labels and optional descriptions.
+The Editable Handle component makes it easy to create nodes with dynamic connection points (handles). Instead of having fixed inputs and outputs, your nodes can:
+
+- Let users add new input/output handles on the fly
+- Edit handle labels and descriptions
+- Remove handles when they're no longer needed
+
+This is particularly useful when building nodes that need to adapt to different use cases or when you want to give users more flexibility in how nodes connect to each other.
 
 ## Installation
 
@@ -32,14 +38,13 @@ npx shadcn@latest add https://simple-ai.dev/r/editable-handle.json
 
 <Steps>
 
-<Step>Install the following shadcn/ui components:</Step>
+<Step>Install the required shadcn/ui components:</Step>
 
-```bash
-npx shadcn-ui@latest add button
-npx shadcn-ui@latest add input
-npx shadcn-ui@latest add popover
-npx shadcn-ui@latest add textarea
-```
+The Editable Handle component requires these shadcn/ui components:
+- [Button](https://ui.shadcn.com/docs/components/button)
+- [Input](https://ui.shadcn.com/docs/components/input)
+- [Popover](https://ui.shadcn.com/docs/components/popover)
+- [Textarea](https://ui.shadcn.com/docs/components/textarea)
 
 <Step>Copy and paste the following code into your project.</Step>
 
@@ -55,14 +60,14 @@ npx shadcn-ui@latest add textarea
 
 ## Usage
 
-The Editable Handle system consists of two main components:
+The Editable Handle system has two main parts:
 
-1. `EditableHandleDialog`: A popup dialog component for creating new handles
-2. `EditableHandle`: The handle component itself that displays and allows editing of existing handles
+1. `EditableHandleDialog`: Used to create new handles with a user-friendly popup
+2. `EditableHandle`: The handle component itself that users can edit or delete
 
-### Creating New Handles
+### Adding New Handles
 
-The `EditableHandleDialog` component is used to create new handles. It provides a popup interface where users can input the handle's label and optional description.
+Use `EditableHandleDialog` to let users create new handles. It provides a simple interface for entering a handle's label and optional description.
 
 ```tsx
 import { EditableHandleDialog } from "@/components/ui/flow/editable-handle"
@@ -80,16 +85,16 @@ function MyNode() {
       align="start"
     >
       <Button variant="outline" size="sm">
-        Create New Handle
+        Add New Input
       </Button>
     </EditableHandleDialog>
   )
 }
 ```
 
-### Managing Existing Handles
+### Managing Handles
 
-The `EditableHandle` component is used to display and manage existing handles. It provides functionality for editing and deleting handles.
+Use `EditableHandle` to display handles that users can edit or remove.
 
 ```tsx
 import { EditableHandle } from "@/components/ui/flow/editable-handle"
@@ -120,31 +125,3 @@ function MyNode({ id }: NodeProps) {
   )
 }
 ```
-
-## Props
-
-### EditableHandle
-
-| Prop | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| nodeId | string | Yes | - | The ID of the node this handle belongs to |
-| handleId | string | Yes | - | Unique identifier for the handle |
-| name | string | Yes | - | The label displayed next to the handle |
-| description | string | No | - | Optional description text |
-| type | 'source' \| 'target' | Yes | - | The type of handle (input or output) |
-| position | Position | Yes | - | The position of the handle (left, right, top, bottom) |
-| onUpdateTool | (handleId: string, newName: string, newDescription?: string) => boolean | Yes | - | Callback when handle is updated |
-| onDelete | (handleId: string) => void | Yes | - | Callback when handle is deleted |
-| showDescription | boolean | No | false | Whether to show the description field |
-
-### EditableHandleDialog
-
-| Prop | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| variant | 'edit' \| 'create' | Yes | - | Whether this is for creating a new handle or editing an existing one |
-| onSave | (newLabel: string, newDescription?: string) => boolean | Yes | - | Callback when the form is saved |
-| label | string | No | - | Initial label value (for edit mode) |
-| description | string | No | - | Initial description value (for edit mode) |
-| align | 'start' \| 'end' | No | 'start' | Alignment of the popup dialog |
-| showDescription | boolean | No | false | Whether to show the description field |
-| children | ReactNode | Yes | - | The trigger element for the popover |

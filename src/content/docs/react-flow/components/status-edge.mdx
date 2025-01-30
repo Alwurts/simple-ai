@@ -9,7 +9,19 @@ component: true
 
 ## Overview
 
-The Status Edge is a custom React Flow edge component that provides visual feedback through color-coded states. Built on top of React Flow's BaseEdge, it supports error states and selection highlighting with smooth transitions between states.
+The Status Edge is a simple React Flow edge component that provides visual feedback through color coding. It provides:
+
+- Color-coded states for different conditions:
+  - Red for error state
+  - Gray for default state
+- Smooth transitions between states
+- Built on React Flow's BaseEdge component
+
+## Components Used
+
+This edge is built using React Flow Components:
+- [Base Edge](https://reactflow.dev/api-reference/components/base-edge) - For the core edge structure
+- [getBezierPath](https://reactflow.dev/api-reference/utils/get-bezier-path) - For calculating the curved edge path
 
 ## Installation
 
@@ -46,86 +58,24 @@ npx shadcn@latest add https://simple-ai.dev/r/status-edge.json
 
 ## Usage
 
-The Status Edge provides a simple way to add visual feedback to your flow connections. Here's how to use it in your React Flow application:
+The Status Edge is designed to provide visual feedback for connections in your flow. Here's how to use it in your React Flow application:
 
 ```tsx
-import { StatusEdge } from "@/components/ui/flow/status-edge"
-import { type Edge } from "@xyflow/react"
-
-const edges: Edge[] = [
+// Example usage of the Status Edge
+const edges = [
   {
-    id: "edge-1",
-    source: "node-1",
-    target: "node-2",
+    id: "e1-2",
+    source: "1",
+    target: "2",
     type: "status",
     data: {
       error: true // Set to true to show error state
     }
   }
-]
+];
 
-function MyFlowComponent() {
-  return (
-    <ReactFlow
-      edges={edges}
-      edgeTypes={{ status: StatusEdge }}
-    />
-  )
-}
+// Register the edge type
+const edgeTypes = {
+  status: StatusEdge,
+};
 ```
-
-### Features
-
-The edge includes several key features:
-
-1. **Visual States**
-   - Error state (red)
-   - Selected state (blue)
-   - Default state (gray)
-
-2. **Smooth Transitions**
-   - Animated color transitions
-   - Animated stroke width changes
-   - 0.2s transition duration
-
-3. **Bezier Path**
-   - Smooth curved connections
-   - Automatic path calculation
-   - Source and target position awareness
-
-## Props
-
-### Edge Data Structure
-
-| Property | Type | Description |
-| --- | --- | --- |
-| error | boolean | Whether to show the edge in error state |
-
-### Component Props
-
-| Prop | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| sourceX | number | Yes | - | X coordinate of the source point |
-| sourceY | number | Yes | - | Y coordinate of the source point |
-| targetX | number | Yes | - | X coordinate of the target point |
-| targetY | number | Yes | - | Y coordinate of the target point |
-| sourcePosition | Position | Yes | - | Position of the source handle |
-| targetPosition | Position | Yes | - | Position of the target handle |
-| data | ' error: boolean ' | No | - | Edge data containing error state |
-| selected | boolean | No | - | Whether the edge is selected |
-
-### Visual States
-
-The edge has three visual states with different colors:
-
-```tsx
-{
-  error: "#ef4444",     // Red for error state
-  selected: "#3b82f6",  // Blue for selected state
-  default: "#b1b1b7"    // Gray for default state
-}
-```
-
-The stroke width also changes based on selection:
-- Selected: 3px
-- Default: 2px

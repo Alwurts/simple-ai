@@ -1,15 +1,25 @@
 ---
 title: Resizable Node
-description: A base React Flow node component that provides resizing capabilities with size constraints
+description: A wrapper React Flow node component that adds resizing functionality to other nodes
 featured: true
 component: true
 ---
 
-<ComponentPreview name="resizable-node-demo" description="An example of a resizable node with size constraints and resize handles" />
+<ComponentPreview name="resizable-node-demo" description="An example of a resizable node with size constraints" />
 
 ## Overview
 
-The Resizable Node is a foundational React Flow node component that adds resizing capabilities to your nodes. Built on top of React Flow's NodeResizer, it provides a clean interface with size constraints and hover effects. This component serves as a base for other resizable nodes in the application.
+The Resizable Node is a simple wrapper component that adds resizing functionality to other nodes in your React Flow application. It provides:
+
+- Resize handles that appear when the node is selected
+- Built-in size constraints for consistent node sizes
+- Integration with React Flow's base node system
+
+## Components Used
+
+This node is built using several React Flow Components:
+- [Base Node](https://reactflow.dev/components/nodes/base-node) - For the core node structure and styling
+- [Node Resizer](https://reactflow.dev/api-reference/components/node-resizer) - For the resizing functionality
 
 ## Installation
 
@@ -46,74 +56,29 @@ npx shadcn@latest add https://simple-ai.dev/r/resizable-node.json
 
 ## Usage
 
-The Resizable Node provides a wrapper component that adds resizing functionality to your nodes. Here's how to use it in your React Flow application:
+The Resizable Node is designed to wrap other node content to make it resizable. Here's how to use it in your React Flow application:
 
 ```tsx
-import { ResizableNode } from "@/components/ui/flow/resizable-node"
-import { type NodeProps } from "@xyflow/react"
-
-function CustomNode(props: NodeProps) {
+// Example of a custom node using ResizableNode
+const TextResizableNode = (props: NodeProps<Node>) => {
   return (
     <ResizableNode
       selected={props.selected}
-      className="flex items-center justify-center p-4"
+      className="flex flex-col items-center justify-center p-4"
     >
-      <div>Your node content here</div>
+      <span>{props.data.value as string}</span>
     </ResizableNode>
-  )
-}
+  );
+};
 
-// Use in your React Flow instance
+// Register the node type
 const nodeTypes = {
-  "custom-node": CustomNode
-}
+  "text-resizable-node": TextResizableNode,
+};
 ```
 
-### Features
-
-The node includes several key features:
-
-1. **Size Constraints**
-   - Minimum width: 250px
-   - Minimum height: 200px
-   - Maximum width: 800px
-   - Maximum height: 800px
-
-2. **Resize Handles**
-   - Visible when node is selected
-   - Smooth resizing interaction
-   - Maintains aspect ratio (optional)
-
-3. **Styling**
-   - Clean base styling
-   - Orange highlight on hover
-   - Customizable through className prop
-
-4. **Base Node Integration**
-   - Built on top of BaseNode component
-   - Maintains consistent node styling
-   - Compatible with React Flow's node system
-
-## Props
-
-| Prop | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| selected | boolean | Yes | - | Whether the node is selected (controls resize handles visibility) |
-| className | string | No | - | Additional CSS classes to apply to the node |
-| style | React.CSSProperties | No | - | Additional inline styles (size constraints cannot be overridden) |
-| children | React.ReactNode | No | - | The content to render inside the node |
-
-### Size Constraints
-
-The ResizableNode comes with built-in size constraints that can be overridden:
-
-```tsx
-{
-  minHeight: 200,
-  minWidth: 250,
-  maxHeight: 800,
-  maxWidth: 800
-}
-```
-
-These constraints ensure that nodes maintain a usable size while preventing them from becoming too large.
+The node includes the following features:
+- Size constraints (min: 250x200px, max: 800x800px)
+- Resize handles visible on selection
+- Hover effect with orange highlight
+- Customizable through className prop

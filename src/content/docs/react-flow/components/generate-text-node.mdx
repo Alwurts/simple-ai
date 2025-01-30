@@ -1,6 +1,6 @@
 ---
 title: Generate Text Node
-description: A React Flow node component for generating text with dynamic tool outputs and model selection capabilities
+description: A React Flow node component that represents Vercel AI SDK's text generation capabilities, featuring system instructions, prompts, and optional tool outputs
 featured: true
 component: true
 ---
@@ -9,7 +9,19 @@ component: true
 
 ## Overview
 
-The Generate Text Node is a specialized React Flow node component that provides text generation capabilities with configurable model selection and dynamic tool outputs. It features a clean interface with system and prompt inputs, a result output, and the ability to add multiple tool outputs dynamically.
+The Generate Text Node is a React Flow component that provides a visual interface representing the `generateText` function from Vercel AI SDK. When executing your flow, this node will map to the SDK's text generation functionality. It allows you to:
+
+- Set system-level instructions that guide the AI's behavior
+- Input specific prompts for each generation
+- Receive generated text as output
+- Optionally define tool outputs that the AI can use to route information to different parts of your workflow
+
+## Components Used
+
+This node is built using several React Flow Components:
+- [Base Node](https://reactflow.dev/components/nodes/base-node) - For the core node structure and styling
+- [Node Header](https://reactflow.dev/components/nodes/node-header) - For the node's header section
+- [Labeled Handle](https://reactflow.dev/components/handles/labeled-handle) - For the input and output connection points
 
 ## Installation
 
@@ -32,7 +44,7 @@ npx shadcn@latest add https://simple-ai.dev/r/generate-text-node.json
 
 <Steps>
 
-<Step>Install the following shadcn/ui components:</Step>
+<Step>Install the required shadcn/ui components:</Step>
 
 ```bash
 npx shadcn-ui@latest add button
@@ -53,101 +65,70 @@ npx shadcn-ui@latest add separator
 
 ## Usage
 
-The Generate Text Node provides a complete interface for text generation with model selection and dynamic tool outputs. Here's how to use it in your React Flow application:
+The Generate Text Node requires a controller component to manage its state and handle tool-related operations. Here's how to implement it in your React Flow application:
 
 ```tsx
-import { GenerateTextNode } from "@/components/ui/flow/generate-text-node"
-import type { Model } from "@/registry/ui/model-selector"
-import { useState } from "react"
+// Controller component to manage the Generate Text Node
+const GenerateTextNodeController = ({
+  id,
+  data,
+  ...props
+}: NodeProps<Node>) => {
+  const [model, setModel] = useState<Model>("deepseek-chat");
+  const [toolHandles, setToolHandles] = useState({
+    tools: [{ id: "name", name: "name" }],
+  });
 
-function MyFlowComponent() {
-  const [model, setModel] = useState<Model>("deepseek-chat")
-  const [tools, setTools] = useState({
-    tools: [{ id: "tool-1", name: "default-tool" }]
-  })
+  // Handle tool creation
+  const handleCreateTool = useCallback(() => {
+    setToolHandles({
+      ...toolHandles,
+      tools: [...toolHandles.tools, { id: nanoid(), name: "name" }],
+    });
+    return true;
+  }, [toolHandles]);
 
-  const handleCreateTool = (name: string, description?: string) => {
-    setTools(prev => ({
-      ...prev,
-      tools: [...prev.tools, { id: nanoid(), name, description }]
-    }))
-    return true
-  }
+  // Handle tool removal
+  const handleRemoveTool = useCallback((toolId: string) => {
+    setToolHandles({
+      ...toolHandles,
+      tools: toolHandles.tools.filter((tool) => tool.id !== toolId),
+    });
+  }, [toolHandles]);
 
   return (
     <GenerateTextNode
-      id="generate-1"
+      id={id}
       data={{
         status: "idle",
         config: { model },
-        dynamicHandles: tools
+        dynamicHandles: toolHandles,
       }}
-      onModelChange={setModel}
+      {...props}
+      onModelChange={(model) => setModel(model)}
       onCreateTool={handleCreateTool}
-      onRemoveTool={(id) => {
-        setTools(prev => ({
-          ...prev,
-          tools: prev.tools.filter(tool => tool.id !== id)
-        }))
-      }}
-      onUpdateTool={(id, name, description) => {
-        setTools(prev => ({
-          ...prev,
-          tools: prev.tools.map(tool => 
-            tool.id === id ? { ...tool, name, description } : tool
-          )
-        }))
-        return true
-      }}
+      onRemoveTool={handleRemoveTool}
+      onUpdateTool={handleUpdateTool}
     />
-  )
-}
+  );
+};
+
+// Register the node type
+const nodeTypes = {
+  "generate-text": GenerateTextNodeController,
+};
 ```
 
-### Features
+The node provides the following connection points:
 
-The node includes several key features:
+- **Inputs**:
+  - `system`: For system-level instructions that guide the AI's behavior
+  - `prompt`: For the specific text generation prompt
+- **Outputs**:
+  - `result`: The main output containing the generated text
+  - Dynamic tool outputs: Optional outputs that can be added/removed as needed
 
-1. **Fixed Handles**
-   - System input (left)
-   - Prompt input (left)
-   - Result output (right)
-
-2. **Model Selection**
-   - Built-in model selector
-   - Configurable available models
-   - Disabled models support
-
-3. **Dynamic Tool Outputs**
-   - Add/remove tool outputs
-   - Edit tool names and descriptions
-   - Right-side positioning for all tool outputs
-
-4. **Status Indication**
-   - Visual status feedback (idle, processing, error, success)
-   - Status-based border highlighting
-
-## Props
-
-### Node Data Structure
-
-| Property | Type | Description |
-| --- | --- | --- |
-| status | 'processing' \| 'error' \| 'success' \| 'idle' \| undefined | Current status of the node |
-| config |  model: Model  | Configuration object containing the selected model |
-| dynamicHandles |  tools: 'Array' | Array of tool outputs |
-
-### Component Props
-
-| Prop | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| id | string | Yes | - | Unique identifier for the node |
-| data | GenerateTextData | Yes | - | Node data containing status, config, and tools |
-| selected | boolean | No | - | Whether the node is selected |
-| deletable | boolean | No | - | Whether the node can be deleted |
-| disableModelSelector | boolean | No | false | Whether to disable the model selector |
-| onModelChange | (model: Model) => void | Yes | - | Callback when model selection changes |
-| onCreateTool | (name: string, description?: string) => boolean | Yes | - | Callback when creating a new tool output |
-| onRemoveTool | (handleId: string) => void | Yes | - | Callback when removing a tool output |
-| onUpdateTool | (toolId: string, newName: string, newDescription?: string) => boolean | Yes | - | Callback when updating a tool output |
-| onDeleteNode | () => void | Yes | - | Callback when the node is deleted |
+The node's state includes:
+- Model selection for text generation
+- Processing status indication (idle, processing, error, success)
+- Dynamic tool management (add, remove, update)
