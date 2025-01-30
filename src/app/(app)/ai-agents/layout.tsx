@@ -28,8 +28,25 @@ export default function BlocksLayout({
 			<PageHeader>
 				<PageHeaderHeading>AI Agents Workflows</PageHeaderHeading>
 				<PageHeaderDescription>
-					Explore example implementations of AI Agents using Vercel AI SDK and
-					React Flow.
+					Explore example implementations of AI Agents using{" "}
+					<a
+						href="https://sdk.vercel.ai/docs"
+						className="underline"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Vercel AI SDK
+					</a>{" "}
+					and{" "}
+					<a
+						href="https://reactflow.dev/"
+						className="underline"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						React Flow
+					</a>
+					.
 				</PageHeaderDescription>
 				<PageHeaderDescription>
 					These workflows are inspired by{" "}
@@ -48,13 +65,19 @@ export default function BlocksLayout({
 						<Link href="/docs/react-flow">Get More Information</Link>
 					</Button>
 					<Button asChild size="sm" variant="ghost">
-						<Link href="/docs/components/react-flow/generate-text-node">
+						<Link href="/docs/react-flow/components/generate-text-node">
 							See React Flow Components
 						</Link>
 					</Button>
 				</PageActions>
+				{/* <PageHeaderDescription>
+					Each workflow below is fully customizable and copy-paste ready. Simply
+					use our CLI or copy the code directly to integrate these patterns into
+					your project. All components are built with TypeScript and follow best
+					practices for AI application development.
+				</PageHeaderDescription> */}
 			</PageHeader>
-			<div className="container-wrapper flex-1">{children}</div>
+			{children}
 		</>
 	);
 }

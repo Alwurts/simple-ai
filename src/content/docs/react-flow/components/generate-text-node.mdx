@@ -1,11 +1,15 @@
 ---
 title: Generate Text Node
-description: A generate text node that you can use to create your own nodes
+description: A React Flow node component for generating text with dynamic tool outputs and model selection capabilities
 featured: true
 component: true
 ---
 
-<ComponentPreview name="generate-text-node-demo" description="A generate text node that you can use to create your own nodes" />
+<ComponentPreview name="generate-text-node-demo" description="An example of a Generate Text node with model selection and dynamic tool outputs" />
+
+## Overview
+
+The Generate Text Node is a specialized React Flow node component that provides text generation capabilities with configurable model selection and dynamic tool outputs. It features a clean interface with system and prompt inputs, a result output, and the ability to add multiple tool outputs dynamically.
 
 ## Installation
 
@@ -15,6 +19,7 @@ component: true
   <TabsTrigger value="cli">CLI</TabsTrigger>
   <TabsTrigger value="manual">Manual</TabsTrigger>
 </TabsList>
+
 <TabsContent value="cli">
 
 ```bash
@@ -27,14 +32,16 @@ npx shadcn@latest add https://simple-ai.dev/r/generate-text-node.json
 
 <Steps>
 
+<Step>Install the following shadcn/ui components:</Step>
+
+```bash
+npx shadcn-ui@latest add button
+npx shadcn-ui@latest add separator
+```
+
 <Step>Copy and paste the following code into your project.</Step>
 
 <ComponentSource name="generate-text-node" />
-
-<Step>Install the required components from shadcn/ui.</Step>
-
-<a href="https://ui.shadcn.com/docs/components/button">https://ui.shadcn.com/docs/components/button</a>
-<a href="https://ui.shadcn.com/docs/components/input">https://ui.shadcn.com/docs/components/input</a>
 
 <Step>Update the import paths to match your project setup.</Step>
 
@@ -46,42 +53,101 @@ npx shadcn@latest add https://simple-ai.dev/r/generate-text-node.json
 
 ## Usage
 
-```tsx
-import { GenerateTextNode } from "@/components/ui/generate-text-node"
-```
-
-The Generate Text Node component is a React Flow node that allows users to generate text content. It includes:
-
-- Editable text input field
-- Generate button with loading state
-- Customizable node styling
-- Built-in error handling
+The Generate Text Node provides a complete interface for text generation with model selection and dynamic tool outputs. Here's how to use it in your React Flow application:
 
 ```tsx
-import { useState } from "react";
-import { GenerateTextNode } from "@/components/ui/generate-text-node";
+import { GenerateTextNode } from "@/components/ui/flow/generate-text-node"
+import type { Model } from "@/registry/ui/model-selector"
+import { useState } from "react"
 
 function MyFlowComponent() {
-    const [text, setText] = useState<string>("");
-    return (
-        <GenerateTextNode
-            id="text-node-1"
-            data={{ text }}
-            onTextChange={(newText) => setText(newText)}
-            onGenerate={() => {
-                // Handle text generation logic
-            }}
-        />
-    );
+  const [model, setModel] = useState<Model>("deepseek-chat")
+  const [tools, setTools] = useState({
+    tools: [{ id: "tool-1", name: "default-tool" }]
+  })
+
+  const handleCreateTool = (name: string, description?: string) => {
+    setTools(prev => ({
+      ...prev,
+      tools: [...prev.tools, { id: nanoid(), name, description }]
+    }))
+    return true
+  }
+
+  return (
+    <GenerateTextNode
+      id="generate-1"
+      data={{
+        status: "idle",
+        config: { model },
+        dynamicHandles: tools
+      }}
+      onModelChange={setModel}
+      onCreateTool={handleCreateTool}
+      onRemoveTool={(id) => {
+        setTools(prev => ({
+          ...prev,
+          tools: prev.tools.filter(tool => tool.id !== id)
+        }))
+      }}
+      onUpdateTool={(id, name, description) => {
+        setTools(prev => ({
+          ...prev,
+          tools: prev.tools.map(tool => 
+            tool.id === id ? { ...tool, name, description } : tool
+          )
+        }))
+        return true
+      }}
+    />
+  )
 }
 ```
 
-### Node Properties
+### Features
 
-The component accepts these props:
+The node includes several key features:
 
-- `id: string` - Unique identifier for the node
-- `data: { text: string }` - Current text content
-- `onTextChange: (text: string) => void` - Callback when text changes
-- `onGenerate: () => void` - Callback when generate button is clicked
-- `isGenerating?: boolean` - Loading state for the generate button
+1. **Fixed Handles**
+   - System input (left)
+   - Prompt input (left)
+   - Result output (right)
+
+2. **Model Selection**
+   - Built-in model selector
+   - Configurable available models
+   - Disabled models support
+
+3. **Dynamic Tool Outputs**
+   - Add/remove tool outputs
+   - Edit tool names and descriptions
+   - Right-side positioning for all tool outputs
+
+4. **Status Indication**
+   - Visual status feedback (idle, processing, error, success)
+   - Status-based border highlighting
+
+## Props
+
+### Node Data Structure
+
+| Property | Type | Description |
+| --- | --- | --- |
+| status | 'processing' \| 'error' \| 'success' \| 'idle' \| undefined | Current status of the node |
+| config |  model: Model  | Configuration object containing the selected model |
+| dynamicHandles |  tools: 'Array' | Array of tool outputs |
+
+### Component Props
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| id | string | Yes | - | Unique identifier for the node |
+| data | GenerateTextData | Yes | - | Node data containing status, config, and tools |
+| selected | boolean | No | - | Whether the node is selected |
+| deletable | boolean | No | - | Whether the node can be deleted |
+| disableModelSelector | boolean | No | false | Whether to disable the model selector |
+| onModelChange | (model: Model) => void | Yes | - | Callback when model selection changes |
+| onCreateTool | (name: string, description?: string) => boolean | Yes | - | Callback when creating a new tool output |
+| onRemoveTool | (handleId: string) => void | Yes | - | Callback when removing a tool output |
+| onUpdateTool | (toolId: string, newName: string, newDescription?: string) => boolean | Yes | - | Callback when updating a tool output |
+| onDeleteNode | () => void | Yes | - | Callback when the node is deleted |

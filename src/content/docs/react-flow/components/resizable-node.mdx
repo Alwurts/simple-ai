@@ -1,11 +1,15 @@
 ---
 title: Resizable Node
-description: A simple resizable node that you can use to create your own nodes
+description: A base React Flow node component that provides resizing capabilities with size constraints
 featured: true
 component: true
 ---
 
-<ComponentPreview name="resizable-node-demo" description="A resizable node that you can use to create your own nodes" />
+<ComponentPreview name="resizable-node-demo" description="An example of a resizable node with size constraints and resize handles" />
+
+## Overview
+
+The Resizable Node is a foundational React Flow node component that adds resizing capabilities to your nodes. Built on top of React Flow's NodeResizer, it provides a clean interface with size constraints and hover effects. This component serves as a base for other resizable nodes in the application.
 
 ## Installation
 
@@ -15,6 +19,7 @@ component: true
   <TabsTrigger value="cli">CLI</TabsTrigger>
   <TabsTrigger value="manual">Manual</TabsTrigger>
 </TabsList>
+
 <TabsContent value="cli">
 
 ```bash
@@ -31,10 +36,6 @@ npx shadcn@latest add https://simple-ai.dev/r/resizable-node.json
 
 <ComponentSource name="resizable-node" />
 
-<Step>Install the resizable component from shadcn/ui.</Step>
-
-<a href="https://ui.shadcn.com/docs/components/resizable">https://ui.shadcn.com/docs/components/resizable</a>
-
 <Step>Update the import paths to match your project setup.</Step>
 
 </Steps>
@@ -45,37 +46,74 @@ npx shadcn@latest add https://simple-ai.dev/r/resizable-node.json
 
 ## Usage
 
-```tsx
-import { ResizableNode } from "@/components/ui/resizable-node"
-```
-
-The Resizable Node component is a wrapper around the shadcn/ui Resizable component that allows users to create resizable nodes in React Flow. It includes:
-
-- Smooth resizing handles on all sides
-- Minimum and maximum size constraints
-- Customizable content area
-- Built-in support for React Flow node types
+The Resizable Node provides a wrapper component that adds resizing functionality to your nodes. Here's how to use it in your React Flow application:
 
 ```tsx
-import { useState } from "react";
-import { ResizableNode } from "@/components/ui/resizable-node";
+import { ResizableNode } from "@/components/ui/flow/resizable-node"
+import { type NodeProps } from "@xyflow/react"
 
-function MyComponent() {
-    const [size, setSize] = useState({ width: 200, height: 150 });
-    return (
-        <ResizableNode
-            size={size}
-            onSizeChange={setSize}
-            minWidth={100}
-            minHeight={100}
-            maxWidth={500}
-            maxHeight={400}
-        >
-            <div className="p-4">
-                <h3>Resizable Content</h3>
-                <p>This area can be resized</p>
-            </div>
-        </ResizableNode>
-    );
+function CustomNode(props: NodeProps) {
+  return (
+    <ResizableNode
+      selected={props.selected}
+      className="flex items-center justify-center p-4"
+    >
+      <div>Your node content here</div>
+    </ResizableNode>
+  )
+}
+
+// Use in your React Flow instance
+const nodeTypes = {
+  "custom-node": CustomNode
 }
 ```
+
+### Features
+
+The node includes several key features:
+
+1. **Size Constraints**
+   - Minimum width: 250px
+   - Minimum height: 200px
+   - Maximum width: 800px
+   - Maximum height: 800px
+
+2. **Resize Handles**
+   - Visible when node is selected
+   - Smooth resizing interaction
+   - Maintains aspect ratio (optional)
+
+3. **Styling**
+   - Clean base styling
+   - Orange highlight on hover
+   - Customizable through className prop
+
+4. **Base Node Integration**
+   - Built on top of BaseNode component
+   - Maintains consistent node styling
+   - Compatible with React Flow's node system
+
+## Props
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| selected | boolean | Yes | - | Whether the node is selected (controls resize handles visibility) |
+| className | string | No | - | Additional CSS classes to apply to the node |
+| style | React.CSSProperties | No | - | Additional inline styles (size constraints cannot be overridden) |
+| children | React.ReactNode | No | - | The content to render inside the node |
+
+### Size Constraints
+
+The ResizableNode comes with built-in size constraints that can be overridden:
+
+```tsx
+{
+  minHeight: 200,
+  minWidth: 250,
+  maxHeight: 800,
+  maxWidth: 800
+}
+```
+
+These constraints ensure that nodes maintain a usable size while preventing them from becoming too large.

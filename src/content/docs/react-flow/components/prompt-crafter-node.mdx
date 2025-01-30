@@ -1,11 +1,15 @@
 ---
 title: Prompt Crafter Node
-description: A prompt crafter node that you can use to create your own nodes
+description: A React Flow node component for creating dynamic prompts with variable inputs and syntax highlighting
 featured: true
 component: true
 ---
 
-<ComponentPreview name="prompt-crafter-node-demo" description="A prompt crafter node that you can use to create your own nodes" />
+<ComponentPreview name="prompt-crafter-node-demo" description="An example of a Prompt Crafter node with dynamic inputs and template syntax" />
+
+## Overview
+
+The Prompt Crafter Node is a specialized React Flow node component for creating dynamic prompt templates. It features a code editor with syntax highlighting for template variables, dynamic input handles, and an intuitive interface for managing template inputs.
 
 ## Installation
 
@@ -15,6 +19,7 @@ component: true
   <TabsTrigger value="cli">CLI</TabsTrigger>
   <TabsTrigger value="manual">Manual</TabsTrigger>
 </TabsList>
+
 <TabsContent value="cli">
 
 ```bash
@@ -27,14 +32,24 @@ npx shadcn@latest add https://simple-ai.dev/r/prompt-crafter-node.json
 
 <Steps>
 
+<Step>Install the following shadcn/ui components:</Step>
+
+```bash
+npx shadcn-ui@latest add button
+npx shadcn-ui@latest add separator
+npx shadcn-ui@latest add command
+npx shadcn-ui@latest add popover
+```
+
+<Step>Install CodeMirror dependencies:</Step>
+
+```bash
+npm install @uiw/react-codemirror @uiw/codemirror-themes @codemirror/language @codemirror/view @lezer/highlight
+```
+
 <Step>Copy and paste the following code into your project.</Step>
 
 <ComponentSource name="prompt-crafter-node" />
-
-<Step>Install the required components from shadcn/ui.</Step>
-
-<a href="https://ui.shadcn.com/docs/components/textarea">https://ui.shadcn.com/docs/components/textarea</a>
-<a href="https://ui.shadcn.com/docs/components/button">https://ui.shadcn.com/docs/components/button</a>
 
 <Step>Update the import paths to match your project setup.</Step>
 
@@ -46,42 +61,90 @@ npx shadcn@latest add https://simple-ai.dev/r/prompt-crafter-node.json
 
 ## Usage
 
-```tsx
-import { PromptCrafterNode } from "@/components/react-flow/prompt-crafter-node"
-```
-
-The Prompt Crafter Node is a React Flow node component that allows users to craft and edit prompts. It includes:
-
-- Editable text area for prompt creation
-- Save and cancel buttons
-- Customizable node styling
-- Integration with React Flow's node system
+The Prompt Crafter Node provides a powerful interface for creating prompt templates with dynamic inputs. Here's how to use it in your React Flow application:
 
 ```tsx
-import { useNodesState } from "reactflow";
-import { PromptCrafterNode } from "@/components/react-flow/prompt-crafter-node";
+import { PromptCrafterNode } from "@/components/ui/flow/prompt-crafter-node"
+import { useState } from "react"
 
-function MyFlow() {
-    const [nodes, setNodes] = useNodesState([]);
-    
-    return (
-        <ReactFlow nodes={nodes} onNodesChange={setNodes}>
-            <PromptCrafterNode
-                id="prompt-1"
-                data={{ prompt: "Initial prompt text" }}
-                position={{ x: 100, y: 100 }}
-            />
-        </ReactFlow>
-    );
+function MyFlowComponent() {
+  const [template, setTemplate] = useState("Hello {{name}}")
+  const [inputs, setInputs] = useState({
+    "template-tags": [{ id: "name", name: "name" }]
+  })
+
+  return (
+    <ReactFlow
+      nodes={[{
+        id: "prompt-1",
+        type: "prompt-crafter",
+        position: { x: 0, y: 0 },
+        data: {
+          status: "idle",
+          config: { template },
+          dynamicHandles: inputs
+        }
+      }]}
+      nodeTypes={{ "prompt-crafter": PromptCrafterNode }}
+      onPromptTextChange={setTemplate}
+      onCreateInput={(name) => {
+        setInputs(prev => ({
+          "template-tags": [...prev["template-tags"], 
+            { id: nanoid(), name }]
+        }))
+        return true
+      }}
+    />
+  )
 }
 ```
 
-### Node Properties
+### Features
 
-The component accepts these standard React Flow node properties:
+The node includes several key features:
 
-- `id`: Unique identifier for the node
-- `data`: Object containing the prompt text
-- `position`: X and Y coordinates for node placement
-- `selected`: Boolean indicating if node is selected
-- `type`: Node type (default: 'promptCrafter')
+1. **Template Editor**
+   - Syntax highlighting for template variables
+   - Variable validation
+   - Custom theme matching your app's design
+   - Quick input insertion through command palette
+
+2. **Dynamic Inputs**
+   - Add/remove input handles
+   - Edit input names
+   - Left-side positioning for inputs
+   - Right-side result output
+
+3. **Template Syntax**
+   - Use `{{input-name}}` to reference inputs
+   - Visual validation of input references
+   - Invalid references highlighted in red
+   - Valid references highlighted in green
+
+4. **Status Indication**
+   - Visual status feedback (processing, error, success, idle)
+   - Status-based border highlighting
+
+## Props
+
+### Node Data Structure
+
+| Property | Type | Description |
+| --- | --- | --- |
+| status | 'processing' \| 'error' \| 'success' \| 'idle' \| undefined | Current status of the node |
+| config | 'template: string' | Configuration object containing the prompt template |
+| dynamicHandles | 'template-tags: Array< id: string, name: string >' | Array of input handles |
+
+### Component Props
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| id | string | Yes | - | Unique identifier for the node |
+| data | PromptCrafterData | Yes | - | Node data containing status, config, and handles |
+| selected | boolean | No | - | Whether the node is selected |
+| deletable | boolean | No | - | Whether the node can be deleted |
+| onPromptTextChange | (value: string) => void | Yes | - | Callback when template text changes |
+| onCreateInput | (name: string) => boolean | Yes | - | Callback when creating a new input |
+| onRemoveInput | (handleId: string) => void | Yes | - | Callback when removing an input |
+| onUpdateInputName | (handleId: string, newLabel: string) => boolean | Yes | - | Callback when updating an input name |
+| onDeleteNode | () => void | Yes | - | Callback when the delete button is clicked |

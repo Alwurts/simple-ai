@@ -1,11 +1,15 @@
 ---
 title: Status Edge
-description: A status edge that you can use to create your own edges
+description: A React Flow edge component that provides visual feedback through color-coded states
 featured: true
 component: true
 ---
 
-<ComponentPreview name="status-edge-demo" description="A status edge that you can use to create your own edges" />
+<ComponentPreview name="status-edge-demo" description="An example of a Status Edge with error and selection states" />
+
+## Overview
+
+The Status Edge is a custom React Flow edge component that provides visual feedback through color-coded states. Built on top of React Flow's BaseEdge, it supports error states and selection highlighting with smooth transitions between states.
 
 ## Installation
 
@@ -15,6 +19,7 @@ component: true
   <TabsTrigger value="cli">CLI</TabsTrigger>
   <TabsTrigger value="manual">Manual</TabsTrigger>
 </TabsList>
+
 <TabsContent value="cli">
 
 ```bash
@@ -31,10 +36,6 @@ npx shadcn@latest add https://simple-ai.dev/r/status-edge.json
 
 <ComponentSource name="status-edge" />
 
-<Step>Install the required dependencies from react-flow.</Step>
-
-<a href="https://reactflow.dev/docs">https://reactflow.dev/docs</a>
-
 <Step>Update the import paths to match your project setup.</Step>
 
 </Steps>
@@ -45,41 +46,86 @@ npx shadcn@latest add https://simple-ai.dev/r/status-edge.json
 
 ## Usage
 
-```tsx
-import { StatusEdge } from "@/components/react-flow/status-edge"
-```
-
-The Status Edge component is a custom edge component for React Flow that includes:
-
-- Different status states (success, error, warning, processing)
-- Animated progress indicator
-- Customizable colors and styles
-- Built-in edge types and markers
+The Status Edge provides a simple way to add visual feedback to your flow connections. Here's how to use it in your React Flow application:
 
 ```tsx
-import { useEdgesState } from "reactflow";
-import { StatusEdge } from "@/components/react-flow/status-edge";
+import { StatusEdge } from "@/components/ui/flow/status-edge"
+import { type Edge } from "@xyflow/react"
+
+const edges: Edge[] = [
+  {
+    id: "edge-1",
+    source: "node-1",
+    target: "node-2",
+    type: "status",
+    data: {
+      error: true // Set to true to show error state
+    }
+  }
+]
 
 function MyFlowComponent() {
-    const [edges, setEdges] = useEdgesState([]);
-    return (
-        <ReactFlow
-            edges={edges}
-            edgeTypes={{
-                status: StatusEdge
-            }}
-        />
-    );
+  return (
+    <ReactFlow
+      edges={edges}
+      edgeTypes={{ status: StatusEdge }}
+    />
+  )
 }
 ```
 
-### Available Statuses
+### Features
 
-The component includes these predefined status states:
+The edge includes several key features:
 
-- `success` - Green color with checkmark
-- `error` - Red color with cross
-- `warning` - Yellow color with exclamation
-- `processing` - Blue color with animated spinner
+1. **Visual States**
+   - Error state (red)
+   - Selected state (blue)
+   - Default state (gray)
 
-Each status has a corresponding visual indicator that appears along the edge.
+2. **Smooth Transitions**
+   - Animated color transitions
+   - Animated stroke width changes
+   - 0.2s transition duration
+
+3. **Bezier Path**
+   - Smooth curved connections
+   - Automatic path calculation
+   - Source and target position awareness
+
+## Props
+
+### Edge Data Structure
+
+| Property | Type | Description |
+| --- | --- | --- |
+| error | boolean | Whether to show the edge in error state |
+
+### Component Props
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| sourceX | number | Yes | - | X coordinate of the source point |
+| sourceY | number | Yes | - | Y coordinate of the source point |
+| targetX | number | Yes | - | X coordinate of the target point |
+| targetY | number | Yes | - | Y coordinate of the target point |
+| sourcePosition | Position | Yes | - | Position of the source handle |
+| targetPosition | Position | Yes | - | Position of the target handle |
+| data | ' error: boolean ' | No | - | Edge data containing error state |
+| selected | boolean | No | - | Whether the edge is selected |
+
+### Visual States
+
+The edge has three visual states with different colors:
+
+```tsx
+{
+  error: "#ef4444",     // Red for error state
+  selected: "#3b82f6",  // Blue for selected state
+  default: "#b1b1b7"    // Gray for default state
+}
+```
+
+The stroke width also changes based on selection:
+- Selected: 3px
+- Default: 2px

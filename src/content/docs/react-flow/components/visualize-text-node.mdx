@@ -1,11 +1,15 @@
 ---
 title: Visualize Text Node
-description: A visualize text node that you can use to create your own nodes
+description: A React Flow node component for displaying and visualizing text content with Markdown support
 featured: true
 component: true
 ---
 
-<ComponentPreview name="visualize-text-node-demo" description="A visualize text node that you can use to create your own nodes" />
+<ComponentPreview name="visualize-text-node-demo" description="An example of a Visualize Text node displaying formatted markdown content" />
+
+## Overview
+
+The Visualize Text Node is a React Flow node component that renders text content with Markdown support. It provides a clean, resizable interface for displaying formatted text from other nodes in your flow, making it perfect for visualizing outputs or documentation.
 
 ## Installation
 
@@ -28,13 +32,15 @@ npx shadcn@latest add https://simple-ai.dev/r/visualize-text-node.json
 
 <Steps>
 
+<Step>Install the following shadcn/ui components:</Step>
+
+```bash
+npx shadcn-ui@latest add separator
+```
+
 <Step>Copy and paste the following code into your project.</Step>
 
 <ComponentSource name="visualize-text-node" />
-
-<Step>Install the required dependencies from shadcn/ui.</Step>
-
-<a href="https://ui.shadcn.com/docs/components/textarea">https://ui.shadcn.com/docs/components/textarea</a>
 
 <Step>Update the import paths to match your project setup.</Step>
 
@@ -46,39 +52,69 @@ npx shadcn@latest add https://simple-ai.dev/r/visualize-text-node.json
 
 ## Usage
 
-```tsx
-import { VisualizeTextNode } from "@/components/react-flow/visualize-text-node"
-```
-
-The Visualize Text Node component is a React Flow node that allows you to display and edit text content. It includes:
-
-- Editable text area with auto-resizing
-- Customizable node styling
-- Built-in handle connections
-- Support for React Flow's node and edge interactions
+The Visualize Text Node provides a resizable container for displaying formatted text content. Here's how to use it in your React Flow application:
 
 ```tsx
-import { useNodesState } from "reactflow";
-import { VisualizeTextNode } from "@/components/react-flow/visualize-text-node";
+import { VisualizeTextNode } from "@/components/ui/flow/visualize-text-node"
 
-const initialNodes = [
+const nodes = [
   {
-    id: '1',
-    type: 'visualizeText',
+    id: "visualize-1",
+    type: "visualize-text",
     position: { x: 0, y: 0 },
-    data: { text: 'Initial text content' },
-  },
-];
+    data: {
+      input: "### Markdown Support\n\nThis node supports:\n- Headers\n- Lists\n- And other markdown features",
+      status: "success"
+    }
+  }
+]
 
-function MyFlow() {
-  const [nodes, setNodes] = useNodesState(initialNodes);
-  
+function MyFlowComponent() {
   return (
     <ReactFlow
       nodes={nodes}
-      onNodesChange={setNodes}
-      nodeTypes={{ visualizeText: VisualizeTextNode }}
+      nodeTypes={{ "visualize-text": VisualizeTextNode }}
     />
-  );
+  )
 }
 ```
+
+### Features
+
+The node includes several key features:
+
+1. **Markdown Support**
+   - Renders markdown-formatted text
+   - Supports headers, lists, and other markdown syntax
+   - Clean and readable output
+
+2. **Resizable Interface**
+   - Drag to resize the node
+   - Scrollable content area
+   - Text selection enabled
+
+3. **Input Handle**
+   - Single input handle on the left side
+   - Accepts text input from connected nodes
+
+4. **Status Indication**
+   - Visual status feedback (processing, error, success, idle)
+   - Status-based border highlighting
+
+## Props
+
+### Node Data Structure
+
+| Property | Type | Description |
+| --- | --- | --- |
+| status | 'processing' \| 'error' \| 'success' \| 'idle' \| undefined | Current status of the node |
+| input | string \| undefined | The text content to be displayed |
+
+### Component Props
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| id | string | Yes | - | Unique identifier for the node |
+| data | "" | Yes | - | Node data containing status and input text |
+| selected | boolean | No | - | Whether the node is selected |
+| onDeleteNode | => void | No | - | Callback when the delete button is clicked |

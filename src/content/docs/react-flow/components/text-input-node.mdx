@@ -1,11 +1,15 @@
 ---
 title: Text Input Node
-description: A text input node that you can use to create your own nodes
+description: A React Flow node component for inputting and editing text with a resizable interface
 featured: true
 component: true
 ---
 
-<ComponentPreview name="text-input-node-demo" description="A text input node that you can use to create your own nodes" />
+<ComponentPreview name="text-input-node-demo" description="An example of a Text Input node with a resizable textarea" />
+
+## Overview
+
+The Text Input Node is a React Flow node component that provides a resizable textarea for inputting and editing text. It features a clean interface with a single output handle, making it perfect for creating text content that can be processed by other nodes in your flow.
 
 ## Installation
 
@@ -15,6 +19,7 @@ component: true
   <TabsTrigger value="cli">CLI</TabsTrigger>
   <TabsTrigger value="manual">Manual</TabsTrigger>
 </TabsList>
+
 <TabsContent value="cli">
 
 ```bash
@@ -27,13 +32,16 @@ npx shadcn@latest add https://simple-ai.dev/r/text-input-node.json
 
 <Steps>
 
+<Step>Install the following shadcn/ui components:</Step>
+
+```bash
+npx shadcn-ui@latest add textarea
+npx shadcn-ui@latest add separator
+```
+
 <Step>Copy and paste the following code into your project.</Step>
 
 <ComponentSource name="text-input-node" />
-
-<Step>Install the input component from shadcn/ui.</Step>
-
-<a href="https://ui.shadcn.com/docs/components/input">https://ui.shadcn.com/docs/components/input</a>
 
 <Step>Update the import paths to match your project setup.</Step>
 
@@ -45,39 +53,71 @@ npx shadcn@latest add https://simple-ai.dev/r/text-input-node.json
 
 ## Usage
 
-```tsx
-import { TextInputNode } from "@/components/ui/text-input-node"
-```
-
-The Text Input Node component is a specialized node for React Flow that allows users to input and edit text. It includes:
-
-- Built-in text input functionality
-- Customizable placeholder text
-- Value and change handlers
-- Integration with React Flow's node system
+The Text Input Node provides a resizable textarea for entering and editing text. Here's how to use it in your React Flow application:
 
 ```tsx
-import { useState } from "react";
-import { TextInputNode } from "@/components/ui/text-input-node";
+import { TextInputNode } from "@/components/ui/flow/text-input-node"
+import { useState } from "react"
 
 function MyFlowComponent() {
-    const [text, setText] = useState<string>("");
-    return (
-        <TextInputNode
-            id="text-node-1"
-            data={{ text }}
-            onTextChange={(newText) => setText(newText)}
-        />
-    );
+  const [value, setValue] = useState("Initial text")
+
+  return (
+    <ReactFlow
+      nodes={[{
+        id: "input-1",
+        type: "text-input",
+        position: { x: 0, y: 0 },
+        data: {
+          status: "idle",
+          config: { value }
+        }
+      }]}
+      nodeTypes={{ "text-input": TextInputNode }}
+      onTextChange={setValue}
+    />
+  )
 }
 ```
 
-### Customization
+### Features
 
-You can customize the text input node with these props:
+The node includes several key features:
 
-- `placeholder`: Set custom placeholder text
-- `className`: Add custom styles using Tailwind CSS
-- `disabled`: Disable the text input
-- `onTextChange`: Handle text changes
+1. **Resizable Interface**
+   - Drag to resize the node
+   - Textarea automatically fills available space
+   - Clean and intuitive design
 
+2. **Text Editing**
+   - Multi-line text input support
+   - Placeholder text
+   - Auto-resize with content
+
+3. **Output Handle**
+   - Single output handle on the right side
+   - Sends text content to connected nodes
+
+4. **Status Indication**
+   - Visual status feedback (processing, error, success, idle)
+   - Status-based border highlighting
+
+## Props
+
+### Node Data Structure
+
+| Property | Type | Description |
+| --- | --- | --- |
+| status | 'processing' \| 'error' \| 'success' \| 'idle' \| undefined | Current status of the node |
+| config | '' | Configuration object containing the textarea value |
+
+### Component Props
+
+| Prop | Type | Required | Default | Description |
+| --- | --- | --- | --- | --- |
+| id | string | Yes | - | Unique identifier for the node |
+| data | TextInputData | Yes | - | Node data containing status and config |
+| selected | boolean | No | - | Whether the node is selected |
+| deletable | boolean | No | - | Whether the node can be deleted |
+| onTextChange | (value: string) => void | No | - | Callback when text content changes |
+| onDeleteNode | () => void | No | - | Callback when the delete button is clicked |
