@@ -172,15 +172,15 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 				getBranchStatus(nodeId, handleId),
 			);
 
-			// Node can process if at least one branch is complete and none are processing
-			const hasCompleteBranch = branchStatuses.some(
+			// Node can process if ALL branches are complete and NONE are processing
+			const allBranchesComplete = branchStatuses.every(
 				(status) => status === "success",
 			);
 			const hasProcessingBranch = branchStatuses.some(
 				(status) => status === "processing",
 			);
 
-			return hasCompleteBranch && !hasProcessingBranch;
+			return allBranchesComplete && !hasProcessingBranch;
 		}
 
 		// For regular nodes, check all dependencies

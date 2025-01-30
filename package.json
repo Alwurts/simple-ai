@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "npm run build:registry && next dev -p 4567",
 		"build": "contentlayer2 build && npm run build:registry && next build",
-		"start": "next start",
+		"start": "next start -p 4567",
 		"lint": "biome check --write src",
 		"build:registry": "tsx src/scripts/build-registry.ts",
 		"build:docs": "contentlayer2 build"
