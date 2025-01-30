@@ -9,10 +9,10 @@ import {
 import { Button } from "@/components/ui/button";
 
 import "@/styles/mdx.css";
+import { Announcement } from "@/components/announcement";
 import { BlocksNav } from "@/components/blocks/blocks-nav";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { Announcement } from "@/components/announcement";
 
 export const metadata: Metadata = {
 	title: "Building Blocks for AI",

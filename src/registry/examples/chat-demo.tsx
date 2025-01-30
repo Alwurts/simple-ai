@@ -28,12 +28,14 @@ export default function ChatDemo() {
 				},
 				{
 					id: "2",
-					content: "This chat interface you're looking at? It's just one of our many copy-paste friendly components. Built with the Vercel AI SDK, it's ready for your AI applications with features like streaming responses and seamless LLM integration.",
+					content:
+						"This chat interface you're looking at? It's just one of our many copy-paste friendly components. Built with the Vercel AI SDK, it's ready for your AI applications with features like streaming responses and seamless LLM integration.",
 					role: "assistant",
 				},
 				{
 					id: "3",
-					content: "Want to explore our other components, app blocks, or AI workflow tools? Feel free to ask!",
+					content:
+						"Want to explore our other components, app blocks, or AI workflow tools? Feel free to ask!",
 					role: "assistant",
 				},
 			],
