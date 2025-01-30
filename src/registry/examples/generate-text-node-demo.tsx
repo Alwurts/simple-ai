@@ -95,7 +95,7 @@ const initialNodes = [
 	{
 		id: "node-1",
 		type: "generate-text",
-		position: { x: 0, y: -50 },
+		position: { x: 0, y: -130 },
 		data: {},
 	},
 ];
@@ -122,7 +122,7 @@ export default function ResizableNodeDemo() {
 		[],
 	);
 	return (
-		<div className="w-[600px] h-[600px] border border-border rounded-md">
+		<div className="w-full max-w-[600px] h-[450px] border border-border rounded-md">
 			<ReactFlowProvider>
 				<ReactFlow
 					nodes={nodes}

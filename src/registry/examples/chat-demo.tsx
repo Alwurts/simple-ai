@@ -23,12 +23,17 @@ export default function ChatDemo() {
 				{
 					id: "1",
 					content:
-						"Hi! Welcome to simple-ai, the collection of chat UI components that you can easily use to build your chat AI applications.",
+						"👋 Welcome to Simple-AI.dev! We're your go-to library for copy-paste AI components and React Flow workflows.",
 					role: "assistant",
 				},
 				{
 					id: "2",
-					content: "Would you like to know more?",
+					content: "This chat interface you're looking at? It's just one of our many copy-paste friendly components. Built with the Vercel AI SDK, it's ready for your AI applications with features like streaming responses and seamless LLM integration.",
+					role: "assistant",
+				},
+				{
+					id: "3",
+					content: "Want to explore our other components, app blocks, or AI workflow tools? Feel free to ask!",
 					role: "assistant",
 				},
 			],

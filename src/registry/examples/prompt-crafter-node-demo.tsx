@@ -112,7 +112,7 @@ export default function ResizableNodeDemo() {
 	const [edges, setEdges] = useState([]);
 
 	// Add default viewport configuration
-	const defaultViewport = { x: 100, y: 150, zoom: 1.1 };
+	const defaultViewport = { x: 100, y: 100, zoom: 1.1 };
 
 	const onNodesChange = useCallback(
 		(changes: NodeChange<Node>[]) =>
@@ -129,7 +129,7 @@ export default function ResizableNodeDemo() {
 		[],
 	);
 	return (
-		<div className="w-[600px] h-[600px] border border-border rounded-md">
+		<div className="w-full max-w-[600px] h-[450px] border border-border rounded-md">
 			<ReactFlowProvider>
 				<ReactFlow
 					nodes={nodes}
