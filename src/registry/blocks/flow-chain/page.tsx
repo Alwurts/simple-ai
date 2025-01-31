@@ -90,13 +90,13 @@ export function Flow() {
 		const result = await store.startExecution();
 		if (result.status === "error") {
 			console.error(result.error);
-			track({
-				name: "ai_agent_used",
-				properties: {
-					used_block_ai_agent: "flow-chain",
-				},
-			});
 		}
+		track({
+			name: "ai_agent_used",
+			properties: {
+				used_block_ai_agent: "flow-chain",
+			},
+		});
 	};
 
 	return (
