@@ -8,7 +8,7 @@ import {
 	ReactFlowProvider,
 } from "@xyflow/react";
 import { Background, Panel, ReactFlow, useReactFlow } from "@xyflow/react";
-import { type DragEvent, useEffect } from "react";
+import { type DragEvent, useEffect, useRef } from "react";
 import { shallow } from "zustand/shallow";
 import "@xyflow/react/dist/style.css";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ import { ErrorIndicator } from "@/registry/blocks/flow-chain/components/error-in
 import { NodesPanel } from "@/registry/blocks/flow-chain/components/nodes-panel";
 import { NEWS_SUMMARY_WORKFLOW } from "@/registry/blocks/flow-chain/lib/news-summarization-chain";
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
+import { useWorkflowAnimation } from "@/components/agents/workflows/hooks/use-workflow-animation";
 import type { FlowNode } from "@/registry/lib/flow/workflow";
 import { GenerateTextNodeController } from "@/registry/ui/flow/generate-text-node-controller";
 import { PromptCrafterNodeController } from "@/registry/ui/flow/prompt-crafter-node-controller";
@@ -35,6 +36,57 @@ const edgeTypes: EdgeTypes = {
 	status: StatusEdgeController,
 };
 
+const workflows = [
+	{
+		steps: [
+			{
+				nodes: [],
+				paths: [],
+			},
+			{
+				nodes: ["event-in"],
+				paths: ["path-in"],
+			},
+			{
+				nodes: ["task-agent-01"],
+				paths: ["path-agent-01"],
+			},
+			{
+				nodes: ["gateway-router"],
+				paths: [],
+			},
+			{
+				nodes: ["event-out-fail"],
+				paths: ["path-fail-out"],
+			},
+		],
+	},
+	{
+		steps: [
+			{
+				nodes: ["event-in"],
+				paths: ["path-in"],
+			},
+			{
+				nodes: ["task-agent-01"],
+				paths: ["path-agent-01"],
+			},
+			{
+				nodes: ["gateway-router"],
+				paths: [],
+			},
+			{
+				nodes: ["task-agent-success"],
+				paths: ["path-success"],
+			},
+			{
+				nodes: ["event-out-success"],
+				paths: ["path-success-out"],
+			},
+		],
+	},
+];
+
 export function Flow() {
 	const store = useWorkflow(
 		(store) => ({
@@ -51,6 +103,12 @@ export function Flow() {
 		shallow,
 	);
 	const track = useTrackEvent();
+	const svgRef = useRef<SVGSVGElement>(null);
+
+	useWorkflowAnimation({
+		workflows,
+		svgRef,
+	});
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We want to initialize the workflow only once
 	useEffect(() => {
