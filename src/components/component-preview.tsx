@@ -117,7 +117,7 @@ export function ComponentPreview({
 								</div>
 							}
 						>
-							<div className="w-full max-w-full overflow-hidden">{Preview}</div>
+							<div className="w-full max-w-full">{Preview}</div>
 						</React.Suspense>
 					</div>
 				</TabsContent>
