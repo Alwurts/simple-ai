@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { V0Button } from "@/components/v0-button";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useTrackEvent } from "@/lib/events";
 import type {
@@ -52,7 +53,6 @@ import type {
 	registryItemFileSchema,
 	registryItemSchema,
 } from "@/registry/schema";
-import { V0Button } from "@/components/v0-button";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://simple-ai.dev";
 

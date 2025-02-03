@@ -1,13 +1,13 @@
 "use client";
 
-import type * as React from "react";
-import { cn } from "@/lib/utils";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import type * as React from "react";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://simple-ai.dev";
 
