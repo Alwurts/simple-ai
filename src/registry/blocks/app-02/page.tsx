@@ -16,8 +16,8 @@ import { getRandomExample } from "@/registry/blocks/app-02/lib/example-businesse
 import {
 	ProductPersonaSchema,
 	UserPersonaSchema,
-} from "@/registry/blocks/app-02/types/persona";
-import { formSchema } from "@/registry/blocks/app-02/types/persona";
+} from "@/registry/blocks/app-02/lib/persona";
+import { formSchema } from "@/registry/blocks/app-02/lib/persona";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 

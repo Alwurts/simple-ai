@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { getRandomExample } from "@/registry/blocks/app-03/lib/profile-examples";
-import { profileGenerationSchema } from "@/registry/blocks/app-03/types/x";
+import { profileGenerationSchema } from "@/registry/blocks/app-03/lib/x";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

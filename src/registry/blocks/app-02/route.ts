@@ -1,7 +1,7 @@
 import {
 	ProductPersonaSchema,
 	UserPersonaSchema,
-} from "@/registry/blocks/app-02/types/persona";
+} from "@/registry/blocks/app-02/lib/persona";
 // src/registry/blocks/persona-generator/route.ts
 import { openai } from "@ai-sdk/openai";
 import { streamObject } from "ai";

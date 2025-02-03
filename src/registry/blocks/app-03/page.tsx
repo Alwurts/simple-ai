@@ -7,7 +7,7 @@ import { XPreview } from "@/registry/blocks/app-03/components/x-preview";
 import type {
 	XProfile,
 	profileGenerationSchema,
-} from "@/registry/blocks/app-03/types/x";
+} from "@/registry/blocks/app-03/lib/x";
 import type { DeepPartial } from "ai";
 import { useCompletion } from "ai/react";
 import { useEffect, useState } from "react";

@@ -1,7 +1,7 @@
 import {
 	ProductPersonaSchema,
 	UserPersonaSchema,
-} from "@/registry/blocks/app-02/types/persona";
+} from "@/registry/blocks/app-02/lib/persona";
 import { createDeepSeek } from "@ai-sdk/deepseek";
 import { streamObject } from "ai";
 import { z } from "zod";
