@@ -85,13 +85,13 @@ export function XPreview({
 									</div>
 									<div className="flex justify-end mb-4">{generateDialog}</div>
 									<div className="mt-6">
-										<h2 className="font-bold text-xl mb-2">
+										<h4 className="font-bold text-xl mb-2">
 											<DisplayLoader
 												value={profile.displayName}
 												isLoading={isLoading}
 												width="w-20"
 											/>
-										</h2>
+										</h4>
 										<span className="flex items-center text-gray-500">
 											@
 											<DisplayLoader

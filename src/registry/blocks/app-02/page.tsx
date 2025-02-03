@@ -66,9 +66,9 @@ export default function PersonaGenerator() {
 	return (
 		<div className="max-w-3xl mx-auto p-6 space-y-8">
 			<div className="space-y-4 text-center">
-				<h1 className="text-3xl font-bold tracking-tight">
+				<h4 className="text-3xl font-bold tracking-tight">
 					AI Persona Generator
-				</h1>
+				</h4>
 				<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
 					Generate detailed user and product personas for your business using
 					AI. Fill in the details below or try a random example to get started.

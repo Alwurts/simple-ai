@@ -17,7 +17,7 @@ export default function Page() {
 				{open && (
 					<div className="w-[400px] h-[600px] bg-background border rounded-lg shadow-lg flex flex-col overflow-hidden">
 						<div className="flex items-center justify-between p-4 border-b">
-							<h2 className="font-semibold">Chat</h2>
+							<h4 className="font-semibold">Chat</h4>
 							<Button
 								variant="ghost"
 								size="icon"

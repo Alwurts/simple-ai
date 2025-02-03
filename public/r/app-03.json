@@ -52,7 +52,7 @@
     },
     {
       "path": "blocks/app-03/components/toolbar.tsx",
-      "content": "import { ThemeToggle } from \"@/components/theme/theme-toggle\";\n\nexport function Toolbar() {\n\treturn (\n\t\t<div className=\"bg-background text-foreground border-b border-border\">\n\t\t\t<div className=\"max-w-7xl mx-auto px-3 py-2 flex items-center justify-between gap-2\">\n\t\t\t\t<div className=\"flex-1 text-center flex flex-col items-center justify-center\">\n\t\t\t\t\t<h1 className=\"font-bold text-xl\">Generate X Bio with AI</h1>\n\t\t\t\t\t<p className=\"text-muted-foreground text-sm\">\n\t\t\t\t\t\tSee how your profile will look\n\t\t\t\t\t</p>\n\t\t\t\t</div>\n\t\t\t\t<ThemeToggle />\n\t\t\t</div>\n\t\t</div>\n\t);\n}\n",
+      "content": "import { ThemeToggle } from \"@/components/theme/theme-toggle\";\n\nexport function Toolbar() {\n\treturn (\n\t\t<div className=\"bg-background text-foreground border-b border-border\">\n\t\t\t<div className=\"max-w-7xl mx-auto px-3 py-2 flex items-center justify-between gap-2\">\n\t\t\t\t<div className=\"flex-1 text-center flex flex-col items-center justify-center\">\n\t\t\t\t\t<h4 className=\"font-bold text-xl\">Generate X Bio with AI</h4>\n\t\t\t\t\t<p className=\"text-muted-foreground text-sm\">\n\t\t\t\t\t\tSee how your profile will look\n\t\t\t\t\t</p>\n\t\t\t\t</div>\n\t\t\t\t<ThemeToggle />\n\t\t\t</div>\n\t\t</div>\n\t);\n}\n",
       "type": "registry:component",
       "target": ""
     },

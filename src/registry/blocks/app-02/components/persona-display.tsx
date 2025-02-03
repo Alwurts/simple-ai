@@ -64,9 +64,9 @@ export function PersonaDisplay({
 
 			<div className="grid gap-8 md:grid-cols-2 h-full">
 				<div className="flex flex-col space-y-3 h-full">
-					<h2 className="text-xl font-semibold text-center flex-none">
+					<h4 className="text-xl font-semibold text-center flex-none">
 						User Persona
-					</h2>
+					</h4>
 					<Card className="flex-1 flex flex-col">
 						<CardHeader className="flex flex-row items-center gap-4 flex-none">
 							<Avatar className="h-16 w-16">
@@ -142,9 +142,9 @@ export function PersonaDisplay({
 				</div>
 
 				<div className="flex flex-col space-y-3 h-full">
-					<h2 className="text-xl font-semibold text-center flex-none">
+					<h4 className="text-xl font-semibold text-center flex-none">
 						Product Persona
-					</h2>
+					</h4>
 					<Card className="flex-1 flex flex-col">
 						<CardHeader className="flex flex-row items-center gap-4 flex-none">
 							<div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted text-4xl">
