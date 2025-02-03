@@ -1,4 +1,4 @@
-import type { formSchema } from "@/registry/blocks/app-02/types/persona";
+import type { formSchema } from "@/registry/blocks/app-02/lib/persona";
 import type { z } from "zod";
 
 export type BusinessExample = z.infer<typeof formSchema>;

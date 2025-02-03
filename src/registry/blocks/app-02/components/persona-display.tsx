@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import type {
 	ProductPersona,
 	UserPersona,
-} from "@/registry/blocks/app-02/types/persona";
+} from "@/registry/blocks/app-02/lib/persona";
 import type { DeepPartial } from "ai";
 
 function DisplayField({

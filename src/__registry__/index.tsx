@@ -803,9 +803,9 @@ export const Index: Record<string, any> = {
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/app-02/types/persona.ts",
+			path: "src/registry/blocks/app-02/lib/persona.ts",
 			type: "registry:lib",
-			target: "app/types/persona.ts"
+			target: ""
 		},{
 			path: "src/registry/blocks/app-02/lib/example-businesses.ts",
 			type: "registry:lib",
@@ -849,9 +849,9 @@ export const Index: Record<string, any> = {
 			type: "registry:component",
 			target: ""
 		},{
-			path: "src/registry/blocks/app-03/types/x.ts",
+			path: "src/registry/blocks/app-03/lib/x.ts",
 			type: "registry:lib",
-			target: "app/types/x.ts"
+			target: ""
 		},{
 			path: "src/registry/blocks/app-03/lib/profile-examples.ts",
 			type: "registry:lib",

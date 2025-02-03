@@ -3,7 +3,7 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import type { XProfile } from "@/registry/blocks/app-03/types/x";
+import type { XProfile } from "@/registry/blocks/app-03/lib/x";
 import type { DeepPartial } from "ai";
 import {
 	BookmarkIcon,

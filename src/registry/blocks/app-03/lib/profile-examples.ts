@@ -1,5 +1,5 @@
 import type { z } from "zod";
-import type { profileGenerationSchema } from "../types/x";
+import type { profileGenerationSchema } from "./x";
 
 type ProfileExample = z.infer<typeof profileGenerationSchema>;
 

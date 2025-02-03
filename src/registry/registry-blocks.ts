@@ -224,8 +224,8 @@ export const blocks: Registry = [
 				type: "registry:component",
 			},
 			{
-				path: "blocks/app-02/types/persona.ts",
-				target: "app/types/persona.ts",
+				path: "blocks/app-02/lib/persona.ts",
+				//target: "types/persona.ts",
 				type: "registry:lib",
 			},
 			{
@@ -284,8 +284,7 @@ export const blocks: Registry = [
 				type: "registry:component",
 			},
 			{
-				path: "blocks/app-03/types/x.ts",
-				target: "app/types/x.ts",
+				path: "blocks/app-03/lib/x.ts",
 				type: "registry:lib",
 			},
 			{
