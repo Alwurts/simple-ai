@@ -5,7 +5,7 @@
     "@xyflow/react"
   ],
   "registryDependencies": [
-    "https://simple-ai.dev/r/base-node.json"
+    "http://localhost:4567/r/base-node.json"
   ],
   "files": [
     {

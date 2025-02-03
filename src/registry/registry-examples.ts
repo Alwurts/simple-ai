@@ -1,4 +1,7 @@
 import type { Registry } from "@/registry/schema";
+import "dotenv/config";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://simple-ai.dev";
 
 export const examples: Registry = [
 	{
@@ -14,7 +17,7 @@ export const examples: Registry = [
 	{
 		name: "chat-input-demo",
 		type: "registry:example",
-		registryDependencies: ["https://simple-ai.dev/r/chat-input.json"],
+		registryDependencies: [`${BASE_URL}/r/chat-input.json`],
 		files: [
 			{
 				path: "examples/chat-input-demo.tsx",

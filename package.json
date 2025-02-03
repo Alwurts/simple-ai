@@ -48,6 +48,7 @@
 		"cmdk": "^1.0.0",
 		"contentlayer2": "^0.4.6",
 		"date-fns": "^4.1.0",
+		"dotenv": "^16.4.7",
 		"jotai": "^2.1.0",
 		"lucide-react": "^0.469.0",
 		"marked": "^15.0.4",

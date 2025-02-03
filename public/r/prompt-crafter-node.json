@@ -14,11 +14,11 @@
     "separator",
     "popover",
     "command",
-    "https://simple-ai.dev/r/node-header-status.json",
-    "https://simple-ai.dev/r/editable-handle.json",
-    "https://simple-ai.dev/r/node-header.json",
-    "https://simple-ai.dev/r/labeled-handle.json",
-    "https://simple-ai.dev/r/base-node.json"
+    "http://localhost:4567/r/node-header-status.json",
+    "http://localhost:4567/r/editable-handle.json",
+    "http://localhost:4567/r/node-header.json",
+    "http://localhost:4567/r/labeled-handle.json",
+    "http://localhost:4567/r/base-node.json"
   ],
   "files": [
     {

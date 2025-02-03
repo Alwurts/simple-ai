@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { V0Button } from "@/components/v0-button";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useTrackEvent } from "@/lib/events";
 import type {
@@ -52,6 +53,8 @@ import type {
 	registryItemFileSchema,
 	registryItemSchema,
 } from "@/registry/schema";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://simple-ai.dev";
 
 type BlockViewerContext = {
 	item: z.infer<typeof registryItemSchema>;
@@ -212,7 +215,7 @@ function BlockViewerToolbar() {
 						size="sm"
 						onClick={() => {
 							copyToClipboard(
-								`npx shadcn@latest add https://simple-ai.dev/r/${item.name}.json`,
+								`npx shadcn@latest add ${BASE_URL}/r/${item.name}.json`,
 							);
 							track({
 								name: "copy_block_code",
@@ -224,11 +227,16 @@ function BlockViewerToolbar() {
 					>
 						{isCopied ? <Check /> : <Terminal />}
 						<span className="hidden lg:inline">
-							npx shadcn add https://simple-ai.dev/r/{item.name}
-							.json
+							npx shadcn add {BASE_URL}/r/{item.name}.json
 						</span>
 					</Button>
 				</div>
+				<Separator orientation="vertical" className="mx-1 hidden h-4 xl:flex" />
+				<V0Button
+					className="hidden shadow-none sm:flex"
+					id={`v0-button-${item.name}`}
+					name={`${item.name}`}
+				/>
 			</div>
 		</div>
 	);

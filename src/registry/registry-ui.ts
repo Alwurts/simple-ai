@@ -1,4 +1,7 @@
 import type { Registry } from "./schema";
+import "dotenv/config";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://simple-ai.dev";
 
 export const ui: Registry = [
 	{
@@ -7,7 +10,7 @@ export const ui: Registry = [
 			"A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 		type: "registry:ui",
 		dependencies: ["react-jsx-parser"],
-		registryDependencies: ["https://simple-ai.dev/r/jsx-utils.json"],
+		registryDependencies: [`${BASE_URL}/r/jsx-utils.json`],
 		files: [{ type: "registry:ui", path: "ui/jsx-renderer.tsx" }],
 	},
 	{
@@ -31,7 +34,7 @@ export const ui: Registry = [
 	{
 		name: "chat-message",
 		type: "registry:ui",
-		registryDependencies: ["https://simple-ai.dev/r/markdown-content.json"],
+		registryDependencies: [`${BASE_URL}/r/markdown-content.json`],
 		files: [{ type: "registry:ui", path: "ui/chat-message.tsx" }],
 	},
 	{
@@ -51,7 +54,7 @@ export const ui: Registry = [
 		name: "resizable-node",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
-		registryDependencies: ["https://simple-ai.dev/r/base-node.json"],
+		registryDependencies: [`${BASE_URL}/r/base-node.json`],
 		files: [
 			{
 				type: "registry:ui",
@@ -82,7 +85,7 @@ export const ui: Registry = [
 			"input",
 			"textarea",
 			"popover",
-			"https://simple-ai.dev/r/base-handle.json",
+			`${BASE_URL}/r/base-handle.json`,
 		],
 		files: [
 			{
@@ -111,12 +114,12 @@ export const ui: Registry = [
 		registryDependencies: [
 			"button",
 			"separator",
-			"https://simple-ai.dev/r/model-selector.json",
-			"https://simple-ai.dev/r/node-header-status.json",
-			"https://simple-ai.dev/r/editable-handle.json",
-			"https://simple-ai.dev/r/labeled-handle.json",
-			"https://simple-ai.dev/r/base-node.json",
-			"https://simple-ai.dev/r/node-header.json",
+			`${BASE_URL}/r/model-selector.json`,
+			`${BASE_URL}/r/node-header-status.json`,
+			`${BASE_URL}/r/editable-handle.json`,
+			`${BASE_URL}/r/labeled-handle.json`,
+			`${BASE_URL}/r/base-node.json`,
+			`${BASE_URL}/r/node-header.json`,
 		],
 		files: [
 			{
@@ -142,11 +145,11 @@ export const ui: Registry = [
 			"separator",
 			"popover",
 			"command",
-			"https://simple-ai.dev/r/node-header-status.json",
-			"https://simple-ai.dev/r/editable-handle.json",
-			"https://simple-ai.dev/r/node-header.json",
-			"https://simple-ai.dev/r/labeled-handle.json",
-			"https://simple-ai.dev/r/base-node.json",
+			`${BASE_URL}/r/node-header-status.json`,
+			`${BASE_URL}/r/editable-handle.json`,
+			`${BASE_URL}/r/node-header.json`,
+			`${BASE_URL}/r/labeled-handle.json`,
+			`${BASE_URL}/r/base-node.json`,
 		],
 		files: [
 			{
@@ -163,9 +166,9 @@ export const ui: Registry = [
 		registryDependencies: [
 			"textarea",
 			"separator",
-			"https://simple-ai.dev/r/labeled-handle.json",
-			"https://simple-ai.dev/r/node-header.json",
-			"https://simple-ai.dev/r/resizable-node.json",
+			`${BASE_URL}/r/labeled-handle.json`,
+			`${BASE_URL}/r/node-header.json`,
+			`${BASE_URL}/r/resizable-node.json`,
 		],
 		files: [
 			{
@@ -181,10 +184,10 @@ export const ui: Registry = [
 		dependencies: ["@xyflow/react"],
 		registryDependencies: [
 			"separator",
-			"https://simple-ai.dev/r/markdown-content.json",
-			"https://simple-ai.dev/r/labeled-handle.json",
-			"https://simple-ai.dev/r/node-header.json",
-			"https://simple-ai.dev/r/resizable-node.json",
+			`${BASE_URL}/r/markdown-content.json`,
+			`${BASE_URL}/r/labeled-handle.json`,
+			`${BASE_URL}/r/node-header.json`,
+			`${BASE_URL}/r/resizable-node.json`,
 		],
 		files: [
 			{
