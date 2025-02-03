@@ -1,4 +1,7 @@
 import type { Registry } from "@/registry/schema";
+import "dotenv/config";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://simple-ai.dev";
 
 export const blocks: Registry = [
 	{
@@ -15,9 +18,9 @@ export const blocks: Registry = [
 			"button",
 			"avatar",
 			"dropdown-menu",
-			"https://simple-ai.dev/r/chat-input.json",
-			"https://simple-ai.dev/r/chat-message-area.json",
-			"https://simple-ai.dev/r/chat-message.json",
+			`${BASE_URL}/r/chat-input.json`,
+			`${BASE_URL}/r/chat-message-area.json`,
+			`${BASE_URL}/r/chat-message.json`,
 		],
 		files: [
 			{
@@ -53,9 +56,9 @@ export const blocks: Registry = [
 		registryDependencies: [
 			"sidebar",
 			"breadcrumb",
-			"https://simple-ai.dev/r/chat-input.json",
-			"https://simple-ai.dev/r/chat-message-area.json",
-			"https://simple-ai.dev/r/chat-message.json",
+			`${BASE_URL}/r/chat-input.json`,
+			`${BASE_URL}/r/chat-message-area.json`,
+			`${BASE_URL}/r/chat-message.json`,
 		],
 		files: [
 			{
@@ -83,9 +86,9 @@ export const blocks: Registry = [
 		registryDependencies: [
 			"popover",
 			"button",
-			"https://simple-ai.dev/r/chat-input.json",
-			"https://simple-ai.dev/r/chat-message-area.json",
-			"https://simple-ai.dev/r/chat-message.json",
+			`${BASE_URL}/r/chat-input.json`,
+			`${BASE_URL}/r/chat-message-area.json`,
+			`${BASE_URL}/r/chat-message.json`,
 		],
 		files: [
 			{
@@ -131,11 +134,11 @@ export const blocks: Registry = [
 			"badge",
 			"dialog",
 			"slider",
-			"https://simple-ai.dev/r/chat-input.json",
-			"https://simple-ai.dev/r/chat-message-area.json",
-			"https://simple-ai.dev/r/chat-message.json",
-			"https://simple-ai.dev/r/jsx-renderer.json",
-			"https://simple-ai.dev/r/jsx-utils.json",
+			`${BASE_URL}/r/chat-input.json`,
+			`${BASE_URL}/r/chat-message-area.json`,
+			`${BASE_URL}/r/chat-message.json`,
+			`${BASE_URL}/r/jsx-renderer.json`,
+			`${BASE_URL}/r/jsx-utils.json`,
 		],
 		files: [
 			{
@@ -312,10 +315,10 @@ export const blocks: Registry = [
 			"input",
 			"textarea",
 			"sonner",
-			"https://simple-ai.dev/r/generate-text-node.json",
-			"https://simple-ai.dev/r/prompt-crafter-node.json",
-			"https://simple-ai.dev/r/text-input-node.json",
-			"https://simple-ai.dev/r/visualize-text-node.json",
+			`${BASE_URL}/r/generate-text-node.json`,
+			`${BASE_URL}/r/prompt-crafter-node.json`,
+			`${BASE_URL}/r/text-input-node.json`,
+			`${BASE_URL}/r/visualize-text-node.json`,
 		],
 		files: [
 			{
@@ -417,10 +420,10 @@ export const blocks: Registry = [
 			"input",
 			"textarea",
 			"sonner",
-			"https://simple-ai.dev/r/generate-text-node.json",
-			"https://simple-ai.dev/r/prompt-crafter-node.json",
-			"https://simple-ai.dev/r/text-input-node.json",
-			"https://simple-ai.dev/r/visualize-text-node.json",
+			`${BASE_URL}/r/generate-text-node.json`,
+			`${BASE_URL}/r/prompt-crafter-node.json`,
+			`${BASE_URL}/r/text-input-node.json`,
+			`${BASE_URL}/r/visualize-text-node.json`,
 		],
 		files: [
 			{
@@ -523,10 +526,10 @@ export const blocks: Registry = [
 			"input",
 			"textarea",
 			"sonner",
-			"https://simple-ai.dev/r/generate-text-node.json",
-			"https://simple-ai.dev/r/prompt-crafter-node.json",
-			"https://simple-ai.dev/r/text-input-node.json",
-			"https://simple-ai.dev/r/visualize-text-node.json",
+			`${BASE_URL}/r/generate-text-node.json`,
+			`${BASE_URL}/r/prompt-crafter-node.json`,
+			`${BASE_URL}/r/text-input-node.json`,
+			`${BASE_URL}/r/visualize-text-node.json`,
 		],
 		files: [
 			{
@@ -628,10 +631,10 @@ export const blocks: Registry = [
 			"input",
 			"textarea",
 			"sonner",
-			"https://simple-ai.dev/r/generate-text-node.json",
-			"https://simple-ai.dev/r/prompt-crafter-node.json",
-			"https://simple-ai.dev/r/text-input-node.json",
-			"https://simple-ai.dev/r/visualize-text-node.json",
+			`${BASE_URL}/r/generate-text-node.json`,
+			`${BASE_URL}/r/prompt-crafter-node.json`,
+			`${BASE_URL}/r/text-input-node.json`,
+			`${BASE_URL}/r/visualize-text-node.json`,
 		],
 		files: [
 			{
