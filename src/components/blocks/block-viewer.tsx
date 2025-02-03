@@ -42,7 +42,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { V0Button } from "@/components/v0-button";
+/* import { V0Button } from "@/components/v0-button"; */
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { useTrackEvent } from "@/lib/events";
 import type {
@@ -231,12 +231,12 @@ function BlockViewerToolbar() {
 						</span>
 					</Button>
 				</div>
-				<Separator orientation="vertical" className="mx-1 hidden h-4 xl:flex" />
+				{/* <Separator orientation="vertical" className="mx-1 hidden h-4 xl:flex" />
 				<V0Button
 					className="hidden shadow-none sm:flex"
 					id={`v0-button-${item.name}`}
 					name={`${item.name}`}
-				/>
+				/> */}
 			</div>
 		</div>
 	);
