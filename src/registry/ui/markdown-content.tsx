@@ -7,7 +7,8 @@ import remarkGfm from "remark-gfm";
 
 // The neccessary imports here
 import remarkMath from "remark-math";
-import rehypeMathjax from "rehype-mathjax";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.css";
 
 
 const DEFAULT_PRE_BLOCK_CLASS =
@@ -316,7 +317,7 @@ const MemoizedMarkdownBlock = memo(
 		return (
 			<ReactMarkdown
 				remarkPlugins={[remarkGfm, remarkMath]}
-				rehypePlugins={[rehypeMathjax]}
+				rehypePlugins={[rehypeKatex]}
 				components={components}
 				className={className}
 			>
