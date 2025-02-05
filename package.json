@@ -66,6 +66,8 @@
 		"react-markdown": "^9.0.1",
 		"react-resizable-panels": "^2.1.7",
 		"react-wrap-balancer": "^1.1.1",
+		"rehype-mathjax": "^6.0.0",
+		"remark-math": "^6.0.0",
 		"remark-mdx": "^3.1.0",
 		"sonner": "^1.7.1",
 		"tailwind-merge": "^2.6.0",

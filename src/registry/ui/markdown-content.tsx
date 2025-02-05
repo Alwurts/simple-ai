@@ -5,6 +5,11 @@ import { Suspense, isValidElement, memo, useMemo } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+// The neccessary imports here
+import remarkMath from "remark-math";
+import rehypeMathjax from "rehype-mathjax";
+
+
 const DEFAULT_PRE_BLOCK_CLASS =
 	"my-4 overflow-x-auto w-fit rounded-xl bg-zinc-950 text-zinc-50 dark:bg-zinc-900 border border-border p-4";
 
@@ -276,15 +281,46 @@ interface MarkdownBlockProps {
 	className?: string;
 }
 
+/**
+ * Preprocesses LaTeX delimiters in the markdown content to be compatible with ReactMarkdown.
+ * 
+ * This function replaces block-level LaTeX delimiters \[ \] with $$ $$ and inline LaTeX delimiters \( \) with $ $.
+ * 
+ * Example usage:
+ * const processedContent = preprocessLaTeX(markdownContent);
+ * 
+ * Markdown examples to use for testing:
+ * 
+ * $9\div3$
+ * $z^{n-1}$
+ * $x={-b\pm\sqrt{b^2-4ac}\over2a}$
+ * $\max(a,b)=\begin{cases}a&(a\geqq b) \\ b&(a\lt b)\end{cases}$
+ */
+export const preprocessLaTeX = (content: string) => {
+	// Replace block-level LaTeX delimiters \[ \] with $$ $$
+	const blockProcessedContent = content.replace(
+	  /\\\[(.*?)\\\]/gs,
+	  (_, equation) => `$$${equation}$$`,
+	);
+	// Replace inline LaTeX delimiters \( \) with $ $
+	const inlineProcessedContent = blockProcessedContent.replace(
+	  /\\\((.*?)\\\)/gs,
+	  (_, equation) => `$${equation}$`,
+	);
+	return inlineProcessedContent;
+  };
+  
+
 const MemoizedMarkdownBlock = memo(
 	({ content, className }: MarkdownBlockProps) => {
 		return (
 			<ReactMarkdown
-				remarkPlugins={[remarkGfm]}
+				remarkPlugins={[remarkGfm, remarkMath]}
+				rehypePlugins={[rehypeMathjax]}
 				components={components}
 				className={className}
 			>
-				{content}
+				{preprocessLaTeX(content)}
 			</ReactMarkdown>
 		);
 	},
