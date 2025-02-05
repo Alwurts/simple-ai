@@ -8,6 +8,7 @@ import remarkGfm from "remark-gfm";
 // The neccessary imports here
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+// biome-ignore lint/correctness/noUndeclaredDependencies: <it is needed to add the right styles to LaTeX>
 import "katex/dist/katex.css";
 
 
