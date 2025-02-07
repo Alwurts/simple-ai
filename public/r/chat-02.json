@@ -9,9 +9,9 @@
   "registryDependencies": [
     "sidebar",
     "breadcrumb",
-    "http://localhost:4567/r/chat-input.json",
-    "http://localhost:4567/r/chat-message-area.json",
-    "http://localhost:4567/r/chat-message.json"
+    "https://simple-ai.dev/r/chat-input.json",
+    "https://simple-ai.dev/r/chat-message-area.json",
+    "https://simple-ai.dev/r/chat-message.json"
   ],
   "files": [
     {

@@ -9,7 +9,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer",
 		description: "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 		type: "registry:ui",
-		registryDependencies: ["http://localhost:4567/r/jsx-utils.json"],
+		registryDependencies: ["https://simple-ai.dev/r/jsx-utils.json"],
 		files: [{
 			path: "src/registry/ui/jsx-renderer.tsx",
 			type: "registry:ui",
@@ -59,7 +59,7 @@ export const Index: Record<string, any> = {
 		name: "chat-message",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["http://localhost:4567/r/markdown-content.json"],
+		registryDependencies: ["https://simple-ai.dev/r/markdown-content.json"],
 		files: [{
 			path: "src/registry/ui/chat-message.tsx",
 			type: "registry:ui",
@@ -101,7 +101,7 @@ export const Index: Record<string, any> = {
 		name: "resizable-node",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["http://localhost:4567/r/base-node.json"],
+		registryDependencies: ["https://simple-ai.dev/r/base-node.json"],
 		files: [{
 			path: "src/registry/ui/flow/resizable-node.tsx",
 			type: "registry:ui",
@@ -129,7 +129,7 @@ export const Index: Record<string, any> = {
 		name: "editable-handle",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["button","input","textarea","popover","http://localhost:4567/r/base-handle.json"],
+		registryDependencies: ["button","input","textarea","popover","https://simple-ai.dev/r/base-handle.json"],
 		files: [{
 			path: "src/registry/ui/flow/editable-handle.tsx",
 			type: "registry:ui",
@@ -157,7 +157,7 @@ export const Index: Record<string, any> = {
 		name: "generate-text-node",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["button","separator","http://localhost:4567/r/model-selector.json","http://localhost:4567/r/node-header-status.json","http://localhost:4567/r/editable-handle.json","http://localhost:4567/r/labeled-handle.json","http://localhost:4567/r/base-node.json","http://localhost:4567/r/node-header.json"],
+		registryDependencies: ["button","separator","https://simple-ai.dev/r/model-selector.json","https://simple-ai.dev/r/node-header-status.json","https://simple-ai.dev/r/editable-handle.json","https://simple-ai.dev/r/labeled-handle.json","https://simple-ai.dev/r/base-node.json","https://simple-ai.dev/r/node-header.json"],
 		files: [{
 			path: "src/registry/ui/flow/generate-text-node.tsx",
 			type: "registry:ui",
@@ -171,7 +171,7 @@ export const Index: Record<string, any> = {
 		name: "prompt-crafter-node",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["button","separator","popover","command","http://localhost:4567/r/node-header-status.json","http://localhost:4567/r/editable-handle.json","http://localhost:4567/r/node-header.json","http://localhost:4567/r/labeled-handle.json","http://localhost:4567/r/base-node.json"],
+		registryDependencies: ["button","separator","popover","command","https://simple-ai.dev/r/node-header-status.json","https://simple-ai.dev/r/editable-handle.json","https://simple-ai.dev/r/node-header.json","https://simple-ai.dev/r/labeled-handle.json","https://simple-ai.dev/r/base-node.json"],
 		files: [{
 			path: "src/registry/ui/flow/prompt-crafter-node.tsx",
 			type: "registry:ui",
@@ -185,7 +185,7 @@ export const Index: Record<string, any> = {
 		name: "text-input-node",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["textarea","separator","http://localhost:4567/r/labeled-handle.json","http://localhost:4567/r/node-header.json","http://localhost:4567/r/resizable-node.json"],
+		registryDependencies: ["textarea","separator","https://simple-ai.dev/r/labeled-handle.json","https://simple-ai.dev/r/node-header.json","https://simple-ai.dev/r/resizable-node.json"],
 		files: [{
 			path: "src/registry/ui/flow/text-input-node.tsx",
 			type: "registry:ui",
@@ -199,7 +199,7 @@ export const Index: Record<string, any> = {
 		name: "visualize-text-node",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["separator","http://localhost:4567/r/markdown-content.json","http://localhost:4567/r/labeled-handle.json","http://localhost:4567/r/node-header.json","http://localhost:4567/r/resizable-node.json"],
+		registryDependencies: ["separator","https://simple-ai.dev/r/markdown-content.json","https://simple-ai.dev/r/labeled-handle.json","https://simple-ai.dev/r/node-header.json","https://simple-ai.dev/r/resizable-node.json"],
 		files: [{
 			path: "src/registry/ui/flow/visualize-text-node.tsx",
 			type: "registry:ui",
@@ -283,7 +283,7 @@ export const Index: Record<string, any> = {
 		name: "chat-input-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["http://localhost:4567/r/chat-input.json"],
+		registryDependencies: ["https://simple-ai.dev/r/chat-input.json"],
 		files: [{
 			path: "src/registry/examples/chat-input-demo.tsx",
 			type: "registry:example",
@@ -661,7 +661,7 @@ export const Index: Record<string, any> = {
 		name: "chat-01",
 		description: "A simple chat page.",
 		type: "registry:block",
-		registryDependencies: ["card","breadcrumb","separator","sidebar","tooltip","button","avatar","dropdown-menu","http://localhost:4567/r/chat-input.json","http://localhost:4567/r/chat-message-area.json","http://localhost:4567/r/chat-message.json"],
+		registryDependencies: ["card","breadcrumb","separator","sidebar","tooltip","button","avatar","dropdown-menu","https://simple-ai.dev/r/chat-input.json","https://simple-ai.dev/r/chat-message-area.json","https://simple-ai.dev/r/chat-message.json"],
 		files: [{
 			path: "src/registry/blocks/chat-01/page.tsx",
 			type: "registry:page",
@@ -691,7 +691,7 @@ export const Index: Record<string, any> = {
 		name: "chat-02",
 		description: "A chat in a sidebar.",
 		type: "registry:block",
-		registryDependencies: ["sidebar","breadcrumb","http://localhost:4567/r/chat-input.json","http://localhost:4567/r/chat-message-area.json","http://localhost:4567/r/chat-message.json"],
+		registryDependencies: ["sidebar","breadcrumb","https://simple-ai.dev/r/chat-input.json","https://simple-ai.dev/r/chat-message-area.json","https://simple-ai.dev/r/chat-message.json"],
 		files: [{
 			path: "src/registry/blocks/chat-02/page.tsx",
 			type: "registry:page",
@@ -713,7 +713,7 @@ export const Index: Record<string, any> = {
 		name: "chat-03",
 		description: "A chat in a popover.",
 		type: "registry:block",
-		registryDependencies: ["popover","button","http://localhost:4567/r/chat-input.json","http://localhost:4567/r/chat-message-area.json","http://localhost:4567/r/chat-message.json"],
+		registryDependencies: ["popover","button","https://simple-ai.dev/r/chat-input.json","https://simple-ai.dev/r/chat-message-area.json","https://simple-ai.dev/r/chat-message.json"],
 		files: [{
 			path: "src/registry/blocks/chat-03/page.tsx",
 			type: "registry:page",
@@ -735,7 +735,7 @@ export const Index: Record<string, any> = {
 		name: "app-01",
 		description: "A app with generative UI capabilities.",
 		type: "registry:block",
-		registryDependencies: ["avatar","input","label","tabs","resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","slider","http://localhost:4567/r/chat-input.json","http://localhost:4567/r/chat-message-area.json","http://localhost:4567/r/chat-message.json","http://localhost:4567/r/jsx-renderer.json","http://localhost:4567/r/jsx-utils.json"],
+		registryDependencies: ["avatar","input","label","tabs","resizable","breadcrumb","button","toggle-group","switch","separator","card","badge","dialog","slider","https://simple-ai.dev/r/chat-input.json","https://simple-ai.dev/r/chat-message-area.json","https://simple-ai.dev/r/chat-message.json","https://simple-ai.dev/r/jsx-renderer.json","https://simple-ai.dev/r/jsx-utils.json"],
 		files: [{
 			path: "src/registry/blocks/app-01/page.tsx",
 			type: "registry:page",
@@ -865,7 +865,7 @@ export const Index: Record<string, any> = {
 		name: "flow-chain",
 		description: "Agentic chain workflow.",
 		type: "registry:block",
-		registryDependencies: ["button","card","dialog","input","textarea","sonner","http://localhost:4567/r/generate-text-node.json","http://localhost:4567/r/prompt-crafter-node.json","http://localhost:4567/r/text-input-node.json","http://localhost:4567/r/visualize-text-node.json"],
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","https://simple-ai.dev/r/generate-text-node.json","https://simple-ai.dev/r/prompt-crafter-node.json","https://simple-ai.dev/r/text-input-node.json","https://simple-ai.dev/r/visualize-text-node.json"],
 		files: [{
 			path: "src/registry/blocks/flow-chain/page.tsx",
 			type: "registry:page",
@@ -943,7 +943,7 @@ export const Index: Record<string, any> = {
 		name: "flow-routing",
 		description: "Agentic routing workflow.",
 		type: "registry:block",
-		registryDependencies: ["button","card","dialog","input","textarea","sonner","http://localhost:4567/r/generate-text-node.json","http://localhost:4567/r/prompt-crafter-node.json","http://localhost:4567/r/text-input-node.json","http://localhost:4567/r/visualize-text-node.json"],
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","https://simple-ai.dev/r/generate-text-node.json","https://simple-ai.dev/r/prompt-crafter-node.json","https://simple-ai.dev/r/text-input-node.json","https://simple-ai.dev/r/visualize-text-node.json"],
 		files: [{
 			path: "src/registry/blocks/flow-routing/page.tsx",
 			type: "registry:page",
@@ -1021,7 +1021,7 @@ export const Index: Record<string, any> = {
 		name: "flow-parallelization",
 		description: "Agentic parallelization workflow.",
 		type: "registry:block",
-		registryDependencies: ["button","card","dialog","input","textarea","sonner","http://localhost:4567/r/generate-text-node.json","http://localhost:4567/r/prompt-crafter-node.json","http://localhost:4567/r/text-input-node.json","http://localhost:4567/r/visualize-text-node.json"],
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","https://simple-ai.dev/r/generate-text-node.json","https://simple-ai.dev/r/prompt-crafter-node.json","https://simple-ai.dev/r/text-input-node.json","https://simple-ai.dev/r/visualize-text-node.json"],
 		files: [{
 			path: "src/registry/blocks/flow-parallelization/page.tsx",
 			type: "registry:page",
@@ -1099,7 +1099,7 @@ export const Index: Record<string, any> = {
 		name: "flow-orchestrator",
 		description: "Agentic orchestrator workflow.",
 		type: "registry:block",
-		registryDependencies: ["button","card","dialog","input","textarea","sonner","http://localhost:4567/r/generate-text-node.json","http://localhost:4567/r/prompt-crafter-node.json","http://localhost:4567/r/text-input-node.json","http://localhost:4567/r/visualize-text-node.json"],
+		registryDependencies: ["button","card","dialog","input","textarea","sonner","https://simple-ai.dev/r/generate-text-node.json","https://simple-ai.dev/r/prompt-crafter-node.json","https://simple-ai.dev/r/text-input-node.json","https://simple-ai.dev/r/visualize-text-node.json"],
 		files: [{
 			path: "src/registry/blocks/flow-orchestrator/page.tsx",
 			type: "registry:page",

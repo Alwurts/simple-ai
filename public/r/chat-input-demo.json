@@ -2,7 +2,7 @@
   "name": "chat-input-demo",
   "type": "registry:example",
   "registryDependencies": [
-    "http://localhost:4567/r/chat-input.json"
+    "https://simple-ai.dev/r/chat-input.json"
   ],
   "files": [
     {
