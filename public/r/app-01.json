@@ -24,11 +24,11 @@
     "badge",
     "dialog",
     "slider",
-    "http://localhost:4567/r/chat-input.json",
-    "http://localhost:4567/r/chat-message-area.json",
-    "http://localhost:4567/r/chat-message.json",
-    "http://localhost:4567/r/jsx-renderer.json",
-    "http://localhost:4567/r/jsx-utils.json"
+    "https://simple-ai.dev/r/chat-input.json",
+    "https://simple-ai.dev/r/chat-message-area.json",
+    "https://simple-ai.dev/r/chat-message.json",
+    "https://simple-ai.dev/r/jsx-renderer.json",
+    "https://simple-ai.dev/r/jsx-utils.json"
   ],
   "files": [
     {
