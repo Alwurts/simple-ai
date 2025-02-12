@@ -225,7 +225,6 @@ export const blocks: Registry = [
 			},
 			{
 				path: "blocks/app-02/lib/persona.ts",
-				//target: "types/persona.ts",
 				type: "registry:lib",
 			},
 			{

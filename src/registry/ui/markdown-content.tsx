@@ -267,6 +267,9 @@ const components: Partial<Components> = {
 };
 
 function parseMarkdownIntoBlocks(markdown: string): string[] {
+	if (!markdown) {
+		return [];
+	}
 	const tokens = marked.lexer(markdown);
 	return tokens.map((token) => token.raw);
 }
@@ -306,7 +309,10 @@ interface MarkdownContentProps {
 
 export const MarkdownContent = memo(
 	({ content, id, className }: MarkdownContentProps) => {
-		const blocks = useMemo(() => parseMarkdownIntoBlocks(content), [content]);
+		const blocks = useMemo(
+			() => parseMarkdownIntoBlocks(content || ""),
+			[content],
+		);
 
 		return blocks.map((block, index) => (
 			<MemoizedMarkdownBlock
