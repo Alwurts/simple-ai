@@ -18,12 +18,70 @@
 			]
 		},
 		{
+			"name": "chat-message",
+			"type": "registry:ui",
+			"registryDependencies": [],
+			"files": [
+				{
+					"path": "./src/registry/ui/chat-message.tsx",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "chat-message-area",
+			"type": "registry:ui",
+			"registryDependencies": ["scroll-area"],
+			"files": [
+				{
+					"path": "./src/registry/ui/chat-message-area.tsx",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/registry/hooks/use-scroll-to-bottom.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "markdown-content",
+			"type": "registry:ui",
+			"registryDependencies": [],
+			"files": [
+				{
+					"path": "./src/registry/ui/markdown-content.tsx",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
 			"name": "use-textarea-resize",
 			"type": "registry:hook",
 			"files": [
 				{
 					"path": "./src/registry/hooks/use-textarea-resize.ts",
 					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-scroll-to-bottom",
+			"type": "registry:hook",
+			"files": [
+				{
+					"path": "./src/registry/hooks/use-scroll-to-bottom.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "chat-input-demo",
+			"type": "registry:example",
+			"registryDependencies": ["undefined/r/chat-input.json"],
+			"files": [
+				{
+					"path": "./src/registry/examples/chat-input-demo.tsx",
+					"type": "registry:example"
 				}
 			]
 		}

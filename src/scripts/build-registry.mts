@@ -32,7 +32,7 @@ export const Index: Record<string, any> = {`;
     type: "${item.type}",
     registryDependencies: ${JSON.stringify(item.registryDependencies)},
     files: [${item.files?.map((file) => {
-		const filePath = `registry/${typeof file === "string" ? file : file.path}`;
+		const filePath = `./src/registry/${typeof file === "string" ? file : file.path}`;
 		const resolvedFilePath = path.resolve(filePath);
 		return typeof file === "string"
 			? `"${resolvedFilePath}"`

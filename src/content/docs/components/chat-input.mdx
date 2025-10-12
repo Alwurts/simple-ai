@@ -1,0 +1,89 @@
+---
+title: Chat Input
+description: A chat input component that autoresizes to fit the content and features a submit button.
+component: true
+---
+
+<ComponentPreview name="chat-input-demo" description="A chat input component." />
+
+A versatile chat input component that comes pre-styled with a modern look. It features automatic height adjustment based on content, a submit button, and smart keyboard handling. Press Enter to submit your message or Shift+Enter to add a new line. The component is composed of a textarea and a submit button, which can be customized or used individually.
+
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/chat-input.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+`chat-input.tsx`
+
+<ComponentSource name="chat-input" />
+
+`use-textarea-resize.ts`
+
+<ComponentSource name="use-textarea-resize" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { ChatInput, ChatInputTextArea, ChatInputSubmit } from "@/components/ui/chat-input"
+```
+
+```tsx
+<ChatInput variant="default">
+  <ChatInputTextArea placeholder="Type a message..." />
+  <ChatInputSubmit />
+</ChatInput>
+```
+
+## Props
+
+### ChatInput
+
+| Prop      | Type                     | Default     | Description                                               |
+| --------- | ------------------------ | ----------- | --------------------------------------------------------- |
+| variant   | `"default" \| "unstyled"` | `"default"` | The visual style variant of the chat input                |
+| value     | `string`                 | -           | The controlled value of the textarea                      |
+| onChange  | `function`               | -           | Callback when the textarea value changes                  |
+| onSubmit  | `function`               | -           | Callback when the message is submitted                    |
+| loading   | `boolean`                | `false`     | Whether the input is in a loading state                   |
+| onStop    | `function`               | -           | Callback to stop an ongoing action (shown when loading)   |
+| rows      | `number`                 | `1`         | Initial number of rows to display in the textarea         |
+
+## Examples
+
+### Default
+
+<ComponentPreview name="chat-input-demo" />
+
+### Unstyled
+
+<ComponentPreview name="chat-input-unstyled" />
+
+### Unstyled with initial rows
+
+<ComponentPreview name="chat-input-unstyled-initial-rows" />

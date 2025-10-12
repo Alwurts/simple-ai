@@ -1,0 +1,13 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "chat-input-demo",
+	"type": "registry:example",
+	"registryDependencies": ["undefined/r/chat-input.json"],
+	"files": [
+		{
+			"path": "./src/registry/examples/chat-input-demo.tsx",
+			"content": "\"use client\";\n\nimport { useState } from \"react\";\nimport { toast } from \"sonner\";\nimport {\n\tChatInput,\n\tChatInputSubmit,\n\tChatInputTextArea,\n} from \"@/registry/ui/chat-input\";\n\nexport default function ChatInputDemo() {\n\tconst [value, setValue] = useState(\"\");\n\tconst [isLoading, setIsLoading] = useState(false);\n\n\tconst handleSubmit = () => {\n\t\tsetIsLoading(true);\n\t\tsetTimeout(() => {\n\t\t\ttoast(value);\n\t\t\tsetIsLoading(false);\n\t\t}, 1000);\n\t};\n\n\treturn (\n\t\t<div className=\"w-full h-full\">\n\t\t\t<ChatInput\n\t\t\t\tvariant=\"default\"\n\t\t\t\tvalue={value}\n\t\t\t\tonChange={(e) => setValue(e.target.value)}\n\t\t\t\tonSubmit={handleSubmit}\n\t\t\t\tloading={isLoading}\n\t\t\t\tonStop={() => setIsLoading(false)}\n\t\t\t>\n\t\t\t\t<ChatInputTextArea placeholder=\"Type a message...\" />\n\t\t\t\t<ChatInputSubmit />\n\t\t\t</ChatInput>\n\t\t</div>\n\t);\n}\n",
+			"type": "registry:example"
+		}
+	]
+}
