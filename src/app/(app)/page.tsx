@@ -12,7 +12,6 @@ import {
 import { PageNav } from "@/components/layout/page-nav";
 import { Button } from "@/components/ui/button";
 
-
 const title = "AI Building Blocks. Build Smarter, Faster.";
 const description =
 	"An open-source library of AI-focused UI components, app blocks, and React Flow workflows designed to accelerate development. Built with shadcn/UI and Vercel AI SDK.";

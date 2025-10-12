@@ -180,8 +180,7 @@ export function CommandMenu({
 				<Command
 					className="**:data-[slot=command-input-wrapper]:bg-input/50 **:data-[slot=command-input-wrapper]:border-input rounded-none bg-transparent **:data-[slot=command-input]:!h-9 **:data-[slot=command-input]:py-0 **:data-[slot=command-input-wrapper]:mb-0 **:data-[slot=command-input-wrapper]:!h-9 **:data-[slot=command-input-wrapper]:rounded-md **:data-[slot=command-input-wrapper]:border"
 					filter={(value, search, keywords) => {
-						const extendValue =
-							value + " " + (keywords?.join(" ") || "");
+						const extendValue = `${value} ${keywords?.join(" ") || ""}`;
 						if (
 							extendValue
 								.toLowerCase()

@@ -1,3 +1,5 @@
+// @ts-nocheck - TODO: Type instantiation is excessively deep and possibly infinite
+
 import { promises as fs } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -197,6 +199,7 @@ export function createFileTreeForRegistryItemFiles(
 					existingNode.path = path;
 				} else {
 					// Move to next level in the tree
+					// biome-ignore lint/style/noNonNullAssertion: Its fine
 					currentLevel = existingNode.children!;
 				}
 			} else {
@@ -207,6 +210,7 @@ export function createFileTreeForRegistryItemFiles(
 				currentLevel.push(newNode);
 
 				if (!isFile) {
+					// biome-ignore lint/style/noNonNullAssertion: Its fine
 					currentLevel = newNode.children!;
 				}
 			}

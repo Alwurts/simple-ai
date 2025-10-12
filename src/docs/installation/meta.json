@@ -1,13 +1,13 @@
 {
-  "pages": [
-    "next",
-    "vite",
-    "laravel",
-    "react-router",
-    "remix",
-    "astro",
-    "tanstack",
-    "tanstack-router",
-    "manual"
-  ]
+	"pages": [
+		"next",
+		"vite",
+		"laravel",
+		"react-router",
+		"remix",
+		"astro",
+		"tanstack",
+		"tanstack-router",
+		"manual"
+	]
 }

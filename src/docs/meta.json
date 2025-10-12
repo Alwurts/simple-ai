@@ -1,8 +1,4 @@
 {
 	"root": true,
-	"pages": [
-		"(root)",
-		"installation"
-
-	]
+	"pages": ["(root)", "installation"]
 }

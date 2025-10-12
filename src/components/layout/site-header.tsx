@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CommandMenu } from "@/components/general/command-menu";
+import { GithubIcon } from "@/components/icons/github-icon";
 import { LogoIcon } from "@/components/icons/logo-icon";
 import { MainNav } from "@/components/layout/main-nav";
 import { MobileNav } from "@/components/layout/mobile-nav";
@@ -7,7 +8,6 @@ import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/lib/config";
-import { GithubIcon } from "@/components/icons/github-icon";
 import { source } from "@/lib/source";
 
 export function SiteHeader() {

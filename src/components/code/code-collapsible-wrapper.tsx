@@ -1,8 +1,6 @@
 "use client";
 
 import * as React from "react";
-
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
 	Collapsible,
@@ -10,6 +8,7 @@ import {
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
 export function CodeCollapsibleWrapper({
 	className,

@@ -1,4 +1,7 @@
 /** biome-ignore-all lint/suspicious/noUnknownAtRules: Fix later */
+/** biome-ignore-all lint/complexity/noImportantStyles: Needed */
+/** biome-ignore-all lint/suspicious/noDuplicateProperties: Needed */
+/** biome-ignore-all lint/a11y/useGenericFontNames: Needed */
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -344,10 +347,10 @@
 /*---break--- */
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
+	* {
+		@apply border-border outline-ring/50;
 	}
-  body {
-    @apply bg-background text-foreground;
+	body {
+		@apply bg-background text-foreground;
 	}
 }

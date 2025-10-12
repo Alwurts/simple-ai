@@ -1,19 +1,14 @@
+import { findNeighbour } from "fumadocs-core/server";
+import { ArrowLeftIcon, ArrowRightIcon, ArrowUpRightIcon } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { mdxComponents } from "@/components/mdx-components";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	ArrowUpRightIcon,
-} from "lucide-react";
-import { findNeighbour } from "fumadocs-core/server";
-
-import { source } from "@/lib/source";
-import { absoluteUrl } from "@/lib/utils";
 import { DocsCopyPage } from "@/components/docs/docs-copy-page";
 import { DocsTableOfContents } from "@/components/docs/docs-toc";
+import { mdxComponents } from "@/components/mdx-components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { source } from "@/lib/source";
+import { absoluteUrl } from "@/lib/utils";
 
 export const revalidate = false;
 export const dynamic = "force-static";
@@ -226,7 +221,7 @@ export default async function Page(props: {
 				) : null}
 				<div className="flex flex-1 flex-col gap-12 px-6">
 					{/* <OpenInV0Cta /> */}
-          <div>TODO: OpenInV0Cta</div>
+					<div>TODO: OpenInV0Cta</div>
 				</div>
 			</div>
 		</div>

@@ -1,12 +1,11 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-
-import { highlightCode } from "@/lib/highlight-code";
-import { getRegistryItem } from "@/lib/registry";
-import { cn } from "@/lib/utils";
 import { CodeCollapsibleWrapper } from "@/components/code/code-collapsible-wrapper";
 import { CopyButton } from "@/components/general/copy-button";
 import { getIconForLanguageExtension } from "@/components/icons";
+import { highlightCode } from "@/lib/highlight-code";
+import { getRegistryItem } from "@/lib/registry";
+import { cn } from "@/lib/utils";
 
 export async function ComponentSource({
 	name,

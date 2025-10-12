@@ -1,15 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-
-import { cn } from "@/lib/utils";
-import { Callout } from "@/components/general/callout";
 import { CodeBlockCommand } from "@/components/code/code-block-command";
 import { CodeCollapsibleWrapper } from "@/components/code/code-collapsible-wrapper";
 import { CodeTabs } from "@/components/code/code-tabs";
 import { ComponentPreview } from "@/components/component/component-preview";
 import { ComponentSource } from "@/components/component/component-source";
 import { ComponentsList } from "@/components/component/components-list";
+import { Callout } from "@/components/general/callout";
 import { CopyButton } from "@/components/general/copy-button";
+import { getIconForLanguageExtension } from "@/components/icons";
 import {
 	Accordion,
 	AccordionContent,
@@ -21,7 +20,7 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getIconForLanguageExtension } from "@/components/icons";
+import { cn } from "@/lib/utils";
 
 export const mdxComponents = {
 	h1: ({ className, ...props }: React.ComponentProps<"h1">) => (

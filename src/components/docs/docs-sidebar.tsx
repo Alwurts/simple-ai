@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-import type { source } from "@/lib/source";
 import {
 	Sidebar,
 	SidebarContent,
@@ -14,6 +12,7 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import type { source } from "@/lib/source";
 
 const TOP_LEVEL_SECTIONS = [
 	{ name: "Get Started", href: "/docs" },

@@ -1,7 +1,7 @@
-import { JsonIcon } from "./json-icon";
-import { CssIcon } from "./css-icon";
-import { TsIcon } from "./ts-icon";
 import { FileIcon } from "lucide-react";
+import { CssIcon } from "./css-icon";
+import { JsonIcon } from "./json-icon";
+import { TsIcon } from "./ts-icon";
 
 export function getIconForLanguageExtension(language: string) {
 	switch (language) {
