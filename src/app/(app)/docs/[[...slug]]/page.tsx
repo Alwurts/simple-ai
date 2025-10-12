@@ -71,6 +71,7 @@ export default async function Page(props: {
 }) {
 	const params = await props.params;
 	const page = source.getPage(params.slug);
+	//console.log("source.getPages()", source.getPages());
 	if (!page) {
 		notFound();
 	}

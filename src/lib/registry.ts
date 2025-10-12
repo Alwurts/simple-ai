@@ -1,13 +1,13 @@
-// @ts-nocheck - TODO: Type instantiation is excessively deep and possibly infinite
-
 import { promises as fs } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { type registryItemFileSchema, registryItemSchema } from "shadcn/schema";
 import { Project, ScriptKind } from "ts-morph";
 import type { z } from "zod";
-
 import { Index } from "@/registry/__index__";
+import {
+	type registryItemFileSchema,
+	registryItemSchema,
+} from "@/shadcn-temp/schema";
 
 export function getRegistryComponent(name: string) {
 	return Index[name]?.component;

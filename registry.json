@@ -1,0 +1,31 @@
+{
+	"name": "simple-ai",
+	"homepage": "https://simple-ai.dev",
+	"items": [
+		{
+			"name": "chat-input",
+			"type": "registry:ui",
+			"registryDependencies": ["textarea"],
+			"files": [
+				{
+					"path": "./src/registry/ui/chat-input.tsx",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/registry/hooks/use-textarea-resize.ts",
+					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "use-textarea-resize",
+			"type": "registry:hook",
+			"files": [
+				{
+					"path": "./src/registry/hooks/use-textarea-resize.ts",
+					"type": "registry:hook"
+				}
+			]
+		}
+	]
+}

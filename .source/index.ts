@@ -1,4 +1,17 @@
 // @ts-nocheck -- skip type checking
+import * as docs_12 from "../src/content/docs/installation/vite.mdx?collection=docs&hash=1760289747769"
+import * as docs_11 from "../src/content/docs/installation/tanstack.mdx?collection=docs&hash=1760289747769"
+import * as docs_10 from "../src/content/docs/installation/tanstack-router.mdx?collection=docs&hash=1760289747769"
+import * as docs_9 from "../src/content/docs/installation/remix.mdx?collection=docs&hash=1760289747769"
+import * as docs_8 from "../src/content/docs/installation/react-router.mdx?collection=docs&hash=1760289747769"
+import * as docs_7 from "../src/content/docs/installation/next.mdx?collection=docs&hash=1760289747769"
+import * as docs_6 from "../src/content/docs/installation/manual.mdx?collection=docs&hash=1760289747769"
+import * as docs_5 from "../src/content/docs/installation/laravel.mdx?collection=docs&hash=1760289747769"
+import * as docs_4 from "../src/content/docs/installation/index.mdx?collection=docs&hash=1760289747769"
+import * as docs_3 from "../src/content/docs/installation/gatsby.mdx?collection=docs&hash=1760289747769"
+import * as docs_2 from "../src/content/docs/installation/astro.mdx?collection=docs&hash=1760289747769"
+import * as docs_1 from "../src/content/docs/(root)/index.mdx?collection=docs&hash=1760289747769"
+import * as docs_0 from "../src/content/docs/(root)/about.mdx?collection=docs&hash=1760289747769"
 import { _runtime } from "fumadocs-mdx/runtime/next"
 import * as _source from "../source.config"
-export const docs = _runtime.docs<typeof _source.docs>([], [])
+export const docs = _runtime.docs<typeof _source.docs>([{ info: {"path":"(root)/about.mdx","fullPath":"src/content/docs/(root)/about.mdx"}, data: docs_0 }, { info: {"path":"(root)/index.mdx","fullPath":"src/content/docs/(root)/index.mdx"}, data: docs_1 }, { info: {"path":"installation/astro.mdx","fullPath":"src/content/docs/installation/astro.mdx"}, data: docs_2 }, { info: {"path":"installation/gatsby.mdx","fullPath":"src/content/docs/installation/gatsby.mdx"}, data: docs_3 }, { info: {"path":"installation/index.mdx","fullPath":"src/content/docs/installation/index.mdx"}, data: docs_4 }, { info: {"path":"installation/laravel.mdx","fullPath":"src/content/docs/installation/laravel.mdx"}, data: docs_5 }, { info: {"path":"installation/manual.mdx","fullPath":"src/content/docs/installation/manual.mdx"}, data: docs_6 }, { info: {"path":"installation/next.mdx","fullPath":"src/content/docs/installation/next.mdx"}, data: docs_7 }, { info: {"path":"installation/react-router.mdx","fullPath":"src/content/docs/installation/react-router.mdx"}, data: docs_8 }, { info: {"path":"installation/remix.mdx","fullPath":"src/content/docs/installation/remix.mdx"}, data: docs_9 }, { info: {"path":"installation/tanstack-router.mdx","fullPath":"src/content/docs/installation/tanstack-router.mdx"}, data: docs_10 }, { info: {"path":"installation/tanstack.mdx","fullPath":"src/content/docs/installation/tanstack.mdx"}, data: docs_11 }, { info: {"path":"installation/vite.mdx","fullPath":"src/content/docs/installation/vite.mdx"}, data: docs_12 }], [{"info":{"path":"meta.json","fullPath":"src/content/docs/meta.json"},"data":{"pages":["(root)","installation"],"root":true}}, {"info":{"path":"(root)/meta.json","fullPath":"src/content/docs/(root)/meta.json"},"data":{"title":"Get Started","pages":["index"]}}, {"info":{"path":"installation/meta.json","fullPath":"src/content/docs/installation/meta.json"},"data":{"pages":["next","vite","laravel","react-router","remix","astro","tanstack","tanstack-router","manual"]}}])
