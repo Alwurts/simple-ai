@@ -1,95 +1,34 @@
-import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Geist, Geist_Mono } from "next/font/google";
 import "@/styles/globals.css";
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
-import { siteConfig } from "@/config/site";
-import { cn } from "@/lib/utils";
-import PlausibleProvider from "next-plausible";
-import type { ReactNode } from "react";
 
-const geistSans = localFont({
-	src: "./fonts/GeistVF.woff",
+const geistSans = Geist({
 	variable: "--font-geist-sans",
-	weight: "100 900",
+	subsets: ["latin"],
 });
-const geistMono = localFont({
-	src: "./fonts/GeistMonoVF.woff",
+
+const geistMono = Geist_Mono({
 	variable: "--font-geist-mono",
-	weight: "100 900",
+	subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-	title: siteConfig.name,
-	metadataBase: new URL(siteConfig.url),
-	description: siteConfig.description,
-	keywords: [
-		"AI SDK",
-		"shadcn/ui",
-		"simple-ai",
-		"AI Chatbot",
-		"React",
-		"Next.js",
-		"Tailwind CSS",
-		"TypeScript",
-	],
-	authors: [
-		{
-			name: "Alwurts",
-			url: "https://alwurts.com",
-		},
-	],
-	creator: "Alwurts",
-	openGraph: {
-		type: "website",
-		locale: "en_US",
-		url: siteConfig.url,
-		title: siteConfig.name,
-		description: siteConfig.description,
-		siteName: siteConfig.name,
-		images: [
-			{
-				url: siteConfig.ogImage,
-				width: 1200,
-				height: 630,
-				alt: siteConfig.name,
-			},
-		],
-	},
-	twitter: {
-		card: "summary_large_image",
-		title: siteConfig.name,
-		description: siteConfig.description,
-		images: [siteConfig.ogImage],
-		creator: "@alwurts",
-	},
+	title: "Simple AI - AI Component Library",
+	description:
+		"A comprehensive component library for building AI-powered applications, built on shadcn/ui",
 };
 
-interface RootLayoutProps {
-	children: ReactNode;
-}
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({
+	children,
+}: Readonly<{
+	children: React.ReactNode;
+}>) {
 	return (
 		<html lang="en">
 			<body
-				className={cn("antialiased", geistSans.variable, geistMono.variable)}
+				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<PlausibleProvider domain="simple-ai.dev" selfHosted>
-					<ThemeProvider
-						attribute="class"
-						defaultTheme="system"
-						enableSystem
-						disableTransitionOnChange
-						enableColorScheme
-					>
-						{children}
-						<Toaster />
-					</ThemeProvider>
-
-					<GoogleAnalytics gaId="G-SJSDG0H2W0" />
-				</PlausibleProvider>
+				{children}
 			</body>
 		</html>
 	);
