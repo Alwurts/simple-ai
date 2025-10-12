@@ -5,7 +5,7 @@ import { type Registry, registryItemSchema } from "@/shadcn-temp/schema";
 
 const DEPRECATED_ITEMS: string[] = [];
 
-export const registry = {
+export const registry: Registry = {
 	name: "simple-ai",
 	homepage: "https://simple-ai.dev",
 	items: z.array(registryItemSchema).parse(
@@ -13,4 +13,6 @@ export const registry = {
 			return !DEPRECATED_ITEMS.includes(item.name);
 		}),
 	),
-} satisfies Registry;
+};
+
+export default { registry };
