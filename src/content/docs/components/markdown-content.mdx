@@ -1,0 +1,75 @@
+---
+title: Markdown Content
+description: A component that renders markdown content.
+component: true
+---
+
+<ComponentPreview
+  name="markdown-content-demo"
+  description="A markdown content component"
+/>
+
+This component provides a simple way to render Markdown content with optimized performance through memoization. The implementation uses memoized blocks which prevents unnecessary re-renders and improves rendering efficiency, especially when dealing with streaming content.
+
+The memoization approach is inspired by the [Vercel AI SDK's markdown chatbot example](https://sdk.vercel.ai/cookbook/next/markdown-chatbot-with-memoization). As they explain, memoization caches parsed Markdown blocks and reuses them to avoid redundant parsing and rendering operations. This is particularly beneficial when content is being streamed or updated frequently, as it ensures that only changed blocks are re-rendered rather than the entire content.
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/markdown-content.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install react-markdown marked
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+`markdown-content.tsx`
+
+<ComponentSource name="markdown-content" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { MarkdownContent } from "@/components/ui/markdown-content"
+```
+
+```tsx
+<MarkdownContent id="my-id" content={content} />
+```
+
+## Examples
+
+### Streaming
+
+This component supports streaming content with automatic batching
+
+<ComponentPreview
+  name="markdown-streaming-demo"
+  description="A markdown content component that streams content"
+/>

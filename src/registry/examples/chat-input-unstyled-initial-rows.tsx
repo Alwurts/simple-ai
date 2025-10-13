@@ -23,12 +23,13 @@ export default function ChatInputDemo() {
 	return (
 		<div className="w-full h-full flex justify-center items-center">
 			<ChatInput
-				variant="default"
+				variant="unstyled"
 				value={value}
 				onChange={(e) => setValue(e.target.value)}
 				onSubmit={handleSubmit}
 				loading={isLoading}
 				onStop={() => setIsLoading(false)}
+				rows={4}
 			>
 				<ChatInputTextArea placeholder="Type a message..." />
 				<ChatInputSubmit />

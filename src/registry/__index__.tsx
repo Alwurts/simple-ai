@@ -192,4 +192,382 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"chat-input-unstyled": {
+		name: "chat-input-unstyled",
+		description: "",
+		type: "registry:example",
+		registryDependencies: ["undefined/r/chat-input.json"],
+		files: [
+			{
+				path: "./src/registry/examples/chat-input-unstyled.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-input-unstyled.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-input-unstyled-initial-rows": {
+		name: "chat-input-unstyled-initial-rows",
+		description: "",
+		type: "registry:example",
+		registryDependencies: ["undefined/r/chat-input.json"],
+		files: [
+			{
+				path: "./src/registry/examples/chat-input-unstyled-initial-rows.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-input-unstyled-initial-rows.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-message-demo": {
+		name: "chat-message-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-message-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-message-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-message-demo-default": {
+		name: "chat-message-demo-default",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-message-demo-default.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-message-demo-default.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-message-demo-bubble": {
+		name: "chat-message-demo-bubble",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-message-demo-bubble.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-message-demo-bubble.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-message-demo-full": {
+		name: "chat-message-demo-full",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-message-demo-full.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-message-demo-full.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-message-demo-without-avatar": {
+		name: "chat-message-demo-without-avatar",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-message-demo-without-avatar.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-message-demo-without-avatar.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-message-demo-avatar-image": {
+		name: "chat-message-demo-avatar-image",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-message-demo-avatar-image.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-message-demo-avatar-image.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-message-demo-markdown-content": {
+		name: "chat-message-demo-markdown-content",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-message-demo-markdown-content.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-message-demo-markdown-content.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-message-area-demo": {
+		name: "chat-message-area-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-message-area-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-message-area-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-message-area-demo-alignment": {
+		name: "chat-message-area-demo-alignment",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-message-area-demo-alignment.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-message-area-demo-alignment.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-message-area-demo-streaming": {
+		name: "chat-message-area-demo-streaming",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-message-area-demo-streaming.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-message-area-demo-streaming.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"markdown-content-demo": {
+		name: "markdown-content-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/markdown-content-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/markdown-content-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"markdown-streaming-demo": {
+		name: "markdown-streaming-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/markdown-streaming-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/markdown-streaming-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 };
