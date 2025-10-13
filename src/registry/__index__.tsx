@@ -570,4 +570,61 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"chat-01": {
+		name: "chat-01",
+		description: "A simple chat page.",
+		type: "registry:block",
+		registryDependencies: [
+			"card",
+			"breadcrumb",
+			"separator",
+			"sidebar",
+			"tooltip",
+			"button",
+			"avatar",
+			"dropdown-menu",
+			"undefined/r/chat-input.json",
+			"undefined/r/chat-message-area.json",
+			"undefined/r/chat-message.json",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/chat-01/page.tsx",
+				type: "registry:page",
+				target: "app/chat/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/route.ts",
+				type: "registry:page",
+				target: "app/api/ai/chat/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/components/chat.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/components/sidebar-app.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/components/nav-user.tsx",
+				type: "registry:component",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/blocks/chat-01/page.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["chat"],
+		meta: undefined,
+	},
 };

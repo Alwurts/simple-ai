@@ -1,16 +1,18 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
+
+import { Badge } from "@/components/ui/badge";
 
 export function Announcement() {
 	return (
-		<Link
-			href="/ai-agents"
-			className="group mb-2 inline-flex items-center px-0.5 text-sm font-medium"
-		>
-			<span className="underline-offset-4 group-hover:underline">
-				Newly Released AI Agents Workflows
-			</span>
-			<ArrowRight className="ml-1 h-4 w-4" />
-		</Link>
+		<Badge asChild variant="secondary" className="rounded-full">
+			<Link href="/ai-agents">
+				<span
+					className="flex size-2 rounded-full bg-blue-500"
+					title="New"
+				/>
+				Newly Released AI Agents Workflows <ArrowRightIcon />
+			</Link>
+		</Badge>
 	);
 }

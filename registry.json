@@ -226,6 +226,50 @@
 					"type": "registry:example"
 				}
 			]
+		},
+		{
+			"name": "chat-01",
+			"type": "registry:block",
+			"description": "A simple chat page.",
+			"dependencies": ["ai", "@ai-sdk/openai"],
+			"registryDependencies": [
+				"card",
+				"breadcrumb",
+				"separator",
+				"sidebar",
+				"tooltip",
+				"button",
+				"avatar",
+				"dropdown-menu",
+				"undefined/r/chat-input.json",
+				"undefined/r/chat-message-area.json",
+				"undefined/r/chat-message.json"
+			],
+			"files": [
+				{
+					"path": "./src/registry/blocks/chat-01/page.tsx",
+					"type": "registry:page",
+					"target": "app/chat/page.tsx"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/route.ts",
+					"type": "registry:page",
+					"target": "app/api/ai/chat/route.ts"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/components/chat.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/components/sidebar-app.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/components/nav-user.tsx",
+					"type": "registry:component"
+				}
+			],
+			"categories": ["chat"]
 		}
 	]
 }
