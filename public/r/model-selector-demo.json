@@ -1,0 +1,13 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "model-selector-demo",
+	"type": "registry:example",
+	"registryDependencies": ["undefined/r/model-selector.json"],
+	"files": [
+		{
+			"path": "./src/registry/examples/model-selector-demo.tsx",
+			"content": "\"use client\";\n\nimport { useState } from \"react\";\nimport { Badge } from \"@/components/ui/badge\";\nimport {\n\tCard,\n\tCardContent,\n\tCardDescription,\n\tCardHeader,\n\tCardTitle,\n} from \"@/components/ui/card\";\nimport { type Model, ModelSelector } from \"@/registry/ui/model-selector\";\n\nexport default function ModelSelectorDemo() {\n\tconst [selectedModel, setSelectedModel] = useState<Model>(\"gpt-4o\");\n\n\tconst modelDescriptions = {\n\t\t\"gpt-4o\": \"OpenAI's most advanced model with vision capabilities\",\n\t\t\"gpt-4o-mini\": \"OpenAI's fast and cost-effective model\",\n\t\t\"llama-3.3-70b-versatile\": \"Meta's powerful open-source model via Groq\",\n\t\t\"llama-3.1-8b-instant\": \"Meta's fast inference model via Groq\",\n\t\t\"deepseek-chat\": \"DeepSeek's conversational AI model\",\n\t\t\"deepseek-r1-distill-llama-70b\":\n\t\t\t\"DeepSeek's distilled reasoning model via Groq\",\n\t};\n\n\treturn (\n\t\t<div className=\"w-full max-w-md\">\n\t\t\t<Card>\n\t\t\t\t<CardHeader>\n\t\t\t\t\t<CardTitle className=\"flex items-center gap-2\">\n\t\t\t\t\t\tAI Model Selector\n\t\t\t\t\t\t<Badge variant=\"secondary\">Demo</Badge>\n\t\t\t\t\t</CardTitle>\n\t\t\t\t\t<CardDescription>\n\t\t\t\t\t\tSelect from various AI models across different providers\n\t\t\t\t\t</CardDescription>\n\t\t\t\t</CardHeader>\n\t\t\t\t<CardContent className=\"space-y-4\">\n\t\t\t\t\t<ModelSelector\n\t\t\t\t\t\tvalue={selectedModel}\n\t\t\t\t\t\tonChange={setSelectedModel}\n\t\t\t\t\t/>\n\t\t\t\t\t<div className=\"text-sm text-muted-foreground\">\n\t\t\t\t\t\t<strong>Selected:</strong> {selectedModel}\n\t\t\t\t\t</div>\n\t\t\t\t\t<div className=\"text-sm\">\n\t\t\t\t\t\t<strong>Description:</strong>{\" \"}\n\t\t\t\t\t\t{modelDescriptions[selectedModel]}\n\t\t\t\t\t</div>\n\t\t\t\t</CardContent>\n\t\t\t</Card>\n\t\t</div>\n\t);\n}\n",
+			"type": "registry:example"
+		}
+	]
+}

@@ -1,77 +1,89 @@
 ---
 title: Introduction
-description: shadcn/ui is a set of beautifully-designed, accessible components and a code distribution platform. Works with your favorite frameworks and AI models. Open Source. Open Code.
+description: AI Building Blocks that you can copy and paste into your apps. Customizable. Open Source. Built for AI-first development.
 ---
 
-**This is not a component library. It is how you build your component library.**
+**AI Building Blocks for Modern Applications**
 
-You know how most traditional component libraries work: you install a package from NPM, import the components, and use them in your app.
+Simple AI is a collection of production-ready UI components and app templates specifically designed for AI-powered applications. Built on shadcn/ui, it provides the building blocks you need to create chat interfaces, AI workflows, and intelligent user experiences.
 
-This approach works well until you need to customize a component to fit your design system or require one that isn’t included in the library. **Often, you end up wrapping library components, writing workarounds to override styles, or mixing components from different libraries with incompatible APIs.**
+Whether you're building a chatbot, AI assistant, content generator, or complex workflow application, Simple AI gives you the components and patterns to accelerate development while maintaining full customization and control.
 
-This is what shadcn/ui aims to solve. It is built around the following principles:
+## What Makes Simple AI Different
 
-- **Open Code:** The top layer of your component code is open for modification.
-- **Composition:** Every component uses a common, composable interface, making them predictable.
-- **Distribution:** A flat-file schema and command-line tool make it easy to distribute components.
-- **Beautiful Defaults:** Carefully chosen default styles, so you get great design out-of-the-box.
-- **AI-Ready:** Open code for LLMs to read, understand, and improve.
+Simple AI extends shadcn/ui with AI-specific components and patterns:
 
-## Open Code
+- **Chat Components:** Production-ready chat interfaces with streaming, markdown rendering, and message management
+- **AI Integration:** Built-in support for Vercel AI SDK with OpenAI, Groq, DeepSeek, and more
+- **App Blocks:** Complete application templates for common AI use cases
+- **Workflow Ready:** Components designed to work with React Flow for complex AI workflows
+- **AI-First Design:** Every component considers AI interaction patterns and user experience
 
-shadcn/ui hands you the actual component code. You have full control to customize and extend the components to your needs. This means:
+## Core Principles
 
-- **Full Transparency:** You see exactly how each component is built.
-- **Easy Customization:** Modify any part of a component to fit your design and functionality requirements.
-- **AI Integration:** Access to the code makes it straightforward for LLMs to read, understand, and even improve your components.
+- **Open Code:** Full access to component source code for customization and AI-assisted development
+- **AI SDK Integration:** Seamless integration with Vercel AI SDK and popular AI providers
+- **Production Ready:** Components designed for real-world AI applications with proper error handling and loading states
+- **Composable Architecture:** Mix and match components to build complex AI experiences
+- **Beautiful Defaults:** Carefully designed components that work well together out-of-the-box
 
-_In a typical library, if you need to change a button’s behavior, you have to override styles or wrap the component. With shadcn/ui, you simply edit the button code directly._
+## Chat-First Components
+
+Simple AI provides a complete chat component ecosystem:
+
+- **Chat Input:** Auto-resizing textarea with send functionality and keyboard shortcuts
+- **Chat Message Area:** Scrollable message container with auto-scroll and loading states
+- **Chat Message:** Rich message display with markdown, code highlighting, and avatar support
+- **Markdown Content:** Advanced markdown rendering with syntax highlighting and AI-friendly formatting
+
+## App Blocks
+
+Ready-to-use application templates for common AI scenarios:
+
+- **Chat Applications:** Various chat layouts (sidebar, popover, full-page)
+- **AI Generators:** Content generation apps with structured outputs
+- **Profile Builders:** AI-powered profile and bio generators
+- **Workflow Apps:** Complex AI workflow builders (coming soon)
+
+## AI-Ready Architecture
+
+Every component in Simple AI is designed with AI integration in mind:
+
+- **Streaming Support:** Built-in support for real-time AI responses
+- **Error Handling:** Graceful error states for AI API failures
+- **Loading States:** Proper loading indicators for AI operations
+- **Type Safety:** Full TypeScript support with AI SDK types
+- **Provider Agnostic:** Works with any AI provider through Vercel AI SDK
 
 <Accordion collapsible>
   <AccordionItem value="faq-1" className="border-none">
     <AccordionTrigger>
-      How do I pull upstream updates in an Open Code approach?
+      How does Simple AI differ from shadcn/ui?
     </AccordionTrigger>
     <AccordionContent>
       <p>
-        shadcn/ui follows a headless component architecture. This means the core
-        of your app can receive fixes by updating your dependencies, for
-        instance, radix-ui or input-otp.
+        Simple AI is built on top of shadcn/ui but adds AI-specific components,
+        app blocks, and integrations that shadcn/ui doesn't include. While
+        shadcn/ui focuses on general-purpose UI components, Simple AI provides
+        the building blocks specifically for AI-powered applications.
       </p>
       <p className="mt-4">
-        The topmost layer, i.e., the one closest to your design system, is not
-        coupled with the implementation of the library. It stays open for
-        modification.
+        This includes chat interfaces, AI SDK integration, streaming support,
+        and complete application templates for common AI use cases.
+      </p>
+    </AccordionContent>
+  </AccordionItem>
+  <AccordionItem value="faq-2" className="border-none">
+    <AccordionTrigger>
+      Can I use Simple AI components in non-AI applications?
+    </AccordionTrigger>
+    <AccordionContent>
+      <p>
+        Absolutely! The components are built with the same principles as
+        shadcn/ui - they're highly customizable and can be used in any
+        application. The chat components work great for customer support
+        interfaces, collaborative tools, or any messaging application.
       </p>
     </AccordionContent>
   </AccordionItem>
 </Accordion>
-
-## Composition
-
-Every component in shadcn/ui shares a common, composable interface. **If a component does not exist, we bring it in, make it composable, and adjust its style to match and work with the rest of the design system.**
-
-_A shared, composable interface means it's predictable for both your team and LLMs. You are not learning different APIs for every new component. Even for third-party ones._
-
-## Distribution
-
-shadcn/ui is also a code distribution system. It defines a schema for components and a CLI to distribute them.
-
-- **Schema:** A flat-file structure that defines the components, their dependencies, and properties.
-- **CLI:** A command-line tool to distribute and install components across projects with cross-framework support.
-
-_You can use the schema to distribute your components to other projects or have AI generate completely new components based on existing schema._
-
-## Beautiful Defaults
-
-shadcn/ui comes with a large collection of components that have carefully chosen default styles. They are designed to look good on their own and to work well together as a consistent system:
-
-- **Good Out-of-the-Box:** Your UI has a clean and minimal look without extra work.
-- **Unified Design:** Components naturally fit with one another. Each component is built to match the others, keeping your UI consistent.
-- **Easily Customizable:** If you want to change something, it's simple to override and extend the defaults.
-
-## AI-Ready
-
-The design of shadcn/ui makes it easy for AI tools to work with your code. Its open code and consistent API allow AI models to read, understand, and even generate new components.
-
-_An AI model can learn how your components work and suggest improvements or even create new components that integrate with your existing design._

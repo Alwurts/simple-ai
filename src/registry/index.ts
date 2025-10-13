@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { hooks } from "@/registry/registry-hooks";
+import { lib } from "@/registry/registry-lib";
 import { ui } from "@/registry/registry-ui";
 import { type Registry, registryItemSchema } from "@/shadcn-temp/schema";
 import { blocks } from "./registry-blocks";
@@ -11,7 +12,7 @@ export const registry: Registry = {
 	name: "simple-ai",
 	homepage: "https://simple-ai.dev",
 	items: z.array(registryItemSchema).parse(
-		[...ui, ...hooks, ...examples, ...blocks].filter((item) => {
+		[...ui, ...hooks, ...lib, ...examples, ...blocks].filter((item) => {
 			return !DEPRECATED_ITEMS.includes(item.name);
 		}),
 	),

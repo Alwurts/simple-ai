@@ -1,0 +1,13 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "jsx-renderer-demo",
+	"type": "registry:example",
+	"registryDependencies": ["undefined/r/jsx-renderer.json"],
+	"files": [
+		{
+			"path": "./src/registry/examples/jsx-renderer-demo.tsx",
+			"content": "\"use client\";\n\nimport { Badge } from \"@/components/ui/badge\";\nimport { Button } from \"@/components/ui/button\";\nimport {\n\tCard,\n\tCardContent,\n\tCardDescription,\n\tCardHeader,\n\tCardTitle,\n} from \"@/components/ui/card\";\nimport { JsxRenderer } from \"@/registry/ui/jsx-renderer\";\n\nexport default function JsxRendererDemo() {\n\tconst jsxString = `\n\t\t<Card className=\"w-full max-w-md\">\n\t\t\t<CardHeader>\n\t\t\t\t<CardTitle className=\"flex items-center gap-2\">\n\t\t\t\t\tAI Generated UI\n\t\t\t\t\t<Badge variant=\"secondary\">Demo</Badge>\n\t\t\t\t</CardTitle>\n\t\t\t\t<CardDescription>\n\t\t\t\t\tThis card was rendered from a JSX string using the JsxRenderer component.\n\t\t\t\t</CardDescription>\n\t\t\t</CardHeader>\n\t\t\t<CardContent className=\"space-y-4\">\n\t\t\t\t<div className=\"flex gap-2\">\n\t\t\t\t\t<Button size=\"sm\">Primary Action</Button>\n\t\t\t\t\t<Button size=\"sm\" variant=\"outline\">Secondary</Button>\n\t\t\t\t</div>\n\t\t\t\t<p className=\"text-sm text-muted-foreground\">\n\t\t\t\t\tThe JsxRenderer allows you to dynamically render JSX strings with full access to your component library.\n\t\t\t\t</p>\n\t\t\t</CardContent>\n\t\t</Card>\n\t`;\n\n\treturn (\n\t\t<div className=\"w-full\">\n\t\t\t<JsxRenderer\n\t\t\t\tjsx={jsxString}\n\t\t\t\tcomponents={{\n\t\t\t\t\tCard,\n\t\t\t\t\tCardHeader,\n\t\t\t\t\tCardTitle,\n\t\t\t\t\tCardDescription,\n\t\t\t\t\tCardContent,\n\t\t\t\t\tButton,\n\t\t\t\t\tBadge,\n\t\t\t\t}}\n\t\t\t/>\n\t\t</div>\n\t);\n}\n",
+			"type": "registry:example"
+		}
+	]
+}

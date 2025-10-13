@@ -115,6 +115,57 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"jsx-renderer": {
+		name: "jsx-renderer",
+		description:
+			"A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ui/jsx-renderer.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/jsx-renderer.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"model-selector": {
+		name: "model-selector",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["select"],
+		files: [
+			{
+				path: "./src/registry/ui/model-selector.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/model-selector.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"use-textarea-resize": {
 		name: "use-textarea-resize",
 		description: "",
@@ -156,6 +207,31 @@ export const Index: Record<string, any> = {
 			const mod = await import(
 				"@/registry/hooks/use-scroll-to-bottom.ts"
 			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"jsx-utils": {
+		name: "jsx-utils",
+		description: "",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/lib/jsx-utils.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/lib/jsx-utils.ts");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>
@@ -558,6 +634,60 @@ export const Index: Record<string, any> = {
 		component: React.lazy(async () => {
 			const mod = await import(
 				"@/registry/examples/markdown-streaming-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"jsx-renderer-demo": {
+		name: "jsx-renderer-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: ["undefined/r/jsx-renderer.json"],
+		files: [
+			{
+				path: "./src/registry/examples/jsx-renderer-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/jsx-renderer-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"model-selector-demo": {
+		name: "model-selector-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: ["undefined/r/model-selector.json"],
+		files: [
+			{
+				path: "./src/registry/examples/model-selector-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/model-selector-demo.tsx"
 			);
 			const exportName =
 				Object.keys(mod).find(

@@ -55,6 +55,29 @@
 			]
 		},
 		{
+			"name": "jsx-renderer",
+			"type": "registry:ui",
+			"description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
+			"dependencies": ["react-jsx-parser"],
+			"files": [
+				{
+					"path": "./src/registry/ui/jsx-renderer.tsx",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "model-selector",
+			"type": "registry:ui",
+			"registryDependencies": ["select"],
+			"files": [
+				{
+					"path": "./src/registry/ui/model-selector.tsx",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
 			"name": "use-textarea-resize",
 			"type": "registry:hook",
 			"files": [
@@ -71,6 +94,16 @@
 				{
 					"path": "./src/registry/hooks/use-scroll-to-bottom.ts",
 					"type": "registry:hook"
+				}
+			]
+		},
+		{
+			"name": "jsx-utils",
+			"type": "registry:lib",
+			"files": [
+				{
+					"path": "./src/registry/lib/jsx-utils.ts",
+					"type": "registry:lib"
 				}
 			]
 		},
@@ -223,6 +256,28 @@
 			"files": [
 				{
 					"path": "./src/registry/examples/markdown-streaming-demo.tsx",
+					"type": "registry:example"
+				}
+			]
+		},
+		{
+			"name": "jsx-renderer-demo",
+			"type": "registry:example",
+			"registryDependencies": ["undefined/r/jsx-renderer.json"],
+			"files": [
+				{
+					"path": "./src/registry/examples/jsx-renderer-demo.tsx",
+					"type": "registry:example"
+				}
+			]
+		},
+		{
+			"name": "model-selector-demo",
+			"type": "registry:example",
+			"registryDependencies": ["undefined/r/model-selector.json"],
+			"files": [
+				{
+					"path": "./src/registry/examples/model-selector-demo.tsx",
 					"type": "registry:example"
 				}
 			]

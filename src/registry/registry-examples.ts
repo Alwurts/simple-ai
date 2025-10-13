@@ -155,4 +155,26 @@ export const examples: Registry["items"] = [
 			},
 		],
 	},
+	{
+		name: "jsx-renderer-demo",
+		type: "registry:example",
+		registryDependencies: [`${BASE_URL}/r/jsx-renderer.json`],
+		files: [
+			{
+				path: "examples/jsx-renderer-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "model-selector-demo",
+		type: "registry:example",
+		registryDependencies: [`${BASE_URL}/r/model-selector.json`],
+		files: [
+			{
+				path: "examples/model-selector-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
 ];

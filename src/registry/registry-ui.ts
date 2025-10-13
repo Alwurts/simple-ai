@@ -31,4 +31,18 @@ export const ui: Registry["items"] = [
 		registryDependencies: [],
 		files: [{ type: "registry:ui", path: "ui/markdown-content.tsx" }],
 	},
+	{
+		name: "jsx-renderer",
+		description:
+			"A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
+		type: "registry:ui",
+		dependencies: ["react-jsx-parser"],
+		files: [{ type: "registry:ui", path: "ui/jsx-renderer.tsx" }],
+	},
+	{
+		name: "model-selector",
+		type: "registry:ui",
+		registryDependencies: ["select"],
+		files: [{ type: "registry:ui", path: "ui/model-selector.tsx" }],
+	},
 ];

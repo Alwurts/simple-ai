@@ -1,0 +1,14 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "jsx-renderer",
+	"type": "registry:ui",
+	"description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
+	"dependencies": ["react-jsx-parser"],
+	"files": [
+		{
+			"path": "./src/registry/ui/jsx-renderer.tsx",
+			"content": "import * as React from \"react\";\nimport JsxParser from \"react-jsx-parser\";\nimport { completeJsxTag } from \"@/registry/lib/jsx-utils\";\n\ninterface JsxRendererProps extends React.HTMLAttributes<HTMLDivElement> {\n\tjsx: string;\n\tfixIncompleteJsx?: boolean;\n\tcomponents: Record<string, React.ComponentType>;\n}\n\nconst JsxRenderer = React.forwardRef<JsxParser, JsxRendererProps>(\n\t({ className, jsx, fixIncompleteJsx = true, components }, ref) => {\n\t\tconst processedJsx = React.useMemo(() => {\n\t\t\treturn fixIncompleteJsx ? completeJsxTag(jsx) : jsx;\n\t\t}, [jsx, fixIncompleteJsx]);\n\n\t\treturn (\n\t\t\t<JsxParser\n\t\t\t\tref={ref}\n\t\t\t\tclassName={className}\n\t\t\t\tjsx={processedJsx}\n\t\t\t\tcomponents={components}\n\t\t\t/>\n\t\t);\n\t},\n);\nJsxRenderer.displayName = \"JsxRenderer\";\n\nexport { JsxRenderer };\n",
+			"type": "registry:ui"
+		}
+	]
+}
