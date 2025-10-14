@@ -5,14 +5,20 @@ export const hooks: Registry["items"] = [
 		name: "use-textarea-resize",
 		type: "registry:hook",
 		files: [
-			{ type: "registry:hook", path: "hooks/use-textarea-resize.ts" },
+			{
+				path: "hooks/use-textarea-resize.ts",
+				type: "registry:hook",
+			},
 		],
 	},
 	{
 		name: "use-scroll-to-bottom",
 		type: "registry:hook",
 		files: [
-			{ type: "registry:hook", path: "hooks/use-scroll-to-bottom.ts" },
+			{
+				path: "hooks/use-scroll-to-bottom.ts",
+				type: "registry:hook",
+			},
 		],
 	},
 ];

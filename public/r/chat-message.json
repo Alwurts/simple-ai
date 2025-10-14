@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "chat-message",
 	"type": "registry:ui",
-	"registryDependencies": [],
+	"registryDependencies": ["undefined/r/markdown-content.json"],
 	"files": [
 		{
 			"path": "./src/registry/ui/chat-message.tsx",

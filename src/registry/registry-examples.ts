@@ -3,6 +3,16 @@ import type { Registry } from "@/shadcn-temp/schema";
 
 export const examples: Registry["items"] = [
 	{
+		name: "chat-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/chat-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
 		name: "chat-input-demo",
 		type: "registry:example",
 		registryDependencies: [`${BASE_URL}/r/chat-input.json`],
@@ -16,7 +26,6 @@ export const examples: Registry["items"] = [
 	{
 		name: "chat-input-unstyled",
 		type: "registry:example",
-		registryDependencies: [`${BASE_URL}/r/chat-input.json`],
 		files: [
 			{
 				path: "examples/chat-input-unstyled.tsx",
@@ -27,10 +36,29 @@ export const examples: Registry["items"] = [
 	{
 		name: "chat-input-unstyled-initial-rows",
 		type: "registry:example",
-		registryDependencies: [`${BASE_URL}/r/chat-input.json`],
 		files: [
 			{
 				path: "examples/chat-input-unstyled-initial-rows.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "markdown-content-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/markdown-content-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "markdown-streaming-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/markdown-streaming-demo.tsx",
 				type: "registry:example",
 			},
 		],
@@ -136,29 +164,8 @@ export const examples: Registry["items"] = [
 		],
 	},
 	{
-		name: "markdown-content-demo",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/markdown-content-demo.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
-		name: "markdown-streaming-demo",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/markdown-streaming-demo.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
 		name: "jsx-renderer-demo",
 		type: "registry:example",
-		registryDependencies: [`${BASE_URL}/r/jsx-renderer.json`],
 		files: [
 			{
 				path: "examples/jsx-renderer-demo.tsx",
@@ -169,10 +176,89 @@ export const examples: Registry["items"] = [
 	{
 		name: "model-selector-demo",
 		type: "registry:example",
-		registryDependencies: [`${BASE_URL}/r/model-selector.json`],
 		files: [
 			{
 				path: "examples/model-selector-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "model-selector-disabled-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/model-selector-disabled-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "resizable-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/resizable-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "visualize-text-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/visualize-text-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "prompt-crafter-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/prompt-crafter-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "text-input-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/text-input-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "generate-text-node-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/generate-text-node-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "editable-handle-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/editable-handle-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "status-edge-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/status-edge-demo.tsx",
 				type: "registry:example",
 			},
 		],

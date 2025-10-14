@@ -1,0 +1,127 @@
+---
+title: Editable Handle
+description: A React Flow component that allows you to dynamically add, edit, or remove input/output handles on your nodes - perfect for building nodes with flexible connection points.
+featured: true
+component: true
+---
+
+<ComponentPreview name="editable-handle-demo" description="An example of a node with dynamic handles - try adding new inputs or outputs, editing their labels, or removing them" />
+
+## Overview
+
+The Editable Handle component makes it easy to create nodes with dynamic connection points (handles). Instead of having fixed inputs and outputs, your nodes can:
+
+- Let users add new input/output handles on the fly
+- Edit handle labels and descriptions
+- Remove handles when they're no longer needed
+
+This is particularly useful when building nodes that need to adapt to different use cases or when you want to give users more flexibility in how nodes connect to each other.
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/editable-handle.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the required shadcn/ui components:</Step>
+
+The Editable Handle component requires these shadcn/ui components:
+- [Button](https://ui.shadcn.com/docs/components/button)
+- [Input](https://ui.shadcn.com/docs/components/input)
+- [Popover](https://ui.shadcn.com/docs/components/popover)
+- [Textarea](https://ui.shadcn.com/docs/components/textarea)
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="editable-handle" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+The Editable Handle system has two main parts:
+
+1. `EditableHandleDialog`: Used to create new handles with a user-friendly popup
+2. `EditableHandle`: The handle component itself that users can edit or delete
+
+### Adding New Handles
+
+Use `EditableHandleDialog` to let users create new handles. It provides a simple interface for entering a handle's label and optional description.
+
+```tsx
+import { EditableHandleDialog } from "@/components/ui/flow/editable-handle"
+
+function MyNode() {
+  const handleCreate = (name: string, description?: string) => {
+    // Add the new handle to your state
+    return true // Return true if handle was created successfully
+  }
+
+  return (
+    <EditableHandleDialog
+      variant="create"
+      onSave={handleCreate}
+      align="start"
+    >
+      <Button variant="outline" size="sm">
+        Add New Input
+      </Button>
+    </EditableHandleDialog>
+  )
+}
+```
+
+### Managing Handles
+
+Use `EditableHandle` to display handles that users can edit or remove.
+
+```tsx
+import { EditableHandle } from "@/components/ui/flow/editable-handle"
+import { Position } from "@xyflow/react"
+
+function MyNode({ id }: NodeProps) {
+  const handleUpdate = (handleId: string, newName: string, newDescription?: string) => {
+    // Update your handle state
+    return true // Return true if update was successful
+  }
+
+  const handleDelete = (handleId: string) => {
+    // Remove the handle from your state
+  }
+
+  return (
+    <EditableHandle
+      nodeId={id}
+      handleId="handle-1"
+      name="Input 1"
+      description="Optional description"
+      type="target"
+      position={Position.Left}
+      onUpdateTool={handleUpdate}
+      onDelete={handleDelete}
+      showDescription
+    />
+  )
+}
+```

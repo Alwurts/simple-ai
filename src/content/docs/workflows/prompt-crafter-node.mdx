@@ -1,0 +1,149 @@
+---
+title: Prompt Crafter Node
+description: A React Flow node component for building dynamic prompts by combining multiple inputs using a template-based approach
+featured: true
+component: true
+---
+
+<ComponentPreview name="prompt-crafter-node-demo" description="An example of a Prompt Crafter node with dynamic inputs and template syntax" />
+
+## Overview
+
+The Prompt Crafter Node is a React Flow component that allows you to build dynamic prompts by combining multiple inputs using a template-based approach. It provides:
+
+- A template editor where you can write your prompt with placeholders
+- Dynamic input handles that can receive text from other nodes
+- Template syntax highlighting that validates input references
+- A single output that combines all inputs according to your template
+
+## Components Used
+
+This node is built using several React Flow Components:
+- [Base Node](https://reactflow.dev/components/nodes/base-node) - For the core node structure and styling
+- [Node Header](https://reactflow.dev/components/nodes/node-header) - For the node's header section
+- [Labeled Handle](https://reactflow.dev/components/handles/labeled-handle) - For the input and output connection points
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/prompt-crafter-node.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the required shadcn/ui components:</Step>
+
+```bash
+npx shadcn-ui@latest add button
+npx shadcn-ui@latest add separator
+npx shadcn-ui@latest add command
+npx shadcn-ui@latest add popover
+```
+
+<Step>Install CodeMirror dependencies:</Step>
+
+```bash
+npm install @uiw/react-codemirror @uiw/codemirror-themes @codemirror/language @codemirror/view @lezer/highlight
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="prompt-crafter-node" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+The Prompt Crafter Node requires a controller component to manage its state and handle input-related operations. Here's how to implement it in your React Flow application:
+
+```tsx
+// Controller component to manage the Prompt Crafter Node
+const PromptCrafterNodeController = ({
+  id,
+  data,
+  ...props
+}: NodeProps<Node>) => {
+  const [template, setTemplate] = useState("Hello {{name}}");
+  const [dynamicHandles, setDynamicHandles] = useState({
+    "template-tags": [{ id: "name", name: "name" }],
+  });
+
+  // Handle input creation
+  const handleCreateInput = useCallback((name: string) => {
+    setDynamicHandles({
+      ...dynamicHandles,
+      "template-tags": [
+        ...dynamicHandles["template-tags"],
+        { id: nanoid(), name },
+      ],
+    });
+    return true;
+  }, [dynamicHandles]);
+
+  // Handle input removal
+  const handleRemoveInput = useCallback((handleId: string) => {
+    setDynamicHandles({
+      ...dynamicHandles,
+      "template-tags": dynamicHandles["template-tags"].filter(
+        (input) => input.id !== handleId
+      ),
+    });
+  }, [dynamicHandles]);
+
+  return (
+    <PromptCrafterNode
+      id={id}
+      data={{
+        status: "idle",
+        config: { template },
+        dynamicHandles,
+      }}
+      {...props}
+      onPromptTextChange={setTemplate}
+      onCreateInput={handleCreateInput}
+      onRemoveInput={handleRemoveInput}
+      onUpdateInputName={handleUpdateInputName}
+    />
+  );
+};
+
+// Register the node type
+const nodeTypes = {
+  "prompt-crafter": PromptCrafterNodeController,
+};
+```
+
+The node provides the following connection points:
+
+- **Inputs**:
+  - Dynamic inputs that can be added/removed as needed
+  - Each input can be referenced in the template using `{{input-name}}`
+- **Output**:
+  - `result`: The final prompt with all inputs combined according to the template
+
+The node's features include:
+- Template editor with syntax highlighting
+- Dynamic input management (add, remove, rename)
+- Input validation in the template
+- Visual feedback for valid/invalid input references
+- Quick input insertion through a command palette
+

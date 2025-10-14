@@ -9,32 +9,9 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import { siteConfig } from "@/lib/config";
 import type { source } from "@/lib/source";
 import { cn } from "@/lib/utils";
-
-const TOP_LEVEL_SECTIONS = [
-	{ name: "Get Started", href: "/docs" },
-	{
-		name: "Components",
-		href: "/docs/components",
-	},
-	{
-		name: "Registry",
-		href: "/docs/registry",
-	},
-	{
-		name: "MCP Server",
-		href: "/docs/mcp",
-	},
-	{
-		name: "Forms",
-		href: "/docs/forms",
-	},
-	{
-		name: "Changelog",
-		href: "/docs/changelog",
-	},
-];
 
 export function MobileNav({
 	tree,
@@ -112,17 +89,19 @@ export function MobileNav({
 							Sections
 						</div>
 						<div className="flex flex-col gap-3">
-							{TOP_LEVEL_SECTIONS.map(({ name, href }) => {
-								return (
-									<MobileLink
-										key={name}
-										href={href}
-										onOpenChange={setOpen}
-									>
-										{name}
-									</MobileLink>
-								);
-							})}
+							{siteConfig.topLevelSections.map(
+								({ name, href }) => {
+									return (
+										<MobileLink
+											key={name}
+											href={href}
+											onOpenChange={setOpen}
+										>
+											{name}
+										</MobileLink>
+									);
+								},
+							)}
 						</div>
 					</div>
 					<div className="flex flex-col gap-8">

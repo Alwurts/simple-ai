@@ -5,6 +5,32 @@
 import * as React from "react";
 
 export const Index: Record<string, any> = {
+	"jsx-renderer": {
+		name: "jsx-renderer",
+		description:
+			"A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
+		type: "registry:ui",
+		registryDependencies: ["undefined/r/jsx-utils.json"],
+		files: [
+			{
+				path: "./src/registry/ui/jsx-renderer.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/jsx-renderer.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"chat-input": {
 		name: "chat-input",
 		description: "",
@@ -35,36 +61,11 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
-	"chat-message": {
-		name: "chat-message",
-		description: "",
-		type: "registry:ui",
-		registryDependencies: [],
-		files: [
-			{
-				path: "./src/registry/ui/chat-message.tsx",
-				type: "registry:ui",
-				target: "",
-			},
-		],
-		component: React.lazy(async () => {
-			const mod = await import("@/registry/ui/chat-message.tsx");
-			const exportName =
-				Object.keys(mod).find(
-					(key) =>
-						typeof mod[key] === "function" ||
-						typeof mod[key] === "object",
-				) || item.name;
-			return { default: mod.default || mod[exportName] };
-		}),
-		categories: undefined,
-		meta: undefined,
-	},
 	"chat-message-area": {
 		name: "chat-message-area",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["scroll-area"],
+		registryDependencies: ["scroll-area", "button"],
 		files: [
 			{
 				path: "./src/registry/ui/chat-message-area.tsx",
@@ -90,20 +91,20 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
-	"markdown-content": {
-		name: "markdown-content",
+	"chat-message": {
+		name: "chat-message",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: [],
+		registryDependencies: ["undefined/r/markdown-content.json"],
 		files: [
 			{
-				path: "./src/registry/ui/markdown-content.tsx",
+				path: "./src/registry/ui/chat-message.tsx",
 				type: "registry:ui",
 				target: "",
 			},
 		],
 		component: React.lazy(async () => {
-			const mod = await import("@/registry/ui/markdown-content.tsx");
+			const mod = await import("@/registry/ui/chat-message.tsx");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>
@@ -115,21 +116,20 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
-	"jsx-renderer": {
-		name: "jsx-renderer",
-		description:
-			"A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
+	"markdown-content": {
+		name: "markdown-content",
+		description: "A markdown content component.",
 		type: "registry:ui",
 		registryDependencies: undefined,
 		files: [
 			{
-				path: "./src/registry/ui/jsx-renderer.tsx",
+				path: "./src/registry/ui/markdown-content.tsx",
 				type: "registry:ui",
 				target: "",
 			},
 		],
 		component: React.lazy(async () => {
-			const mod = await import("@/registry/ui/jsx-renderer.tsx");
+			const mod = await import("@/registry/ui/markdown-content.tsx");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>
@@ -155,6 +155,351 @@ export const Index: Record<string, any> = {
 		],
 		component: React.lazy(async () => {
 			const mod = await import("@/registry/ui/model-selector.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"resizable-node": {
+		name: "resizable-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["undefined/r/base-node.json"],
+		files: [
+			{
+				path: "./src/registry/ui/flow/resizable-node.tsx",
+				type: "registry:ui",
+				target: "components/flow/resizable-node.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/flow/resizable-node.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"node-header-status": {
+		name: "node-header-status",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["badge"],
+		files: [
+			{
+				path: "./src/registry/ui/flow/node-header-status.tsx",
+				type: "registry:ui",
+				target: "components/flow/node-header-status.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/ui/flow/node-header-status.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"editable-handle": {
+		name: "editable-handle",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: [
+			"button",
+			"input",
+			"textarea",
+			"popover",
+			"undefined/r/base-handle.json",
+		],
+		files: [
+			{
+				path: "./src/registry/ui/flow/editable-handle.tsx",
+				type: "registry:ui",
+				target: "components/flow/editable-handle.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/flow/editable-handle.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"status-edge": {
+		name: "status-edge",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ui/flow/status-edge.tsx",
+				type: "registry:ui",
+				target: "components/flow/status-edge.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/flow/status-edge.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"generate-text-node": {
+		name: "generate-text-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: [
+			"button",
+			"separator",
+			"undefined/r/model-selector.json",
+			"undefined/r/node-header-status.json",
+			"undefined/r/editable-handle.json",
+			"undefined/r/labeled-handle.json",
+			"undefined/r/base-node.json",
+			"undefined/r/node-header.json",
+		],
+		files: [
+			{
+				path: "./src/registry/ui/flow/generate-text-node.tsx",
+				type: "registry:ui",
+				target: "components/flow/generate-text-node.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/ui/flow/generate-text-node.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"prompt-crafter-node": {
+		name: "prompt-crafter-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: [
+			"button",
+			"separator",
+			"popover",
+			"command",
+			"undefined/r/node-header-status.json",
+			"undefined/r/editable-handle.json",
+			"undefined/r/node-header.json",
+			"undefined/r/labeled-handle.json",
+			"undefined/r/base-node.json",
+		],
+		files: [
+			{
+				path: "./src/registry/ui/flow/prompt-crafter-node.tsx",
+				type: "registry:ui",
+				target: "components/flow/prompt-crafter-node.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/ui/flow/prompt-crafter-node.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"text-input-node": {
+		name: "text-input-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: [
+			"textarea",
+			"separator",
+			"undefined/r/labeled-handle.json",
+			"undefined/r/node-header.json",
+			"undefined/r/resizable-node.json",
+		],
+		files: [
+			{
+				path: "./src/registry/ui/flow/text-input-node.tsx",
+				type: "registry:ui",
+				target: "components/flow/text-input-node.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/flow/text-input-node.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"visualize-text-node": {
+		name: "visualize-text-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: [
+			"separator",
+			"undefined/r/markdown-content.json",
+			"undefined/r/labeled-handle.json",
+			"undefined/r/node-header.json",
+			"undefined/r/resizable-node.json",
+		],
+		files: [
+			{
+				path: "./src/registry/ui/flow/visualize-text-node.tsx",
+				type: "registry:ui",
+				target: "components/flow/visualize-text-node.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/ui/flow/visualize-text-node.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"base-handle": {
+		name: "base-handle",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ui/flow/base-handle.tsx",
+				type: "registry:ui",
+				target: "components/flow/base-handle.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/flow/base-handle.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"labeled-handle": {
+		name: "labeled-handle",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ui/flow/labeled-handle.tsx",
+				type: "registry:ui",
+				target: "components/flow/labeled-handle.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/flow/labeled-handle.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"base-node": {
+		name: "base-node",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ui/flow/base-node.tsx",
+				type: "registry:ui",
+				target: "components/flow/base-node.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/flow/base-node.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"node-header": {
+		name: "node-header",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["button", "dropdown-menu"],
+		files: [
+			{
+				path: "./src/registry/ui/flow/node-header.tsx",
+				type: "registry:ui",
+				target: "components/flow/node-header.tsx",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/flow/node-header.tsx");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>
@@ -220,7 +565,7 @@ export const Index: Record<string, any> = {
 	},
 	"jsx-utils": {
 		name: "jsx-utils",
-		description: "",
+		description: "A set of utilities for working with JSX.",
 		type: "registry:lib",
 		registryDependencies: undefined,
 		files: [
@@ -232,6 +577,31 @@ export const Index: Record<string, any> = {
 		],
 		component: React.lazy(async () => {
 			const mod = await import("@/registry/lib/jsx-utils.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-demo": {
+		name: "chat-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/examples/chat-demo.tsx");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>
@@ -272,7 +642,7 @@ export const Index: Record<string, any> = {
 		name: "chat-input-unstyled",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["undefined/r/chat-input.json"],
+		registryDependencies: undefined,
 		files: [
 			{
 				path: "./src/registry/examples/chat-input-unstyled.tsx",
@@ -299,7 +669,7 @@ export const Index: Record<string, any> = {
 		name: "chat-input-unstyled-initial-rows",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["undefined/r/chat-input.json"],
+		registryDependencies: undefined,
 		files: [
 			{
 				path: "./src/registry/examples/chat-input-unstyled-initial-rows.tsx",
@@ -310,6 +680,60 @@ export const Index: Record<string, any> = {
 		component: React.lazy(async () => {
 			const mod = await import(
 				"@/registry/examples/chat-input-unstyled-initial-rows.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"markdown-content-demo": {
+		name: "markdown-content-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/markdown-content-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/markdown-content-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"markdown-streaming-demo": {
+		name: "markdown-streaming-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/markdown-streaming-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/markdown-streaming-demo.tsx"
 			);
 			const exportName =
 				Object.keys(mod).find(
@@ -592,65 +1016,11 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
-	"markdown-content-demo": {
-		name: "markdown-content-demo",
-		description: "",
-		type: "registry:example",
-		registryDependencies: undefined,
-		files: [
-			{
-				path: "./src/registry/examples/markdown-content-demo.tsx",
-				type: "registry:example",
-				target: "",
-			},
-		],
-		component: React.lazy(async () => {
-			const mod = await import(
-				"@/registry/examples/markdown-content-demo.tsx"
-			);
-			const exportName =
-				Object.keys(mod).find(
-					(key) =>
-						typeof mod[key] === "function" ||
-						typeof mod[key] === "object",
-				) || item.name;
-			return { default: mod.default || mod[exportName] };
-		}),
-		categories: undefined,
-		meta: undefined,
-	},
-	"markdown-streaming-demo": {
-		name: "markdown-streaming-demo",
-		description: "",
-		type: "registry:example",
-		registryDependencies: undefined,
-		files: [
-			{
-				path: "./src/registry/examples/markdown-streaming-demo.tsx",
-				type: "registry:example",
-				target: "",
-			},
-		],
-		component: React.lazy(async () => {
-			const mod = await import(
-				"@/registry/examples/markdown-streaming-demo.tsx"
-			);
-			const exportName =
-				Object.keys(mod).find(
-					(key) =>
-						typeof mod[key] === "function" ||
-						typeof mod[key] === "object",
-				) || item.name;
-			return { default: mod.default || mod[exportName] };
-		}),
-		categories: undefined,
-		meta: undefined,
-	},
 	"jsx-renderer-demo": {
 		name: "jsx-renderer-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["undefined/r/jsx-renderer.json"],
+		registryDependencies: undefined,
 		files: [
 			{
 				path: "./src/registry/examples/jsx-renderer-demo.tsx",
@@ -677,7 +1047,7 @@ export const Index: Record<string, any> = {
 		name: "model-selector-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["undefined/r/model-selector.json"],
+		registryDependencies: undefined,
 		files: [
 			{
 				path: "./src/registry/examples/model-selector-demo.tsx",
@@ -688,6 +1058,222 @@ export const Index: Record<string, any> = {
 		component: React.lazy(async () => {
 			const mod = await import(
 				"@/registry/examples/model-selector-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"model-selector-disabled-demo": {
+		name: "model-selector-disabled-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/model-selector-disabled-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/model-selector-disabled-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"resizable-node-demo": {
+		name: "resizable-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/resizable-node-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/resizable-node-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"visualize-text-node-demo": {
+		name: "visualize-text-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/visualize-text-node-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/visualize-text-node-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"prompt-crafter-node-demo": {
+		name: "prompt-crafter-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/prompt-crafter-node-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/prompt-crafter-node-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"text-input-node-demo": {
+		name: "text-input-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/text-input-node-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/text-input-node-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"generate-text-node-demo": {
+		name: "generate-text-node-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/generate-text-node-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/generate-text-node-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"editable-handle-demo": {
+		name: "editable-handle-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/editable-handle-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/editable-handle-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"status-edge-demo": {
+		name: "status-edge-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/status-edge-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/status-edge-demo.tsx"
 			);
 			const exportName =
 				Object.keys(mod).find(
@@ -755,6 +1341,782 @@ export const Index: Record<string, any> = {
 			return { default: mod.default || mod[exportName] };
 		}),
 		categories: ["chat"],
+		meta: undefined,
+	},
+	"chat-02": {
+		name: "chat-02",
+		description: "A chat in a sidebar.",
+		type: "registry:block",
+		registryDependencies: [
+			"sidebar",
+			"breadcrumb",
+			"undefined/r/chat-input.json",
+			"undefined/r/chat-message-area.json",
+			"undefined/r/chat-message.json",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/chat-02/page.tsx",
+				type: "registry:page",
+				target: "app/chat/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/chat-02/route.ts",
+				type: "registry:page",
+				target: "app/api/ai/chat/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/chat-02/components/app-sidebar.tsx",
+				type: "registry:component",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/blocks/chat-02/page.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["chat"],
+		meta: undefined,
+	},
+	"chat-03": {
+		name: "chat-03",
+		description: "A chat in a popover.",
+		type: "registry:block",
+		registryDependencies: [
+			"popover",
+			"button",
+			"undefined/r/chat-input.json",
+			"undefined/r/chat-message-area.json",
+			"undefined/r/chat-message.json",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/chat-03/page.tsx",
+				type: "registry:page",
+				target: "app/chat/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/chat-03/route.ts",
+				type: "registry:page",
+				target: "app/api/ai/chat/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/chat-03/components/chat.tsx",
+				type: "registry:component",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/blocks/chat-03/page.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["chat"],
+		meta: undefined,
+	},
+	"app-01": {
+		name: "app-01",
+		description: "A app with generative UI capabilities.",
+		type: "registry:block",
+		registryDependencies: [
+			"avatar",
+			"input",
+			"label",
+			"tabs",
+			"resizable",
+			"breadcrumb",
+			"button",
+			"toggle-group",
+			"switch",
+			"separator",
+			"card",
+			"badge",
+			"dialog",
+			"slider",
+			"undefined/r/chat-input.json",
+			"undefined/r/chat-message-area.json",
+			"undefined/r/chat-message.json",
+			"undefined/r/jsx-renderer.json",
+			"undefined/r/jsx-utils.json",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/app-01/page.tsx",
+				type: "registry:page",
+				target: "app/generative-ui/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/app-01/canvas/page.tsx",
+				type: "registry:page",
+				target: "app/canvas/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/app-01/route.ts",
+				type: "registry:page",
+				target: "app/api/ai/generate/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/app-01/hooks/generation-store.ts",
+				type: "registry:hook",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-01/components/versions.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-01/components/editor-layout.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-01/components/editor-toolbar.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-01/components/code-editor.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-01/components/preview.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-01/components/chat-dialog.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-01/components/copy-button.tsx",
+				type: "registry:component",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/blocks/app-01/page.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["app"],
+		meta: undefined,
+	},
+	"app-02": {
+		name: "app-02",
+		description: "A persona generator app with structured outputs.",
+		type: "registry:block",
+		registryDependencies: [
+			"dialog",
+			"button",
+			"input",
+			"textarea",
+			"label",
+			"scroll-area",
+			"form",
+			"skeleton",
+			"card",
+			"avatar",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/app-02/page.tsx",
+				type: "registry:page",
+				target: "app/persona/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/app-02/route.ts",
+				type: "registry:page",
+				target: "app/api/ai/persona/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/app-02/components/persona-display.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-02/lib/persona.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-02/lib/example-businesses.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/blocks/app-02/page.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["app"],
+		meta: undefined,
+	},
+	"app-03": {
+		name: "app-03",
+		description: "An X profile bio generator app.",
+		type: "registry:block",
+		registryDependencies: [
+			"button",
+			"dialog",
+			"input",
+			"textarea",
+			"form",
+			"label",
+			"select",
+			"skeleton",
+			"avatar",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/app-03/page.tsx",
+				type: "registry:page",
+				target: "app/x-profile/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/app-03/layout.tsx",
+				type: "registry:page",
+				target: "app/x-profile/layout.tsx",
+			},
+			{
+				path: "./src/registry/blocks/app-03/route.ts",
+				type: "registry:page",
+				target: "app/api/ai/x-profile/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/app-03/components/profile-generate-dialog.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-03/components/x-preview.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-03/components/toolbar.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-03/components/theme-toggle.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-03/lib/x.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/app-03/lib/profile-examples.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/blocks/app-03/page.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["app"],
+		meta: undefined,
+	},
+	"flow-chain": {
+		name: "flow-chain",
+		description: "Agentic chain workflow.",
+		type: "registry:block",
+		registryDependencies: [
+			"button",
+			"card",
+			"dialog",
+			"input",
+			"textarea",
+			"sonner",
+			"undefined/r/generate-text-node.json",
+			"undefined/r/prompt-crafter-node.json",
+			"undefined/r/text-input-node.json",
+			"undefined/r/visualize-text-node.json",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/flow-chain/page.tsx",
+				type: "registry:page",
+				target: "app/workflow/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/flow-chain/route.ts",
+				type: "registry:page",
+				target: "app/api/workflow/execute/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/flow-chain/components/nodes-panel.tsx",
+				type: "registry:component",
+				target: "components/flow/nodes-panel.tsx",
+			},
+			{
+				path: "./src/registry/blocks/flow-chain/lib/news-summarization-chain.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/ui/flow/status-edge-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/status-edge-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/visualize-text-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/visualize-text-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/text-input-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/text-input-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/prompt-crafter-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/generate-text-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/generate-text-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/hooks/flow/use-workflow.ts",
+				type: "registry:hook",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/workflow.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/workflow-execution-engine.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/sse-workflow-execution-client.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/sse-workflow-execution-engine.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/server-node-processors.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/node-factory.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/generate-ai-text.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/blocks/flow-chain/page.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["flow"],
+		meta: undefined,
+	},
+	"flow-routing": {
+		name: "flow-routing",
+		description: "Agentic routing workflow.",
+		type: "registry:block",
+		registryDependencies: [
+			"button",
+			"card",
+			"dialog",
+			"input",
+			"textarea",
+			"sonner",
+			"undefined/r/generate-text-node.json",
+			"undefined/r/prompt-crafter-node.json",
+			"undefined/r/text-input-node.json",
+			"undefined/r/visualize-text-node.json",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/flow-routing/page.tsx",
+				type: "registry:page",
+				target: "app/workflow/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/flow-routing/route.ts",
+				type: "registry:page",
+				target: "app/api/workflow/execute/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/flow-routing/components/nodes-panel.tsx",
+				type: "registry:component",
+				target: "components/flow/nodes-panel.tsx",
+			},
+			{
+				path: "./src/registry/blocks/flow-routing/lib/content-creator-routing.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/ui/flow/status-edge-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/status-edge-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/visualize-text-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/visualize-text-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/text-input-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/text-input-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/prompt-crafter-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/generate-text-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/generate-text-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/hooks/flow/use-workflow.ts",
+				type: "registry:hook",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/workflow.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/workflow-execution-engine.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/sse-workflow-execution-client.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/sse-workflow-execution-engine.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/server-node-processors.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/node-factory.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/generate-ai-text.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/blocks/flow-routing/page.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["flow"],
+		meta: undefined,
+	},
+	"flow-parallelization": {
+		name: "flow-parallelization",
+		description: "Agentic parallelization workflow.",
+		type: "registry:block",
+		registryDependencies: [
+			"button",
+			"card",
+			"dialog",
+			"input",
+			"textarea",
+			"sonner",
+			"undefined/r/generate-text-node.json",
+			"undefined/r/prompt-crafter-node.json",
+			"undefined/r/text-input-node.json",
+			"undefined/r/visualize-text-node.json",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/flow-parallelization/page.tsx",
+				type: "registry:page",
+				target: "app/workflow/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/flow-parallelization/route.ts",
+				type: "registry:page",
+				target: "app/api/workflow/execute/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/flow-parallelization/components/nodes-panel.tsx",
+				type: "registry:component",
+				target: "components/flow/nodes-panel.tsx",
+			},
+			{
+				path: "./src/registry/blocks/flow-parallelization/lib/exam-creator-parallelization.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/ui/flow/status-edge-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/status-edge-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/visualize-text-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/visualize-text-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/text-input-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/text-input-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/prompt-crafter-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/generate-text-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/generate-text-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/hooks/flow/use-workflow.ts",
+				type: "registry:hook",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/workflow.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/workflow-execution-engine.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/sse-workflow-execution-client.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/sse-workflow-execution-engine.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/server-node-processors.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/node-factory.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/generate-ai-text.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/blocks/flow-parallelization/page.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["flow"],
+		meta: undefined,
+	},
+	"flow-orchestrator": {
+		name: "flow-orchestrator",
+		description: "Agentic orchestrator workflow.",
+		type: "registry:block",
+		registryDependencies: [
+			"button",
+			"card",
+			"dialog",
+			"input",
+			"textarea",
+			"sonner",
+			"undefined/r/generate-text-node.json",
+			"undefined/r/prompt-crafter-node.json",
+			"undefined/r/text-input-node.json",
+			"undefined/r/visualize-text-node.json",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/flow-orchestrator/page.tsx",
+				type: "registry:page",
+				target: "app/workflow/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/flow-orchestrator/route.ts",
+				type: "registry:page",
+				target: "app/api/workflow/execute/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/flow-orchestrator/components/nodes-panel.tsx",
+				type: "registry:component",
+				target: "components/flow/nodes-panel.tsx",
+			},
+			{
+				path: "./src/registry/blocks/flow-orchestrator/lib/developer-tasks-orchestrator.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/ui/flow/status-edge-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/status-edge-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/visualize-text-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/visualize-text-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/text-input-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/text-input-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/prompt-crafter-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/prompt-crafter-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/generate-text-node-controller.tsx",
+				type: "registry:component",
+				target: "components/flow/generate-text-node-controller.tsx",
+			},
+			{
+				path: "./src/registry/hooks/flow/use-workflow.ts",
+				type: "registry:hook",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/workflow.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/workflow-execution-engine.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/sse-workflow-execution-client.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/sse-workflow-execution-engine.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/server-node-processors.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/node-factory.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/flow/generate-ai-text.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/blocks/flow-orchestrator/page.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["flow"],
 		meta: undefined,
 	},
 };

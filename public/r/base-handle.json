@@ -1,0 +1,14 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "base-handle",
+	"type": "registry:ui",
+	"dependencies": ["@xyflow/react"],
+	"files": [
+		{
+			"path": "./src/registry/ui/flow/base-handle.tsx",
+			"content": "import { Handle, type HandleProps } from \"@xyflow/react\";\nimport React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport const BaseHandle = React.forwardRef<\n\tHTMLDivElement,\n\tReact.HTMLAttributes<HTMLDivElement> & HandleProps\n>(({ className, ...props }, ref) => (\n\t<Handle ref={ref} className={cn(\"\", className)} {...props} />\n));\n\nBaseHandle.displayName = \"BaseHandle\";\n",
+			"type": "registry:ui",
+			"target": "components/flow/base-handle.tsx"
+		}
+	]
+}

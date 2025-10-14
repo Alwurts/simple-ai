@@ -1,0 +1,14 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "labeled-handle",
+	"type": "registry:ui",
+	"dependencies": ["@xyflow/react"],
+	"files": [
+		{
+			"path": "./src/registry/ui/flow/labeled-handle.tsx",
+			"content": "\"use client\";\n\nimport type { HandleProps } from \"@xyflow/react\";\nimport React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nimport { BaseHandle } from \"@/registry/ui/flow/base-handle\";\n\nconst flexDirections = {\n\ttop: \"flex-col\",\n\tright: \"flex-row-reverse justify-end\",\n\tbottom: \"flex-col-reverse justify-end\",\n\tleft: \"flex-row\",\n};\n\nconst LabeledHandle = React.forwardRef<\n\tHTMLDivElement,\n\tHandleProps &\n\t\tReact.HTMLAttributes<HTMLDivElement> & {\n\t\t\ttitle: string;\n\t\t\thandleClassName?: string;\n\t\t\tlabelClassName?: string;\n\t\t}\n>(\n\t(\n\t\t{\n\t\t\tclassName,\n\t\t\tlabelClassName,\n\t\t\thandleClassName,\n\t\t\ttitle,\n\t\t\tposition,\n\t\t\t...props\n\t\t},\n\t\tref,\n\t) => (\n\t\t<div\n\t\t\tref={ref}\n\t\t\ttitle={title}\n\t\t\tclassName={cn(\n\t\t\t\t\"relative flex items-center\",\n\t\t\t\tflexDirections[position],\n\t\t\t\tclassName,\n\t\t\t)}\n\t\t>\n\t\t\t<BaseHandle\n\t\t\t\tposition={position}\n\t\t\t\tclassName={handleClassName}\n\t\t\t\t{...props}\n\t\t\t/>\n\t\t\t{/* biome-ignore lint/a11y/noLabelWithoutControl: Needed */}\n\t\t\t<label className={cn(\"px-3 text-foreground\", labelClassName)}>\n\t\t\t\t{title}\n\t\t\t</label>\n\t\t</div>\n\t),\n);\n\nLabeledHandle.displayName = \"LabeledHandle\";\n\nexport { LabeledHandle };\n",
+			"type": "registry:ui",
+			"target": "components/flow/labeled-handle.tsx"
+		}
+	]
+}

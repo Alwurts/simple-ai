@@ -1,0 +1,100 @@
+---
+title: Visualize Text Node
+description: A React Flow node component for displaying text content with Markdown support and a resizable interface
+featured: true
+component: true
+---
+
+<ComponentPreview name="visualize-text-node-demo" description="An example of a Visualize Text node displaying formatted markdown content" />
+
+## Overview
+
+The Visualize Text Node is a simple React Flow component that displays text content from other nodes with Markdown support. It provides:
+
+- A resizable container for displaying text
+- Markdown rendering for formatted text display
+- A single input handle to receive text from other nodes
+- Visual status feedback for different states
+
+## Components Used
+
+This node is built using several React Flow Components:
+- [Base Node](https://reactflow.dev/components/nodes/base-node) - For the core node structure and styling
+- [Node Header](https://reactflow.dev/components/nodes/node-header) - For the node's header section
+- [Labeled Handle](https://reactflow.dev/components/handles/labeled-handle) - For the input connection point
+
+It also uses our [Markdown Content](/docs/components/markdown-content) component for rendering markdown-formatted text.
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/visualize-text-node.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the required shadcn/ui components:</Step>
+
+```bash
+npx shadcn-ui@latest add separator
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="visualize-text-node" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+The Visualize Text Node is designed to display text content from other nodes. Here's how to implement it in your React Flow application:
+
+```tsx
+// Example usage of the Visualize Text Node
+const nodes = [
+  {
+    id: "visualize-1",
+    type: "visualize-text",
+    position: { x: 0, y: 0 },
+    data: {
+      input: "### Markdown Example\n\nDisplaying text with:\n- Markdown formatting\n- From other nodes",
+      status: "success"
+    }
+  }
+];
+
+// Register the node type
+const nodeTypes = {
+  "visualize-text": VisualizeTextNode,
+};
+```
+
+The node provides the following connection point:
+
+- **Input**:
+  - `input`: Receives text content to be displayed
+
+The node's features include:
+- Markdown rendering support
+- Resizable display area
+- Text selection enabled
+- Status indication (idle, processing, error, success)

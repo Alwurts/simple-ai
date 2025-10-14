@@ -2,9 +2,9 @@ import Link from "next/link";
 
 import { source } from "@/lib/source";
 
-export function ComponentsList() {
+export function ComponentsList({ type }: { type: "components" | "workflows" }) {
 	const components = source.pageTree.children.find(
-		(page) => page.$id === "components",
+		(page) => page.$id === type,
 	);
 
 	if (components?.type !== "folder") {

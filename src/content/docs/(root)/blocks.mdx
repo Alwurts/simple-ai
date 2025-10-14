@@ -1,0 +1,61 @@
+---
+title: Blocks
+description: Ready-to-use AI chat interface blocks powered by Vercel AI SDK. Copy and paste into your React apps.
+---
+
+## Prerequisites
+
+Our blocks examples are built using the [Vercel AI SDK](https://sdk.vercel.ai/docs), which provides powerful utilities for building AI-powered user interfaces. The examples use:
+
+- `useChat` hook for client-side chat state management
+- `streamText` for server-side streaming responses
+- OpenAI's GPT-4 model through the `@ai-sdk/openai` provider
+
+### Client-Side Usage
+
+```tsx
+import { useChat } from 'ai/react'
+
+export function Chat() {
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    api: '/api/chat'
+  })
+  
+  return (
+    // Your chat UI components
+  )
+}
+```
+
+### Server-Side Implementation
+
+```tsx
+import { openai } from "@ai-sdk/openai";
+import { streamText } from "ai";
+
+export async function POST(req: Request) {
+  const { messages } = await req.json();
+  
+  const result = streamText({
+    model: openai("gpt-4-mini"),
+    messages,
+  });
+
+  return result.toDataStreamResponse();
+}
+```
+
+## Environment Setup
+
+To use the OpenAI provider in our examples, you'll need an OpenAI API key. Create a `.env` file in your project root and add:
+
+```bash
+OPENAI_API_KEY=your_api_key_here
+```
+
+For more information about:
+- useChat, see the [Vercel AI SDK Chat Documentation](https://sdk.vercel.ai/docs/api-reference/use-chat)
+- streamText, see the [Vercel AI SDK Text Streaming Documentation](https://sdk.vercel.ai/docs/ai-sdk-core/generating-text)
+- OpenAI provider setup, see the [OpenAI Provider Documentation](https://sdk.vercel.ai/providers/ai-sdk-providers/openai)
+
+

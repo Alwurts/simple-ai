@@ -1,0 +1,134 @@
+---
+title: Generate Text Node
+description: A React Flow node component that represents Vercel AI SDK's text generation capabilities, featuring system instructions, prompts, and optional tool outputs
+featured: true
+component: true
+---
+
+<ComponentPreview name="generate-text-node-demo" description="An example of a Generate Text node with model selection and dynamic tool outputs" />
+
+## Overview
+
+The Generate Text Node is a React Flow component that provides a visual interface representing the `generateText` function from Vercel AI SDK. When executing your flow, this node will map to the SDK's text generation functionality. It allows you to:
+
+- Set system-level instructions that guide the AI's behavior
+- Input specific prompts for each generation
+- Receive generated text as output
+- Optionally define tool outputs that the AI can use to route information to different parts of your workflow
+
+## Components Used
+
+This node is built using several React Flow Components:
+- [Base Node](https://reactflow.dev/components/nodes/base-node) - For the core node structure and styling
+- [Node Header](https://reactflow.dev/components/nodes/node-header) - For the node's header section
+- [Labeled Handle](https://reactflow.dev/components/handles/labeled-handle) - For the input and output connection points
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/generate-text-node.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the required shadcn/ui components:</Step>
+
+```bash
+npx shadcn-ui@latest add button
+npx shadcn-ui@latest add separator
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="generate-text-node" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+The Generate Text Node requires a controller component to manage its state and handle tool-related operations. Here's how to implement it in your React Flow application:
+
+```tsx
+// Controller component to manage the Generate Text Node
+const GenerateTextNodeController = ({
+  id,
+  data,
+  ...props
+}: NodeProps<Node>) => {
+  const [model, setModel] = useState<Model>("deepseek-chat");
+  const [toolHandles, setToolHandles] = useState({
+    tools: [{ id: "name", name: "name" }],
+  });
+
+  // Handle tool creation
+  const handleCreateTool = useCallback(() => {
+    setToolHandles({
+      ...toolHandles,
+      tools: [...toolHandles.tools, { id: nanoid(), name: "name" }],
+    });
+    return true;
+  }, [toolHandles]);
+
+  // Handle tool removal
+  const handleRemoveTool = useCallback((toolId: string) => {
+    setToolHandles({
+      ...toolHandles,
+      tools: toolHandles.tools.filter((tool) => tool.id !== toolId),
+    });
+  }, [toolHandles]);
+
+  return (
+    <GenerateTextNode
+      id={id}
+      data={{
+        status: "idle",
+        config: { model },
+        dynamicHandles: toolHandles,
+      }}
+      {...props}
+      onModelChange={(model) => setModel(model)}
+      onCreateTool={handleCreateTool}
+      onRemoveTool={handleRemoveTool}
+      onUpdateTool={handleUpdateTool}
+    />
+  );
+};
+
+// Register the node type
+const nodeTypes = {
+  "generate-text": GenerateTextNodeController,
+};
+```
+
+The node provides the following connection points:
+
+- **Inputs**:
+  - `system`: For system-level instructions that guide the AI's behavior
+  - `prompt`: For the specific text generation prompt
+- **Outputs**:
+  - `result`: The main output containing the generated text
+  - Dynamic tool outputs: Optional outputs that can be added/removed as needed
+
+The node's state includes:
+- Model selection for text generation
+- Processing status indication (idle, processing, error, success)
+- Dynamic tool management (add, remove, update)

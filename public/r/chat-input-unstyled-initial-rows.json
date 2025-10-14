@@ -2,7 +2,6 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "chat-input-unstyled-initial-rows",
 	"type": "registry:example",
-	"registryDependencies": ["undefined/r/chat-input.json"],
 	"files": [
 		{
 			"path": "./src/registry/examples/chat-input-unstyled-initial-rows.tsx",

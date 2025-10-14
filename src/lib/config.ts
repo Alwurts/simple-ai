@@ -1,5 +1,5 @@
 export const siteConfig = {
-	name: "aimple-ai",
+	name: "simple-ai",
 	url: "https://simple-ai.dev",
 	ogImage: "https://simple-ai.dev/og.jpg",
 	description:
@@ -10,7 +10,7 @@ export const siteConfig = {
 	},
 	navItems: [
 		{
-			href: "/docs/installation",
+			href: "/docs",
 			label: "Docs",
 		},
 		{
@@ -21,6 +21,15 @@ export const siteConfig = {
 			href: "/blocks",
 			label: "Blocks",
 		},
+		{
+			href: "/ai-agents",
+			label: "Agents",
+		},
+	],
+	topLevelSections: [
+		{ name: "Get Started", href: "/docs" },
+		{ name: "Components", href: "/docs/components" },
+		{ name: "Workflows", href: "/docs/workflows" },
 	],
 };
 

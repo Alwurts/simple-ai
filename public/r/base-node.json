@@ -1,0 +1,13 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "base-node",
+	"type": "registry:ui",
+	"files": [
+		{
+			"path": "./src/registry/ui/flow/base-node.tsx",
+			"content": "import React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nexport const BaseNode = React.forwardRef<\n\tHTMLDivElement,\n\tReact.HTMLAttributes<HTMLDivElement> & { selected?: boolean }\n>(({ className, selected, ...props }, ref) => (\n\t<div\n\t\tref={ref}\n\t\tclassName={cn(\n\t\t\t\"relative rounded-md border bg-card p-5 text-card-foreground\",\n\t\t\tclassName,\n\t\t\tselected ? \"border-muted-foreground shadow-lg\" : \"\",\n\t\t\t\"hover:ring-1\",\n\t\t)}\n\t\t// biome-ignore lint/a11y/noNoninteractiveTabindex: Needed\n\t\ttabIndex={0}\n\t\t{...props}\n\t/>\n));\nBaseNode.displayName = \"BaseNode\";\n",
+			"type": "registry:ui",
+			"target": "components/flow/base-node.tsx"
+		}
+	]
+}

@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MarkdownContent } from "@/registry/ui/markdown-content";
+import { MarkdownContent } from "../ui/markdown-content";
 
 export default function MarkdownStreamingDemo() {
 	const [content, setContent] = useState("");
@@ -62,7 +62,7 @@ export default function MarkdownStreamingDemo() {
 				</Button>
 			</div>
 			<div className="p-4 w-full min-h-[200px] border rounded-md overflow-y-auto">
-				<MarkdownContent id={useId()} content={content} />
+				<MarkdownContent id="markdown-content-demo" content={content} />
 			</div>
 		</div>
 	);
