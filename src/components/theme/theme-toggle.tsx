@@ -19,7 +19,8 @@ export const ThemeToggle = ({
 	return (
 		<Button
 			variant="ghost"
-			className={cn("group/toggle h-8 w-8 px-0", className)}
+			size="icon-sm"
+			className={cn("group/toggle", className)}
 			onClick={toggleTheme}
 			{...props}
 		>

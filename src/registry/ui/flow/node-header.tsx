@@ -137,8 +137,6 @@ export const NodeHeaderAction = React.forwardRef<
 
 NodeHeaderAction.displayName = "NodeHeaderAction";
 
-//
-
 export type NodeHeaderMenuActionProps = Omit<
 	NodeHeaderActionProps,
 	"onClick"

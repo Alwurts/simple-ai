@@ -45,6 +45,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { BASE_URL } from "@/lib/config";
 import { trackEvent } from "@/lib/events";
 import type {
 	createFileTreeForRegistryItemFiles,
@@ -215,11 +216,13 @@ function BlockViewerToolbar() {
 					className="w-fit gap-1 px-2 shadow-none"
 					size="sm"
 					onClick={() => {
-						copyToClipboard(`npx shadcn@latest add ${item.name}`);
+						copyToClipboard(
+							`npx shadcn@latest add ${BASE_URL}/r/${item.name}.json`,
+						);
 					}}
 				>
 					{isCopied ? <Check /> : <Terminal />}
-					<span>npx shadcn add {item.name}</span>
+					<span>npx shadcn add simple-ai.dev/{item.name}</span>
 				</Button>
 			</div>
 		</div>
@@ -250,7 +253,7 @@ function BlockViewerView() {
 	return (
 		<div className="hidden group-data-[view=code]/block-view-wrapper:hidden md:h-(--height) lg:flex">
 			<div className="relative grid w-full gap-4">
-				<div className="absolute inset-0 right-4 [background-image:radial-gradient(#d4d4d4_1px,transparent_1px)] [background-size:20px_20px] dark:[background-image:radial-gradient(#404040_1px,transparent_1px)]"></div>
+				<div className="absolute inset-0 right-4 bg-muted rounded-xl"></div>
 				<ResizablePanelGroup
 					direction="horizontal"
 					className="after:bg-surface/50 relative z-10 after:absolute after:inset-0 after:right-3 after:z-0 after:rounded-xl"
@@ -289,7 +292,7 @@ function BlockViewerMobile({ children }: { children: React.ReactNode }) {
 			) : (
 				<div className="overflow-hidden rounded-xl border">
 					<Image
-						src={`/r/styles/new-york-v4/${item.name}-light.png`}
+						src={`/r/${item.name}-light.png`}
 						alt={item.name}
 						data-block={item.name}
 						width={1440}
@@ -297,7 +300,7 @@ function BlockViewerMobile({ children }: { children: React.ReactNode }) {
 						className="object-cover dark:hidden"
 					/>
 					<Image
-						src={`/r/styles/new-york-v4/${item.name}-dark.png`}
+						src={`/r/${item.name}-dark.png`}
 						alt={item.name}
 						data-block={item.name}
 						width={1440}

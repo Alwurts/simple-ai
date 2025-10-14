@@ -57,6 +57,13 @@
 	--color-code-number: var(--code-number);
 	--color-selection: var(--selection);
 	--color-selection-foreground: var(--selection-foreground);
+	--color-workflow-task-stroke: var(--workflow-task-stroke);
+	--color-workflow-task-fill: var(--workflow-task-fill);
+	--color-workflow-event-stroke: var(--workflow-event-stroke);
+	--color-workflow-event-fill: var(--workflow-event-fill);
+	--color-workflow-gateway-stroke: var(--workflow-gateway-stroke);
+	--color-workflow-gateway-fill: var(--workflow-gateway-fill);
+	--color-workflow-highlight: var(--workflow-highlight);
 }
 
 :root {
@@ -100,6 +107,13 @@
 	--code-number: oklch(0.56 0 0);
 	--selection: oklch(0.145 0 0);
 	--selection-foreground: oklch(1 0 0);
+	--workflow-task-stroke: 292 76% 43%;
+	--workflow-task-fill: 284 100% 91%;
+	--workflow-event-stroke: 203 97% 40%;
+	--workflow-event-fill: 209 100% 90%;
+	--workflow-gateway-stroke: 32 99% 43%;
+	--workflow-gateway-fill: 37 100% 84%;
+	--workflow-highlight: 127 91% 36%;
 }
 
 .dark {
@@ -142,6 +156,13 @@
 	--code-number: oklch(0.72 0 0);
 	--selection: oklch(0.922 0 0);
 	--selection-foreground: oklch(0.205 0 0);
+	--workflow-task-stroke: 292 76% 43%;
+	--workflow-task-fill: 283 100% 80%;
+	--workflow-event-stroke: 203 95% 31%;
+	--workflow-event-fill: 209 100% 81%;
+	--workflow-gateway-stroke: 32 100% 34%;
+	--workflow-gateway-fill: 35 100% 73%;
+	--workflow-highlight: 120 59% 37%;
 }
 
 @layer base {

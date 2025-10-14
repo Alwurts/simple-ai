@@ -55,7 +55,7 @@ export default function BlocksLayout({
 						<a href="#blocks">Browse Blocks</a>
 					</Button>
 					<Button asChild variant="ghost" size="sm">
-						<Link href="/docs/blocks">Add a block</Link>
+						<Link href="/docs/blocks">See docs</Link>
 					</Button>
 				</PageActions>
 			</PageHeader>
@@ -67,7 +67,7 @@ export default function BlocksLayout({
 					size="sm"
 					className="mr-7 hidden shadow-none lg:flex"
 				>
-					<Link href="/blocks/sidebar">Browse all blocks</Link>
+					<Link href="/blocks/chat">Browse all blocks</Link>
 				</Button>
 			</PageNav>
 			<div className="container-wrapper section-soft flex-1 md:py-12">

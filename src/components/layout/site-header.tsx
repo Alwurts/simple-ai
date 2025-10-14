@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { siteConfig } from "@/lib/config";
 import { source } from "@/lib/source";
+import { XIcon } from "../icons/x-icon";
 
 export function SiteHeader() {
 	const pageTree = source.pageTree;
@@ -50,7 +51,7 @@ export function SiteHeader() {
 						/>
 						<Button
 							asChild
-							size="sm"
+							size="icon-sm"
 							variant="ghost"
 							className="h-8 shadow-none"
 						>
@@ -62,7 +63,20 @@ export function SiteHeader() {
 								<GithubIcon className="size-4" />
 							</Link>
 						</Button>
-						<Separator orientation="vertical" />
+						<Button
+							asChild
+							size="icon-sm"
+							variant="ghost"
+							className="h-8 shadow-none"
+						>
+							<Link
+								href={siteConfig.links.twitter}
+								target="_blank"
+								rel="noreferrer"
+							>
+								<XIcon className="size-4" />
+							</Link>
+						</Button>
 						<ThemeToggle />
 					</div>
 				</div>

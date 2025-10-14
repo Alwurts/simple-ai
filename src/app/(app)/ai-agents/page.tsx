@@ -7,7 +7,7 @@ import { BlockDisplay } from "@/components/blocks/block-display";
 export default async function BlocksPage() {
 	return (
 		<>
-			<div className="flex-1 border-grid border-b">
+			<div className="flex-1">
 				<div className="container-wrapper">
 					<div className="container flex items-center py-4">
 						<p>
@@ -20,7 +20,7 @@ export default async function BlocksPage() {
 				</div>
 			</div>
 			<div className="container-wrapper flex-1">
-				<div className="border-grid container border-b py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
+				<div className="container py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
 					<div className="flex flex-col items-stretch xl:flex-row px-2 gap-8">
 						<div className="w-full max-w-[60ch] xl:min-w-[60ch] xl:flex-1">
 							<h1 className="text-2xl font-bold mb-4">
@@ -55,7 +55,7 @@ export default async function BlocksPage() {
 					</div>
 					<BlockDisplay name={"flow-chain"} />
 				</div>
-				<div className="border-grid container border-b py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
+				<div className="container border-b py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
 					<div className="flex flex-col items-stretch xl:flex-row px-2 gap-8">
 						<div className="w-full max-w-[60ch] xl:min-w-[60ch] xl:flex-1">
 							<h1 className="text-2xl font-bold mb-4">
@@ -92,7 +92,7 @@ export default async function BlocksPage() {
 					</div>
 					<BlockDisplay name={"flow-routing"} />
 				</div>
-				<div className="border-grid container border-b py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
+				<div className="container border-b py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
 					<div className="flex flex-col items-stretch xl:flex-row px-2 gap-8">
 						<div className="w-full max-w-[60ch] xl:min-w-[60ch] xl:flex-1">
 							<h1 className="text-2xl font-bold mb-4">
@@ -130,7 +130,7 @@ export default async function BlocksPage() {
 					</div>
 					<BlockDisplay name={"flow-parallelization"} />
 				</div>
-				<div className="border-grid container border-b py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
+				<div className="container border-b py-8 first:pt-6 last:border-b-0 xl:py-12 space-y-10">
 					<div className="flex flex-col items-stretch xl:flex-row px-2 gap-8">
 						<div className="w-full max-w-[60ch] xl:min-w-[60ch] xl:flex-1">
 							<h1 className="text-2xl font-bold mb-4">

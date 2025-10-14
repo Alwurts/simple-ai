@@ -32,3 +32,9 @@ npx shadcn@latest add https://simple-ai.dev/r/chat-message.json
 ## License
 
 Licensed under the MIT License.
+
+- [ ] Check page can use llms.txt and copy page text works, request page as md works
+- [ ] Check proper use of sitemap
+- [ ] Check use of og and how its used in metadata in layouts like /block/layout
+- [ ] Check view as markdown works
+- [ ] Remove .json ending out of copy commands

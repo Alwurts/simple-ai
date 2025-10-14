@@ -88,7 +88,7 @@ const messages = [
 export default function ChatMessageAreaDemoAlignment() {
 	return (
 		<ChatMessageArea
-			className="space-y-4 p-4 max-h-[400px]"
+			className="max-h-[400px] p-4"
 			scrollButtonAlignment="center"
 		>
 			{messages.map((message) => (

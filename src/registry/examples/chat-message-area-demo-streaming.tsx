@@ -158,8 +158,8 @@ export default function ChatMessageAreaDemo() {
 				{streamContent ? "Restart Story" : "Start Story"}{" "}
 				{isStreaming && "(Streaming...)"}
 			</Button>
-			<div className="border rounded-md min-h-[400px]">
-				<ChatMessageArea className="space-y-4 p-4 max-h-[400px]">
+			<div className="border rounded-md">
+				<ChatMessageArea className="space-y-4 p-4">
 					<ChatMessage
 						key="1"
 						id="1"

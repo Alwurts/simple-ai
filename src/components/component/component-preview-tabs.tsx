@@ -11,6 +11,7 @@ export function ComponentPreviewTabs({
 	chromeLessOnMobile = false,
 	component,
 	source,
+	componentContainerClassName,
 	...props
 }: React.ComponentProps<"div"> & {
 	align?: "center" | "start" | "end";
@@ -18,6 +19,7 @@ export function ComponentPreviewTabs({
 	chromeLessOnMobile?: boolean;
 	component: React.ReactNode;
 	source: React.ReactNode;
+	componentContainerClassName?: string;
 }) {
 	const [tab, setTab] = React.useState("preview");
 
@@ -68,6 +70,7 @@ export function ComponentPreviewTabs({
 						className={cn(
 							"preview flex w-full justify-center data-[align=center]:items-center data-[align=end]:items-end data-[align=start]:items-start",
 							chromeLessOnMobile ? "sm:p-10" : "h-[450px] p-10",
+							componentContainerClassName,
 						)}
 					>
 						{component}

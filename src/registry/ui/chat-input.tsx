@@ -177,11 +177,9 @@ function ChatInputSubmit({
 
 	return (
 		<Button
-			className={cn(
-				"shrink-0 rounded-full p-1.5 h-fit border dark:border-zinc-600",
-				className,
-			)}
+			className={cn("rounded-full", className)}
 			disabled={isDisabled}
+			size="icon"
 			onClick={(event) => {
 				event.preventDefault();
 				if (!isDisabled) {

@@ -16,7 +16,7 @@ export function BlockImage({
 			)}
 		>
 			<Image
-				src={`/r/styles/new-york/${name}-light.png`}
+				src={`/r/${name}-light.png`}
 				alt={name}
 				width={width}
 				height={height}
@@ -24,7 +24,7 @@ export function BlockImage({
 				data-image="light"
 			/>
 			<Image
-				src={`/r/styles/new-york/${name}-dark.png`}
+				src={`/r/${name}-dark.png`}
 				alt={name}
 				width={width}
 				height={height}

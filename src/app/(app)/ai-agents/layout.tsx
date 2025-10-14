@@ -77,13 +77,11 @@ export default function BlocksLayout({ children }: { children: ReactNode }) {
 				</PageHeaderDescription>
 				<PageActions>
 					<Button asChild size="sm">
-						<Link href="/docs/react-flow">
-							Get More Information
-						</Link>
+						<Link href="/docs/workflows">Get More Information</Link>
 					</Button>
 					<Button asChild size="sm" variant="ghost">
-						<Link href="/docs/react-flow/components/generate-text-node">
-							See React Flow Components
+						<Link href="/docs/workflows/generate-text-node">
+							See Workflow Components
 						</Link>
 					</Button>
 				</PageActions>

@@ -87,7 +87,7 @@ const messages = [
 
 export default function ChatMessageAreaDemo() {
 	return (
-		<ChatMessageArea className="space-y-4 p-2 max-h-[400px]">
+		<ChatMessageArea className="max-h-[400px] h-full bg-red-200 p-4">
 			{messages.map((message) => (
 				<ChatMessage
 					key={message.id}

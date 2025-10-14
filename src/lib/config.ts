@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 export const siteConfig = {
 	name: "simple-ai",
 	url: "https://simple-ai.dev",
@@ -5,7 +7,7 @@ export const siteConfig = {
 	description:
 		"AI Building Blocks that you can copy and paste into your apps. Customizable. Open Source.",
 	links: {
-		twitter: "https://twitter.com/alwurts",
+		twitter: "https://x.com/alwurts",
 		github: "https://github.com/Alwurts/simple-ai",
 	},
 	navItems: [
@@ -33,4 +35,4 @@ export const siteConfig = {
 	],
 };
 
-export const BASE_URL = process.env.NEXT_PUBLIC_APP_URL;
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

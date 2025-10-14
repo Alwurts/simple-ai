@@ -1,89 +1,77 @@
 ---
 title: Introduction
-description: AI Building Blocks that you can copy and paste into your apps. Customizable. Open Source. Built for AI-first development.
+description: A collection of beautifully designed chat interface components that you can copy and paste into your apps. Accessible. Customizable. Open Source.
 ---
 
-**AI Building Blocks for Modern Applications**
+# Welcome to simple-ai
 
-Simple AI is a collection of production-ready UI components and app templates specifically designed for AI-powered applications. Built on shadcn/ui, it provides the building blocks you need to create chat interfaces, AI workflows, and intelligent user experiences.
+Get started building beautiful, accessible, and performant chat interfaces with simple-ai components.
 
-Whether you're building a chatbot, AI assistant, content generator, or complex workflow application, Simple AI gives you the components and patterns to accelerate development while maintaining full customization and control.
+## Introduction
 
-## What Makes Simple AI Different
+Welcome to simple-ai, a collection of carefully crafted chat interface components that you can copy and paste into your applications. Built on the philosophy of [shadcn/ui](https://ui.shadcn.com), this collection focuses on providing everything you need to create modern chatbot experiences, from chat inputs to message areas and everything in between.
 
-Simple AI extends shadcn/ui with AI-specific components and patterns:
+This is **NOT** a component library. It's a collection of re-usable components that you can copy and paste into your apps.
 
-- **Chat Components:** Production-ready chat interfaces with streaming, markdown rendering, and message management
-- **AI Integration:** Built-in support for Vercel AI SDK with OpenAI, Groq, DeepSeek, and more
-- **App Blocks:** Complete application templates for common AI use cases
-- **Workflow Ready:** Components designed to work with React Flow for complex AI workflows
-- **AI-First Design:** Every component considers AI interaction patterns and user experience
+## Why simple-ai?
 
-## Core Principles
+* **Chat-First Design** - Components specifically designed for chat and conversational interfaces
+* **Modern UX Patterns** - Implements patterns seen in leading AI chat applications
+* **Copy and Paste** - Use components directly in your app and customize them to your needs
+* **Dark Mode** - Built-in dark mode support
+* **TypeScript** - Written in TypeScript for better developer experience
 
-- **Open Code:** Full access to component source code for customization and AI-assisted development
-- **AI SDK Integration:** Seamless integration with Vercel AI SDK and popular AI providers
-- **Production Ready:** Components designed for real-world AI applications with proper error handling and loading states
-- **Composable Architecture:** Mix and match components to build complex AI experiences
-- **Beautiful Defaults:** Carefully designed components that work well together out-of-the-box
+## Vercel AI SDK Compatibility
 
-## Chat-First Components
+The components in simple-ai are designed to work seamlessly with [Vercel AI SDK](https://sdk.vercel.ai/). If you're building AI-powered applications with Vercel's SDK, our components provide the perfect UI layer for your chat interfaces, handling streaming responses, loading states, and complex chat interactions out of the box.
 
-Simple AI provides a complete chat component ecosystem:
+## Philosophy
 
-- **Chat Input:** Auto-resizing textarea with send functionality and keyboard shortcuts
-- **Chat Message Area:** Scrollable message container with auto-scroll and loading states
-- **Chat Message:** Rich message display with markdown, code highlighting, and avatar support
-- **Markdown Content:** Advanced markdown rendering with syntax highlighting and AI-friendly formatting
+simple-ai follows the same philosophy as [shadcn/ui](https://ui.shadcn.com): giving you ownership and control over the code. We believe that:
 
-## App Blocks
+1. You should have complete control over your chat interface components
+2. Components should be easy to customize and extend
+4. Chat interfaces should be performant, even with large message histories
 
-Ready-to-use application templates for common AI scenarios:
+## Credits
 
-- **Chat Applications:** Various chat layouts (sidebar, popover, full-page)
-- **AI Generators:** Content generation apps with structured outputs
-- **Profile Builders:** AI-powered profile and bio generators
-- **Workflow Apps:** Complex AI workflow builders (coming soon)
+This project wouldn't be possible without [shadcn/ui](https://ui.shadcn.com). It serves as the main inspiration for both the philosophy and implementation approach of this collection. We also draw inspiration from the [Vercel AI SDK](https://sdk.vercel.ai/) for our chat-specific components and interactions.
 
-## AI-Ready Architecture
+## FAQ
 
-Every component in Simple AI is designed with AI integration in mind:
+<Accordion type="multiple">
 
-- **Streaming Support:** Built-in support for real-time AI responses
-- **Error Handling:** Graceful error states for AI API failures
-- **Loading States:** Proper loading indicators for AI operations
-- **Type Safety:** Full TypeScript support with AI SDK types
-- **Provider Agnostic:** Works with any AI provider through Vercel AI SDK
+<AccordionItem value="faq-1">
+	<AccordionTrigger>
+		Why copy/paste and not packaged as a dependency?
+	</AccordionTrigger>
+	<AccordionContent>
+The idea behind this is to give you ownership and control over the code, allowing you to decide how the components are built and styled.
 
-<Accordion collapsible>
-  <AccordionItem value="faq-1" className="border-none">
-    <AccordionTrigger>
-      How does Simple AI differ from shadcn/ui?
-    </AccordionTrigger>
-    <AccordionContent>
-      <p>
-        Simple AI is built on top of shadcn/ui but adds AI-specific components,
-        app blocks, and integrations that shadcn/ui doesn't include. While
-        shadcn/ui focuses on general-purpose UI components, Simple AI provides
-        the building blocks specifically for AI-powered applications.
-      </p>
-      <p className="mt-4">
-        This includes chat interfaces, AI SDK integration, streaming support,
-        and complete application templates for common AI use cases.
-      </p>
+Start with some sensible defaults, then customize the components to your needs.
+
+This approach allows you to maintain full control over your chat interface implementation while starting with battle-tested components.
+</AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="faq-2">
+  <AccordionTrigger>
+    Which frameworks are supported?
+  </AccordionTrigger>
+  <AccordionContent>
+    The components are primarily built for Next.js applications, but you can use them with any React-based framework that supports modern React features.
+  </AccordionContent>
+</AccordionItem>
+
+<AccordionItem value="faq-3">
+	<AccordionTrigger>
+	Can I use this in my project?
+	</AccordionTrigger>
+	<AccordionContent>
+Yes. Free to use for personal and commercial projects. No attribution required.
+
+We'd love to see what you build with these components!
     </AccordionContent>
-  </AccordionItem>
-  <AccordionItem value="faq-2" className="border-none">
-    <AccordionTrigger>
-      Can I use Simple AI components in non-AI applications?
-    </AccordionTrigger>
-    <AccordionContent>
-      <p>
-        Absolutely! The components are built with the same principles as
-        shadcn/ui - they're highly customizable and can be used in any
-        application. The chat components work great for customer support
-        interfaces, collaborative tools, or any messaging application.
-      </p>
-    </AccordionContent>
-  </AccordionItem>
+</AccordionItem>
+
 </Accordion>

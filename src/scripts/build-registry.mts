@@ -98,7 +98,7 @@ async function buildRegistryJsonFile() {
 	// 3. Format the registry.json file.
 	await exec(`biome check registry.json --write`);
 
-	// 3. Copy the registry.json to the www/public/r/styles/new-york-v4 directory.
+	// 3. Copy the registry.json to the www/public/r directory.
 	await fs.cp(
 		path.join(process.cwd(), "registry.json"),
 		path.join(process.cwd(), "./public/r/registry.json"),
@@ -112,7 +112,7 @@ async function buildRegistry() {
 		const process = exec(
 			`npx shadcn build registry.json --output ./public/r`,
 		);
-		//const process = exec(`pnpm dlx shadcn build registry.json --output ../www/public/r/styles/new-york-v4`);
+		//const process = exec(`pnpm dlx shadcn build registry.json --output ../www/public/r`);
 
 		process.on("exit", (code) => {
 			if (code === 0) {

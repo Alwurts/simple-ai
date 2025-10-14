@@ -32,6 +32,7 @@ import { Separator } from "@/components/ui/separator";
 import { useConfig } from "@/hooks/use-config";
 import { useIsMac } from "@/hooks/use-is-mac";
 import { useMutationObserver } from "@/hooks/use-mutation-observer";
+import { BASE_URL } from "@/lib/config";
 import type { source } from "@/lib/source";
 import { cn } from "@/lib/utils";
 
@@ -65,7 +66,7 @@ export function CommandMenu({
 				const componentName = item.url.split("/").pop();
 				setSelectedType("component");
 				setCopyPayload(
-					`${packageManager} dlx shadcn@latest add ${componentName}`,
+					`${packageManager} dlx shadcn@latest add ${BASE_URL}/r/${componentName}`,
 				);
 			} else {
 				setSelectedType("page");
@@ -84,7 +85,7 @@ export function CommandMenu({
 		}) => {
 			setSelectedType("block");
 			setCopyPayload(
-				`${packageManager} dlx shadcn@latest add ${block.name}`,
+				`${packageManager} dlx shadcn@latest add ${BASE_URL}/r/${block.name}`,
 			);
 		},
 		[setSelectedType, setCopyPayload, packageManager],
