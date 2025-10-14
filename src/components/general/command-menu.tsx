@@ -53,7 +53,10 @@ export function CommandMenu({
 	const [selectedType, setSelectedType] = useState<
 		"color" | "page" | "component" | "block" | null
 	>(null);
-	const [copyPayload, setCopyPayload] = useState("");
+	const [copyPayload, setCopyPayload] = useState<{
+		command: string;
+		label: string;
+	} | null>(null);
 	const packageManager = config.packageManager || "pnpm";
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Needed for the command
@@ -65,12 +68,13 @@ export function CommandMenu({
 			if (isComponent) {
 				const componentName = item.url.split("/").pop();
 				setSelectedType("component");
-				setCopyPayload(
-					`${packageManager} dlx shadcn@latest add ${BASE_URL}/r/${componentName}`,
-				);
+				setCopyPayload({
+					command: `${packageManager} dlx shadcn@latest add ${BASE_URL}/r/${componentName}`,
+					label: `npx shadcn add ${componentName}`,
+				});
 			} else {
 				setSelectedType("page");
-				setCopyPayload("");
+				setCopyPayload(null);
 			}
 		},
 		[packageManager, setSelectedType, setCopyPayload],
@@ -84,9 +88,10 @@ export function CommandMenu({
 			categories: string[];
 		}) => {
 			setSelectedType("block");
-			setCopyPayload(
-				`${packageManager} dlx shadcn@latest add ${BASE_URL}/r/${block.name}`,
-			);
+			setCopyPayload({
+				command: `${packageManager} dlx shadcn@latest add ${BASE_URL}/r/${block.name}`,
+				label: `npx shadcn add ${block.name}`,
+			});
 		},
 		[setSelectedType, setCopyPayload, packageManager],
 	);
@@ -115,24 +120,15 @@ export function CommandMenu({
 
 			if (e.key === "c" && (e.metaKey || e.ctrlKey)) {
 				runCommand(() => {
-					if (selectedType === "block") {
-						copyToClipboardWithMeta(copyPayload, {
-							name: "copy_npm_command",
-							properties: {
-								command: copyPayload,
-								pm: packageManager,
-							},
-						});
-					}
-
 					if (
-						selectedType === "page" ||
-						selectedType === "component"
+						copyPayload &&
+						(selectedType === "block" ||
+							selectedType === "component")
 					) {
-						copyToClipboardWithMeta(copyPayload, {
+						copyToClipboardWithMeta(copyPayload.command, {
 							name: "copy_npm_command",
 							properties: {
-								command: copyPayload,
+								command: copyPayload.command,
 								pm: packageManager,
 							},
 						});
@@ -213,7 +209,7 @@ export function CommandMenu({
 										]}
 										onHighlight={() => {
 											setSelectedType("page");
-											setCopyPayload("");
+											setCopyPayload(null);
 										}}
 										onSelect={() => {
 											runCommand(() =>
@@ -339,7 +335,7 @@ export function CommandMenu({
 									{isMac ? "⌘" : "Ctrl"}
 								</CommandMenuKbd>
 								<CommandMenuKbd>C</CommandMenuKbd>
-								{copyPayload}
+								{copyPayload.label}
 							</div>
 						</>
 					)}
