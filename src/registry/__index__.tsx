@@ -61,25 +61,20 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
-	"chat-message-area": {
-		name: "chat-message-area",
+	"message-area": {
+		name: "message-area",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["scroll-area", "button"],
+		registryDependencies: ["button"],
 		files: [
 			{
-				path: "./src/registry/ui/chat-message-area.tsx",
+				path: "./src/registry/ui/message-area.tsx",
 				type: "registry:ui",
-				target: "",
-			},
-			{
-				path: "./src/registry/hooks/use-scroll-to-bottom.ts",
-				type: "registry:hook",
 				target: "",
 			},
 		],
 		component: React.lazy(async () => {
-			const mod = await import("@/registry/ui/chat-message-area.tsx");
+			const mod = await import("@/registry/ui/message-area.tsx");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>
@@ -525,33 +520,6 @@ export const Index: Record<string, any> = {
 		],
 		component: React.lazy(async () => {
 			const mod = await import("@/registry/hooks/use-textarea-resize.ts");
-			const exportName =
-				Object.keys(mod).find(
-					(key) =>
-						typeof mod[key] === "function" ||
-						typeof mod[key] === "object",
-				) || item.name;
-			return { default: mod.default || mod[exportName] };
-		}),
-		categories: undefined,
-		meta: undefined,
-	},
-	"use-scroll-to-bottom": {
-		name: "use-scroll-to-bottom",
-		description: "",
-		type: "registry:hook",
-		registryDependencies: undefined,
-		files: [
-			{
-				path: "./src/registry/hooks/use-scroll-to-bottom.ts",
-				type: "registry:hook",
-				target: "",
-			},
-		],
-		component: React.lazy(async () => {
-			const mod = await import(
-				"@/registry/hooks/use-scroll-to-bottom.ts"
-			);
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>

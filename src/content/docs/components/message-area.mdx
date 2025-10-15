@@ -1,15 +1,15 @@
 ---
-title: Chat Message Area
-description: A component that adds auto scrolling functionality to a list of chat messages.
+title: Message Area
+description: A component that adds auto scrolling functionality to a list of messages.
 component: true
 ---
 
 <ComponentPreview
   name="chat-message-area-demo"
-  description="A component that adds auto scrolling functionality to a list of chat messages."
+  description="A component that adds auto scrolling functionality to a list of messages."
 />
 
-The Chat Message Area component provides a responsive and intelligent scrollable container specifically designed for streamingchat interfaces. It features a sophisticated auto-scrolling system that adapts to user interaction:
+The Message Area component provides a responsive and intelligent scrollable container specifically designed for streaming interfaces. It features a sophisticated auto-scrolling system that adapts to user interaction:
 
 - **Smart Auto-scroll**: Automatically scrolls to new messages when they appear, but only if the user is already at the bottom
 - **Interaction Awareness**: Auto-scroll automatically disables when users scroll up to read previous messages
@@ -28,7 +28,7 @@ The Chat Message Area component provides a responsive and intelligent scrollable
 <TabsContent value="cli">
 
 ```bash
-npx shadcn@latest add https://simple-ai.dev/r/chat-message-area.json
+npx shadcn@latest add https://simple-ai.dev/r/message-area.json
 ```
 
 </TabsContent>
@@ -39,9 +39,9 @@ npx shadcn@latest add https://simple-ai.dev/r/chat-message-area.json
 
 <Step>Copy and paste the following code into your project.</Step>
 
-`chat-message-area.tsx`
+`message-area.tsx`
 
-<ComponentSource name="chat-message-area" />
+<ComponentSource name="message-area" />
 
 `use-scroll-to-bottom.ts`
 
@@ -58,20 +58,27 @@ npx shadcn@latest add https://simple-ai.dev/r/chat-message-area.json
 ## Usage
 
 ```tsx
-import { ChatMessageArea } from "@/components/ui/chat-message-area"
+import {
+  MessageArea,
+  MessageAreaContent,
+  MessageAreaScrollButton,
+} from "@/components/ui/message-area"
 ```
 
 ```tsx
-<ChatMessageArea className="px-4 py-8 space-y-4">
-  {/* Your chat messages go here */}
-</ChatMessageArea>
+<MessageArea>
+  <MessageAreaContent className="px-4 py-8 space-y-4">
+    {/* Your messages go here */}
+  </MessageAreaContent>
+  <MessageAreaScrollButton />
+</MessageArea>
 ```
 
 ## Examples
 
 ### Alignment
 
-You can align the scroll button to the left, right, or center.
+You can align the scroll button to the left, right, or center using the `alignment` prop on `MessageAreaScrollButton`.
 
 <ComponentPreview
   name="chat-message-area-demo-alignment"

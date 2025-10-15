@@ -31,17 +31,14 @@
 			]
 		},
 		{
-			"name": "chat-message-area",
+			"name": "message-area",
 			"type": "registry:ui",
-			"registryDependencies": ["scroll-area", "button"],
+			"dependencies": ["use-stick-to-bottom"],
+			"registryDependencies": ["button"],
 			"files": [
 				{
-					"path": "./src/registry/ui/chat-message-area.tsx",
+					"path": "./src/registry/ui/message-area.tsx",
 					"type": "registry:ui"
-				},
-				{
-					"path": "./src/registry/hooks/use-scroll-to-bottom.ts",
-					"type": "registry:hook"
 				}
 			]
 		},
@@ -279,16 +276,6 @@
 			"files": [
 				{
 					"path": "./src/registry/hooks/use-textarea-resize.ts",
-					"type": "registry:hook"
-				}
-			]
-		},
-		{
-			"name": "use-scroll-to-bottom",
-			"type": "registry:hook",
-			"files": [
-				{
-					"path": "./src/registry/hooks/use-scroll-to-bottom.ts",
 					"type": "registry:hook"
 				}
 			]

@@ -82,6 +82,13 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<html lang="en">
+			<head>
+				<script
+					async
+					crossOrigin="anonymous"
+					src="https://tweakcn.com/live-preview.min.js"
+				/>
+			</head>
 			<body
 				className={cn(
 					"layout-fixed text-foreground group/body verscroll-none font-sans antialiased [--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]",

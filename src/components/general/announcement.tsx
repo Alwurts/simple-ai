@@ -8,7 +8,7 @@ export function Announcement() {
 		<Badge asChild variant="secondary" className="rounded-full">
 			<Link href="/ai-agents">
 				<span
-					className="flex size-2 rounded-full bg-blue-500"
+					className="flex size-2 rounded-full bg-primary"
 					title="New"
 				/>
 				Newly Released AI Agents Workflows <ArrowRightIcon />

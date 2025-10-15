@@ -70,7 +70,7 @@ export function CommandMenu({
 				setSelectedType("component");
 				setCopyPayload({
 					command: `${packageManager} dlx shadcn@latest add ${BASE_URL}/r/${componentName}`,
-					label: `npx shadcn add ${componentName}`,
+					label: `npx shadcn add simple-ai.dev/${componentName}`,
 				});
 			} else {
 				setSelectedType("page");
@@ -90,7 +90,7 @@ export function CommandMenu({
 			setSelectedType("block");
 			setCopyPayload({
 				command: `${packageManager} dlx shadcn@latest add ${BASE_URL}/r/${block.name}`,
-				label: `npx shadcn add ${block.name}`,
+				label: `npx shadcn add simple-ai.dev/${block.name}`,
 			});
 		},
 		[setSelectedType, setCopyPayload, packageManager],

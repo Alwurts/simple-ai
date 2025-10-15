@@ -7,7 +7,11 @@ import {
 	ChatMessageAvatar,
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
-import { ChatMessageArea } from "@/registry/ui/chat-message-area";
+import {
+	MessageArea,
+	MessageAreaContent,
+	MessageAreaScrollButton,
+} from "@/registry/ui/message-area";
 
 const STORY = `# The Tale of the Enchanted Forest
 
@@ -159,23 +163,26 @@ export default function ChatMessageAreaDemo() {
 				{isStreaming && "(Streaming...)"}
 			</Button>
 			<div className="border rounded-md">
-				<ChatMessageArea className="space-y-4 p-4">
-					<ChatMessage
-						key="1"
-						id="1"
-						variant="bubble"
-						type="outgoing"
-					>
-						<ChatMessageContent content="Can you tell me a magical story?" />
-					</ChatMessage>
-
-					{streamContent && (
-						<ChatMessage key="2" id="2">
-							<ChatMessageAvatar />
-							<ChatMessageContent content={streamContent} />
+				<MessageArea>
+					<MessageAreaContent>
+						<ChatMessage
+							key="1"
+							id="1"
+							variant="bubble"
+							type="outgoing"
+						>
+							<ChatMessageContent content="Can you tell me a magical story?" />
 						</ChatMessage>
-					)}
-				</ChatMessageArea>
+
+						{streamContent && (
+							<ChatMessage key="2" id="2">
+								<ChatMessageAvatar />
+								<ChatMessageContent content={streamContent} />
+							</ChatMessage>
+						)}
+					</MessageAreaContent>
+					<MessageAreaScrollButton />
+				</MessageArea>
 			</div>
 		</div>
 	);

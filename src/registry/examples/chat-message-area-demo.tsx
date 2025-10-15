@@ -5,7 +5,11 @@ import {
 	ChatMessageAvatar,
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
-import { ChatMessageArea } from "@/registry/ui/chat-message-area";
+import {
+	MessageArea,
+	MessageAreaContent,
+	MessageAreaScrollButton,
+} from "@/registry/ui/message-area";
 
 const messages = [
 	{
@@ -87,18 +91,21 @@ const messages = [
 
 export default function ChatMessageAreaDemo() {
 	return (
-		<ChatMessageArea className="max-h-[400px] h-full bg-red-200 p-4">
-			{messages.map((message) => (
-				<ChatMessage
-					key={message.id}
-					id={message.id}
-					variant={message.type === "user" ? "bubble" : undefined}
-					type={message.type === "user" ? "outgoing" : "incoming"}
-				>
-					{message.type === "assistant" && <ChatMessageAvatar />}
-					<ChatMessageContent content={message.content} />
-				</ChatMessage>
-			))}
-		</ChatMessageArea>
+		<MessageArea>
+			<MessageAreaContent>
+				{messages.map((message) => (
+					<ChatMessage
+						key={message.id}
+						id={message.id}
+						variant={message.type === "user" ? "bubble" : undefined}
+						type={message.type === "user" ? "outgoing" : "incoming"}
+					>
+						{message.type === "assistant" && <ChatMessageAvatar />}
+						<ChatMessageContent content={message.content} />
+					</ChatMessage>
+				))}
+			</MessageAreaContent>
+			<MessageAreaScrollButton />
+		</MessageArea>
 	);
 }

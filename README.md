@@ -38,3 +38,4 @@ Licensed under the MIT License.
 - [ ] Check use of og and how its used in metadata in layouts like /block/layout
 - [ ] Check view as markdown works
 - [ ] Remove .json ending out of copy commands
+- [ ] Add validate registry script?

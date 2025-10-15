@@ -11,14 +11,4 @@ export const hooks: Registry["items"] = [
 			},
 		],
 	},
-	{
-		name: "use-scroll-to-bottom",
-		type: "registry:hook",
-		files: [
-			{
-				path: "hooks/use-scroll-to-bottom.ts",
-				type: "registry:hook",
-			},
-		],
-	},
 ];

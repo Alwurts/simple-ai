@@ -38,6 +38,8 @@ Your responses will be displayed in a beautiful, accessible chat interface. You 
 - [Visualize Text Node](https://simple-ai.dev/docs/react-flow/components/visualize-text-node): A React Flow node for displaying and visualizing text content with Markdown support.
 `;
 
+// TODO: Get info from llms.txt
+
 export async function POST(req: Request) {
 	const { messages } = await req.json();
 

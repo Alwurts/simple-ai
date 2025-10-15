@@ -14,7 +14,11 @@ import {
 	ChatMessageAvatar,
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
-import { ChatMessageArea } from "@/registry/ui/chat-message-area";
+import {
+	MessageArea,
+	MessageAreaContent,
+	MessageAreaScrollButton,
+} from "@/registry/ui/message-area";
 
 const INITIAL_MESSAGES: UIMessage[] = [
 	{
@@ -136,8 +140,8 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 
 	return (
 		<div className="flex-1 flex flex-col h-full overflow-y-auto" {...props}>
-			<ChatMessageArea scrollButtonAlignment="center">
-				<div className="max-w-2xl mx-auto w-full px-4 py-8 space-y-4">
+			<MessageArea>
+				<MessageAreaContent>
 					{messages.map((message) => {
 						if (message.role !== "user") {
 							return (
@@ -172,8 +176,9 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 							</ChatMessage>
 						);
 					})}
-				</div>
-			</ChatMessageArea>
+				</MessageAreaContent>
+				<MessageAreaScrollButton alignment="center" />
+			</MessageArea>
 			<div className="px-2 py-4 max-w-2xl mx-auto w-full">
 				<ChatInput
 					value={input}

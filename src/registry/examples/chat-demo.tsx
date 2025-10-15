@@ -15,7 +15,11 @@ import {
 	ChatMessageAvatar,
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
-import { ChatMessageArea } from "@/registry/ui/chat-message-area";
+import {
+	MessageArea,
+	MessageAreaContent,
+	MessageAreaScrollButton,
+} from "@/registry/ui/message-area";
 
 const INITIAL_MESSAGES: UIMessage[] = [
 	{
@@ -90,15 +94,37 @@ export default function ChatDemo() {
 		<div className="w-full">
 			<Card className="w-full max-w-xl mx-auto flex flex-col flex-1 h-[500px]">
 				<div className="flex-1 flex flex-col min-h-0">
-					<ChatMessageArea className="px-4 py-8 space-y-4">
-						{messages.map((message) => {
-							if (message.role !== "user") {
+					<MessageArea>
+						<MessageAreaContent>
+							{messages.map((message) => {
+								if (message.role !== "user") {
+									return (
+										<ChatMessage
+											key={message.id}
+											id={message.id}
+										>
+											<ChatMessageAvatar />
+											{message.parts
+												.filter(
+													(part) =>
+														part.type === "text",
+												)
+												.map((part) => (
+													<ChatMessageContent
+														key={part.type}
+														content={part.text}
+													/>
+												))}
+										</ChatMessage>
+									);
+								}
 								return (
 									<ChatMessage
 										key={message.id}
 										id={message.id}
+										variant="bubble"
+										type="outgoing"
 									>
-										<ChatMessageAvatar />
 										{message.parts
 											.filter(
 												(part) => part.type === "text",
@@ -111,26 +137,10 @@ export default function ChatDemo() {
 											))}
 									</ChatMessage>
 								);
-							}
-							return (
-								<ChatMessage
-									key={message.id}
-									id={message.id}
-									variant="bubble"
-									type="outgoing"
-								>
-									{message.parts
-										.filter((part) => part.type === "text")
-										.map((part) => (
-											<ChatMessageContent
-												key={part.type}
-												content={part.text}
-											/>
-										))}
-								</ChatMessage>
-							);
-						})}
-					</ChatMessageArea>
+							})}
+						</MessageAreaContent>
+						<MessageAreaScrollButton />
+					</MessageArea>
 					<div className="border-t p-4">
 						<ChatInput
 							value={input}

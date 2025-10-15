@@ -14,7 +14,11 @@ import {
 	ChatMessageAvatar,
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
-import { ChatMessageArea } from "@/registry/ui/chat-message-area";
+import {
+	MessageArea,
+	MessageAreaContent,
+	MessageAreaScrollButton,
+} from "@/registry/ui/message-area";
 
 const INITIAL_MESSAGES: UIMessage[] = [
 	{
@@ -84,17 +88,36 @@ export function Chat() {
 
 	return (
 		<div className="flex flex-col h-full overflow-y-auto">
-			<ChatMessageArea className="px-4 py-4 space-y-4">
-				{messages.map((message) => {
-					if (message.role !== "user") {
+			<MessageArea>
+				<MessageAreaContent>
+					{messages.map((message) => {
+						if (message.role !== "user") {
+							return (
+								<ChatMessage
+									key={message.id}
+									id={message.id}
+									variant="bubble"
+									type="incoming"
+								>
+									<ChatMessageAvatar imageSrc="/avatar-1.png" />
+									{message.parts
+										.filter((part) => part.type === "text")
+										.map((part) => (
+											<ChatMessageContent
+												key={part.type}
+												content={part.text}
+											/>
+										))}
+								</ChatMessage>
+							);
+						}
 						return (
 							<ChatMessage
 								key={message.id}
 								id={message.id}
 								variant="bubble"
-								type="incoming"
+								type="outgoing"
 							>
-								<ChatMessageAvatar imageSrc="/avatar-1.png" />
 								{message.parts
 									.filter((part) => part.type === "text")
 									.map((part) => (
@@ -103,29 +126,13 @@ export function Chat() {
 											content={part.text}
 										/>
 									))}
+								<ChatMessageAvatar imageSrc="/avatar-1.png" />
 							</ChatMessage>
 						);
-					}
-					return (
-						<ChatMessage
-							key={message.id}
-							id={message.id}
-							variant="bubble"
-							type="outgoing"
-						>
-							{message.parts
-								.filter((part) => part.type === "text")
-								.map((part) => (
-									<ChatMessageContent
-										key={part.type}
-										content={part.text}
-									/>
-								))}
-							<ChatMessageAvatar imageSrc="/avatar-1.png" />
-						</ChatMessage>
-					);
-				})}
-			</ChatMessageArea>
+					})}
+				</MessageAreaContent>
+				<MessageAreaScrollButton />
+			</MessageArea>
 			<div className="px-2 py-2 border-t">
 				<ChatInput
 					value={input}

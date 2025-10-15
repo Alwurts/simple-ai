@@ -27,7 +27,11 @@ import {
 	ChatMessageAvatar,
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
-import { ChatMessageArea } from "@/registry/ui/chat-message-area";
+import {
+	MessageArea,
+	MessageAreaContent,
+	MessageAreaScrollButton,
+} from "@/registry/ui/message-area";
 
 const INITIAL_MESSAGES: UIMessage[] = [
 	{
@@ -143,15 +147,36 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			</SidebarHeader>
 			<SidebarSeparator />
 			<div className="flex-1 flex flex-col h-full overflow-y-auto">
-				<ChatMessageArea
-					scrollButtonAlignment="center"
-					className="px-4 py-6 space-y-4"
-				>
-					{messages.map((message) => {
-						if (message.role !== "user") {
+				<MessageArea>
+					<MessageAreaContent>
+						{messages.map((message) => {
+							if (message.role !== "user") {
+								return (
+									<ChatMessage
+										key={message.id}
+										id={message.id}
+									>
+										<ChatMessageAvatar />
+										{message.parts
+											.filter(
+												(part) => part.type === "text",
+											)
+											.map((part) => (
+												<ChatMessageContent
+													key={part.type}
+													content={part.text}
+												/>
+											))}
+									</ChatMessage>
+								);
+							}
 							return (
-								<ChatMessage key={message.id} id={message.id}>
-									<ChatMessageAvatar />
+								<ChatMessage
+									key={message.id}
+									id={message.id}
+									variant="bubble"
+									type="outgoing"
+								>
 									{message.parts
 										.filter((part) => part.type === "text")
 										.map((part) => (
@@ -162,26 +187,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 										))}
 								</ChatMessage>
 							);
-						}
-						return (
-							<ChatMessage
-								key={message.id}
-								id={message.id}
-								variant="bubble"
-								type="outgoing"
-							>
-								{message.parts
-									.filter((part) => part.type === "text")
-									.map((part) => (
-										<ChatMessageContent
-											key={part.type}
-											content={part.text}
-										/>
-									))}
-							</ChatMessage>
-						);
-					})}
-				</ChatMessageArea>
+						})}
+					</MessageAreaContent>
+					<MessageAreaScrollButton alignment="center" />
+				</MessageArea>
 				<div className="p-4 max-w-2xl mx-auto w-full">
 					<ChatInput
 						value={input}

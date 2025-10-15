@@ -5,7 +5,11 @@ import {
 	ChatMessageAvatar,
 	ChatMessageContent,
 } from "@/registry/ui/chat-message";
-import { ChatMessageArea } from "@/registry/ui/chat-message-area";
+import {
+	MessageArea,
+	MessageAreaContent,
+	MessageAreaScrollButton,
+} from "@/registry/ui/message-area";
 
 const messages = [
 	{
@@ -87,26 +91,26 @@ const messages = [
 
 export default function ChatMessageAreaDemoAlignment() {
 	return (
-		<ChatMessageArea
-			className="max-h-[400px] p-4"
-			scrollButtonAlignment="center"
-		>
-			{messages.map((message) => (
-				<ChatMessage
-					key={message.id}
-					id={message.id}
-					variant="bubble"
-					type={message.type === "user" ? "outgoing" : "incoming"}
-				>
-					{message.type === "assistant" && (
-						<ChatMessageAvatar imageSrc="/avatar-1.png" />
-					)}
-					<ChatMessageContent content={message.content} />
-					{message.type === "user" && (
-						<ChatMessageAvatar imageSrc="/avatar-2.png" />
-					)}
-				</ChatMessage>
-			))}
-		</ChatMessageArea>
+		<MessageArea>
+			<MessageAreaContent>
+				{messages.map((message) => (
+					<ChatMessage
+						key={message.id}
+						id={message.id}
+						variant="bubble"
+						type={message.type === "user" ? "outgoing" : "incoming"}
+					>
+						{message.type === "assistant" && (
+							<ChatMessageAvatar imageSrc="/avatar-1.png" />
+						)}
+						<ChatMessageContent content={message.content} />
+						{message.type === "user" && (
+							<ChatMessageAvatar imageSrc="/avatar-2.png" />
+						)}
+					</ChatMessage>
+				))}
+			</MessageAreaContent>
+			<MessageAreaScrollButton alignment="center" />
+		</MessageArea>
 	);
 }

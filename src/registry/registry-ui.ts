@@ -21,13 +21,11 @@ export const ui: Registry["items"] = [
 		],
 	},
 	{
-		name: "chat-message-area",
+		name: "message-area",
 		type: "registry:ui",
-		registryDependencies: ["scroll-area", "button"],
-		files: [
-			{ type: "registry:ui", path: "ui/chat-message-area.tsx" },
-			{ type: "registry:hook", path: "hooks/use-scroll-to-bottom.ts" },
-		],
+		registryDependencies: ["button"],
+		dependencies: ["use-stick-to-bottom"],
+		files: [{ type: "registry:ui", path: "ui/message-area.tsx" }],
 	},
 	{
 		name: "chat-message",
