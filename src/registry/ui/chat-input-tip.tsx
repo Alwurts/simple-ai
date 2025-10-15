@@ -7,21 +7,29 @@ import type { Editor, JSONContent } from "@tiptap/react";
 import { EditorContent, ReactRenderer, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import type { SuggestionProps } from "@tiptap/suggestion";
-import { ArrowUpIcon } from "lucide-react";
+import { ArrowUpIcon, Loader2 } from "lucide-react";
+
 import {
 	type ComponentProps,
+	createContext,
 	forwardRef,
 	type ReactNode,
 	useCallback,
+	useContext,
 	useEffect,
 	useImperativeHandle,
+	useMemo,
 	useRef,
 	useState,
 } from "react";
 import tippy, { type Instance } from "tippy.js";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { InputGroup, InputGroupButton } from "./input-group";
+import {
+	InputGroup,
+	InputGroupAddon,
+	InputGroupButton,
+} from "@/components/ui/input-group";
 
 export type ChatInputValue = JSONContent; // Store full JSON for state
 
@@ -52,31 +60,95 @@ export function createMentionConfig<T extends BaseMentionItem>(
 
 export type Mention = { type: string; id: string; name: string };
 
-export function extractMentions(json: JSONContent): Mention[] {
-	let mentions: Mention[] = [];
-	if (json.content) {
-		for (const item of json.content) {
-			if (item.type?.endsWith("-mention")) {
-				const type = item.type.replace("-mention", "");
-				mentions.push({
-					type,
-					id: item.attrs?.id as string,
-					name: item.attrs?.label as string,
-				});
-			}
-			if (item.content) {
-				mentions = mentions.concat(
-					extractMentions({ type: item.type, content: item.content }),
+type ChatInputContextType = {
+	// biome-ignore lint/suspicious/noExplicitAny: Needs to accept configs with different item types
+	mentionConfigs: MentionConfig<any>[];
+	// biome-ignore lint/suspicious/noExplicitAny: Needs to accept configs with different item types
+	addMentionConfig: (config: MentionConfig<any>) => void;
+	onSubmit: () => void;
+	onStop?: () => void;
+	isStreaming: boolean;
+	disabled: boolean;
+};
+
+const ChatInputContext = createContext<ChatInputContextType>({
+	mentionConfigs: [],
+	addMentionConfig: () => {},
+	onSubmit: () => {},
+	onStop: undefined,
+	isStreaming: false,
+	disabled: false,
+});
+
+export function ChatInput({
+	children,
+	className,
+	onSubmit,
+	isStreaming = false,
+	onStop,
+	disabled = false,
+	...props
+}: ComponentProps<typeof InputGroup> & {
+	onSubmit: () => void;
+	isStreaming?: boolean;
+	onStop?: () => void;
+	disabled?: boolean;
+}) {
+	// biome-ignore lint/suspicious/noExplicitAny: Needs to accept configs with different item types
+	const [mentionConfigs, setMentionConfigs] = useState<MentionConfig<any>[]>(
+		[],
+	);
+
+	// Track which types have been registered to prevent duplicates across re-renders
+	const registeredTypesRef = useRef(new Set<string>());
+
+	// biome-ignore lint/suspicious/noExplicitAny: Needs to accept configs with different item types
+	const addMentionConfig = useCallback((config: MentionConfig<any>) => {
+		if (registeredTypesRef.current.has(config.type)) {
+			// Already registered, just update the config
+			setMentionConfigs((prev) => {
+				const existingIndex = prev.findIndex(
+					(c) => c.type === config.type,
 				);
-			}
+				if (existingIndex >= 0) {
+					const updated = [...prev];
+					updated[existingIndex] = config;
+					return updated;
+				}
+				return prev;
+			});
+		} else {
+			// New registration
+			registeredTypesRef.current.add(config.type);
+			setMentionConfigs((prev) => [...prev, config]);
 		}
-	}
-	return mentions;
+	}, []);
+
+	return (
+		<ChatInputContext.Provider
+			value={{
+				mentionConfigs,
+				addMentionConfig,
+				onSubmit,
+				onStop,
+				isStreaming,
+				disabled,
+			}}
+		>
+			<InputGroup
+				className={cn(
+					"focus-within:ring-1 focus-within:ring-ring rounded-2xl",
+					className,
+				)}
+				{...props}
+			>
+				{children}
+			</InputGroup>
+		</ChatInputContext.Provider>
+	);
 }
 
 export interface ChatInputEditorProps {
-	// biome-ignore lint/suspicious/noExplicitAny: Needs to accept configs with different item types
-	mentionConfigs?: MentionConfig<any>[];
 	disabled?: boolean;
 	onEnter?: () => void;
 	placeholder?: string;
@@ -86,7 +158,6 @@ export interface ChatInputEditorProps {
 }
 
 export function ChatInputEditor({
-	mentionConfigs = [],
 	disabled,
 	onEnter,
 	placeholder = "Type a message...",
@@ -94,47 +165,50 @@ export function ChatInputEditor({
 	value,
 	onChange,
 }: ChatInputEditorProps) {
+	const {
+		mentionConfigs,
+		onSubmit,
+		disabled: contextDisabled,
+	} = useContext(ChatInputContext);
 	const [isMounted, setIsMounted] = useState(false);
 
 	useEffect(() => {
 		setIsMounted(true);
 	}, []);
 
-	const mentionConfigsRef = useRef(mentionConfigs);
-	const onEnterRef = useRef(onEnter);
+	const onEnterRef = useRef(onEnter || onSubmit);
 
 	useEffect(() => {
-		mentionConfigsRef.current = mentionConfigs;
-	}, [mentionConfigs]);
+		onEnterRef.current = onEnter || onSubmit;
+	}, [onEnter, onSubmit]);
 
-	useEffect(() => {
-		onEnterRef.current = onEnter;
-	}, [onEnter]);
-
-	const extensions = [
-		StarterKit,
-		Placeholder.configure({ placeholder }),
-		KeyboardShortcuts.configure({
-			getOnEnter: () => onEnterRef.current,
-		}),
-		...mentionConfigs.map((config) => {
-			const MentionPlugin = MentionExtension.extend({
-				name: `${config.type}-mention`,
-			});
-			return MentionPlugin.configure({
-				HTMLAttributes: {
-					class: cn(
-						"bg-primary text-primary-foreground rounded-sm px-1 py-0.5 no-underline",
-						config.editorMentionClass,
-					),
-				},
-				suggestion: {
-					char: config.trigger,
-					...getMentionSuggestion(config),
-				},
-			});
-		}),
-	];
+	const extensions = useMemo(
+		() => [
+			StarterKit,
+			Placeholder.configure({ placeholder }),
+			KeyboardShortcuts.configure({
+				getOnEnter: () => onEnterRef.current,
+			}),
+			...mentionConfigs.map((config) => {
+				const MentionPlugin = MentionExtension.extend({
+					name: `${config.type}-mention`,
+				});
+				return MentionPlugin.configure({
+					HTMLAttributes: {
+						class: cn(
+							"bg-primary text-primary-foreground rounded-sm px-1 py-0.5 no-underline",
+							config.editorMentionClass,
+						),
+					},
+					suggestion: {
+						char: config.trigger,
+						...getMentionSuggestion(config),
+					},
+				});
+			}),
+		],
+		[mentionConfigs, placeholder],
+	);
 
 	const onUpdate = useCallback(
 		({ editor }: { editor: Editor }) => {
@@ -145,13 +219,16 @@ export function ChatInputEditor({
 		[onChange, isMounted],
 	);
 
-	const editor = useEditor({
-		extensions,
-		content: value,
-		onUpdate,
-		editable: !disabled,
-		immediatelyRender: true,
-	});
+	const editor = useEditor(
+		{
+			extensions,
+			content: value,
+			onUpdate,
+			editable: !(disabled || contextDisabled),
+			immediatelyRender: true,
+		},
+		[extensions, disabled, contextDisabled],
+	);
 
 	// Sync external value
 	useEffect(() => {
@@ -179,7 +256,7 @@ export function ChatInputEditor({
 			<EditorContent
 				editor={editor}
 				className={cn(
-					"w-full h-full max-h-48 p-4 overflow-y-auto",
+					"w-full h-full max-h-48 px-4 pt-4 pb-2 overflow-y-auto",
 					className,
 				)}
 			/>
@@ -207,6 +284,44 @@ const KeyboardShortcuts = Extension.create({
 		};
 	},
 });
+
+export type ChatInputMentionProps<T extends BaseMentionItem = BaseMentionItem> =
+	{
+		type: string;
+		trigger: string;
+		items: T[];
+		children?: (item: T, isSelected: boolean) => ReactNode;
+		editorMentionClass?: string;
+	};
+
+export function ChatInputMention<T extends BaseMentionItem = BaseMentionItem>({
+	type,
+	trigger,
+	items,
+	children,
+	editorMentionClass,
+}: ChatInputMentionProps<T>) {
+	const { addMentionConfig } = useContext(ChatInputContext);
+
+	// Store renderItem in a ref to avoid re-registering on every render
+	const renderItemRef = useRef(children);
+	useEffect(() => {
+		renderItemRef.current = children;
+	}, [children]);
+
+	useEffect(() => {
+		addMentionConfig({
+			type,
+			trigger,
+			items,
+			renderItem: renderItemRef.current,
+			editorMentionClass,
+		});
+		// Only re-register when these specific values change, not when children changes
+	}, [addMentionConfig, type, trigger, items, editorMentionClass]);
+
+	return null; // Doesn't render anything, just registers
+}
 
 interface GenericMentionListProps<T extends BaseMentionItem> {
 	items: T[];
@@ -400,28 +515,105 @@ function getMentionSuggestion<T extends BaseMentionItem>(
 	};
 }
 
-////////////////
-// InputGroup //
-////////////////
+export type ChatInputSubmitButtonProps = ComponentProps<
+	typeof InputGroupButton
+> & {
+	isStreaming?: boolean;
+	onStop?: () => void;
+	disabled?: boolean;
+};
 
-type ChatInputProps = ComponentProps<typeof InputGroup>;
+export function ChatInputSubmitButton({
+	className,
+	isStreaming,
+	onStop,
+	disabled,
+	...props
+}: ChatInputSubmitButtonProps) {
+	const {
+		onSubmit,
+		onStop: onStopContext,
+		isStreaming: isStreamingContext,
+		disabled: contextDisabled,
+	} = useContext(ChatInputContext);
 
-export function ChatInput(props: ChatInputProps) {
-	return <InputGroup {...props} />;
-}
+	const loading = isStreaming ?? isStreamingContext;
+	const effectiveOnStop = onStop ?? onStopContext;
+	const effectiveDisabled = disabled ?? contextDisabled;
 
-type ChatInputSubmitButtonProps = ComponentProps<typeof InputGroupButton>;
+	// Determine variant and click handler
+	const isStopVariant = loading && effectiveOnStop;
+	const isLoadingVariant = loading && !effectiveOnStop;
 
-export function ChatInputSubmitButton(props: ChatInputSubmitButtonProps) {
+	const handleClick = isStopVariant ? effectiveOnStop : onSubmit;
+
+	if (isStopVariant) {
+		return (
+			<InputGroupButton
+				variant="default"
+				size="icon-sm"
+				className={cn("rounded-full", className)}
+				onClick={handleClick}
+				disabled={effectiveDisabled}
+				{...props}
+			>
+				<StopIcon className="h-4 w-4" />
+
+				<span className="sr-only">Stop</span>
+			</InputGroupButton>
+		);
+	}
+
+	if (isLoadingVariant) {
+		return (
+			<InputGroupButton
+				variant="default"
+				size="icon-sm"
+				className={cn("rounded-full", className)}
+				onClick={handleClick}
+				disabled={effectiveDisabled}
+				{...props}
+			>
+				<Loader2 className="h-4 w-4 animate-spin" />
+				<span className="sr-only">Loading</span>
+			</InputGroupButton>
+		);
+	}
+
 	return (
 		<InputGroupButton
 			variant="default"
 			size="icon-sm"
-			className="rounded-full"
+			className={cn("rounded-full", className)}
+			onClick={handleClick}
+			disabled={effectiveDisabled}
 			{...props}
 		>
 			<ArrowUpIcon />
 			<span className="sr-only">Send</span>
 		</InputGroupButton>
 	);
+}
+
+const StopIcon = ({ className }: { className?: string }) => (
+	<svg
+		width="16"
+		height="16"
+		viewBox="0 0 16 16"
+		fill="currentColor"
+		className={className}
+		aria-hidden="true"
+	>
+		<title>Stop</title>
+		<rect x="2" y="2" width="12" height="12" rx="2" fill="currentColor" />
+	</svg>
+);
+
+export type ChatInputGroupAddon = ComponentProps<typeof InputGroupAddon>;
+
+export function ChatInputGroupAddon({
+	className,
+	...props
+}: ChatInputGroupAddon) {
+	return <InputGroupAddon className={cn(className)} {...props} />;
 }

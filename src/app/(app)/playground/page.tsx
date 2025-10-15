@@ -7,11 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import {
 	ChatInput,
 	ChatInputEditor,
+	ChatInputMention,
 	ChatInputSubmitButton,
 	type ChatInputValue,
-	createMentionConfig,
-	extractMentions,
-} from "@/components/ui/chat-input";
+} from "@/registry/ui/chat-input-tip";
 import {
 	InputGroupAddon,
 	InputGroupButton,
@@ -97,57 +96,6 @@ export default function ChatExample() {
 	// 	}, 2000);
 	// };
 
-	const mentionConfigs = [
-		createMentionConfig({
-			type: "member",
-			trigger: "@",
-			items: members,
-			renderItem: (item) => {
-				// TypeScript infers item as MemberMention from items array!
-				const imgUrl = item.image ?? "/placeholder.jpg";
-				return (
-					<>
-						<Avatar className="h-6 w-6">
-							<AvatarImage src={imgUrl} alt={item.name} />
-							<AvatarFallback>
-								{item.name[0].toUpperCase()}
-							</AvatarFallback>
-						</Avatar>
-
-						<span
-							className="text-sm font-medium truncate max-w-[120px]"
-							title={item.name}
-						>
-							{item.name}
-						</span>
-						<Badge variant="outline" className="ml-auto">
-							{item.type}
-						</Badge>
-					</>
-				);
-			},
-		}),
-		createMentionConfig({
-			type: "file",
-			trigger: "/",
-			items: files,
-			renderItem: (item) => {
-				// TypeScript infers item as FileMention from items array!
-				return (
-					<>
-						<FileIcon className="h-4 w-4 text-muted-foreground" />
-						<span
-							className="text-sm font-medium truncate max-w-[200px]"
-							title={item.name}
-						>
-							{item.name}
-						</span>
-					</>
-				);
-			},
-		}),
-	];
-
 	const handleSubmit = () => {
 		console.log("Submit button clicked");
 		console.log(editorValue);
@@ -158,14 +106,50 @@ export default function ChatExample() {
 		<div className="max-w-2xl mx-auto p-4 w-full space-y-4">
 			<h2 className="text-lg font-semibold mb-4">Chat Input Example</h2>
 
-			<ChatInput>
+			<ChatInput onSubmit={handleSubmit}>
 				<ChatInputEditor
-					mentionConfigs={mentionConfigs}
 					value={editorValue}
 					onChange={setEditorValue}
-					onEnter={handleSubmit} // Enter key submits (Shift+Enter for newline)
-					placeholder="Type @ for members, / for files..."
+					placeholder="Type @ for agents, / for files..."
 				/>
+				<ChatInputMention type="member" trigger="@" items={members}>
+					{(item) => (
+						<>
+							<Avatar className="h-6 w-6">
+								<AvatarImage
+									src={item.image ?? "/placeholder.jpg"}
+									alt={item.name}
+								/>
+								<AvatarFallback>
+									{item.name[0].toUpperCase()}
+								</AvatarFallback>
+							</Avatar>
+
+							<span
+								className="text-sm font-medium truncate max-w-[120px]"
+								title={item.name}
+							>
+								{item.name}
+							</span>
+							<Badge variant="outline" className="ml-auto">
+								{item.type}
+							</Badge>
+						</>
+					)}
+				</ChatInputMention>
+				<ChatInputMention type="file" trigger="/" items={files}>
+					{(item) => (
+						<>
+							<FileIcon className="h-4 w-4 text-muted-foreground" />
+							<span
+								className="text-sm font-medium truncate max-w-[200px]"
+								title={item.name}
+							>
+								{item.name}
+							</span>
+						</>
+					)}
+				</ChatInputMention>
 				<InputGroupAddon align="block-end">
 					<InputGroupButton
 						variant="outline"
@@ -178,17 +162,14 @@ export default function ChatExample() {
 						52% used
 					</InputGroupText>
 					<Separator orientation="vertical" className="!h-6" />
-					<ChatInputSubmitButton onClick={handleSubmit} />
+					<ChatInputSubmitButton />
 				</InputGroupAddon>
 			</ChatInput>
 
 			{/* Debug output */}
 			<pre className="text-xs bg-muted p-2 rounded">
 				{JSON.stringify(
-					{
-						editorValue,
-						extractedMentions: extractMentions(editorValue),
-					},
+					editorValue,
 					null,
 					2,
 				)}

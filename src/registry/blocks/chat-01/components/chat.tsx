@@ -6,9 +6,11 @@ import { type ComponentPropsWithoutRef, useState } from "react";
 import { useTrackEvent } from "@/lib/events";
 import {
 	ChatInput,
-	ChatInputSubmit,
-	ChatInputTextArea,
-} from "@/registry/ui/chat-input";
+	ChatInputEditor,
+	ChatInputGroupAddon,
+	ChatInputSubmitButton,
+	type ChatInputValue,
+} from "@/registry/ui/chat-input-tip";
 import {
 	ChatMessage,
 	ChatMessageAvatar,
@@ -103,8 +105,29 @@ const INITIAL_MESSAGES: UIMessage[] = [
 	},
 ];
 
+// Helper function to extract plain text from JSONContent
+function extractTextFromJSON(json: ChatInputValue): string {
+	if (!json.content) {
+		return "";
+	}
+	let text = "";
+	for (const item of json.content) {
+		if (item.type === "text" && item.text) {
+			text += item.text;
+		} else if (item.type === "paragraph" && item.content) {
+			text += extractTextFromJSON({ type: "doc", content: item.content });
+		} else if (item.content) {
+			text += extractTextFromJSON({ type: "doc", content: item.content });
+		}
+	}
+	return text;
+}
+
 export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
-	const [input, setInput] = useState("");
+	const [input, setInput] = useState<ChatInputValue>({
+		type: "doc",
+		content: [],
+	});
 
 	const { messages, sendMessage, status, stop } = useChat({
 		transport: new DefaultChatTransport({
@@ -134,8 +157,12 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 		if (isLoading) {
 			return;
 		}
-		sendMessage({ role: "user", parts: [{ type: "text", text: input }] });
-		setInput("");
+		const text = extractTextFromJSON(input).trim();
+		if (text.length === 0) {
+			return;
+		}
+		sendMessage({ role: "user", parts: [{ type: "text", text }] });
+		setInput({ type: "doc", content: [] });
 	};
 
 	return (
@@ -180,15 +207,15 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 				<MessageAreaScrollButton alignment="center" />
 			</MessageArea>
 			<div className="px-2 py-4 max-w-2xl mx-auto w-full">
-				<ChatInput
-					value={input}
-					onChange={(e) => setInput(e.target.value)}
-					onSubmit={handleSubmitMessage}
-					loading={isLoading}
-					onStop={stop}
-				>
-					<ChatInputTextArea placeholder="Type a message..." />
-					<ChatInputSubmit />
+				<ChatInput onSubmit={handleSubmitMessage} isStreaming={isLoading} onStop={stop}>
+					<ChatInputEditor
+						value={input}
+						onChange={setInput}
+						placeholder="Type a message..."
+					/>
+					<ChatInputGroupAddon align="block-end">
+						<ChatInputSubmitButton className="ml-auto" />
+					</ChatInputGroupAddon>
 				</ChatInput>
 			</div>
 		</div>
