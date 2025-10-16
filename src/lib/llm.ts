@@ -4,7 +4,7 @@ import { Index } from "@/registry/__index__";
 
 export function processMdxForLLMs(content: string) {
 	const componentPreviewRegex =
-		/<ComponentPreview\s+[^>]*name="([^"]+)"[^>]*\/>/g;
+		/<ComponentPreview\s+[^>]*name="([^"]+)"[^>]*\/>/g; // TODO: Should we replace the ComponentSource?
 
 	return content.replace(componentPreviewRegex, (match, name) => {
 		try {

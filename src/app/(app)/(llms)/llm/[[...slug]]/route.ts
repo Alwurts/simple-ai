@@ -13,22 +13,13 @@ export async function GET(
 	const slug = (await params).slug;
 	const page = source.getPage(slug);
 
-	//const pageData = page?.data;
-	//console.log("pageData", pageData.getText());
-
-	// @ts-expect-error - revisit fumadocs types.
-	console.log("page", page.data);
-	console.log("slug", slug);
-	// @ts-expect-error - revisit fumadocs types.
-	console.log("content", page?.data.content);
-
-	// @ts-expect-error - revisit fumadocs types.
-	if (!page || !page.data.content) {
+	if (!page) {
 		notFound();
 	}
 
-	// @ts-expect-error - revisit fumadocs types.
-	const processedContent = processMdxForLLMs(page.data.content);
+	const markdownTextRaw = await page.data.getText("raw");
+
+	const processedContent = processMdxForLLMs(markdownTextRaw);
 
 	return new NextResponse(processedContent, {
 		headers: {

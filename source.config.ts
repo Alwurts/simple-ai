@@ -13,8 +13,7 @@ export default defineConfig({
 		rehypePlugins: (plugins) => {
 			plugins.shift();
 			plugins.push([
-				// biome-ignore lint/suspicious/noExplicitAny: Fix later
-				rehypePrettyCode as any,
+				rehypePrettyCode,
 				{
 					theme: {
 						dark: "github-dark",
@@ -40,5 +39,8 @@ export const docs = defineDocs({
 				})
 				.optional(),
 		}),
+		// postprocess: {
+		// 	includeProcessedMarkdown: true,
+		// },
 	},
 });

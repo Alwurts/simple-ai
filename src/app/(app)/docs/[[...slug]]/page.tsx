@@ -7,6 +7,7 @@ import { DocsTableOfContents } from "@/components/docs/docs-toc";
 import { mdxComponents } from "@/components/mdx-components";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { processMdxForLLMs } from "@/lib/llm";
 import { source } from "@/lib/source";
 import { absoluteUrl } from "@/lib/utils";
 
@@ -71,18 +72,20 @@ export default async function Page(props: {
 }) {
 	const params = await props.params;
 	const page = source.getPage(params.slug);
-	//console.log("source.getPages()", source.getPages());
+
 	if (!page) {
 		notFound();
 	}
 
 	const doc = page.data;
-	// @ts-expect-error - revisit fumadocs types.
 	const MDX = doc.body;
 	const neighbours = await findNeighbour(source.pageTree, page.url);
 
-	// @ts-expect-error - revisit fumadocs types.
 	const links = doc.links;
+
+	const markdownTextRaw = await doc.getText("raw");
+
+	const processedContent = processMdxForLLMs(markdownTextRaw);
 
 	return (
 		<div
@@ -100,8 +103,7 @@ export default async function Page(props: {
 								</h1>
 								<div className="docs-nav bg-background/80 border-border/50 fixed inset-x-0 bottom-0 isolate z-50 flex items-center gap-2 border-t px-6 py-4 backdrop-blur-sm sm:static sm:z-0 sm:border-t-0 sm:bg-transparent sm:px-0 sm:pt-1.5 sm:backdrop-blur-none">
 									<DocsCopyPage
-										// @ts-expect-error - revisit fumadocs types.
-										page={doc.content}
+										page={processedContent}
 										url={absoluteUrl(page.url)}
 									/>
 									{neighbours.previous && (
@@ -212,10 +214,8 @@ export default async function Page(props: {
 			</div>
 			<div className="sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[calc(100svh-var(--footer-height)+2rem)] w-72 flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
 				<div className="h-(--top-spacing) shrink-0" />
-				{/* @ts-expect-error - revisit fumadocs types. */}
 				{doc.toc?.length ? (
 					<div className="no-scrollbar overflow-y-auto px-8">
-						{/* @ts-expect-error - revisit fumadocs types. */}
 						<DocsTableOfContents toc={doc.toc} />
 						<div className="h-12" />
 					</div>
