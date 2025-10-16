@@ -9,7 +9,8 @@
 		"lint": "biome check src --write",
 		"typecheck": "tsc --noEmit",
 		"postinstall": "fumadocs-mdx",
-		"registry:build": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/build-registry.mts && biome check src/registry --write && biome check ./public/r/*.json --write"
+		"registry:build": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/build-registry.mts && biome check src/registry --write && biome check ./public/r/*.json --write",
+		"registry:capture": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/capture-registry.mts"
 	},
 	"dependencies": {
 		"@ai-sdk/deepseek": "^1.0.23",
@@ -88,6 +89,7 @@
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
+		"puppeteer": "^24.25.0",
 		"tailwindcss": "^4",
 		"tsx": "^4.20.6",
 		"tw-animate-css": "^1.4.0",
