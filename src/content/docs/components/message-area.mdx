@@ -17,6 +17,10 @@ The Message Area component provides a responsive and intelligent scrollable cont
 - **Mobile Optimized**: On touch devices, auto-scroll pauses while the user's finger is on the screen
 - **Convenient Navigation**: Includes a scroll-to-bottom button that appears when not at the bottom
 
+## About
+
+This component is built on top of [use-stick-to-bottom](https://www.npmjs.com/package/use-stick-to-bottom), a React hook that provides smooth auto-scrolling functionality for chat interfaces and streaming content.
+
 ## Installation
 
 <CodeTabs>
@@ -37,15 +41,17 @@ npx shadcn@latest add https://simple-ai.dev/r/message-area.json
 
 <Steps>
 
+<Step>Install required dependencies</Step>
+
+```bash
+npm install use-stick-to-bottom
+```
+
 <Step>Copy and paste the following code into your project.</Step>
 
 `message-area.tsx`
 
 <ComponentSource name="message-area" />
-
-`use-scroll-to-bottom.ts`
-
-<ComponentSource name="use-scroll-to-bottom" />
 
 <Step>Update the import paths to match your project setup.</Step>
 
