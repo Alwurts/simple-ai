@@ -9,8 +9,7 @@
 		"lint": "biome check src --write",
 		"typecheck": "tsc --noEmit",
 		"postinstall": "fumadocs-mdx",
-		"registry:build": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/build-registry.mts && npm run lint && biome check ./public/r/*.json --write",
-		"validate:registries": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/validate-registries.mts"
+		"registry:build": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/build-registry.mts && biome check src/registry --write && biome check ./public/r/*.json --write"
 	},
 	"dependencies": {
 		"@ai-sdk/deepseek": "^1.0.23",
