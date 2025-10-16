@@ -1,3 +1,4 @@
+import { LogoIcon } from "@/components/icons/logo-icon";
 import { ImageResponse } from "next/og";
 
 async function loadAssets(): Promise<
@@ -46,9 +47,12 @@ export async function GET(request: Request) {
 
 	return new ImageResponse(
 		<div
-			tw="flex h-full w-full bg-black text-white"
+			tw="flex h-full w-full bg-white text-black"
 			style={{ fontFamily: "Geist Sans" }}
 		>
+			<div tw="flex absolute flex-row bottom-24 right-24 text-black">
+				<LogoIcon width={108} height={78} />
+			</div>
 			<div tw="flex flex-col absolute w-[896px] justify-center inset-32">
 				<div
 					tw="tracking-tight flex-grow-1 flex flex-col justify-center leading-[1.1]"
@@ -62,7 +66,7 @@ export async function GET(request: Request) {
 					{title}
 				</div>
 				<div
-					tw="text-[40px] leading-[1.5] flex-grow-1 text-stone-400"
+					tw="text-[40px] leading-[1.5] flex-grow-1 text-stone-600"
 					style={{
 						fontWeight: 500,
 						textWrap: "balance",
