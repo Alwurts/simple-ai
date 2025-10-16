@@ -1,5 +1,5 @@
-import { LogoIcon } from "@/components/icons/logo-icon";
 import { ImageResponse } from "next/og";
+import { LogoIcon } from "@/components/icons/logo-icon";
 
 async function loadAssets(): Promise<
 	{ name: string; data: Buffer; weight: 400 | 600; style: "normal" }[]

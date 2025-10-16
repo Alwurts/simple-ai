@@ -32,34 +32,26 @@ import {
 } from "@/components/ui/input-group";
 import { cn } from "@/lib/utils";
 
-export type ChatInputValue = JSONContent; // Store full JSON for state
+export type ChatInputValue = JSONContent;
 
-// Base mention item that all custom mention types must extend
 export type BaseMentionItem = {
 	id: string;
 	name: string;
 };
 
-// Generic mention config - allows typed items and renderItem
-export type MentionConfig<T extends BaseMentionItem = BaseMentionItem> = {
-	type: string; // Discriminator e.g., 'member' or 'file' (renamed from 'name')
+type MentionConfig<T extends BaseMentionItem = BaseMentionItem> = {
+	type: string;
 	trigger: string; // e.g., '@' or '/'
 	items: T[];
 	renderItem?: (item: T, isSelected: boolean) => ReactNode;
 	editorMentionClass?: string;
 };
 
-// Legacy type alias for backwards compatibility
-export type MentionItem = BaseMentionItem;
-
-// Helper for type inference - allows TypeScript to infer the generic type from items
 export function createMentionConfig<T extends BaseMentionItem>(
 	config: MentionConfig<T>,
 ): MentionConfig<T> {
 	return config;
 }
-
-export type Mention = { type: string; id: string; name: string };
 
 type ChatInputContextType = {
 	// biome-ignore lint/suspicious/noExplicitAny: Needs to accept configs with different item types
@@ -108,13 +100,11 @@ export function ChatInput({
 		[],
 	);
 
-	// Track which types have been registered to prevent duplicates across re-renders
 	const registeredTypesRef = useRef(new Set<string>());
 
 	// biome-ignore lint/suspicious/noExplicitAny: Needs to accept configs with different item types
 	const addMentionConfig = useCallback((config: MentionConfig<any>) => {
 		if (registeredTypesRef.current.has(config.type)) {
-			// Already registered, just update the config
 			setMentionConfigs((prev) => {
 				const existingIndex = prev.findIndex(
 					(c) => c.type === config.type,
@@ -127,7 +117,6 @@ export function ChatInput({
 				return prev;
 			});
 		} else {
-			// New registration
 			registeredTypesRef.current.add(config.type);
 			setMentionConfigs((prev) => [...prev, config]);
 		}
@@ -164,8 +153,8 @@ export interface ChatInputEditorProps {
 	onEnter?: () => void;
 	placeholder?: string;
 	className?: string;
-	value?: ChatInputValue; // Optional for controlled
-	onChange?: (value: ChatInputValue) => void; // Optional
+	value?: ChatInputValue;
+	onChange?: (value: ChatInputValue) => void;
 }
 
 export function ChatInputEditor({
@@ -246,14 +235,13 @@ export function ChatInputEditor({
 		[extensions, disabled, contextDisabled],
 	);
 
-	// Sync external value
 	useEffect(() => {
 		if (
 			effectiveValue &&
 			editor &&
 			JSON.stringify(effectiveValue) !== JSON.stringify(editor.getJSON())
 		) {
-			editor.commands.setContent(effectiveValue, {});
+			editor.commands.setContent(effectiveValue);
 		}
 	}, [effectiveValue, editor]);
 
@@ -279,8 +267,6 @@ export function ChatInputEditor({
 		</>
 	);
 }
-
-// Internal helpers
 
 const KeyboardShortcuts = Extension.create({
 	addKeyboardShortcuts() {
@@ -319,7 +305,6 @@ export function ChatInputMention<T extends BaseMentionItem = BaseMentionItem>({
 }: ChatInputMentionProps<T>) {
 	const { addMentionConfig } = useContext(ChatInputContext);
 
-	// Store renderItem in a ref to avoid re-registering on every render
 	const renderItemRef = useRef(children);
 	useEffect(() => {
 		renderItemRef.current = children;
@@ -333,10 +318,9 @@ export function ChatInputMention<T extends BaseMentionItem = BaseMentionItem>({
 			renderItem: renderItemRef.current,
 			editorMentionClass,
 		});
-		// Only re-register when these specific values change, not when children changes
 	}, [addMentionConfig, type, trigger, items, editorMentionClass]);
 
-	return null; // Doesn't render anything, just registers
+	return null;
 }
 
 interface GenericMentionListProps<T extends BaseMentionItem> {
@@ -557,7 +541,6 @@ export function ChatInputSubmitButton({
 	const effectiveOnStop = onStop ?? onStopContext;
 	const effectiveDisabled = disabled ?? contextDisabled;
 
-	// Determine variant and click handler
 	const isStopVariant = loading && effectiveOnStop;
 	const isLoadingVariant = loading && !effectiveOnStop;
 
@@ -659,12 +642,10 @@ type ParsedFromObject<T extends MentionConfigsObject> = {
 	[K in keyof T]?: T[K] extends MentionConfig<infer Item> ? Item[] : never;
 };
 
-// Base parsed type for no mentions
 type ParsedContentOnly = {
 	content: string;
 };
 
-// Conditional return type based on whether mentions are provided
 type UseChatInputReturn<Mentions extends MentionConfigsObject | undefined> = {
 	value: JSONContent;
 	onChange: (value: JSONContent) => void;
@@ -677,14 +658,12 @@ type UseChatInputReturn<Mentions extends MentionConfigsObject | undefined> = {
 	? { mentionConfigs: Mentions }
 	: { mentionConfigs?: never });
 
-// Overload for with mentions
 export function useChatInput<Mentions extends MentionConfigsObject>(config: {
 	mentions: Mentions;
 	initialValue?: JSONContent;
 	onSubmit?: (parsed: ParsedFromObject<Mentions>) => void;
 }): UseChatInputReturn<Mentions>;
 
-// Overload for without mentions
 export function useChatInput(config: {
 	mentions?: never;
 	initialValue?: JSONContent;
@@ -707,7 +686,6 @@ export function useChatInput<
 		initialValue ?? { type: "doc", content: [] },
 	);
 
-	// Convert object to array for internal processing
 	const configsArray = useMemo(
 		() => (mentions ? Object.values(mentions) : []),
 		[mentions],

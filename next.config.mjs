@@ -2,7 +2,8 @@ import { createMDX } from "fumadocs-mdx/next";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	outputFileTracingIncludes: {
+  	//devIndicators: false,
+  	outputFileTracingIncludes: {
 		"/*": ["./src/registry/**/*"],
 	},
 	redirects: async () => {
