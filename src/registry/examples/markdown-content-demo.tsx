@@ -73,7 +73,7 @@ function sayHello() {
 `,
 	);
 	return (
-		<div className="w-full max-h-[500px] overflow-y-auto">
+		<div className="w-full max-h-[400px] overflow-y-auto">
 			<MarkdownContent id={useId()} content={content} />
 		</div>
 	);

@@ -55,7 +55,7 @@ export default function MarkdownStreamingDemo() {
 	};
 
 	return (
-		<div className="space-y-4 w-full h-full">
+		<div className="space-y-4 w-full max-h-[400px] overflow-y-auto">
 			<div className="flex gap-2">
 				<Button onClick={handleStart} disabled={isStreaming}>
 					{content ? "Restart" : "Start"} Streaming

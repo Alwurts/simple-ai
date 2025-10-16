@@ -39,7 +39,7 @@ export default function JsxRendererDemo() {
 		: `${partialJsx.split("\n").slice(0, 3).join("\n")}\n  ...`;
 
 	return (
-		<div className="space-y-4 w-full">
+		<div className="max-h-[550px] space-y-4 w-full overflow-y-auto py-4">
 			<Slider
 				value={percentage}
 				onValueChange={setPercentage}

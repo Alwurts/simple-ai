@@ -35,16 +35,11 @@ export const Index: Record<string, any> = {
 		name: "chat-input",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["textarea"],
+		registryDependencies: ["input-group", "button"],
 		files: [
 			{
 				path: "./src/registry/ui/chat-input.tsx",
 				type: "registry:ui",
-				target: "",
-			},
-			{
-				path: "./src/registry/hooks/use-textarea-resize.ts",
-				type: "registry:hook",
 				target: "",
 			},
 		],
@@ -581,46 +576,21 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
-	"chat-input-demo": {
-		name: "chat-input-demo",
+	"chat-input-demo-mentions": {
+		name: "chat-input-demo-mentions",
 		description: "",
 		type: "registry:example",
 		registryDependencies: ["undefined/r/chat-input.json"],
 		files: [
 			{
-				path: "./src/registry/examples/chat-input-demo.tsx",
-				type: "registry:example",
-				target: "",
-			},
-		],
-		component: React.lazy(async () => {
-			const mod = await import("@/registry/examples/chat-input-demo.tsx");
-			const exportName =
-				Object.keys(mod).find(
-					(key) =>
-						typeof mod[key] === "function" ||
-						typeof mod[key] === "object",
-				) || item.name;
-			return { default: mod.default || mod[exportName] };
-		}),
-		categories: undefined,
-		meta: undefined,
-	},
-	"chat-input-unstyled": {
-		name: "chat-input-unstyled",
-		description: "",
-		type: "registry:example",
-		registryDependencies: undefined,
-		files: [
-			{
-				path: "./src/registry/examples/chat-input-unstyled.tsx",
+				path: "./src/registry/examples/chat-input-demo-mentions.tsx",
 				type: "registry:example",
 				target: "",
 			},
 		],
 		component: React.lazy(async () => {
 			const mod = await import(
-				"@/registry/examples/chat-input-unstyled.tsx"
+				"@/registry/examples/chat-input-demo-mentions.tsx"
 			);
 			const exportName =
 				Object.keys(mod).find(
@@ -633,21 +603,48 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
-	"chat-input-unstyled-initial-rows": {
-		name: "chat-input-unstyled-initial-rows",
+	"chat-input-with-addons": {
+		name: "chat-input-with-addons",
 		description: "",
 		type: "registry:example",
 		registryDependencies: undefined,
 		files: [
 			{
-				path: "./src/registry/examples/chat-input-unstyled-initial-rows.tsx",
+				path: "./src/registry/examples/chat-input-with-addons.tsx",
 				type: "registry:example",
 				target: "",
 			},
 		],
 		component: React.lazy(async () => {
 			const mod = await import(
-				"@/registry/examples/chat-input-unstyled-initial-rows.tsx"
+				"@/registry/examples/chat-input-with-addons.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-input-demo-simple": {
+		name: "chat-input-demo-simple",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-input-demo-simple.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-input-demo-simple.tsx"
 			);
 			const exportName =
 				Object.keys(mod).find(

@@ -12,6 +12,7 @@ export function ComponentPreviewTabs({
 	component,
 	source,
 	componentContainerClassName,
+	codeContainerClassName,
 	...props
 }: React.ComponentProps<"div"> & {
 	align?: "center" | "start" | "end";
@@ -20,6 +21,7 @@ export function ComponentPreviewTabs({
 	component: React.ReactNode;
 	source: React.ReactNode;
 	componentContainerClassName?: string;
+	codeContainerClassName?: string;
 }) {
 	const [tab, setTab] = React.useState("preview");
 
@@ -79,7 +81,10 @@ export function ComponentPreviewTabs({
 				<div
 					data-slot="code"
 					data-active={tab === "code"}
-					className="absolute inset-0 hidden overflow-hidden data-[active=true]:block **:[figure]:!m-0 **:[pre]:h-[450px]"
+					className={cn(
+						"absolute inset-0 hidden overflow-hidden data-[active=true]:block **:[figure]:!m-0 **:[pre]:h-[450px]",
+						codeContainerClassName,
+					)}
 				>
 					{source}
 				</div>

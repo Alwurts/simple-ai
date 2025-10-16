@@ -16,7 +16,7 @@ import {
 	ChatInputSubmitButton,
 	createMentionConfig,
 	useChatInput,
-} from "@/registry/ui/chat-input-tip";
+} from "@/registry/ui/chat-input";
 
 //Sample data (in real app, fetch from API or props)
 type MemberItem = {

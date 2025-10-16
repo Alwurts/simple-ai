@@ -1,13 +1,12 @@
 ---
 title: Chat Input
-description: A chat input component that autoresizes to fit the content and features a submit button.
+description: A rich text chat input component with TipTap editor, mention support, and automatic height adjustment.
 component: true
 ---
 
-<ComponentPreview name="chat-input-demo" description="A chat input component." />
+<ComponentPreview name="chat-input-demo-mentions" description="A basic chat input component." />
 
-A versatile chat input component that comes pre-styled with a modern look. It features automatic height adjustment based on content, a submit button, and smart keyboard handling. Press Enter to submit your message or Shift+Enter to add a new line. The component is composed of a textarea and a submit button, which can be customized or used individually.
-
+A powerful chat input component built on TipTap editor that features automatic height adjustment, smart keyboard handling, and optional mention support. Press Enter to submit or Shift+Enter for new lines. The component can be used as a simple text input or extended with mentions for @users, /files, and custom triggers.
 
 ## Installation
 
@@ -29,15 +28,17 @@ npx shadcn@latest add https://simple-ai.dev/r/chat-input.json
 
 <Steps>
 
+<Step>Install required dependencies</Step>
+
+```bash
+npm install @tiptap/core @tiptap/react @tiptap/starter-kit @tiptap/extension-mention @tiptap/extension-placeholder @tiptap/suggestion tippy.js
+```
+
 <Step>Copy and paste the following code into your project.</Step>
 
 `chat-input.tsx`
 
 <ComponentSource name="chat-input" />
-
-`use-textarea-resize.ts`
-
-<ComponentSource name="use-textarea-resize" />
 
 <Step>Update the import paths to match your project setup.</Step>
 
@@ -50,40 +51,137 @@ npx shadcn@latest add https://simple-ai.dev/r/chat-input.json
 ## Usage
 
 ```tsx
-import { ChatInput, ChatInputTextArea, ChatInputSubmit } from "@/components/ui/chat-input"
+import {
+  ChatInput,
+  ChatInputEditor,
+  ChatInputMention,
+  ChatInputSubmitButton,
+  createMentionConfig,
+  useChatInput,
+} from "@/components/ui/chat-input"
+
+type Member = { id: string; name: string; avatar?: string };
+const members: Member[] = [
+  { id: "1", name: "Alice", avatar: "/alice.jpg" },
+  { id: "2", name: "Bob" },
+];
+
+export function ChatWithMentions() {
+  const { value, onChange, parsed, handleSubmit, mentionConfigs } =
+    useChatInput({
+      mentions: {
+        member: createMentionConfig<Member>({
+          type: "member",
+          trigger: "@",
+          items: members,
+        }),
+      },
+      onSubmit: (parsed) => {
+        console.log("Content:", parsed.content);
+        console.log("Mentioned members:", parsed.member);
+      },
+    });
+
+  return (
+    <ChatInput onSubmit={handleSubmit} value={value} onChange={onChange}>
+      <ChatInputMention
+        type={mentionConfigs.member.type}
+        trigger={mentionConfigs.member.trigger}
+        items={mentionConfigs.member.items}
+      >
+        {(item) => <span>{item.name}</span>}
+      </ChatInputMention>
+      <ChatInputEditor placeholder="Type @ to mention..." />
+      <ChatInputSubmitButton />
+    </ChatInput>
+  );
+}
 ```
 
-```tsx
-<ChatInput variant="default">
-  <ChatInputTextArea placeholder="Type a message..." />
-  <ChatInputSubmit />
-</ChatInput>
-```
+## About
 
-## Props
-
-### ChatInput
-
-| Prop      | Type                     | Default     | Description                                               |
-| --------- | ------------------------ | ----------- | --------------------------------------------------------- |
-| variant   | `"default" \| "unstyled"` | `"default"` | The visual style variant of the chat input                |
-| value     | `string`                 | -           | The controlled value of the textarea                      |
-| onChange  | `function`               | -           | Callback when the textarea value changes                  |
-| onSubmit  | `function`               | -           | Callback when the message is submitted                    |
-| loading   | `boolean`                | `false`     | Whether the input is in a loading state                   |
-| onStop    | `function`               | -           | Callback to stop an ongoing action (shown when loading)   |
-| rows      | `number`                 | `1`         | Initial number of rows to display in the textarea         |
+This component is built on top of [TipTap](https://tiptap.dev/). It provides a rich text editor with mention support, automatic height adjustment, and proper keyboard handling.
 
 ## Examples
 
-### Default
+### Without mentions
 
-<ComponentPreview name="chat-input-demo" />
+<ComponentPreview name="chat-input-demo-simple" />
 
-### Unstyled
+### With Custom Layout
 
-<ComponentPreview name="chat-input-unstyled" />
+<ComponentPreview name="chat-input-with-addons" />
 
-### Unstyled with initial rows
+### Custom Mention Styling
 
-<ComponentPreview name="chat-input-unstyled-initial-rows" />
+## Reference
+
+### ChatInput
+
+Root container component that manages the input state and context.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| onSubmit | `() => void` | - | Callback when message is submitted |
+| isStreaming | `boolean` | `false` | Whether AI is currently streaming a response |
+| onStop | `() => void` | - | Callback to stop streaming (shows stop button) |
+| disabled | `boolean` | `false` | Disables the input |
+| value | `JSONContent` | - | Controlled TipTap JSON value |
+| onChange | `(value: JSONContent) => void` | - | Value change handler |
+
+### ChatInputEditor
+
+The TipTap editor instance for text input.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| placeholder | `string` | `"Type a message..."` | Placeholder text |
+| disabled | `boolean` | - | Disables editing |
+| onEnter | `() => void` | - | Custom Enter key handler |
+| value | `JSONContent` | - | Optional controlled value |
+| onChange | `(value: JSONContent) => void` | - | Optional change handler |
+
+### ChatInputMention
+
+Registers a mention type (render prop pattern).
+
+| Prop | Type | Description |
+|------|------|-------------|
+| type | `string` | Unique mention type identifier |
+| trigger | `string` | Trigger character (e.g., `"@"` or `"/"`) |
+| items | `T[]` | Array of mention items |
+| children | `(item: T, isSelected: boolean) => ReactNode` | Render function for dropdown items |
+| editorMentionClass | `string` | Custom CSS class for mentions in editor |
+
+### ChatInputSubmitButton
+
+Submit button that adapts to loading/streaming states.
+
+| Prop | Type | Description |
+|------|------|-------------|
+| isStreaming | `boolean` | Override streaming state |
+| onStop | `() => void` | Override stop handler |
+| disabled | `boolean` | Disable the button |
+
+### useChatInput
+
+Manages chat input state with optional mentions support.
+
+#### Parameters
+
+| Prop | Type | Description |
+|------|------|-------------|
+| mentions | `Record<string, MentionConfig<any>>` | Mention configurations |
+| initialValue | `JSONContent` | Initial value |
+| onSubmit | `(parsed: ParsedFromObject<Mentions>) => void` | Callback when message is submitted |
+
+#### Returns
+
+| Prop | Type | Description |
+|------|------|-------------|
+| value | `JSONContent` | Current value |
+| onChange | `(value: JSONContent) => void` | Value change handler |
+| parsed | `ParsedFromObject<Mentions>` | Parsed output with content string and mention arrays |
+| clear | `() => void` | Function to clear the input |
+| handleSubmit | `() => void` | Submit handler |
+| mentionConfigs | `Record<string, MentionConfig<any>>` | Mention configs (when using mentions) |

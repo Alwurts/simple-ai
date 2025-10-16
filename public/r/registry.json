@@ -18,15 +18,20 @@
 		{
 			"name": "chat-input",
 			"type": "registry:ui",
-			"registryDependencies": ["textarea"],
+			"dependencies": [
+				"@tiptap/core",
+				"@tiptap/react",
+				"@tiptap/starter-kit",
+				"@tiptap/extension-mention",
+				"@tiptap/extension-placeholder",
+				"@tiptap/suggestion",
+				"tippy.js"
+			],
+			"registryDependencies": ["input-group", "button"],
 			"files": [
 				{
 					"path": "./src/registry/ui/chat-input.tsx",
 					"type": "registry:ui"
-				},
-				{
-					"path": "./src/registry/hooks/use-textarea-resize.ts",
-					"type": "registry:hook"
 				}
 			]
 		},
@@ -302,32 +307,32 @@
 			]
 		},
 		{
-			"name": "chat-input-demo",
+			"name": "chat-input-demo-mentions",
 			"type": "registry:example",
 			"registryDependencies": ["undefined/r/chat-input.json"],
 			"files": [
 				{
-					"path": "./src/registry/examples/chat-input-demo.tsx",
+					"path": "./src/registry/examples/chat-input-demo-mentions.tsx",
 					"type": "registry:example"
 				}
 			]
 		},
 		{
-			"name": "chat-input-unstyled",
+			"name": "chat-input-with-addons",
 			"type": "registry:example",
 			"files": [
 				{
-					"path": "./src/registry/examples/chat-input-unstyled.tsx",
+					"path": "./src/registry/examples/chat-input-with-addons.tsx",
 					"type": "registry:example"
 				}
 			]
 		},
 		{
-			"name": "chat-input-unstyled-initial-rows",
+			"name": "chat-input-demo-simple",
 			"type": "registry:example",
 			"files": [
 				{
-					"path": "./src/registry/examples/chat-input-unstyled-initial-rows.tsx",
+					"path": "./src/registry/examples/chat-input-demo-simple.tsx",
 					"type": "registry:example"
 				}
 			]

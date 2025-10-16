@@ -13,32 +13,32 @@ export const examples: Registry["items"] = [
 		],
 	},
 	{
-		name: "chat-input-demo",
+		name: "chat-input-demo-mentions",
 		type: "registry:example",
 		registryDependencies: [`${BASE_URL}/r/chat-input.json`],
 		files: [
 			{
-				path: "examples/chat-input-demo.tsx",
+				path: "examples/chat-input-demo-mentions.tsx",
 				type: "registry:example",
 			},
 		],
 	},
 	{
-		name: "chat-input-unstyled",
+		name: "chat-input-with-addons",
 		type: "registry:example",
 		files: [
 			{
-				path: "examples/chat-input-unstyled.tsx",
+				path: "examples/chat-input-with-addons.tsx",
 				type: "registry:example",
 			},
 		],
 	},
 	{
-		name: "chat-input-unstyled-initial-rows",
+		name: "chat-input-demo-simple",
 		type: "registry:example",
 		files: [
 			{
-				path: "examples/chat-input-unstyled-initial-rows.tsx",
+				path: "examples/chat-input-demo-simple.tsx",
 				type: "registry:example",
 			},
 		],

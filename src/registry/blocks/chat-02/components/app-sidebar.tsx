@@ -3,7 +3,6 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { MessageCircle, SquarePen } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Sidebar,
@@ -19,8 +18,10 @@ import {
 import { useTrackEvent } from "@/lib/events";
 import {
 	ChatInput,
-	ChatInputSubmit,
-	ChatInputTextArea,
+	ChatInputEditor,
+	ChatInputGroupAddon,
+	ChatInputSubmitButton,
+	useChatInput,
 } from "@/registry/ui/chat-input";
 import {
 	ChatMessage,
@@ -108,16 +109,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 		},
 	});
 	const track = useTrackEvent();
-	const [input, setInput] = useState("");
 	const isLoading = status === "streaming" || status === "submitted";
 
-	const handleSubmitMessage = () => {
-		if (isLoading) {
-			return;
-		}
-		sendMessage({ role: "user", parts: [{ type: "text", text: input }] });
-		setInput("");
-	};
+	const { value, onChange, handleSubmit } = useChatInput({
+		onSubmit: (parsedValue) => {
+			sendMessage({
+				role: "user",
+				parts: [{ type: "text", text: parsedValue.content }],
+			});
+		},
+	});
 
 	return (
 		<Sidebar {...props}>
@@ -193,14 +194,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				</MessageArea>
 				<div className="p-4 max-w-2xl mx-auto w-full">
 					<ChatInput
-						value={input}
-						onChange={(e) => setInput(e.target.value)}
-						onSubmit={handleSubmitMessage}
-						loading={isLoading}
+						value={value}
+						onChange={onChange}
+						onSubmit={handleSubmit}
+						isStreaming={isLoading}
 						onStop={stop}
 					>
-						<ChatInputTextArea placeholder="Type a message..." />
-						<ChatInputSubmit />
+						<ChatInputEditor placeholder="Type a message..." />
+						<ChatInputGroupAddon align="block-end">
+							<ChatInputSubmitButton className="ml-auto" />
+						</ChatInputGroupAddon>
 					</ChatInput>
 				</div>
 			</div>

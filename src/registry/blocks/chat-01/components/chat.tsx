@@ -10,7 +10,7 @@ import {
 	ChatInputGroupAddon,
 	ChatInputSubmitButton,
 	useChatInput,
-} from "@/registry/ui/chat-input-tip";
+} from "@/registry/ui/chat-input";
 import {
 	ChatMessage,
 	ChatMessageAvatar,
