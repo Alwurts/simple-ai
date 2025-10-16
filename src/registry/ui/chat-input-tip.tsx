@@ -24,12 +24,12 @@ import {
 } from "react";
 import tippy, { type Instance } from "tippy.js";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import {
 	InputGroup,
 	InputGroupAddon,
 	InputGroupButton,
 } from "@/components/ui/input-group";
+import { cn } from "@/lib/utils";
 
 export type ChatInputValue = JSONContent; // Store full JSON for state
 
@@ -69,6 +69,8 @@ type ChatInputContextType = {
 	onStop?: () => void;
 	isStreaming: boolean;
 	disabled: boolean;
+	value?: ChatInputValue;
+	onChange?: (value: ChatInputValue) => void;
 };
 
 const ChatInputContext = createContext<ChatInputContextType>({
@@ -78,6 +80,8 @@ const ChatInputContext = createContext<ChatInputContextType>({
 	onStop: undefined,
 	isStreaming: false,
 	disabled: false,
+	value: undefined,
+	onChange: undefined,
 });
 
 export function ChatInput({
@@ -87,12 +91,16 @@ export function ChatInput({
 	isStreaming = false,
 	onStop,
 	disabled = false,
+	value,
+	onChange,
 	...props
 }: ComponentProps<typeof InputGroup> & {
 	onSubmit: () => void;
 	isStreaming?: boolean;
 	onStop?: () => void;
 	disabled?: boolean;
+	value?: ChatInputValue;
+	onChange?: (value: ChatInputValue) => void;
 }) {
 	// biome-ignore lint/suspicious/noExplicitAny: Needs to accept configs with different item types
 	const [mentionConfigs, setMentionConfigs] = useState<MentionConfig<any>[]>(
@@ -133,6 +141,8 @@ export function ChatInput({
 				onStop,
 				isStreaming,
 				disabled,
+				value,
+				onChange,
 			}}
 		>
 			<InputGroup
@@ -169,7 +179,12 @@ export function ChatInputEditor({
 		mentionConfigs,
 		onSubmit,
 		disabled: contextDisabled,
+		value: contextValue,
+		onChange: contextOnChange,
 	} = useContext(ChatInputContext);
+
+	const effectiveValue = value ?? contextValue;
+	const effectiveOnChange = onChange ?? contextOnChange;
 	const [isMounted, setIsMounted] = useState(false);
 
 	useEffect(() => {
@@ -213,16 +228,16 @@ export function ChatInputEditor({
 	const onUpdate = useCallback(
 		({ editor }: { editor: Editor }) => {
 			if (isMounted) {
-				onChange?.(editor.getJSON());
+				effectiveOnChange?.(editor.getJSON());
 			}
 		},
-		[onChange, isMounted],
+		[effectiveOnChange, isMounted],
 	);
 
 	const editor = useEditor(
 		{
 			extensions,
-			content: value,
+			content: effectiveValue,
 			onUpdate,
 			editable: !(disabled || contextDisabled),
 			immediatelyRender: true,
@@ -233,13 +248,13 @@ export function ChatInputEditor({
 	// Sync external value
 	useEffect(() => {
 		if (
-			value &&
+			effectiveValue &&
 			editor &&
-			JSON.stringify(value) !== JSON.stringify(editor.getJSON())
+			JSON.stringify(effectiveValue) !== JSON.stringify(editor.getJSON())
 		) {
-			editor.commands.setContent(value, {});
+			editor.commands.setContent(effectiveValue, {});
 		}
-	}, [value, editor]);
+	}, [effectiveValue, editor]);
 
 	return (
 		<>
@@ -616,4 +631,181 @@ export function ChatInputGroupAddon({
 	...props
 }: ChatInputGroupAddon) {
 	return <InputGroupAddon className={cn(className)} {...props} />;
+}
+
+// biome-ignore lint/suspicious/noExplicitAny: Required for type inference
+type MentionConfigsObject = Record<string, MentionConfig<any>>;
+
+type ParsedFromObject<T extends MentionConfigsObject> = {
+	content: string;
+} & {
+	[K in keyof T]?: T[K] extends MentionConfig<infer Item> ? Item[] : never;
+};
+
+// Base parsed type for no mentions
+type ParsedContentOnly = {
+	content: string;
+};
+
+// Conditional return type based on whether mentions are provided
+type UseChatInputReturn<Mentions extends MentionConfigsObject | undefined> = {
+	value: JSONContent;
+	onChange: (value: JSONContent) => void;
+	parsed: Mentions extends MentionConfigsObject
+		? ParsedFromObject<Mentions>
+		: ParsedContentOnly;
+	clear: () => void;
+	handleSubmit: () => void;
+} & (Mentions extends MentionConfigsObject
+	? { mentionConfigs: Mentions }
+	: { mentionConfigs?: never });
+
+// Overload for with mentions
+export function useChatInput<Mentions extends MentionConfigsObject>(config: {
+	mentions: Mentions;
+	initialValue?: JSONContent;
+	onSubmit?: (parsed: ParsedFromObject<Mentions>) => void;
+}): UseChatInputReturn<Mentions>;
+
+// Overload for without mentions
+export function useChatInput(config: {
+	mentions?: never;
+	initialValue?: JSONContent;
+	onSubmit?: (parsed: ParsedContentOnly) => void;
+}): UseChatInputReturn<undefined>;
+
+export function useChatInput<
+	Mentions extends MentionConfigsObject | undefined,
+>({
+	mentions,
+	initialValue,
+	onSubmit: onCustomSubmit,
+}: {
+	mentions?: Mentions;
+	initialValue?: JSONContent;
+	// biome-ignore lint/suspicious/noExplicitAny: Required for generic config handling
+	onSubmit?: (parsed: any) => void;
+}): UseChatInputReturn<Mentions> {
+	const [value, setValue] = useState<JSONContent>(
+		initialValue ?? { type: "doc", content: [] },
+	);
+
+	// Convert object to array for internal processing
+	const configsArray = useMemo(
+		() => (mentions ? Object.values(mentions) : []),
+		[mentions],
+	);
+
+	const parsed = useMemo(
+		() => parseContent(value, configsArray),
+		[value, configsArray],
+	);
+
+	const clear = useCallback(() => {
+		setValue({ type: "doc", content: [] });
+	}, []);
+
+	const handleSubmit = useCallback(() => {
+		if (parsed.content.trim().length === 0) {
+			return;
+		}
+
+		if (onCustomSubmit) {
+			onCustomSubmit(parsed);
+		}
+
+		clear();
+	}, [parsed, onCustomSubmit, clear]);
+
+	return {
+		value,
+		onChange: setValue,
+		parsed,
+		clear,
+		handleSubmit,
+		...(mentions ? { mentionConfigs: mentions } : {}),
+		// biome-ignore lint/suspicious/noExplicitAny: Type inference complexity
+	} as any;
+}
+
+// biome-ignore lint/suspicious/noExplicitAny: Required for type inference
+type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
+	k: infer I,
+) => void
+	? I
+	: never;
+
+// biome-ignore lint/suspicious/noExplicitAny: Required for type inference
+type ConfigToField<Config extends MentionConfig<any>> =
+	Config extends MentionConfig<infer T>
+		? { [K in Config["type"]]: T[] }
+		: never;
+
+export type ParsedChatInputValue<
+	// biome-ignore lint/suspicious/noExplicitAny: Required for type inference
+	Configs extends readonly MentionConfig<any>[],
+> = { content: string } & Partial<
+	UnionToIntersection<
+		{ [I in keyof Configs]: ConfigToField<Configs[I]> }[number]
+	>
+>;
+
+// biome-ignore lint/suspicious/noExplicitAny: Required for generic config handling
+export function parseContent<Configs extends readonly MentionConfig<any>[]>(
+	json: JSONContent,
+	configs: Configs,
+): ParsedChatInputValue<Configs> {
+	let content = "";
+	// biome-ignore lint/suspicious/noExplicitAny: Dynamic mention types
+	const mentions: Record<string, any[]> = {};
+
+	function recurse(node: JSONContent) {
+		if (node.type === "text" && node.text) {
+			content += node.text;
+		} else if (node.type === "hardBreak") {
+			content += "\n";
+		} else if (node.type?.endsWith("-mention")) {
+			const mentionType = node.type.slice(0, -8);
+			const config = configs.find((c) => c.type === mentionType);
+			if (config) {
+				const attrs = node.attrs ?? {};
+				const id = attrs.id as string;
+				//const type = attrs.type as string;
+				const label = attrs.label as string;
+				content += `<span class="mention mention-${mentionType}" data-type="${mentionType}" data-id="${id}" data-name="${label}" >${config.trigger}${label}</span>`;
+
+				if (!mentions[mentionType]) {
+					mentions[mentionType] = [];
+				}
+				const item = config.items.find((i) => i.id === id);
+				if (
+					item &&
+					!mentions[mentionType].some(
+						(existing) => existing.id === id,
+					)
+				) {
+					mentions[mentionType].push(item);
+				}
+			} else {
+				content += node.text ?? "";
+			}
+		} else if (node.content) {
+			for (const child of node.content) {
+				recurse(child);
+			}
+			if (node.type === "paragraph") {
+				content += "\n\n";
+			}
+		}
+	}
+
+	if (json.content) {
+		for (const node of json.content) {
+			recurse(node);
+		}
+	}
+
+	content = content.trim();
+
+	return { content, ...mentions } as ParsedChatInputValue<Configs>;
 }

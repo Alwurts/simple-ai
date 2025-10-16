@@ -1,25 +1,37 @@
 "use client";
 
 import { FileIcon, PlusIcon } from "lucide-react"; // For file mention icon
-import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import {
-	ChatInput,
-	ChatInputEditor,
-	ChatInputMention,
-	ChatInputSubmitButton,
-	type ChatInputValue,
-} from "@/registry/ui/chat-input-tip";
 import {
 	InputGroupAddon,
 	InputGroupButton,
 	InputGroupText,
 } from "@/components/ui/input-group";
 import { Separator } from "@/components/ui/separator";
+import {
+	ChatInput,
+	ChatInputEditor,
+	ChatInputMention,
+	ChatInputSubmitButton,
+	createMentionConfig,
+	useChatInput,
+} from "@/registry/ui/chat-input-tip";
 
 //Sample data (in real app, fetch from API or props)
-const members = [
+type MemberItem = {
+	id: string;
+	name: string;
+	image?: string;
+	type: string;
+};
+
+type FileItem = {
+	id: string;
+	name: string;
+};
+
+const members: MemberItem[] = [
 	{ id: "1", name: "Alice", image: "/alice.jpg", type: "agent" },
 	{ id: "2", name: "Bob", type: "user" },
 	{ id: "3", name: "Charlie", image: "/charlie.jpg", type: "bot" },
@@ -44,75 +56,54 @@ const members = [
 	{ id: "22", name: "Victor", type: "user" },
 ];
 
-const files = [
+const files: FileItem[] = [
 	{ id: "f1", name: "report.pdf" },
 	{ id: "f2", name: "image.png" },
 	{ id: "f3", name: "notes.txt" },
 ];
 
-// Helper to convert JSON to plain text (simple recursive flatten)
-// function jsonToText(json: ChatInputValue): string {
-// 	if (!json.content) {
-// 		return "";
-// 	}
-// 	return json.content
-// 		.map((node) => {
-// 			if (node.text) {
-// 				return node.text;
-// 			}
-// 			if (node.content) {
-// 				return jsonToText({ content: node.content });
-// 			}
-// 			return "";
-// 		})
-// 		.join(" ");
-// }
-
 export default function ChatExample() {
-	// Controlled state: Tiptap JSON for rich content (mentions preserved)
-	const [editorValue, setEditorValue] = useState<ChatInputValue>({
-		type: "doc",
-		content: [],
-	});
-	//const [isPending, setIsPending] = useState(false);
-
-	// Handle submit (e.g., send to API)
-	// const handleSubmit = () => {
-	// 	if (!editorValue.content?.length) {
-	// 		return; // Empty check
-	// 	}
-
-	// 	const text = jsonToText(editorValue);
-	// 	const mentions = extractMentions(editorValue);
-
-	// 	console.log("Submitted:", { text, mentions });
-	// 	// In real app: await api.sendMessage({ text, mentions });
-
-	// 	// Simulate pending (e.g., API call)
-	// 	setIsPending(true);
-	// 	setTimeout(() => {
-	// 		setIsPending(false);
-	// 		setEditorValue({ type: "doc", content: [] }); // Reset after submit
-	// 	}, 2000);
-	// };
-
-	const handleSubmit = () => {
-		console.log("Submit button clicked");
-		console.log(editorValue);
-		setEditorValue({ type: "doc", content: [] });
-	};
+	// Use the new hook with custom onSubmit
+	const { value, onChange, parsed, handleSubmit, mentionConfigs } =
+		useChatInput({
+			mentions: {
+				member: createMentionConfig<MemberItem>({
+					type: "member",
+					trigger: "@",
+					items: members,
+				}),
+				file: createMentionConfig<FileItem>({
+					type: "file",
+					trigger: "/",
+					items: files,
+				}),
+			},
+			onSubmit: (parsedValue) => {
+				// Custom logic: log, send, access type-safe fields
+				console.log("Submitted parsed:", parsedValue);
+				console.log(
+					"Content with mentions as spans:",
+					parsedValue.content,
+				);
+				console.log("Members mentioned:", parsedValue.member); // TS-enforced
+				console.log("Files mentioned:", parsedValue.file); // TS-enforced
+			},
+		});
 
 	return (
 		<div className="max-w-2xl mx-auto p-4 w-full space-y-4">
 			<h2 className="text-lg font-semibold mb-4">Chat Input Example</h2>
 
-			<ChatInput onSubmit={handleSubmit}>
-				<ChatInputEditor
-					value={editorValue}
-					onChange={setEditorValue}
-					placeholder="Type @ for agents, / for files..."
-				/>
-				<ChatInputMention type="member" trigger="@" items={members}>
+			<ChatInput
+				onSubmit={handleSubmit}
+				value={value}
+				onChange={onChange}
+			>
+				<ChatInputMention
+					type={mentionConfigs.member.type}
+					trigger={mentionConfigs.member.trigger}
+					items={mentionConfigs.member.items}
+				>
 					{(item) => (
 						<>
 							<Avatar className="h-6 w-6">
@@ -137,7 +128,11 @@ export default function ChatExample() {
 						</>
 					)}
 				</ChatInputMention>
-				<ChatInputMention type="file" trigger="/" items={files}>
+				<ChatInputMention
+					type={mentionConfigs.file.type}
+					trigger={mentionConfigs.file.trigger}
+					items={mentionConfigs.file.items}
+				>
 					{(item) => (
 						<>
 							<FileIcon className="h-4 w-4 text-muted-foreground" />
@@ -150,6 +145,7 @@ export default function ChatExample() {
 						</>
 					)}
 				</ChatInputMention>
+				<ChatInputEditor placeholder="Type @ for agents, / for files..." />
 				<InputGroupAddon align="block-end">
 					<InputGroupButton
 						variant="outline"
@@ -167,13 +163,24 @@ export default function ChatExample() {
 			</ChatInput>
 
 			{/* Debug output */}
-			<pre className="text-xs bg-muted p-2 rounded">
-				{JSON.stringify(
-					editorValue,
-					null,
-					2,
-				)}
-			</pre>
+			<div className="space-y-2">
+				<div>
+					<h3 className="text-sm font-semibold mb-1">
+						Raw TipTap JSON:
+					</h3>
+					<pre className="text-xs bg-muted p-2 rounded overflow-auto max-h-48">
+						{JSON.stringify(value, null, 2)}
+					</pre>
+				</div>
+				<div>
+					<h3 className="text-sm font-semibold mb-1">
+						Parsed Output:
+					</h3>
+					<pre className="text-xs bg-muted p-2 rounded overflow-auto max-h-48">
+						{JSON.stringify(parsed, null, 2)}
+					</pre>
+				</div>
+			</div>
 		</div>
 	);
 }

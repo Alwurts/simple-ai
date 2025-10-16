@@ -2,14 +2,14 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
-import { type ComponentPropsWithoutRef, useState } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 import { useTrackEvent } from "@/lib/events";
 import {
 	ChatInput,
 	ChatInputEditor,
 	ChatInputGroupAddon,
 	ChatInputSubmitButton,
-	type ChatInputValue,
+	useChatInput,
 } from "@/registry/ui/chat-input-tip";
 import {
 	ChatMessage,
@@ -105,30 +105,7 @@ const INITIAL_MESSAGES: UIMessage[] = [
 	},
 ];
 
-// Helper function to extract plain text from JSONContent
-function extractTextFromJSON(json: ChatInputValue): string {
-	if (!json.content) {
-		return "";
-	}
-	let text = "";
-	for (const item of json.content) {
-		if (item.type === "text" && item.text) {
-			text += item.text;
-		} else if (item.type === "paragraph" && item.content) {
-			text += extractTextFromJSON({ type: "doc", content: item.content });
-		} else if (item.content) {
-			text += extractTextFromJSON({ type: "doc", content: item.content });
-		}
-	}
-	return text;
-}
-
 export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
-	const [input, setInput] = useState<ChatInputValue>({
-		type: "doc",
-		content: [],
-	});
-
 	const { messages, sendMessage, status, stop } = useChat({
 		transport: new DefaultChatTransport({
 			api: "/api/ai/chat",
@@ -153,17 +130,18 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 	const isLoading = status === "streaming" || status === "submitted";
 	const track = useTrackEvent();
 
-	const handleSubmitMessage = () => {
-		if (isLoading) {
-			return;
-		}
-		const text = extractTextFromJSON(input).trim();
-		if (text.length === 0) {
-			return;
-		}
-		sendMessage({ role: "user", parts: [{ type: "text", text }] });
-		setInput({ type: "doc", content: [] });
-	};
+	// Use the new hook with custom onSubmit
+	const { value, onChange, handleSubmit } = useChatInput({
+		onSubmit: (parsedValue) => {
+			// Custom logic: log, send, access type-safe fields
+			console.log("Submitted parsed:", parsedValue);
+
+			sendMessage({
+				role: "user",
+				parts: [{ type: "text", text: parsedValue.content }],
+			});
+		},
+	});
 
 	return (
 		<div className="flex-1 flex flex-col h-full overflow-y-auto" {...props}>
@@ -207,10 +185,14 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 				<MessageAreaScrollButton alignment="center" />
 			</MessageArea>
 			<div className="px-2 py-4 max-w-2xl mx-auto w-full">
-				<ChatInput onSubmit={handleSubmitMessage} isStreaming={isLoading} onStop={stop}>
+				<ChatInput
+					onSubmit={handleSubmit}
+					isStreaming={isLoading}
+					onStop={stop}
+				>
 					<ChatInputEditor
-						value={input}
-						onChange={setInput}
+						value={value}
+						onChange={onChange}
 						placeholder="Type a message..."
 					/>
 					<ChatInputGroupAddon align="block-end">
