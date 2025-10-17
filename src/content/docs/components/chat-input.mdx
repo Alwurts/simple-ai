@@ -1,12 +1,10 @@
 ---
 title: Chat Input
-description: A rich text chat input component with TipTap editor, mention support, and automatic height adjustment.
+description: A chat input component with mention support and automatic height adjustment.
 component: true
 ---
 
 <ComponentPreview name="chat-input-demo-mentions" description="A basic chat input component." />
-
-A powerful chat input component built on TipTap editor that features automatic height adjustment, smart keyboard handling, and optional mention support. Press Enter to submit or Shift+Enter for new lines. The component can be used as a simple text input or extended with mentions for @users, /files, and custom triggers.
 
 ## Installation
 
@@ -47,6 +45,13 @@ npm install @tiptap/core @tiptap/react @tiptap/starter-kit @tiptap/extension-men
 </TabsContent>
 
 </CodeTabs>
+
+
+## About
+
+A powerful chat input component built on TipTap editor that features automatic height adjustment, smart keyboard handling, and optional mention support. Press Enter to submit or Shift+Enter for new lines. The component can be used as a simple text input or extended with mentions for @users, /files, and custom triggers.
+
+This component is built on top of [TipTap](https://tiptap.dev/), a headless editor framework for building rich text editors. It provides a rich text editor with mention support, automatic height adjustment, and proper keyboard handling.
 
 ## Usage
 
@@ -97,10 +102,6 @@ export function ChatWithMentions() {
   );
 }
 ```
-
-## About
-
-This component is built on top of [TipTap](https://tiptap.dev/), a headless editor framework for building rich text editors. It provides a rich text editor with mention support, automatic height adjustment, and proper keyboard handling.
 
 ## Examples
 

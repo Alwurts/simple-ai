@@ -6,7 +6,7 @@
 			"name": "jsx-renderer",
 			"type": "registry:ui",
 			"description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
-			"dependencies": ["react-jsx-parser"],
+			"dependencies": ["react-jsx-parser", "react-error-boundary"],
 			"registryDependencies": ["undefined/r/jsx-utils.json"],
 			"files": [
 				{
@@ -460,9 +460,32 @@
 		{
 			"name": "jsx-renderer-demo",
 			"type": "registry:example",
+			"registryDependencies": ["undefined/r/jsx-renderer.json"],
 			"files": [
 				{
 					"path": "./src/registry/examples/jsx-renderer-demo.tsx",
+					"type": "registry:example"
+				}
+			]
+		},
+		{
+			"name": "jsx-renderer-disabled-demo",
+			"type": "registry:example",
+			"registryDependencies": ["undefined/r/jsx-renderer.json"],
+			"files": [
+				{
+					"path": "./src/registry/examples/jsx-renderer-disabled-demo.tsx",
+					"type": "registry:example"
+				}
+			]
+		},
+		{
+			"name": "jsx-renderer-streaming-demo",
+			"type": "registry:example",
+			"registryDependencies": ["undefined/r/jsx-renderer.json"],
+			"files": [
+				{
+					"path": "./src/registry/examples/jsx-renderer-streaming-demo.tsx",
 					"type": "registry:example"
 				}
 			]

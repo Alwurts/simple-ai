@@ -86,7 +86,7 @@ export default function Canvas() {
 	return (
 		<>
 			<Script src="https://cdn.tailwindcss.com" />
-			{/* @ts-ignore */}
+			{/* @ts-ignore Some types are not properly typed */}
 			<JsxRenderer jsx={code} components={components} />
 		</>
 	);

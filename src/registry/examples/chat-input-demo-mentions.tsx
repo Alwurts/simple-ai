@@ -127,7 +127,7 @@ export default function ChatInputWithMentions() {
 						<h4 className="font-semibold mb-2 text-sm">
 							Parsed Output:
 						</h4>
-						<Card className="p-4 shadow-none min-h-32 max-h-56 overflow-y-auto">
+						<Card className="p-4 shadow-none max-h-56 overflow-y-auto">
 							<pre className="text-xs font-mono leading-relaxed">
 								{JSON.stringify(parsed, null, 2)}
 							</pre>

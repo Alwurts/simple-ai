@@ -7,7 +7,7 @@ export const ui: Registry["items"] = [
 		description:
 			"A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 		type: "registry:ui",
-		dependencies: ["react-jsx-parser"],
+		dependencies: ["react-jsx-parser", "react-error-boundary"],
 		registryDependencies: [`${BASE_URL}/r/jsx-utils.json`],
 		files: [{ type: "registry:ui", path: "ui/jsx-renderer.tsx" }],
 	},

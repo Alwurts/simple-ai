@@ -35,5 +35,4 @@ Licensed under the MIT License.
 
 - [ ] Check proper use of sitemap
 - [ ] Check use of og and how its used in metadata in layouts like /block/layout
-- [ ] Remove .json ending out of copy commands
-- [ ] Add validate registry script?
+- [ ] Check capture script to check we are using the images captured and remove devindicator

@@ -985,7 +985,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: undefined,
+		registryDependencies: ["undefined/r/jsx-renderer.json"],
 		files: [
 			{
 				path: "./src/registry/examples/jsx-renderer-demo.tsx",
@@ -996,6 +996,60 @@ export const Index: Record<string, any> = {
 		component: React.lazy(async () => {
 			const mod = await import(
 				"@/registry/examples/jsx-renderer-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"jsx-renderer-disabled-demo": {
+		name: "jsx-renderer-disabled-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: ["undefined/r/jsx-renderer.json"],
+		files: [
+			{
+				path: "./src/registry/examples/jsx-renderer-disabled-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/jsx-renderer-disabled-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"jsx-renderer-streaming-demo": {
+		name: "jsx-renderer-streaming-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: ["undefined/r/jsx-renderer.json"],
+		files: [
+			{
+				path: "./src/registry/examples/jsx-renderer-streaming-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/jsx-renderer-streaming-demo.tsx"
 			);
 			const exportName =
 				Object.keys(mod).find(

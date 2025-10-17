@@ -13,7 +13,7 @@ export const siteConfig = {
 	navItems: [
 		{
 			href: "/docs",
-			label: "Docs",
+			label: "Documentation",
 		},
 		{
 			href: "/docs/components",
