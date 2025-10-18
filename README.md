@@ -23,7 +23,7 @@ Visit [simple-ai.dev/docs](https://simple-ai.dev/docs) to view the documentation
 
 ```bash
 # Install shadcn/ui first
-npx shadcn-ui@latest init
+npx shadcn@latest init
 
 # Then you can add simple-ai components
 npx shadcn@latest add https://simple-ai.dev/r/chat-message.json
@@ -36,3 +36,8 @@ Licensed under the MIT License.
 - [ ] Check proper use of sitemap
 - [ ] Check use of og and how its used in metadata in layouts like /block/layout
 - [ ] Check capture script to check we are using the images captured and remove devindicator
+- [ ] Add code to remove `trackEvent` from blocks
+- [ ] Add code to correct imports, is this needed? Check what original v1 was changing
+- [ ] Add frontpage
+- [ ] Check all blocks work
+- [ ] Update layout of chats to be like chatsemble, even add a block with thread support

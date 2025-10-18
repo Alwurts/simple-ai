@@ -507,6 +507,36 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"tool-invocation": {
+		name: "tool-invocation",
+		description: "",
+		type: "registry:ui",
+		registryDependencies: ["card", "collapsible"],
+		files: [
+			{
+				path: "./src/registry/ui/tool-invocation.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/id-to-readable-text.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/tool-invocation.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"use-textarea-resize": {
 		name: "use-textarea-resize",
 		description: "",
@@ -546,6 +576,31 @@ export const Index: Record<string, any> = {
 		],
 		component: React.lazy(async () => {
 			const mod = await import("@/registry/lib/jsx-utils.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"id-to-readable-text": {
+		name: "id-to-readable-text",
+		description: "A utility for converting an ID to a readable text.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/lib/id-to-readable-text.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/lib/id-to-readable-text.ts");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>
@@ -1178,6 +1233,33 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"tool-invocation-demo": {
+		name: "tool-invocation-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/tool-invocation-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/tool-invocation-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"chat-01": {
 		name: "chat-01",
 		description: "A simple chat page.",
@@ -1207,17 +1289,52 @@ export const Index: Record<string, any> = {
 				target: "app/api/ai/chat/route.ts",
 			},
 			{
-				path: "./src/registry/blocks/chat-01/components/chat.tsx",
+				path: "./src/registry/blocks/chat-01/lib/config.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/components/layout/app-layout.tsx",
 				type: "registry:component",
 				target: "",
 			},
 			{
-				path: "./src/registry/blocks/chat-01/components/sidebar-app.tsx",
+				path: "./src/registry/blocks/chat-01/components/layout/app-layout-skeleton.tsx",
 				type: "registry:component",
 				target: "",
 			},
 			{
-				path: "./src/registry/blocks/chat-01/components/nav-user.tsx",
+				path: "./src/registry/blocks/chat-01/components/layout/app-sidebar.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/components/layout/app-main-nav.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/components/layout/app-secondary-nav.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/components/layout/app-user-nav.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/components/chat/chat-main.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/components/chat/chat-header.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/components/chat/chat-content.tsx",
 				type: "registry:component",
 				target: "",
 			},

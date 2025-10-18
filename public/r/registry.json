@@ -282,6 +282,21 @@
 			]
 		},
 		{
+			"name": "tool-invocation",
+			"type": "registry:ui",
+			"registryDependencies": ["card", "collapsible"],
+			"files": [
+				{
+					"path": "./src/registry/ui/tool-invocation.tsx",
+					"type": "registry:ui"
+				},
+				{
+					"path": "./src/registry/lib/id-to-readable-text.ts",
+					"type": "registry:lib"
+				}
+			]
+		},
+		{
 			"name": "use-textarea-resize",
 			"type": "registry:hook",
 			"files": [
@@ -298,6 +313,17 @@
 			"files": [
 				{
 					"path": "./src/registry/lib/jsx-utils.ts",
+					"type": "registry:lib"
+				}
+			]
+		},
+		{
+			"name": "id-to-readable-text",
+			"type": "registry:lib",
+			"description": "A utility for converting an ID to a readable text.",
+			"files": [
+				{
+					"path": "./src/registry/lib/id-to-readable-text.ts",
 					"type": "registry:lib"
 				}
 			]
@@ -537,10 +563,20 @@
 			]
 		},
 		{
+			"name": "tool-invocation-demo",
+			"type": "registry:example",
+			"files": [
+				{
+					"path": "./src/registry/examples/tool-invocation-demo.tsx",
+					"type": "registry:example"
+				}
+			]
+		},
+		{
 			"name": "chat-01",
 			"type": "registry:block",
 			"description": "A simple chat page.",
-			"dependencies": ["ai", "@ai-sdk/openai"],
+			"dependencies": ["ai", "@ai-sdk/react", "@ai-sdk/openai"],
 			"registryDependencies": [
 				"card",
 				"breadcrumb",
@@ -566,15 +602,43 @@
 					"target": "app/api/ai/chat/route.ts"
 				},
 				{
-					"path": "./src/registry/blocks/chat-01/components/chat.tsx",
+					"path": "./src/registry/blocks/chat-01/lib/config.ts",
+					"type": "registry:lib"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/components/layout/app-layout.tsx",
 					"type": "registry:component"
 				},
 				{
-					"path": "./src/registry/blocks/chat-01/components/sidebar-app.tsx",
+					"path": "./src/registry/blocks/chat-01/components/layout/app-layout-skeleton.tsx",
 					"type": "registry:component"
 				},
 				{
-					"path": "./src/registry/blocks/chat-01/components/nav-user.tsx",
+					"path": "./src/registry/blocks/chat-01/components/layout/app-sidebar.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/components/layout/app-main-nav.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/components/layout/app-secondary-nav.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/components/layout/app-user-nav.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/components/chat/chat-main.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/components/chat/chat-header.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/components/chat/chat-content.tsx",
 					"type": "registry:component"
 				}
 			],

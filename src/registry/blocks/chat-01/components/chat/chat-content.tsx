@@ -188,7 +188,10 @@ const INITIAL_MESSAGES: UIMessage<{
 	},
 ];
 
-export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
+export function ChatContent({
+	className,
+	...props
+}: ComponentPropsWithoutRef<"div">) {
 	const { messages, sendMessage, status, stop } = useChat({
 		transport: new DefaultChatTransport({
 			api: "/api/ai/chat",
@@ -227,9 +230,9 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 	});
 
 	return (
-		<div className="flex-1 flex flex-col h-full overflow-y-auto" {...props}>
+		<div className="flex-1 flex flex-col overflow-y-auto" {...props}>
 			<ChatMessageArea>
-				<ChatMessageAreaContent>
+				<ChatMessageAreaContent className="pt-6">
 					{messages.map((message) => {
 						const userName =
 							message.role === "user" ? "You" : "Assistant";

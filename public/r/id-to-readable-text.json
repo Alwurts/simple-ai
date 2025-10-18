@@ -1,0 +1,13 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "id-to-readable-text",
+	"type": "registry:lib",
+	"description": "A utility for converting an ID to a readable text.",
+	"files": [
+		{
+			"path": "./src/registry/lib/id-to-readable-text.ts",
+			"content": "export function idToReadableText(\n\tid: string,\n\toptions?: { capitalize?: boolean },\n): string {\n\tconst { capitalize = true } = options || {};\n\tconst readable = id\n\t\t.replace(/([a-z])([A-Z])/g, \"$1 $2\")\n\t\t.replace(/[_-]/g, \" \")\n\t\t.toLowerCase();\n\n\treturn capitalize\n\t\t? readable.replace(/\\b\\w/g, (l) => l.toUpperCase())\n\t\t: readable;\n}\n",
+			"type": "registry:lib"
+		}
+	]
+}

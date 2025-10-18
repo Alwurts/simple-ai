@@ -6,7 +6,7 @@ export const blocks: Registry["items"] = [
 		name: "chat-01",
 		description: "A simple chat page.",
 		type: "registry:block",
-		dependencies: ["ai", "@ai-sdk/openai"],
+		dependencies: ["ai", "@ai-sdk/react", "@ai-sdk/openai"],
 		registryDependencies: [
 			"card",
 			"breadcrumb",
@@ -32,15 +32,43 @@ export const blocks: Registry["items"] = [
 				type: "registry:page",
 			},
 			{
-				path: "blocks/chat-01/components/chat.tsx",
+				path: "blocks/chat-01/lib/config.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-01/components/layout/app-layout.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/chat-01/components/sidebar-app.tsx",
+				path: "blocks/chat-01/components/layout/app-layout-skeleton.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/chat-01/components/nav-user.tsx",
+				path: "blocks/chat-01/components/layout/app-sidebar.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/layout/app-main-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/layout/app-secondary-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/layout/app-user-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/chat/chat-main.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/chat/chat-header.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/chat/chat-content.tsx",
 				type: "registry:component",
 			},
 		],

@@ -121,7 +121,7 @@ function ChatMessageActions({
 	return (
 		<Card
 			className={cn(
-				"absolute -top-5 right-5 z-10 flex flex-row gap-1 p-1 opacity-0 transition-opacity group-hover/chat-message:opacity-100",
+				"absolute -top-5 right-5 z-20 flex flex-row gap-1 p-1 opacity-0 transition-opacity group-hover/chat-message:opacity-100",
 				className,
 			)}
 			{...props}

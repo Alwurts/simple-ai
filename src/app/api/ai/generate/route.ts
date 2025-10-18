@@ -1,4 +1,4 @@
-import { createDeepSeek } from "@ai-sdk/deepseek";
+import { createGroq } from "@ai-sdk/groq";
 import { smoothStream, streamText } from "ai";
 
 // Allow streaming responses up to 30 seconds
@@ -9,17 +9,19 @@ export async function POST(req: Request) {
 	const { prompt, currentCode }: { prompt: string; currentCode: string } =
 		data;
 
-	const deepSeekClient = createDeepSeek({
-		baseURL: process.env.AI_GATEWAY_DEEPSEEK_URL,
+	console.log("Hello from the generate route");
+	console.log(prompt);
+	console.log(currentCode);
+
+	const groqClient = createGroq({
+		baseURL: process.env.AI_GATEWAY_GROQ_URL,
 	});
 
-	/* const groqClient = createGroq({
-		baseURL: process.env.AI_GATEWAY_GROQ_URL,
-	}); */
+	console.log("Hello from the generate route");
 
 	try {
 		const result = streamText({
-			model: deepSeekClient("deepseek-chat"),
+			model: groqClient("llama-3.3-70b-versatile"),
 			system: `
 <internal_reminder>
 	<assistant_info>

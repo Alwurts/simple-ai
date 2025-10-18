@@ -7,4 +7,10 @@ export const lib: Registry["items"] = [
 		type: "registry:lib",
 		files: [{ type: "registry:lib", path: "lib/jsx-utils.ts" }],
 	},
+	{
+		name: "id-to-readable-text",
+		description: "A utility for converting an ID to a readable text.",
+		type: "registry:lib",
+		files: [{ type: "registry:lib", path: "lib/id-to-readable-text.ts" }],
+	},
 ];

@@ -236,4 +236,14 @@ export const examples: Registry["items"] = [
 			},
 		],
 	},
+	{
+		name: "tool-invocation-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/tool-invocation-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
 ];

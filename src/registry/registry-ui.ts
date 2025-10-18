@@ -253,4 +253,13 @@ export const ui: Registry["items"] = [
 			},
 		],
 	},
+	{
+		name: "tool-invocation",
+		type: "registry:ui",
+		registryDependencies: ["card", "collapsible"],
+		files: [
+			{ type: "registry:ui", path: "ui/tool-invocation.tsx" },
+			{ type: "registry:lib", path: "lib/id-to-readable-text.ts" },
+		],
+	},
 ];
