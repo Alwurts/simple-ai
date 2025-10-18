@@ -1,0 +1,12 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "chat-message-demo-simple",
+	"type": "registry:example",
+	"files": [
+		{
+			"path": "./src/registry/examples/chat-message-demo-simple.tsx",
+			"content": "\"use client\";\n\nimport type { UIMessage } from \"@ai-sdk/react\";\nimport {\n\tChatMessage,\n\tChatMessageAuthor,\n\tChatMessageAvatar,\n\tChatMessageAvatarAssistantIcon,\n\tChatMessageAvatarUserIcon,\n\tChatMessageContainer,\n\tChatMessageContent,\n\tChatMessageHeader,\n\tChatMessageMarkdown,\n\tChatMessageTimestamp,\n} from \"@/registry/ui/chat-message\";\n\nconst messages: UIMessage[] = [\n\t{\n\t\tid: \"1\",\n\t\tparts: [\n\t\t\t{\n\t\t\t\ttype: \"text\",\n\t\t\t\ttext: \"Hey, how are you doing today?\",\n\t\t\t},\n\t\t],\n\t\trole: \"user\",\n\t},\n\t{\n\t\tid: \"2\",\n\t\tparts: [\n\t\t\t{\n\t\t\t\ttype: \"text\",\n\t\t\t\ttext: \"I'm doing great! Just working on some projects. How can I help you?\",\n\t\t\t},\n\t\t],\n\t\trole: \"assistant\",\n\t},\n\t{\n\t\tid: \"3\",\n\t\tparts: [\n\t\t\t{\n\t\t\t\ttype: \"text\",\n\t\t\t\ttext: \"I need help with my React application.\",\n\t\t\t},\n\t\t],\n\t\trole: \"user\",\n\t},\n];\n\nexport default function ChatMessageDemoSimple() {\n\treturn (\n\t\t<div className=\"w-full max-h-[400px] overflow-y-auto\">\n\t\t\t{messages.map((message) => (\n\t\t\t\t<ChatMessage key={message.id}>\n\t\t\t\t\t<ChatMessageAvatar>\n\t\t\t\t\t\t{message.role === \"user\" ? (\n\t\t\t\t\t\t\t<ChatMessageAvatarUserIcon />\n\t\t\t\t\t\t) : (\n\t\t\t\t\t\t\t<ChatMessageAvatarAssistantIcon />\n\t\t\t\t\t\t)}\n\t\t\t\t\t</ChatMessageAvatar>\n\n\t\t\t\t\t<ChatMessageContainer>\n\t\t\t\t\t\t<ChatMessageHeader>\n\t\t\t\t\t\t\t<ChatMessageAuthor>\n\t\t\t\t\t\t\t\t{message.role === \"user\" ? \"You\" : \"Assistant\"}\n\t\t\t\t\t\t\t</ChatMessageAuthor>\n\t\t\t\t\t\t\t<ChatMessageTimestamp createdAt={new Date()} />\n\t\t\t\t\t\t</ChatMessageHeader>\n\t\t\t\t\t\t<ChatMessageContent>\n\t\t\t\t\t\t\t{message.parts\n\t\t\t\t\t\t\t\t.filter((part) => part.type === \"text\")\n\t\t\t\t\t\t\t\t.map((part) => (\n\t\t\t\t\t\t\t\t\t<ChatMessageMarkdown\n\t\t\t\t\t\t\t\t\t\tkey={part.type}\n\t\t\t\t\t\t\t\t\t\tcontent={part.text}\n\t\t\t\t\t\t\t\t\t/>\n\t\t\t\t\t\t\t\t))}\n\t\t\t\t\t\t</ChatMessageContent>\n\t\t\t\t\t</ChatMessageContainer>\n\t\t\t\t</ChatMessage>\n\t\t\t))}\n\t\t</div>\n\t);\n}\n",
+			"type": "registry:example"
+		}
+	]
+}

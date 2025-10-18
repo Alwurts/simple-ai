@@ -36,7 +36,13 @@ export const ui: Registry["items"] = [
 	{
 		name: "chat-message",
 		type: "registry:ui",
-		registryDependencies: [`${BASE_URL}/r/markdown-content.json`],
+		registryDependencies: [
+			`${BASE_URL}/r/markdown-content.json`,
+			"avatar",
+			"button",
+			"card",
+			"tooltip",
+		],
 		files: [{ type: "registry:ui", path: "ui/chat-message.tsx" }],
 	},
 	{

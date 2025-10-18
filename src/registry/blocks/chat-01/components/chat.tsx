@@ -2,6 +2,7 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
+import { Copy, ThumbsUp } from "lucide-react";
 import type { ComponentPropsWithoutRef } from "react";
 import { useTrackEvent } from "@/lib/events";
 import {
@@ -13,8 +14,21 @@ import {
 } from "@/registry/ui/chat-input";
 import {
 	ChatMessage,
+	ChatMessageAction,
+	ChatMessageActions,
+	ChatMessageAuthor,
 	ChatMessageAvatar,
+	ChatMessageAvatarFallback,
+	ChatMessageAvatarImage,
+	ChatMessageContainer,
 	ChatMessageContent,
+	ChatMessageHeader,
+	ChatMessageMarkdown,
+	ChatMessageThread,
+	ChatMessageThreadAction,
+	ChatMessageThreadReplyCount,
+	ChatMessageThreadTimestamp,
+	ChatMessageTimestamp,
 } from "@/registry/ui/chat-message";
 import {
 	MessageArea,
@@ -22,7 +36,20 @@ import {
 	MessageAreaScrollButton,
 } from "@/registry/ui/message-area";
 
-const INITIAL_MESSAGES: UIMessage[] = [
+const INITIAL_MESSAGES: UIMessage<{
+	member: {
+		image: string;
+		name: string;
+	};
+	threadData?: {
+		member: {
+			image: string;
+			name: string;
+		};
+		messageCount: number;
+		lastReply: Date;
+	};
+}>[] = [
 	{
 		id: "1",
 		parts: [
@@ -32,6 +59,12 @@ const INITIAL_MESSAGES: UIMessage[] = [
 			},
 		],
 		role: "user",
+		metadata: {
+			member: {
+				image: "/avatar-1.png",
+				name: "Pedro",
+			},
+		},
 	},
 	{
 		id: "2",
@@ -42,6 +75,12 @@ const INITIAL_MESSAGES: UIMessage[] = [
 			},
 		],
 		role: "assistant",
+		metadata: {
+			member: {
+				image: "/avatar-2.png",
+				name: "Travel Assistant",
+			},
+		},
 	},
 	{
 		id: "3",
@@ -52,6 +91,12 @@ const INITIAL_MESSAGES: UIMessage[] = [
 			},
 		],
 		role: "user",
+		metadata: {
+			member: {
+				image: "/avatar-1.png",
+				name: "Pedro",
+			},
+		},
 	},
 	{
 		id: "4",
@@ -62,6 +107,12 @@ const INITIAL_MESSAGES: UIMessage[] = [
 			},
 		],
 		role: "assistant",
+		metadata: {
+			member: {
+				image: "/avatar-2.png",
+				name: "Travel Assistant",
+			},
+		},
 	},
 	{
 		id: "5",
@@ -72,6 +123,12 @@ const INITIAL_MESSAGES: UIMessage[] = [
 			},
 		],
 		role: "user",
+		metadata: {
+			member: {
+				image: "/avatar-1.png",
+				name: "Pedro",
+			},
+		},
 	},
 	{
 		id: "6",
@@ -82,6 +139,12 @@ const INITIAL_MESSAGES: UIMessage[] = [
 			},
 		],
 		role: "assistant",
+		metadata: {
+			member: {
+				image: "/avatar-2.png",
+				name: "Travel Assistant",
+			},
+		},
 	},
 	{
 		id: "7",
@@ -92,6 +155,12 @@ const INITIAL_MESSAGES: UIMessage[] = [
 			},
 		],
 		role: "user",
+		metadata: {
+			member: {
+				image: "/avatar-1.png",
+				name: "Pedro",
+			},
+		},
 	},
 	{
 		id: "8",
@@ -102,6 +171,20 @@ const INITIAL_MESSAGES: UIMessage[] = [
 			},
 		],
 		role: "assistant",
+		metadata: {
+			member: {
+				image: "/avatar-1.png",
+				name: "Pedro",
+			},
+			threadData: {
+				lastReply: new Date(),
+				member: {
+					image: "/avatar-2.png",
+					name: "Travel Assistant",
+				},
+				messageCount: 10,
+			},
+		},
 	},
 ];
 
@@ -148,36 +231,85 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 			<MessageArea>
 				<MessageAreaContent>
 					{messages.map((message) => {
-						if (message.role !== "user") {
-							return (
-								<ChatMessage key={message.id} id={message.id}>
-									<ChatMessageAvatar />
-									{message.parts
-										.filter((part) => part.type === "text")
-										.map((part) => (
-											<ChatMessageContent
-												key={part.type}
-												content={part.text}
-											/>
-										))}
-								</ChatMessage>
-							);
-						}
+						const userName =
+							message.role === "user" ? "You" : "Assistant";
 						return (
-							<ChatMessage
-								key={message.id}
-								id={message.id}
-								variant="bubble"
-								type="outgoing"
-							>
-								{message.parts
-									.filter((part) => part.type === "text")
-									.map((part) => (
-										<ChatMessageContent
-											key={part.type}
-											content={part.text}
+							<ChatMessage key={message.id}>
+								<ChatMessageActions>
+									<ChatMessageAction label="Copy">
+										<Copy className="size-4" />
+									</ChatMessageAction>
+									<ChatMessageAction label="Like">
+										<ThumbsUp className="size-4" />
+									</ChatMessageAction>
+								</ChatMessageActions>
+								<ChatMessageAvatar>
+									<ChatMessageAvatarImage
+										src={message.metadata?.member.image}
+									/>
+									<ChatMessageAvatarFallback>
+										{message.metadata?.member.name
+											.charAt(0)
+											.toUpperCase()}
+									</ChatMessageAvatarFallback>
+								</ChatMessageAvatar>
+
+								<ChatMessageContainer>
+									<ChatMessageHeader>
+										<ChatMessageAuthor>
+											{userName}
+										</ChatMessageAuthor>
+										<ChatMessageTimestamp
+											createdAt={new Date()}
 										/>
-									))}
+									</ChatMessageHeader>
+
+									<ChatMessageContent>
+										{message.parts
+											.filter(
+												(part) => part.type === "text",
+											)
+											.map((part) => (
+												<ChatMessageMarkdown
+													key={part.type}
+													content={part.text}
+												/>
+											))}
+									</ChatMessageContent>
+
+									{message.metadata?.threadData && (
+										<ChatMessageThread>
+											<ChatMessageAvatar>
+												<ChatMessageAvatarImage
+													src={
+														message.metadata
+															.threadData.member
+															.image
+													}
+												/>
+												<ChatMessageAvatarFallback>
+													{message.metadata.threadData.member.name
+														.charAt(0)
+														.toUpperCase()}
+												</ChatMessageAvatarFallback>
+											</ChatMessageAvatar>
+											<ChatMessageThreadReplyCount>
+												{
+													message.metadata.threadData
+														.messageCount
+												}{" "}
+												replies
+											</ChatMessageThreadReplyCount>
+											<ChatMessageThreadTimestamp
+												date={
+													message.metadata.threadData
+														.lastReply
+												}
+											/>
+											<ChatMessageThreadAction />
+										</ChatMessageThread>
+									)}
+								</ChatMessageContainer>
 							</ChatMessage>
 						);
 					})}

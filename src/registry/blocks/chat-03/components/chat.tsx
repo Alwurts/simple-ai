@@ -12,8 +12,15 @@ import {
 } from "@/registry/ui/chat-input";
 import {
 	ChatMessage,
+	ChatMessageAuthor,
 	ChatMessageAvatar,
+	ChatMessageAvatarAssistantIcon,
+	ChatMessageAvatarUserIcon,
+	ChatMessageContainer,
 	ChatMessageContent,
+	ChatMessageHeader,
+	ChatMessageMarkdown,
+	ChatMessageTimestamp,
 } from "@/registry/ui/chat-message";
 import {
 	MessageArea,
@@ -92,42 +99,40 @@ export function Chat() {
 			<MessageArea>
 				<MessageAreaContent>
 					{messages.map((message) => {
-						if (message.role !== "user") {
-							return (
-								<ChatMessage
-									key={message.id}
-									id={message.id}
-									variant="bubble"
-									type="incoming"
-								>
-									<ChatMessageAvatar imageSrc="/avatar-1.png" />
-									{message.parts
-										.filter((part) => part.type === "text")
-										.map((part) => (
-											<ChatMessageContent
-												key={part.type}
-												content={part.text}
-											/>
-										))}
-								</ChatMessage>
-							);
-						}
 						return (
-							<ChatMessage
-								key={message.id}
-								id={message.id}
-								variant="bubble"
-								type="outgoing"
-							>
-								{message.parts
-									.filter((part) => part.type === "text")
-									.map((part) => (
-										<ChatMessageContent
-											key={part.type}
-											content={part.text}
+							<ChatMessage key={message.id}>
+								<ChatMessageAvatar>
+									{message.role === "user" ? (
+										<ChatMessageAvatarUserIcon />
+									) : (
+										<ChatMessageAvatarAssistantIcon />
+									)}
+								</ChatMessageAvatar>
+
+								<ChatMessageContainer>
+									<ChatMessageHeader>
+										<ChatMessageAuthor>
+											{message.role === "user"
+												? "You"
+												: "Assistant"}
+										</ChatMessageAuthor>
+										<ChatMessageTimestamp
+											createdAt={new Date()}
 										/>
-									))}
-								<ChatMessageAvatar imageSrc="/avatar-1.png" />
+									</ChatMessageHeader>
+									<ChatMessageContent>
+										{message.parts
+											.filter(
+												(part) => part.type === "text",
+											)
+											.map((part) => (
+												<ChatMessageMarkdown
+													key={part.type}
+													content={part.text}
+												/>
+											))}
+									</ChatMessageContent>
+								</ChatMessageContainer>
 							</ChatMessage>
 						);
 					})}

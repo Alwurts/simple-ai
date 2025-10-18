@@ -1,10 +1,11 @@
 "use client";
 
-import { Calendar, ChevronDown, ChevronUp, Clock, Plane } from "lucide-react";
-import { useState } from "react";
+import { Calendar, Clock, Plane } from "lucide-react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { highlightCode } from "@/lib/highlight-code";
 import { JsxRenderer } from "@/registry/ui/jsx-renderer";
 
 const fullJsx = `<div className="max-w-xl rounded-lg border bg-card p-6">
@@ -46,18 +47,17 @@ const fullJsx = `<div className="max-w-xl rounded-lg border bg-card p-6">
 
 export default function JsxRendererDemo() {
 	const [percentage, setPercentage] = useState([100]);
-	const [isExpanded, setIsExpanded] = useState(false);
+	const [highlightedCode, setHighlightedCode] = useState<string>("");
 	const partialJsx = fullJsx.slice(
 		0,
 		Math.floor((fullJsx.length * percentage[0]) / 100),
 	);
 
-	const displayCode = isExpanded
-		? partialJsx
-		: `${partialJsx.split("\n").slice(0, 3).join("\n")}\n  ...`;
+	useEffect(() => {
+		highlightCode(partialJsx, "tsx").then(setHighlightedCode);
+	}, [partialJsx]);
 
 	const onClickHandler = (value: string) => {
-		console.log("clicked: ", value);
 		toast.success(`${value} clicked`);
 	};
 
@@ -84,28 +84,11 @@ export default function JsxRendererDemo() {
 			</div>
 			<div className="space-y-2">
 				<div className="relative">
-					<pre
-						className={`p-4 bg-muted rounded-lg overflow-x-auto ${isExpanded ? "h-[400px]" : "h-[150px]"} overflow-y-auto`}
-					>
-						<code>{displayCode}</code>
-					</pre>
+					<div
+						className="bg-code text-sm rounded-lg overflow-x-auto overflow-y-auto"
+						dangerouslySetInnerHTML={{ __html: highlightedCode }}
+					/>
 				</div>
-				<Button
-					variant="ghost"
-					size="sm"
-					onClick={() => setIsExpanded(!isExpanded)}
-					className="w-full flex items-center justify-center gap-2"
-				>
-					{isExpanded ? (
-						<>
-							Show less code <ChevronUp className="size-4" />
-						</>
-					) : (
-						<>
-							Show all code <ChevronDown className="size-4" />
-						</>
-					)}
-				</Button>
 			</div>
 		</div>
 	);

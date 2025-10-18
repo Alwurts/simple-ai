@@ -3,16 +3,6 @@ import type { Registry } from "@/shadcn-temp/schema";
 
 export const examples: Registry["items"] = [
 	{
-		name: "chat-demo",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/chat-demo.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
 		name: "chat-input-demo-mentions",
 		type: "registry:example",
 		registryDependencies: [`${BASE_URL}/r/chat-input.json`],
@@ -74,41 +64,11 @@ export const examples: Registry["items"] = [
 		],
 	},
 	{
-		name: "chat-message-demo-default",
+		name: "chat-message-demo-simple",
 		type: "registry:example",
 		files: [
 			{
-				path: "examples/chat-message-demo-default.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
-		name: "chat-message-demo-bubble",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/chat-message-demo-bubble.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
-		name: "chat-message-demo-full",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/chat-message-demo-full.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
-		name: "chat-message-demo-without-avatar",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/chat-message-demo-without-avatar.tsx",
+				path: "examples/chat-message-demo-simple.tsx",
 				type: "registry:example",
 			},
 		],
@@ -119,16 +79,6 @@ export const examples: Registry["items"] = [
 		files: [
 			{
 				path: "examples/chat-message-demo-avatar-image.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
-		name: "chat-message-demo-markdown-content",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/chat-message-demo-markdown-content.tsx",
 				type: "registry:example",
 			},
 		],

@@ -66,10 +66,7 @@ export function MessageAreaContent({
 }: MessageAreaContentProps) {
 	return (
 		<StickToBottom.Content
-			className={cn(
-				"max-w-2xl mx-auto w-full px-4 py-8 space-y-4",
-				className,
-			)}
+			className={cn("max-w-2xl mx-auto w-full py-2", className)}
 			{...props}
 		/>
 	);

@@ -1,9 +1,10 @@
 "use client";
 
 import { FileIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
+import { highlightCode } from "@/lib/highlight-code";
 import {
 	ChatInput,
 	ChatInputEditor,
@@ -40,6 +41,8 @@ const files: FileItem[] = [
 ];
 
 export default function ChatInputWithMentions() {
+	const [highlightedOutput, setHighlightedOutput] = useState<string>("");
+
 	const { value, onChange, parsed, handleSubmit, mentionConfigs } =
 		useChatInput({
 			mentions: {
@@ -60,6 +63,12 @@ export default function ChatInputWithMentions() {
 				console.log("Files mentioned:", parsedValue.file);
 			},
 		});
+
+	useEffect(() => {
+		highlightCode(JSON.stringify(parsed, null, 2), "json").then(
+			setHighlightedOutput,
+		);
+	}, [parsed]);
 
 	return (
 		<div className="w-full h-full flex justify-center items-center">
@@ -127,11 +136,13 @@ export default function ChatInputWithMentions() {
 						<h4 className="font-semibold mb-2 text-sm">
 							Parsed Output:
 						</h4>
-						<Card className="p-4 shadow-none max-h-56 overflow-y-auto">
-							<pre className="text-xs font-mono leading-relaxed">
-								{JSON.stringify(parsed, null, 2)}
-							</pre>
-						</Card>
+						<div className="bg-code rounded-lg border border-border p-0 text-sm max-h-32 overflow-y-auto">
+							<div
+								dangerouslySetInnerHTML={{
+									__html: highlightedOutput,
+								}}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

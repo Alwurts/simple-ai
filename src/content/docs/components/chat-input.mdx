@@ -97,7 +97,9 @@ export function ChatWithMentions() {
         {(item) => <span>{item.name}</span>}
       </ChatInputMention>
       <ChatInputEditor placeholder="Type @ to mention..." />
-      <ChatInputSubmitButton />
+      <ChatInputGroupAddon align="block-end">
+        <ChatInputSubmitButton className="ml-auto" />
+      </ChatInputGroupAddon>
     </ChatInput>
   );
 }

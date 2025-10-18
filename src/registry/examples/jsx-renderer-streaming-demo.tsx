@@ -52,7 +52,6 @@ const fullJsx = `<div className="max-w-xl rounded-xl bg-gradient-to-br from-blue
 </div>`;
 
 const jsxLines = fullJsx.split("\n");
-console.log(jsxLines);
 
 export default function JsxRendererStreamingDemo() {
 	const [currentLines, setCurrentLines] = useState(jsxLines.slice(0, 1)); // Start with header and current temp

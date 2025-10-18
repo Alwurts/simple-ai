@@ -50,7 +50,13 @@
 		{
 			"name": "chat-message",
 			"type": "registry:ui",
-			"registryDependencies": ["undefined/r/markdown-content.json"],
+			"registryDependencies": [
+				"undefined/r/markdown-content.json",
+				"avatar",
+				"button",
+				"card",
+				"tooltip"
+			],
 			"files": [
 				{
 					"path": "./src/registry/ui/chat-message.tsx",
@@ -297,16 +303,6 @@
 			]
 		},
 		{
-			"name": "chat-demo",
-			"type": "registry:example",
-			"files": [
-				{
-					"path": "./src/registry/examples/chat-demo.tsx",
-					"type": "registry:example"
-				}
-			]
-		},
-		{
 			"name": "chat-input-demo-mentions",
 			"type": "registry:example",
 			"registryDependencies": ["undefined/r/chat-input.json"],
@@ -368,41 +364,11 @@
 			]
 		},
 		{
-			"name": "chat-message-demo-default",
+			"name": "chat-message-demo-simple",
 			"type": "registry:example",
 			"files": [
 				{
-					"path": "./src/registry/examples/chat-message-demo-default.tsx",
-					"type": "registry:example"
-				}
-			]
-		},
-		{
-			"name": "chat-message-demo-bubble",
-			"type": "registry:example",
-			"files": [
-				{
-					"path": "./src/registry/examples/chat-message-demo-bubble.tsx",
-					"type": "registry:example"
-				}
-			]
-		},
-		{
-			"name": "chat-message-demo-full",
-			"type": "registry:example",
-			"files": [
-				{
-					"path": "./src/registry/examples/chat-message-demo-full.tsx",
-					"type": "registry:example"
-				}
-			]
-		},
-		{
-			"name": "chat-message-demo-without-avatar",
-			"type": "registry:example",
-			"files": [
-				{
-					"path": "./src/registry/examples/chat-message-demo-without-avatar.tsx",
+					"path": "./src/registry/examples/chat-message-demo-simple.tsx",
 					"type": "registry:example"
 				}
 			]
@@ -413,16 +379,6 @@
 			"files": [
 				{
 					"path": "./src/registry/examples/chat-message-demo-avatar-image.tsx",
-					"type": "registry:example"
-				}
-			]
-		},
-		{
-			"name": "chat-message-demo-markdown-content",
-			"type": "registry:example",
-			"files": [
-				{
-					"path": "./src/registry/examples/chat-message-demo-markdown-content.tsx",
 					"type": "registry:example"
 				}
 			]

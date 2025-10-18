@@ -5,7 +5,8 @@ import {
 	ChatMessage,
 	ChatMessageAuthor,
 	ChatMessageAvatar,
-	ChatMessageAvatarImage,
+	ChatMessageAvatarAssistantIcon,
+	ChatMessageAvatarUserIcon,
 	ChatMessageContainer,
 	ChatMessageContent,
 	ChatMessageHeader,
@@ -13,60 +14,50 @@ import {
 	ChatMessageTimestamp,
 } from "@/registry/ui/chat-message";
 
-const messages: UIMessage<{
-	avatarImage: string;
-}>[] = [
+const messages: UIMessage[] = [
 	{
 		id: "1",
 		parts: [
 			{
 				type: "text",
-				text: "Hi there! This is a user message with an avatar image.",
+				text: "Hey, how are you doing today?",
 			},
 		],
 		role: "user",
-		metadata: {
-			avatarImage: "/avatar-1.png",
-		},
 	},
 	{
 		id: "2",
 		parts: [
 			{
 				type: "text",
-				text: "And this is an assistant message with its own avatar image.",
+				text: "I'm doing great! Just working on some projects. How can I help you?",
 			},
 		],
 		role: "assistant",
-		metadata: {
-			avatarImage: "/avatar-2.png",
-		},
 	},
 	{
 		id: "3",
 		parts: [
 			{
 				type: "text",
-				text: "Great! Avatar images are displaying properly.",
+				text: "I need help with my React application.",
 			},
 		],
 		role: "user",
-		metadata: {
-			avatarImage: "/avatar-1.png",
-		},
 	},
 ];
 
-export default function ChatMessageDemoAvatarImage() {
+export default function ChatMessageDemoSimple() {
 	return (
 		<div className="w-full max-h-[400px] overflow-y-auto">
 			{messages.map((message) => (
 				<ChatMessage key={message.id}>
 					<ChatMessageAvatar>
-						<ChatMessageAvatarImage
-							src={message.metadata?.avatarImage}
-							alt="Avatar"
-						/>
+						{message.role === "user" ? (
+							<ChatMessageAvatarUserIcon />
+						) : (
+							<ChatMessageAvatarAssistantIcon />
+						)}
 					</ChatMessageAvatar>
 
 					<ChatMessageContainer>

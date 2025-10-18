@@ -322,12 +322,11 @@ MemoizedMarkdownBlock.displayName = "MemoizedMarkdownBlock";
 
 interface MarkdownContentProps {
 	content: string;
-	id: string;
 	className?: string;
 }
 
 export const MarkdownContent = memo(
-	({ content, id, className }: MarkdownContentProps) => {
+	({ content, className }: MarkdownContentProps) => {
 		const blocks = useMemo(
 			() => parseMarkdownIntoBlocks(content || ""),
 			[content],
@@ -337,7 +336,7 @@ export const MarkdownContent = memo(
 			<MemoizedMarkdownBlock
 				content={block}
 				className={className}
-				key={`${id}-block_${
+				key={`block_${
 					// biome-ignore lint/suspicious/noArrayIndexKey: Needed for react key
 					index
 				}`}
