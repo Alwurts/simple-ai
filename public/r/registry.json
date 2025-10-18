@@ -36,13 +36,13 @@
 			]
 		},
 		{
-			"name": "message-area",
+			"name": "chat-message-area",
 			"type": "registry:ui",
 			"dependencies": ["use-stick-to-bottom"],
 			"registryDependencies": ["button"],
 			"files": [
 				{
-					"path": "./src/registry/ui/message-area.tsx",
+					"path": "./src/registry/ui/chat-message-area.tsx",
 					"type": "registry:ui"
 				}
 			]

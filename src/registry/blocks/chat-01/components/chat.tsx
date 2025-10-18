@@ -31,10 +31,10 @@ import {
 	ChatMessageTimestamp,
 } from "@/registry/ui/chat-message";
 import {
-	MessageArea,
-	MessageAreaContent,
-	MessageAreaScrollButton,
-} from "@/registry/ui/message-area";
+	ChatMessageArea,
+	ChatMessageAreaContent,
+	ChatMessageAreaScrollButton,
+} from "@/registry/ui/chat-message-area";
 
 const INITIAL_MESSAGES: UIMessage<{
 	member: {
@@ -228,8 +228,8 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 
 	return (
 		<div className="flex-1 flex flex-col h-full overflow-y-auto" {...props}>
-			<MessageArea>
-				<MessageAreaContent>
+			<ChatMessageArea>
+				<ChatMessageAreaContent>
 					{messages.map((message) => {
 						const userName =
 							message.role === "user" ? "You" : "Assistant";
@@ -313,9 +313,9 @@ export function Chat({ className, ...props }: ComponentPropsWithoutRef<"div">) {
 							</ChatMessage>
 						);
 					})}
-				</MessageAreaContent>
-				<MessageAreaScrollButton alignment="center" />
-			</MessageArea>
+				</ChatMessageAreaContent>
+				<ChatMessageAreaScrollButton alignment="center" />
+			</ChatMessageArea>
 			<div className="px-2 py-4 max-w-2xl mx-auto w-full">
 				<ChatInput
 					onSubmit={handleSubmit}

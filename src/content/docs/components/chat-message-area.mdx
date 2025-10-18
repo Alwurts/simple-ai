@@ -1,5 +1,5 @@
 ---
-title: Message Area
+title: Chat Message Area
 description: A component that adds auto scrolling functionality to a list of messages.
 component: true
 ---
@@ -9,7 +9,7 @@ component: true
   description="A component that adds auto scrolling functionality to a list of messages."
 />
 
-The Message Area component provides a responsive and intelligent scrollable container specifically designed for streaming interfaces. It features a sophisticated auto-scrolling system that adapts to user interaction:
+The Chat Message Area component provides a responsive and intelligent scrollable container specifically designed for streaming interfaces. It features a sophisticated auto-scrolling system that adapts to user interaction:
 
 - **Smart Auto-scroll**: Automatically scrolls to new messages when they appear, but only if the user is already at the bottom
 - **Interaction Awareness**: Auto-scroll automatically disables when users scroll up to read previous messages
@@ -32,7 +32,7 @@ This component is built on top of [use-stick-to-bottom](https://www.npmjs.com/pa
 <TabsContent value="cli">
 
 ```bash
-npx shadcn@latest add https://simple-ai.dev/r/message-area.json
+npx shadcn@latest add https://simple-ai.dev/r/chat-message-area.json
 ```
 
 </TabsContent>
@@ -49,9 +49,9 @@ npm install use-stick-to-bottom
 
 <Step>Copy and paste the following code into your project.</Step>
 
-`message-area.tsx`
+`chat-message-area.tsx`
 
-<ComponentSource name="message-area" />
+<ComponentSource name="chat-message-area" />
 
 <Step>Update the import paths to match your project setup.</Step>
 
@@ -65,26 +65,26 @@ npm install use-stick-to-bottom
 
 ```tsx
 import {
-  MessageArea,
-  MessageAreaContent,
-  MessageAreaScrollButton,
-} from "@/components/ui/message-area"
+  ChatMessageArea,
+  ChatMessageAreaContent,
+  ChatMessageAreaScrollButton,
+} from "@/components/ui/chat-message-area"
 ```
 
 ```tsx
-<MessageArea>
-  <MessageAreaContent className="px-4 py-8 space-y-4">
+<ChatMessageArea>
+  <ChatMessageAreaContent className="px-4 py-8 space-y-4">
     {/* Your messages go here */}
-  </MessageAreaContent>
-  <MessageAreaScrollButton />
-</MessageArea>
+  </ChatMessageAreaContent>
+  <ChatMessageAreaScrollButton />
+</ChatMessageArea>
 ```
 
 ## Examples
 
 ### Alignment
 
-You can align the scroll button to the left, right, or center using the `alignment` prop on `MessageAreaScrollButton`.
+You can align the scroll button to the left, right, or center using the `alignment` prop on `ChatMessageAreaScrollButton`.
 
 <ComponentPreview
   name="chat-message-area-demo-alignment"

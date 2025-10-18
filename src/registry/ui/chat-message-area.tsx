@@ -4,15 +4,15 @@ import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-interface MessageAreaScrollButtonProps {
+interface ChatMessageAreaScrollButtonProps {
 	alignment?: "left" | "center" | "right";
 	className?: string;
 }
 
-export function MessageAreaScrollButton({
+export function ChatMessageAreaScrollButton({
 	alignment = "center",
 	className,
-}: MessageAreaScrollButtonProps) {
+}: ChatMessageAreaScrollButtonProps) {
 	const { isAtBottom, scrollToBottom } = useStickToBottomContext();
 
 	const handleScrollToBottom = useCallback(() => {
@@ -45,9 +45,9 @@ export function MessageAreaScrollButton({
 	);
 }
 
-type MessageAreaProps = ComponentProps<typeof StickToBottom>;
+type ChatMessageAreaProps = ComponentProps<typeof StickToBottom>;
 
-export function MessageArea({ className, ...props }: MessageAreaProps) {
+export function ChatMessageArea({ className, ...props }: ChatMessageAreaProps) {
 	return (
 		<StickToBottom
 			className={cn("flex-1 relative h-full overflow-y-auto", className)}
@@ -58,12 +58,12 @@ export function MessageArea({ className, ...props }: MessageAreaProps) {
 	);
 }
 
-type MessageAreaContentProps = ComponentProps<typeof StickToBottom.Content>;
+type ChatMessageAreaContentProps = ComponentProps<typeof StickToBottom.Content>;
 
-export function MessageAreaContent({
+export function ChatMessageAreaContent({
 	className,
 	...props
-}: MessageAreaContentProps) {
+}: ChatMessageAreaContentProps) {
 	return (
 		<StickToBottom.Content
 			className={cn("max-w-2xl mx-auto w-full py-2", className)}

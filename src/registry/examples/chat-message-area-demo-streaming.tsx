@@ -16,10 +16,10 @@ import {
 	ChatMessageTimestamp,
 } from "@/registry/ui/chat-message";
 import {
-	MessageArea,
-	MessageAreaContent,
-	MessageAreaScrollButton,
-} from "@/registry/ui/message-area";
+	ChatMessageArea,
+	ChatMessageAreaContent,
+	ChatMessageAreaScrollButton,
+} from "@/registry/ui/chat-message-area";
 
 const userMessage: UIMessage<{
 	member: {
@@ -193,8 +193,8 @@ export default function ChatMessageAreaDemo() {
 				{isStreaming && "(Streaming...)"}
 			</Button>
 			<div className="border rounded-md h-[320px] overflow-y-auto">
-				<MessageArea>
-					<MessageAreaContent>
+				<ChatMessageArea>
+					<ChatMessageAreaContent>
 						<ChatMessage key={userMessage.id}>
 							<ChatMessageAvatar>
 								<ChatMessageAvatarImage
@@ -257,9 +257,9 @@ export default function ChatMessageAreaDemo() {
 								</ChatMessageContainer>
 							</ChatMessage>
 						)}
-					</MessageAreaContent>
-					<MessageAreaScrollButton />
-				</MessageArea>
+					</ChatMessageAreaContent>
+					<ChatMessageAreaScrollButton />
+				</ChatMessageArea>
 			</div>
 		</div>
 	);

@@ -36,10 +36,10 @@ import {
 	ChatMessageTimestamp,
 } from "@/registry/ui/chat-message";
 import {
-	MessageArea,
-	MessageAreaContent,
-	MessageAreaScrollButton,
-} from "@/registry/ui/message-area";
+	ChatMessageArea,
+	ChatMessageAreaContent,
+	ChatMessageAreaScrollButton,
+} from "@/registry/ui/chat-message-area";
 
 const INITIAL_MESSAGES: UIMessage[] = [
 	{
@@ -155,8 +155,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			</SidebarHeader>
 			<SidebarSeparator />
 			<div className="flex-1 flex flex-col h-full overflow-y-auto">
-				<MessageArea>
-					<MessageAreaContent>
+				<ChatMessageArea>
+					<ChatMessageAreaContent>
 						{messages.map((message) => {
 							return (
 								<ChatMessage key={message.id}>
@@ -196,9 +196,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 								</ChatMessage>
 							);
 						})}
-					</MessageAreaContent>
-					<MessageAreaScrollButton alignment="center" />
-				</MessageArea>
+					</ChatMessageAreaContent>
+					<ChatMessageAreaScrollButton alignment="center" />
+				</ChatMessageArea>
 				<div className="p-4 max-w-2xl mx-auto w-full">
 					<ChatInput
 						value={value}

@@ -23,10 +23,10 @@ import {
 	ChatMessageTimestamp,
 } from "@/registry/ui/chat-message";
 import {
-	MessageArea,
-	MessageAreaContent,
-	MessageAreaScrollButton,
-} from "@/registry/ui/message-area";
+	ChatMessageArea,
+	ChatMessageAreaContent,
+	ChatMessageAreaScrollButton,
+} from "@/registry/ui/chat-message-area";
 
 const INITIAL_MESSAGES: UIMessage[] = [
 	{
@@ -96,8 +96,8 @@ export function Chat() {
 
 	return (
 		<div className="flex flex-col h-full overflow-y-auto">
-			<MessageArea>
-				<MessageAreaContent>
+			<ChatMessageArea>
+				<ChatMessageAreaContent>
 					{messages.map((message) => {
 						return (
 							<ChatMessage key={message.id}>
@@ -136,9 +136,9 @@ export function Chat() {
 							</ChatMessage>
 						);
 					})}
-				</MessageAreaContent>
-				<MessageAreaScrollButton />
-			</MessageArea>
+				</ChatMessageAreaContent>
+				<ChatMessageAreaScrollButton />
+			</ChatMessageArea>
 			<div className="px-2 py-2 border-t">
 				<ChatInput
 					value={value}

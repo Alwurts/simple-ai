@@ -27,11 +27,11 @@ export const ui: Registry["items"] = [
 		files: [{ type: "registry:ui", path: "ui/chat-input.tsx" }],
 	},
 	{
-		name: "message-area",
+		name: "chat-message-area",
 		type: "registry:ui",
 		registryDependencies: ["button"],
 		dependencies: ["use-stick-to-bottom"],
-		files: [{ type: "registry:ui", path: "ui/message-area.tsx" }],
+		files: [{ type: "registry:ui", path: "ui/chat-message-area.tsx" }],
 	},
 	{
 		name: "chat-message",

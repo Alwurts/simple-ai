@@ -14,10 +14,10 @@ import {
 	ChatMessageTimestamp,
 } from "@/registry/ui/chat-message";
 import {
-	MessageArea,
-	MessageAreaContent,
-	MessageAreaScrollButton,
-} from "@/registry/ui/message-area";
+	ChatMessageArea,
+	ChatMessageAreaContent,
+	ChatMessageAreaScrollButton,
+} from "@/registry/ui/chat-message-area";
 
 const messages: UIMessage<{
 	member: {
@@ -237,8 +237,8 @@ const messages: UIMessage<{
 
 export default function ChatMessageAreaDemo() {
 	return (
-		<MessageArea>
-			<MessageAreaContent>
+		<ChatMessageArea>
+			<ChatMessageAreaContent>
 				{messages.map((message) => (
 					<ChatMessage key={message.id}>
 						<ChatMessageAvatar>
@@ -273,8 +273,8 @@ export default function ChatMessageAreaDemo() {
 						</ChatMessageContainer>
 					</ChatMessage>
 				))}
-			</MessageAreaContent>
-			<MessageAreaScrollButton />
-		</MessageArea>
+			</ChatMessageAreaContent>
+			<ChatMessageAreaScrollButton />
+		</ChatMessageArea>
 	);
 }

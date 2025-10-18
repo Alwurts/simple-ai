@@ -56,20 +56,20 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
-	"message-area": {
-		name: "message-area",
+	"chat-message-area": {
+		name: "chat-message-area",
 		description: "",
 		type: "registry:ui",
 		registryDependencies: ["button"],
 		files: [
 			{
-				path: "./src/registry/ui/message-area.tsx",
+				path: "./src/registry/ui/chat-message-area.tsx",
 				type: "registry:ui",
 				target: "",
 			},
 		],
 		component: React.lazy(async () => {
-			const mod = await import("@/registry/ui/message-area.tsx");
+			const mod = await import("@/registry/ui/chat-message-area.tsx");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>

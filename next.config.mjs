@@ -8,11 +8,11 @@ const nextConfig = {
 	},
 	redirects: async () => {
 		return [
-			{
-				source: "/docs/components/chat-message-area",
-				destination: "/docs/components/message-area",
-				permanent: true,
-			},
+			// {
+			// 	source: "/docs/components/chat-message-area",
+			// 	destination: "/docs/components/message-area",
+			// 	permanent: true,
+			// },
 		];
 	},
 	rewrites: async () => {
