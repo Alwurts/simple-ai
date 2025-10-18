@@ -26,7 +26,6 @@ interface VisualizeTextProps extends NodeProps<VisualizeTextNode> {
 }
 
 export function VisualizeTextNode({
-	id,
 	selected,
 	data,
 	onDeleteNode,
@@ -58,7 +57,6 @@ export function VisualizeTextNode({
 			<div className="p-2 flex-1 overflow-auto flex flex-col">
 				<div className="flex-1 overflow-auto nodrag nopan nowheel border border-border rounded-md p-2 select-text cursor-auto">
 					<MarkdownContent
-						id={id}
 						content={data.input ? data.input : "No text to display"}
 					/>
 				</div>

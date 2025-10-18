@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useState } from "react";
 import { MarkdownContent } from "@/registry/ui/markdown-content";
 
 export default function MarkdownContentDemo() {
@@ -74,7 +74,7 @@ function sayHello() {
 	);
 	return (
 		<div className="w-full max-h-[400px] overflow-y-auto">
-			<MarkdownContent id={useId()} content={content} />
+			<MarkdownContent content={content} />
 		</div>
 	);
 }

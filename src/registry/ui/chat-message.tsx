@@ -98,7 +98,7 @@ interface ChatMessageMarkdownProps {
 }
 
 function ChatMessageMarkdown({ content, className }: ChatMessageMarkdownProps) {
-	return <MarkdownContent content={content.trim()} className={className} />;
+	return <MarkdownContent content={content || ""} className={className} />;
 }
 
 function ChatMessageFooter({ className, ...props }: ComponentProps<"div">) {

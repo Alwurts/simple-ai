@@ -1,17 +1,47 @@
 "use client";
 
+import type { UIMessage } from "@ai-sdk/react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	ChatMessage,
+	ChatMessageAuthor,
 	ChatMessageAvatar,
+	ChatMessageAvatarFallback,
+	ChatMessageAvatarImage,
+	ChatMessageContainer,
 	ChatMessageContent,
+	ChatMessageHeader,
+	ChatMessageMarkdown,
+	ChatMessageTimestamp,
 } from "@/registry/ui/chat-message";
 import {
 	MessageArea,
 	MessageAreaContent,
 	MessageAreaScrollButton,
 } from "@/registry/ui/message-area";
+
+const userMessage: UIMessage<{
+	member: {
+		image: string;
+		name: string;
+	};
+}> = {
+	id: "1",
+	parts: [
+		{
+			type: "text",
+			text: "Can you tell me a magical story?",
+		},
+	],
+	role: "user",
+	metadata: {
+		member: {
+			image: "/avatar-1.png",
+			name: "You",
+		},
+	},
+};
 
 const STORY = `# The Tale of the Enchanted Forest
 
@@ -165,19 +195,66 @@ export default function ChatMessageAreaDemo() {
 			<div className="border rounded-md h-[320px] overflow-y-auto">
 				<MessageArea>
 					<MessageAreaContent>
-						<ChatMessage
-							key="1"
-							id="1"
-							variant="bubble"
-							type="outgoing"
-						>
-							<ChatMessageContent content="Can you tell me a magical story?" />
+						<ChatMessage key={userMessage.id}>
+							<ChatMessageAvatar>
+								<ChatMessageAvatarImage
+									src={userMessage.metadata?.member.image}
+								/>
+								<ChatMessageAvatarFallback>
+									{userMessage.metadata?.member.name
+										.charAt(0)
+										.toUpperCase()}
+								</ChatMessageAvatarFallback>
+							</ChatMessageAvatar>
+
+							<ChatMessageContainer>
+								<ChatMessageHeader>
+									<ChatMessageAuthor>
+										{userMessage.metadata?.member.name}
+									</ChatMessageAuthor>
+									<ChatMessageTimestamp
+										createdAt={new Date()}
+									/>
+								</ChatMessageHeader>
+
+								<ChatMessageContent>
+									{userMessage.parts
+										.filter((part) => part.type === "text")
+										.map((part) => (
+											<ChatMessageMarkdown
+												key={part.type}
+												content={part.text}
+											/>
+										))}
+								</ChatMessageContent>
+							</ChatMessageContainer>
 						</ChatMessage>
 
 						{streamContent && (
 							<ChatMessage key="2" id="2">
-								<ChatMessageAvatar />
-								<ChatMessageContent content={streamContent} />
+								<ChatMessageAvatar>
+									<ChatMessageAvatarImage src="/avatar-2.png" />
+									<ChatMessageAvatarFallback>
+										A
+									</ChatMessageAvatarFallback>
+								</ChatMessageAvatar>
+
+								<ChatMessageContainer>
+									<ChatMessageHeader>
+										<ChatMessageAuthor>
+											Assistant
+										</ChatMessageAuthor>
+										<ChatMessageTimestamp
+											createdAt={new Date()}
+										/>
+									</ChatMessageHeader>
+
+									<ChatMessageContent>
+										<ChatMessageMarkdown
+											content={streamContent}
+										/>
+									</ChatMessageContent>
+								</ChatMessageContainer>
 							</ChatMessage>
 						)}
 					</MessageAreaContent>
