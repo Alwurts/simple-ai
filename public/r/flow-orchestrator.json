@@ -19,10 +19,10 @@
 		"input",
 		"textarea",
 		"sonner",
-		"undefined/r/generate-text-node.json",
-		"undefined/r/prompt-crafter-node.json",
-		"undefined/r/text-input-node.json",
-		"undefined/r/visualize-text-node.json"
+		"http://localhost:4567/r/generate-text-node.json",
+		"http://localhost:4567/r/prompt-crafter-node.json",
+		"http://localhost:4567/r/text-input-node.json",
+		"http://localhost:4567/r/visualize-text-node.json"
 	],
 	"files": [
 		{

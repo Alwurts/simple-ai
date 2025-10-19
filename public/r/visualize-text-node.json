@@ -5,10 +5,10 @@
 	"dependencies": ["@xyflow/react"],
 	"registryDependencies": [
 		"separator",
-		"undefined/r/markdown-content.json",
-		"undefined/r/labeled-handle.json",
-		"undefined/r/node-header.json",
-		"undefined/r/resizable-node.json"
+		"http://localhost:4567/r/markdown-content.json",
+		"http://localhost:4567/r/labeled-handle.json",
+		"http://localhost:4567/r/node-header.json",
+		"http://localhost:4567/r/resizable-node.json"
 	],
 	"files": [
 		{

@@ -3,7 +3,7 @@
 	"name": "chat-message",
 	"type": "registry:ui",
 	"registryDependencies": [
-		"undefined/r/markdown-content.json",
+		"http://localhost:4567/r/markdown-content.json",
 		"avatar",
 		"button",
 		"card",

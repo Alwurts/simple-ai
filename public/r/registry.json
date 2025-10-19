@@ -7,7 +7,7 @@
 			"type": "registry:ui",
 			"description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 			"dependencies": ["react-jsx-parser", "react-error-boundary"],
-			"registryDependencies": ["undefined/r/jsx-utils.json"],
+			"registryDependencies": ["http://localhost:4567/r/jsx-utils.json"],
 			"files": [
 				{
 					"path": "./src/registry/ui/jsx-renderer.tsx",
@@ -51,7 +51,7 @@
 			"name": "chat-message",
 			"type": "registry:ui",
 			"registryDependencies": [
-				"undefined/r/markdown-content.json",
+				"http://localhost:4567/r/markdown-content.json",
 				"avatar",
 				"button",
 				"card",
@@ -91,7 +91,7 @@
 			"name": "resizable-node",
 			"type": "registry:ui",
 			"dependencies": ["@xyflow/react"],
-			"registryDependencies": ["undefined/r/base-node.json"],
+			"registryDependencies": ["http://localhost:4567/r/base-node.json"],
 			"files": [
 				{
 					"path": "./src/registry/ui/flow/resizable-node.tsx",
@@ -122,7 +122,7 @@
 				"input",
 				"textarea",
 				"popover",
-				"undefined/r/base-handle.json"
+				"http://localhost:4567/r/base-handle.json"
 			],
 			"files": [
 				{
@@ -151,12 +151,12 @@
 			"registryDependencies": [
 				"button",
 				"separator",
-				"undefined/r/model-selector.json",
-				"undefined/r/node-header-status.json",
-				"undefined/r/editable-handle.json",
-				"undefined/r/labeled-handle.json",
-				"undefined/r/base-node.json",
-				"undefined/r/node-header.json"
+				"http://localhost:4567/r/model-selector.json",
+				"http://localhost:4567/r/node-header-status.json",
+				"http://localhost:4567/r/editable-handle.json",
+				"http://localhost:4567/r/labeled-handle.json",
+				"http://localhost:4567/r/base-node.json",
+				"http://localhost:4567/r/node-header.json"
 			],
 			"files": [
 				{
@@ -182,11 +182,11 @@
 				"separator",
 				"popover",
 				"command",
-				"undefined/r/node-header-status.json",
-				"undefined/r/editable-handle.json",
-				"undefined/r/node-header.json",
-				"undefined/r/labeled-handle.json",
-				"undefined/r/base-node.json"
+				"http://localhost:4567/r/node-header-status.json",
+				"http://localhost:4567/r/editable-handle.json",
+				"http://localhost:4567/r/node-header.json",
+				"http://localhost:4567/r/labeled-handle.json",
+				"http://localhost:4567/r/base-node.json"
 			],
 			"files": [
 				{
@@ -203,9 +203,9 @@
 			"registryDependencies": [
 				"textarea",
 				"separator",
-				"undefined/r/labeled-handle.json",
-				"undefined/r/node-header.json",
-				"undefined/r/resizable-node.json"
+				"http://localhost:4567/r/labeled-handle.json",
+				"http://localhost:4567/r/node-header.json",
+				"http://localhost:4567/r/resizable-node.json"
 			],
 			"files": [
 				{
@@ -221,10 +221,10 @@
 			"dependencies": ["@xyflow/react"],
 			"registryDependencies": [
 				"separator",
-				"undefined/r/markdown-content.json",
-				"undefined/r/labeled-handle.json",
-				"undefined/r/node-header.json",
-				"undefined/r/resizable-node.json"
+				"http://localhost:4567/r/markdown-content.json",
+				"http://localhost:4567/r/labeled-handle.json",
+				"http://localhost:4567/r/node-header.json",
+				"http://localhost:4567/r/resizable-node.json"
 			],
 			"files": [
 				{
@@ -331,7 +331,7 @@
 		{
 			"name": "chat-input-demo-mentions",
 			"type": "registry:example",
-			"registryDependencies": ["undefined/r/chat-input.json"],
+			"registryDependencies": ["http://localhost:4567/r/chat-input.json"],
 			"files": [
 				{
 					"path": "./src/registry/examples/chat-input-demo-mentions.tsx",
@@ -442,7 +442,9 @@
 		{
 			"name": "jsx-renderer-demo",
 			"type": "registry:example",
-			"registryDependencies": ["undefined/r/jsx-renderer.json"],
+			"registryDependencies": [
+				"http://localhost:4567/r/jsx-renderer.json"
+			],
 			"files": [
 				{
 					"path": "./src/registry/examples/jsx-renderer-demo.tsx",
@@ -453,7 +455,9 @@
 		{
 			"name": "jsx-renderer-disabled-demo",
 			"type": "registry:example",
-			"registryDependencies": ["undefined/r/jsx-renderer.json"],
+			"registryDependencies": [
+				"http://localhost:4567/r/jsx-renderer.json"
+			],
 			"files": [
 				{
 					"path": "./src/registry/examples/jsx-renderer-disabled-demo.tsx",
@@ -464,7 +468,9 @@
 		{
 			"name": "jsx-renderer-streaming-demo",
 			"type": "registry:example",
-			"registryDependencies": ["undefined/r/jsx-renderer.json"],
+			"registryDependencies": [
+				"http://localhost:4567/r/jsx-renderer.json"
+			],
 			"files": [
 				{
 					"path": "./src/registry/examples/jsx-renderer-streaming-demo.tsx",
@@ -586,9 +592,9 @@
 				"button",
 				"avatar",
 				"dropdown-menu",
-				"undefined/r/chat-input.json",
-				"undefined/r/chat-message-area.json",
-				"undefined/r/chat-message.json"
+				"http://localhost:4567/r/chat-input.json",
+				"http://localhost:4567/r/chat-message-area.json",
+				"http://localhost:4567/r/chat-message.json"
 			],
 			"files": [
 				{
@@ -652,9 +658,9 @@
 			"registryDependencies": [
 				"sidebar",
 				"breadcrumb",
-				"undefined/r/chat-input.json",
-				"undefined/r/chat-message-area.json",
-				"undefined/r/chat-message.json"
+				"http://localhost:4567/r/chat-input.json",
+				"http://localhost:4567/r/chat-message-area.json",
+				"http://localhost:4567/r/chat-message.json"
 			],
 			"files": [
 				{
@@ -682,9 +688,9 @@
 			"registryDependencies": [
 				"popover",
 				"button",
-				"undefined/r/chat-input.json",
-				"undefined/r/chat-message-area.json",
-				"undefined/r/chat-message.json"
+				"http://localhost:4567/r/chat-input.json",
+				"http://localhost:4567/r/chat-message-area.json",
+				"http://localhost:4567/r/chat-message.json"
 			],
 			"files": [
 				{
@@ -730,11 +736,11 @@
 				"badge",
 				"dialog",
 				"slider",
-				"undefined/r/chat-input.json",
-				"undefined/r/chat-message-area.json",
-				"undefined/r/chat-message.json",
-				"undefined/r/jsx-renderer.json",
-				"undefined/r/jsx-utils.json"
+				"http://localhost:4567/r/chat-input.json",
+				"http://localhost:4567/r/chat-message-area.json",
+				"http://localhost:4567/r/chat-message.json",
+				"http://localhost:4567/r/jsx-renderer.json",
+				"http://localhost:4567/r/jsx-utils.json"
 			],
 			"files": [
 				{
@@ -909,10 +915,10 @@
 				"input",
 				"textarea",
 				"sonner",
-				"undefined/r/generate-text-node.json",
-				"undefined/r/prompt-crafter-node.json",
-				"undefined/r/text-input-node.json",
-				"undefined/r/visualize-text-node.json"
+				"http://localhost:4567/r/generate-text-node.json",
+				"http://localhost:4567/r/prompt-crafter-node.json",
+				"http://localhost:4567/r/text-input-node.json",
+				"http://localhost:4567/r/visualize-text-node.json"
 			],
 			"files": [
 				{
@@ -1014,10 +1020,10 @@
 				"input",
 				"textarea",
 				"sonner",
-				"undefined/r/generate-text-node.json",
-				"undefined/r/prompt-crafter-node.json",
-				"undefined/r/text-input-node.json",
-				"undefined/r/visualize-text-node.json"
+				"http://localhost:4567/r/generate-text-node.json",
+				"http://localhost:4567/r/prompt-crafter-node.json",
+				"http://localhost:4567/r/text-input-node.json",
+				"http://localhost:4567/r/visualize-text-node.json"
 			],
 			"files": [
 				{
@@ -1119,10 +1125,10 @@
 				"input",
 				"textarea",
 				"sonner",
-				"undefined/r/generate-text-node.json",
-				"undefined/r/prompt-crafter-node.json",
-				"undefined/r/text-input-node.json",
-				"undefined/r/visualize-text-node.json"
+				"http://localhost:4567/r/generate-text-node.json",
+				"http://localhost:4567/r/prompt-crafter-node.json",
+				"http://localhost:4567/r/text-input-node.json",
+				"http://localhost:4567/r/visualize-text-node.json"
 			],
 			"files": [
 				{
@@ -1224,10 +1230,10 @@
 				"input",
 				"textarea",
 				"sonner",
-				"undefined/r/generate-text-node.json",
-				"undefined/r/prompt-crafter-node.json",
-				"undefined/r/text-input-node.json",
-				"undefined/r/visualize-text-node.json"
+				"http://localhost:4567/r/generate-text-node.json",
+				"http://localhost:4567/r/prompt-crafter-node.json",
+				"http://localhost:4567/r/text-input-node.json",
+				"http://localhost:4567/r/visualize-text-node.json"
 			],
 			"files": [
 				{

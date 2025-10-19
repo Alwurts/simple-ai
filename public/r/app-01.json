@@ -25,11 +25,11 @@
 		"badge",
 		"dialog",
 		"slider",
-		"undefined/r/chat-input.json",
-		"undefined/r/chat-message-area.json",
-		"undefined/r/chat-message.json",
-		"undefined/r/jsx-renderer.json",
-		"undefined/r/jsx-utils.json"
+		"http://localhost:4567/r/chat-input.json",
+		"http://localhost:4567/r/chat-message-area.json",
+		"http://localhost:4567/r/chat-message.json",
+		"http://localhost:4567/r/jsx-renderer.json",
+		"http://localhost:4567/r/jsx-utils.json"
 	],
 	"files": [
 		{

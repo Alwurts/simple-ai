@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "chat-input-demo-mentions",
 	"type": "registry:example",
-	"registryDependencies": ["undefined/r/chat-input.json"],
+	"registryDependencies": ["http://localhost:4567/r/chat-input.json"],
 	"files": [
 		{
 			"path": "./src/registry/examples/chat-input-demo-mentions.tsx",

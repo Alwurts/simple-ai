@@ -13,9 +13,9 @@
 		"button",
 		"avatar",
 		"dropdown-menu",
-		"undefined/r/chat-input.json",
-		"undefined/r/chat-message-area.json",
-		"undefined/r/chat-message.json"
+		"http://localhost:4567/r/chat-input.json",
+		"http://localhost:4567/r/chat-message-area.json",
+		"http://localhost:4567/r/chat-message.json"
 	],
 	"files": [
 		{

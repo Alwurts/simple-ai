@@ -10,7 +10,7 @@ export const Index: Record<string, any> = {
 		description:
 			"A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 		type: "registry:ui",
-		registryDependencies: ["undefined/r/jsx-utils.json"],
+		registryDependencies: ["http://localhost:4567/r/jsx-utils.json"],
 		files: [
 			{
 				path: "./src/registry/ui/jsx-renderer.tsx",
@@ -86,7 +86,7 @@ export const Index: Record<string, any> = {
 		description: "",
 		type: "registry:ui",
 		registryDependencies: [
-			"undefined/r/markdown-content.json",
+			"http://localhost:4567/r/markdown-content.json",
 			"avatar",
 			"button",
 			"card",
@@ -166,7 +166,7 @@ export const Index: Record<string, any> = {
 		name: "resizable-node",
 		description: "",
 		type: "registry:ui",
-		registryDependencies: ["undefined/r/base-node.json"],
+		registryDependencies: ["http://localhost:4567/r/base-node.json"],
 		files: [
 			{
 				path: "./src/registry/ui/flow/resizable-node.tsx",
@@ -223,7 +223,7 @@ export const Index: Record<string, any> = {
 			"input",
 			"textarea",
 			"popover",
-			"undefined/r/base-handle.json",
+			"http://localhost:4567/r/base-handle.json",
 		],
 		files: [
 			{
@@ -277,12 +277,12 @@ export const Index: Record<string, any> = {
 		registryDependencies: [
 			"button",
 			"separator",
-			"undefined/r/model-selector.json",
-			"undefined/r/node-header-status.json",
-			"undefined/r/editable-handle.json",
-			"undefined/r/labeled-handle.json",
-			"undefined/r/base-node.json",
-			"undefined/r/node-header.json",
+			"http://localhost:4567/r/model-selector.json",
+			"http://localhost:4567/r/node-header-status.json",
+			"http://localhost:4567/r/editable-handle.json",
+			"http://localhost:4567/r/labeled-handle.json",
+			"http://localhost:4567/r/base-node.json",
+			"http://localhost:4567/r/node-header.json",
 		],
 		files: [
 			{
@@ -315,11 +315,11 @@ export const Index: Record<string, any> = {
 			"separator",
 			"popover",
 			"command",
-			"undefined/r/node-header-status.json",
-			"undefined/r/editable-handle.json",
-			"undefined/r/node-header.json",
-			"undefined/r/labeled-handle.json",
-			"undefined/r/base-node.json",
+			"http://localhost:4567/r/node-header-status.json",
+			"http://localhost:4567/r/editable-handle.json",
+			"http://localhost:4567/r/node-header.json",
+			"http://localhost:4567/r/labeled-handle.json",
+			"http://localhost:4567/r/base-node.json",
 		],
 		files: [
 			{
@@ -350,9 +350,9 @@ export const Index: Record<string, any> = {
 		registryDependencies: [
 			"textarea",
 			"separator",
-			"undefined/r/labeled-handle.json",
-			"undefined/r/node-header.json",
-			"undefined/r/resizable-node.json",
+			"http://localhost:4567/r/labeled-handle.json",
+			"http://localhost:4567/r/node-header.json",
+			"http://localhost:4567/r/resizable-node.json",
 		],
 		files: [
 			{
@@ -380,10 +380,10 @@ export const Index: Record<string, any> = {
 		type: "registry:ui",
 		registryDependencies: [
 			"separator",
-			"undefined/r/markdown-content.json",
-			"undefined/r/labeled-handle.json",
-			"undefined/r/node-header.json",
-			"undefined/r/resizable-node.json",
+			"http://localhost:4567/r/markdown-content.json",
+			"http://localhost:4567/r/labeled-handle.json",
+			"http://localhost:4567/r/node-header.json",
+			"http://localhost:4567/r/resizable-node.json",
 		],
 		files: [
 			{
@@ -616,7 +616,7 @@ export const Index: Record<string, any> = {
 		name: "chat-input-demo-mentions",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["undefined/r/chat-input.json"],
+		registryDependencies: ["http://localhost:4567/r/chat-input.json"],
 		files: [
 			{
 				path: "./src/registry/examples/chat-input-demo-mentions.tsx",
@@ -913,7 +913,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["undefined/r/jsx-renderer.json"],
+		registryDependencies: ["http://localhost:4567/r/jsx-renderer.json"],
 		files: [
 			{
 				path: "./src/registry/examples/jsx-renderer-demo.tsx",
@@ -940,7 +940,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer-disabled-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["undefined/r/jsx-renderer.json"],
+		registryDependencies: ["http://localhost:4567/r/jsx-renderer.json"],
 		files: [
 			{
 				path: "./src/registry/examples/jsx-renderer-disabled-demo.tsx",
@@ -967,7 +967,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer-streaming-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["undefined/r/jsx-renderer.json"],
+		registryDependencies: ["http://localhost:4567/r/jsx-renderer.json"],
 		files: [
 			{
 				path: "./src/registry/examples/jsx-renderer-streaming-demo.tsx",
@@ -1273,9 +1273,9 @@ export const Index: Record<string, any> = {
 			"button",
 			"avatar",
 			"dropdown-menu",
-			"undefined/r/chat-input.json",
-			"undefined/r/chat-message-area.json",
-			"undefined/r/chat-message.json",
+			"http://localhost:4567/r/chat-input.json",
+			"http://localhost:4567/r/chat-message-area.json",
+			"http://localhost:4567/r/chat-message.json",
 		],
 		files: [
 			{
@@ -1359,9 +1359,9 @@ export const Index: Record<string, any> = {
 		registryDependencies: [
 			"sidebar",
 			"breadcrumb",
-			"undefined/r/chat-input.json",
-			"undefined/r/chat-message-area.json",
-			"undefined/r/chat-message.json",
+			"http://localhost:4567/r/chat-input.json",
+			"http://localhost:4567/r/chat-message-area.json",
+			"http://localhost:4567/r/chat-message.json",
 		],
 		files: [
 			{
@@ -1400,9 +1400,9 @@ export const Index: Record<string, any> = {
 		registryDependencies: [
 			"popover",
 			"button",
-			"undefined/r/chat-input.json",
-			"undefined/r/chat-message-area.json",
-			"undefined/r/chat-message.json",
+			"http://localhost:4567/r/chat-input.json",
+			"http://localhost:4567/r/chat-message-area.json",
+			"http://localhost:4567/r/chat-message.json",
 		],
 		files: [
 			{
@@ -1453,11 +1453,11 @@ export const Index: Record<string, any> = {
 			"badge",
 			"dialog",
 			"slider",
-			"undefined/r/chat-input.json",
-			"undefined/r/chat-message-area.json",
-			"undefined/r/chat-message.json",
-			"undefined/r/jsx-renderer.json",
-			"undefined/r/jsx-utils.json",
+			"http://localhost:4567/r/chat-input.json",
+			"http://localhost:4567/r/chat-message-area.json",
+			"http://localhost:4567/r/chat-message.json",
+			"http://localhost:4567/r/jsx-renderer.json",
+			"http://localhost:4567/r/jsx-utils.json",
 		],
 		files: [
 			{
@@ -1671,10 +1671,10 @@ export const Index: Record<string, any> = {
 			"input",
 			"textarea",
 			"sonner",
-			"undefined/r/generate-text-node.json",
-			"undefined/r/prompt-crafter-node.json",
-			"undefined/r/text-input-node.json",
-			"undefined/r/visualize-text-node.json",
+			"http://localhost:4567/r/generate-text-node.json",
+			"http://localhost:4567/r/prompt-crafter-node.json",
+			"http://localhost:4567/r/text-input-node.json",
+			"http://localhost:4567/r/visualize-text-node.json",
 		],
 		files: [
 			{
@@ -1787,10 +1787,10 @@ export const Index: Record<string, any> = {
 			"input",
 			"textarea",
 			"sonner",
-			"undefined/r/generate-text-node.json",
-			"undefined/r/prompt-crafter-node.json",
-			"undefined/r/text-input-node.json",
-			"undefined/r/visualize-text-node.json",
+			"http://localhost:4567/r/generate-text-node.json",
+			"http://localhost:4567/r/prompt-crafter-node.json",
+			"http://localhost:4567/r/text-input-node.json",
+			"http://localhost:4567/r/visualize-text-node.json",
 		],
 		files: [
 			{
@@ -1903,10 +1903,10 @@ export const Index: Record<string, any> = {
 			"input",
 			"textarea",
 			"sonner",
-			"undefined/r/generate-text-node.json",
-			"undefined/r/prompt-crafter-node.json",
-			"undefined/r/text-input-node.json",
-			"undefined/r/visualize-text-node.json",
+			"http://localhost:4567/r/generate-text-node.json",
+			"http://localhost:4567/r/prompt-crafter-node.json",
+			"http://localhost:4567/r/text-input-node.json",
+			"http://localhost:4567/r/visualize-text-node.json",
 		],
 		files: [
 			{
@@ -2021,10 +2021,10 @@ export const Index: Record<string, any> = {
 			"input",
 			"textarea",
 			"sonner",
-			"undefined/r/generate-text-node.json",
-			"undefined/r/prompt-crafter-node.json",
-			"undefined/r/text-input-node.json",
-			"undefined/r/visualize-text-node.json",
+			"http://localhost:4567/r/generate-text-node.json",
+			"http://localhost:4567/r/prompt-crafter-node.json",
+			"http://localhost:4567/r/text-input-node.json",
+			"http://localhost:4567/r/visualize-text-node.json",
 		],
 		files: [
 			{

@@ -3,7 +3,7 @@
 	"name": "resizable-node",
 	"type": "registry:ui",
 	"dependencies": ["@xyflow/react"],
-	"registryDependencies": ["undefined/r/base-node.json"],
+	"registryDependencies": ["http://localhost:4567/r/base-node.json"],
 	"files": [
 		{
 			"path": "./src/registry/ui/flow/resizable-node.tsx",

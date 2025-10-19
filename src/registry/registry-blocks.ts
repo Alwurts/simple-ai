@@ -44,6 +44,10 @@ export const blocks: Registry["items"] = [
 				type: "registry:component",
 			},
 			{
+				path: "blocks/chat-01/components/layout/app-header.tsx",
+				type: "registry:component",
+			},
+			{
 				path: "blocks/chat-01/components/layout/app-sidebar.tsx",
 				type: "registry:component",
 			},

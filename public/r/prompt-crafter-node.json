@@ -15,11 +15,11 @@
 		"separator",
 		"popover",
 		"command",
-		"undefined/r/node-header-status.json",
-		"undefined/r/editable-handle.json",
-		"undefined/r/node-header.json",
-		"undefined/r/labeled-handle.json",
-		"undefined/r/base-node.json"
+		"http://localhost:4567/r/node-header-status.json",
+		"http://localhost:4567/r/editable-handle.json",
+		"http://localhost:4567/r/node-header.json",
+		"http://localhost:4567/r/labeled-handle.json",
+		"http://localhost:4567/r/base-node.json"
 	],
 	"files": [
 		{

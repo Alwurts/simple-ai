@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "jsx-renderer-disabled-demo",
 	"type": "registry:example",
-	"registryDependencies": ["undefined/r/jsx-renderer.json"],
+	"registryDependencies": ["http://localhost:4567/r/jsx-renderer.json"],
 	"files": [
 		{
 			"path": "./src/registry/examples/jsx-renderer-disabled-demo.tsx",

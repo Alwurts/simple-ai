@@ -4,7 +4,7 @@
 	"type": "registry:ui",
 	"description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 	"dependencies": ["react-jsx-parser", "react-error-boundary"],
-	"registryDependencies": ["undefined/r/jsx-utils.json"],
+	"registryDependencies": ["http://localhost:4567/r/jsx-utils.json"],
 	"files": [
 		{
 			"path": "./src/registry/ui/jsx-renderer.tsx",

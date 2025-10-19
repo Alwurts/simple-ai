@@ -8,7 +8,7 @@
 		"input",
 		"textarea",
 		"popover",
-		"undefined/r/base-handle.json"
+		"http://localhost:4567/r/base-handle.json"
 	],
 	"files": [
 		{
