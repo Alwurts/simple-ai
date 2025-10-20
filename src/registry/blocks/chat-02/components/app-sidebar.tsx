@@ -15,7 +15,6 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useTrackEvent } from "@/lib/events";
 import {
 	ChatInput,
 	ChatInputEditor,
@@ -100,22 +99,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			api: "/api/ai/chat",
 		}),
 		messages: INITIAL_MESSAGES,
-		onFinish: ({ message }) => {
-			//console.log("onFinish", message, completion);
-			track({
-				name: "block_used",
-				properties: {
-					used_block: "chat-02",
-					used_block_ai_completion: JSON.stringify(
-						message.parts,
-						null,
-						2,
-					),
-				},
-			});
-		},
 	});
-	const track = useTrackEvent();
 	const isLoading = status === "streaming" || status === "submitted";
 
 	const { value, onChange, handleSubmit } = useChatInput({

@@ -4,7 +4,6 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { Copy, ThumbsUp } from "lucide-react";
 import type { ComponentPropsWithoutRef } from "react";
-import { useTrackEvent } from "@/lib/events";
 import {
 	ChatInput,
 	ChatInputEditor,
@@ -197,24 +196,9 @@ export function ChatContent({
 			api: "/api/ai/chat",
 		}),
 		messages: INITIAL_MESSAGES,
-		onFinish: ({ message }) => {
-			//console.log("onFinish", message, completion);
-			track({
-				name: "block_used",
-				properties: {
-					used_block: "chat-01",
-					used_block_ai_completion: JSON.stringify(
-						message.parts,
-						null,
-						2,
-					),
-				},
-			});
-		},
 	});
 
 	const isLoading = status === "streaming" || status === "submitted";
-	const track = useTrackEvent();
 
 	// Use the new hook with custom onSubmit
 	const { value, onChange, handleSubmit } = useChatInput({

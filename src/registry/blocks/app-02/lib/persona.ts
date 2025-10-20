@@ -42,7 +42,7 @@ export const ProductPersonaSchema = z.object({
 	valueProposition: z.string().describe("Core value proposition"),
 	painPointsSolved: z.array(z.string()).min(1),
 	pricingModel: z.string().describe("e.g., Freemium, Subscription, etc."),
-	emoji: z.string().emoji().length(1).describe("Category-representing emoji"),
+	emoji: z.string().min(1).max(1).describe("Category-representing emoji"),
 });
 
 // Type exports for TypeScript

@@ -1,9 +1,8 @@
 "use client";
 
-import { PanelLeft, Search } from "lucide-react";
+import { Brain, PanelLeft, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 import type { ComponentProps } from "react";
-import { LogoIcon } from "@/components/icons/logo-icon";
 import {
 	Sidebar,
 	SidebarContent,
@@ -29,7 +28,7 @@ export function AppSidebar({ children }: ComponentProps<typeof Sidebar>) {
 			<SidebarHeader>
 				<SidebarMenu>
 					<SidebarMenuItem className="flex items-center justify-between">
-						<LogoIcon className="size-6 group-data-[collapsible=icon]:hidden" />
+						<Brain className="size-6 group-data-[collapsible=icon]:hidden" />
 
 						<SidebarMenuButton
 							className="w-fit [&>svg]:size-5 md:flex justify-center hidden"

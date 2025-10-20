@@ -1,3 +1,4 @@
+import type { MDXComponents } from "mdx/types";
 import Image from "next/image";
 import Link from "next/link";
 import { CodeBlockCommand } from "@/components/code/code-block-command";
@@ -21,7 +22,6 @@ import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import type { MDXComponents } from "mdx/types";
 
 export const mdxComponents = {
 	h1: ({ className, ...props }) => (
@@ -306,7 +306,7 @@ export const mdxComponents = {
 	}: React.ComponentProps<"img">) => (
 		<Image
 			className={cn("mt-6 rounded-md border", className)}
-			src={src as string || ""}
+			src={(src as string) || ""}
 			width={Number(width)}
 			height={Number(height)}
 			alt={alt || ""}

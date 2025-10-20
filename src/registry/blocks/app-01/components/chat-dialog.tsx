@@ -6,7 +6,6 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { useTrackEvent } from "@/lib/events";
 import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
 import {
 	ChatInput,
@@ -27,29 +26,19 @@ export function ChatDialog() {
 	const addVersion = useGenerationStore((state) => state.addVersion);
 	const chatOpen = useGenerationStore((state) => state.chatOpen);
 	const setChatOpen = useGenerationStore((state) => state.setChatOpen);
-	const track = useTrackEvent();
 
-	const { completion, isLoading, handleSubmit, stop, setInput } =
-		useCompletion({
-			api: "/api/ai/generate",
-			onFinish: (prompt, completion) => {
-				setView("preview");
-				updateCurrentCode(completion);
-				updateStatus("complete");
-				setChatOpen(false);
-				track({
-					name: "block_used",
-					properties: {
-						used_block: "app-01",
-						used_block_ai_prompt: prompt,
-						used_block_ai_completion: completion,
-					},
-				});
-			},
-			body: {
-				currentCode: versions[currentVersion]?.code ?? "",
-			},
-		});
+	const { completion, isLoading, complete, stop } = useCompletion({
+		api: "/api/ai/generate",
+		onFinish: (_prompt, completion) => {
+			setView("preview");
+			updateCurrentCode(completion);
+			updateStatus("complete");
+			setChatOpen(false);
+		},
+		body: {
+			currentCode: versions[currentVersion]?.code ?? "",
+		},
+	});
 
 	const {
 		value,
@@ -58,8 +47,7 @@ export function ChatDialog() {
 	} = useChatInput({
 		onSubmit: (parsedValue) => {
 			addVersion("", parsedValue.content);
-			setInput(parsedValue.content);
-			handleSubmit();
+			complete(parsedValue.content);
 			setChatOpen(false);
 		},
 	});

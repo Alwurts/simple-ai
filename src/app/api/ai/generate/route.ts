@@ -1,27 +1,20 @@
-import { createGroq } from "@ai-sdk/groq";
 import { smoothStream, streamText } from "ai";
-
+import { model } from "@/lib/ai/models";
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
+	console.log("Hello from the generate route");
 	const data = await req.json();
 	const { prompt, currentCode }: { prompt: string; currentCode: string } =
 		data;
 
-	console.log("Hello from the generate route");
 	console.log(prompt);
 	console.log(currentCode);
 
-	const groqClient = createGroq({
-		baseURL: process.env.AI_GATEWAY_GROQ_URL,
-	});
-
-	console.log("Hello from the generate route");
-
 	try {
 		const result = streamText({
-			model: groqClient("llama-3.3-70b-versatile"),
+			model: model.languageModel("gpt-5-mini"),
 			system: `
 <internal_reminder>
 	<assistant_info>
@@ -82,7 +75,7 @@ export async function POST(req: Request) {
 			}),
 		});
 
-		return result.toTextStreamResponse();
+		return result.toUIMessageStreamResponse();
 	} catch (error) {
 		console.error(error);
 		return new Response("Internal Server Error", { status: 500 });

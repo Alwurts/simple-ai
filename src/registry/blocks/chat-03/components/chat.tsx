@@ -2,7 +2,6 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
-import { useTrackEvent } from "@/lib/events";
 import {
 	ChatInput,
 	ChatInputEditor,
@@ -67,22 +66,7 @@ export function Chat() {
 			api: "/api/ai/chat",
 		}),
 		messages: INITIAL_MESSAGES,
-		onFinish: ({ message }) => {
-			//console.log("onFinish", message, completion);
-			track({
-				name: "block_used",
-				properties: {
-					used_block: "chat-03",
-					used_block_ai_completion: JSON.stringify(
-						message.parts,
-						null,
-						2,
-					),
-				},
-			});
-		},
 	});
-	const track = useTrackEvent();
 	const isLoading = status === "streaming" || status === "submitted";
 
 	const { value, onChange, handleSubmit } = useChatInput({

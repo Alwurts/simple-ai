@@ -14,7 +14,7 @@ export const siteConfig = {
 			label: "Documentation",
 		},
 		{
-			href: "/docs/components",
+			href: "/docs/components/chat-input",
 			label: "Components",
 		},
 		{
@@ -35,7 +35,9 @@ export const siteConfig = {
 
 const resolvedBase =
 	process.env.NEXT_PUBLIC_BASE_URL ||
-	(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
+	(process.env.VERCEL_URL
+		? `https://${process.env.VERCEL_URL}`
+		: undefined) ||
 	`http://localhost:${process.env.PORT || "4567"}`;
 
 export const BASE_URL = resolvedBase.replace(/\/$/, "");

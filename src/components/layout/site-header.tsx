@@ -26,12 +26,14 @@ export function SiteHeader() {
 					<Button
 						asChild
 						variant="ghost"
-						size="icon"
-						className="hidden size-8 lg:flex"
+						size="sm"
+						className="hidden lg:flex gap-2"
 					>
 						<Link href="/">
 							<LogoIcon className="size-7" />
-							<span className="sr-only">{siteConfig.name}</span>
+							<span className="font-bold text-base">
+								{siteConfig.name}
+							</span>
 						</Link>
 					</Button>
 					<MainNav

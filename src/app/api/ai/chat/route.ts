@@ -1,5 +1,5 @@
-import { createGroq } from "@ai-sdk/groq";
 import { convertToModelMessages, smoothStream, streamText } from "ai";
+import { model } from "@/lib/ai/models";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -43,13 +43,9 @@ Your responses will be displayed in a beautiful, accessible chat interface. You 
 export async function POST(req: Request) {
 	const { messages } = await req.json();
 
-	const groqClient = createGroq({
-		baseURL: process.env.AI_GATEWAY_GROQ_URL,
-	});
-
 	try {
 		const result = streamText({
-			model: groqClient("llama-3.1-8b-instant"),
+			model: model.languageModel("gpt-5-nano"),
 			system: chatSimpleAISystemPrompt,
 			messages: convertToModelMessages(messages),
 			experimental_transform: smoothStream(),
