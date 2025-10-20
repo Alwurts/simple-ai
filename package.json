@@ -9,7 +9,7 @@
 		"lint": "biome check src --write",
 		"typecheck": "tsc --noEmit",
 		"postinstall": "fumadocs-mdx",
-		"registry:build": "tsx --env-file=.env.local --tsconfig ./tsconfig.scripts.json ./src/scripts/build-registry.mts && biome check src/registry --write && biome check ./public/r/*.json --write",
+		"registry:build": "sh -lc 'if [ -f .env.local ]; then tsx --env-file=.env.local --tsconfig ./tsconfig.scripts.json ./src/scripts/build-registry.mts; else tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/build-registry.mts; fi' && biome check src/registry --write && biome check ./public/r/*.json --write",
 		"registry:capture": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/capture-registry.mts"
 	},
 	"dependencies": {
@@ -74,7 +74,7 @@
 		"rehype-pretty-code": "^0.14.1",
 		"remark-gfm": "^4.0.1",
 		"rimraf": "^6.0.1",
-		"shadcn": "^3.4.0",
+		"shadcn": "^3.4.2",
 		"shiki": "^3.13.0",
 		"sonner": "^2.0.7",
 		"tailwind-merge": "^3.3.1",

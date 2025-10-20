@@ -21,18 +21,20 @@ import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import type { MDXComponents } from "mdx/types";
 
 export const mdxComponents = {
-	h1: ({ className, ...props }: React.ComponentProps<"h1">) => (
+	h1: ({ className, ...props }) => (
 		<h1
 			className={cn(
 				"font-heading mt-2 scroll-m-28 text-3xl font-bold tracking-tight",
 				className,
 			)}
 			{...props}
+			ref={undefined}
 		/>
 	),
-	h2: ({ className, ...props }: React.ComponentProps<"h2">) => {
+	h2: ({ className, ...props }) => {
 		return (
 			<h2
 				id={props.children
@@ -46,92 +48,112 @@ export const mdxComponents = {
 					className,
 				)}
 				{...props}
+				ref={undefined}
 			/>
 		);
 	},
-	h3: ({ className, ...props }: React.ComponentProps<"h3">) => (
+	h3: ({ className, ...props }) => (
 		<h3
 			className={cn(
 				"font-heading mt-12 scroll-m-28 text-lg font-medium tracking-tight [&+p]:!mt-4 *:[code]:text-xl",
 				className,
 			)}
 			{...props}
+			ref={undefined}
 		/>
 	),
-	h4: ({ className, ...props }: React.ComponentProps<"h4">) => (
+	h4: ({ className, ...props }) => (
 		<h4
 			className={cn(
 				"font-heading mt-8 scroll-m-28 text-base font-medium tracking-tight",
 				className,
 			)}
 			{...props}
+			ref={undefined}
 		/>
 	),
-	h5: ({ className, ...props }: React.ComponentProps<"h5">) => (
+	h5: ({ className, ...props }) => (
 		<h5
 			className={cn(
 				"mt-8 scroll-m-28 text-base font-medium tracking-tight",
 				className,
 			)}
 			{...props}
+			ref={undefined}
 		/>
 	),
-	h6: ({ className, ...props }: React.ComponentProps<"h6">) => (
+	h6: ({ className, ...props }) => (
 		<h6
 			className={cn(
 				"mt-8 scroll-m-28 text-base font-medium tracking-tight",
 				className,
 			)}
 			{...props}
+			ref={undefined}
 		/>
 	),
-	a: ({ className, ...props }: React.ComponentProps<"a">) => (
+	a: ({ className, ...props }) => (
 		<a
 			className={cn(
 				"font-medium underline underline-offset-4",
 				className,
 			)}
 			{...props}
+			ref={undefined}
 		/>
 	),
-	p: ({ className, ...props }: React.ComponentProps<"p">) => (
+	p: ({ className, ...props }) => (
 		<p
 			className={cn(
 				"leading-relaxed [&:not(:first-child)]:mt-6",
 				className,
 			)}
 			{...props}
+			ref={undefined}
 		/>
 	),
-	strong: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
-		<strong className={cn("font-medium", className)} {...props} />
+	strong: ({ className, ...props }) => (
+		<strong
+			className={cn("font-medium", className)}
+			{...props}
+			ref={undefined}
+		/>
 	),
-	ul: ({ className, ...props }: React.ComponentProps<"ul">) => (
-		<ul className={cn("my-6 ml-6 list-disc", className)} {...props} />
+	ul: ({ className, ...props }) => (
+		<ul
+			className={cn("my-6 ml-6 list-disc", className)}
+			{...props}
+			ref={undefined}
+		/>
 	),
-	ol: ({ className, ...props }: React.ComponentProps<"ol">) => (
-		<ol className={cn("my-6 ml-6 list-decimal", className)} {...props} />
+	ol: ({ className, ...props }) => (
+		<ol
+			className={cn("my-6 ml-6 list-decimal", className)}
+			{...props}
+			ref={undefined}
+		/>
 	),
-	li: ({ className, ...props }: React.ComponentProps<"li">) => (
-		<li className={cn("mt-2", className)} {...props} />
+	li: ({ className, ...props }) => (
+		<li className={cn("mt-2", className)} {...props} ref={undefined} />
 	),
-	blockquote: ({
-		className,
-		...props
-	}: React.ComponentProps<"blockquote">) => (
+	blockquote: ({ className, ...props }) => (
 		<blockquote
 			className={cn("mt-6 border-l-2 pl-6 italic", className)}
 			{...props}
+			ref={undefined}
 		/>
 	),
-	img: ({ className, alt, ...props }: React.ComponentProps<"img">) => (
-		// biome-ignore lint/performance/noImgElement: Needed
-		<img className={cn("rounded-md", className)} alt={alt} {...props} />
+	img: ({ className, alt, ...props }) => (
+		// biome-ignore lint/performance/noImgElement: Required for image
+		<img
+			className={cn("rounded-md", className)}
+			alt={alt}
+			{...props}
+			ref={undefined}
+		/>
 	),
-	hr: ({ ...props }: React.ComponentProps<"hr">) => (
-		<hr className="my-4 md:my-8" {...props} />
-	),
-	table: ({ className, ...props }: React.ComponentProps<"table">) => (
+	hr: (props) => <hr className="my-4 md:my-8" {...props} ref={undefined} />,
+	table: ({ className, ...props }) => (
 		<div className="no-scrollbar my-6 w-full overflow-y-auto rounded-lg border">
 			<table
 				className={cn(
@@ -139,31 +161,38 @@ export const mdxComponents = {
 					className,
 				)}
 				{...props}
+				ref={undefined}
 			/>
 		</div>
 	),
-	tr: ({ className, ...props }: React.ComponentProps<"tr">) => (
-		<tr className={cn("m-0 border-b", className)} {...props} />
+	tr: ({ className, ...props }) => (
+		<tr
+			className={cn("m-0 border-b", className)}
+			{...props}
+			ref={undefined}
+		/>
 	),
-	th: ({ className, ...props }: React.ComponentProps<"th">) => (
+	th: ({ className, ...props }) => (
 		<th
 			className={cn(
 				"px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
 				className,
 			)}
 			{...props}
+			ref={undefined}
 		/>
 	),
-	td: ({ className, ...props }: React.ComponentProps<"td">) => (
+	td: ({ className, ...props }) => (
 		<td
 			className={cn(
 				"px-4 py-2 text-left whitespace-nowrap [&[align=center]]:text-center [&[align=right]]:text-right",
 				className,
 			)}
 			{...props}
+			ref={undefined}
 		/>
 	),
-	pre: ({ className, children, ...props }: React.ComponentProps<"pre">) => {
+	pre: ({ className, children, ...props }) => {
 		return (
 			<pre
 				className={cn(
@@ -171,19 +200,16 @@ export const mdxComponents = {
 					className,
 				)}
 				{...props}
+				ref={undefined}
 			>
 				{children}
 			</pre>
 		);
 	},
-	figure: ({ className, ...props }: React.ComponentProps<"figure">) => {
-		return <figure className={cn(className)} {...props} />;
+	figure: ({ className, ...props }) => {
+		return <figure className={cn(className)} {...props} ref={undefined} />;
 	},
-	figcaption: ({
-		className,
-		children,
-		...props
-	}: React.ComponentProps<"figcaption">) => {
+	figcaption: ({ className, children, ...props }) => {
 		const iconExtension =
 			"data-language" in props &&
 			typeof props["data-language"] === "string"
@@ -197,6 +223,7 @@ export const mdxComponents = {
 					className,
 				)}
 				{...props}
+				ref={undefined}
 			>
 				{iconExtension}
 				{children}
@@ -212,7 +239,7 @@ export const mdxComponents = {
 		__pnpm__,
 		__bun__,
 		...props
-	}: React.ComponentProps<"code"> & {
+	}: React.HTMLAttributes<HTMLElement> & {
 		__raw__?: string;
 		__src__?: string;
 		__npm__?: string;
@@ -279,8 +306,7 @@ export const mdxComponents = {
 	}: React.ComponentProps<"img">) => (
 		<Image
 			className={cn("mt-6 rounded-md border", className)}
-			// @ts-expect-error - Needed
-			src={src || ""}
+			src={src as string || ""}
 			width={Number(width)}
 			height={Number(height)}
 			alt={alt || ""}
@@ -371,4 +397,4 @@ export const mdxComponents = {
 		/>
 	),
 	Kbd,
-};
+} satisfies MDXComponents;

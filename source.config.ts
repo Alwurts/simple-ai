@@ -3,16 +3,18 @@ import {
 	defineDocs,
 	frontmatterSchema,
 } from "fumadocs-mdx/config";
-import rehypePrettyCode from "rehype-pretty-code";
+import rehypePrettyCode, {
+	type Options as RehypePrettyCoeOptions,
+} from "rehype-pretty-code";
 import { z } from "zod";
 
 import { transformers } from "@/lib/highlight-code";
 
 export default defineConfig({
 	mdxOptions: {
-		rehypePlugins: (plugins) => {
-			plugins.shift();
-			plugins.push([
+		rehypeCodeOptions: false,
+		rehypePlugins: [
+			[
 				rehypePrettyCode,
 				{
 					theme: {
@@ -20,11 +22,9 @@ export default defineConfig({
 						light: "github-light-default",
 					},
 					transformers,
-				},
-			]);
-
-			return plugins;
-		},
+				} satisfies RehypePrettyCoeOptions,
+			],
+		],
 	},
 });
 
@@ -39,8 +39,5 @@ export const docs = defineDocs({
 				})
 				.optional(),
 		}),
-		// postprocess: {
-		// 	includeProcessedMarkdown: true,
-		// },
 	},
 });

@@ -1304,6 +1304,11 @@ export const Index: Record<string, any> = {
 				target: "",
 			},
 			{
+				path: "./src/registry/blocks/chat-01/components/layout/app-header.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
 				path: "./src/registry/blocks/chat-01/components/layout/app-sidebar.tsx",
 				type: "registry:component",
 				target: "",

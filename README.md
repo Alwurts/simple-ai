@@ -41,3 +41,4 @@ Licensed under the MIT License.
 - [ ] Add frontpage
 - [ ] Check all blocks work
 - [ ] Update layout of chats to be like chatsemble, even add a block with thread support
+- [ ] Add name, title and description to all components and blocks
