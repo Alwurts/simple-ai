@@ -33,27 +33,9 @@ export const siteConfig = {
 	],
 };
 
-function getBaseUrl() {
-	// 1) Explicit public base URL takes precedence
-	const explicit = process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL;
-	if (explicit && /^https?:\/\//.test(explicit)) {
-		return explicit.replace(/\/$/, "");
-	}
+const resolvedBase =
+	process.env.NEXT_PUBLIC_BASE_URL ||
+	(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined) ||
+	`http://localhost:${process.env.PORT || "4567"}`;
 
-	// 2) Vercel-provided URL (no protocol), prefer https
-	const vercelUrl = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
-	if (vercelUrl) {
-		return `https://${vercelUrl.replace(/\/$/, "")}`;
-	}
-
-	// 3) Fallback to configured site URL if present
-	if (siteConfig?.url) {
-		return siteConfig.url.replace(/\/$/, "");
-	}
-
-	// 4) Local development fallback
-	const port = process.env.PORT || "4567";
-	return `http://localhost:${port}`;
-}
-
-export const BASE_URL = getBaseUrl();
+export const BASE_URL = resolvedBase.replace(/\/$/, "");
