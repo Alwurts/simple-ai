@@ -1,6 +1,6 @@
 "use client";
 
-import { Brain, PanelLeft, Search } from "lucide-react";
+import { MessageCircle, PanelLeft, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 import type { ComponentProps } from "react";
 import {
@@ -28,7 +28,9 @@ export function AppSidebar({ children }: ComponentProps<typeof Sidebar>) {
 			<SidebarHeader>
 				<SidebarMenu>
 					<SidebarMenuItem className="flex items-center justify-between">
-						<Brain className="size-6 group-data-[collapsible=icon]:hidden" />
+						<div className="flex size-7 group-data-[collapsible=icon]:hidden items-center justify-center rounded-lg bg-primary">
+							<MessageCircle className="h-5 w-5 text-primary-foreground" />
+						</div>
 
 						<SidebarMenuButton
 							className="w-fit [&>svg]:size-5 md:flex justify-center hidden"

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-// import Image from "next/image";
 import Link from "next/link";
-
+import { BlockPreview } from "@/components/blocks/block-preview";
 import { Announcement } from "@/components/general/announcement";
 import {
 	PageActions,
@@ -9,8 +8,9 @@ import {
 	PageHeaderDescription,
 	PageHeaderHeading,
 } from "@/components/layout/page-header";
-import { PageNav } from "@/components/layout/page-nav";
+import { PageNav, PageNavTitle } from "@/components/layout/page-nav";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 const title = "AI Building Blocks. Build Smarter, Faster.";
 const description =
@@ -57,18 +57,30 @@ export default function IndexPage() {
 						<Link href="/docs/installation">Get Started</Link>
 					</Button>
 					<Button asChild size="sm" variant="ghost">
-						<Link href="/docs/components">View Components</Link>
+						<Link href="/blocks">View Blocks</Link>
 					</Button>
 				</PageActions>
 			</PageHeader>
-			<PageNav className="hidden md:flex">
-				{/* <ExamplesNav className="[&>a:first-child]:text-primary flex-1 overflow-hidden" /> */}
+			<div className="container-wrapper md:px-10">
+				<Separator className="md:mb-6" />
+			</div>
+			<PageNav>
+				<PageNavTitle>Agentic Chat</PageNavTitle>
 			</PageNav>
-			<div className="container-wrapper section-soft flex-1 pb-6">
-				<div className="container overflow-hidden">
-					<section className="theme-container hidden md:block">
-						{/* <RootComponents /> */}
-					</section>
+			<div className="container-wrapper">
+				<div className="container flex flex-col gap-4">
+					<BlockPreview name="chat-01" />
+				</div>
+			</div>
+			<div className="container-wrapper md:px-10">
+				<Separator className="mt-8 md:mt-12 mb-0" />
+			</div>
+			<PageNav>
+				<PageNavTitle>Agentic Workflows</PageNavTitle>
+			</PageNav>
+			<div className="container-wrapper">
+				<div className="container flex flex-col gap-4">
+					<BlockPreview name="flow-parallelization" />
 				</div>
 			</div>
 		</div>

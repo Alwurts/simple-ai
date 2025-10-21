@@ -79,6 +79,20 @@ async function captureScreenshots() {
 				}
 			});
 
+			// Close Next.js developer indicator
+			await page.evaluate(() => {
+				const indicator = document.querySelector("#devtools-indicator");
+				if (indicator) {
+					indicator.remove();
+				}
+				const indicator2 = document.querySelector(
+					'div[data-nextjs-toast="true"]',
+				);
+				if (indicator2) {
+					indicator2.remove();
+				}
+			});
+
 			await page.screenshot({
 				path: screenshotPath as `${string}.png`,
 			});
