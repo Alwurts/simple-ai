@@ -230,7 +230,7 @@ export function ChatInputEditor({
 			content: effectiveValue,
 			onUpdate,
 			editable: !(disabled || contextDisabled),
-			immediatelyRender: true,
+			immediatelyRender: false,
 		},
 		[extensions, disabled, contextDisabled],
 	);

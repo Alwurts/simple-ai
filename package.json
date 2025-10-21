@@ -5,7 +5,7 @@
 	"scripts": {
 		"dev": "next dev --turbopack -p 4567",
 		"build": "npm run registry:build && next build --turbopack",
-		"start": "next start",
+		"start": "next start -p 4567",
 		"lint": "biome check src --write",
 		"typecheck": "tsc --noEmit",
 		"postinstall": "fumadocs-mdx",

@@ -1,8 +1,9 @@
-import { existsSync } from "node:fs";
+import { existsSync, unlinkSync } from "node:fs";
 import path from "node:path";
 import puppeteer from "puppeteer";
 
 const REGISTRY_PATH = path.join(process.cwd(), "public/r");
+const clearExisting = true;
 
 // ----------------------------------------------------------------------------
 // Capture screenshots.
@@ -11,18 +12,17 @@ async function captureScreenshots() {
 	const { getAllBlockIds } = await import("../lib/blocks");
 
 	const blockIds = await getAllBlockIds();
-	const blocks = blockIds.filter((block) => {
-		// Check if screenshots already exist
-		const lightPath = path.join(
-			REGISTRY_PATH,
-			`styles/new-york-v4/${block}-light.png`,
-		);
-		const darkPath = path.join(
-			REGISTRY_PATH,
-			`styles/new-york-v4/${block}-dark.png`,
-		);
-		return !existsSync(lightPath) || !existsSync(darkPath);
-	});
+	const blocks = clearExisting
+		? blockIds
+		: blockIds.filter((block) => {
+				// Check if screenshots already exist
+				const lightPath = path.join(
+					REGISTRY_PATH,
+					`${block}-light.png`,
+				);
+				const darkPath = path.join(REGISTRY_PATH, `${block}-dark.png`);
+				return !existsSync(lightPath) || !existsSync(darkPath);
+			});
 
 	if (blocks.length === 0) {
 		console.log("✨ All screenshots exist, nothing to capture");
@@ -53,8 +53,13 @@ async function captureScreenshots() {
 				`${block}${theme === "dark" ? "-dark" : "-light"}.png`,
 			);
 
-			if (existsSync(screenshotPath)) {
+			if (!clearExisting && existsSync(screenshotPath)) {
 				continue;
+			}
+
+			// Clear existing screenshot if flag is set
+			if (clearExisting && existsSync(screenshotPath)) {
+				unlinkSync(screenshotPath);
 			}
 
 			// Set theme and reload page
