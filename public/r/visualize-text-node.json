@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "visualize-text-node",
 	"type": "registry:ui",
+	"title": "Visualize Text Node",
+	"description": "A React Flow node component for displaying text content with Markdown support and a resizable interface.",
 	"dependencies": ["@xyflow/react"],
 	"registryDependencies": [
 		"separator",

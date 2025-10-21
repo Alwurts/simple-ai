@@ -2,7 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "markdown-content",
 	"type": "registry:ui",
-	"description": "A markdown content component.",
+	"title": "Markdown Content",
+	"description": "A component that renders markdown content.",
 	"dependencies": ["react-markdown", "marked", "remark-gfm", "shiki"],
 	"files": [
 		{

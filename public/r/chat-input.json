@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "chat-input",
 	"type": "registry:ui",
+	"title": "Chat Input",
+	"description": "A chat input component with mention support and automatic height adjustment.",
 	"dependencies": [
 		"@tiptap/core",
 		"@tiptap/react",

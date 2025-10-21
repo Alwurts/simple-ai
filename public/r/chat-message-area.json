@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "chat-message-area",
 	"type": "registry:ui",
+	"title": "Chat Message Area",
+	"description": "A component that adds auto scrolling functionality to a list of messages.",
 	"dependencies": ["use-stick-to-bottom"],
 	"registryDependencies": ["button"],
 	"files": [

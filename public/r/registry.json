@@ -5,6 +5,7 @@
 		{
 			"name": "jsx-renderer",
 			"type": "registry:ui",
+			"title": "JSX Renderer",
 			"description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 			"dependencies": ["react-jsx-parser", "react-error-boundary"],
 			"registryDependencies": ["http://localhost:4567/r/jsx-utils.json"],
@@ -18,6 +19,8 @@
 		{
 			"name": "chat-input",
 			"type": "registry:ui",
+			"title": "Chat Input",
+			"description": "A chat input component with mention support and automatic height adjustment.",
 			"dependencies": [
 				"@tiptap/core",
 				"@tiptap/react",
@@ -38,6 +41,8 @@
 		{
 			"name": "chat-message-area",
 			"type": "registry:ui",
+			"title": "Chat Message Area",
+			"description": "A component that adds auto scrolling functionality to a list of messages.",
 			"dependencies": ["use-stick-to-bottom"],
 			"registryDependencies": ["button"],
 			"files": [
@@ -50,6 +55,8 @@
 		{
 			"name": "chat-message",
 			"type": "registry:ui",
+			"title": "Chat Message",
+			"description": "A fully composable component for displaying chat messages with rich features like timestamps, actions, and threading.",
 			"registryDependencies": [
 				"http://localhost:4567/r/markdown-content.json",
 				"avatar",
@@ -67,7 +74,8 @@
 		{
 			"name": "markdown-content",
 			"type": "registry:ui",
-			"description": "A markdown content component.",
+			"title": "Markdown Content",
+			"description": "A component that renders markdown content.",
 			"dependencies": ["react-markdown", "marked", "remark-gfm", "shiki"],
 			"files": [
 				{
@@ -79,6 +87,8 @@
 		{
 			"name": "model-selector",
 			"type": "registry:ui",
+			"title": "Model Selector",
+			"description": "A dropdown component for selecting AI models with provider icons.",
 			"registryDependencies": ["select"],
 			"files": [
 				{
@@ -90,6 +100,8 @@
 		{
 			"name": "resizable-node",
 			"type": "registry:ui",
+			"title": "Resizable Node",
+			"description": "A wrapper React Flow node component that adds resizing functionality to other nodes.",
 			"dependencies": ["@xyflow/react"],
 			"registryDependencies": ["http://localhost:4567/r/base-node.json"],
 			"files": [
@@ -103,6 +115,8 @@
 		{
 			"name": "node-header-status",
 			"type": "registry:ui",
+			"title": "Node Header Status",
+			"description": "A React Flow component that displays status indicators in node headers.",
 			"dependencies": ["@xyflow/react"],
 			"registryDependencies": ["badge"],
 			"files": [
@@ -116,6 +130,8 @@
 		{
 			"name": "editable-handle",
 			"type": "registry:ui",
+			"title": "Editable Handle",
+			"description": "A React Flow component that allows you to dynamically add, edit, or remove input/output handles on your nodes.",
 			"dependencies": ["@xyflow/react"],
 			"registryDependencies": [
 				"button",
@@ -135,6 +151,8 @@
 		{
 			"name": "status-edge",
 			"type": "registry:ui",
+			"title": "Status Edge",
+			"description": "A React Flow edge component that provides visual feedback through color-coded states.",
 			"dependencies": ["@xyflow/react"],
 			"files": [
 				{
@@ -147,6 +165,8 @@
 		{
 			"name": "generate-text-node",
 			"type": "registry:ui",
+			"title": "Generate Text Node",
+			"description": "A React Flow node component that represents Vercel AI SDK's text generation capabilities, featuring system instructions, prompts, and optional tool outputs.",
 			"dependencies": ["@xyflow/react"],
 			"registryDependencies": [
 				"button",
@@ -169,6 +189,8 @@
 		{
 			"name": "prompt-crafter-node",
 			"type": "registry:ui",
+			"title": "Prompt Crafter Node",
+			"description": "A React Flow node component for building dynamic prompts by combining multiple inputs using a template-based approach.",
 			"dependencies": [
 				"@xyflow/react",
 				"@uiw/react-codemirror",
@@ -199,6 +221,8 @@
 		{
 			"name": "text-input-node",
 			"type": "registry:ui",
+			"title": "Text Input Node",
+			"description": "A React Flow node component that provides a simple text input interface with a resizable textarea and single output.",
 			"dependencies": ["@xyflow/react"],
 			"registryDependencies": [
 				"textarea",
@@ -218,6 +242,8 @@
 		{
 			"name": "visualize-text-node",
 			"type": "registry:ui",
+			"title": "Visualize Text Node",
+			"description": "A React Flow node component for displaying text content with Markdown support and a resizable interface.",
 			"dependencies": ["@xyflow/react"],
 			"registryDependencies": [
 				"separator",
@@ -941,6 +967,11 @@
 					"target": "components/flow/nodes-panel.tsx"
 				},
 				{
+					"path": "./src/registry/blocks/flow-chain/components/error-indicator.tsx",
+					"type": "registry:component",
+					"target": "components/error-indicator.tsx"
+				},
+				{
 					"path": "./src/registry/blocks/flow-chain/lib/news-summarization-chain.ts",
 					"type": "registry:lib"
 				},
@@ -948,6 +979,11 @@
 					"path": "./src/registry/ui/flow/status-edge-controller.tsx",
 					"type": "registry:component",
 					"target": "components/flow/status-edge-controller.tsx"
+				},
+				{
+					"path": "./src/registry/ui/flow/status-edge.tsx",
+					"type": "registry:component",
+					"target": "components/flow/status-edge.tsx"
 				},
 				{
 					"path": "./src/registry/ui/flow/visualize-text-node-controller.tsx",
@@ -1046,6 +1082,11 @@
 					"target": "components/flow/nodes-panel.tsx"
 				},
 				{
+					"path": "./src/registry/blocks/flow-chain/components/error-indicator.tsx",
+					"type": "registry:component",
+					"target": "components/error-indicator.tsx"
+				},
+				{
 					"path": "./src/registry/blocks/flow-routing/lib/content-creator-routing.ts",
 					"type": "registry:lib"
 				},
@@ -1053,6 +1094,11 @@
 					"path": "./src/registry/ui/flow/status-edge-controller.tsx",
 					"type": "registry:component",
 					"target": "components/flow/status-edge-controller.tsx"
+				},
+				{
+					"path": "./src/registry/ui/flow/status-edge.tsx",
+					"type": "registry:component",
+					"target": "components/flow/status-edge.tsx"
 				},
 				{
 					"path": "./src/registry/ui/flow/visualize-text-node-controller.tsx",
@@ -1151,6 +1197,11 @@
 					"target": "components/flow/nodes-panel.tsx"
 				},
 				{
+					"path": "./src/registry/blocks/flow-parallelization/components/error-indicator.tsx",
+					"type": "registry:component",
+					"target": "components/error-indicator.tsx"
+				},
+				{
 					"path": "./src/registry/blocks/flow-parallelization/lib/exam-creator-parallelization.ts",
 					"type": "registry:lib"
 				},
@@ -1158,6 +1209,11 @@
 					"path": "./src/registry/ui/flow/status-edge-controller.tsx",
 					"type": "registry:component",
 					"target": "components/flow/status-edge-controller.tsx"
+				},
+				{
+					"path": "./src/registry/ui/flow/status-edge.tsx",
+					"type": "registry:component",
+					"target": "components/flow/status-edge.tsx"
 				},
 				{
 					"path": "./src/registry/ui/flow/visualize-text-node-controller.tsx",
@@ -1256,6 +1312,11 @@
 					"target": "components/flow/nodes-panel.tsx"
 				},
 				{
+					"path": "./src/registry/blocks/flow-orchestrator/components/error-indicator.tsx",
+					"type": "registry:component",
+					"target": "components/error-indicator.tsx"
+				},
+				{
 					"path": "./src/registry/blocks/flow-orchestrator/lib/developer-tasks-orchestrator.ts",
 					"type": "registry:lib"
 				},
@@ -1263,6 +1324,11 @@
 					"path": "./src/registry/ui/flow/status-edge-controller.tsx",
 					"type": "registry:component",
 					"target": "components/flow/status-edge-controller.tsx"
+				},
+				{
+					"path": "./src/registry/ui/flow/status-edge.tsx",
+					"type": "registry:component",
+					"target": "components/flow/status-edge.tsx"
 				},
 				{
 					"path": "./src/registry/ui/flow/visualize-text-node-controller.tsx",

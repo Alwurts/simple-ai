@@ -2,6 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "jsx-renderer",
 	"type": "registry:ui",
+	"title": "JSX Renderer",
 	"description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 	"dependencies": ["react-jsx-parser", "react-error-boundary"],
 	"registryDependencies": ["http://localhost:4567/r/jsx-utils.json"],

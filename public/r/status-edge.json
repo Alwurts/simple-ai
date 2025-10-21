@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "status-edge",
 	"type": "registry:ui",
+	"title": "Status Edge",
+	"description": "A React Flow edge component that provides visual feedback through color-coded states.",
 	"dependencies": ["@xyflow/react"],
 	"files": [
 		{

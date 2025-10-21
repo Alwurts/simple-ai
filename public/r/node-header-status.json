@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "node-header-status",
 	"type": "registry:ui",
+	"title": "Node Header Status",
+	"description": "A React Flow component that displays status indicators in node headers.",
 	"dependencies": ["@xyflow/react"],
 	"registryDependencies": ["badge"],
 	"files": [

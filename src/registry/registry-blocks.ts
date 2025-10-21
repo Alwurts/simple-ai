@@ -365,12 +365,22 @@ export const blocks: Registry["items"] = [
 				type: "registry:component",
 			},
 			{
+				path: "blocks/flow-chain/components/error-indicator.tsx",
+				target: "components/error-indicator.tsx",
+				type: "registry:component",
+			},
+			{
 				path: "blocks/flow-chain/lib/news-summarization-chain.ts",
 				type: "registry:lib",
 			},
 			{
 				path: "ui/flow/status-edge-controller.tsx",
 				target: "components/flow/status-edge-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/status-edge.tsx",
+				target: "components/flow/status-edge.tsx",
 				type: "registry:component",
 			},
 			{
@@ -470,12 +480,22 @@ export const blocks: Registry["items"] = [
 				type: "registry:component",
 			},
 			{
+				path: "blocks/flow-chain/components/error-indicator.tsx",
+				target: "components/error-indicator.tsx",
+				type: "registry:component",
+			},
+			{
 				path: "blocks/flow-routing/lib/content-creator-routing.ts",
 				type: "registry:lib",
 			},
 			{
 				path: "ui/flow/status-edge-controller.tsx",
 				target: "components/flow/status-edge-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/status-edge.tsx",
+				target: "components/flow/status-edge.tsx",
 				type: "registry:component",
 			},
 			{
@@ -576,12 +596,22 @@ export const blocks: Registry["items"] = [
 				type: "registry:component",
 			},
 			{
+				path: "blocks/flow-parallelization/components/error-indicator.tsx",
+				target: "components/error-indicator.tsx",
+				type: "registry:component",
+			},
+			{
 				path: "blocks/flow-parallelization/lib/exam-creator-parallelization.ts",
 				type: "registry:lib",
 			},
 			{
 				path: "ui/flow/status-edge-controller.tsx",
 				target: "components/flow/status-edge-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/status-edge.tsx",
+				target: "components/flow/status-edge.tsx",
 				type: "registry:component",
 			},
 			{
@@ -681,12 +711,22 @@ export const blocks: Registry["items"] = [
 				type: "registry:component",
 			},
 			{
+				path: "blocks/flow-orchestrator/components/error-indicator.tsx",
+				target: "components/error-indicator.tsx",
+				type: "registry:component",
+			},
+			{
 				path: "blocks/flow-orchestrator/lib/developer-tasks-orchestrator.ts",
 				type: "registry:lib",
 			},
 			{
 				path: "ui/flow/status-edge-controller.tsx",
 				target: "components/flow/status-edge-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/status-edge.tsx",
+				target: "components/flow/status-edge.tsx",
 				type: "registry:component",
 			},
 			{

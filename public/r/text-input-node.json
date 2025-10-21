@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "text-input-node",
 	"type": "registry:ui",
+	"title": "Text Input Node",
+	"description": "A React Flow node component that provides a simple text input interface with a resizable textarea and single output.",
 	"dependencies": ["@xyflow/react"],
 	"registryDependencies": [
 		"textarea",

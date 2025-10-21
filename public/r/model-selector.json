@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "model-selector",
 	"type": "registry:ui",
+	"title": "Model Selector",
+	"description": "A dropdown component for selecting AI models with provider icons.",
 	"registryDependencies": ["select"],
 	"files": [
 		{

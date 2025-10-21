@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "editable-handle",
 	"type": "registry:ui",
+	"title": "Editable Handle",
+	"description": "A React Flow component that allows you to dynamically add, edit, or remove input/output handles on your nodes.",
 	"dependencies": ["@xyflow/react"],
 	"registryDependencies": [
 		"button",

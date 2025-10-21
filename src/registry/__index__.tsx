@@ -33,7 +33,8 @@ export const Index: Record<string, any> = {
 	},
 	"chat-input": {
 		name: "chat-input",
-		description: "",
+		description:
+			"A chat input component with mention support and automatic height adjustment.",
 		type: "registry:ui",
 		registryDependencies: ["input-group", "button"],
 		files: [
@@ -58,7 +59,8 @@ export const Index: Record<string, any> = {
 	},
 	"chat-message-area": {
 		name: "chat-message-area",
-		description: "",
+		description:
+			"A component that adds auto scrolling functionality to a list of messages.",
 		type: "registry:ui",
 		registryDependencies: ["button"],
 		files: [
@@ -83,7 +85,8 @@ export const Index: Record<string, any> = {
 	},
 	"chat-message": {
 		name: "chat-message",
-		description: "",
+		description:
+			"A fully composable component for displaying chat messages with rich features like timestamps, actions, and threading.",
 		type: "registry:ui",
 		registryDependencies: [
 			"http://localhost:4567/r/markdown-content.json",
@@ -114,7 +117,7 @@ export const Index: Record<string, any> = {
 	},
 	"markdown-content": {
 		name: "markdown-content",
-		description: "A markdown content component.",
+		description: "A component that renders markdown content.",
 		type: "registry:ui",
 		registryDependencies: undefined,
 		files: [
@@ -139,7 +142,8 @@ export const Index: Record<string, any> = {
 	},
 	"model-selector": {
 		name: "model-selector",
-		description: "",
+		description:
+			"A dropdown component for selecting AI models with provider icons.",
 		type: "registry:ui",
 		registryDependencies: ["select"],
 		files: [
@@ -164,7 +168,8 @@ export const Index: Record<string, any> = {
 	},
 	"resizable-node": {
 		name: "resizable-node",
-		description: "",
+		description:
+			"A wrapper React Flow node component that adds resizing functionality to other nodes.",
 		type: "registry:ui",
 		registryDependencies: ["http://localhost:4567/r/base-node.json"],
 		files: [
@@ -189,7 +194,8 @@ export const Index: Record<string, any> = {
 	},
 	"node-header-status": {
 		name: "node-header-status",
-		description: "",
+		description:
+			"A React Flow component that displays status indicators in node headers.",
 		type: "registry:ui",
 		registryDependencies: ["badge"],
 		files: [
@@ -216,7 +222,8 @@ export const Index: Record<string, any> = {
 	},
 	"editable-handle": {
 		name: "editable-handle",
-		description: "",
+		description:
+			"A React Flow component that allows you to dynamically add, edit, or remove input/output handles on your nodes.",
 		type: "registry:ui",
 		registryDependencies: [
 			"button",
@@ -247,7 +254,8 @@ export const Index: Record<string, any> = {
 	},
 	"status-edge": {
 		name: "status-edge",
-		description: "",
+		description:
+			"A React Flow edge component that provides visual feedback through color-coded states.",
 		type: "registry:ui",
 		registryDependencies: undefined,
 		files: [
@@ -272,7 +280,8 @@ export const Index: Record<string, any> = {
 	},
 	"generate-text-node": {
 		name: "generate-text-node",
-		description: "",
+		description:
+			"A React Flow node component that represents Vercel AI SDK's text generation capabilities, featuring system instructions, prompts, and optional tool outputs.",
 		type: "registry:ui",
 		registryDependencies: [
 			"button",
@@ -308,7 +317,8 @@ export const Index: Record<string, any> = {
 	},
 	"prompt-crafter-node": {
 		name: "prompt-crafter-node",
-		description: "",
+		description:
+			"A React Flow node component for building dynamic prompts by combining multiple inputs using a template-based approach.",
 		type: "registry:ui",
 		registryDependencies: [
 			"button",
@@ -345,7 +355,8 @@ export const Index: Record<string, any> = {
 	},
 	"text-input-node": {
 		name: "text-input-node",
-		description: "",
+		description:
+			"A React Flow node component that provides a simple text input interface with a resizable textarea and single output.",
 		type: "registry:ui",
 		registryDependencies: [
 			"textarea",
@@ -376,7 +387,8 @@ export const Index: Record<string, any> = {
 	},
 	"visualize-text-node": {
 		name: "visualize-text-node",
-		description: "",
+		description:
+			"A React Flow node component for displaying text content with Markdown support and a resizable interface.",
 		type: "registry:ui",
 		registryDependencies: [
 			"separator",
@@ -1698,6 +1710,11 @@ export const Index: Record<string, any> = {
 				target: "components/flow/nodes-panel.tsx",
 			},
 			{
+				path: "./src/registry/blocks/flow-chain/components/error-indicator.tsx",
+				type: "registry:component",
+				target: "components/error-indicator.tsx",
+			},
+			{
 				path: "./src/registry/blocks/flow-chain/lib/news-summarization-chain.ts",
 				type: "registry:lib",
 				target: "",
@@ -1706,6 +1723,11 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/ui/flow/status-edge-controller.tsx",
 				type: "registry:component",
 				target: "components/flow/status-edge-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/status-edge.tsx",
+				type: "registry:component",
+				target: "components/flow/status-edge.tsx",
 			},
 			{
 				path: "./src/registry/ui/flow/visualize-text-node-controller.tsx",
@@ -1814,6 +1836,11 @@ export const Index: Record<string, any> = {
 				target: "components/flow/nodes-panel.tsx",
 			},
 			{
+				path: "./src/registry/blocks/flow-chain/components/error-indicator.tsx",
+				type: "registry:component",
+				target: "components/error-indicator.tsx",
+			},
+			{
 				path: "./src/registry/blocks/flow-routing/lib/content-creator-routing.ts",
 				type: "registry:lib",
 				target: "",
@@ -1822,6 +1849,11 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/ui/flow/status-edge-controller.tsx",
 				type: "registry:component",
 				target: "components/flow/status-edge-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/status-edge.tsx",
+				type: "registry:component",
+				target: "components/flow/status-edge.tsx",
 			},
 			{
 				path: "./src/registry/ui/flow/visualize-text-node-controller.tsx",
@@ -1930,6 +1962,11 @@ export const Index: Record<string, any> = {
 				target: "components/flow/nodes-panel.tsx",
 			},
 			{
+				path: "./src/registry/blocks/flow-parallelization/components/error-indicator.tsx",
+				type: "registry:component",
+				target: "components/error-indicator.tsx",
+			},
+			{
 				path: "./src/registry/blocks/flow-parallelization/lib/exam-creator-parallelization.ts",
 				type: "registry:lib",
 				target: "",
@@ -1938,6 +1975,11 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/ui/flow/status-edge-controller.tsx",
 				type: "registry:component",
 				target: "components/flow/status-edge-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/status-edge.tsx",
+				type: "registry:component",
+				target: "components/flow/status-edge.tsx",
 			},
 			{
 				path: "./src/registry/ui/flow/visualize-text-node-controller.tsx",
@@ -2048,6 +2090,11 @@ export const Index: Record<string, any> = {
 				target: "components/flow/nodes-panel.tsx",
 			},
 			{
+				path: "./src/registry/blocks/flow-orchestrator/components/error-indicator.tsx",
+				type: "registry:component",
+				target: "components/error-indicator.tsx",
+			},
+			{
 				path: "./src/registry/blocks/flow-orchestrator/lib/developer-tasks-orchestrator.ts",
 				type: "registry:lib",
 				target: "",
@@ -2056,6 +2103,11 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/ui/flow/status-edge-controller.tsx",
 				type: "registry:component",
 				target: "components/flow/status-edge-controller.tsx",
+			},
+			{
+				path: "./src/registry/ui/flow/status-edge.tsx",
+				type: "registry:component",
+				target: "components/flow/status-edge.tsx",
 			},
 			{
 				path: "./src/registry/ui/flow/visualize-text-node-controller.tsx",

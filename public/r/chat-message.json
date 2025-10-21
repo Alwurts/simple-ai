@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "chat-message",
 	"type": "registry:ui",
+	"title": "Chat Message",
+	"description": "A fully composable component for displaying chat messages with rich features like timestamps, actions, and threading.",
 	"registryDependencies": [
 		"http://localhost:4567/r/markdown-content.json",
 		"avatar",

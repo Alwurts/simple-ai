@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "resizable-node",
 	"type": "registry:ui",
+	"title": "Resizable Node",
+	"description": "A wrapper React Flow node component that adds resizing functionality to other nodes.",
 	"dependencies": ["@xyflow/react"],
 	"registryDependencies": ["http://localhost:4567/r/base-node.json"],
 	"files": [

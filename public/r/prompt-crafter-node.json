@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "prompt-crafter-node",
 	"type": "registry:ui",
+	"title": "Prompt Crafter Node",
+	"description": "A React Flow node component for building dynamic prompts by combining multiple inputs using a template-based approach.",
 	"dependencies": [
 		"@xyflow/react",
 		"@uiw/react-codemirror",

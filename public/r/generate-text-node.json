@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "generate-text-node",
 	"type": "registry:ui",
+	"title": "Generate Text Node",
+	"description": "A React Flow node component that represents Vercel AI SDK's text generation capabilities, featuring system instructions, prompts, and optional tool outputs.",
 	"dependencies": ["@xyflow/react"],
 	"registryDependencies": [
 		"button",
