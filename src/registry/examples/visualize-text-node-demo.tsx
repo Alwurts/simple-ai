@@ -39,7 +39,7 @@ export default function VisualizeTextNodeDemo() {
 	const [edges, setEdges] = useState([]);
 
 	// Add default viewport configuration
-	const defaultViewport = { x: 100, y: 75, zoom: 1.3 };
+	const defaultViewport = { x: 100, y: 75, zoom: 1 };
 
 	const onNodesChange = useCallback(
 		(changes: NodeChange<Node>[]) =>
@@ -56,7 +56,7 @@ export default function VisualizeTextNodeDemo() {
 		[],
 	);
 	return (
-		<div className="w-full max-w-[600px] h-[450px] border border-border rounded-md">
+		<div className="w-full h-full">
 			<ReactFlowProvider>
 				<ReactFlow
 					nodes={nodes}

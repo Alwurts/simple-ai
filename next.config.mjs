@@ -2,17 +2,22 @@ import { createMDX } from "fumadocs-mdx/next";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  	devIndicators: false,
-  	outputFileTracingIncludes: {
+	devIndicators: false,
+	outputFileTracingIncludes: {
 		"/*": ["./src/registry/**/*"],
 	},
 	redirects: async () => {
 		return [
-			// {
-			// 	source: "/docs/components/chat-message-area",
-			// 	destination: "/docs/components/message-area",
-			// 	permanent: true,
-			// },
+			{
+				source: "/docs/react-flow/:slug",
+				destination: "/docs/workflows/:slug",
+				permanent: true,
+			},
+			{
+				source: "/docs/react-flow",
+				destination: "/docs/workflows",
+				permanent: true,
+			},
 		];
 	},
 	rewrites: async () => {

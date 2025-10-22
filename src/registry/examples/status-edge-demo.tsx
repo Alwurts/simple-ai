@@ -36,10 +36,10 @@ const edgeTypes = {
 };
 
 export default function StatusEdgeDemo() {
-	const defaultViewport = { x: -150, y: -50, zoom: 1.1 };
+	const defaultViewport = { x: -100, y: -100, zoom: 1.1 };
 
 	return (
-		<div className="w-[600px] h-[600px] border border-border rounded-md">
+		<div className="w-full h-full">
 			<ReactFlowProvider>
 				<ReactFlow
 					defaultNodes={defaultNodes}

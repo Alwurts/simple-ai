@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { PersonaDisplay } from "@/registry/blocks/app-02/components/persona-display";
 import { getRandomExample } from "@/registry/blocks/app-02/lib/example-businesses";
@@ -154,10 +153,8 @@ export default function PersonaGenerator() {
 			</div>
 
 			<Dialog open={showDialog} onOpenChange={setShowDialog}>
-				<DialogContent className="w-[95vw] max-w-4xl lg:max-w-6xl h-[90vh]">
-					<ScrollArea className="h-full">
-						<PersonaDisplay object={object} isLoading={isLoading} />
-					</ScrollArea>
+				<DialogContent className="w-[95vw] max-w-4xl lg:max-w-6xl h-[90vh] overflow-y-auto">
+					<PersonaDisplay object={object} isLoading={isLoading} />
 				</DialogContent>
 			</Dialog>
 		</div>

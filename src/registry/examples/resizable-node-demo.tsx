@@ -66,7 +66,7 @@ export default function ResizableNodeDemo() {
 	);
 
 	return (
-		<div className="w-[600px] h-[600px] border border-border rounded-md">
+		<div className="w-full h-full">
 			<ReactFlowProvider>
 				<ReactFlow
 					nodes={nodes}
