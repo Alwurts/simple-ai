@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 
 const title = "AI Building Blocks. Build Smarter, Faster.";
 const description =
-	"An open-source library of AI-focused UI components, app blocks, and React Flow workflows designed to accelerate development. Built with shadcn/UI and Vercel AI SDK.";
+	"A library of AI-focused components, app blocks, templates and more";
 
 export const dynamic = "force-static";
 export const revalidate = false;
