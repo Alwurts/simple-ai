@@ -8,7 +8,7 @@
 			"title": "JSX Renderer",
 			"description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 			"dependencies": ["react-jsx-parser", "react-error-boundary"],
-			"registryDependencies": ["http://localhost:4567/r/jsx-utils.json"],
+			"registryDependencies": ["@simple-ai/jsx-utils"],
 			"files": [
 				{
 					"path": "./src/registry/ui/jsx-renderer.tsx",
@@ -58,7 +58,7 @@
 			"title": "Chat Message",
 			"description": "A fully composable component for displaying chat messages with rich features like timestamps, actions, and threading.",
 			"registryDependencies": [
-				"http://localhost:4567/r/markdown-content.json",
+				"@simple-ai/markdown-content",
 				"avatar",
 				"button",
 				"card",
@@ -103,7 +103,7 @@
 			"title": "Resizable Node",
 			"description": "A wrapper React Flow node component that adds resizing functionality to other nodes.",
 			"dependencies": ["@xyflow/react"],
-			"registryDependencies": ["http://localhost:4567/r/base-node.json"],
+			"registryDependencies": ["@simple-ai/base-node"],
 			"files": [
 				{
 					"path": "./src/registry/ui/flow/resizable-node.tsx",
@@ -138,7 +138,7 @@
 				"input",
 				"textarea",
 				"popover",
-				"http://localhost:4567/r/base-handle.json"
+				"@simple-ai/base-handle"
 			],
 			"files": [
 				{
@@ -171,12 +171,12 @@
 			"registryDependencies": [
 				"button",
 				"separator",
-				"http://localhost:4567/r/model-selector.json",
-				"http://localhost:4567/r/node-header-status.json",
-				"http://localhost:4567/r/editable-handle.json",
-				"http://localhost:4567/r/labeled-handle.json",
-				"http://localhost:4567/r/base-node.json",
-				"http://localhost:4567/r/node-header.json"
+				"@simple-ai/model-selector",
+				"@simple-ai/node-header-status",
+				"@simple-ai/editable-handle",
+				"@simple-ai/labeled-handle",
+				"@simple-ai/base-node",
+				"@simple-ai/node-header"
 			],
 			"files": [
 				{
@@ -204,11 +204,11 @@
 				"separator",
 				"popover",
 				"command",
-				"http://localhost:4567/r/node-header-status.json",
-				"http://localhost:4567/r/editable-handle.json",
-				"http://localhost:4567/r/node-header.json",
-				"http://localhost:4567/r/labeled-handle.json",
-				"http://localhost:4567/r/base-node.json"
+				"@simple-ai/node-header-status",
+				"@simple-ai/editable-handle",
+				"@simple-ai/node-header",
+				"@simple-ai/labeled-handle",
+				"@simple-ai/base-node"
 			],
 			"files": [
 				{
@@ -227,9 +227,9 @@
 			"registryDependencies": [
 				"textarea",
 				"separator",
-				"http://localhost:4567/r/labeled-handle.json",
-				"http://localhost:4567/r/node-header.json",
-				"http://localhost:4567/r/resizable-node.json"
+				"@simple-ai/labeled-handle",
+				"@simple-ai/node-header",
+				"@simple-ai/resizable-node"
 			],
 			"files": [
 				{
@@ -247,10 +247,10 @@
 			"dependencies": ["@xyflow/react"],
 			"registryDependencies": [
 				"separator",
-				"http://localhost:4567/r/markdown-content.json",
-				"http://localhost:4567/r/labeled-handle.json",
-				"http://localhost:4567/r/node-header.json",
-				"http://localhost:4567/r/resizable-node.json"
+				"@simple-ai/markdown-content",
+				"@simple-ai/labeled-handle",
+				"@simple-ai/node-header",
+				"@simple-ai/resizable-node"
 			],
 			"files": [
 				{
@@ -357,7 +357,7 @@
 		{
 			"name": "chat-input-demo-mentions",
 			"type": "registry:example",
-			"registryDependencies": ["http://localhost:4567/r/chat-input.json"],
+			"registryDependencies": ["@simple-ai/chat-input"],
 			"files": [
 				{
 					"path": "./src/registry/examples/chat-input-demo-mentions.tsx",
@@ -468,9 +468,7 @@
 		{
 			"name": "jsx-renderer-demo",
 			"type": "registry:example",
-			"registryDependencies": [
-				"http://localhost:4567/r/jsx-renderer.json"
-			],
+			"registryDependencies": ["@simple-ai/jsx-renderer"],
 			"files": [
 				{
 					"path": "./src/registry/examples/jsx-renderer-demo.tsx",
@@ -481,9 +479,7 @@
 		{
 			"name": "jsx-renderer-disabled-demo",
 			"type": "registry:example",
-			"registryDependencies": [
-				"http://localhost:4567/r/jsx-renderer.json"
-			],
+			"registryDependencies": ["@simple-ai/jsx-renderer"],
 			"files": [
 				{
 					"path": "./src/registry/examples/jsx-renderer-disabled-demo.tsx",
@@ -494,9 +490,7 @@
 		{
 			"name": "jsx-renderer-streaming-demo",
 			"type": "registry:example",
-			"registryDependencies": [
-				"http://localhost:4567/r/jsx-renderer.json"
-			],
+			"registryDependencies": ["@simple-ai/jsx-renderer"],
 			"files": [
 				{
 					"path": "./src/registry/examples/jsx-renderer-streaming-demo.tsx",
@@ -618,9 +612,9 @@
 				"button",
 				"avatar",
 				"dropdown-menu",
-				"http://localhost:4567/r/chat-input.json",
-				"http://localhost:4567/r/chat-message-area.json",
-				"http://localhost:4567/r/chat-message.json"
+				"@simple-ai/chat-input",
+				"@simple-ai/chat-message-area",
+				"@simple-ai/chat-message"
 			],
 			"files": [
 				{
@@ -688,9 +682,9 @@
 			"registryDependencies": [
 				"sidebar",
 				"breadcrumb",
-				"http://localhost:4567/r/chat-input.json",
-				"http://localhost:4567/r/chat-message-area.json",
-				"http://localhost:4567/r/chat-message.json"
+				"@simple-ai/chat-input",
+				"@simple-ai/chat-message-area",
+				"@simple-ai/chat-message"
 			],
 			"files": [
 				{
@@ -718,9 +712,9 @@
 			"registryDependencies": [
 				"popover",
 				"button",
-				"http://localhost:4567/r/chat-input.json",
-				"http://localhost:4567/r/chat-message-area.json",
-				"http://localhost:4567/r/chat-message.json"
+				"@simple-ai/chat-input",
+				"@simple-ai/chat-message-area",
+				"@simple-ai/chat-message"
 			],
 			"files": [
 				{
@@ -766,11 +760,11 @@
 				"badge",
 				"dialog",
 				"slider",
-				"http://localhost:4567/r/chat-input.json",
-				"http://localhost:4567/r/chat-message-area.json",
-				"http://localhost:4567/r/chat-message.json",
-				"http://localhost:4567/r/jsx-renderer.json",
-				"http://localhost:4567/r/jsx-utils.json"
+				"@simple-ai/chat-input",
+				"@simple-ai/chat-message-area",
+				"@simple-ai/chat-message",
+				"@simple-ai/jsx-renderer",
+				"@simple-ai/jsx-utils"
 			],
 			"files": [
 				{
@@ -945,10 +939,10 @@
 				"input",
 				"textarea",
 				"sonner",
-				"http://localhost:4567/r/generate-text-node.json",
-				"http://localhost:4567/r/prompt-crafter-node.json",
-				"http://localhost:4567/r/text-input-node.json",
-				"http://localhost:4567/r/visualize-text-node.json"
+				"@simple-ai/generate-text-node",
+				"@simple-ai/prompt-crafter-node",
+				"@simple-ai/text-input-node",
+				"@simple-ai/visualize-text-node"
 			],
 			"files": [
 				{
@@ -1060,10 +1054,10 @@
 				"input",
 				"textarea",
 				"sonner",
-				"http://localhost:4567/r/generate-text-node.json",
-				"http://localhost:4567/r/prompt-crafter-node.json",
-				"http://localhost:4567/r/text-input-node.json",
-				"http://localhost:4567/r/visualize-text-node.json"
+				"@simple-ai/generate-text-node",
+				"@simple-ai/prompt-crafter-node",
+				"@simple-ai/text-input-node",
+				"@simple-ai/visualize-text-node"
 			],
 			"files": [
 				{
@@ -1175,10 +1169,10 @@
 				"input",
 				"textarea",
 				"sonner",
-				"http://localhost:4567/r/generate-text-node.json",
-				"http://localhost:4567/r/prompt-crafter-node.json",
-				"http://localhost:4567/r/text-input-node.json",
-				"http://localhost:4567/r/visualize-text-node.json"
+				"@simple-ai/generate-text-node",
+				"@simple-ai/prompt-crafter-node",
+				"@simple-ai/text-input-node",
+				"@simple-ai/visualize-text-node"
 			],
 			"files": [
 				{
@@ -1290,10 +1284,10 @@
 				"input",
 				"textarea",
 				"sonner",
-				"http://localhost:4567/r/generate-text-node.json",
-				"http://localhost:4567/r/prompt-crafter-node.json",
-				"http://localhost:4567/r/text-input-node.json",
-				"http://localhost:4567/r/visualize-text-node.json"
+				"@simple-ai/generate-text-node",
+				"@simple-ai/prompt-crafter-node",
+				"@simple-ai/text-input-node",
+				"@simple-ai/visualize-text-node"
 			],
 			"files": [
 				{

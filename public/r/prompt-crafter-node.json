@@ -17,11 +17,11 @@
 		"separator",
 		"popover",
 		"command",
-		"http://localhost:4567/r/node-header-status.json",
-		"http://localhost:4567/r/editable-handle.json",
-		"http://localhost:4567/r/node-header.json",
-		"http://localhost:4567/r/labeled-handle.json",
-		"http://localhost:4567/r/base-node.json"
+		"@simple-ai/node-header-status",
+		"@simple-ai/editable-handle",
+		"@simple-ai/node-header",
+		"@simple-ai/labeled-handle",
+		"@simple-ai/base-node"
 	],
 	"files": [
 		{

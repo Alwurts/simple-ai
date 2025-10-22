@@ -10,7 +10,7 @@
 		"input",
 		"textarea",
 		"popover",
-		"http://localhost:4567/r/base-handle.json"
+		"@simple-ai/base-handle"
 	],
 	"files": [
 		{

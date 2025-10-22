@@ -1,11 +1,10 @@
-import { BASE_URL } from "@/lib/config";
 import type { Registry } from "@/shadcn-temp/schema";
 
 export const examples: Registry["items"] = [
 	{
 		name: "chat-input-demo-mentions",
 		type: "registry:example",
-		registryDependencies: [`${BASE_URL}/r/chat-input.json`],
+		registryDependencies: ["@simple-ai/chat-input"],
 		files: [
 			{
 				path: "examples/chat-input-demo-mentions.tsx",
@@ -116,7 +115,7 @@ export const examples: Registry["items"] = [
 	{
 		name: "jsx-renderer-demo",
 		type: "registry:example",
-		registryDependencies: [`${BASE_URL}/r/jsx-renderer.json`],
+		registryDependencies: ["@simple-ai/jsx-renderer"],
 		files: [
 			{
 				path: "examples/jsx-renderer-demo.tsx",
@@ -127,7 +126,7 @@ export const examples: Registry["items"] = [
 	{
 		name: "jsx-renderer-disabled-demo",
 		type: "registry:example",
-		registryDependencies: [`${BASE_URL}/r/jsx-renderer.json`],
+		registryDependencies: ["@simple-ai/jsx-renderer"],
 		files: [
 			{
 				path: "examples/jsx-renderer-disabled-demo.tsx",
@@ -138,7 +137,7 @@ export const examples: Registry["items"] = [
 	{
 		name: "jsx-renderer-streaming-demo",
 		type: "registry:example",
-		registryDependencies: [`${BASE_URL}/r/jsx-renderer.json`],
+		registryDependencies: ["@simple-ai/jsx-renderer"],
 		files: [
 			{
 				path: "examples/jsx-renderer-streaming-demo.tsx",

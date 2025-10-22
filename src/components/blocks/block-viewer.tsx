@@ -45,7 +45,6 @@ import {
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
-import { BASE_URL } from "@/lib/config";
 import { trackEvent } from "@/lib/events";
 import type {
 	createFileTreeForRegistryItemFiles,
@@ -217,12 +216,12 @@ function BlockViewerToolbar() {
 					size="sm"
 					onClick={() => {
 						copyToClipboard(
-							`npx shadcn@latest add ${BASE_URL}/r/${item.name}.json`,
+							`npx shadcn@latest add @simple-ai/${item.name}`,
 						);
 					}}
 				>
 					{isCopied ? <Check /> : <Terminal />}
-					<span>npx shadcn add simple-ai.dev/{item.name}</span>
+					<span>npx shadcn add @simple-ai/{item.name}</span>
 				</Button>
 			</div>
 		</div>

@@ -5,7 +5,7 @@
 	"title": "Resizable Node",
 	"description": "A wrapper React Flow node component that adds resizing functionality to other nodes.",
 	"dependencies": ["@xyflow/react"],
-	"registryDependencies": ["http://localhost:4567/r/base-node.json"],
+	"registryDependencies": ["@simple-ai/base-node"],
 	"files": [
 		{
 			"path": "./src/registry/ui/flow/resizable-node.tsx",

@@ -13,9 +13,9 @@
 		"button",
 		"avatar",
 		"dropdown-menu",
-		"http://localhost:4567/r/chat-input.json",
-		"http://localhost:4567/r/chat-message-area.json",
-		"http://localhost:4567/r/chat-message.json"
+		"@simple-ai/chat-input",
+		"@simple-ai/chat-message-area",
+		"@simple-ai/chat-message"
 	],
 	"files": [
 		{

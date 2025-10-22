@@ -10,7 +10,7 @@ export const Index: Record<string, any> = {
 		description:
 			"A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 		type: "registry:ui",
-		registryDependencies: ["http://localhost:4567/r/jsx-utils.json"],
+		registryDependencies: ["@simple-ai/jsx-utils"],
 		files: [
 			{
 				path: "./src/registry/ui/jsx-renderer.tsx",
@@ -89,7 +89,7 @@ export const Index: Record<string, any> = {
 			"A fully composable component for displaying chat messages with rich features like timestamps, actions, and threading.",
 		type: "registry:ui",
 		registryDependencies: [
-			"http://localhost:4567/r/markdown-content.json",
+			"@simple-ai/markdown-content",
 			"avatar",
 			"button",
 			"card",
@@ -171,7 +171,7 @@ export const Index: Record<string, any> = {
 		description:
 			"A wrapper React Flow node component that adds resizing functionality to other nodes.",
 		type: "registry:ui",
-		registryDependencies: ["http://localhost:4567/r/base-node.json"],
+		registryDependencies: ["@simple-ai/base-node"],
 		files: [
 			{
 				path: "./src/registry/ui/flow/resizable-node.tsx",
@@ -230,7 +230,7 @@ export const Index: Record<string, any> = {
 			"input",
 			"textarea",
 			"popover",
-			"http://localhost:4567/r/base-handle.json",
+			"@simple-ai/base-handle",
 		],
 		files: [
 			{
@@ -286,12 +286,12 @@ export const Index: Record<string, any> = {
 		registryDependencies: [
 			"button",
 			"separator",
-			"http://localhost:4567/r/model-selector.json",
-			"http://localhost:4567/r/node-header-status.json",
-			"http://localhost:4567/r/editable-handle.json",
-			"http://localhost:4567/r/labeled-handle.json",
-			"http://localhost:4567/r/base-node.json",
-			"http://localhost:4567/r/node-header.json",
+			"@simple-ai/model-selector",
+			"@simple-ai/node-header-status",
+			"@simple-ai/editable-handle",
+			"@simple-ai/labeled-handle",
+			"@simple-ai/base-node",
+			"@simple-ai/node-header",
 		],
 		files: [
 			{
@@ -325,11 +325,11 @@ export const Index: Record<string, any> = {
 			"separator",
 			"popover",
 			"command",
-			"http://localhost:4567/r/node-header-status.json",
-			"http://localhost:4567/r/editable-handle.json",
-			"http://localhost:4567/r/node-header.json",
-			"http://localhost:4567/r/labeled-handle.json",
-			"http://localhost:4567/r/base-node.json",
+			"@simple-ai/node-header-status",
+			"@simple-ai/editable-handle",
+			"@simple-ai/node-header",
+			"@simple-ai/labeled-handle",
+			"@simple-ai/base-node",
 		],
 		files: [
 			{
@@ -361,9 +361,9 @@ export const Index: Record<string, any> = {
 		registryDependencies: [
 			"textarea",
 			"separator",
-			"http://localhost:4567/r/labeled-handle.json",
-			"http://localhost:4567/r/node-header.json",
-			"http://localhost:4567/r/resizable-node.json",
+			"@simple-ai/labeled-handle",
+			"@simple-ai/node-header",
+			"@simple-ai/resizable-node",
 		],
 		files: [
 			{
@@ -392,10 +392,10 @@ export const Index: Record<string, any> = {
 		type: "registry:ui",
 		registryDependencies: [
 			"separator",
-			"http://localhost:4567/r/markdown-content.json",
-			"http://localhost:4567/r/labeled-handle.json",
-			"http://localhost:4567/r/node-header.json",
-			"http://localhost:4567/r/resizable-node.json",
+			"@simple-ai/markdown-content",
+			"@simple-ai/labeled-handle",
+			"@simple-ai/node-header",
+			"@simple-ai/resizable-node",
 		],
 		files: [
 			{
@@ -628,7 +628,7 @@ export const Index: Record<string, any> = {
 		name: "chat-input-demo-mentions",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["http://localhost:4567/r/chat-input.json"],
+		registryDependencies: ["@simple-ai/chat-input"],
 		files: [
 			{
 				path: "./src/registry/examples/chat-input-demo-mentions.tsx",
@@ -925,7 +925,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["http://localhost:4567/r/jsx-renderer.json"],
+		registryDependencies: ["@simple-ai/jsx-renderer"],
 		files: [
 			{
 				path: "./src/registry/examples/jsx-renderer-demo.tsx",
@@ -952,7 +952,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer-disabled-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["http://localhost:4567/r/jsx-renderer.json"],
+		registryDependencies: ["@simple-ai/jsx-renderer"],
 		files: [
 			{
 				path: "./src/registry/examples/jsx-renderer-disabled-demo.tsx",
@@ -979,7 +979,7 @@ export const Index: Record<string, any> = {
 		name: "jsx-renderer-streaming-demo",
 		description: "",
 		type: "registry:example",
-		registryDependencies: ["http://localhost:4567/r/jsx-renderer.json"],
+		registryDependencies: ["@simple-ai/jsx-renderer"],
 		files: [
 			{
 				path: "./src/registry/examples/jsx-renderer-streaming-demo.tsx",
@@ -1285,9 +1285,9 @@ export const Index: Record<string, any> = {
 			"button",
 			"avatar",
 			"dropdown-menu",
-			"http://localhost:4567/r/chat-input.json",
-			"http://localhost:4567/r/chat-message-area.json",
-			"http://localhost:4567/r/chat-message.json",
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
 		],
 		files: [
 			{
@@ -1376,9 +1376,9 @@ export const Index: Record<string, any> = {
 		registryDependencies: [
 			"sidebar",
 			"breadcrumb",
-			"http://localhost:4567/r/chat-input.json",
-			"http://localhost:4567/r/chat-message-area.json",
-			"http://localhost:4567/r/chat-message.json",
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
 		],
 		files: [
 			{
@@ -1417,9 +1417,9 @@ export const Index: Record<string, any> = {
 		registryDependencies: [
 			"popover",
 			"button",
-			"http://localhost:4567/r/chat-input.json",
-			"http://localhost:4567/r/chat-message-area.json",
-			"http://localhost:4567/r/chat-message.json",
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
 		],
 		files: [
 			{
@@ -1470,11 +1470,11 @@ export const Index: Record<string, any> = {
 			"badge",
 			"dialog",
 			"slider",
-			"http://localhost:4567/r/chat-input.json",
-			"http://localhost:4567/r/chat-message-area.json",
-			"http://localhost:4567/r/chat-message.json",
-			"http://localhost:4567/r/jsx-renderer.json",
-			"http://localhost:4567/r/jsx-utils.json",
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
+			"@simple-ai/jsx-renderer",
+			"@simple-ai/jsx-utils",
 		],
 		files: [
 			{
@@ -1688,10 +1688,10 @@ export const Index: Record<string, any> = {
 			"input",
 			"textarea",
 			"sonner",
-			"http://localhost:4567/r/generate-text-node.json",
-			"http://localhost:4567/r/prompt-crafter-node.json",
-			"http://localhost:4567/r/text-input-node.json",
-			"http://localhost:4567/r/visualize-text-node.json",
+			"@simple-ai/generate-text-node",
+			"@simple-ai/prompt-crafter-node",
+			"@simple-ai/text-input-node",
+			"@simple-ai/visualize-text-node",
 		],
 		files: [
 			{
@@ -1814,10 +1814,10 @@ export const Index: Record<string, any> = {
 			"input",
 			"textarea",
 			"sonner",
-			"http://localhost:4567/r/generate-text-node.json",
-			"http://localhost:4567/r/prompt-crafter-node.json",
-			"http://localhost:4567/r/text-input-node.json",
-			"http://localhost:4567/r/visualize-text-node.json",
+			"@simple-ai/generate-text-node",
+			"@simple-ai/prompt-crafter-node",
+			"@simple-ai/text-input-node",
+			"@simple-ai/visualize-text-node",
 		],
 		files: [
 			{
@@ -1940,10 +1940,10 @@ export const Index: Record<string, any> = {
 			"input",
 			"textarea",
 			"sonner",
-			"http://localhost:4567/r/generate-text-node.json",
-			"http://localhost:4567/r/prompt-crafter-node.json",
-			"http://localhost:4567/r/text-input-node.json",
-			"http://localhost:4567/r/visualize-text-node.json",
+			"@simple-ai/generate-text-node",
+			"@simple-ai/prompt-crafter-node",
+			"@simple-ai/text-input-node",
+			"@simple-ai/visualize-text-node",
 		],
 		files: [
 			{
@@ -2068,10 +2068,10 @@ export const Index: Record<string, any> = {
 			"input",
 			"textarea",
 			"sonner",
-			"http://localhost:4567/r/generate-text-node.json",
-			"http://localhost:4567/r/prompt-crafter-node.json",
-			"http://localhost:4567/r/text-input-node.json",
-			"http://localhost:4567/r/visualize-text-node.json",
+			"@simple-ai/generate-text-node",
+			"@simple-ai/prompt-crafter-node",
+			"@simple-ai/text-input-node",
+			"@simple-ai/visualize-text-node",
 		],
 		files: [
 			{

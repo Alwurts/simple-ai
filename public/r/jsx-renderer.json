@@ -5,7 +5,7 @@
 	"title": "JSX Renderer",
 	"description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 	"dependencies": ["react-jsx-parser", "react-error-boundary"],
-	"registryDependencies": ["http://localhost:4567/r/jsx-utils.json"],
+	"registryDependencies": ["@simple-ai/jsx-utils"],
 	"files": [
 		{
 			"path": "./src/registry/ui/jsx-renderer.tsx",

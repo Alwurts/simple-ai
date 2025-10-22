@@ -8,12 +8,12 @@
 	"registryDependencies": [
 		"button",
 		"separator",
-		"http://localhost:4567/r/model-selector.json",
-		"http://localhost:4567/r/node-header-status.json",
-		"http://localhost:4567/r/editable-handle.json",
-		"http://localhost:4567/r/labeled-handle.json",
-		"http://localhost:4567/r/base-node.json",
-		"http://localhost:4567/r/node-header.json"
+		"@simple-ai/model-selector",
+		"@simple-ai/node-header-status",
+		"@simple-ai/editable-handle",
+		"@simple-ai/labeled-handle",
+		"@simple-ai/base-node",
+		"@simple-ai/node-header"
 	],
 	"files": [
 		{

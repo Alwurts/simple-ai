@@ -5,7 +5,7 @@
 	"title": "Chat Message",
 	"description": "A fully composable component for displaying chat messages with rich features like timestamps, actions, and threading.",
 	"registryDependencies": [
-		"http://localhost:4567/r/markdown-content.json",
+		"@simple-ai/markdown-content",
 		"avatar",
 		"button",
 		"card",

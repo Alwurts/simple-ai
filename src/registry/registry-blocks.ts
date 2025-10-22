@@ -1,4 +1,3 @@
-import { BASE_URL } from "@/lib/config";
 import type { Registry } from "@/shadcn-temp/schema";
 
 export const blocks: Registry["items"] = [
@@ -16,9 +15,9 @@ export const blocks: Registry["items"] = [
 			"button",
 			"avatar",
 			"dropdown-menu",
-			`${BASE_URL}/r/chat-input.json`,
-			`${BASE_URL}/r/chat-message-area.json`,
-			`${BASE_URL}/r/chat-message.json`,
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
 		],
 		files: [
 			{
@@ -86,9 +85,9 @@ export const blocks: Registry["items"] = [
 		registryDependencies: [
 			"sidebar",
 			"breadcrumb",
-			`${BASE_URL}/r/chat-input.json`,
-			`${BASE_URL}/r/chat-message-area.json`,
-			`${BASE_URL}/r/chat-message.json`,
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
 		],
 		files: [
 			{
@@ -116,9 +115,9 @@ export const blocks: Registry["items"] = [
 		registryDependencies: [
 			"popover",
 			"button",
-			`${BASE_URL}/r/chat-input.json`,
-			`${BASE_URL}/r/chat-message-area.json`,
-			`${BASE_URL}/r/chat-message.json`,
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
 		],
 		files: [
 			{
@@ -164,11 +163,11 @@ export const blocks: Registry["items"] = [
 			"badge",
 			"dialog",
 			"slider",
-			`${BASE_URL}/r/chat-input.json`,
-			`${BASE_URL}/r/chat-message-area.json`,
-			`${BASE_URL}/r/chat-message.json`,
-			`${BASE_URL}/r/jsx-renderer.json`,
-			`${BASE_URL}/r/jsx-utils.json`,
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
+			"@simple-ai/jsx-renderer",
+			"@simple-ai/jsx-utils",
 		],
 		files: [
 			{
@@ -343,10 +342,10 @@ export const blocks: Registry["items"] = [
 			"input",
 			"textarea",
 			"sonner",
-			`${BASE_URL}/r/generate-text-node.json`,
-			`${BASE_URL}/r/prompt-crafter-node.json`,
-			`${BASE_URL}/r/text-input-node.json`,
-			`${BASE_URL}/r/visualize-text-node.json`,
+			"@simple-ai/generate-text-node",
+			"@simple-ai/prompt-crafter-node",
+			"@simple-ai/text-input-node",
+			"@simple-ai/visualize-text-node",
 		],
 		files: [
 			{
@@ -458,10 +457,10 @@ export const blocks: Registry["items"] = [
 			"input",
 			"textarea",
 			"sonner",
-			`${BASE_URL}/r/generate-text-node.json`,
-			`${BASE_URL}/r/prompt-crafter-node.json`,
-			`${BASE_URL}/r/text-input-node.json`,
-			`${BASE_URL}/r/visualize-text-node.json`,
+			"@simple-ai/generate-text-node",
+			"@simple-ai/prompt-crafter-node",
+			"@simple-ai/text-input-node",
+			"@simple-ai/visualize-text-node",
 		],
 		files: [
 			{
@@ -574,10 +573,10 @@ export const blocks: Registry["items"] = [
 			"input",
 			"textarea",
 			"sonner",
-			`${BASE_URL}/r/generate-text-node.json`,
-			`${BASE_URL}/r/prompt-crafter-node.json`,
-			`${BASE_URL}/r/text-input-node.json`,
-			`${BASE_URL}/r/visualize-text-node.json`,
+			"@simple-ai/generate-text-node",
+			"@simple-ai/prompt-crafter-node",
+			"@simple-ai/text-input-node",
+			"@simple-ai/visualize-text-node",
 		],
 		files: [
 			{
@@ -689,10 +688,10 @@ export const blocks: Registry["items"] = [
 			"input",
 			"textarea",
 			"sonner",
-			`${BASE_URL}/r/generate-text-node.json`,
-			`${BASE_URL}/r/prompt-crafter-node.json`,
-			`${BASE_URL}/r/text-input-node.json`,
-			`${BASE_URL}/r/visualize-text-node.json`,
+			"@simple-ai/generate-text-node",
+			"@simple-ai/prompt-crafter-node",
+			"@simple-ai/text-input-node",
+			"@simple-ai/visualize-text-node",
 		],
 		files: [
 			{
