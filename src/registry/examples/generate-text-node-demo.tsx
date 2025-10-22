@@ -3,6 +3,9 @@
 import "@xyflow/react/dist/style.css";
 
 import {
+	addEdge,
+	applyEdgeChanges,
+	applyNodeChanges,
 	Background,
 	type Connection,
 	type EdgeChange,
@@ -12,14 +15,10 @@ import {
 	type NodeTypes,
 	ReactFlow,
 	ReactFlowProvider,
-	addEdge,
-	applyEdgeChanges,
-	applyNodeChanges,
 } from "@xyflow/react";
-
-import type { Model } from "@/registry/ui/model-selector";
 import { nanoid } from "nanoid";
 import { useCallback, useState } from "react";
+import type { Model } from "@/registry/ui/model-selector";
 import { GenerateTextNode } from "../ui/flow/generate-text-node";
 
 const GenerateTextNodeController = ({
@@ -59,7 +58,11 @@ const GenerateTextNodeController = ({
 				...toolHandles,
 				tools: toolHandles.tools.map((tool) =>
 					tool.id === toolId
-						? { ...tool, name: newName, description: newDescription }
+						? {
+								...tool,
+								name: newName,
+								description: newDescription,
+							}
 						: tool,
 				),
 			});
@@ -105,7 +108,7 @@ export default function ResizableNodeDemo() {
 	const [edges, setEdges] = useState([]);
 
 	// Add default viewport configuration
-	const defaultViewport = { x: 100, y: 200, zoom: 1.1 };
+	const defaultViewport = { x: 100, y: 200, zoom: 1 };
 
 	const onNodesChange = useCallback(
 		(changes: NodeChange<Node>[]) =>
@@ -122,7 +125,7 @@ export default function ResizableNodeDemo() {
 		[],
 	);
 	return (
-		<div className="w-full max-w-[600px] h-[450px] border border-border rounded-md">
+		<div className="w-full h-full">
 			<ReactFlowProvider>
 				<ReactFlow
 					nodes={nodes}

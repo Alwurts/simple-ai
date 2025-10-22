@@ -1,31 +1,27 @@
 "use client";
 
-import { experimental_useObject as useObject } from "ai/react";
+import { experimental_useObject as useObject } from "@ai-sdk/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
-import { useTrackEvent } from "@/lib/events";
 import { PersonaDisplay } from "@/registry/blocks/app-02/components/persona-display";
 import { getRandomExample } from "@/registry/blocks/app-02/lib/example-businesses";
 import {
+	formSchema,
 	ProductPersonaSchema,
 	UserPersonaSchema,
 } from "@/registry/blocks/app-02/lib/persona";
-import { formSchema } from "@/registry/blocks/app-02/lib/persona";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 
 type FormData = z.infer<typeof formSchema>;
 
 export default function PersonaGenerator() {
 	const [showDialog, setShowDialog] = useState(false);
-	const track = useTrackEvent();
 
 	const {
 		register,
@@ -42,15 +38,6 @@ export default function PersonaGenerator() {
 			userPersona: UserPersonaSchema,
 			productPersona: ProductPersonaSchema,
 		}),
-		onFinish: ({ object }) => {
-			track({
-				name: "block_used",
-				properties: {
-					used_block: "app-02",
-					used_block_ai_completion: JSON.stringify(object),
-				},
-			});
-		},
 	});
 
 	const onSubmit = async (data: FormData) => {
@@ -70,13 +57,18 @@ export default function PersonaGenerator() {
 					AI Persona Generator
 				</h4>
 				<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-					Generate detailed user and product personas for your business using
-					AI. Fill in the details below or try a random example to get started.
+					Generate detailed user and product personas for your
+					business using AI. Fill in the details below or try a random
+					example to get started.
 				</p>
 			</div>
 
 			<div className="flex justify-end">
-				<Button variant="outline" onClick={handleRandomize} className="group">
+				<Button
+					variant="outline"
+					onClick={handleRandomize}
+					className="group"
+				>
 					<span className="mr-2 group-hover:animate-spin">🎲</span>
 					Try Random Example
 				</Button>
@@ -117,8 +109,8 @@ export default function PersonaGenerator() {
 					<div className="space-y-2">
 						<Label htmlFor="targetAudience">Target Audience</Label>
 						<p className="text-sm text-muted-foreground">
-							Describe your ideal customers including their age, occupation,
-							interests, and needs.
+							Describe your ideal customers including their age,
+							occupation, interests, and needs.
 						</p>
 						<Textarea
 							id="targetAudience"
@@ -134,10 +126,12 @@ export default function PersonaGenerator() {
 					</div>
 
 					<div className="space-y-2">
-						<Label htmlFor="productDescription">Product Description</Label>
+						<Label htmlFor="productDescription">
+							Product Description
+						</Label>
 						<p className="text-sm text-muted-foreground">
-							Describe what your product or service does and the main problems
-							it solves.
+							Describe what your product or service does and the
+							main problems it solves.
 						</p>
 						<Textarea
 							id="productDescription"
@@ -159,10 +153,8 @@ export default function PersonaGenerator() {
 			</div>
 
 			<Dialog open={showDialog} onOpenChange={setShowDialog}>
-				<DialogContent className="w-[95vw] max-w-4xl lg:max-w-6xl h-[90vh]">
-					<ScrollArea className="h-full">
-						<PersonaDisplay object={object} isLoading={isLoading} />
-					</ScrollArea>
+				<DialogContent className="w-[95vw] max-w-4xl lg:max-w-6xl h-[90vh] overflow-y-auto">
+					<PersonaDisplay object={object} isLoading={isLoading} />
 				</DialogContent>
 			</Dialog>
 		</div>

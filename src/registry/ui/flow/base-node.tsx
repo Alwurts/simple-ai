@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import React from "react";
+import { cn } from "@/lib/utils";
 
 export const BaseNode = React.forwardRef<
 	HTMLDivElement,
@@ -13,7 +13,7 @@ export const BaseNode = React.forwardRef<
 			selected ? "border-muted-foreground shadow-lg" : "",
 			"hover:ring-1",
 		)}
-		// biome-ignore lint/a11y/noNoninteractiveTabindex: <explanation>
+		// biome-ignore lint/a11y/noNoninteractiveTabindex: Needed
 		tabIndex={0}
 		{...props}
 	/>

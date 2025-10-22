@@ -23,7 +23,7 @@ Visit [simple-ai.dev/docs](https://simple-ai.dev/docs) to view the documentation
 
 ```bash
 # Install shadcn/ui first
-npx shadcn-ui@latest init
+npx shadcn@latest init
 
 # Then you can add simple-ai components
 npx shadcn@latest add https://simple-ai.dev/r/chat-message.json
@@ -32,3 +32,6 @@ npx shadcn@latest add https://simple-ai.dev/r/chat-message.json
 ## License
 
 Licensed under the MIT License.
+
+- [ ] Check proper use of sitemap
+- [ ] Check use of og and how its used in metadata in layouts like /block/layout

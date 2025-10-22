@@ -1,23 +1,23 @@
+import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
+import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
+import { nanoid } from "nanoid";
+import { createWithEqualityFn } from "zustand/traditional";
 import { createNode } from "@/registry/lib/flow/node-factory";
 import { SSEWorkflowExecutionClient } from "@/registry/lib/flow/sse-workflow-execution-client";
 import {
 	type DynamicHandle,
 	type FlowEdge,
 	type FlowNode,
-	type WorkflowDefinition,
-	type WorkflowError,
 	isNodeOfType,
 	isNodeWithDynamicHandles,
 	prepareWorkflow,
+	type WorkflowDefinition,
+	type WorkflowError,
 } from "@/registry/lib/flow/workflow";
 import type {
 	EdgeExecutionState,
 	NodeExecutionState,
 } from "@/registry/lib/flow/workflow-execution-engine";
-import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
-import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
-import { nanoid } from "nanoid";
-import { createWithEqualityFn } from "zustand/traditional";
 
 export interface WorkflowState {
 	nodes: FlowNode[];
@@ -166,14 +166,16 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 										...node.data.executionState,
 										targets: {
 											...node.data.executionState.targets,
-											[connection.targetHandle]: sourceHandleData,
+											[connection.targetHandle]:
+												sourceHandleData,
 										},
 									}
 								: {
 										status: "success",
 										timestamp: new Date().toISOString(),
 										targets: {
-											[connection.targetHandle]: sourceHandleData,
+											[connection.targetHandle]:
+												sourceHandleData,
 										},
 									},
 						},
@@ -314,7 +316,9 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 					const handles = dynamicHandles[
 						handleCategory as keyof typeof dynamicHandles
 					] as DynamicHandle[];
-					const newHandles = handles.filter((handle) => handle.id !== handleId);
+					const newHandles = handles.filter(
+						(handle) => handle.id !== handleId,
+					);
 
 					return {
 						...node,
@@ -407,7 +411,8 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 							workflowExecutionState: {
 								...state.workflowExecutionState,
 								finishedAt: timestamp,
-								timesRun: state.workflowExecutionState.timesRun + 1,
+								timesRun:
+									state.workflowExecutionState.timesRun + 1,
 							},
 						}));
 						resolve(undefined);
@@ -424,7 +429,8 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 			return {
 				status: "error",
 				message: "Workflow execution failed",
-				error: error instanceof Error ? error : new Error(String(error)),
+				error:
+					error instanceof Error ? error : new Error(String(error)),
 			};
 		} finally {
 			// Reset execution state when done

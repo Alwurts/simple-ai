@@ -1,97 +1,116 @@
 ---
 title: Model Selector
-description: A component that lets users select from different AI models with icons and disabled states.
-featured: true
-component: true
+description: A dropdown component for selecting AI models with provider icons.
 ---
 
-<ComponentPreview name="model-selector-demo" description="A model selector with icons and disabled states" />
+<ComponentPreview name="model-selector-demo" />
 
 ## Installation
 
-<Tabs defaultValue="cli">
-
-<TabsList>
-  <TabsTrigger value="cli">CLI</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
-</TabsList>
-<TabsContent value="cli">
-
 ```bash
-npx shadcn@latest add https://simple-ai.dev/r/model-selector.json
+npx shadcn@latest add model-selector
 ```
-
-</TabsContent>
-
-<TabsContent value="manual">
-
-<Steps>
-
-<Step>Copy and paste the following code into your project.</Step>
-
-<ComponentSource name="model-selector" />
-
-<Step>Install the select component from shadcn/ui.</Step>
-
-<a href="https://ui.shadcn.com/docs/components/select">https://ui.shadcn.com/docs/components/select</a>
-
-<Step>Update the import paths to match your project setup.</Step>
-
-</Steps>
-
-</TabsContent>
-
-</Tabs>
 
 ## Usage
 
-```tsx
-import { ModelSelector } from "@/components/ui/model-selector"
-```
-
-
-The Model Selector component is a wrapper around the shadcn/ui Select component that allows users to choose from different AI models. It includes:
-
-- Predefined model options with icons
-- Ability to disable specific models
-- Customizable value and change handler
-- Built-in icons from svgl.app
+The Model Selector provides a dropdown interface for choosing between different AI models from various providers like OpenAI, Groq, and DeepSeek.
 
 ```tsx
-import { useState } from "react";
-import { ModelSelector } from "@/components/ui/model-selector";
+import { ModelSelector, type Model } from "@/components/ui/model-selector"
+import { useState } from "react"
 
-function MyComponent() {
-    const [model, setModel] = useState<Model>("deepseek-chat");
-    return (
-        <ModelSelector
-            value={model}
-            onChange={setModel}
-        />
-    );
+export function MyComponent() {
+  const [selectedModel, setSelectedModel] = useState<Model>("gpt-4o")
+
+  return (
+    <ModelSelector
+      value={selectedModel}
+      onChange={setSelectedModel}
+    />
+  )
 }
 ```
 
+## API Reference
 
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `value` | `Model` | - | The currently selected model |
+| `onChange` | `(value: Model) => void` | - | Callback function called when model changes |
+| `disabledModels` | `Model[]` | - | Array of models to disable in the selector |
 
-### Available Models
+## Available Models
 
-The component includes these predefined models but you can easily add or remove models:
+The component includes support for the following AI models:
 
-- `deepseek-chat`
-- `deepseek-r1-distill-llama-70b`
-- `llama-3.3-70b-versatile`
-- `llama-3.1-8b-instant`
-- `gpt-4o`
-- `gpt-4o-mini`
+- **OpenAI**: `gpt-4o`, `gpt-4o-mini`
+- **Groq**: `llama-3.3-70b-versatile`, `llama-3.1-8b-instant`, `deepseek-r1-distill-llama-70b`
+- **DeepSeek**: `deepseek-chat`
 
-Each model has a corresponding icon from [svgl.app](https://svgl.app) that appears in the dropdown.
+## Disabling Models
 
+You can disable specific models by passing the `disabledModels` prop:
 
-### Disabling Models
+```tsx
+<ModelSelector
+  value={selectedModel}
+  onChange={setSelectedModel}
+  disabledModels={["gpt-4o", "llama-3.3-70b-versatile"]}
+/>
+```
 
-You can disable specific models by using the `disabledModels` prop.
+## Integration with AI SDK
 
-<ComponentPreview name="model-selector-disabled-demo" description="A model selector with icons and disabled states" />
+The Model Selector is designed to work seamlessly with Vercel AI SDK:
 
+```tsx
+import { generateText } from "ai"
+import { openai } from "@ai-sdk/openai"
+import { groq } from "@ai-sdk/groq"
+import { deepseek } from "@ai-sdk/deepseek"
 
+const modelMap = {
+  "gpt-4o": openai("gpt-4o"),
+  "gpt-4o-mini": openai("gpt-4o-mini"),
+  "llama-3.3-70b-versatile": groq("llama-3.3-70b-versatile"),
+  "llama-3.1-8b-instant": groq("llama-3.1-8b-instant"),
+  "deepseek-chat": deepseek("deepseek-chat"),
+  "deepseek-r1-distill-llama-70b": groq("deepseek-r1-distill-llama-70b"),
+}
+
+export function ChatComponent() {
+  const [selectedModel, setSelectedModel] = useState<Model>("gpt-4o")
+
+  const handleSendMessage = async (message: string) => {
+    const model = modelMap[selectedModel]
+    const result = await generateText({
+      model,
+      prompt: message,
+    })
+    // Handle response...
+  }
+
+  return (
+    <div>
+      <ModelSelector
+        value={selectedModel}
+        onChange={setSelectedModel}
+      />
+      {/* Chat interface */}
+    </div>
+  )
+}
+```
+
+## Customization
+
+The component uses shadcn/ui's Select component internally, so you can pass any additional props that the Select component accepts:
+
+```tsx
+<ModelSelector
+  value={selectedModel}
+  onChange={setSelectedModel}
+  className="w-64"
+  placeholder="Choose a model"
+/>
+```

@@ -10,7 +10,21 @@ export function LogoIcon(props: SVGProps<SVGSVGElement>) {
 			xmlns="http://www.w3.org/2000/svg"
 			{...props}
 		>
-			<title>Logo</title>
+			<title
+				style={{
+					position: "absolute",
+					width: "1px",
+					height: "1px",
+					padding: "0",
+					margin: "-1px",
+					overflow: "hidden",
+					clipPath: "inset(50%)",
+					whiteSpace: "nowrap",
+					borderWidth: "0",
+				}}
+			>
+				simple-ai
+			</title>
 			<rect
 				x="242"
 				y="21"

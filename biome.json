@@ -1,34 +1,36 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
 	"vcs": {
-		"enabled": false,
+		"enabled": true,
 		"clientKind": "git",
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignoreUnknown": false,
-		"ignore": []
+		"ignoreUnknown": true,
+		"includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",
-		"indentWidth": 2,
+		"indentWidth": 4,
 		"lineWidth": 80
-	},
-	"organizeImports": {
-		"enabled": true
 	},
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"recommended": true,
 			"correctness": {
-				"noUndeclaredDependencies": "error",
-				"noUndeclaredVariables": "error",
 				"noUnusedFunctionParameters": "error",
 				"noUnusedImports": "error",
 				"noUnusedVariables": "error",
-				"useHookAtTopLevel": "error"
+				"useHookAtTopLevel": "error",
+				"useUniqueElementIds": "off"
+			},
+			"complexity": {
+				"noBannedTypes": "off"
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "off"
 			},
 			"style": {
 				"useBlockStatements": "error",
@@ -48,6 +50,13 @@
 			"trailingCommas": "all",
 			"semicolons": "always",
 			"arrowParentheses": "always"
+		}
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
 		}
 	}
 }

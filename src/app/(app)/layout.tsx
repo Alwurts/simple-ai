@@ -1,19 +1,12 @@
-import { SiteHeader } from "@/components/layout/header";
 import { SiteFooter } from "@/components/layout/site-footer";
-import type { ReactNode } from "react";
+import { SiteHeader } from "@/components/layout/site-header";
 
-interface AppLayoutProps {
-	children: ReactNode;
-}
-
-export default function AppLayout({ children }: AppLayoutProps) {
+export default function AppLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<div className="min-h-screen bg-background flex flex-col">
-			<div data-wrapper="" className="flex flex-1 flex-col">
-				<SiteHeader />
-				<main className="flex flex-1 flex-col">{children}</main>
-				<SiteFooter />
-			</div>
+		<div className="bg-background relative z-10 flex min-h-svh flex-col">
+			<SiteHeader />
+			<main className="flex flex-1 flex-col">{children}</main>
+			<SiteFooter />
 		</div>
 	);
 }

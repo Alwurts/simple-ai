@@ -4,9 +4,9 @@ import {
 	Position,
 	useUpdateNodeInternals,
 } from "@xyflow/react";
-
+import { Bot, Plus, Trash } from "lucide-react";
+import { useCallback } from "react";
 import { Button } from "@/components/ui/button";
-
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { BaseNode } from "@/registry/ui/flow/base-node";
@@ -24,8 +24,6 @@ import {
 } from "@/registry/ui/flow/node-header";
 import { NodeHeaderStatus } from "@/registry/ui/flow/node-header-status";
 import { type Model, ModelSelector } from "@/registry/ui/model-selector";
-import { Bot, Plus, Trash } from "lucide-react";
-import { useCallback } from "react";
 
 export type GenerateTextData = {
 	status: "processing" | "error" | "success" | "idle" | undefined;
@@ -166,14 +164,20 @@ export function GenerateTextNode({
 			<div className="border-t border-border mt-2">
 				<div>
 					<div className="flex items-center justify-between py-2 px-4 bg-muted">
-						<span className="text-sm font-medium">Tool outputs</span>
+						<span className="text-sm font-medium">
+							Tool outputs
+						</span>
 						<EditableHandleDialog
 							variant="create"
 							onSave={handleCreateTool}
 							align="end"
 							showDescription
 						>
-							<Button variant="outline" size="sm" className="h-7 px-2">
+							<Button
+								variant="outline"
+								size="sm"
+								className="h-7 px-2"
+							>
 								<Plus className="h-4 w-4 mr-1" />
 								New tool output
 							</Button>

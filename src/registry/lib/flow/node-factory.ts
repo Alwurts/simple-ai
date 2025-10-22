@@ -1,9 +1,9 @@
+import { nanoid } from "nanoid";
 import type { FlowNode } from "@/registry/lib/flow/workflow";
 import type { GenerateTextNodeController } from "@/registry/ui/flow/generate-text-node-controller";
 import type { PromptCrafterNodeController } from "@/registry/ui/flow/prompt-crafter-node-controller";
 import type { TextInputNodeController } from "@/registry/ui/flow/text-input-node-controller";
 import type { VisualizeTextNodeController } from "@/registry/ui/flow/visualize-text-node-controller";
-import { nanoid } from "nanoid";
 
 export type NodePosition = {
 	x: number;
@@ -25,7 +25,9 @@ export const nodeFactory = {
 		},
 	}),
 
-	"prompt-crafter": (position: NodePosition): PromptCrafterNodeController => ({
+	"prompt-crafter": (
+		position: NodePosition,
+	): PromptCrafterNodeController => ({
 		id: nanoid(),
 		type: "prompt-crafter",
 		position,
@@ -39,7 +41,9 @@ export const nodeFactory = {
 		},
 	}),
 
-	"visualize-text": (position: NodePosition): VisualizeTextNodeController => ({
+	"visualize-text": (
+		position: NodePosition,
+	): VisualizeTextNodeController => ({
 		id: nanoid(),
 		type: "visualize-text",
 		position,

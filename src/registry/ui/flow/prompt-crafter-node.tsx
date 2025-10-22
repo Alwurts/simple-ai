@@ -1,5 +1,18 @@
 "use client";
 
+import { StreamLanguage } from "@codemirror/language";
+import type { EditorView } from "@codemirror/view";
+import { tags as t } from "@lezer/highlight";
+import { createTheme } from "@uiw/codemirror-themes";
+import CodeMirror from "@uiw/react-codemirror";
+import type { Node } from "@xyflow/react";
+import {
+	type NodeProps,
+	Position,
+	useUpdateNodeInternals,
+} from "@xyflow/react";
+import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Command,
@@ -30,19 +43,6 @@ import {
 	NodeHeaderTitle,
 } from "@/registry/ui/flow/node-header";
 import { NodeHeaderStatus } from "@/registry/ui/flow/node-header-status";
-import { StreamLanguage } from "@codemirror/language";
-import type { EditorView } from "@codemirror/view";
-import { tags as t } from "@lezer/highlight";
-import { createTheme } from "@uiw/codemirror-themes";
-import CodeMirror from "@uiw/react-codemirror";
-import type { Node } from "@xyflow/react";
-import {
-	type NodeProps,
-	Position,
-	useUpdateNodeInternals,
-} from "@xyflow/react";
-import { BetweenVerticalEnd, PencilRuler, Plus, Trash } from "lucide-react";
-import { useCallback, useMemo, useRef, useState } from "react";
 
 type PromptCrafterData = {
 	status: "processing" | "error" | "success" | "idle" | undefined;
@@ -115,7 +115,7 @@ export function PromptCrafterNode({
 }: PromptCrafterProps) {
 	const updateNodeInternals = useUpdateNodeInternals();
 	const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-	const editorViewRef = useRef<EditorView>();
+	const editorViewRef = useRef<EditorView | null>(null);
 
 	const handleCreateInput = useCallback(
 		(name: string) => {
@@ -199,9 +199,16 @@ export function PromptCrafterNode({
 			<Separator />
 			<div className="p-2">
 				<div className="flex items-center gap-2 mb-1">
-					<Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+					<Popover
+						open={isPopoverOpen}
+						onOpenChange={setIsPopoverOpen}
+					>
 						<PopoverTrigger asChild>
-							<Button variant="outline" size="sm" className="h-7 px-2">
+							<Button
+								variant="outline"
+								size="sm"
+								className="h-7 px-2"
+							>
 								<BetweenVerticalEnd className="h-4 w-4 mr-1" />
 								Insert Input into Prompt
 							</Button>
@@ -210,14 +217,22 @@ export function PromptCrafterNode({
 							<Command>
 								<CommandInput placeholder="Search inputs..." />
 								<CommandList>
-									<CommandEmpty>No inputs found.</CommandEmpty>
+									<CommandEmpty>
+										No inputs found.
+									</CommandEmpty>
 									<CommandGroup>
-										{data.dynamicHandles["template-tags"]?.map(
+										{data.dynamicHandles[
+											"template-tags"
+										]?.map(
 											(input) =>
 												input.name && (
 													<CommandItem
 														key={input.id}
-														onSelect={() => insertInputAtCursor(input.name)}
+														onSelect={() =>
+															insertInputAtCursor(
+																input.name,
+															)
+														}
 														className="text-base"
 													>
 														{input.name}

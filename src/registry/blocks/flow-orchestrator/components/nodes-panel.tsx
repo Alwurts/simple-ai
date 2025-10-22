@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
 import { Panel } from "@xyflow/react";
 import { Eye, PenLine } from "lucide-react";
 import type React from "react";
+import { Button } from "@/components/ui/button";
 
 const nodeTypes = [
 	{

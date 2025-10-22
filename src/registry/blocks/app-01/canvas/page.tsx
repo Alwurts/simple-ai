@@ -1,5 +1,9 @@
 "use client";
 
+import * as LucideIcons from "lucide-react";
+import Script from "next/script";
+import type * as React from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,10 +22,6 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { extractJsxContent } from "@/registry/lib/jsx-utils";
 import { JsxRenderer } from "@/registry/ui/jsx-renderer";
-import * as LucideIcons from "lucide-react";
-import Script from "next/script";
-import type * as React from "react";
-import { useCallback, useEffect, useMemo, useState } from "react";
 
 export default function Canvas() {
 	const [code, setCode] = useState("");
@@ -39,7 +39,10 @@ export default function Canvas() {
 	useEffect(() => {
 		window.addEventListener("message", handleMessageFromCanvasParent);
 		return () =>
-			window.removeEventListener("message", handleMessageFromCanvasParent);
+			window.removeEventListener(
+				"message",
+				handleMessageFromCanvasParent,
+			);
 	}, [handleMessageFromCanvasParent]);
 
 	const components = useMemo(() => {
@@ -48,7 +51,8 @@ export default function Canvas() {
 				if (iconName === "default") {
 					return acc;
 				}
-				//@ts-ignore
+				//@ts-expect-error
+				// biome-ignore lint/performance/noDynamicNamespaceImportAccess: TODO: fix this
 				acc[iconName] = LucideIcons[iconName];
 				return acc;
 			},
@@ -82,7 +86,7 @@ export default function Canvas() {
 	return (
 		<>
 			<Script src="https://cdn.tailwindcss.com" />
-			{/* @ts-ignore */}
+			{/* @ts-ignore Some types are not properly typed */}
 			<JsxRenderer jsx={code} components={components} />
 		</>
 	);

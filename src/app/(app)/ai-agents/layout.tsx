@@ -1,32 +1,47 @@
 import type { Metadata } from "next";
-
+import Link from "next/link";
+import type { ReactNode } from "react";
 import {
 	PageActions,
 	PageHeader,
 	PageHeaderDescription,
 	PageHeaderHeading,
 } from "@/components/layout/page-header";
-
-import "@/styles/mdx.css";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import type { ReactNode } from "react";
+
+const title = "AI Agents Workflows";
+const description =
+	"Example implementations of AI Agents using Vercel AI SDK and React Flow";
 
 export const metadata: Metadata = {
-	title: "AI Agents Workflows",
-	description:
-		"Example implementations of AI Agents using Vercel AI SDK and React Flow",
+	title,
+	description,
+	openGraph: {
+		images: [
+			{
+				url: `/og?title=${encodeURIComponent(
+					title,
+				)}&description=${encodeURIComponent(description)}`,
+			},
+		],
+	},
+	twitter: {
+		card: "summary_large_image",
+		images: [
+			{
+				url: `/og?title=${encodeURIComponent(
+					title,
+				)}&description=${encodeURIComponent(description)}`,
+			},
+		],
+	},
 };
 
-export default function BlocksLayout({
-	children,
-}: {
-	children: ReactNode;
-}) {
+export default function BlocksLayout({ children }: { children: ReactNode }) {
 	return (
 		<>
 			<PageHeader>
-				<PageHeaderHeading>AI Agents Workflows</PageHeaderHeading>
+				<PageHeaderHeading>{title}</PageHeaderHeading>
 				<PageHeaderDescription>
 					Explore example implementations of AI Agents using{" "}
 					<a
@@ -62,11 +77,11 @@ export default function BlocksLayout({
 				</PageHeaderDescription>
 				<PageActions>
 					<Button asChild size="sm">
-						<Link href="/docs/react-flow">Get More Information</Link>
+						<Link href="/docs/workflows">Get More Information</Link>
 					</Button>
 					<Button asChild size="sm" variant="ghost">
-						<Link href="/docs/react-flow/components/generate-text-node">
-							See React Flow Components
+						<Link href="/docs/workflows/generate-text-node">
+							See Workflow Components
 						</Link>
 					</Button>
 				</PageActions>

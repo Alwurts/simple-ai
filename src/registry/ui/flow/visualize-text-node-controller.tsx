@@ -1,10 +1,10 @@
 "use client";
 
+import type { NodeProps } from "@xyflow/react";
+import { useCallback } from "react";
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import { VisualizeTextNode } from "@/registry/ui/flow/visualize-text-node";
-import type { NodeProps } from "@xyflow/react";
-import { useCallback } from "react";
 
 export type VisualizeTextNodeController = Omit<VisualizeTextNode, "data"> & {
 	type: "visualize-text";

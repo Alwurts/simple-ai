@@ -1,3 +1,5 @@
+import { type Node, type NodeProps, Position } from "@xyflow/react";
+import { PenLine, Trash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
@@ -10,8 +12,6 @@ import {
 	NodeHeaderTitle,
 } from "@/registry/ui/flow/node-header";
 import { ResizableNode } from "@/registry/ui/flow/resizable-node";
-import { type Node, type NodeProps, Position } from "@xyflow/react";
-import { PenLine, Trash } from "lucide-react";
 
 export type TextInputData = {
 	status: "processing" | "error" | "success" | "idle" | undefined;

@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Chat } from "@/registry/blocks/chat-03/components/chat";
 import { X } from "lucide-react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Chat } from "@/registry/blocks/chat-03/components/chat";
 
 export default function Page() {
 	const [open, setOpen] = useState(true);

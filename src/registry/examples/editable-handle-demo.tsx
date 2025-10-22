@@ -3,6 +3,9 @@
 import "@xyflow/react/dist/style.css";
 
 import {
+	addEdge,
+	applyEdgeChanges,
+	applyNodeChanges,
 	Background,
 	type Connection,
 	type EdgeChange,
@@ -10,22 +13,18 @@ import {
 	type NodeChange,
 	type NodeProps,
 	type NodeTypes,
+	Position,
 	ReactFlow,
 	ReactFlowProvider,
-	addEdge,
-	applyEdgeChanges,
-	applyNodeChanges,
 	useUpdateNodeInternals,
 } from "@xyflow/react";
-
+import { nanoid } from "nanoid";
+import { useCallback, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
 	EditableHandle,
 	EditableHandleDialog,
 } from "@/registry/ui/flow/editable-handle";
-import { Position } from "@xyflow/react";
-import { nanoid } from "nanoid";
-import { useCallback, useState } from "react";
 
 const DynamicHandlesNode = ({ id }: NodeProps<Node>) => {
 	const updateNodeInternals = useUpdateNodeInternals();
@@ -59,7 +58,11 @@ const DynamicHandlesNode = ({ id }: NodeProps<Node>) => {
 			setHandles((prev) =>
 				prev.map((handle) =>
 					handle.id === handleId
-						? { ...handle, name: newName, description: newDescription }
+						? {
+								...handle,
+								name: newName,
+								description: newDescription,
+							}
 						: handle,
 				),
 			);
@@ -70,7 +73,9 @@ const DynamicHandlesNode = ({ id }: NodeProps<Node>) => {
 
 	const handleDelete = useCallback(
 		(handleId: string) => {
-			setHandles((prev) => prev.filter((handle) => handle.id !== handleId));
+			setHandles((prev) =>
+				prev.filter((handle) => handle.id !== handleId),
+			);
 			updateNodeInternals(id);
 		},
 		[id, updateNodeInternals],
@@ -150,7 +155,7 @@ export default function EditableHandleDemo() {
 	);
 
 	return (
-		<div className="w-[600px] h-[600px] border border-border rounded-md">
+		<div className="w-full h-full">
 			<ReactFlowProvider>
 				<ReactFlow
 					nodes={nodes}

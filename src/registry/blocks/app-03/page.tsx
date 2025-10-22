@@ -1,37 +1,27 @@
 "use client";
 
-import { useTrackEvent } from "@/lib/events";
+import { useCompletion } from "@ai-sdk/react";
+import type { DeepPartial } from "ai";
+import { useEffect, useState } from "react";
+import type { z } from "zod";
 import { ProfileGenerateDialog } from "@/registry/blocks/app-03/components/profile-generate-dialog";
 import { Toolbar } from "@/registry/blocks/app-03/components/toolbar";
 import { XPreview } from "@/registry/blocks/app-03/components/x-preview";
 import type {
-	XProfile,
 	profileGenerationSchema,
+	XProfile,
 } from "@/registry/blocks/app-03/lib/x";
-import type { DeepPartial } from "ai";
-import { useCompletion } from "ai/react";
-import { useEffect, useState } from "react";
-import type { z } from "zod";
 
 export default function XProfileGenerator() {
 	const [profile, setProfile] = useState<DeepPartial<XProfile>>({});
-	const track = useTrackEvent();
 
 	const { isLoading, complete, completion } = useCompletion({
 		api: "/api/ai/x-profile",
-		onFinish: (prompt, completion) => {
+		onFinish: (_prompt, completion) => {
 			setProfile((profile) => ({
 				...profile,
 				bio: completion,
 			}));
-			track({
-				name: "block_used",
-				properties: {
-					used_block: "app-03",
-					used_block_ai_prompt: prompt,
-					used_block_ai_completion: completion,
-				},
-			});
 		},
 		experimental_throttle: 90,
 	});

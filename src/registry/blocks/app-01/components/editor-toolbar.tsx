@@ -1,11 +1,11 @@
 "use client";
 
+import { BotMessageSquare, Code, EyeIcon } from "lucide-react";
+import type { FC, ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
-import { BotMessageSquare, Code, EyeIcon } from "lucide-react";
-import type { FC, ReactNode } from "react";
 
 interface EditorToolbarProps {
 	actions?: ReactNode;
@@ -34,7 +34,9 @@ export const EditorToolbar: FC<EditorToolbarProps> = ({ actions }) => {
 				<Code className="h-4 w-4" />
 				<Switch
 					checked={view === "preview"}
-					onCheckedChange={(checked) => setView(checked ? "preview" : "code")}
+					onCheckedChange={(checked) =>
+						setView(checked ? "preview" : "code")
+					}
 				/>
 				<EyeIcon className="h-4 w-4" />
 			</div>

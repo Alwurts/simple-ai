@@ -1,4 +1,57 @@
 /**
+ * Finds the closing bracket (>) of a JSX tag while properly handling:
+ * - String literals (both single and double quotes)
+ * - JSX expressions with braces {}
+ * - Parentheses in arrow functions and function calls
+ * - Arrow functions (=>)
+ *
+ * @param tagCode - The tag code starting from the opening <
+ * @returns The index of the closing bracket, or -1 if not found
+ */
+function findTagClosingBracket(tagCode: string): number {
+	let inString = false;
+	let stringChar: string | null = null;
+	let braceDepth = 0;
+	let parenDepth = 0;
+
+	for (let i = 1; i < tagCode.length; i++) {
+		const char = tagCode[i];
+		const prevChar = tagCode[i - 1];
+
+		if (inString && prevChar === "\\") {
+			continue;
+		}
+
+		if (char === '"' || char === "'") {
+			if (!inString) {
+				inString = true;
+				stringChar = char;
+			} else if (char === stringChar && prevChar !== "\\") {
+				inString = false;
+				stringChar = null;
+			}
+			continue;
+		}
+
+		if (!inString) {
+			if (char === "{") {
+				braceDepth++;
+			} else if (char === "}") {
+				braceDepth--;
+			} else if (char === "(") {
+				parenDepth++;
+			} else if (char === ")") {
+				parenDepth--;
+			} else if (char === ">" && braceDepth === 0 && parenDepth === 0) {
+				return i;
+			}
+		}
+	}
+
+	return -1;
+}
+
+/**
  * Matches and extracts information about JSX tags in a string of code.
  * Handles three tag formats:
  * 1. Opening tags: <tag attr="value">
@@ -24,27 +77,55 @@ export function matchJsxTag(code: string) {
 		return null;
 	}
 
-	const tagRegex = /<\/?([a-zA-Z][a-zA-Z0-9]*)\s*([^>]*?)(\/)?>/;
-	const match = code.match(tagRegex);
-
-	if (!match || typeof match.index === "undefined") {
+	const tagStartMatch = code.match(/<\/?([a-zA-Z][a-zA-Z0-9]*)/);
+	if (!tagStartMatch || typeof tagStartMatch.index === "undefined") {
 		return null;
 	}
 
-	const [fullMatch, tagName, attributes, selfClosing] = match;
-	const type = selfClosing
-		? "self-closing"
-		: fullMatch.startsWith("</")
-			? "closing"
-			: "opening";
+	const tagName = tagStartMatch[1];
+	const isClosingTag = tagStartMatch[0].startsWith("</");
+	const startIndex = tagStartMatch.index;
+
+	if (isClosingTag) {
+		const closingBracketIndex = code.indexOf(">", startIndex);
+		if (closingBracketIndex === -1) {
+			return null;
+		}
+
+		return {
+			tag: code.slice(startIndex, closingBracketIndex + 1),
+			tagName,
+			type: "closing",
+			attributes: "",
+			startIndex,
+			endIndex: closingBracketIndex + 1,
+		};
+	}
+
+	const tagContent = code.slice(startIndex);
+	const closingBracketPos = findTagClosingBracket(tagContent);
+
+	if (closingBracketPos === -1) {
+		return null;
+	}
+
+	const fullMatch = tagContent.slice(0, closingBracketPos + 1);
+	const isSelfClosing = fullMatch.endsWith("/>");
+
+	const afterTagName = fullMatch.slice(tagName.length + 1);
+	const attributes = isSelfClosing
+		? afterTagName.slice(0, -2).trim()
+		: afterTagName.slice(0, -1).trim();
+
+	const type = isSelfClosing ? "self-closing" : "opening";
 
 	return {
 		tag: fullMatch,
 		tagName,
 		type,
-		attributes: attributes.trim(),
-		startIndex: match.index,
-		endIndex: match.index + fullMatch.length,
+		attributes,
+		startIndex,
+		endIndex: startIndex + closingBracketPos + 1,
 	};
 }
 
@@ -55,7 +136,7 @@ export function matchJsxTag(code: string) {
  * @param code - The JSX code string that may contain unclosed tags
  * @returns The completed JSX code with all necessary closing tags added
  * @example
- * completeJsxTag('<div><p);
+ * completeJsxTag('<div><p');
  * // Returns: '<div></div>'
  */
 export function completeJsxTag(code: string) {

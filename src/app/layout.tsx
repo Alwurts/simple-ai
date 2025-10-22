@@ -1,23 +1,32 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import {
+	Geist_Mono as FontMono,
+	Geist as FontSans,
+	Inter,
+} from "next/font/google";
 import "@/styles/globals.css";
+import type { ReactNode } from "react";
+import { AnalyticsProvider } from "@/components/providers/analytics-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import { siteConfig } from "@/config/site";
+import { siteConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
-import PlausibleProvider from "next-plausible";
-import type { ReactNode } from "react";
 
-const geistSans = localFont({
-	src: "./fonts/GeistVF.woff",
-	variable: "--font-geist-sans",
-	weight: "100 900",
+const fontSans = FontSans({
+	subsets: ["latin"],
+	variable: "--font-sans",
 });
-const geistMono = localFont({
-	src: "./fonts/GeistMonoVF.woff",
-	variable: "--font-geist-mono",
-	weight: "100 900",
+
+const fontMono = FontMono({
+	subsets: ["latin"],
+	variable: "--font-mono",
+	weight: ["400"],
+});
+
+const fontInter = Inter({
+	subsets: ["latin"],
+	variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -72,24 +81,29 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
+			<head>
+				<script
+					async
+					crossOrigin="anonymous"
+					src="https://tweakcn.com/live-preview.min.js"
+				/>
+			</head>
 			<body
-				className={cn("antialiased", geistSans.variable, geistMono.variable)}
+				className={cn(
+					"layout-fixed text-foreground group/body verscroll-none font-sans antialiased [--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]",
+					fontSans.variable,
+					fontMono.variable,
+					fontInter.variable,
+				)}
 			>
-				<PlausibleProvider domain="simple-ai.dev" selfHosted>
-					<ThemeProvider
-						attribute="class"
-						defaultTheme="system"
-						enableSystem
-						disableTransitionOnChange
-						enableColorScheme
-					>
+				<AnalyticsProvider>
+					<ThemeProvider>
 						{children}
 						<Toaster />
 					</ThemeProvider>
-
 					<GoogleAnalytics gaId="G-SJSDG0H2W0" />
-				</PlausibleProvider>
+				</AnalyticsProvider>
 			</body>
 		</html>
 	);

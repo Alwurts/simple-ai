@@ -1,5 +1,9 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
 	Dialog,
@@ -9,13 +13,11 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-	Form,
-	FormControl,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from "@/components/ui/form";
+	Field,
+	FieldError,
+	FieldGroup,
+	FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
 	Select,
@@ -27,10 +29,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { getRandomExample } from "@/registry/blocks/app-03/lib/profile-examples";
 import { profileGenerationSchema } from "@/registry/blocks/app-03/lib/x";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import type { z } from "zod";
 
 interface ProfileGenerateDialogProps {
 	onSubmit: (values: z.infer<typeof profileGenerationSchema>) => void;
@@ -72,91 +70,143 @@ export function ProfileGenerateDialog({
 					<DialogTitle>Generate your X bio</DialogTitle>
 				</DialogHeader>
 
-				<Button variant="outline" onClick={handleRandomize} className="group">
+				<Button
+					variant="outline"
+					onClick={handleRandomize}
+					className="group"
+				>
 					<span className="mr-2 group-hover:animate-spin">🎲</span>
 					Try Random Example
 				</Button>
 
-				<Form {...form}>
-					<form
-						onSubmit={form.handleSubmit((values) => {
-							onSubmit(values);
-							setDialogOpen(false);
-						})}
-						className="space-y-4"
-					>
-						<FormField
-							control={form.control}
+				<form
+					id="user-persona-demo-form"
+					onSubmit={form.handleSubmit((values) => {
+						onSubmit(values);
+						setDialogOpen(false);
+					})}
+					className="space-y-4"
+				>
+					<FieldGroup>
+						<Controller
 							name="displayName"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Display Name</FormLabel>
-									<FormControl>
-										<Input placeholder="John Doe" {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
 							control={form.control}
-							name="username"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Username</FormLabel>
-									<FormControl>
-										<Input placeholder="johndoe" {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							control={form.control}
-							name="aboutYou"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>About You</FormLabel>
-									<FormControl>
-										<Textarea
-											placeholder="Tell us about yourself..."
-											className="resize-none"
-											{...field}
+							render={({ field, fieldState }) => (
+								<Field data-invalid={fieldState.invalid}>
+									<FieldLabel htmlFor="user-persona-demo-displayName">
+										Display Name
+									</FieldLabel>
+									<Input
+										{...field}
+										id="user-persona-demo-displayName"
+										aria-invalid={fieldState.invalid}
+										placeholder="John Doe"
+										autoComplete="off"
+									/>
+									{fieldState.invalid && (
+										<FieldError
+											errors={[fieldState.error]}
 										/>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
+									)}
+								</Field>
 							)}
 						/>
-						<FormField
+
+						<Controller
+							name="username"
 							control={form.control}
-							name="generationType"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Generation Type</FormLabel>
-									<FormControl>
-										<Select value={field.value} onValueChange={field.onChange}>
-											<SelectTrigger>
-												<SelectValue placeholder="Select a generation type" />
-											</SelectTrigger>
-											<SelectContent>
-												<SelectItem value="fun">🎉 Fun</SelectItem>
-												<SelectItem value="professional">
-													👨‍💻 Professional
-												</SelectItem>
-												<SelectItem value="casual">👋 Casual</SelectItem>
-												<SelectItem value="technical">💻 Technical</SelectItem>
-												<SelectItem value="creative">🎨 Creative</SelectItem>
-											</SelectContent>
-										</Select>
-									</FormControl>
-									<FormMessage />
-								</FormItem>
+							render={({ field, fieldState }) => (
+								<Field data-invalid={fieldState.invalid}>
+									<FieldLabel htmlFor="user-persona-demo-username">
+										Username
+									</FieldLabel>
+									<Input
+										{...field}
+										id="user-persona-demo-username"
+										aria-invalid={fieldState.invalid}
+										placeholder="johndoe"
+										autoComplete="off"
+									/>
+									{fieldState.invalid && (
+										<FieldError
+											errors={[fieldState.error]}
+										/>
+									)}
+								</Field>
 							)}
 						/>
+
+						<Controller
+							name="aboutYou"
+							control={form.control}
+							render={({ field, fieldState }) => (
+								<Field data-invalid={fieldState.invalid}>
+									<FieldLabel htmlFor="user-persona-demo-aboutYou">
+										About You
+									</FieldLabel>
+									<Textarea
+										{...field}
+										id="user-persona-demo-aboutYou"
+										aria-invalid={fieldState.invalid}
+										placeholder="Tell us about yourself..."
+										className="resize-none"
+									/>
+									{fieldState.invalid && (
+										<FieldError
+											errors={[fieldState.error]}
+										/>
+									)}
+								</Field>
+							)}
+						/>
+						<Controller
+							name="generationType"
+							control={form.control}
+							render={({ field, fieldState }) => (
+								<Field data-invalid={fieldState.invalid}>
+									<FieldLabel htmlFor="user-persona-demo-generationType">
+										Generation Type
+									</FieldLabel>
+
+									<Select
+										value={field.value}
+										onValueChange={field.onChange}
+									>
+										<SelectTrigger>
+											<SelectValue placeholder="Select a generation type" />
+										</SelectTrigger>
+
+										<SelectContent>
+											<SelectItem value="fun">
+												🎉 Fun
+											</SelectItem>
+											<SelectItem value="professional">
+												👨‍💻 Professional
+											</SelectItem>
+											<SelectItem value="casual">
+												👋 Casual
+											</SelectItem>
+											<SelectItem value="technical">
+												💻 Technical
+											</SelectItem>
+											<SelectItem value="creative">
+												🎨 Creative
+											</SelectItem>
+										</SelectContent>
+									</Select>
+									{fieldState.invalid && (
+										<FieldError
+											errors={[fieldState.error]}
+										/>
+									)}
+								</Field>
+							)}
+						/>
+					</FieldGroup>
+					<Field orientation="horizontal">
 						<Button type="submit">Generate</Button>
-					</form>
-				</Form>
+					</Field>
+				</form>
 			</DialogContent>
 		</Dialog>
 	);

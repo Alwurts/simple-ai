@@ -40,7 +40,8 @@ export const useGenerationStore = create<GenerationStore>((set) => ({
 				currentVersion: newVersion.versionNumber,
 			};
 		}),
-	setCurrentVersion: (versionNumber) => set({ currentVersion: versionNumber }),
+	setCurrentVersion: (versionNumber) =>
+		set({ currentVersion: versionNumber }),
 	updateCurrentCode: (code) =>
 		set((state) => {
 			if (state.currentVersion === -1) {

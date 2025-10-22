@@ -1,3 +1,5 @@
+import { AlertCircle } from "lucide-react";
+import type React from "react";
 import { Button } from "@/components/ui/button";
 import {
 	Popover,
@@ -5,8 +7,6 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import type { WorkflowError } from "@/registry/lib/flow/workflow";
-import { AlertCircle } from "lucide-react";
-import type React from "react";
 
 interface ErrorIndicatorProps {
 	errors: WorkflowError[];

@@ -20,7 +20,10 @@ const eventSchema = z.object({
 		"example_used",
 	]),
 	properties: z
-		.record(z.union([z.string(), z.number(), z.boolean(), z.null()]))
+		.record(
+			z.string(),
+			z.union([z.string(), z.number(), z.boolean(), z.null()]),
+		)
 		.optional(),
 });
 
@@ -59,3 +62,5 @@ export function trackEvent(input: Event): void {
 	// Only track with Google Analytics in non-React contexts
 	trackGoogleAnalytics(event);
 }
+
+// TODO: Rework tracking to be only plausible

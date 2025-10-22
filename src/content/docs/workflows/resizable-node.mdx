@@ -1,0 +1,84 @@
+---
+title: Resizable Node
+description: A wrapper React Flow node component that adds resizing functionality to other nodes
+featured: true
+component: true
+---
+
+<ComponentPreview name="resizable-node-demo" description="An example of a resizable node with size constraints" componentContainerClassName="p-0" />
+
+## Overview
+
+The Resizable Node is a simple wrapper component that adds resizing functionality to other nodes in your React Flow application. It provides:
+
+- Resize handles that appear when the node is selected
+- Built-in size constraints for consistent node sizes
+- Integration with React Flow's base node system
+
+## Components Used
+
+This node is built using several React Flow Components:
+- [Base Node](https://reactflow.dev/components/nodes/base-node) - For the core node structure and styling
+- [Node Resizer](https://reactflow.dev/api-reference/components/node-resizer) - For the resizing functionality
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/resizable-node.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource name="resizable-node" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+The Resizable Node is designed to wrap other node content to make it resizable. Here's how to use it in your React Flow application:
+
+```tsx
+// Example of a custom node using ResizableNode
+const TextResizableNode = (props: NodeProps<Node>) => {
+  return (
+    <ResizableNode
+      selected={props.selected}
+      className="flex flex-col items-center justify-center p-4"
+    >
+      <span>{props.data.value as string}</span>
+    </ResizableNode>
+  );
+};
+
+// Register the node type
+const nodeTypes = {
+  "text-resizable-node": TextResizableNode,
+};
+```
+
+The node includes the following features:
+- Size constraints (min: 250x200px, max: 800x800px)
+- Resize handles visible on selection
+- Hover effect with orange highlight
+- Customizable through className prop

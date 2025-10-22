@@ -1,0 +1,52 @@
+[
+	{
+		"name": "chat-01",
+		"description": "A simple chat page.",
+		"categories": ["chat"]
+	},
+	{
+		"name": "chat-02",
+		"description": "A chat in a sidebar.",
+		"categories": ["chat"]
+	},
+	{
+		"name": "chat-03",
+		"description": "A chat in a popover.",
+		"categories": ["chat"]
+	},
+	{
+		"name": "app-01",
+		"description": "A app with generative UI capabilities.",
+		"categories": ["app"]
+	},
+	{
+		"name": "app-02",
+		"description": "A persona generator app with structured outputs.",
+		"categories": ["app"]
+	},
+	{
+		"name": "app-03",
+		"description": "An X profile bio generator app.",
+		"categories": ["app"]
+	},
+	{
+		"name": "flow-chain",
+		"description": "Agentic chain workflow.",
+		"categories": ["flow"]
+	},
+	{
+		"name": "flow-routing",
+		"description": "Agentic routing workflow.",
+		"categories": ["flow"]
+	},
+	{
+		"name": "flow-parallelization",
+		"description": "Agentic parallelization workflow.",
+		"categories": ["flow"]
+	},
+	{
+		"name": "flow-orchestrator",
+		"description": "Agentic orchestrator workflow.",
+		"categories": ["flow"]
+	}
+]

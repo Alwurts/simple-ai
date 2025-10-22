@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import { MarkdownContent } from "../ui/markdown-content";
 
 export default function MarkdownStreamingDemo() {
@@ -55,14 +55,14 @@ export default function MarkdownStreamingDemo() {
 	};
 
 	return (
-		<div className="space-y-4 w-full h-full">
+		<div className="space-y-4 w-full max-h-[400px] overflow-y-auto">
 			<div className="flex gap-2">
 				<Button onClick={handleStart} disabled={isStreaming}>
 					{content ? "Restart" : "Start"} Streaming
 				</Button>
 			</div>
 			<div className="p-4 w-full min-h-[200px] border rounded-md overflow-y-auto">
-				<MarkdownContent id="markdown-content-demo" content={content} />
+				<MarkdownContent content={content} />
 			</div>
 		</div>
 	);

@@ -1,12 +1,12 @@
 "use client";
 
+import type { NodeProps } from "@xyflow/react";
+import { useCallback } from "react";
+import { toast } from "sonner";
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
 import type { Model } from "@/registry/ui/model-selector";
-import type { NodeProps } from "@xyflow/react";
-import { useCallback } from "react";
-import { toast } from "sonner";
 
 export type GenerateTextNodeController = Omit<GenerateTextNode, "data"> & {
 	type: "generate-text";
@@ -22,7 +22,9 @@ export function GenerateTextNodeController({
 }: NodeProps<GenerateTextNodeController>) {
 	const updateNode = useWorkflow((state) => state.updateNode);
 	const addDynamicHandle = useWorkflow((state) => state.addDynamicHandle);
-	const removeDynamicHandle = useWorkflow((state) => state.removeDynamicHandle);
+	const removeDynamicHandle = useWorkflow(
+		(state) => state.removeDynamicHandle,
+	);
 	const deleteNode = useWorkflow((state) => state.deleteNode);
 
 	const handleModelChange = useCallback(
@@ -87,7 +89,11 @@ export function GenerateTextNodeController({
 					...data.dynamicHandles,
 					tools: data.dynamicHandles.tools.map((tool) =>
 						tool.id === toolId
-							? { ...tool, name: newName, description: newDescription }
+							? {
+									...tool,
+									name: newName,
+									description: newDescription,
+								}
 							: tool,
 					),
 				},

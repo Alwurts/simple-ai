@@ -1,23 +1,28 @@
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
-import { useScrollToBottom } from "@/registry/hooks/use-scroll-to-bottom";
 import { ChevronDown } from "lucide-react";
-import type { ReactNode } from "react";
+import { type ComponentProps, useCallback } from "react";
+import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-type ScrollButtonAlignment = "left" | "center" | "right";
-
-interface ScrollButtonProps {
-	onClick: () => void;
-	alignment?: ScrollButtonAlignment;
+interface ChatMessageAreaScrollButtonProps {
+	alignment?: "left" | "center" | "right";
 	className?: string;
 }
 
-export function ScrollButton({
-	onClick,
-	alignment = "right",
+export function ChatMessageAreaScrollButton({
+	alignment = "center",
 	className,
-}: ScrollButtonProps) {
+}: ChatMessageAreaScrollButtonProps) {
+	const { isAtBottom, scrollToBottom } = useStickToBottomContext();
+
+	const handleScrollToBottom = useCallback(() => {
+		scrollToBottom();
+	}, [scrollToBottom]);
+
+	if (isAtBottom) {
+		return null;
+	}
+
 	const alignmentClasses = {
 		left: "left-4",
 		center: "left-1/2 -translate-x-1/2",
@@ -33,41 +38,36 @@ export function ScrollButton({
 				alignmentClasses[alignment],
 				className,
 			)}
-			onClick={onClick}
+			onClick={handleScrollToBottom}
 		>
 			<ChevronDown className="h-4 w-4" />
 		</Button>
 	);
 }
 
-interface ChatMessageAreaProps {
-	children: ReactNode;
-	className?: string;
-	scrollButtonAlignment?: ScrollButtonAlignment;
-}
+type ChatMessageAreaProps = ComponentProps<typeof StickToBottom>;
 
-export function ChatMessageArea({
-	children,
-	className,
-	scrollButtonAlignment = "right",
-}: ChatMessageAreaProps) {
-	const [containerRef, showScrollButton, scrollToBottom] =
-		useScrollToBottom<HTMLDivElement>();
-
+export function ChatMessageArea({ className, ...props }: ChatMessageAreaProps) {
 	return (
-		<ScrollArea className="flex-1 relative">
-			<div ref={containerRef}>
-				<div className={cn(className, "min-h-0")}>{children}</div>
-			</div>
-			{showScrollButton && (
-				<ScrollButton
-					onClick={scrollToBottom}
-					alignment={scrollButtonAlignment}
-					className="absolute bottom-4 rounded-full shadow-lg hover:bg-secondary"
-				/>
-			)}
-		</ScrollArea>
+		<StickToBottom
+			className={cn("flex-1 relative h-full overflow-y-auto", className)}
+			resize="smooth"
+			initial="smooth"
+			{...props}
+		/>
 	);
 }
 
-ChatMessageArea.displayName = "ChatMessageArea";
+type ChatMessageAreaContentProps = ComponentProps<typeof StickToBottom.Content>;
+
+export function ChatMessageAreaContent({
+	className,
+	...props
+}: ChatMessageAreaContentProps) {
+	return (
+		<StickToBottom.Content
+			className={cn("max-w-2xl mx-auto w-full py-2", className)}
+			{...props}
+		/>
+	);
+}

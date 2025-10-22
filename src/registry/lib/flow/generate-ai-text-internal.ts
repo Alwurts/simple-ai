@@ -1,9 +1,9 @@
-import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
-import type { Model } from "@/registry/ui/model-selector";
 import { createDeepSeek } from "@ai-sdk/deepseek";
 import { createGroq } from "@ai-sdk/groq";
 import { generateText } from "ai";
 import { z } from "zod";
+import type { GenerateTextNode } from "@/registry/ui/flow/generate-text-node";
+import type { Model } from "@/registry/ui/model-selector";
 
 interface ToolResult {
 	id: string;
@@ -36,10 +36,11 @@ function mapToolsForAI(
 			toolToMap.name,
 			{
 				description: toolToMap.description,
-				parameters: z.object({
+				inputSchema: z.object({
 					toolValue: z.string(),
 				}),
-				execute: async ({ toolValue }: { toolValue: string }) => toolValue,
+				execute: async ({ toolValue }: { toolValue: string }) =>
+					toolValue,
 			},
 		]),
 	);
@@ -73,12 +74,14 @@ export async function generateAITextInternal({
 	let toolResults: ToolResult[] = [];
 	if (tools.length > 0 && result.toolResults) {
 		toolResults = result.toolResults.map((step) => {
-			const originalTool = tools.find((tool) => tool.name === step.toolName);
+			const originalTool = tools.find(
+				(tool) => tool.name === step.toolName,
+			);
 			return {
 				id: originalTool?.id || "",
 				name: step.toolName,
 				description: originalTool?.description || "",
-				result: step.result,
+				result: step.output as string,
 			};
 		});
 	}

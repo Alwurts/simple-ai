@@ -3,6 +3,9 @@
 import "@xyflow/react/dist/style.css";
 
 import {
+	addEdge,
+	applyEdgeChanges,
+	applyNodeChanges,
 	Background,
 	type Connection,
 	type EdgeChange,
@@ -12,14 +15,10 @@ import {
 	type NodeTypes,
 	ReactFlow,
 	ReactFlowProvider,
-	addEdge,
-	applyEdgeChanges,
-	applyNodeChanges,
 } from "@xyflow/react";
-
-import { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
 import { nanoid } from "nanoid";
 import { useCallback, useState } from "react";
+import { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
 
 const PromptCrafterNodeController = ({
 	id,
@@ -65,7 +64,9 @@ const PromptCrafterNodeController = ({
 			setDynamicHandles({
 				...dynamicHandles,
 				"template-tags": dynamicHandles["template-tags"].map((input) =>
-					input.id === handleId ? { ...input, name: newLabel } : input,
+					input.id === handleId
+						? { ...input, name: newLabel }
+						: input,
 				),
 			});
 			return true;
@@ -112,7 +113,7 @@ export default function ResizableNodeDemo() {
 	const [edges, setEdges] = useState([]);
 
 	// Add default viewport configuration
-	const defaultViewport = { x: 100, y: 100, zoom: 1.1 };
+	const defaultViewport = { x: 100, y: 100, zoom: 0.9 };
 
 	const onNodesChange = useCallback(
 		(changes: NodeChange<Node>[]) =>
@@ -129,7 +130,7 @@ export default function ResizableNodeDemo() {
 		[],
 	);
 	return (
-		<div className="w-full max-w-[600px] h-[450px] border border-border rounded-md">
+		<div className="w-full h-full">
 			<ReactFlowProvider>
 				<ReactFlow
 					nodes={nodes}

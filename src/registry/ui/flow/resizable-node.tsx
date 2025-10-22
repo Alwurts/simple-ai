@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils";
-import { BaseNode } from "@/registry/ui/flow/base-node";
 import { NodeResizer } from "@xyflow/react";
 import React from "react";
+import { cn } from "@/lib/utils";
+import { BaseNode } from "@/registry/ui/flow/base-node";
 
 export const ResizableNode = React.forwardRef<
 	HTMLDivElement,

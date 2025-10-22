@@ -3,6 +3,9 @@
 import "@xyflow/react/dist/style.css";
 
 import {
+	addEdge,
+	applyEdgeChanges,
+	applyNodeChanges,
 	Background,
 	type Connection,
 	type EdgeChange,
@@ -12,13 +15,10 @@ import {
 	type NodeTypes,
 	ReactFlow,
 	ReactFlowProvider,
-	addEdge,
-	applyEdgeChanges,
-	applyNodeChanges,
 } from "@xyflow/react";
 
 import { useCallback, useState } from "react";
-import { TextInputNode } from "../ui/flow/text-input-node";
+import { TextInputNode } from "@/registry/ui/flow/text-input-node";
 
 const TextInputNodeController = ({ id, data, ...props }: NodeProps<Node>) => {
 	const [value, setValue] = useState("Hello World!");
@@ -56,7 +56,7 @@ export default function ResizableNodeDemo() {
 	const [edges, setEdges] = useState([]);
 
 	// Add default viewport configuration
-	const defaultViewport = { x: 100, y: 120, zoom: 1.5 };
+	const defaultViewport = { x: 100, y: 120, zoom: 1.2 };
 
 	const onNodesChange = useCallback(
 		(changes: NodeChange<Node>[]) =>
@@ -73,7 +73,7 @@ export default function ResizableNodeDemo() {
 		[],
 	);
 	return (
-		<div className="w-full max-w-[600px] h-[450px] border border-border rounded-md">
+		<div className="w-full h-full">
 			<ReactFlowProvider>
 				<ReactFlow
 					nodes={nodes}

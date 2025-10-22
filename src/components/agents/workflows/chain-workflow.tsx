@@ -55,7 +55,7 @@ const workflows = [
 ];
 
 export function ChainWorkflow(props: HTMLAttributes<SVGSVGElement>) {
-	const svgRef = useRef<SVGSVGElement>(null);
+	const svgRef = useRef<SVGSVGElement | null>(null);
 
 	useWorkflowAnimation({
 		workflows,

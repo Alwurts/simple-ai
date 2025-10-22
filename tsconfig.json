@@ -1,6 +1,11 @@
 {
 	"compilerOptions": {
-		"lib": ["dom", "dom.iterable", "esnext"],
+		"target": "ES2017",
+		"lib": [
+			"dom",
+			"dom.iterable",
+			"esnext"
+		],
 		"allowJs": true,
 		"skipLibCheck": true,
 		"strict": true,
@@ -19,8 +24,12 @@
 		],
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"],
-			"contentlayer/generated": ["./.contentlayer/generated"]
+			"@/*": [
+				"./src/*"
+			],
+			"react": [
+				"./node_modules/@types/react"
+			]
 		}
 	},
 	"include": [
@@ -28,7 +37,10 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-		".contentlayer/generated"
+		"./src/scripts/build-registry.mts",
+		"next.config.mjs"
 	],
-	"exclude": ["node_modules", "./scripts/build-registry.ts", "__registry__"]
+	"exclude": [
+		"node_modules"
+	]
 }

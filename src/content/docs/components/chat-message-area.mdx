@@ -1,16 +1,15 @@
 ---
 title: Chat Message Area
-description: A component that adds auto scrolling functionality to a list of chat messages.
+description: A component that adds auto scrolling functionality to a list of messages.
 component: true
 ---
 
 <ComponentPreview
   name="chat-message-area-demo"
-  title="Chat Message Area"
-  description="A component that adds auto scrolling functionality to a list of chat messages."
+  description="A component that adds auto scrolling functionality to a list of messages."
 />
 
-The Chat Message Area component provides a responsive and intelligent scrollable container specifically designed for streamingchat interfaces. It features a sophisticated auto-scrolling system that adapts to user interaction:
+The Chat Message Area component provides a responsive and intelligent scrollable container specifically designed for streaming interfaces. It features a sophisticated auto-scrolling system that adapts to user interaction:
 
 - **Smart Auto-scroll**: Automatically scrolls to new messages when they appear, but only if the user is already at the bottom
 - **Interaction Awareness**: Auto-scroll automatically disables when users scroll up to read previous messages
@@ -18,9 +17,13 @@ The Chat Message Area component provides a responsive and intelligent scrollable
 - **Mobile Optimized**: On touch devices, auto-scroll pauses while the user's finger is on the screen
 - **Convenient Navigation**: Includes a scroll-to-bottom button that appears when not at the bottom
 
+## About
+
+This component is built on top of [use-stick-to-bottom](https://www.npmjs.com/package/use-stick-to-bottom), a React hook that provides smooth auto-scrolling functionality for chat interfaces and streaming content.
+
 ## Installation
 
-<Tabs defaultValue="cli">
+<CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
@@ -38,15 +41,17 @@ npx shadcn@latest add https://simple-ai.dev/r/chat-message-area.json
 
 <Steps>
 
+<Step>Install required dependencies</Step>
+
+```bash
+npm install use-stick-to-bottom
+```
+
 <Step>Copy and paste the following code into your project.</Step>
 
 `chat-message-area.tsx`
 
 <ComponentSource name="chat-message-area" />
-
-`use-scroll-to-bottom.ts`
-
-<ComponentSource name="use-scroll-to-bottom" />
 
 <Step>Update the import paths to match your project setup.</Step>
 
@@ -54,17 +59,24 @@ npx shadcn@latest add https://simple-ai.dev/r/chat-message-area.json
 
 </TabsContent>
 
-</Tabs>
+</CodeTabs>
 
 ## Usage
 
 ```tsx
-import { ChatMessageArea } from "@/components/ui/chat-message-area"
+import {
+  ChatMessageArea,
+  ChatMessageAreaContent,
+  ChatMessageAreaScrollButton,
+} from "@/components/ui/chat-message-area"
 ```
 
 ```tsx
-<ChatMessageArea className="px-4 py-8 space-y-4">
-  {/* Your chat messages go here */}
+<ChatMessageArea>
+  <ChatMessageAreaContent className="px-4 py-8 space-y-4">
+    {/* Your messages go here */}
+  </ChatMessageAreaContent>
+  <ChatMessageAreaScrollButton />
 </ChatMessageArea>
 ```
 
@@ -72,11 +84,10 @@ import { ChatMessageArea } from "@/components/ui/chat-message-area"
 
 ### Alignment
 
-You can align the scroll button to the left, right, or center.
+You can align the scroll button to the left, right, or center using the `alignment` prop on `ChatMessageAreaScrollButton`.
 
 <ComponentPreview
   name="chat-message-area-demo-alignment"
-  title="Chat Message Area Demo Alignment"
   description="A chat message area demo with alignment centered."
 />
 
@@ -86,6 +97,5 @@ Try out the auto-scrolling behavior in this live demo. Scroll up to pause auto-s
 
 <ComponentPreview
   name="chat-message-area-demo-streaming"
-  title="Chat Message Area Demo Streaming"
   description="A chat message area demo with streaming messages."
 />

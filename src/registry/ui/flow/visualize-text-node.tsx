@@ -1,5 +1,5 @@
 import { type Node, type NodeProps, Position } from "@xyflow/react";
-
+import { Eye, Trash } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { LabeledHandle } from "@/registry/ui/flow/labeled-handle";
@@ -12,7 +12,6 @@ import {
 } from "@/registry/ui/flow/node-header";
 import { ResizableNode } from "@/registry/ui/flow/resizable-node";
 import { MarkdownContent } from "@/registry/ui/markdown-content";
-import { Eye, Trash } from "lucide-react";
 
 export type VisualizeTextNode = Node<
 	{
@@ -27,7 +26,6 @@ interface VisualizeTextProps extends NodeProps<VisualizeTextNode> {
 }
 
 export function VisualizeTextNode({
-	id,
 	selected,
 	data,
 	onDeleteNode,
@@ -59,7 +57,6 @@ export function VisualizeTextNode({
 			<div className="p-2 flex-1 overflow-auto flex flex-col">
 				<div className="flex-1 overflow-auto nodrag nopan nowheel border border-border rounded-md p-2 select-text cursor-auto">
 					<MarkdownContent
-						id={id}
 						content={data.input ? data.input : "No text to display"}
 					/>
 				</div>

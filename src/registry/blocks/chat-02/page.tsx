@@ -17,7 +17,7 @@ export default function Page() {
 	return (
 		<SidebarProvider
 			style={{
-				// @ts-ignore
+				// @ts-expect-error
 				"--sidebar-width": "25rem",
 				"--sidebar-width-mobile": "25rem",
 			}}

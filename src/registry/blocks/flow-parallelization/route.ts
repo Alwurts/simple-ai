@@ -1,7 +1,7 @@
+import { NextResponse } from "next/server";
 import { serverNodeProcessors } from "@/registry/lib/flow/server-node-processors";
 import { executeServerWorkflow } from "@/registry/lib/flow/sse-workflow-execution-engine";
 import type { WorkflowDefinition } from "@/registry/lib/flow/workflow";
-import { NextResponse } from "next/server";
 
 export const maxDuration = 60;
 

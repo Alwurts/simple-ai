@@ -1,18 +1,20 @@
 "use client";
 
 import {
+	Background,
 	Controls,
 	type EdgeTypes,
 	MiniMap,
 	type NodeTypes,
+	Panel,
+	ReactFlow,
 	ReactFlowProvider,
+	useReactFlow,
 } from "@xyflow/react";
-import { Background, Panel, ReactFlow, useReactFlow } from "@xyflow/react";
 import { type DragEvent, useEffect } from "react";
 import { shallow } from "zustand/shallow";
 import "@xyflow/react/dist/style.css";
 import { Button } from "@/components/ui/button";
-import { useTrackEvent } from "@/lib/events";
 import { ErrorIndicator } from "@/registry/blocks/flow-routing/components/error-indicator";
 import { NodesPanel } from "@/registry/blocks/flow-routing/components/nodes-panel";
 import { CONTENT_CREATOR_ROUTING_WORKFLOW } from "@/registry/blocks/flow-routing/lib/content-creator-routing";
@@ -50,7 +52,6 @@ export function Flow() {
 		}),
 		shallow,
 	);
-	const track = useTrackEvent();
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We want to initialize the workflow only once
 	useEffect(() => {
@@ -91,12 +92,6 @@ export function Flow() {
 		if (result.status === "error") {
 			console.error(result.error);
 		}
-		track({
-			name: "ai_agent_used",
-			properties: {
-				used_block_ai_agent: "flow-routing",
-			},
-		});
 	};
 
 	return (
@@ -131,7 +126,9 @@ export function Flow() {
 						store.workflowExecutionState.timesRun > 1
 					}
 				>
-					{store.workflowExecutionState.isRunning ? "Running..." : "Run Flow"}
+					{store.workflowExecutionState.isRunning
+						? "Running..."
+						: "Run Flow"}
 				</Button>
 			</Panel>
 		</ReactFlow>

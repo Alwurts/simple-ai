@@ -3,6 +3,9 @@
 import "@xyflow/react/dist/style.css";
 
 import {
+	addEdge,
+	applyEdgeChanges,
+	applyNodeChanges,
 	Background,
 	type Connection,
 	type EdgeChange,
@@ -12,13 +15,9 @@ import {
 	type NodeTypes,
 	ReactFlow,
 	ReactFlowProvider,
-	addEdge,
-	applyEdgeChanges,
-	applyNodeChanges,
 } from "@xyflow/react";
-
-import { ResizableNode } from "@/registry/ui/flow/resizable-node";
 import { useCallback, useState } from "react";
+import { ResizableNode } from "@/registry/ui/flow/resizable-node";
 
 const TextResizableNode = (props: NodeProps<Node>) => {
 	return (
@@ -67,7 +66,7 @@ export default function ResizableNodeDemo() {
 	);
 
 	return (
-		<div className="w-[600px] h-[600px] border border-border rounded-md">
+		<div className="w-full h-full">
 			<ReactFlowProvider>
 				<ReactFlow
 					nodes={nodes}

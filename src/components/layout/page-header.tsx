@@ -1,15 +1,14 @@
 import { cn } from "@/lib/utils";
-import type { HTMLAttributes } from "react";
 
 function PageHeader({
 	className,
 	children,
 	...props
-}: HTMLAttributes<HTMLDivElement>) {
+}: React.ComponentProps<"section">) {
 	return (
-		<section className={cn("border-grid border-b", className)} {...props}>
+		<section className={cn("border-grid", className)} {...props}>
 			<div className="container-wrapper">
-				<div className="container flex flex-col items-start gap-1 py-8 md:py-10 lg:py-12">
+				<div className="container flex flex-col items-center gap-2 py-8 text-center md:py-16 lg:py-20 xl:gap-4">
 					{children}
 				</div>
 			</div>
@@ -20,11 +19,11 @@ function PageHeader({
 function PageHeaderHeading({
 	className,
 	...props
-}: HTMLAttributes<HTMLHeadingElement>) {
+}: React.ComponentProps<"h1">) {
 	return (
 		<h1
 			className={cn(
-				"text-3xl font-bold leading-tight tracking-tighter md:text-4xl lg:leading-[1.1]",
+				"text-primary leading-tighter max-w-2xl text-4xl font-semibold tracking-tight text-balance lg:leading-[1.1] lg:font-semibold xl:text-5xl xl:tracking-tighter",
 				className,
 			)}
 			{...props}
@@ -35,11 +34,11 @@ function PageHeaderHeading({
 function PageHeaderDescription({
 	className,
 	...props
-}: HTMLAttributes<HTMLParagraphElement>) {
+}: React.ComponentProps<"p">) {
 	return (
 		<p
 			className={cn(
-				"max-w-2xl text-balance text-lg font-light text-foreground",
+				"text-foreground max-w-3xl text-base text-balance sm:text-lg",
 				className,
 			)}
 			{...props}
@@ -47,11 +46,11 @@ function PageHeaderDescription({
 	);
 }
 
-function PageActions({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+function PageActions({ className, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
 			className={cn(
-				"flex w-full items-center justify-start gap-2 pt-2",
+				"flex w-full items-center justify-center gap-2 pt-2 **:data-[slot=button]:shadow-none",
 				className,
 			)}
 			{...props}

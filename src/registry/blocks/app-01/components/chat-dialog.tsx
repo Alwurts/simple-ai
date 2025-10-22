@@ -1,18 +1,19 @@
+import { useCompletion } from "@ai-sdk/react";
+import { useEffect } from "react";
 import {
 	Dialog,
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { useTrackEvent } from "@/lib/events";
 import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
 import {
 	ChatInput,
-	ChatInputSubmit,
-	ChatInputTextArea,
+	ChatInputEditor,
+	ChatInputGroupAddon,
+	ChatInputSubmitButton,
+	useChatInput,
 } from "@/registry/ui/chat-input";
-import { useCompletion } from "ai/react";
-import { useEffect } from "react";
 
 export function ChatDialog() {
 	const versions = useGenerationStore((state) => state.versions);
@@ -25,43 +26,31 @@ export function ChatDialog() {
 	const addVersion = useGenerationStore((state) => state.addVersion);
 	const chatOpen = useGenerationStore((state) => state.chatOpen);
 	const setChatOpen = useGenerationStore((state) => state.setChatOpen);
-	const track = useTrackEvent();
 
-	const {
-		completion,
-		isLoading,
-		input,
-		handleInputChange,
-		handleSubmit,
-		stop,
-		setInput,
-	} = useCompletion({
+	const { completion, isLoading, complete, stop } = useCompletion({
 		api: "/api/ai/generate",
-		onFinish: (prompt, completion) => {
+		onFinish: (_prompt, completion) => {
 			setView("preview");
 			updateCurrentCode(completion);
 			updateStatus("complete");
 			setChatOpen(false);
-			track({
-				name: "block_used",
-				properties: {
-					used_block: "app-01",
-					used_block_ai_prompt: prompt,
-					used_block_ai_completion: completion,
-				},
-			});
 		},
 		body: {
 			currentCode: versions[currentVersion]?.code ?? "",
 		},
 	});
 
-	const handleGenerate = () => {
-		addVersion("", input);
-		handleSubmit();
-		setInput("");
-		setChatOpen(false);
-	};
+	const {
+		value,
+		onChange,
+		handleSubmit: chatInputSubmit,
+	} = useChatInput({
+		onSubmit: (parsedValue) => {
+			addVersion("", parsedValue.content);
+			complete(parsedValue.content);
+			setChatOpen(false);
+		},
+	});
 
 	useEffect(() => {
 		if (completion) {
@@ -77,14 +66,16 @@ export function ChatDialog() {
 				</DialogHeader>
 
 				<ChatInput
-					value={input}
-					onChange={handleInputChange}
-					onSubmit={handleGenerate}
-					loading={isLoading}
+					value={value}
+					onChange={onChange}
+					onSubmit={chatInputSubmit}
+					isStreaming={isLoading}
 					onStop={stop}
 				>
-					<ChatInputTextArea placeholder="Type your code generation prompt..." />
-					<ChatInputSubmit />
+					<ChatInputEditor placeholder="Type your code generation prompt..." />
+					<ChatInputGroupAddon align="block-end">
+						<ChatInputSubmitButton className="ml-auto" />
+					</ChatInputGroupAddon>
 				</ChatInput>
 			</DialogContent>
 		</Dialog>

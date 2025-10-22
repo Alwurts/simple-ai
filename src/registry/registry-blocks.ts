@@ -1,14 +1,12 @@
-import type { Registry } from "@/registry/schema";
-import "dotenv/config";
+import { BASE_URL } from "@/lib/config";
+import type { Registry } from "@/shadcn-temp/schema";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://simple-ai.dev";
-
-export const blocks: Registry = [
+export const blocks: Registry["items"] = [
 	{
 		name: "chat-01",
 		description: "A simple chat page.",
 		type: "registry:block",
-		dependencies: ["ai", "@ai-sdk/openai"],
+		dependencies: ["ai", "@ai-sdk/react", "@ai-sdk/openai"],
 		registryDependencies: [
 			"card",
 			"breadcrumb",
@@ -34,15 +32,47 @@ export const blocks: Registry = [
 				type: "registry:page",
 			},
 			{
-				path: "blocks/chat-01/components/chat.tsx",
+				path: "blocks/chat-01/lib/config.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-01/components/layout/app-layout.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/chat-01/components/sidebar-app.tsx",
+				path: "blocks/chat-01/components/layout/app-layout-skeleton.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/chat-01/components/nav-user.tsx",
+				path: "blocks/chat-01/components/layout/app-header.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/layout/app-sidebar.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/layout/app-main-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/layout/app-secondary-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/layout/app-user-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/chat/chat-main.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/chat/chat-header.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-01/components/chat/chat-content.tsx",
 				type: "registry:component",
 			},
 		],
@@ -335,12 +365,22 @@ export const blocks: Registry = [
 				type: "registry:component",
 			},
 			{
+				path: "blocks/flow-chain/components/error-indicator.tsx",
+				target: "components/error-indicator.tsx",
+				type: "registry:component",
+			},
+			{
 				path: "blocks/flow-chain/lib/news-summarization-chain.ts",
 				type: "registry:lib",
 			},
 			{
 				path: "ui/flow/status-edge-controller.tsx",
 				target: "components/flow/status-edge-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/status-edge.tsx",
+				target: "components/flow/status-edge.tsx",
 				type: "registry:component",
 			},
 			{
@@ -440,12 +480,22 @@ export const blocks: Registry = [
 				type: "registry:component",
 			},
 			{
+				path: "blocks/flow-chain/components/error-indicator.tsx",
+				target: "components/error-indicator.tsx",
+				type: "registry:component",
+			},
+			{
 				path: "blocks/flow-routing/lib/content-creator-routing.ts",
 				type: "registry:lib",
 			},
 			{
 				path: "ui/flow/status-edge-controller.tsx",
 				target: "components/flow/status-edge-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/status-edge.tsx",
+				target: "components/flow/status-edge.tsx",
 				type: "registry:component",
 			},
 			{
@@ -546,12 +596,22 @@ export const blocks: Registry = [
 				type: "registry:component",
 			},
 			{
+				path: "blocks/flow-parallelization/components/error-indicator.tsx",
+				target: "components/error-indicator.tsx",
+				type: "registry:component",
+			},
+			{
 				path: "blocks/flow-parallelization/lib/exam-creator-parallelization.ts",
 				type: "registry:lib",
 			},
 			{
 				path: "ui/flow/status-edge-controller.tsx",
 				target: "components/flow/status-edge-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/status-edge.tsx",
+				target: "components/flow/status-edge.tsx",
 				type: "registry:component",
 			},
 			{
@@ -651,12 +711,22 @@ export const blocks: Registry = [
 				type: "registry:component",
 			},
 			{
+				path: "blocks/flow-orchestrator/components/error-indicator.tsx",
+				target: "components/error-indicator.tsx",
+				type: "registry:component",
+			},
+			{
 				path: "blocks/flow-orchestrator/lib/developer-tasks-orchestrator.ts",
 				type: "registry:lib",
 			},
 			{
 				path: "ui/flow/status-edge-controller.tsx",
 				target: "components/flow/status-edge-controller.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "ui/flow/status-edge.tsx",
+				target: "components/flow/status-edge.tsx",
 				type: "registry:component",
 			},
 			{

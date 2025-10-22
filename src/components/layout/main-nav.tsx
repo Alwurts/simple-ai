@@ -2,39 +2,30 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-import { docsConfig } from "@/config/docs";
-import { siteConfig } from "@/config/site";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { LogoIcon } from "../icons/logo-icon";
 
-export function MainNav() {
+export function MainNav({
+	items,
+	className,
+	...props
+}: React.ComponentProps<"nav"> & {
+	items: { href: string; label: string }[];
+}) {
 	const pathname = usePathname();
 
 	return (
-		<div className="mr-4 hidden md:flex">
-			<Link href="/" className="mr-4 flex items-center gap-2 lg:mr-6">
-				<LogoIcon className="h-8 w-8" />
-				<span className="hidden font-bold lg:inline-block">
-					{siteConfig.name}
-				</span>
-			</Link>
-			<nav className="flex items-center gap-4 text-sm xl:gap-6">
-				{docsConfig.mainNav.slice(1).map((navItem) => (
+		<nav className={cn("items-center gap-0.5", className)} {...props}>
+			{items.map((item) => (
+				<Button key={item.href} variant="ghost" asChild size="sm">
 					<Link
-						key={navItem.href}
-						href={navItem.href ?? ""}
-						className={cn(
-							"transition-colors hover:text-foreground/80",
-							pathname === navItem.href
-								? "text-foreground"
-								: "text-foreground/80",
-						)}
+						href={item.href}
+						className={cn(pathname === item.href && "text-primary")}
 					>
-						{navItem.title}
+						{item.label}
 					</Link>
-				))}
-			</nav>
-		</div>
+				</Button>
+			))}
+		</nav>
 	);
 }

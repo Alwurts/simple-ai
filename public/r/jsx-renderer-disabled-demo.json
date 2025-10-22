@@ -1,0 +1,13 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "jsx-renderer-disabled-demo",
+	"type": "registry:example",
+	"registryDependencies": ["http://localhost:4567/r/jsx-renderer.json"],
+	"files": [
+		{
+			"path": "./src/registry/examples/jsx-renderer-disabled-demo.tsx",
+			"content": "\"use client\";\n\nimport { Calendar, ChefHat, Clock } from \"lucide-react\";\nimport { JsxRenderer } from \"@/registry/ui/jsx-renderer\";\n\nexport default function JsxRendererDisabledDemo() {\n\tconst jsx = `<div className=\"max-w-xl rounded-lg border bg-card p-6\">\n  <div className=\"flex items-center gap-2 mb-6\">\n    <ChefHat className=\"size-5 text-primary\" />\n    <h2 className=\"text-xl font-semibold\">Restaurant Reservation</h2>\n  </div>\n  <div className=\"space-y-4 mb-6\">\n    <div className=\"flex items-center justify-between p-3 bg-muted rounded-md\">\n      <div className=\"flex items-center gap-2\">\n        <Calendar className=\"size-4 text-muted-foreground\" />\n        <span className=\"text-sm font-medium\">Date</span>\n      </div>\n      <span className=\"text-sm\">October 20, 2024</span>\n    </div>\n    <div className=\"flex items-center justify-between p-3 bg-muted rounded-md\">\n      <div className=\"flex items-center gap-2\">\n        <Clock className=\"size-4 text-muted-foreground\" />\n        <span className=\"text-sm font-medium\">Time</span>\n      </div>\n      <span className=\"text-sm\">7:00 PM</span>\n    </div>\n    <div className=\"flex items-center justify-between p-3 bg-muted rounded-md\">\n      <div>\n        <div className=\"text-sm font-medium mb-1\">The Golden Spoon</div>\n        <div className=\"text-xs text-muted-foreground\">Italian Cuisine • Downtown</div>\n      </div>\n      <div className=\"text-right\">\n        <div className=\"text-sm font-semibold\">4 Guests</div>\n        <div className=\"text-xs text-muted-foreground\">Window Seat</div>\n      </div>\n    </div>\n  </div>\n  <div className=\"flex gap-2\">\n    <button className=\"flex-1 bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md font-medium\">\n      Confirm Reservation\n    </button>\n    <button className=\"flex-1 border border-input bg-background hover:bg-accent hover:text-accent-foreground px-4 py-2 rounded-md font-medium\">\n      Modify Details\n    </button>\n  </div>\n</div>`;\n\n\treturn (\n\t\t<div className=\"w-full\">\n\t\t\t<JsxRenderer\n\t\t\t\tjsx={jsx}\n\t\t\t\tcomponents={{ Calendar, Clock, ChefHat }}\n\t\t\t\tstate=\"disabled\"\n\t\t\t\tclassName=\"w-full\"\n\t\t\t/>\n\t\t</div>\n\t);\n}\n",
+			"type": "registry:example"
+		}
+	]
+}

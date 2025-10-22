@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { ChatDialog } from "@/registry/blocks/app-01/components/chat-dialog";
 import { CodeEditor } from "@/registry/blocks/app-01/components/code-editor";
 import { CopyButton } from "@/registry/blocks/app-01/components/copy-button";
@@ -9,7 +10,6 @@ import {
 	PreviewControls,
 } from "@/registry/blocks/app-01/components/preview";
 import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
-import { useMemo, useState } from "react";
 
 export const EditorLayout = () => {
 	const view = useGenerationStore((state) => state.view);

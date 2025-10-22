@@ -1,3 +1,4 @@
+import type { DeepPartial } from "ai";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -7,7 +8,6 @@ import type {
 	ProductPersona,
 	UserPersona,
 } from "@/registry/blocks/app-02/lib/persona";
-import type { DeepPartial } from "ai";
 
 function DisplayField({
 	label,
@@ -85,7 +85,9 @@ export function PersonaDisplay({
 								</AvatarFallback>
 							</Avatar>
 							<div className="space-y-1">
-								<CardTitle>{userPersona?.name || "User Persona"}</CardTitle>
+								<CardTitle>
+									{userPersona?.name || "User Persona"}
+								</CardTitle>
 								<p className="text-sm text-muted-foreground">
 									{userPersona?.role || "Loading role..."}
 								</p>
@@ -128,12 +130,16 @@ export function PersonaDisplay({
 								/>
 								<DisplayField
 									label="Frustrations"
-									value={userPersona?.frustrations?.join("\n")}
+									value={userPersona?.frustrations?.join(
+										"\n",
+									)}
 									isLoading={isLoading}
 								/>
 								<DisplayField
 									label="Preferred Channels"
-									value={userPersona?.preferredChannels?.join(", ")}
+									value={userPersona?.preferredChannels?.join(
+										", ",
+									)}
 									isLoading={isLoading}
 								/>
 							</div>
@@ -152,10 +158,12 @@ export function PersonaDisplay({
 							</div>
 							<div className="space-y-1">
 								<CardTitle>
-									{productPersona?.productName || "Product Persona"}
+									{productPersona?.productName ||
+										"Product Persona"}
 								</CardTitle>
 								<p className="text-sm text-muted-foreground">
-									{productPersona?.category || "Loading category..."}
+									{productPersona?.category ||
+										"Loading category..."}
 								</p>
 							</div>
 						</CardHeader>
@@ -168,7 +176,9 @@ export function PersonaDisplay({
 								/>
 								<DisplayField
 									label="Key Features"
-									value={productPersona?.keyFeatures?.join("\n")}
+									value={productPersona?.keyFeatures?.join(
+										"\n",
+									)}
 									isLoading={isLoading}
 								/>
 								<DisplayField
@@ -178,7 +188,9 @@ export function PersonaDisplay({
 								/>
 								<DisplayField
 									label="Pain Points Solved"
-									value={productPersona?.painPointsSolved?.join("\n")}
+									value={productPersona?.painPointsSolved?.join(
+										"\n",
+									)}
 									isLoading={isLoading}
 								/>
 								<DisplayField

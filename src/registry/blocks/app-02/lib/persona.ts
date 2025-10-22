@@ -23,7 +23,10 @@ export const UserPersonaSchema = z.object({
 	}),
 	bio: z.string().describe("Short biographical description"),
 	goals: z.array(z.string()).min(1).describe("User's primary goals"),
-	frustrations: z.array(z.string()).min(1).describe("User's main frustrations"),
+	frustrations: z
+		.array(z.string())
+		.min(1)
+		.describe("User's main frustrations"),
 	preferredChannels: z
 		.array(z.string())
 		.describe("Preferred communication channels"),
@@ -39,7 +42,7 @@ export const ProductPersonaSchema = z.object({
 	valueProposition: z.string().describe("Core value proposition"),
 	painPointsSolved: z.array(z.string()).min(1),
 	pricingModel: z.string().describe("e.g., Freemium, Subscription, etc."),
-	emoji: z.string().emoji().length(1).describe("Category-representing emoji"),
+	emoji: z.string().min(1).max(1).describe("Category-representing emoji"),
 });
 
 // Type exports for TypeScript

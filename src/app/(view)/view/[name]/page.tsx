@@ -1,28 +1,29 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import * as React from "react";
+import { cache } from "react";
+import { z } from "zod";
 
-import { siteConfig } from "@/config/site";
-import { absoluteUrl, cn } from "@/lib/utils";
-
-import "@/styles/mdx.css";
-import { getAllBlockIds } from "@/lib/blocks";
+import { siteConfig } from "@/lib/config";
 import { getRegistryComponent, getRegistryItem } from "@/lib/registry";
+import { absoluteUrl, cn } from "@/lib/utils";
+import { registryItemSchema } from "@/shadcn-temp/schema";
 
-const getCachedRegistryItem = React.cache(async (name: string) => {
+export const revalidate = false;
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
+const getCachedRegistryItem = cache(async (name: string) => {
 	return await getRegistryItem(name);
 });
-
-export const dynamicParams = false;
 
 export async function generateMetadata({
 	params,
 }: {
-	params: {
+	params: Promise<{
 		name: string;
-	};
+	}>;
 }): Promise<Metadata> {
-	const { name } = params;
+	const { name } = await params;
 	const item = await getCachedRegistryItem(name);
 
 	if (!item) {
@@ -33,13 +34,13 @@ export async function generateMetadata({
 	const description = item.description;
 
 	return {
-		title: `${item.name}${item.description ? ` - ${item.description}` : ""}`,
+		title: item.description,
 		description,
 		openGraph: {
 			title,
 			description,
 			type: "article",
-			url: absoluteUrl(`/blocks/${item.name}`),
+			url: absoluteUrl(`/view/${item.name}`),
 			images: [
 				{
 					url: siteConfig.ogImage,
@@ -54,26 +55,37 @@ export async function generateMetadata({
 			title,
 			description,
 			images: [siteConfig.ogImage],
-			creator: "@alwurts",
+			creator: "@Alwurts",
 		},
 	};
 }
 
 export async function generateStaticParams() {
-	const blockIds = await getAllBlockIds();
-	return blockIds.map((name) => ({
-		name,
-	}));
+	const { Index } = await import("@/registry/__index__");
+	const index = z.record(z.string(), registryItemSchema).parse(Index);
+
+	return Object.values(index)
+		.filter((block) =>
+			[
+				"registry:block",
+				"registry:component",
+				"registry:example",
+				"registry:internal",
+			].includes(block.type),
+		)
+		.map((block) => ({
+			name: block.name,
+		}));
 }
 
 export default async function BlockPage({
 	params,
 }: {
-	params: {
+	params: Promise<{
 		name: string;
-	};
+	}>;
 }) {
-	const { name } = params;
+	const { name } = await params;
 	const item = await getCachedRegistryItem(name);
 	const Component = getRegistryComponent(name);
 
@@ -82,10 +94,8 @@ export default async function BlockPage({
 	}
 
 	return (
-		<>
-			<div className={cn("themes-wrapper bg-background", item.meta?.container)}>
-				<Component />
-			</div>
-		</>
+		<div className={cn("bg-background", item.meta?.container)}>
+			<Component />
+		</div>
 	);
 }

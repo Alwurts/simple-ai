@@ -1,10 +1,10 @@
 "use client";
 
+import type { NodeProps } from "@xyflow/react";
+import { useCallback } from "react";
 import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
 import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
 import { TextInputNode } from "@/registry/ui/flow/text-input-node";
-import type { NodeProps } from "@xyflow/react";
-import { useCallback } from "react";
 
 export type TextInputNodeController = Omit<TextInputNode, "data"> & {
 	type: "text-input";

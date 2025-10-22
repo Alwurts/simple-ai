@@ -1,6 +1,6 @@
-import type { FlowNode } from "@/registry/lib/flow/workflow";
 import type {
 	CycleError,
+	FlowNode,
 	MissingConnectionError,
 	MultipleSourcesError,
 	WorkflowDefinition,
@@ -106,7 +106,10 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 
 		// If this node has no dependencies, check its own status
 		if (dependencies.length === 0) {
-			if (completedNodes.has(nodeId) && node.data.executionState?.sources) {
+			if (
+				completedNodes.has(nodeId) &&
+				node.data.executionState?.sources
+			) {
 				return "success";
 			}
 			return "idle";
@@ -191,13 +194,17 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 				return false;
 			}
 			// Check if the node is completed AND the specific source handle has data
-			const sourceNode = context.workflow.nodes.find((n) => n.id === dep.node);
+			const sourceNode = context.workflow.nodes.find(
+				(n) => n.id === dep.node,
+			);
 			if (!sourceNode?.data.executionState?.sources) {
 				return false;
 			}
 			const sourceHandleData =
 				sourceNode.data.executionState.sources[dep.sourceHandle];
-			return completedNodes.has(dep.node) && sourceHandleData !== undefined;
+			return (
+				completedNodes.has(dep.node) && sourceHandleData !== undefined
+			);
 		});
 	};
 
@@ -228,7 +235,10 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 				status: "error",
 				error: {
 					type: "processing-node",
-					message: error instanceof Error ? error.message : "Unknown error",
+					message:
+						error instanceof Error
+							? error.message
+							: "Unknown error",
 				},
 			});
 			console.error(error);
@@ -244,7 +254,10 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 			failedNodes.clear();
 			processingNodes.clear();
 
-			while (completedNodes.size + failedNodes.size < executionOrder.length) {
+			while (
+				completedNodes.size + failedNodes.size <
+				executionOrder.length
+			) {
 				const availableNodes = executionOrder.filter(
 					(nodeId) =>
 						!completedNodes.has(nodeId) &&
@@ -255,7 +268,9 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 
 				if (availableNodes.length === 0) {
 					if (processingNodes.size > 0) {
-						await new Promise((resolve) => setTimeout(resolve, 100));
+						await new Promise((resolve) =>
+							setTimeout(resolve, 100),
+						);
 						continue;
 					}
 					// If there are no available nodes and nothing is processing,

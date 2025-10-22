@@ -1,9 +1,5 @@
 "use client";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
-import type { XProfile } from "@/registry/blocks/app-03/lib/x";
 import type { DeepPartial } from "ai";
 import {
 	BookmarkIcon,
@@ -17,6 +13,10 @@ import {
 	Share,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
+import type { XProfile } from "@/registry/blocks/app-03/lib/x";
 
 function DisplayLoader({
 	value,
@@ -60,7 +60,7 @@ export function XPreview({
 							<div className="h-12 w-12 bg-gray-100 dark:bg-zinc-800 rounded-lg" />
 							{[...Array(7)].map((_, i) => (
 								<div
-									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+									// biome-ignore lint/suspicious/noArrayIndexKey: false positive
 									key={i}
 									className="h-8 bg-gray-100 dark:bg-zinc-800 rounded-lg"
 								/>
@@ -83,7 +83,9 @@ export function XPreview({
 											</AvatarFallback>
 										</Avatar>
 									</div>
-									<div className="flex justify-end mb-4">{generateDialog}</div>
+									<div className="flex justify-end mb-4">
+										{generateDialog}
+									</div>
 									<div className="mt-6">
 										<h4 className="font-bold text-xl mb-2">
 											<DisplayLoader
@@ -143,22 +145,32 @@ export function XPreview({
 											<span className="flex items-center gap-1">
 												<strong>
 													<DisplayLoader
-														value={Math.floor(Math.random() * 1000)}
+														value={Math.floor(
+															Math.random() *
+																1000,
+														)}
 														isLoading={isLoading}
 														forceLoading
 													/>
 												</strong>
-												<span className="text-gray-500">Following</span>
+												<span className="text-gray-500">
+													Following
+												</span>
 											</span>
 											<span className="flex items-center gap-1">
 												<strong>
 													<DisplayLoader
-														value={Math.floor(Math.random() * 1000)}
+														value={Math.floor(
+															Math.random() *
+																1000,
+														)}
 														isLoading={isLoading}
 														forceLoading
 													/>
 												</strong>
-												<span className="text-gray-500">Followers</span>
+												<span className="text-gray-500">
+													Followers
+												</span>
 											</span>
 										</div>
 									</div>
@@ -170,7 +182,10 @@ export function XPreview({
 									{[
 										{ id: "posts", label: "Posts" },
 										{ id: "replies", label: "Replies" },
-										{ id: "highlights", label: "Highlights" },
+										{
+											id: "highlights",
+											label: "Highlights",
+										},
 										{ id: "media", label: "Media" },
 										{ id: "likes", label: "Likes" },
 									].map((tab) => (
@@ -208,20 +223,30 @@ export function XPreview({
 												<div className="flex items-center gap-2">
 													<span className="font-bold">
 														<DisplayLoader
-															value={profile.displayName}
-															isLoading={isLoading}
+															value={
+																profile.displayName
+															}
+															isLoading={
+																isLoading
+															}
 															width="w-20"
 														/>
 													</span>
 													<span className="flex items-center text-gray-500">
 														@
 														<DisplayLoader
-															value={profile.username}
-															isLoading={isLoading}
+															value={
+																profile.username
+															}
+															isLoading={
+																isLoading
+															}
 															width="w-10"
 														/>
 													</span>
-													<span className="text-gray-500">{i * 10}h</span>
+													<span className="text-gray-500">
+														{i * 10}h
+													</span>
 												</div>
 												<p>
 													<div className="h-4 bg-gray-200 dark:bg-zinc-700 rounded w-2/3" />
@@ -233,7 +258,9 @@ export function XPreview({
 												<MessageCircle size={18} />
 												<span className="text-sm">
 													<DisplayLoader
-														value={Math.floor(Math.random() * 100)}
+														value={Math.floor(
+															Math.random() * 100,
+														)}
 														isLoading={isLoading}
 														forceLoading
 														width="w-6"
@@ -244,7 +271,9 @@ export function XPreview({
 												<Repeat2 size={18} />
 												<span className="text-sm">
 													<DisplayLoader
-														value={Math.floor(Math.random() * 100)}
+														value={Math.floor(
+															Math.random() * 100,
+														)}
 														isLoading={isLoading}
 														forceLoading
 														width="w-6"
@@ -255,7 +284,9 @@ export function XPreview({
 												<Heart size={18} />
 												<span className="text-sm">
 													<DisplayLoader
-														value={Math.floor(Math.random() * 100)}
+														value={Math.floor(
+															Math.random() * 100,
+														)}
 														isLoading={isLoading}
 														forceLoading
 														width="w-6"
@@ -266,7 +297,10 @@ export function XPreview({
 												<ChartNoAxesColumn size={18} />
 												<span className="text-sm">
 													<DisplayLoader
-														value={Math.floor(Math.random() * 1000)}
+														value={Math.floor(
+															Math.random() *
+																1000,
+														)}
 														isLoading={isLoading}
 														forceLoading
 														width="w-6"
@@ -290,8 +324,11 @@ export function XPreview({
 							<div className="p-4 space-y-4 bg-gray-100 dark:bg-zinc-800 rounded-lg">
 								<div className="h-6 bg-gray-200 dark:bg-zinc-700 rounded w-1/3" />
 								{[...Array(3)].map((_, i) => (
-									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-									<div key={i} className="flex items-center gap-3">
+									<div
+										// biome-ignore lint/suspicious/noArrayIndexKey: false positive
+										key={i}
+										className="flex items-center gap-3"
+									>
 										<div className="h-10 w-10 bg-gray-200 dark:bg-zinc-700 rounded-full" />
 										<div className="flex-1 space-y-2">
 											<div className="h-4 bg-gray-200 dark:bg-zinc-700 rounded w-2/3" />

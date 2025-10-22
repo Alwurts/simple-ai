@@ -1,11 +1,11 @@
 "use client";
 
-import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
-import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
-import { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
 import type { NodeProps } from "@xyflow/react";
 import { useCallback } from "react";
 import { toast } from "sonner";
+import { useWorkflow } from "@/registry/hooks/flow/use-workflow";
+import type { NodeExecutionState } from "@/registry/lib/flow/workflow-execution-engine";
+import { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
 
 export type PromptCrafterNodeController = Omit<PromptCrafterNode, "data"> & {
 	type: "prompt-crafter";
@@ -21,7 +21,9 @@ export function PromptCrafterNodeController({
 }: NodeProps<PromptCrafterNodeController>) {
 	const updateNode = useWorkflow((state) => state.updateNode);
 	const addDynamicHandle = useWorkflow((state) => state.addDynamicHandle);
-	const removeDynamicHandle = useWorkflow((state) => state.removeDynamicHandle);
+	const removeDynamicHandle = useWorkflow(
+		(state) => state.removeDynamicHandle,
+	);
 	const deleteNode = useWorkflow((state) => state.deleteNode);
 
 	const handlePromptTextChange = useCallback(
@@ -56,7 +58,12 @@ export function PromptCrafterNodeController({
 
 	const handleRemoveInput = useCallback(
 		(handleId: string) => {
-			removeDynamicHandle(id, "prompt-crafter", "template-tags", handleId);
+			removeDynamicHandle(
+				id,
+				"prompt-crafter",
+				"template-tags",
+				handleId,
+			);
 		},
 		[id, removeDynamicHandle],
 	);
@@ -93,9 +100,12 @@ export function PromptCrafterNodeController({
 				},
 				dynamicHandles: {
 					...data.dynamicHandles,
-					"template-tags": (data.dynamicHandles["template-tags"] || []).map(
-						(input) =>
-							input.id === handleId ? { ...input, name: newLabel } : input,
+					"template-tags": (
+						data.dynamicHandles["template-tags"] || []
+					).map((input) =>
+						input.id === handleId
+							? { ...input, name: newLabel }
+							: input,
 					),
 				},
 			});

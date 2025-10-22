@@ -1,15 +1,15 @@
 ---
 title: Chat Message
-description: A composable component that displays a chat message.
+description: A fully composable component for displaying chat messages with rich features like timestamps, actions, and threading.
 featured: true
 component: true
 ---
 
-<ComponentPreview name="chat-message-demo" description="A chat message" />
+<ComponentPreview name="chat-message-demo" description="A full-featured chat message with actions and threading" />
 
 ## Installation
 
-<Tabs defaultValue="cli">
+<CodeTabs>
 
 <TabsList>
   <TabsTrigger value="cli">CLI</TabsTrigger>
@@ -29,10 +29,12 @@ npx shadcn@latest add https://simple-ai.dev/r/chat-message.json
 
 <Step>Copy and paste the following code into your project.</Step>
 
+`chat-message.tsx`
+
 <ComponentSource name="chat-message" />
 
 <Step>Update the import paths to match your project setup.</Step>
-<Step>Install the Markdown Content component.</Step>
+<Step>Install the Markdown Content component for rendering markdown in messages.</Step>
 
 <Link href="/docs/components/markdown-content">Markdown Content</Link>
 
@@ -40,60 +42,19 @@ npx shadcn@latest add https://simple-ai.dev/r/chat-message.json
 
 </TabsContent>
 
-</Tabs>
-
-## Usage
-
-```tsx
-import { ChatMessage } from "@/components/ui/chat-message"
-```
-
-```tsx
-<ChatMessage
-    key={message.id}
-    id={message.id}
-    type="outgoing"
-    variant="bubble"
->
-    <ChatMessageAvatar imageSrc="/avatar-2.png" />
-    <ChatMessageContent content={message.content} />
-</ChatMessage>
-<ChatMessage
-    key={message.id}
-    id={message.id}
-    type="incoming"
-    variant="bubble"
->
-    <ChatMessageAvatar imageSrc="/avatar-2.png" />
-    <ChatMessageContent content={message.content} />
-</ChatMessage>
-```
+</CodeTabs>
 
 ## Examples
 
-The chat message component is composable and can be used in a variety of ways.
+### Simple Message
 
-### Default
+A minimal chat message without any actions or threading.
 
-<ComponentPreview name="chat-message-demo-default" description="A chat message" />
+<ComponentPreview name="chat-message-demo-simple" description="A simple chat message" />
 
-### Bubble
+### With Avatar Images
 
-<ComponentPreview name="chat-message-demo-bubble" description="A chat message" />
+Chat messages using image avatars instead of icons.
 
-### Full
-
-<ComponentPreview name="chat-message-demo-full" description="A chat message" />
-
-### Without Avatar
-
-<ComponentPreview name="chat-message-demo-without-avatar" description="A chat message without an avatar" />
-
-### Avatar Image
-
-<ComponentPreview name="chat-message-demo-avatar-image" description="A chat message with an avatar image" />
-
-### Markdown Content
-
-<ComponentPreview name="chat-message-demo-markdown-content" description="A chat message with markdown content" />
+<ComponentPreview name="chat-message-demo-avatar-image" description="Chat message with avatar images" />
 

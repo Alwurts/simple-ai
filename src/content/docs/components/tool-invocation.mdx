@@ -1,0 +1,57 @@
+---
+title: Tool Invocation
+description: A component for displaying tool invocations with different states and collapsible content.
+component: true
+---
+
+<ComponentPreview name="tool-invocation-demo" description="Tool invocation component with different states." />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add https://simple-ai.dev/r/tool-invocation.json
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install required dependencies</Step>
+
+```bash
+npm install lucide-react
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+`tool-invocation.tsx`
+
+<ComponentSource name="tool-invocation" />
+
+`id-to-readable-text.ts`
+
+<ComponentSource name="id-to-readable-text" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## About
+
+The Tool Invocation component displays tool calls with visual indicators for different states (streaming, available, error). It includes collapsible sections for viewing input arguments and output results.
+
+## API Reference

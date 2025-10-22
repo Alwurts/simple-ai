@@ -1,18 +1,17 @@
 {
-  "name": "resizable-node",
-  "type": "registry:ui",
-  "dependencies": [
-    "@xyflow/react"
-  ],
-  "registryDependencies": [
-    "http://localhost:4567/r/base-node.json"
-  ],
-  "files": [
-    {
-      "path": "ui/flow/resizable-node.tsx",
-      "content": "import { cn } from \"@/lib/utils\";\nimport { BaseNode } from \"@/components/flow/base-node\";\nimport { NodeResizer } from \"@xyflow/react\";\nimport React from \"react\";\n\nexport const ResizableNode = React.forwardRef<\n\tHTMLDivElement,\n\tReact.HTMLAttributes<HTMLDivElement> & {\n\t\tselected: boolean;\n\t}\n>(({ className, selected, style, children, ...props }, ref) => (\n\t<BaseNode\n\t\tref={ref}\n\t\tstyle={{\n\t\t\t...style,\n\t\t\tminHeight: 200,\n\t\t\tminWidth: 250,\n\t\t\tmaxHeight: 800,\n\t\t\tmaxWidth: 800,\n\t\t}}\n\t\tclassName={cn(className, \"h-full p-0 hover:ring-orange-500\")}\n\t\t{...props}\n\t>\n\t\t<NodeResizer isVisible={selected} />\n\t\t{children}\n\t</BaseNode>\n));\nResizableNode.displayName = \"ResizableNode\";\n",
-      "type": "registry:ui",
-      "target": "components/flow/resizable-node.tsx"
-    }
-  ]
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "resizable-node",
+	"type": "registry:ui",
+	"title": "Resizable Node",
+	"description": "A wrapper React Flow node component that adds resizing functionality to other nodes.",
+	"dependencies": ["@xyflow/react"],
+	"registryDependencies": ["http://localhost:4567/r/base-node.json"],
+	"files": [
+		{
+			"path": "./src/registry/ui/flow/resizable-node.tsx",
+			"content": "import { NodeResizer } from \"@xyflow/react\";\nimport React from \"react\";\nimport { cn } from \"@/lib/utils\";\nimport { BaseNode } from \"@/registry/ui/flow/base-node\";\n\nexport const ResizableNode = React.forwardRef<\n\tHTMLDivElement,\n\tReact.HTMLAttributes<HTMLDivElement> & {\n\t\tselected: boolean;\n\t}\n>(({ className, selected, style, children, ...props }, ref) => (\n\t<BaseNode\n\t\tref={ref}\n\t\tstyle={{\n\t\t\t...style,\n\t\t\tminHeight: 200,\n\t\t\tminWidth: 250,\n\t\t\tmaxHeight: 800,\n\t\t\tmaxWidth: 800,\n\t\t}}\n\t\tclassName={cn(className, \"h-full p-0 hover:ring-orange-500\")}\n\t\t{...props}\n\t>\n\t\t<NodeResizer isVisible={selected} />\n\t\t{children}\n\t</BaseNode>\n));\nResizableNode.displayName = \"ResizableNode\";\n",
+			"type": "registry:ui",
+			"target": "components/flow/resizable-node.tsx"
+		}
+	]
 }

@@ -1,9 +1,9 @@
+import { nanoid } from "nanoid";
 import type { GenerateTextNodeController } from "@/registry/ui/flow/generate-text-node-controller";
 import type { PromptCrafterNodeController } from "@/registry/ui/flow/prompt-crafter-node-controller";
 import type { StatusEdgeController } from "@/registry/ui/flow/status-edge-controller";
 import type { TextInputNodeController } from "@/registry/ui/flow/text-input-node-controller";
 import type { VisualizeTextNodeController } from "@/registry/ui/flow/visualize-text-node-controller";
-import { nanoid } from "nanoid";
 
 type Dependency = {
 	node: string;
@@ -295,7 +295,8 @@ function detectCycles(
 
 	const cycleEdges = edges.filter(
 		(edge) =>
-			cycleNodes.includes(edge.source) && cycleNodes.includes(edge.target),
+			cycleNodes.includes(edge.source) &&
+			cycleNodes.includes(edge.target),
 	);
 
 	if (cycleEdges.length === 0) {

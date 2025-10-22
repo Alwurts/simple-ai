@@ -1,10 +1,10 @@
+import { BotMessageSquare } from "lucide-react";
+import type { ComponentPropsWithoutRef } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
-import { BotMessageSquare } from "lucide-react";
-import type { ComponentPropsWithoutRef } from "react";
 
 export function Versions({
 	className,
@@ -35,7 +35,8 @@ export function Versions({
 							key={version.versionNumber}
 							className={cn(
 								"transition-all",
-								version.versionNumber === currentVersion && "border-primary",
+								version.versionNumber === currentVersion &&
+									"border-primary",
 								version.status === "generating" &&
 									"border-primary animate-pulse",
 							)}
@@ -45,7 +46,8 @@ export function Versions({
 									<div className="text-xs font-medium">
 										Version {version.versionNumber + 1}
 									</div>
-									{version.versionNumber === currentVersion && (
+									{version.versionNumber ===
+										currentVersion && (
 										<Badge
 											variant="secondary"
 											className="text-[10px] px-1 py-0"

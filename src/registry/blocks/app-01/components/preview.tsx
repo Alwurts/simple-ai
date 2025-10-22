@@ -1,5 +1,8 @@
 "use client";
 
+import { LoaderCircle, Monitor, Smartphone, Tablet } from "lucide-react";
+import { useCallback, useEffect, useRef } from "react";
+import type { ImperativePanelHandle } from "react-resizable-panels";
 import {
 	ResizableHandle,
 	ResizablePanel,
@@ -8,9 +11,6 @@ import {
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
 import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
-import { LoaderCircle, Monitor, Smartphone, Tablet } from "lucide-react";
-import { useCallback, useEffect, useRef } from "react";
-import type { ImperativePanelHandle } from "react-resizable-panels";
 
 interface CanvasMessage {
 	type: string;
@@ -82,7 +82,7 @@ export function Preview({
 	// Update panel size when viewerSize changes
 	useEffect(() => {
 		if (viewerPanelRef.current) {
-			viewerPanelRef.current.resize(Number.parseInt(viewerSize));
+			viewerPanelRef.current.resize(Number.parseInt(viewerSize, 10));
 		}
 	}, [viewerSize]);
 
@@ -93,14 +93,17 @@ export function Preview({
 					"h-full relative after:absolute after:inset-0 after:right-3 after:z-0 after:rounded-lg after:bg-muted-foreground/25 after:border after:border-border",
 				)}
 			>
-				<ResizablePanelGroup direction="horizontal" className="relative z-10">
+				<ResizablePanelGroup
+					direction="horizontal"
+					className="relative z-10"
+				>
 					<ResizablePanel
 						ref={viewerPanelRef}
 						order={1}
 						className={cn(
 							"relative rounded-lg border bg-background border-border",
 						)}
-						defaultSize={Number.parseInt(viewerSize)}
+						defaultSize={Number.parseInt(viewerSize, 10)}
 						onResize={(size) => {
 							onViewerSizeChange(size.toString());
 						}}

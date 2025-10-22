@@ -1,9 +1,9 @@
-import { cn } from "@/lib/utils";
 import { marked } from "marked";
 import type * as React from "react";
-import { Suspense, isValidElement, memo, useMemo } from "react";
+import { isValidElement, memo, Suspense, useMemo } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { cn } from "@/lib/utils";
 
 const DEFAULT_PRE_BLOCK_CLASS =
 	"my-4 overflow-x-auto w-fit rounded-xl bg-zinc-950 text-zinc-50 dark:bg-zinc-900 border border-border p-4";
@@ -16,6 +16,7 @@ const extractTextContent = (node: React.ReactNode): string => {
 		return node.map(extractTextContent).join("");
 	}
 	if (isValidElement(node)) {
+		// @ts-expect-error
 		return extractTextContent(node.props.children);
 	}
 	return "";
@@ -26,13 +27,21 @@ interface HighlightedPreProps extends React.HTMLAttributes<HTMLPreElement> {
 }
 
 const HighlightedPre = memo(
-	async ({ children, className, language, ...props }: HighlightedPreProps) => {
+	async ({
+		children,
+		className,
+		language,
+		...props
+	}: HighlightedPreProps) => {
 		const { codeToTokens, bundledLanguages } = await import("shiki");
 		const code = extractTextContent(children);
 
 		if (!(language in bundledLanguages)) {
 			return (
-				<pre {...props} className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}>
+				<pre
+					{...props}
+					className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}
+				>
 					<code className="whitespace-pre-wrap">{children}</code>
 				</pre>
 			);
@@ -98,7 +107,10 @@ const CodeBlock = ({
 	return (
 		<Suspense
 			fallback={
-				<pre {...props} className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}>
+				<pre
+					{...props}
+					className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}
+				>
 					<code className="whitespace-pre-wrap">{children}</code>
 				</pre>
 			}
@@ -222,7 +234,10 @@ const components: Partial<Components> = {
 			{children}
 		</tr>
 	),
-	th: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
+	th: ({
+		children,
+		...props
+	}: React.HTMLAttributes<HTMLTableCellElement>) => (
 		<th
 			className="px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right"
 			{...props}
@@ -230,7 +245,10 @@ const components: Partial<Components> = {
 			{children}
 		</th>
 	),
-	td: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
+	td: ({
+		children,
+		...props
+	}: React.HTMLAttributes<HTMLTableCellElement>) => (
 		<td
 			className="px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right"
 			{...props}
@@ -239,7 +257,7 @@ const components: Partial<Components> = {
 		</td>
 	),
 	img: ({ alt, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-		// biome-ignore lint/a11y/useAltText: alt is not required
+		// biome-ignore lint/performance/noImgElement: Required for image
 		<img className="rounded-md" alt={alt} {...props} />
 	),
 	code: ({ children, node, className, ...props }) => {
@@ -282,13 +300,14 @@ interface MarkdownBlockProps {
 const MemoizedMarkdownBlock = memo(
 	({ content, className }: MarkdownBlockProps) => {
 		return (
-			<ReactMarkdown
-				remarkPlugins={[remarkGfm]}
-				components={components}
-				className={className}
-			>
-				{content}
-			</ReactMarkdown>
+			<div className={className}>
+				<ReactMarkdown
+					remarkPlugins={[remarkGfm]}
+					components={components}
+				>
+					{content}
+				</ReactMarkdown>
+			</div>
 		);
 	},
 	(prevProps, nextProps) => {
@@ -303,12 +322,11 @@ MemoizedMarkdownBlock.displayName = "MemoizedMarkdownBlock";
 
 interface MarkdownContentProps {
 	content: string;
-	id: string;
 	className?: string;
 }
 
 export const MarkdownContent = memo(
-	({ content, id, className }: MarkdownContentProps) => {
+	({ content, className }: MarkdownContentProps) => {
 		const blocks = useMemo(
 			() => parseMarkdownIntoBlocks(content || ""),
 			[content],
@@ -318,8 +336,8 @@ export const MarkdownContent = memo(
 			<MemoizedMarkdownBlock
 				content={block}
 				className={className}
-				key={`${id}-block_${
-					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+				key={`block_${
+					// biome-ignore lint/suspicious/noArrayIndexKey: Needed for react key
 					index
 				}`}
 			/>

@@ -1,46 +1,34 @@
-import type { Registry } from "@/registry/schema";
-import "dotenv/config";
+import { BASE_URL } from "@/lib/config";
+import type { Registry } from "@/shadcn-temp/schema";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://simple-ai.dev";
-
-export const examples: Registry = [
+export const examples: Registry["items"] = [
 	{
-		name: "chat-demo",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/chat-demo.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
-		name: "chat-input-demo",
+		name: "chat-input-demo-mentions",
 		type: "registry:example",
 		registryDependencies: [`${BASE_URL}/r/chat-input.json`],
 		files: [
 			{
-				path: "examples/chat-input-demo.tsx",
+				path: "examples/chat-input-demo-mentions.tsx",
 				type: "registry:example",
 			},
 		],
 	},
 	{
-		name: "chat-input-unstyled",
+		name: "chat-input-with-addons",
 		type: "registry:example",
 		files: [
 			{
-				path: "examples/chat-input-unstyled.tsx",
+				path: "examples/chat-input-with-addons.tsx",
 				type: "registry:example",
 			},
 		],
 	},
 	{
-		name: "chat-input-unstyled-initial-rows",
+		name: "chat-input-demo-simple",
 		type: "registry:example",
 		files: [
 			{
-				path: "examples/chat-input-unstyled-initial-rows.tsx",
+				path: "examples/chat-input-demo-simple.tsx",
 				type: "registry:example",
 			},
 		],
@@ -76,41 +64,11 @@ export const examples: Registry = [
 		],
 	},
 	{
-		name: "chat-message-demo-default",
+		name: "chat-message-demo-simple",
 		type: "registry:example",
 		files: [
 			{
-				path: "examples/chat-message-demo-default.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
-		name: "chat-message-demo-bubble",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/chat-message-demo-bubble.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
-		name: "chat-message-demo-full",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/chat-message-demo-full.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
-		name: "chat-message-demo-without-avatar",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/chat-message-demo-without-avatar.tsx",
+				path: "examples/chat-message-demo-simple.tsx",
 				type: "registry:example",
 			},
 		],
@@ -121,16 +79,6 @@ export const examples: Registry = [
 		files: [
 			{
 				path: "examples/chat-message-demo-avatar-image.tsx",
-				type: "registry:example",
-			},
-		],
-	},
-	{
-		name: "chat-message-demo-markdown-content",
-		type: "registry:example",
-		files: [
-			{
-				path: "examples/chat-message-demo-markdown-content.tsx",
 				type: "registry:example",
 			},
 		],
@@ -168,9 +116,32 @@ export const examples: Registry = [
 	{
 		name: "jsx-renderer-demo",
 		type: "registry:example",
+		registryDependencies: [`${BASE_URL}/r/jsx-renderer.json`],
 		files: [
 			{
 				path: "examples/jsx-renderer-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "jsx-renderer-disabled-demo",
+		type: "registry:example",
+		registryDependencies: [`${BASE_URL}/r/jsx-renderer.json`],
+		files: [
+			{
+				path: "examples/jsx-renderer-disabled-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "jsx-renderer-streaming-demo",
+		type: "registry:example",
+		registryDependencies: [`${BASE_URL}/r/jsx-renderer.json`],
+		files: [
+			{
+				path: "examples/jsx-renderer-streaming-demo.tsx",
 				type: "registry:example",
 			},
 		],
@@ -261,6 +232,16 @@ export const examples: Registry = [
 		files: [
 			{
 				path: "examples/status-edge-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "tool-invocation-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/tool-invocation-demo.tsx",
 				type: "registry:example",
 			},
 		],

@@ -1,24 +1,20 @@
-import { createDeepSeek } from "@ai-sdk/deepseek";
 import { smoothStream, streamText } from "ai";
-
+import { model } from "@/lib/ai/models";
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
+	console.log("Hello from the generate route");
 	const data = await req.json();
-	const { prompt, currentCode }: { prompt: string; currentCode: string } = data;
+	const { prompt, currentCode }: { prompt: string; currentCode: string } =
+		data;
 
-	const deepSeekClient = createDeepSeek({
-		baseURL: process.env.AI_GATEWAY_DEEPSEEK_URL,
-	});
-
-	/* const groqClient = createGroq({
-		baseURL: process.env.AI_GATEWAY_GROQ_URL,
-	}); */
+	console.log(prompt);
+	console.log(currentCode);
 
 	try {
 		const result = streamText({
-			model: deepSeekClient("deepseek-chat"),
+			model: model.languageModel("gpt-5-mini"),
 			system: `
 <internal_reminder>
 	<assistant_info>
@@ -79,7 +75,7 @@ export async function POST(req: Request) {
 			}),
 		});
 
-		return result.toDataStreamResponse();
+		return result.toUIMessageStreamResponse();
 	} catch (error) {
 		console.error(error);
 		return new Response("Internal Server Error", { status: 500 });

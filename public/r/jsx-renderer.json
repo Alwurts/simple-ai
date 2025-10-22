@@ -1,19 +1,16 @@
 {
-  "name": "jsx-renderer",
-  "type": "registry:ui",
-  "description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
-  "dependencies": [
-    "react-jsx-parser"
-  ],
-  "registryDependencies": [
-    "http://localhost:4567/r/jsx-utils.json"
-  ],
-  "files": [
-    {
-      "path": "ui/jsx-renderer.tsx",
-      "content": "import { completeJsxTag } from \"@/lib/jsx-utils\";\nimport * as React from \"react\";\nimport JsxParser from \"react-jsx-parser\";\n\ninterface JsxRendererProps extends React.HTMLAttributes<HTMLDivElement> {\n\tjsx: string;\n\tfixIncompleteJsx?: boolean;\n\tcomponents: Record<string, React.ComponentType>;\n}\n\nconst JsxRenderer = React.forwardRef<JsxParser, JsxRendererProps>(\n\t({ className, jsx, fixIncompleteJsx = true, components }, ref) => {\n\t\tconst processedJsx = React.useMemo(() => {\n\t\t\treturn fixIncompleteJsx ? completeJsxTag(jsx) : jsx;\n\t\t}, [jsx, fixIncompleteJsx]);\n\n\t\treturn (\n\t\t\t<JsxParser\n\t\t\t\tref={ref}\n\t\t\t\tclassName={className}\n\t\t\t\tjsx={processedJsx}\n\t\t\t\tcomponents={components}\n\t\t\t/>\n\t\t);\n\t},\n);\nJsxRenderer.displayName = \"JsxRenderer\";\n\nexport { JsxRenderer };\n",
-      "type": "registry:ui",
-      "target": ""
-    }
-  ]
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "jsx-renderer",
+	"type": "registry:ui",
+	"title": "JSX Renderer",
+	"description": "A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
+	"dependencies": ["react-jsx-parser", "react-error-boundary"],
+	"registryDependencies": ["http://localhost:4567/r/jsx-utils.json"],
+	"files": [
+		{
+			"path": "./src/registry/ui/jsx-renderer.tsx",
+			"content": "import { cva } from \"class-variance-authority\";\nimport type { ComponentProps } from \"react\";\nimport * as React from \"react\";\nimport { ErrorBoundary } from \"react-error-boundary\";\nimport JsxParser from \"react-jsx-parser\";\nimport { cn } from \"@/lib/utils\";\nimport { completeJsxTag } from \"@/registry/lib/jsx-utils\";\n\nconst jsxRendererVariants = cva(\"\", {\n\tvariants: {\n\t\tstate: {\n\t\t\tdisabled: \"opacity-50 cursor-not-allowed pointer-events-none\",\n\t\t\t\"read-only\": \"pointer-events-none\",\n\t\t\tstreaming:\n\t\t\t\t\"opacity-65 cursor-not-allowed pointer-events-none animate-pulse\",\n\t\t\tinteractive: \"\",\n\t\t\terror: \"border-2 border-destructive\",\n\t\t},\n\t},\n\tdefaultVariants: {\n\t\tstate: \"interactive\",\n\t},\n});\n\ntype JsxRendererProps = ComponentProps<typeof JsxParser> & {\n\tfixIncompleteJsx?: boolean;\n\tjsx: string;\n\tstate?: \"disabled\" | \"read-only\" | \"interactive\" | \"streaming\" | \"error\";\n\tfallback?: React.ComponentType;\n\tonError?: (error: Error, errorInfo: React.ErrorInfo) => void;\n};\n\nfunction JsxRendererInner({\n\tclassName,\n\tjsx,\n\tfixIncompleteJsx = true,\n\tstate,\n\t...props\n}: Omit<JsxRendererProps, \"fallback\" | \"onError\">) {\n\tconst processedJsx = React.useMemo(() => {\n\t\treturn fixIncompleteJsx ? completeJsxTag(jsx) : jsx;\n\t}, [jsx, fixIncompleteJsx]);\n\n\treturn (\n\t\t<JsxParser\n\t\t\tclassName={cn(jsxRendererVariants({ state }), className)}\n\t\t\tjsx={processedJsx}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\nexport function ErrorFallback() {\n\treturn (\n\t\t<div className=\"flex items-center justify-center h-32 bg-destructive/10 border border-destructive/20 rounded-md text-destructive text-sm font-medium\">\n\t\t\tError rendering\n\t\t</div>\n\t);\n}\n\ninterface JsxRendererErrorBoundaryProps {\n\tchildren: React.ReactNode;\n\tfallback?: React.ComponentType;\n\tonError?: (error: Error, errorInfo: React.ErrorInfo) => void;\n}\n\nfunction JsxRendererErrorBoundary({\n\tchildren,\n\tfallback = ErrorFallback,\n\tonError,\n}: JsxRendererErrorBoundaryProps) {\n\tconst Fallback = fallback;\n\treturn (\n\t\t<ErrorBoundary fallback={<Fallback />} onError={onError}>\n\t\t\t{children}\n\t\t</ErrorBoundary>\n\t);\n}\n\nexport const JsxRenderer = React.memo(function JsxRenderer(\n\tprops: JsxRendererProps,\n) {\n\tconst { fallback, onError, ...innerProps } = props;\n\treturn (\n\t\t<JsxRendererErrorBoundary fallback={fallback} onError={onError}>\n\t\t\t<JsxRendererInner {...innerProps} />\n\t\t</JsxRendererErrorBoundary>\n\t);\n});\n",
+			"type": "registry:ui"
+		}
+	]
 }

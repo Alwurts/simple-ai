@@ -1,61 +1,78 @@
 import type { Metadata } from "next";
-
+import Link from "next/link";
+import { BlocksNav } from "@/components/blocks/blocks-nav";
+import { Announcement } from "@/components/general/announcement";
 import {
 	PageActions,
 	PageHeader,
 	PageHeaderDescription,
 	PageHeaderHeading,
 } from "@/components/layout/page-header";
+import { PageNav } from "@/components/layout/page-nav";
 import { Button } from "@/components/ui/button";
 
-import "@/styles/mdx.css";
-import { Announcement } from "@/components/announcement";
-import { BlocksNav } from "@/components/blocks/blocks-nav";
-import Link from "next/link";
-import type { ReactNode } from "react";
+const title = "Building Blocks for AI";
+const description =
+	"Beautifully designed. Copy and paste into your apps. Open Source.";
 
 export const metadata: Metadata = {
-	title: "Building Blocks for AI",
-	description:
-		"Beautifully designed. Copy and paste into your apps. Open Source.",
-	keywords: ["ai", "blocks", "open source", "ai blocks", "ai blocks for ai"],
+	title,
+	description,
+	openGraph: {
+		images: [
+			{
+				url: `/og?title=${encodeURIComponent(
+					title,
+				)}&description=${encodeURIComponent(description)}`,
+			},
+		],
+	},
+	twitter: {
+		card: "summary_large_image",
+		images: [
+			{
+				url: `/og?title=${encodeURIComponent(
+					title,
+				)}&description=${encodeURIComponent(description)}`,
+			},
+		],
+	},
 };
 
 export default function BlocksLayout({
 	children,
 }: {
-	children: ReactNode;
+	children: React.ReactNode;
 }) {
 	return (
 		<>
 			<PageHeader>
 				<Announcement />
-				<PageHeaderHeading>Building Blocks for AI</PageHeaderHeading>
-				<PageHeaderDescription>
-					Building blocks for AI. Copy and paste into your apps. Works with all
-					React frameworks. Open Source..
-				</PageHeaderDescription>
-				<PageHeaderDescription>
-					All of our blocks use the Vercel AI SDK, click{" "}
-					<Link href="/docs/blocks" className="underline">
-						here
-					</Link>{" "}
-					for more details.
-				</PageHeaderDescription>
+				<PageHeaderHeading>{title}</PageHeaderHeading>
+				<PageHeaderDescription>{description}</PageHeaderDescription>
 				<PageActions>
 					<Button asChild size="sm">
-						<a href="/docs/blocks">See Docs</a>
+						<a href="#blocks">Browse Blocks</a>
+					</Button>
+					<Button asChild variant="ghost" size="sm">
+						<Link href="/docs/blocks">See docs</Link>
 					</Button>
 				</PageActions>
 			</PageHeader>
-			<div id="blocks" className="border-grid scroll-mt-24 border-b">
-				<div className="container-wrapper">
-					<div className="container flex items-center py-4">
-						<BlocksNav />
-					</div>
-				</div>
+			<PageNav id="blocks">
+				<BlocksNav />
+				<Button
+					asChild
+					variant="secondary"
+					size="sm"
+					className="mr-7 hidden shadow-none lg:flex"
+				>
+					<Link href="/blocks/chat">Browse all blocks</Link>
+				</Button>
+			</PageNav>
+			<div className="container-wrapper section-soft flex-1 md:py-12">
+				<div className="container">{children}</div>
 			</div>
-			<div className="container-wrapper flex-1">{children}</div>
 		</>
 	);
 }

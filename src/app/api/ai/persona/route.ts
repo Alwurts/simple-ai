@@ -1,10 +1,10 @@
+import { streamObject } from "ai";
+import { z } from "zod";
+import { model } from "@/lib/ai/models";
 import {
 	ProductPersonaSchema,
 	UserPersonaSchema,
 } from "@/registry/blocks/app-02/lib/persona";
-import { createDeepSeek } from "@ai-sdk/deepseek";
-import { streamObject } from "ai";
-import { z } from "zod";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -12,14 +12,9 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
 	const data = await req.json();
 	const { businessName, industry, targetAudience, productDescription } = data;
-
-	const deepSeekClient = createDeepSeek({
-		baseURL: process.env.AI_GATEWAY_DEEPSEEK_URL,
-	});
-
 	try {
 		const result = streamObject({
-			model: deepSeekClient("deepseek-chat"),
+			model: model.languageModel("gpt-5-nano"),
 			system: `
 <persona_generation_rules>
   <general_rules>

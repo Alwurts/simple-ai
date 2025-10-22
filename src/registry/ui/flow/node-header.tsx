@@ -1,14 +1,13 @@
-import React from "react";
-
-import { Button, type ButtonProps } from "@/components/ui/button";
+import { Slot } from "@radix-ui/react-slot";
+import { EllipsisVertical } from "lucide-react";
+import React, { type ComponentProps } from "react";
+import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { Slot } from "@radix-ui/react-slot";
-import { EllipsisVertical } from "lucide-react";
 
 /* NODE HEADER -------------------------------------------------------------- */
 
@@ -108,7 +107,7 @@ NodeHeaderActions.displayName = "NodeHeaderActions";
 
 /* NODE HEADER ACTION ------------------------------------------------------- */
 
-export interface NodeHeaderActionProps extends ButtonProps {
+export interface NodeHeaderActionProps extends ComponentProps<typeof Button> {
 	label: string;
 }
 
@@ -137,8 +136,6 @@ export const NodeHeaderAction = React.forwardRef<
 });
 
 NodeHeaderAction.displayName = "NodeHeaderAction";
-
-//
 
 export type NodeHeaderMenuActionProps = Omit<
 	NodeHeaderActionProps,

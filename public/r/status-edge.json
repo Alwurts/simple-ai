@@ -1,15 +1,16 @@
 {
-  "name": "status-edge",
-  "type": "registry:ui",
-  "dependencies": [
-    "@xyflow/react"
-  ],
-  "files": [
-    {
-      "path": "ui/flow/status-edge.tsx",
-      "content": "import {\n\ttype Edge,\n\ttype EdgeProps,\n\tBaseEdge as FlowBaseEdge,\n\tgetBezierPath,\n} from \"@xyflow/react\";\nimport type { CSSProperties } from \"react\";\n\nexport type StatusEdge = Edge<\n\t{\n\t\terror?: boolean;\n\t},\n\t\"status\"\n> & {\n\ttype: \"status\";\n\tsourceHandle: string;\n\ttargetHandle: string;\n};\n\nexport function StatusEdge({\n\tsourceX,\n\tsourceY,\n\ttargetX,\n\ttargetY,\n\tsourcePosition,\n\ttargetPosition,\n\tdata,\n\tselected,\n}: EdgeProps<StatusEdge>) {\n\tconst [edgePath] = getBezierPath({\n\t\tsourceX,\n\t\tsourceY,\n\t\tsourcePosition,\n\t\ttargetX,\n\t\ttargetY,\n\t\ttargetPosition,\n\t});\n\n\tconst edgeStyle: CSSProperties = {\n\t\tstroke: data?.error ? \"#ef4444\" : selected ? \"#3b82f6\" : \"#b1b1b7\",\n\t\tstrokeWidth: selected ? 3 : 2,\n\t\ttransition: \"stroke 0.2s, stroke-width 0.2s\",\n\t};\n\n\treturn <FlowBaseEdge path={edgePath} style={edgeStyle} />;\n}\n",
-      "type": "registry:ui",
-      "target": "components/flow/status-edge.tsx"
-    }
-  ]
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "status-edge",
+	"type": "registry:ui",
+	"title": "Status Edge",
+	"description": "A React Flow edge component that provides visual feedback through color-coded states.",
+	"dependencies": ["@xyflow/react"],
+	"files": [
+		{
+			"path": "./src/registry/ui/flow/status-edge.tsx",
+			"content": "import {\n\ttype Edge,\n\ttype EdgeProps,\n\tBaseEdge as FlowBaseEdge,\n\tgetBezierPath,\n} from \"@xyflow/react\";\nimport type { CSSProperties } from \"react\";\n\nexport type StatusEdge = Edge<\n\t{\n\t\terror?: boolean;\n\t},\n\t\"status\"\n> & {\n\ttype: \"status\";\n\tsourceHandle: string;\n\ttargetHandle: string;\n};\n\nexport function StatusEdge({\n\tsourceX,\n\tsourceY,\n\ttargetX,\n\ttargetY,\n\tsourcePosition,\n\ttargetPosition,\n\tdata,\n\tselected,\n}: EdgeProps<StatusEdge>) {\n\tconst [edgePath] = getBezierPath({\n\t\tsourceX,\n\t\tsourceY,\n\t\tsourcePosition,\n\t\ttargetX,\n\t\ttargetY,\n\t\ttargetPosition,\n\t});\n\n\tconst edgeStyle: CSSProperties = {\n\t\tstroke: data?.error ? \"#ef4444\" : selected ? \"#3b82f6\" : \"#b1b1b7\",\n\t\tstrokeWidth: selected ? 3 : 2,\n\t\ttransition: \"stroke 0.2s, stroke-width 0.2s\",\n\t};\n\n\treturn <FlowBaseEdge path={edgePath} style={edgeStyle} />;\n}\n",
+			"type": "registry:ui",
+			"target": "components/flow/status-edge.tsx"
+		}
+	]
 }

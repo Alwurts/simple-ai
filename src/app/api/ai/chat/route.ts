@@ -1,20 +1,10 @@
-import { createGroq } from "@ai-sdk/groq";
-import { smoothStream, streamText } from "ai";
+import { convertToModelMessages, smoothStream, streamText } from "ai";
+import { model } from "@/lib/ai/models";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-export async function POST(req: Request) {
-	const { messages } = await req.json();
-
-	const groqClient = createGroq({
-		baseURL: process.env.AI_GATEWAY_GROQ_URL,
-	});
-
-	try {
-		const result = streamText({
-			model: groqClient("llama-3.1-8b-instant"),
-			system: `You are a helpful and friendly assistant for Simple-AI.dev, an open-source library of AI-focused UI components, app blocks, and React Flow workflows designed to accelerate development. Simple-AI.dev provides copy-paste friendly components inspired by shadcn/UI's philosophy, focusing on modularity and customization.
+const chatSimpleAISystemPrompt = `You are a helpful and friendly assistant for Simple-AI.dev, an open-source library of AI-focused UI components, app blocks, and React Flow workflows designed to accelerate development. Simple-AI.dev provides copy-paste friendly components inspired by shadcn/UI's philosophy, focusing on modularity and customization.
 
 You help developers understand and implement:
 - UI Components: Pre-styled React elements optimized for AI applications
@@ -46,12 +36,22 @@ Your responses will be displayed in a beautiful, accessible chat interface. You 
 - [Status Edge](https://simple-ai.dev/docs/react-flow/components/status-edge): A React Flow edge that provides visual feedback with color-coded states.
 - [Text Input Node](https://simple-ai.dev/docs/react-flow/components/text-input-node): A React Flow node for text input with a resizable textarea.
 - [Visualize Text Node](https://simple-ai.dev/docs/react-flow/components/visualize-text-node): A React Flow node for displaying and visualizing text content with Markdown support.
-`,
-			messages,
+`;
+
+// TODO: Get info from llms.txt
+
+export async function POST(req: Request) {
+	const { messages } = await req.json();
+
+	try {
+		const result = streamText({
+			model: model.languageModel("gpt-5-nano"),
+			system: chatSimpleAISystemPrompt,
+			messages: convertToModelMessages(messages),
 			experimental_transform: smoothStream(),
 		});
 
-		return result.toDataStreamResponse();
+		return result.toUIMessageStreamResponse();
 	} catch (error) {
 		console.error(error);
 		return new Response("Internal Server Error", { status: 500 });

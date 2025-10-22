@@ -1,8 +1,8 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import type { HandleProps } from "@xyflow/react";
 import React from "react";
+import { cn } from "@/lib/utils";
 
 import { BaseHandle } from "@/registry/ui/flow/base-handle";
 
@@ -23,7 +23,14 @@ const LabeledHandle = React.forwardRef<
 		}
 >(
 	(
-		{ className, labelClassName, handleClassName, title, position, ...props },
+		{
+			className,
+			labelClassName,
+			handleClassName,
+			title,
+			position,
+			...props
+		},
 		ref,
 	) => (
 		<div
@@ -35,8 +42,12 @@ const LabeledHandle = React.forwardRef<
 				className,
 			)}
 		>
-			<BaseHandle position={position} className={handleClassName} {...props} />
-			{/* biome-ignore lint/a11y/noLabelWithoutControl: <explanation> */}
+			<BaseHandle
+				position={position}
+				className={handleClassName}
+				{...props}
+			/>
+			{/* biome-ignore lint/a11y/noLabelWithoutControl: Needed */}
 			<label className={cn("px-3 text-foreground", labelClassName)}>
 				{title}
 			</label>

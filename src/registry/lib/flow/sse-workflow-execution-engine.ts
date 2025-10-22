@@ -1,9 +1,11 @@
-import type { FlowNode } from "@/registry/lib/flow/workflow";
-import type { WorkflowDefinition } from "@/registry/lib/flow/workflow";
+import type {
+	FlowNode,
+	WorkflowDefinition,
+} from "@/registry/lib/flow/workflow";
 import {
+	createWorkflowExecutionEngine,
 	type NodeExecutionState,
 	type NodeProcessor,
-	createWorkflowExecutionEngine,
 } from "@/registry/lib/flow/workflow-execution-engine";
 
 function createEvent(type: string, data: Record<string, unknown>) {
@@ -26,7 +28,10 @@ function createSSEWorkflowExecutionEngine(
 			const processor = nodeProcessor[node.type];
 			return await processor(node, targetsData);
 		},
-		updateNodeExecutionState: (nodeId, state: Partial<NodeExecutionState>) => {
+		updateNodeExecutionState: (
+			nodeId,
+			state: Partial<NodeExecutionState>,
+		) => {
 			const node = workflow.nodes.find((n) => n.id === nodeId);
 			if (!node) {
 				return;

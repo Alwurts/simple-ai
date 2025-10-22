@@ -1,57 +1,82 @@
-import type { Registry } from "./schema";
-import "dotenv/config";
+import { BASE_URL } from "@/lib/config";
+import type { Registry } from "@/shadcn-temp/schema";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://simple-ai.dev";
-
-export const ui: Registry = [
+export const ui: Registry["items"] = [
 	{
 		name: "jsx-renderer",
+		title: "JSX Renderer",
 		description:
 			"A component that renders JSX strings with access to tailwind, shadcn components and lucide icons.",
 		type: "registry:ui",
-		dependencies: ["react-jsx-parser"],
+		dependencies: ["react-jsx-parser", "react-error-boundary"],
 		registryDependencies: [`${BASE_URL}/r/jsx-utils.json`],
 		files: [{ type: "registry:ui", path: "ui/jsx-renderer.tsx" }],
 	},
 	{
 		name: "chat-input",
+		title: "Chat Input",
+		description:
+			"A chat input component with mention support and automatic height adjustment.",
 		type: "registry:ui",
-		registryDependencies: ["textarea"],
-		files: [
-			{ type: "registry:ui", path: "ui/chat-input.tsx" },
-			{ type: "registry:hook", path: "hooks/use-textarea-resize.ts" },
+		dependencies: [
+			"@tiptap/core",
+			"@tiptap/react",
+			"@tiptap/starter-kit",
+			"@tiptap/extension-mention",
+			"@tiptap/extension-placeholder",
+			"@tiptap/suggestion",
+			"tippy.js",
 		],
+		registryDependencies: ["input-group", "button"],
+		files: [{ type: "registry:ui", path: "ui/chat-input.tsx" }],
 	},
 	{
 		name: "chat-message-area",
+		title: "Chat Message Area",
+		description:
+			"A component that adds auto scrolling functionality to a list of messages.",
 		type: "registry:ui",
-		registryDependencies: ["scroll-area", "button"],
-		files: [
-			{ type: "registry:ui", path: "ui/chat-message-area.tsx" },
-			{ type: "registry:hook", path: "hooks/use-scroll-to-bottom.ts" },
-		],
+		registryDependencies: ["button"],
+		dependencies: ["use-stick-to-bottom"],
+		files: [{ type: "registry:ui", path: "ui/chat-message-area.tsx" }],
 	},
 	{
 		name: "chat-message",
+		title: "Chat Message",
+		description:
+			"A fully composable component for displaying chat messages with rich features like timestamps, actions, and threading.",
 		type: "registry:ui",
-		registryDependencies: [`${BASE_URL}/r/markdown-content.json`],
+		registryDependencies: [
+			`${BASE_URL}/r/markdown-content.json`,
+			"avatar",
+			"button",
+			"card",
+			"tooltip",
+		],
 		files: [{ type: "registry:ui", path: "ui/chat-message.tsx" }],
 	},
 	{
 		name: "markdown-content",
-		description: "A markdown content component.",
+		title: "Markdown Content",
+		description: "A component that renders markdown content.",
 		type: "registry:ui",
 		dependencies: ["react-markdown", "marked", "remark-gfm", "shiki"],
 		files: [{ type: "registry:ui", path: "ui/markdown-content.tsx" }],
 	},
 	{
 		name: "model-selector",
+		title: "Model Selector",
+		description:
+			"A dropdown component for selecting AI models with provider icons.",
 		type: "registry:ui",
 		registryDependencies: ["select"],
 		files: [{ type: "registry:ui", path: "ui/model-selector.tsx" }],
 	},
 	{
 		name: "resizable-node",
+		title: "Resizable Node",
+		description:
+			"A wrapper React Flow node component that adds resizing functionality to other nodes.",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
 		registryDependencies: [`${BASE_URL}/r/base-node.json`],
@@ -65,6 +90,9 @@ export const ui: Registry = [
 	},
 	{
 		name: "node-header-status",
+		title: "Node Header Status",
+		description:
+			"A React Flow component that displays status indicators in node headers.",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
 		registryDependencies: ["badge"],
@@ -78,6 +106,9 @@ export const ui: Registry = [
 	},
 	{
 		name: "editable-handle",
+		title: "Editable Handle",
+		description:
+			"A React Flow component that allows you to dynamically add, edit, or remove input/output handles on your nodes.",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
 		registryDependencies: [
@@ -97,6 +128,9 @@ export const ui: Registry = [
 	},
 	{
 		name: "status-edge",
+		title: "Status Edge",
+		description:
+			"A React Flow edge component that provides visual feedback through color-coded states.",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
 		files: [
@@ -109,6 +143,9 @@ export const ui: Registry = [
 	},
 	{
 		name: "generate-text-node",
+		title: "Generate Text Node",
+		description:
+			"A React Flow node component that represents Vercel AI SDK's text generation capabilities, featuring system instructions, prompts, and optional tool outputs.",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
 		registryDependencies: [
@@ -131,6 +168,9 @@ export const ui: Registry = [
 	},
 	{
 		name: "prompt-crafter-node",
+		title: "Prompt Crafter Node",
+		description:
+			"A React Flow node component for building dynamic prompts by combining multiple inputs using a template-based approach.",
 		type: "registry:ui",
 		dependencies: [
 			"@xyflow/react",
@@ -161,6 +201,9 @@ export const ui: Registry = [
 	},
 	{
 		name: "text-input-node",
+		title: "Text Input Node",
+		description:
+			"A React Flow node component that provides a simple text input interface with a resizable textarea and single output.",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
 		registryDependencies: [
@@ -180,6 +223,9 @@ export const ui: Registry = [
 	},
 	{
 		name: "visualize-text-node",
+		title: "Visualize Text Node",
+		description:
+			"A React Flow node component for displaying text content with Markdown support and a resizable interface.",
 		type: "registry:ui",
 		dependencies: ["@xyflow/react"],
 		registryDependencies: [
@@ -243,6 +289,15 @@ export const ui: Registry = [
 				path: "ui/flow/node-header.tsx",
 				target: "components/flow/node-header.tsx",
 			},
+		],
+	},
+	{
+		name: "tool-invocation",
+		type: "registry:ui",
+		registryDependencies: ["card", "collapsible"],
+		files: [
+			{ type: "registry:ui", path: "ui/tool-invocation.tsx" },
+			{ type: "registry:lib", path: "lib/id-to-readable-text.ts" },
 		],
 	},
 ];

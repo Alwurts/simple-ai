@@ -1,25 +1,20 @@
 import { promises as fs } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { Index } from "@/__registry__";
-import { Project, ScriptKind, type SourceFile } from "ts-morph";
+import { Project, ScriptKind } from "ts-morph";
 import type { z } from "zod";
-
+import { Index } from "@/registry/__index__";
 import {
 	type registryItemFileSchema,
 	registryItemSchema,
-} from "@/registry/schema";
-
-const memoizedIndex: typeof Index = Object.fromEntries(
-	Object.entries(Index).map(([name, items]) => [name, { ...items }]),
-);
+} from "@/shadcn-temp/schema";
 
 export function getRegistryComponent(name: string) {
-	return memoizedIndex[name]?.component;
+	return Index[name]?.component;
 }
 
 export async function getRegistryItem(name: string) {
-	const item = memoizedIndex[name];
+	const item = Index[name];
 
 	if (!item) {
 		return null;
@@ -40,6 +35,7 @@ export async function getRegistryItem(name: string) {
 	let files: typeof result.data.files = [];
 	for (const file of item.files) {
 		const content = await getFileContent(file);
+
 		const relativePath = path.relative(process.cwd(), file.path);
 
 		files.push({
@@ -49,17 +45,12 @@ export async function getRegistryItem(name: string) {
 		});
 	}
 
-	// Get meta.
-	// Assume the first file is the main file.
-	// const meta = await getFileMeta(files[0].path)
-
 	// Fix file paths.
 	files = fixFilePaths(files);
 
 	const parsed = registryItemSchema.safeParse({
 		...result.data,
 		files,
-		// meta,
 	});
 
 	if (!parsed.success) {
@@ -83,12 +74,9 @@ async function getFileContent(file: z.infer<typeof registryItemFileSchema>) {
 	});
 
 	// Remove meta variables.
-	removeVariable(sourceFile, "iframeHeight");
-	removeVariable(sourceFile, "containerClassName");
-	removeVariable(sourceFile, "description");
-
-	// Remove useTrackEvent import and usage
-	removeTrackingCode(sourceFile);
+	// removeVariable(sourceFile, "iframeHeight")
+	// removeVariable(sourceFile, "containerClassName")
+	// removeVariable(sourceFile, "description")
 
 	let code = sourceFile.getFullText();
 
@@ -131,16 +119,12 @@ function getFileTarget(file: z.infer<typeof registryItemFileSchema>) {
 		}
 	}
 
-	return target;
+	return target ?? "";
 }
 
 async function createTempSourceFile(filename: string) {
 	const dir = await fs.mkdtemp(path.join(tmpdir(), "shadcn-"));
 	return path.join(dir, filename);
-}
-
-function removeVariable(sourceFile: SourceFile, name: string) {
-	sourceFile.getVariableDeclaration(name)?.remove();
 }
 
 function fixFilePaths(files: z.infer<typeof registryItemSchema>["files"]) {
@@ -163,33 +147,21 @@ function fixFilePaths(files: z.infer<typeof registryItemSchema>["files"]) {
 
 export function fixImport(content: string) {
 	const regex =
-		/@\/(.+?)\/((?:.*?\/)?(?:components|ui\/flow|ui|hooks|lib))\/([\w-]+)/g;
+		/@\/(.+?)\/((?:.*?\/)?(?:components|ui|hooks|lib))\/([\w-]+)/g;
 
 	const replacement = (
 		match: string,
-		_: string,
+		_path: string,
 		type: string,
 		component: string,
 	) => {
-		// Special case for registry/ui/flow
-		if (type.endsWith("ui/flow")) {
-			return `@/components/flow/${component}`;
-		}
-
-		// General case for registry/ui
-		if (type.endsWith("ui")) {
-			return `@/components/ui/${component}`;
-		}
-
 		if (type.endsWith("components")) {
 			return `@/components/${component}`;
-		}
-
-		if (type.endsWith("hooks")) {
+		} else if (type.endsWith("ui")) {
+			return `@/components/ui/${component}`;
+		} else if (type.endsWith("hooks")) {
 			return `@/hooks/${component}`;
-		}
-
-		if (type.endsWith("lib")) {
+		} else if (type.endsWith("lib")) {
 			return `@/lib/${component}`;
 		}
 
@@ -218,7 +190,9 @@ export function createFileTreeForRegistryItemFiles(
 		for (let i = 0; i < parts.length; i++) {
 			const part = parts[i];
 			const isFile = i === parts.length - 1;
-			const existingNode = currentLevel.find((node) => node.name === part);
+			const existingNode = currentLevel.find(
+				(node) => node.name === part,
+			);
 
 			if (existingNode) {
 				if (isFile) {
@@ -226,7 +200,7 @@ export function createFileTreeForRegistryItemFiles(
 					existingNode.path = path;
 				} else {
 					// Move to next level in the tree
-					// biome-ignore lint/style/noNonNullAssertion: <explanation>
+					// biome-ignore lint/style/noNonNullAssertion: Its fine
 					currentLevel = existingNode.children!;
 				}
 			} else {
@@ -237,7 +211,7 @@ export function createFileTreeForRegistryItemFiles(
 				currentLevel.push(newNode);
 
 				if (!isFile) {
-					// biome-ignore lint/style/noNonNullAssertion: <explanation>
+					// biome-ignore lint/style/noNonNullAssertion: Its fine
 					currentLevel = newNode.children!;
 				}
 			}
@@ -245,27 +219,4 @@ export function createFileTreeForRegistryItemFiles(
 	}
 
 	return root;
-}
-
-function removeTrackingCode(sourceFile: SourceFile) {
-	// Remove the import
-	for (const importDecl of sourceFile.getImportDeclarations()) {
-		if (importDecl.getModuleSpecifierValue() === "@/lib/events") {
-			importDecl.remove();
-		}
-	}
-
-	let code = sourceFile.getFullText();
-
-	// Remove track variable declaration
-	code = code.replace(/const\s+track\s*=\s*useTrackEvent\(\);?\n?/g, "");
-
-	// Remove track function calls - handles multiline with any indentation
-	code = code.replace(
-		/\n(\t|\s)*track\(\{\n(\t|\s)*name:[\s\S]*?\}\s*\)\s*;/g,
-		"",
-	);
-
-	// Update source file with cleaned code
-	sourceFile.replaceWithText(code);
 }
