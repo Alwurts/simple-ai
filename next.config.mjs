@@ -1,7 +1,10 @@
 import { createMDX } from "fumadocs-mdx/next";
+import { withPlausibleProxy } from "next-plausible";
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withPlausibleProxy({
+	customDomain: "https://plausible.alwurts.com",
+})({
 	devIndicators: false,
 	outputFileTracingIncludes: {
 		"/*": ["./src/registry/**/*"],
@@ -28,7 +31,7 @@ const nextConfig = {
 			},
 		];
 	},
-};
+});
 const withMDX = createMDX({});
 
 export default withMDX(nextConfig);
