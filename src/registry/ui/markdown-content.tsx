@@ -57,7 +57,7 @@ const HighlightedPre = memo(
 
 		return (
 			<pre {...props} className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}>
-				<code className="whitespace-pre-wrap">
+				<code className="whitespace-pre-wrap break-all">
 					{tokens.map((line, lineIndex) => (
 						<span
 							key={`line-${
@@ -171,7 +171,7 @@ const components: Partial<Components> = {
 		</h6>
 	),
 	p: ({ children, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
-		<p className="leading-6 [&:not(:first-child)]:mt-4" {...props}>
+		<p className="leading-6 not-first:mt-4 break-all" {...props}>
 			{children}
 		</p>
 	),
@@ -185,7 +185,7 @@ const components: Partial<Components> = {
 		...props
 	}: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
 		<a
-			className="font-medium underline underline-offset-4"
+			className="font-medium underline underline-offset-4 whitespace-pre-wrap break-all"
 			target="_blank"
 			rel="noreferrer"
 			{...props}
@@ -204,7 +204,7 @@ const components: Partial<Components> = {
 		</ul>
 	),
 	li: ({ children, ...props }: React.LiHTMLAttributes<HTMLLIElement>) => (
-		<li className="mt-2" {...props}>
+		<li className="mt-2 break-all" {...props}>
 			{children}
 		</li>
 	),
@@ -272,7 +272,7 @@ const components: Partial<Components> = {
 		return (
 			<code
 				className={cn(
-					"rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm",
+					"rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm break-all",
 					className,
 				)}
 				{...props}

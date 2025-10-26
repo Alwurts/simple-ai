@@ -88,7 +88,7 @@ function ChatMessageTimestamp({
 
 function ChatMessageContent({ className, ...props }: ComponentProps<"div">) {
 	return (
-		<div className={cn("flex flex-col gap-2 p-2", className)} {...props} />
+		<div className={cn("w-full flex flex-col gap-2 p-2", className)} {...props} />
 	);
 }
 
