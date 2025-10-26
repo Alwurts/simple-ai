@@ -9,9 +9,9 @@ import {
 } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 
-const title = "AI Agents Workflows";
+const title = "AI Agent Builder";
 const description =
-	"Example implementations of AI Agents using Vercel AI SDK and React Flow";
+	"Build AI Agents using Vercel AI SDK and React Flow";
 
 export const metadata: Metadata = {
 	title,
