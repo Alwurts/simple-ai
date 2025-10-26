@@ -48,5 +48,10 @@
 		"name": "flow-orchestrator",
 		"description": "Agentic orchestrator workflow.",
 		"categories": ["flow"]
+	},
+	{
+		"name": "workflow-01",
+		"description": "A block for building AI Agentic workflows.",
+		"categories": ["workflow"]
 	}
 ]

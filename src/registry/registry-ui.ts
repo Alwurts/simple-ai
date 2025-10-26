@@ -63,6 +63,18 @@ export const ui: Registry["items"] = [
 		files: [{ type: "registry:ui", path: "ui/markdown-content.tsx" }],
 	},
 	{
+		name: "tool-invocation",
+		title: "Tool Invocation",
+		description:
+			"A component that displays a tool invocation with a collapsible content.",
+		type: "registry:ui",
+		registryDependencies: ["card", "collapsible"],
+		files: [
+			{ type: "registry:ui", path: "ui/tool-invocation.tsx" },
+			{ type: "registry:lib", path: "lib/id-to-readable-text.ts" },
+		],
+	},
+	{
 		name: "model-selector",
 		title: "Model Selector",
 		description:
@@ -288,15 +300,6 @@ export const ui: Registry["items"] = [
 				path: "ui/flow/node-header.tsx",
 				target: "components/flow/node-header.tsx",
 			},
-		],
-	},
-	{
-		name: "tool-invocation",
-		type: "registry:ui",
-		registryDependencies: ["card", "collapsible"],
-		files: [
-			{ type: "registry:ui", path: "ui/tool-invocation.tsx" },
-			{ type: "registry:lib", path: "lib/id-to-readable-text.ts" },
 		],
 	},
 ];

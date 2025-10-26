@@ -10,6 +10,11 @@ export const registryCategories = [
 		hidden: false,
 	},
 	{
+		name: "Flow",
+		slug: "flow",
+		hidden: true,
+	},
+	{
 		name: "Workflow",
 		slug: "workflow",
 		hidden: true,

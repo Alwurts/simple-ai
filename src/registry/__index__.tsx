@@ -140,6 +140,37 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"tool-invocation": {
+		name: "tool-invocation",
+		description:
+			"A component that displays a tool invocation with a collapsible content.",
+		type: "registry:ui",
+		registryDependencies: ["card", "collapsible"],
+		files: [
+			{
+				path: "./src/registry/ui/tool-invocation.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+			{
+				path: "./src/registry/lib/id-to-readable-text.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/tool-invocation.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"model-selector": {
 		name: "model-selector",
 		description:
@@ -508,36 +539,6 @@ export const Index: Record<string, any> = {
 		],
 		component: React.lazy(async () => {
 			const mod = await import("@/registry/ui/flow/node-header.tsx");
-			const exportName =
-				Object.keys(mod).find(
-					(key) =>
-						typeof mod[key] === "function" ||
-						typeof mod[key] === "object",
-				) || item.name;
-			return { default: mod.default || mod[exportName] };
-		}),
-		categories: undefined,
-		meta: undefined,
-	},
-	"tool-invocation": {
-		name: "tool-invocation",
-		description: "",
-		type: "registry:ui",
-		registryDependencies: ["card", "collapsible"],
-		files: [
-			{
-				path: "./src/registry/ui/tool-invocation.tsx",
-				type: "registry:ui",
-				target: "",
-			},
-			{
-				path: "./src/registry/lib/id-to-readable-text.ts",
-				type: "registry:lib",
-				target: "",
-			},
-		],
-		component: React.lazy(async () => {
-			const mod = await import("@/registry/ui/tool-invocation.tsx");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>
@@ -2183,6 +2184,257 @@ export const Index: Record<string, any> = {
 			return { default: mod.default || mod[exportName] };
 		}),
 		categories: ["flow"],
+		meta: undefined,
+	},
+	"workflow-01": {
+		name: "workflow-01",
+		description: "A block for building AI Agentic workflows.",
+		type: "registry:block",
+		registryDependencies: [
+			"button",
+			"card",
+			"dialog",
+			"input",
+			"textarea",
+			"sonner",
+			"sidebar",
+			"badge",
+			"checkbox",
+			"collapsible",
+			"dropdown-menu",
+			"popover",
+			"select",
+			"switch",
+			"tooltip",
+			"separator",
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
+			"@simple-ai/tool-invocation",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/workflow-01/page.tsx",
+				type: "registry:page",
+				target: "app/workflow/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/route.ts",
+				type: "registry:page",
+				target: "app/api/workflow/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/app-header.tsx",
+				type: "registry:component",
+				target: "components/app-header.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/app-layout.tsx",
+				type: "registry:component",
+				target: "components/app-layout.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/chat.tsx",
+				type: "registry:component",
+				target: "components/chat.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/editor/schema-preview.tsx",
+				type: "registry:component",
+				target: "components/editor/schema-preview.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/editor/schema-editor.tsx",
+				type: "registry:component",
+				target: "components/editor/schema-editor.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/editor/condition-editor.tsx",
+				type: "registry:component",
+				target: "components/editor/condition-editor.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/editor/condition-editor.css",
+				type: "registry:style",
+				target: "components/editor/condition-editor.css",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/node-editor-panel.tsx",
+				type: "registry:component",
+				target: "components/node-editor-panel.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/node-execution.tsx",
+				type: "registry:component",
+				target: "components/node-execution.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/node-selector-panel.tsx",
+				type: "registry:component",
+				target: "components/node-selector-panel.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/template-selector.tsx",
+				type: "registry:component",
+				target: "components/template-selector.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/theme-provider.tsx",
+				type: "registry:component",
+				target: "components/theme-provider.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/theme-toggle.tsx",
+				type: "registry:component",
+				target: "components/theme-toggle.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/validation-status.tsx",
+				type: "registry:component",
+				target: "components/validation-status.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/workflow/agent-node.tsx",
+				type: "registry:component",
+				target: "components/workflow/agent-node.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/workflow/end-node.tsx",
+				type: "registry:component",
+				target: "components/workflow/end-node.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/workflow/if-else-node.tsx",
+				type: "registry:component",
+				target: "components/workflow/if-else-node.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/workflow/note-node.tsx",
+				type: "registry:component",
+				target: "components/workflow/note-node.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/workflow/primitives/base-handle.tsx",
+				type: "registry:component",
+				target: "components/workflow/primitives/base-handle.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/workflow/primitives/base-node.tsx",
+				type: "registry:component",
+				target: "components/workflow/primitives/base-node.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/workflow/primitives/labeled-handle.tsx",
+				type: "registry:component",
+				target: "components/workflow/primitives/labeled-handle.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/workflow/primitives/node-header.tsx",
+				type: "registry:component",
+				target: "components/workflow/primitives/node-header.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/workflow/primitives/resizable-node.tsx",
+				type: "registry:component",
+				target: "components/workflow/primitives/resizable-node.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/workflow/start-node.tsx",
+				type: "registry:component",
+				target: "components/workflow/start-node.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/workflow/status-edge.tsx",
+				type: "registry:component",
+				target: "components/workflow/status-edge.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/components/model-selector.tsx",
+				type: "registry:component",
+				target: "components/model-selector.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/templates/code-analysis-workflow.ts",
+				type: "registry:lib",
+				target: "lib/templates/code-analysis-workflow.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/templates/index.ts",
+				type: "registry:lib",
+				target: "lib/templates/index.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/templates/wikipedia-research-workflow.ts",
+				type: "registry:lib",
+				target: "lib/templates/wikipedia-research-workflow.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/tools/index.ts",
+				type: "registry:lib",
+				target: "lib/tools/index.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/tools/wikipedia-query.ts",
+				type: "registry:lib",
+				target: "lib/tools/wikipedia-query.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/executor.ts",
+				type: "registry:lib",
+				target: "lib/workflow/executor.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/json-schema-utils.ts",
+				type: "registry:lib",
+				target: "lib/workflow/json-schema-utils.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/messages.ts",
+				type: "registry:lib",
+				target: "lib/workflow/messages.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/models.ts",
+				type: "registry:lib",
+				target: "lib/workflow/models.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/node-factory.ts",
+				type: "registry:lib",
+				target: "lib/workflow/node-factory.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/types.ts",
+				type: "registry:lib",
+				target: "lib/workflow/types.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/validation.ts",
+				type: "registry:lib",
+				target: "lib/workflow/validation.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/variables.ts",
+				type: "registry:lib",
+				target: "lib/workflow/variables.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/workflow/use-workflow.ts",
+				type: "registry:hook",
+				target: "hooks/workflow/use-workflow.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/blocks/workflow-01/page.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["workflow"],
 		meta: undefined,
 	},
 };

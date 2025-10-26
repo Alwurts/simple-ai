@@ -86,5 +86,9 @@
 			"type": "registry:component"
 		}
 	],
+	"envVars": {
+		"OPENAI_API_KEY": ""
+	},
+	"docs": "Get an OpenAI API key from https://platform.openai.com/ and add it to the environment variables file and run the dev server. \n\nLearn more about how to use the Vercel AI SDK https://ai-sdk.dev/docs/introduction.",
 	"categories": ["chat"]
 }

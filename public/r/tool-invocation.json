@@ -2,6 +2,8 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "tool-invocation",
 	"type": "registry:ui",
+	"title": "Tool Invocation",
+	"description": "A component that displays a tool invocation with a collapsible content.",
 	"registryDependencies": ["card", "collapsible"],
 	"files": [
 		{

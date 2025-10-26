@@ -20,7 +20,7 @@ export const MODELS = [
 export type Model = (typeof MODELS)[number];
 
 interface ModelSelectorProps extends SelectProps {
-	value: Model;
+	value: string;
 	onChange: (value: Model) => void;
 	disabledModels?: Model[];
 }

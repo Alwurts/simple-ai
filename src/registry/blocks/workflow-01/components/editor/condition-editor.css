@@ -1,0 +1,44 @@
+/* JEXL Syntax Highlighting */
+.jexl-editor .cm-jexl-variable {
+	color: #8250df;
+	font-weight: 600;
+}
+
+.jexl-editor .cm-jexl-operator {
+	color: #cf222e;
+	font-weight: 600;
+}
+
+.jexl-editor .cm-jexl-keyword {
+	color: #0550ae;
+	font-weight: 600;
+}
+
+.jexl-editor .cm-jexl-number {
+	color: #0550ae;
+}
+
+.jexl-editor .cm-jexl-string {
+	color: #0a3069;
+}
+
+/* Dark mode JEXL highlighting */
+.dark .jexl-editor .cm-jexl-variable {
+	color: #d2a8ff;
+}
+
+.dark .jexl-editor .cm-jexl-operator {
+	color: #ff7b72;
+}
+
+.dark .jexl-editor .cm-jexl-keyword {
+	color: #79c0ff;
+}
+
+.dark .jexl-editor .cm-jexl-number {
+	color: #79c0ff;
+}
+
+.dark .jexl-editor .cm-jexl-string {
+	color: #a5d6ff;
+}
