@@ -31,8 +31,10 @@ import {
 	AppLayoutSidebar,
 } from "@/registry/blocks/workflow-01/components/app-layout";
 import { Chat } from "@/registry/blocks/workflow-01/components/chat";
+import { CopyWorkflowButton } from "@/registry/blocks/workflow-01/components/copy-workflow-button";
 import { NodeEditorPanel } from "@/registry/blocks/workflow-01/components/node-editor-panel";
 import { NodeSelectorPanel } from "@/registry/blocks/workflow-01/components/node-selector-panel";
+import { TemplateSelector } from "@/registry/blocks/workflow-01/components/template-selector";
 import { ThemeToggle } from "@/registry/blocks/workflow-01/components/theme-toggle";
 import { ValidationStatus } from "@/registry/blocks/workflow-01/components/validation-status";
 import { AgentNode } from "@/registry/blocks/workflow-01/components/workflow/agent-node";
@@ -41,7 +43,10 @@ import { IfElseNode } from "@/registry/blocks/workflow-01/components/workflow/if
 import { NoteNode } from "@/registry/blocks/workflow-01/components/workflow/note-node";
 import { StartNode } from "@/registry/blocks/workflow-01/components/workflow/start-node";
 import { StatusEdge } from "@/registry/blocks/workflow-01/components/workflow/status-edge";
-import { DEFAULT_TEMPLATE } from "@/registry/blocks/workflow-01/lib/templates";
+import {
+	DEFAULT_TEMPLATE,
+	getTemplateById,
+} from "@/registry/blocks/workflow-01/lib/templates";
 import { WORKFLOW_TOOL_DESCRIPTIONS } from "@/registry/blocks/workflow-01/lib/tools";
 import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/lib/workflow/messages";
 import type { FlowNode } from "@/registry/blocks/workflow-01/lib/workflow/types";
@@ -76,6 +81,9 @@ export function Flow() {
 	);
 
 	const [selectedNodes, setSelectedNodes] = useState<FlowNode[]>([]);
+	const [selectedTemplateId, setSelectedTemplateId] = useState<string>(
+		DEFAULT_TEMPLATE.id,
+	);
 
 	const { messages, sendMessage, status, stop, setMessages } =
 		useChat<WorkflowUIMessage>({
@@ -110,6 +118,19 @@ export function Flow() {
 			setSelectedNodes(nodes as FlowNode[]);
 		},
 	});
+
+	const handleTemplateSelect = (templateId: string) => {
+		const template = getTemplateById(templateId);
+		if (template) {
+			setSelectedTemplateId(templateId);
+			store.initializeWorkflow({
+				nodes: template.nodes,
+				edges: template.edges,
+			});
+			// Reset chat messages when switching templates
+			setMessages([]);
+		}
+	};
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We want to initialize the workflow only once
 	useEffect(() => {
@@ -159,8 +180,15 @@ export function Flow() {
 						Workflow Builder
 					</AppHeaderTitle>
 					<AppHeaderSeparator />
+					<TemplateSelector
+						selectedTemplateId={selectedTemplateId}
+						onTemplateSelect={handleTemplateSelect}
+						className="hidden lg:flex"
+					/>
+					<AppHeaderSeparator />
 					<ThemeToggle />
 					<ValidationStatus />
+					<CopyWorkflowButton />
 					<SidebarTrigger className="ml-auto" />
 				</AppHeader>
 
@@ -202,6 +230,7 @@ export function Flow() {
 					status={status}
 					stop={stop}
 					setMessages={setMessages}
+					selectedTemplateId={selectedTemplateId}
 				/>
 			</AppLayoutSidebar>
 		</AppLayout>

@@ -72,6 +72,19 @@
 			]
 		},
 		{
+			"name": "chat-suggestions",
+			"type": "registry:ui",
+			"title": "Chat Suggestions",
+			"description": "A composable component for displaying chat prompt suggestions as clickable buttons.",
+			"registryDependencies": ["button"],
+			"files": [
+				{
+					"path": "./src/registry/ui/chat-suggestions.tsx",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
 			"name": "markdown-content",
 			"type": "registry:ui",
 			"title": "Markdown Content",

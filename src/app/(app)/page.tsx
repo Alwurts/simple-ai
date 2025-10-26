@@ -65,22 +65,22 @@ export default function IndexPage() {
 				<Separator className="md:mb-6" />
 			</div>
 			<PageNav>
-				<PageNavTitle>Agentic Chat</PageNavTitle>
+				<PageNavTitle>Agentic Builder</PageNavTitle>
 			</PageNav>
 			<div className="container-wrapper">
 				<div className="container flex flex-col gap-4">
-					<BlockPreview name="chat-01" />
+					<BlockPreview name="workflow-01" />
 				</div>
 			</div>
 			<div className="container-wrapper md:px-10">
 				<Separator className="mt-8 md:mt-12 mb-0" />
 			</div>
 			<PageNav>
-				<PageNavTitle>Agentic Workflows</PageNavTitle>
+				<PageNavTitle>Agentic Chat</PageNavTitle>
 			</PageNav>
 			<div className="container-wrapper">
 				<div className="container flex flex-col gap-4">
-					<BlockPreview name="flow-parallelization" />
+					<BlockPreview name="chat-01" />
 				</div>
 			</div>
 		</div>

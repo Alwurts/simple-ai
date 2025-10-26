@@ -19,6 +19,7 @@ import {
 	NodeExecutionStatusIcon,
 	NodeExecutionStatusType,
 } from "@/registry/blocks/workflow-01/components/node-execution";
+import { getTemplateById } from "@/registry/blocks/workflow-01/lib/templates";
 import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/lib/workflow/messages";
 import { useWorkflow } from "@/registry/blocks/workflow-01/workflow/use-workflow";
 import {
@@ -47,6 +48,12 @@ import {
 	ChatMessageAreaContent,
 	ChatMessageAreaScrollButton,
 } from "@/registry/ui/chat-message-area";
+import {
+	ChatSuggestion,
+	ChatSuggestions,
+	ChatSuggestionsList,
+	ChatSuggestionsTitle,
+} from "@/registry/ui/chat-suggestions";
 import {
 	ToolInvocation,
 	ToolInvocationContentCollapsible,
@@ -90,6 +97,7 @@ interface ChatProps extends ComponentPropsWithoutRef<"div"> {
 	status: ReturnOfUseChat["status"];
 	stop: ReturnOfUseChat["stop"];
 	setMessages: ReturnOfUseChat["setMessages"];
+	selectedTemplateId?: string;
 }
 
 export function Chat({
@@ -99,6 +107,7 @@ export function Chat({
 	status,
 	stop,
 	setMessages,
+	selectedTemplateId,
 	...props
 }: ChatProps) {
 	const getWorkflowData = useWorkflow((store) => store.getWorkflowData);
@@ -108,6 +117,10 @@ export function Chat({
 	const isLoading = status === "streaming" || status === "submitted";
 	const hasValidationErrors = !validationState.valid;
 	const isDisabled = hasValidationErrors;
+
+	const currentTemplate = selectedTemplateId
+		? getTemplateById(selectedTemplateId)
+		: undefined;
 
 	const { value, onChange, handleSubmit } = useChatInput({
 		onSubmit: (parsedValue) => {
@@ -130,6 +143,25 @@ export function Chat({
 		},
 	});
 
+	const handleSuggestionClick = (suggestion: string) => {
+		resetNodeStatuses();
+
+		const workflowData = getWorkflowData();
+
+		sendMessage(
+			{
+				role: "user",
+				parts: [{ type: "text", text: suggestion }],
+			},
+			{
+				body: {
+					nodes: workflowData.nodes,
+					edges: workflowData.edges,
+				},
+			},
+		);
+	};
+
 	const resetMessages = () => {
 		setMessages([]);
 		resetNodeStatuses();
@@ -144,7 +176,10 @@ export function Chat({
 			<ChatMessageArea className="px-2">
 				<ChatMessageAreaContent className="pt-4">
 					{messages.length === 0 ? (
-						<NoChatMessages />
+						<NoChatMessages
+							template={currentTemplate}
+							onSuggestionClick={handleSuggestionClick}
+						/>
 					) : (
 						messages.map((message) => {
 							const userName =
@@ -405,10 +440,37 @@ export function Chat({
 	);
 }
 
-function NoChatMessages() {
+function NoChatMessages({
+	template,
+	onSuggestionClick,
+}: {
+	template?: ReturnType<typeof getTemplateById>;
+	onSuggestionClick: (suggestion: string) => void;
+}) {
+	if (!template || template.suggestions.length === 0) {
+		return (
+			<div className="flex flex-col gap-2 p-2 items-center justify-center h-full">
+				<p className="text-muted-foreground text-lg">
+					No chat messages
+				</p>
+			</div>
+		);
+	}
 	return (
-		<div className="flex flex-col gap-2 p-2 items-center justify-center h-full">
-			<p className="text-muted-foreground text-lg">No chat messages</p>
+		<div className="flex flex-col gap-2 p-2 justify-end items-center h-full">
+			<ChatSuggestions>
+				<ChatSuggestionsTitle>Try these prompts:</ChatSuggestionsTitle>
+				<ChatSuggestionsList>
+					{template.suggestions.map((suggestion) => (
+						<ChatSuggestion
+							key={suggestion}
+							onSuggestionClick={onSuggestionClick}
+						>
+							{suggestion}
+						</ChatSuggestion>
+					))}
+				</ChatSuggestionsList>
+			</ChatSuggestions>
 		</div>
 	);
 }

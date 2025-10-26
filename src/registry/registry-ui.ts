@@ -55,6 +55,15 @@ export const ui: Registry["items"] = [
 		files: [{ type: "registry:ui", path: "ui/chat-message.tsx" }],
 	},
 	{
+		name: "chat-suggestions",
+		title: "Chat Suggestions",
+		description:
+			"A composable component for displaying chat prompt suggestions as clickable buttons.",
+		type: "registry:ui",
+		registryDependencies: ["button"],
+		files: [{ type: "registry:ui", path: "ui/chat-suggestions.tsx" }],
+	},
+	{
 		name: "markdown-content",
 		title: "Markdown Content",
 		description: "A component that renders markdown content.",

@@ -115,6 +115,32 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"chat-suggestions": {
+		name: "chat-suggestions",
+		description:
+			"A composable component for displaying chat prompt suggestions as clickable buttons.",
+		type: "registry:ui",
+		registryDependencies: ["button"],
+		files: [
+			{
+				path: "./src/registry/ui/chat-suggestions.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/chat-suggestions.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"markdown-content": {
 		name: "markdown-content",
 		description: "A component that renders markdown content.",

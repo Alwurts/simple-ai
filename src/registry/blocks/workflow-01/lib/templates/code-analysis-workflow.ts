@@ -10,15 +10,29 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 			{
 				id: "start-node",
 				type: "start",
-				position: { x: 100, y: 200 },
-				data: {
-					sourceType: { type: "text" },
+				position: {
+					x: 0,
+					y: 0,
 				},
+				data: {
+					sourceType: {
+						type: "text",
+					},
+				},
+				measured: {
+					width: 163,
+					height: 58,
+				},
+				selected: false,
+				dragging: false,
 			},
 			{
 				id: "code-analyzer-node",
 				type: "agent",
-				position: { x: 450, y: 200 },
+				position: {
+					x: 215.16311438267223,
+					y: -0.9015840544455784,
+				},
 				data: {
 					name: "Code Analyzer",
 					status: "idle",
@@ -26,15 +40,8 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 					excludeFromConversation: true,
 					maxSteps: 5,
 					model: "gpt-5-nano",
-					systemPrompt: `You are a code analysis expert. Analyze the provided code snippet and determine its programming language and key characteristics.
-
-Return a structured analysis with:
-- language: The primary programming language (e.g., "typescript", "python", "javascript", "java", "csharp", "cpp", "go", "rust", "php", "ruby", "swift", "kotlin")
-- framework: Any specific framework or library used (if detectable)
-- complexity: "simple", "medium", or "complex"
-- has_errors: boolean indicating if there are obvious syntax/logic errors
-
-Focus on accurate language detection and provide concise, structured output.`,
+					systemPrompt:
+						'You are a code analysis expert. Analyze the provided code snippet and determine its programming language and key characteristics.\n\nReturn a structured analysis with:\n- language: The primary programming language (e.g., "typescript", "python", "javascript", "java", "csharp", "cpp", "go", "rust", "php", "ruby", "swift", "kotlin")\n- framework: Any specific framework or library used (if detectable)\n- complexity: "simple", "medium", or "complex"\n- has_errors: boolean indicating if there are obvious syntax/logic errors\n\nFocus on accurate language detection and provide concise, structured output.',
 					selectedTools: [],
 					sourceType: {
 						type: "structured",
@@ -81,11 +88,20 @@ Focus on accurate language detection and provide concise, structured output.`,
 						},
 					},
 				},
+				measured: {
+					width: 182,
+					height: 74,
+				},
+				selected: false,
+				dragging: false,
 			},
 			{
 				id: "language-router-node",
 				type: "if-else",
-				position: { x: 850, y: 200 },
+				position: {
+					x: 472.28701112265446,
+					y: -72.76601002155019,
+				},
 				data: {
 					status: "idle",
 					dynamicSourceHandles: [
@@ -111,144 +127,188 @@ Focus on accurate language detection and provide concise, structured output.`,
 						},
 					],
 				},
+				measured: {
+					width: 189,
+					height: 199,
+				},
+				selected: false,
+				dragging: false,
 			},
 			{
 				id: "typescript-specialist-node",
 				type: "agent",
-				position: { x: 1250, y: -50 },
+				position: {
+					x: 754.0612102200728,
+					y: -98.53418215111799,
+				},
 				data: {
 					name: "TypeScript Specialist",
 					model: "gpt-5-nano",
-					systemPrompt: `You are a TypeScript expert. Analyze the provided TypeScript code and provide detailed feedback including:
-
-1. Code quality assessment
-2. Type safety evaluation
-3. Performance considerations
-4. Best practices compliance
-5. Suggested improvements
-
-Be thorough but concise in your analysis. Focus on TypeScript-specific patterns, type annotations, and modern TypeScript features.`,
+					systemPrompt:
+						"You are a TypeScript expert. Analyze the provided TypeScript code and provide detailed feedback including:\n\n1. Code quality assessment\n2. Type safety evaluation\n3. Performance considerations\n4. Best practices compliance\n5. Suggested improvements\n\nBe thorough but concise in your analysis. Focus on TypeScript-specific patterns, type annotations, and modern TypeScript features.",
 					selectedTools: [],
-					sourceType: { type: "text" },
+					sourceType: {
+						type: "text",
+					},
 					status: "idle",
 					hideResponseInChat: false,
 					excludeFromConversation: false,
 					maxSteps: 5,
 				},
+				measured: {
+					width: 182,
+					height: 74,
+				},
+				selected: false,
+				dragging: false,
 			},
 			{
 				id: "python-specialist-node",
 				type: "agent",
-				position: { x: 1250, y: 150 },
+				position: {
+					x: 751.2006079269053,
+					y: -0.9982988964702351,
+				},
 				data: {
 					name: "Python Specialist",
 					model: "gpt-5-nano",
-					systemPrompt: `You are a Python expert. Analyze the provided Python code and provide detailed feedback including:
-
-1. Code quality assessment (PEP 8 compliance, readability)
-2. Performance considerations
-3. Pythonic patterns and best practices
-4. Error handling and edge cases
-5. Suggested improvements
-
-Focus on Python-specific idioms, efficient data structures, and modern Python features.`,
+					systemPrompt:
+						"You are a Python expert. Analyze the provided Python code and provide detailed feedback including:\n\n1. Code quality assessment (PEP 8 compliance, readability)\n2. Performance considerations\n3. Pythonic patterns and best practices\n4. Error handling and edge cases\n5. Suggested improvements\n\nFocus on Python-specific idioms, efficient data structures, and modern Python features.",
 					selectedTools: [],
-					sourceType: { type: "text" },
+					sourceType: {
+						type: "text",
+					},
 					status: "idle",
 					hideResponseInChat: false,
 					excludeFromConversation: false,
 					maxSteps: 5,
 				},
+				measured: {
+					width: 182,
+					height: 74,
+				},
+				selected: false,
+				dragging: false,
 			},
 			{
 				id: "javascript-specialist-node",
 				type: "agent",
-				position: { x: 1250, y: 350 },
+				position: {
+					x: 743.7281051008781,
+					y: 95.00028418055776,
+				},
 				data: {
 					name: "JavaScript Specialist",
 					model: "gpt-5-nano",
-					systemPrompt: `You are a JavaScript expert. Analyze the provided JavaScript code and provide detailed feedback including:
-
-1. Code quality assessment
-2. ES6+ features usage
-3. Performance considerations
-4. Browser compatibility
-5. Security considerations
-6. Suggested improvements
-
-Focus on modern JavaScript patterns, asynchronous programming, and best practices.`,
+					systemPrompt:
+						"You are a JavaScript expert. Analyze the provided JavaScript code and provide detailed feedback including:\n\n1. Code quality assessment\n2. ES6+ features usage\n3. Performance considerations\n4. Browser compatibility\n5. Security considerations\n6. Suggested improvements\n\nFocus on modern JavaScript patterns, asynchronous programming, and best practices.",
 					selectedTools: [],
-					sourceType: { type: "text" },
+					sourceType: {
+						type: "text",
+					},
 					status: "idle",
 					hideResponseInChat: false,
 					excludeFromConversation: false,
 					maxSteps: 5,
 				},
+				measured: {
+					width: 182,
+					height: 74,
+				},
+				selected: false,
+				dragging: false,
 			},
 			{
 				id: "java-specialist-node",
 				type: "agent",
-				position: { x: 1250, y: 550 },
+				position: {
+					x: 739.1697040835362,
+					y: 192.00117228002483,
+				},
 				data: {
 					name: "Java Specialist",
 					model: "gpt-5-nano",
-					systemPrompt: `You are a Java expert. Analyze the provided Java code and provide detailed feedback including:
-
-1. Code quality assessment
-2. Object-oriented design patterns
-3. Performance considerations
-4. Memory management
-5. Exception handling
-6. Suggested improvements
-
-Focus on Java-specific patterns, JVM considerations, and enterprise Java best practices.`,
+					systemPrompt:
+						"You are a Java expert. Analyze the provided Java code and provide detailed feedback including:\n\n1. Code quality assessment\n2. Object-oriented design patterns\n3. Performance considerations\n4. Memory management\n5. Exception handling\n6. Suggested improvements\n\nFocus on Java-specific patterns, JVM considerations, and enterprise Java best practices.",
 					selectedTools: [],
-					sourceType: { type: "text" },
+					sourceType: {
+						type: "text",
+					},
 					status: "idle",
 					hideResponseInChat: false,
 					excludeFromConversation: false,
 					maxSteps: 5,
 				},
+				measured: {
+					width: 182,
+					height: 74,
+				},
+				selected: false,
+				dragging: false,
 			},
 			{
 				id: "general-specialist-node",
 				type: "agent",
-				position: { x: 1250, y: 750 },
+				position: {
+					x: 740.5465057146021,
+					y: 289.5370555346727,
+				},
 				data: {
 					name: "General Code Specialist",
 					model: "gpt-5-nano",
-					systemPrompt: `You are a general programming expert. Analyze the provided code and provide feedback on:
-
-1. Overall code quality and structure
-2. Algorithm efficiency
-3. Error handling
-4. Documentation and readability
-5. General best practices
-6. Suggested improvements
-
-Provide comprehensive analysis regardless of the programming language.`,
+					systemPrompt:
+						"You are a general programming expert. Analyze the provided code and provide feedback on:\n\n1. Overall code quality and structure\n2. Algorithm efficiency\n3. Error handling\n4. Documentation and readability\n5. General best practices\n6. Suggested improvements\n\nProvide comprehensive analysis regardless of the programming language.",
 					selectedTools: [],
-					sourceType: { type: "text" },
+					sourceType: {
+						type: "text",
+					},
 					status: "idle",
 					hideResponseInChat: false,
 					excludeFromConversation: false,
 					maxSteps: 5,
 				},
+				measured: {
+					width: 200,
+					height: 74,
+				},
+				selected: false,
+				dragging: false,
 			},
 			{
 				id: "end-node",
 				type: "end",
-				position: { x: 1650, y: 400 },
+				position: {
+					x: 1005.9595837857867,
+					y: 82.61297108435885,
+				},
 				data: {},
+				measured: {
+					width: 181,
+					height: 58,
+				},
+				selected: false,
+				dragging: false,
 			},
 			{
 				id: "workflow-description-note",
 				type: "note",
-				position: { x: 100, y: 600 },
+				position: {
+					x: 71.25415144237013,
+					y: 163.5453637058922,
+				},
 				data: {
 					content:
-						"Code Analysis Workflow\n\nThis workflow demonstrates intelligent routing based on code analysis:\n\n1. Code Analyzer: Detects programming language and analyzes code characteristics\n2. Language Router: Routes to specialized agents based on detected language\n3. Specialized Agents: Provide language-specific expertise and feedback\n4. General Specialist: Handles cases where language detection is uncertain\n\nFeatures:\n- Structured output from analyzer\n- Conditional routing with multiple branches\n- Specialized agents for different languages\n- Fallback handling for unknown languages\n\nTry providing different code snippets to see how the workflow routes to different specialists!",
+						"Code Analysis Workflow\n\nAnalyzes code → detects language → routes to specialized agents (TypeScript, Python, JavaScript, Java) → provides expert feedback.\n\nTry different code snippets to see intelligent routing in action!",
 				},
+				measured: {
+					width: 534,
+					height: 229,
+				},
+				selected: false,
+				dragging: false,
+				width: 534,
+				height: 229,
+				resizing: false,
 			},
 		],
 		edges: [
@@ -259,6 +319,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "message",
 				targetHandle: "prompt",
 				type: "status",
+				data: {},
 			},
 			{
 				id: "analyzer-to-router",
@@ -267,6 +328,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "result",
 				targetHandle: "input",
 				type: "status",
+				data: {},
 			},
 			{
 				id: "router-to-typescript",
@@ -275,6 +337,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "typescript-route",
 				targetHandle: "prompt",
 				type: "status",
+				data: {},
 			},
 			{
 				id: "router-to-python",
@@ -283,6 +346,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "python-route",
 				targetHandle: "prompt",
 				type: "status",
+				data: {},
 			},
 			{
 				id: "router-to-javascript",
@@ -291,6 +355,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "javascript-route",
 				targetHandle: "prompt",
 				type: "status",
+				data: {},
 			},
 			{
 				id: "router-to-java",
@@ -299,6 +364,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "java-route",
 				targetHandle: "prompt",
 				type: "status",
+				data: {},
 			},
 			{
 				id: "router-to-general",
@@ -307,6 +373,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "else",
 				targetHandle: "prompt",
 				type: "status",
+				data: {},
 			},
 			{
 				id: "typescript-to-end",
@@ -315,6 +382,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "result",
 				targetHandle: "input",
 				type: "status",
+				data: {},
 			},
 			{
 				id: "python-to-end",
@@ -323,6 +391,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "result",
 				targetHandle: "input",
 				type: "status",
+				data: {},
 			},
 			{
 				id: "javascript-to-end",
@@ -331,6 +400,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "result",
 				targetHandle: "input",
 				type: "status",
+				data: {},
 			},
 			{
 				id: "java-to-end",
@@ -339,6 +409,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "result",
 				targetHandle: "input",
 				type: "status",
+				data: {},
 			},
 			{
 				id: "general-to-end",
@@ -347,6 +418,7 @@ Provide comprehensive analysis regardless of the programming language.`,
 				sourceHandle: "result",
 				targetHandle: "input",
 				type: "status",
+				data: {},
 			},
 		],
 	};

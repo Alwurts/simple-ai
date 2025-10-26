@@ -22,8 +22,8 @@ export const siteConfig = {
 			label: "Blocks",
 		},
 		{
-			href: "/ai-agents",
-			label: "Agents",
+			href: "/ai-workflows",
+			label: "Workflows",
 		},
 	],
 	topLevelSections: [

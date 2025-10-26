@@ -1,4 +1,4 @@
-import { Sparkles } from "lucide-react";
+import { LayoutTemplate } from "lucide-react";
 import {
 	Select,
 	SelectContent,
@@ -6,16 +6,19 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 import { WORKFLOW_TEMPLATES } from "@/registry/blocks/workflow-01/lib/templates";
 
 interface TemplateSelectorProps {
 	selectedTemplateId: string;
 	onTemplateSelect: (templateId: string) => void;
+	className?: string;
 }
 
 export function TemplateSelector({
 	selectedTemplateId,
 	onTemplateSelect,
+	className,
 }: TemplateSelectorProps) {
 	const selectedTemplate = WORKFLOW_TEMPLATES.find(
 		(template) => template.id === selectedTemplateId,
@@ -24,20 +27,18 @@ export function TemplateSelector({
 	const categories = [...new Set(WORKFLOW_TEMPLATES.map((t) => t.category))];
 
 	return (
-		<div className="flex items-center gap-2">
-			<Sparkles className="h-4 w-4" />
+		<div className={cn("flex items-center gap-2", className)}>
+			<span className="text-muted-foreground text-sm">Template:</span>
 			<Select value={selectedTemplateId} onValueChange={onTemplateSelect}>
-				<SelectTrigger className="w-64">
-					<SelectValue>
-						<div className="flex flex-col items-start">
+				<SelectTrigger className="w-[240px] h-9">
+					<div className="flex items-center gap-2">
+						<LayoutTemplate className="h-4 w-4 shrink-0" />
+						<SelectValue>
 							<span className="font-medium text-sm">
 								{selectedTemplate?.name || "Select Template"}
 							</span>
-							<span className="text-xs text-muted-foreground">
-								{selectedTemplate?.description}
-							</span>
-						</div>
-					</SelectValue>
+						</SelectValue>
+					</div>
 				</SelectTrigger>
 				<SelectContent>
 					{categories.map((category) => (
