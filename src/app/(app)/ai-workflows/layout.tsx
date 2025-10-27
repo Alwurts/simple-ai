@@ -9,9 +9,9 @@ import {
 } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 
-const title = "AI Agent Workflows";
+const title = "AI Agent Workflowr";
 const description =
-	"Example implementations of AI Agent Workflows using Vercel AI SDK and React Flow";
+	"Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK";
 
 export const metadata: Metadata = {
 	title,
@@ -43,16 +43,8 @@ export default function WorkflowsLayout({ children }: { children: ReactNode }) {
 			<PageHeader>
 				<PageHeaderHeading>{title}</PageHeaderHeading>
 				<PageHeaderDescription>
-					Explore example implementations of AI Workflows using{" "}
-					<a
-						href="https://sdk.vercel.ai/docs"
-						className="underline"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Vercel AI SDK
-					</a>{" "}
-					and{" "}
+					Build sophisticated AI agent workflows using an interactive visual
+					interface powered by{" "}
 					<a
 						href="https://reactflow.dev/"
 						className="underline"
@@ -60,21 +52,26 @@ export default function WorkflowsLayout({ children }: { children: ReactNode }) {
 						rel="noopener noreferrer"
 					>
 						React Flow
+					</a>{" "}
+					and deeply integrated with the{" "}
+					<a
+						href="https://ai-sdk.dev/docs/introduction"
+						className="underline"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Vercel AI SDK
 					</a>
 					.
 				</PageHeaderDescription>
 				<PageHeaderDescription>
-					These workflows demonstrate how to build conversational AI
-					agents with flexible workflow orchestration capabilities.
+					Create linear, branching, and conditional workflows with real-time
+					streaming and state management. Switch between templates to explore
+					different workflow patterns.
 				</PageHeaderDescription>
 				<PageActions>
 					<Button asChild size="sm">
 						<Link href="/docs/workflows">Get More Information</Link>
-					</Button>
-					<Button asChild size="sm" variant="ghost">
-						<Link href="/docs/workflows/generate-text-node">
-							See Workflow Components
-						</Link>
 					</Button>
 				</PageActions>
 			</PageHeader>

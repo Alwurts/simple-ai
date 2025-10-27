@@ -31,7 +31,6 @@ import {
 	AppLayoutSidebar,
 } from "@/registry/blocks/workflow-01/components/app-layout";
 import { Chat } from "@/registry/blocks/workflow-01/components/chat";
-import { CopyWorkflowButton } from "@/registry/blocks/workflow-01/components/copy-workflow-button";
 import { NodeEditorPanel } from "@/registry/blocks/workflow-01/components/node-editor-panel";
 import { NodeSelectorPanel } from "@/registry/blocks/workflow-01/components/node-selector-panel";
 import { TemplateSelector } from "@/registry/blocks/workflow-01/components/template-selector";
@@ -188,7 +187,6 @@ export function Flow() {
 					<AppHeaderSeparator />
 					<ThemeToggle />
 					<ValidationStatus />
-					<CopyWorkflowButton />
 					<SidebarTrigger className="ml-auto" />
 				</AppHeader>
 

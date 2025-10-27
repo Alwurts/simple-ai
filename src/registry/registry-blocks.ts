@@ -826,7 +826,7 @@ export const blocks: Registry["items"] = [
 	},
 	{
 		name: "workflow-01",
-		description: "A block for building AI Agentic workflows.",
+		description: "Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK.",
 		type: "registry:block",
 		docs: DEFAULT_OPENAI_DOCS,
 		envVars: DEFAULT_OPENAI_ENV_VARS,

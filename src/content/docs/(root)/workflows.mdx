@@ -1,53 +1,112 @@
 ---
 title: Workflows
-description: Build powerful AI agent workflows with our React Flow components powered by Vercel AI SDK.
+description: Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK.
 ---
 
-# React Flow Components for AI Workflows
+# AI Agent Workflow Builder
 
-Our React Flow components provide a powerful foundation for building interactive AI agent workflows. Inspired by [React Flow's component library](https://reactflow.dev/components) and enhanced with AI capabilities through the Vercel AI SDK, these components enable you to create sophisticated AI workflows through a visual, drag-and-drop interface.
+Build sophisticated AI agent workflows using an interactive visual interface powered by React Flow and deeply integrated with the Vercel AI SDK. Create linear, branching, and conditional workflows that execute seamlessly with real-time streaming and state management.
 
-## Overview
+## Installation
 
-We've built a suite of specialized React Flow components designed specifically for AI workflows:
-- **AI Ready Nodes**: Pre-built nodes for text generation, prompt crafting, and more
-- **Custom Edges**: Smart connections with built-in state management
-- **Interactive Handles**: Editable connection points for dynamic workflow configuration
+Copy the complete workflow builder into your project using the shadcn CLI:
+
+```bash
+npx shadcn@latest add @simple-ai/workflow-01
+```
+
+## Live Examples
+
+Before diving into the details, check out the [AI Workflows page](/ai-workflows) where you can:
+
+- **See the workflow builder in action** with real, functional workflows
+- **Switch between pre-built templates** (Code Agent, Wikipedia Agent, Support Agent)
+- **Copy templates directly** into your project with the shadcn CLI
+
+This is the best way to understand what's possible with the workflow builder!
 
 ## Key Features
 
-- 🔌 **Vercel AI SDK Integration**: Built-in support for streaming responses and state management
-- 🎨 **shadcn/ui Styling**: Beautiful, consistent design using Tailwind CSS
-- 📦 **Copy-Paste Ready**: Install components directly using the shadcn CLI
-- 🔄 **Real-time Updates**: Live preview of AI agent interactions
-- 🎮 **Interactive Design**: Drag-and-drop interface for building workflows
+- 🎨 **Visual Workflow Design**: Drag-and-drop interface for building complex agent flows
+- 🤖 **Agent Nodes**: Configure AI agents with custom models, system prompts, tools, and structured outputs
+- 🔀 **Conditional Routing**: Use if-else nodes with CEL expressions to create dynamic branching workflows
+- 💬 **Chat Integration**: Seamlessly integrates with the `useChat` hook and UI message streams
+- ⚡ **Real-time Streaming**: Stream agent responses and workflow status updates live to your chat
+- ✅ **Workflow Validation**: Real-time validation with helpful error messages
+- 💾 **Easy Persistence**: Workflows are simple JSON (nodes + edges) - save to your database and run anywhere
 
-## The tech stack
+## The Tech Stack
 
-Our React Flow components are built on top of:
-- [React Flow](https://reactflow.dev) for the core diagram functionality
-- [Vercel AI SDK](https://sdk.vercel.ai/docs) for AI capabilities
-- [shadcn/ui](https://ui.shadcn.com) for consistent styling
+- [React Flow](https://reactflow.dev) - Visual workflow canvas and node management
+- [Vercel AI SDK](https://ai-sdk.dev/docs/introduction) - AI capabilities with `streamText` and UI message streams
+- [shadcn/ui](https://ui.shadcn.com) - Beautiful, accessible UI components
 
-## AI Agent Examples
+## How It Works
 
-We provide complete examples of AI agent workflows inspired by [Anthropic's article on building effective agents](https://www.anthropic.com/research/building-effective-agents). Visit our [AI Agents page](/ai-agents) to explore:
+### Workflow Structure
 
-- **Chain Workflow**: Multi-step content creation with quality checks and content transformation pipelines
-- **Routing Workflow**: Directs incoming requests to specialized processes based on content type
-- **Parallelization Workflow**: Handles multiple tasks simultaneously with optional result aggregation
-- **Orchestrator-Workers Workflow**: Uses a coordinator to distribute tasks to specialists based on requirements
+Every workflow consists of **nodes** (the steps) and **edges** (the connections):
 
-Each example is fully functional and can be copied directly into your project using the shadcn CLI:
-
-```bash
-npx shadcn@latest add @simple-ai/flow-chain
+```typescript
+{
+  nodes: FlowNode[],  // Array of workflow nodes
+  edges: FlowEdge[]   // Array of connections between nodes
+}
 ```
 
-## Learn More
+### Node Types
 
-- [React Flow Documentation](https://reactflow.dev/docs) - Learn about the core library
-- [Component Documentation](/docs/react-flow/components/generate-text-node) - Detailed API reference
-- [AI Agents Workflows Examples](/ai-agents) - Learn about building AI agent systems
+1. **Start Node**: Entry point for every workflow - receives the user message
+2. **Agent Node**: AI agents that process inputs using `streamText` from Vercel AI SDK
+   - Configure model, system prompt, tools, and max steps
+   - Choose between text or structured JSON output
+   - Control conversation history inclusion
+3. **If-Else Node**: Conditional routing based on previous node outputs using JEXL expressions
+4. **End Node**: Terminal point for workflow execution paths
+5. **Note Node**: Documentation and comments (not executed)
 
-Join us in building the future of AI workflows - one component at a time.
+### Execution Flow
+
+Workflows execute **linearly** from start to end:
+
+1. User sends a message via the chat interface
+2. Frontend sends the message along with current nodes and edges using the `useChat` hook
+3. Backend executes the workflow using UI message data streams:
+   - Starts from the start node
+   - Processes each node sequentially
+   - Agent nodes use `streamText` and stream responses back to the UI
+   - If-else nodes evaluate conditions and route to the next node
+   - Continues until reaching an end node
+4. Real-time status updates stream to the UI showing node execution states
+
+### Persistence and Execution
+
+Workflows are just data - save them to your database and use them in two ways:
+
+**Option 1: Load into UI**
+```typescript
+// Load workflow into the visual editor
+const workflow = await db.workflows.findById(id);
+store.initializeWorkflow({
+  nodes: workflow.nodes,
+  edges: workflow.edges
+});
+```
+
+**Option 2: Run in Background**
+```typescript
+// Execute workflow directly without loading into UI
+const workflow = await db.workflows.findById(id);
+const result = await executeWorkflow({
+  nodes: workflow.nodes,
+  edges: workflow.edges,
+  messages: userMessages,
+  writer: streamWriter
+});
+```
+
+This means you can build workflows visually, save them, and then execute them programmatically in the background - perfect for automation, scheduled tasks, or API endpoints.
+
+## Full Application Example
+
+A full application example using this workflow builder is **coming soon**. In the meantime, explore the [live examples](/ai-workflows) to see the workflow builder in action.
