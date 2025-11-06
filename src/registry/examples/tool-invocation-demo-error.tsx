@@ -79,15 +79,17 @@ const messages: Array<
 			{
 				type: "tool-search-database",
 				toolCallId: "search-tool-1",
-				state: "output-available",
+				state: "output-error",
 				input: {
 					query: "magical forest stories",
 				},
-				output: "Found several stories about magical forests, including 'The Whispering Woods' - a tale about a magical forest where trees can talk and animals sing beautiful songs. The story follows Luna, a young fox with silver fur who can speak with ancient trees.",
+				output: undefined,
+				errorText:
+					"Database connection timeout. Please try again later.",
 			},
 			{
 				type: "text",
-				text: "I found some great information! There's a wonderful story called 'The Whispering Woods' about a magical forest where trees can talk and animals sing. The main character is Luna, a young fox with silver fur who has the special ability to communicate with ancient trees.",
+				text: "I encountered an error while searching. The database connection timed out.",
 			},
 		],
 		role: "assistant",
@@ -100,7 +102,7 @@ const messages: Array<
 	},
 ];
 
-export default function ChatMessageAreaDemo() {
+export default function ToolInvocationDemoError() {
 	return (
 		<ChatMessageArea>
 			<ChatMessageAreaContent>

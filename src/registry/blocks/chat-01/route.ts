@@ -1,5 +1,6 @@
 import { openai } from "@ai-sdk/openai";
 import { convertToModelMessages, streamText } from "ai";
+import { toolSet } from "./lib/tools";
 
 export async function POST(req: Request) {
 	const { messages } = await req.json();
@@ -8,6 +9,7 @@ export async function POST(req: Request) {
 		model: openai("gpt-5-nano"),
 		system: "You are a helpful assistant",
 		messages: convertToModelMessages(messages),
+		tools: toolSet,
 	});
 
 	return result.toUIMessageStreamResponse();

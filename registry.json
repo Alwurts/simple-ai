@@ -614,6 +614,26 @@
 			]
 		},
 		{
+			"name": "tool-invocation-demo-loading",
+			"type": "registry:example",
+			"files": [
+				{
+					"path": "./src/registry/examples/tool-invocation-demo-loading.tsx",
+					"type": "registry:example"
+				}
+			]
+		},
+		{
+			"name": "tool-invocation-demo-error",
+			"type": "registry:example",
+			"files": [
+				{
+					"path": "./src/registry/examples/tool-invocation-demo-error.tsx",
+					"type": "registry:example"
+				}
+			]
+		},
+		{
 			"name": "chat-01",
 			"type": "registry:block",
 			"description": "A simple chat page.",
@@ -629,7 +649,8 @@
 				"dropdown-menu",
 				"@simple-ai/chat-input",
 				"@simple-ai/chat-message-area",
-				"@simple-ai/chat-message"
+				"@simple-ai/chat-message",
+				"@simple-ai/tool-invocation"
 			],
 			"files": [
 				{
@@ -644,6 +665,10 @@
 				},
 				{
 					"path": "./src/registry/blocks/chat-01/lib/config.ts",
+					"type": "registry:lib"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/lib/tools.ts",
 					"type": "registry:lib"
 				},
 				{
@@ -1449,7 +1474,7 @@
 		{
 			"name": "workflow-01",
 			"type": "registry:block",
-			"description": "A block for building AI Agentic workflows.",
+			"description": "Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK.",
 			"dependencies": [
 				"@xyflow/react",
 				"zustand",

@@ -79,15 +79,10 @@ const messages: Array<
 			{
 				type: "tool-search-database",
 				toolCallId: "search-tool-1",
-				state: "output-available",
+				state: "input-available",
 				input: {
 					query: "magical forest stories",
 				},
-				output: "Found several stories about magical forests, including 'The Whispering Woods' - a tale about a magical forest where trees can talk and animals sing beautiful songs. The story follows Luna, a young fox with silver fur who can speak with ancient trees.",
-			},
-			{
-				type: "text",
-				text: "I found some great information! There's a wonderful story called 'The Whispering Woods' about a magical forest where trees can talk and animals sing. The main character is Luna, a young fox with silver fur who has the special ability to communicate with ancient trees.",
 			},
 		],
 		role: "assistant",
@@ -100,7 +95,7 @@ const messages: Array<
 	},
 ];
 
-export default function ChatMessageAreaDemo() {
+export default function ToolInvocationDemoLoading() {
 	return (
 		<ChatMessageArea>
 			<ChatMessageAreaContent>

@@ -4,7 +4,7 @@ description: A component for displaying tool invocations with different states a
 component: true
 ---
 
-<ComponentPreview name="tool-invocation-demo" description="Tool invocation component with different states." />
+<ComponentPreview name="tool-invocation-demo" description="Tool invocation with completed results" />
 
 ## Installation
 
@@ -54,4 +54,22 @@ npm install lucide-react
 
 The Tool Invocation component displays tool calls with visual indicators for different states (streaming, available, error). It includes collapsible sections for viewing input arguments and output results.
 
-## API Reference
+## Examples
+
+### Complete Tool Invocation
+
+A tool invocation with completed results showing both input arguments and output.
+
+<ComponentPreview name="tool-invocation-demo" description="Tool invocation with completed results" />
+
+### Loading State
+
+A tool invocation showing the loading state while the tool is being executed.
+
+<ComponentPreview name="tool-invocation-demo-loading" description="Tool invocation in loading state" />
+
+### Error State
+
+A tool invocation showing an error state when the tool execution fails.
+
+<ComponentPreview name="tool-invocation-demo-error" description="Tool invocation with error state" />

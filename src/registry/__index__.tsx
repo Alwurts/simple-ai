@@ -1299,6 +1299,60 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"tool-invocation-demo-loading": {
+		name: "tool-invocation-demo-loading",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/tool-invocation-demo-loading.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/tool-invocation-demo-loading.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"tool-invocation-demo-error": {
+		name: "tool-invocation-demo-error",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/tool-invocation-demo-error.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/tool-invocation-demo-error.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"chat-01": {
 		name: "chat-01",
 		description: "A simple chat page.",
@@ -1315,6 +1369,7 @@ export const Index: Record<string, any> = {
 			"@simple-ai/chat-input",
 			"@simple-ai/chat-message-area",
 			"@simple-ai/chat-message",
+			"@simple-ai/tool-invocation",
 		],
 		files: [
 			{
@@ -1329,6 +1384,11 @@ export const Index: Record<string, any> = {
 			},
 			{
 				path: "./src/registry/blocks/chat-01/lib/config.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/lib/tools.ts",
 				type: "registry:lib",
 				target: "",
 			},
@@ -2214,7 +2274,8 @@ export const Index: Record<string, any> = {
 	},
 	"workflow-01": {
 		name: "workflow-01",
-		description: "A block for building AI Agentic workflows.",
+		description:
+			"Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK.",
 		type: "registry:block",
 		registryDependencies: [
 			"button",

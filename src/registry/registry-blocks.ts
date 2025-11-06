@@ -37,6 +37,7 @@ export const blocks: Registry["items"] = [
 			"@simple-ai/chat-input",
 			"@simple-ai/chat-message-area",
 			"@simple-ai/chat-message",
+			"@simple-ai/tool-invocation",
 		],
 		files: [
 			{
@@ -51,6 +52,10 @@ export const blocks: Registry["items"] = [
 			},
 			{
 				path: "blocks/chat-01/lib/config.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-01/lib/tools.ts",
 				type: "registry:lib",
 			},
 			{
@@ -826,7 +831,8 @@ export const blocks: Registry["items"] = [
 	},
 	{
 		name: "workflow-01",
-		description: "Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK.",
+		description:
+			"Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK.",
 		type: "registry:block",
 		docs: DEFAULT_OPENAI_DOCS,
 		envVars: DEFAULT_OPENAI_ENV_VARS,
