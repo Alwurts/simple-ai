@@ -16,6 +16,9 @@ export const startNodeDataSchema = z.object({
 export type StartNodeData = z.infer<typeof startNodeDataSchema>;
 export type StartNode = Node<StartNodeData, "start">;
 
+/**
+ * Validates start node connection constraints: no incoming edges and exactly one outgoing edge.
+ */
 function validateStartNode(
 	node: StartNode,
 	context: ValidationContext,
@@ -27,6 +30,7 @@ function validateStartNode(
 	if (incomingEdges.length > 0) {
 		errors.push({
 			type: "invalid-node-config",
+			severity: "error",
 			message: "Start node cannot have incoming connections",
 			node: { id: node.id },
 		});
@@ -36,12 +40,14 @@ function validateStartNode(
 	if (outgoingEdges.length === 0) {
 		errors.push({
 			type: "invalid-node-config",
+			severity: "error",
 			message: "Start node must have exactly one outgoing connection",
 			node: { id: node.id },
 		});
 	} else if (outgoingEdges.length > 1) {
 		errors.push({
 			type: "invalid-node-config",
+			severity: "error",
 			message: `Start node can only have one outgoing connection (found ${outgoingEdges.length})`,
 			node: { id: node.id },
 		});

@@ -13,69 +13,74 @@ export const waitNodeDataSchema = z.object({
 export type WaitNodeData = z.infer<typeof waitNodeDataSchema>;
 export type WaitNode = Node<WaitNodeData, "wait">;
 
+/**
+ * Validates wait node configuration and connection constraints.
+ * Ensures duration is within allowed limits and node has exactly one incoming and one outgoing connection.
+ */
 function validateWaitNode(
 	node: WaitNode,
 	context: ValidationContext,
 ): ValidationError[] {
 	const errors: ValidationError[] = [];
-
 	const { edges } = context;
 
-	// Must have exactly one incoming connection
-	const incomingEdges = edges.filter((e) => e.target === node.id);
-	if (incomingEdges.length === 0) {
-		errors.push({
-			type: "invalid-node-config",
-			message: "Wait node must have one incoming connection",
-			node: { id: node.id },
-		});
-	} else if (incomingEdges.length > 1) {
-		errors.push({
-			type: "invalid-node-config",
-			message: `Wait node can only have one incoming connection (found ${incomingEdges.length})`,
-			node: { id: node.id },
-		});
-	}
-
-	// Must have exactly one outgoing connection
-	const outgoingEdges = edges.filter((e) => e.source === node.id);
-	if (outgoingEdges.length === 0) {
-		errors.push({
-			type: "invalid-node-config",
-			message: "Wait node must have one outgoing connection",
-			node: { id: node.id },
-		});
-	} else if (outgoingEdges.length > 1) {
-		errors.push({
-			type: "invalid-node-config",
-			message: `Wait node can only have one outgoing connection (found ${outgoingEdges.length})`,
-			node: { id: node.id },
-		});
-	}
-
-	// Validate duration based on unit
 	const { duration, unit } = node.data;
 	if (duration) {
 		let maxDuration: number;
 		switch (unit) {
 			case "seconds":
-				maxDuration = 3600; // 1 hour
+				maxDuration = 3600;
 				break;
 			case "minutes":
-				maxDuration = 60; // 1 hour
+				maxDuration = 60;
 				break;
 			case "hours":
-				maxDuration = 24; // 24 hours max
+				maxDuration = 24;
 				break;
 		}
 
 		if (duration > maxDuration) {
 			errors.push({
 				type: "invalid-node-config",
+				severity: "error",
 				message: `Duration exceeds maximum for ${unit} (${maxDuration})`,
 				node: { id: node.id },
 			});
 		}
+	}
+
+	const incomingEdges = edges.filter((e) => e.target === node.id);
+	if (incomingEdges.length === 0) {
+		errors.push({
+			type: "invalid-node-config",
+			severity: "error",
+			message: "Wait node must have one incoming connection",
+			node: { id: node.id },
+		});
+	} else if (incomingEdges.length > 1) {
+		errors.push({
+			type: "invalid-node-config",
+			severity: "error",
+			message: `Wait node can only have one incoming connection (found ${incomingEdges.length})`,
+			node: { id: node.id },
+		});
+	}
+
+	const outgoingEdges = edges.filter((e) => e.source === node.id);
+	if (outgoingEdges.length === 0) {
+		errors.push({
+			type: "invalid-node-config",
+			severity: "error",
+			message: "Wait node must have one outgoing connection",
+			node: { id: node.id },
+		});
+	} else if (outgoingEdges.length > 1) {
+		errors.push({
+			type: "invalid-node-config",
+			severity: "error",
+			message: `Wait node can only have one outgoing connection (found ${outgoingEdges.length})`,
+			node: { id: node.id },
+		});
 	}
 
 	return errors;

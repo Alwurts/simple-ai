@@ -33,16 +33,20 @@ export async function executeWorkflow({
 }): Promise<void> {
 	const validation = validateWorkflow(nodes, edges);
 
-	if (!validation.valid) {
-		console.error("Workflow validation failed:", validation.errors);
-		const errorMessages = validation.errors
-			.map((e) => `- ${e.message}`)
-			.join("\n");
-		throw new Error(`Workflow validation failed:\n${errorMessages}`);
+	const errors = validation.errors.filter((e) => e.severity === "error");
+	if (errors.length > 0) {
+		const errorMessages = errors.map((e) => `- ${e.message}`).join("\n");
+		throw new Error(`Workflow has errors:\n${errorMessages}`);
+	}
+
+	// Log warnings but don't block
+	const warnings = validation.errors.filter((e) => e.severity === "warning");
+	if (warnings.length > 0) {
+		console.warn("Workflow warnings:", warnings);
 	}
 
 	if (validation.warnings.length > 0) {
-		console.warn("Workflow warnings:", validation.warnings);
+		console.warn("Workflow warnings (legacy):", validation.warnings);
 	}
 
 	const startNode = nodes.find((node) => isNodeOfType(node, "start"));

@@ -8,13 +8,13 @@ import {
 
 const languageModels = {
 	"gpt-5-nano": wrapLanguageModel({
-		model: openai.chat("gpt-5-nano"),
+		model: openai.chat("gpt-5-mini"),
 		middleware: defaultSettingsMiddleware({
 			settings: {
 				providerOptions: {
 					openai: {
 						reasoningSummary: "auto", // 'auto' for condensed or 'detailed' for comprehensive
-						reasoningEffort: "low", // 'minimal' | 'low' | 'medium' | 'high'
+						reasoningEffort: "minimal", // 'minimal' | 'low' | 'medium' | 'high'
 					},
 				},
 			},

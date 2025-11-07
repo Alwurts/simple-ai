@@ -37,7 +37,7 @@ import {
 import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 import {
 	WORKFLOW_TOOLS,
-	type WorkflowToolId,
+	workflowTools,
 } from "@/registry/blocks/workflow-01/lib/tools";
 import { idToReadableText } from "@/registry/lib/id-to-readable-text";
 import type { workflowModelID } from "../../models";
@@ -116,13 +116,7 @@ export function AgentNode({ selected, data, deletable, id }: AgentNodeProps) {
 	);
 }
 
-export function AgentNodePanel({
-	node,
-	toolDescriptions,
-}: {
-	node: AgentNodeType;
-	toolDescriptions: Record<WorkflowToolId, string>;
-}) {
+export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 	const updateNode = useWorkflow((state) => state.updateNode);
 	const [advancedOpen, setAdvancedOpen] = useState(false);
 
@@ -220,7 +214,9 @@ export function AgentNodePanel({
 												{idToReadableText(toolId)}
 											</span>
 											<span className="text-xs text-muted-foreground">
-												{toolDescriptions[toolId]}
+												{workflowTools[toolId]
+													.description ??
+													"No description"}
 											</span>
 										</label>
 									</div>

@@ -24,6 +24,10 @@ export const ifElseNodeDataSchema = z.object({
 export type IfElseNodeData = z.infer<typeof ifElseNodeDataSchema>;
 export type IfElseNode = Node<IfElseNodeData, "if-else">;
 
+/**
+ * Validates if-else node configuration, connection constraints, and condition expressions.
+ * Validates that conditions are syntactically correct and reference available variables.
+ */
 function validateIfElseNode(
 	node: IfElseNode,
 	context: ValidationContext,
@@ -33,9 +37,11 @@ function validateIfElseNode(
 	const { nodes, edges } = context;
 
 	const outgoingEdges = edges.filter((e) => e.source === node.id);
+
 	if (outgoingEdges.length === 0) {
 		errors.push({
 			type: "invalid-node-config",
+			severity: "error",
 			message: "If-else node must have at least one outgoing connection",
 			node: { id: node.id },
 		});
@@ -48,6 +54,7 @@ function validateIfElseNode(
 		if (edgeForHandle && !handle.condition.trim()) {
 			errors.push({
 				type: "invalid-node-config",
+				severity: "error",
 				message: `If-else condition "${handle.label || handle.id}" has a connection but no condition expression`,
 				node: { id: node.id },
 			});
@@ -59,6 +66,7 @@ function validateIfElseNode(
 			} catch (error) {
 				errors.push({
 					type: "invalid-condition",
+					severity: "error",
 					message: "Invalid condition expression in if-else node",
 					condition: {
 						nodeId: node.id,
@@ -87,6 +95,7 @@ function validateIfElseNode(
 			if (!hasIncomingEdge && references.length > 0) {
 				errors.push({
 					type: "invalid-condition",
+					severity: "error",
 					message:
 						"Condition references variables but node has no input connection",
 					condition: {
@@ -111,6 +120,7 @@ function validateIfElseNode(
 						"none";
 					errors.push({
 						type: "invalid-condition",
+						severity: "error",
 						message: "Condition references undefined variables",
 						condition: {
 							nodeId: node.id,

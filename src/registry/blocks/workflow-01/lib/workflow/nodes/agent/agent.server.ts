@@ -7,8 +7,8 @@ import {
 	type Tool,
 } from "ai";
 import {
-	getWorkflowTools,
 	type WorkflowToolId,
+	workflowTools,
 } from "@/registry/blocks/workflow-01/lib/tools";
 import { workflowModel } from "@/registry/blocks/workflow-01/lib/workflow/models";
 import type {
@@ -38,7 +38,7 @@ async function executeAgentNode(
 		});
 	}
 
-	const tools = getWorkflowTools();
+	const tools = workflowTools;
 	const agentTools: Partial<Record<WorkflowToolId, Tool>> = {};
 
 	for (const toolId of node.data.selectedTools) {

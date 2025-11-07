@@ -42,7 +42,6 @@ import {
 	DEFAULT_TEMPLATE,
 	getTemplateById,
 } from "@/registry/blocks/workflow-01/lib/templates";
-import { WORKFLOW_TOOL_DESCRIPTIONS } from "@/registry/blocks/workflow-01/lib/tools";
 import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/lib/workflow/messages";
 import { getAllNodeDefinitions } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
 import type { FlowNode } from "@/registry/blocks/workflow-01/lib/workflow/types";
@@ -210,10 +209,7 @@ export function Flow() {
 					<NodeSelectorPanel />
 
 					{selectedNodes.length === 1 && (
-						<NodeEditorPanel
-							nodeId={selectedNodes[0].id}
-							toolDescriptions={WORKFLOW_TOOL_DESCRIPTIONS}
-						/>
+						<NodeEditorPanel nodeId={selectedNodes[0].id} />
 					)}
 				</ReactFlow>
 			</AppLayoutInset>

@@ -91,13 +91,29 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		set({
 			nodes: applyNodeChanges<FlowNode>(filteredChanges, get().nodes),
 		});
-		get().validateWorkflow();
+
+		// Only validate on meaningful structural changes
+		const shouldValidate = changes.some(
+			(change) => change.type === "add" || change.type === "remove",
+		);
+
+		if (shouldValidate) {
+			get().validateWorkflow();
+		}
 	},
 	onEdgesChange: (changes) => {
 		set({
 			edges: applyEdgeChanges(changes, get().edges),
 		});
-		get().validateWorkflow();
+
+		// Only validate on structural edge changes
+		const shouldValidate = changes.some(
+			(change) => change.type === "add" || change.type === "remove",
+		);
+
+		if (shouldValidate) {
+			get().validateWorkflow();
+		}
 	},
 	onConnect: (connection) => {
 		const valid = isValidConnection({

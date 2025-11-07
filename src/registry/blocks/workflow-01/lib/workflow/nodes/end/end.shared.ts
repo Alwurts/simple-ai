@@ -11,6 +11,9 @@ export const endNodeDataSchema = z.object({
 export type EndNodeData = z.infer<typeof endNodeDataSchema>;
 export type EndNode = Node<EndNodeData, "end">;
 
+/**
+ * Validates end node connection constraints: no outgoing edges allowed.
+ */
 function validateEndNode(
 	node: EndNode,
 	context: ValidationContext,
@@ -22,6 +25,7 @@ function validateEndNode(
 	if (outgoingEdges.length > 0) {
 		errors.push({
 			type: "invalid-node-config",
+			severity: "error",
 			message: "End node cannot have outgoing connections",
 			node: { id: node.id },
 		});

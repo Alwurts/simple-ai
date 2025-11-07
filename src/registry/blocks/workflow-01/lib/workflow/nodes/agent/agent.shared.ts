@@ -33,16 +33,28 @@ export const agentNodeDataSchema = z.object({
 export type AgentNodeData = z.infer<typeof agentNodeDataSchema>;
 export type AgentNode = Node<AgentNodeData, "agent">;
 
+/**
+ * Validates agent node configuration and connection constraints.
+ */
 function validateAgentNode(
 	node: AgentNode,
 	context: ValidationContext,
 ): ValidationError[] {
 	const errors: ValidationError[] = [];
+	const { edges } = context;
 
-	const outgoingEdges = context.edges.filter((e) => e.source === node.id);
-	if (outgoingEdges.length > 1) {
+	const outgoingEdges = edges.filter((e) => e.source === node.id);
+	if (outgoingEdges.length === 0) {
 		errors.push({
 			type: "invalid-node-config",
+			severity: "error",
+			message: "Agent node must have one outgoing connection",
+			node: { id: node.id },
+		});
+	} else if (outgoingEdges.length > 1) {
+		errors.push({
+			type: "invalid-node-config",
+			severity: "error",
 			message: `Agent node can only have one outgoing connection (found ${outgoingEdges.length})`,
 			node: { id: node.id },
 		});
@@ -54,6 +66,7 @@ function validateAgentNode(
 	) {
 		errors.push({
 			type: "invalid-node-config",
+			severity: "error",
 			message: "Agent node with structured output must have a schema",
 			node: { id: node.id },
 		});

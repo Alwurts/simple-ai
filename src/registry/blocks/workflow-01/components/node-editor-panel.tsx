@@ -1,16 +1,9 @@
 import { Panel } from "@xyflow/react";
 import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
-import type { WorkflowToolId } from "@/registry/blocks/workflow-01/lib/tools";
 import { getNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
 import type { FlowNode } from "@/registry/blocks/workflow-01/lib/workflow/types";
 
-export function NodeEditorPanel({
-	nodeId,
-	toolDescriptions,
-}: {
-	nodeId: FlowNode["id"];
-	toolDescriptions: Record<WorkflowToolId, string>;
-}) {
+export function NodeEditorPanel({ nodeId }: { nodeId: FlowNode["id"] }) {
 	const node = useWorkflow((state) => state.getNodeById(nodeId));
 	if (!node) {
 		return <NodeEditorPanelNotFound />;
@@ -35,7 +28,7 @@ export function NodeEditorPanel({
 			<h3 className="font-semibold text-sm mb-3 capitalize">
 				{node.type} Node
 			</h3>
-			<PanelComponent node={node} toolDescriptions={toolDescriptions} />
+			<PanelComponent node={node} />
 		</Panel>
 	);
 }
