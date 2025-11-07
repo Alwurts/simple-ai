@@ -3,7 +3,6 @@ import type {
 	FlowNode,
 } from "@/registry/blocks/workflow-01/lib/workflow/types";
 
-// Code Analysis Workflow: Start -> Code Analyzer -> Language Router -> Specialized Agents -> End
 export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 	{
 		nodes: [

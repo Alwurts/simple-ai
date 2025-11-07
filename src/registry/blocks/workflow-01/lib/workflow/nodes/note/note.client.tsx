@@ -1,16 +1,16 @@
-import type { Node, NodeProps } from "@xyflow/react";
+"use client";
+
+import type { NodeProps } from "@xyflow/react";
+import { FileText } from "lucide-react";
+import { nanoid } from "nanoid";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { ResizableNode } from "@/registry/blocks/workflow-01/components/workflow/primitives/resizable-node";
-import { useWorkflow } from "@/registry/blocks/workflow-01/workflow/use-workflow";
+import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
+import type { NodeClientDefinition } from "../types";
+import type { NoteNode as NoteNodeType } from "./note.shared";
 
-export type NoteNodeData = {
-	content: string;
-};
-
-export type NoteNode = Node<NoteNodeData, "note">;
-
-export interface NoteNodeProps extends NodeProps<NoteNode> {}
+export interface NoteNodeProps extends NodeProps<NoteNodeType> {}
 
 export function NoteNode({ id, selected, data }: NoteNodeProps) {
 	const updateNode = useWorkflow((store) => store.updateNode);
@@ -38,3 +38,32 @@ export function NoteNode({ id, selected, data }: NoteNodeProps) {
 		</ResizableNode>
 	);
 }
+
+export function NoteNodePanel() {
+	return null;
+}
+
+export function createNoteNode(position: {
+	x: number;
+	y: number;
+}): NoteNodeType {
+	return {
+		id: nanoid(),
+		type: "note",
+		position,
+		data: {
+			content: "",
+		},
+	};
+}
+
+export const noteClientDefinition: NodeClientDefinition<NoteNodeType> = {
+	component: NoteNode,
+	panelComponent: NoteNodePanel,
+	create: createNoteNode,
+	meta: {
+		label: "Note",
+		icon: FileText,
+		description: "A resizable text note",
+	},
+};

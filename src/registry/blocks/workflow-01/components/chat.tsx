@@ -19,9 +19,9 @@ import {
 	NodeExecutionStatusIcon,
 	NodeExecutionStatusType,
 } from "@/registry/blocks/workflow-01/components/node-execution";
+import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 import { getTemplateById } from "@/registry/blocks/workflow-01/lib/templates";
 import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/lib/workflow/messages";
-import { useWorkflow } from "@/registry/blocks/workflow-01/workflow/use-workflow";
 import {
 	ChatInput,
 	ChatInputEditor,

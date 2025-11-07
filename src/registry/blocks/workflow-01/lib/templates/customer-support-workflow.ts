@@ -3,7 +3,6 @@ import type {
 	FlowNode,
 } from "@/registry/blocks/workflow-01/lib/workflow/types";
 
-// Customer Support Workflow: Start -> Support Classifier -> Priority Routes -> Specialized Support Agents -> End
 export const CUSTOMER_SUPPORT_WORKFLOW: {
 	nodes: FlowNode[];
 	edges: FlowEdge[];

@@ -1,5 +1,8 @@
-import { type Node, type NodeProps, Position } from "@xyflow/react";
+"use client";
+
+import { type NodeProps, Position } from "@xyflow/react";
 import { Play } from "lucide-react";
+import { nanoid } from "nanoid";
 import { cn } from "@/lib/utils";
 import { BaseHandle } from "@/registry/blocks/workflow-01/components/workflow/primitives/base-handle";
 import { BaseNode } from "@/registry/blocks/workflow-01/components/workflow/primitives/base-node";
@@ -10,22 +13,11 @@ import {
 	NodeHeaderStatus,
 	NodeHeaderTitle,
 } from "@/registry/blocks/workflow-01/components/workflow/primitives/node-header";
-import type {
-	NodeStatus,
-	TextNodeOutput,
-	ValidationError,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
-import { useWorkflow } from "@/registry/blocks/workflow-01/workflow/use-workflow";
+import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
+import type { NodeClientDefinition } from "../types";
+import type { StartNode as StartNodeType } from "./start.shared";
 
-export type StartNodeData = {
-	status?: NodeStatus;
-	sourceType: TextNodeOutput;
-	validationErrors?: ValidationError[];
-};
-
-export type StartNode = Node<StartNodeData, "start">;
-
-export interface StartNodeProps extends NodeProps<StartNode> {}
+export interface StartNodeProps extends NodeProps<StartNodeType> {}
 
 export function StartNode({ id, selected, data }: StartNodeProps) {
 	const canConnectHandle = useWorkflow((store) => store.canConnectHandle);
@@ -72,7 +64,7 @@ export function StartNode({ id, selected, data }: StartNodeProps) {
 	);
 }
 
-export function StartNodePanel({ node: _node }: { node: StartNode }) {
+export function StartNodePanel({ node: _node }: { node: StartNodeType }) {
 	return (
 		<div className="space-y-4">
 			<div>
@@ -84,3 +76,29 @@ export function StartNodePanel({ node: _node }: { node: StartNode }) {
 		</div>
 	);
 }
+
+export function createStartNode(position: {
+	x: number;
+	y: number;
+}): StartNodeType {
+	return {
+		id: nanoid(),
+		type: "start",
+		position,
+		deletable: false,
+		data: {
+			sourceType: { type: "text" },
+		},
+	};
+}
+
+export const startClientDefinition: NodeClientDefinition<StartNodeType> = {
+	component: StartNode,
+	panelComponent: StartNodePanel,
+	create: createStartNode,
+	meta: {
+		label: "Start",
+		icon: Play,
+		description: "The entry point of the workflow",
+	},
+};

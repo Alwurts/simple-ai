@@ -5,10 +5,6 @@ import type {
 	NodeStatus,
 } from "@/registry/blocks/workflow-01/lib/workflow/types";
 
-/////////////////////
-// AI UI Messages //
-/////////////////////
-
 type WorkflowAIMetadata = Record<string, unknown>;
 
 type WorkflowAIDataPart = {

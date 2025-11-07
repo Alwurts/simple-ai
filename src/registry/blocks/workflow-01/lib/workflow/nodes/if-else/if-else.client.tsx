@@ -1,5 +1,6 @@
+"use client";
+
 import {
-	type Node,
 	type NodeProps,
 	Position,
 	useUpdateNodeInternals,
@@ -22,26 +23,12 @@ import {
 	NodeHeaderStatus,
 	NodeHeaderTitle,
 } from "@/registry/blocks/workflow-01/components/workflow/primitives/node-header";
-import type {
-	NodeStatus,
-	ValidationError,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
+import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 import { getAvailableVariables } from "@/registry/blocks/workflow-01/lib/workflow/variables";
-import { useWorkflow } from "@/registry/blocks/workflow-01/workflow/use-workflow";
+import type { NodeClientDefinition } from "../types";
+import type { IfElseNode as IfElseNodeType } from "./if-else.shared";
 
-export type IfElseNodeData = {
-	status?: NodeStatus;
-	dynamicSourceHandles: {
-		id: string;
-		label: string | null;
-		condition: string;
-	}[];
-	validationErrors?: ValidationError[];
-};
-
-export type IfElseNode = Node<IfElseNodeData, "if-else">;
-
-export interface IfElseNodeProps extends NodeProps<IfElseNode> {}
+export interface IfElseNodeProps extends NodeProps<IfElseNodeType> {}
 
 export function IfElseNode({ selected, data, deletable, id }: IfElseNodeProps) {
 	const deleteNode = useWorkflow((state) => state.deleteNode);
@@ -125,13 +112,12 @@ export function IfElseNode({ selected, data, deletable, id }: IfElseNodeProps) {
 	);
 }
 
-export function IfElseNodePanel({ node }: { node: IfElseNode }) {
+export function IfElseNodePanel({ node }: { node: IfElseNodeType }) {
 	const updateNode = useWorkflow((state) => state.updateNode);
 	const nodes = useWorkflow((state) => state.nodes);
 	const edges = useWorkflow((state) => state.edges);
 	const updateNodeInternals = useUpdateNodeInternals();
 
-	// Get available variables for this node
 	const availableVariables = useMemo(
 		() => getAvailableVariables(node.id, nodes, edges),
 		[node.id, nodes, edges],
@@ -274,3 +260,35 @@ export function IfElseNodePanel({ node }: { node: IfElseNode }) {
 		</div>
 	);
 }
+
+export function createIfElseNode(position: {
+	x: number;
+	y: number;
+}): IfElseNodeType {
+	return {
+		id: nanoid(),
+		type: "if-else",
+		position,
+		data: {
+			status: "idle",
+			dynamicSourceHandles: [
+				{
+					id: nanoid(),
+					label: "If",
+					condition: "",
+				},
+			],
+		},
+	};
+}
+
+export const ifElseClientDefinition: NodeClientDefinition<IfElseNodeType> = {
+	component: IfElseNode,
+	panelComponent: IfElseNodePanel,
+	create: createIfElseNode,
+	meta: {
+		label: "If/Else",
+		icon: GitBranch,
+		description: "Routes execution based on conditional expressions",
+	},
+};

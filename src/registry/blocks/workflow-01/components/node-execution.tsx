@@ -5,7 +5,6 @@ import { Badge, type badgeVariants } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { idToReadableText } from "@/registry/lib/id-to-readable-text";
 
-// Wrapper component
 export function NodeExecutionStatus({
 	className,
 	...props
@@ -13,7 +12,6 @@ export function NodeExecutionStatus({
 	return <div className={cn("max-w-full", className)} {...props} />;
 }
 
-// Header component
 export function NodeExecutionStatusHeader({
 	className,
 	...props
@@ -29,7 +27,6 @@ export function NodeExecutionStatusHeader({
 	);
 }
 
-// Icon component with status-aware styling
 export function NodeExecutionStatusIcon({
 	status,
 	className,
@@ -73,7 +70,6 @@ export function NodeExecutionStatusIcon({
 	}
 }
 
-// Content container
 export function NodeExecutionStatusContent({
 	children,
 	className,
@@ -88,7 +84,6 @@ export function NodeExecutionStatusContent({
 	);
 }
 
-// Name component
 export function NodeExecutionStatusName({
 	nodeId,
 	capitalize = true,
@@ -105,7 +100,6 @@ export function NodeExecutionStatusName({
 	);
 }
 
-// Badge component with status-aware variants
 export function NodeExecutionStatusBadge({
 	status,
 	className,
@@ -155,7 +149,6 @@ export function NodeExecutionStatusBadge({
 	);
 }
 
-// Node type label
 export function NodeExecutionStatusType({
 	nodeType,
 	capitalize = true,
@@ -175,7 +168,6 @@ export function NodeExecutionStatusType({
 	);
 }
 
-// Error display component
 export function NodeExecutionStatusError({
 	className,
 	...props

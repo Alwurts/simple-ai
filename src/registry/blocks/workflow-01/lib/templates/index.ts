@@ -4,6 +4,7 @@ import type {
 } from "@/registry/blocks/workflow-01/lib/workflow/types";
 import { CODE_ANALYSIS_WORKFLOW } from "./code-analysis-workflow";
 import { CUSTOMER_SUPPORT_WORKFLOW } from "./customer-support-workflow";
+import { WAIT_DEMO_WORKFLOW } from "./wait-demo-workflow";
 import { WIKIPEDIA_RESEARCH_WORKFLOW } from "./wikipedia-research-workflow";
 
 export type WorkflowTemplate = {
@@ -55,6 +56,20 @@ export const WORKFLOW_TEMPLATES: WorkflowTemplate[] = [
 			"I can't log into my account, can you help?",
 			"My billing statement shows incorrect charges",
 			"The website is loading very slowly, what's wrong?",
+		],
+	},
+	{
+		id: "wait-demo",
+		name: "Wait Node Demo",
+		description:
+			"Demonstrates workflow timing control with delay functionality",
+		category: "Examples",
+		nodes: WAIT_DEMO_WORKFLOW.nodes,
+		edges: WAIT_DEMO_WORKFLOW.edges,
+		suggestions: [
+			"Process customer feedback with realistic delays",
+			"Simulate data processing workflows",
+			"Test timing-dependent business logic",
 		],
 	},
 ];

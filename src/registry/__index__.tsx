@@ -2381,24 +2381,114 @@ export const Index: Record<string, any> = {
 				target: "components/validation-status.tsx",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/components/workflow/agent-node.tsx",
-				type: "registry:component",
-				target: "components/workflow/agent-node.tsx",
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/types.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/types.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/components/workflow/end-node.tsx",
-				type: "registry:component",
-				target: "components/workflow/end-node.tsx",
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/index.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/index.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/components/workflow/if-else-node.tsx",
-				type: "registry:component",
-				target: "components/workflow/if-else-node.tsx",
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/agent/agent.shared.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/agent/agent.shared.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/components/workflow/note-node.tsx",
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/agent/agent.client.tsx",
 				type: "registry:component",
-				target: "components/workflow/note-node.tsx",
+				target: "lib/workflow/nodes/agent/agent.client.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/agent/agent.server.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/agent/agent.server.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/agent/index.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/agent/index.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/if-else/if-else.shared.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/if-else/if-else.shared.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/if-else/if-else.client.tsx",
+				type: "registry:component",
+				target: "lib/workflow/nodes/if-else/if-else.client.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/if-else/if-else.server.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/if-else/if-else.server.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/if-else/index.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/if-else/index.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/start/start.shared.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/start/start.shared.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/start/start.client.tsx",
+				type: "registry:component",
+				target: "lib/workflow/nodes/start/start.client.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/start/start.server.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/start/start.server.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/start/index.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/start/index.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/end/end.shared.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/end/end.shared.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/end/end.client.tsx",
+				type: "registry:component",
+				target: "lib/workflow/nodes/end/end.client.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/end/end.server.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/end/end.server.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/end/index.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/end/index.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/note/note.shared.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/note/note.shared.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/note/note.client.tsx",
+				type: "registry:component",
+				target: "lib/workflow/nodes/note/note.client.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/note/note.server.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/note/note.server.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/note/index.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/note/index.ts",
 			},
 			{
 				path: "./src/registry/blocks/workflow-01/components/workflow/primitives/base-handle.tsx",
@@ -2424,11 +2514,6 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/blocks/workflow-01/components/workflow/primitives/resizable-node.tsx",
 				type: "registry:component",
 				target: "components/workflow/primitives/resizable-node.tsx",
-			},
-			{
-				path: "./src/registry/blocks/workflow-01/components/workflow/start-node.tsx",
-				type: "registry:component",
-				target: "components/workflow/start-node.tsx",
 			},
 			{
 				path: "./src/registry/blocks/workflow-01/components/workflow/status-edge.tsx",
@@ -2486,11 +2571,6 @@ export const Index: Record<string, any> = {
 				target: "lib/workflow/models.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/node-factory.ts",
-				type: "registry:lib",
-				target: "lib/workflow/node-factory.ts",
-			},
-			{
 				path: "./src/registry/blocks/workflow-01/lib/workflow/types.ts",
 				type: "registry:lib",
 				target: "lib/workflow/types.ts",
@@ -2506,7 +2586,7 @@ export const Index: Record<string, any> = {
 				target: "lib/workflow/variables.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/workflow/use-workflow.ts",
+				path: "./src/registry/blocks/workflow-01/hooks/use-workflow.ts",
 				type: "registry:hook",
 				target: "hooks/workflow/use-workflow.ts",
 			},

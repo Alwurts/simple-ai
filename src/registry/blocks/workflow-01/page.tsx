@@ -36,28 +36,23 @@ import { NodeSelectorPanel } from "@/registry/blocks/workflow-01/components/node
 import { TemplateSelector } from "@/registry/blocks/workflow-01/components/template-selector";
 import { ThemeToggle } from "@/registry/blocks/workflow-01/components/theme-toggle";
 import { ValidationStatus } from "@/registry/blocks/workflow-01/components/validation-status";
-import { AgentNode } from "@/registry/blocks/workflow-01/components/workflow/agent-node";
-import { EndNode } from "@/registry/blocks/workflow-01/components/workflow/end-node";
-import { IfElseNode } from "@/registry/blocks/workflow-01/components/workflow/if-else-node";
-import { NoteNode } from "@/registry/blocks/workflow-01/components/workflow/note-node";
-import { StartNode } from "@/registry/blocks/workflow-01/components/workflow/start-node";
 import { StatusEdge } from "@/registry/blocks/workflow-01/components/workflow/status-edge";
+import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 import {
 	DEFAULT_TEMPLATE,
 	getTemplateById,
 } from "@/registry/blocks/workflow-01/lib/templates";
 import { WORKFLOW_TOOL_DESCRIPTIONS } from "@/registry/blocks/workflow-01/lib/tools";
 import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/lib/workflow/messages";
+import { getAllNodeDefinitions } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
 import type { FlowNode } from "@/registry/blocks/workflow-01/lib/workflow/types";
-import { useWorkflow } from "@/registry/blocks/workflow-01/workflow/use-workflow";
 
-const nodeTypes: NodeTypes = {
-	start: StartNode,
-	agent: AgentNode,
-	end: EndNode,
-	"if-else": IfElseNode,
-	note: NoteNode,
-};
+const nodeDefinitions = getAllNodeDefinitions();
+const nodeTypes: NodeTypes = {} as NodeTypes;
+for (const definition of nodeDefinitions) {
+	// biome-ignore lint/suspicious/noExplicitAny: ReactFlow nodeTypes accepts any component type
+	nodeTypes[definition.shared.type] = definition.client.component as any;
+}
 
 const edgeTypes: EdgeTypes = {
 	status: StatusEdge,
@@ -110,6 +105,8 @@ export function Flow() {
 			},
 		});
 
+	console.log("messages", messages);
+
 	const isLoading = status === "streaming" || status === "submitted";
 
 	useOnSelectionChange({
@@ -126,7 +123,6 @@ export function Flow() {
 				nodes: template.nodes,
 				edges: template.edges,
 			});
-			// Reset chat messages when switching templates
 			setMessages([]);
 		}
 	};

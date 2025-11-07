@@ -1,12 +1,6 @@
 import type { JSONSchema7 } from "ai";
-import type { AgentNode } from "@/registry/blocks/workflow-01/components/workflow/agent-node";
-import type { EndNode } from "@/registry/blocks/workflow-01/components/workflow/end-node";
-import type { IfElseNode } from "@/registry/blocks/workflow-01/components/workflow/if-else-node";
-import type { NoteNode } from "@/registry/blocks/workflow-01/components/workflow/note-node";
-import type { StartNode } from "@/registry/blocks/workflow-01/components/workflow/start-node";
 import type { StatusEdge } from "@/registry/blocks/workflow-01/components/workflow/status-edge";
-
-// Nodes
+import type { FlowNode, FlowNodeType } from "./nodes";
 
 export type TextNodeOutput = {
 	type: "text";
@@ -28,14 +22,7 @@ export const NODE_STATUSES = [
 
 export type NodeStatus = (typeof NODE_STATUSES)[number];
 
-export type FlowNode = AgentNode | EndNode | IfElseNode | NoteNode | StartNode;
-
-export type ProcessingNodeError = {
-	message: string;
-	type: "processing-node";
-};
-
-// Edges
+export type { FlowNode, FlowNodeType };
 
 export type FlowEdge = StatusEdge;
 
@@ -126,8 +113,6 @@ export type ValidationError =
 	| NoEndNodeError
 	| UnreachableNodeError
 	| InvalidNodeConfigError;
-
-// Type Guards
 
 export function isNodeOfType<T extends FlowNode["type"]>(
 	node: FlowNode,

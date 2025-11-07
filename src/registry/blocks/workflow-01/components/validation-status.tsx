@@ -7,7 +7,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { useWorkflow } from "@/registry/blocks/workflow-01/workflow/use-workflow";
+import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 
 export function ValidationStatus() {
 	const validationState = useWorkflow((store) => store.validationState);

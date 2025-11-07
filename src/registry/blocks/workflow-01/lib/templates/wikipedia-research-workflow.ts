@@ -3,7 +3,6 @@ import type {
 	FlowNode,
 } from "@/registry/blocks/workflow-01/lib/workflow/types";
 
-// Wikipedia Research Workflow: Start -> Researcher -> Summarizer -> End
 export const WIKIPEDIA_RESEARCH_WORKFLOW: {
 	nodes: FlowNode[];
 	edges: FlowEdge[];
