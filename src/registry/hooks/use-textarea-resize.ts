@@ -9,7 +9,6 @@ export function useTextareaResize(
 ) {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Needed
 	useLayoutEffect(() => {
 		const textArea = textareaRef.current;
 
@@ -32,7 +31,10 @@ export function useTextareaResize(
 			// Set the final height
 			textArea.style.height = `${scrollHeight + 2}px`;
 		}
-	}, [textareaRef, value, rows]);
+		// textareaRef is a ref object and shouldn't be in dependencies
+		// Only re-run when value or rows change
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [value, rows]);
 
 	return textareaRef;
 }
