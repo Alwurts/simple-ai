@@ -1,6 +1,6 @@
 import { openai } from "@ai-sdk/openai";
 import { convertToModelMessages, streamText } from "ai";
-import { toolSet } from "./lib/tools";
+import { toolSet } from "@/registry/blocks/chat-01/lib/tools";
 
 export async function POST(req: Request) {
 	const { messages } = await req.json();

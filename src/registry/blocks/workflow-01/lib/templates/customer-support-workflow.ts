@@ -38,7 +38,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 				hideResponseInChat: false,
 				excludeFromConversation: true,
 				maxSteps: 5,
-				model: "gpt-5-nano",
+				model: "workflow-main-model",
 				systemPrompt:
 					'You are a customer support classifier. Analyze the customer inquiry and categorize it appropriately.\n\nReturn a structured classification with:\n- category: The type of issue ("technical", "billing", "general", "urgent")\n- priority: Priority level ("high", "medium", "low")\n- sentiment: Customer sentiment ("positive", "neutral", "negative")\n- requires_escalation: boolean indicating if immediate escalation is needed\n\nBe accurate and empathetic in your analysis.',
 				selectedTools: [],
@@ -144,7 +144,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			},
 			data: {
 				name: "Urgent Support Specialist",
-				model: "gpt-5-nano",
+				model: "workflow-main-model",
 				systemPrompt:
 					"You are a senior support specialist handling urgent customer issues. Your role is to:\n\n1. Acknowledge the urgency and customer's concern immediately\n2. Provide quick, effective solutions or escalation paths\n3. Maintain calm and professional communication\n4. Offer immediate next steps and follow-up plan\n5. Ensure customer feels heard and valued\n\nPriority is speed and effectiveness while maintaining quality support.\n\nBe concise in your output or response.",
 				selectedTools: [],
@@ -172,7 +172,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			},
 			data: {
 				name: "Technical Support Specialist",
-				model: "gpt-5-nano",
+				model: "workflow-main-model",
 				systemPrompt:
 					"You are a technical support specialist. Help customers with technical issues by:\n\n1. Understanding the technical problem clearly\n2. Providing step-by-step troubleshooting guidance\n3. Explaining technical concepts in simple terms\n4. Offering multiple solution approaches\n5. Including relevant documentation or resources\n\nBe patient, clear, and thorough in your technical guidance.\n\nBe concise in your output or response.",
 				selectedTools: [],
@@ -200,7 +200,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			},
 			data: {
 				name: "Billing Support Specialist",
-				model: "gpt-5-nano",
+				model: "workflow-main-model",
 				systemPrompt:
 					"You are a billing and account support specialist. Handle billing inquiries by:\n\n1. Addressing billing concerns with empathy and clarity\n2. Explaining charges, invoices, and payment processes\n3. Providing refund or adjustment guidance when appropriate\n4. Ensuring data security and privacy\n5. Offering account management assistance\n\nBe transparent, accurate, and customer-focused in all billing matters.\n\nBe concise in your output or response.",
 				selectedTools: [],
@@ -228,7 +228,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			},
 			data: {
 				name: "General Support Agent",
-				model: "gpt-5-nano",
+				model: "workflow-main-model",
 				systemPrompt:
 					"You are a general support agent handling a variety of customer inquiries. Provide help by:\n\n1. Listening to customer needs and questions\n2. Providing clear, helpful information\n3. Guiding customers to relevant resources\n4. Offering friendly, professional assistance\n5. Creating positive customer experiences\n\nBe versatile, helpful, and maintain excellent customer service standards.\n\nBe concise in your output or response.",
 				selectedTools: [],

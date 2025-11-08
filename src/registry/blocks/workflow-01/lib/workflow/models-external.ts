@@ -1,4 +1,4 @@
-import { createOpenAI } from "@ai-sdk/openai";
+import { openai } from "@ai-sdk/openai";
 
 import {
 	customProvider,
@@ -6,15 +6,9 @@ import {
 	wrapLanguageModel,
 } from "ai";
 
-const AI_GATEWAY_URL = process.env.AI_GATEWAY_URL;
-
-const openaiClient = createOpenAI({
-	baseURL: `${AI_GATEWAY_URL}/openai`,
-});
-
 const languageModels = {
 	"workflow-main-model": wrapLanguageModel({
-		model: openaiClient.chat("gpt-5-mini"),
+		model: openai.chat("gpt-5-mini"),
 		middleware: defaultSettingsMiddleware({
 			settings: {
 				providerOptions: {

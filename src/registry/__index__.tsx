@@ -2298,6 +2298,7 @@ export const Index: Record<string, any> = {
 			"@simple-ai/chat-message-area",
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
+			"@simple-ai/chat-suggestions",
 		],
 		files: [
 			{
@@ -2491,6 +2492,26 @@ export const Index: Record<string, any> = {
 				target: "lib/workflow/nodes/note/index.ts",
 			},
 			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/wait/wait.shared.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/wait/wait.shared.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/wait/wait.client.tsx",
+				type: "registry:component",
+				target: "lib/workflow/nodes/wait/wait.client.tsx",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/wait/wait.server.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/wait/wait.server.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/wait/index.ts",
+				type: "registry:lib",
+				target: "lib/workflow/nodes/wait/index.ts",
+			},
+			{
 				path: "./src/registry/blocks/workflow-01/components/workflow/primitives/base-handle.tsx",
 				type: "registry:component",
 				target: "components/workflow/primitives/base-handle.tsx",
@@ -2526,19 +2547,29 @@ export const Index: Record<string, any> = {
 				target: "components/model-selector.tsx",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/lib/templates/code-analysis-workflow.ts",
-				type: "registry:lib",
-				target: "lib/templates/code-analysis-workflow.ts",
-			},
-			{
 				path: "./src/registry/blocks/workflow-01/lib/templates/index.ts",
 				type: "registry:lib",
 				target: "lib/templates/index.ts",
 			},
 			{
+				path: "./src/registry/blocks/workflow-01/lib/templates/code-analysis-workflow.ts",
+				type: "registry:lib",
+				target: "lib/templates/code-analysis-workflow.ts",
+			},
+			{
 				path: "./src/registry/blocks/workflow-01/lib/templates/wikipedia-research-workflow.ts",
 				type: "registry:lib",
 				target: "lib/templates/wikipedia-research-workflow.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/templates/wait-demo-workflow.ts",
+				type: "registry:lib",
+				target: "lib/templates/wait-demo-workflow.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/templates/customer-support-workflow.ts",
+				type: "registry:lib",
+				target: "lib/templates/customer-support-workflow.ts",
 			},
 			{
 				path: "./src/registry/blocks/workflow-01/lib/tools/index.ts",
@@ -2566,7 +2597,7 @@ export const Index: Record<string, any> = {
 				target: "lib/workflow/messages.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/models.ts",
+				path: "./src/registry/blocks/workflow-01/lib/workflow/models-external.ts",
 				type: "registry:lib",
 				target: "lib/workflow/models.ts",
 			},

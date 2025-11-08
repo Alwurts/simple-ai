@@ -38,7 +38,7 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 					hideResponseInChat: false,
 					excludeFromConversation: true,
 					maxSteps: 5,
-					model: "gpt-5-nano",
+					model: "workflow-main-model",
 					systemPrompt:
 						'You are a code analysis expert. Analyze the provided code snippet and determine its programming language and key characteristics.\n\nReturn a structured analysis with:\n- language: The primary programming language (e.g., "typescript", "python", "javascript", "java", "csharp", "cpp", "go", "rust", "php", "ruby", "swift", "kotlin")\n- framework: Any specific framework or library used (if detectable)\n- complexity: "simple", "medium", or "complex"\n- has_errors: boolean indicating if there are obvious syntax/logic errors\n\nFocus on accurate language detection and provide concise, structured output.',
 					selectedTools: [],
@@ -142,7 +142,7 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 				},
 				data: {
 					name: "TypeScript Specialist",
-					model: "gpt-5-nano",
+					model: "workflow-main-model",
 					systemPrompt:
 						"You are a TypeScript expert. Analyze the provided TypeScript code and provide detailed feedback including:\n\n1. Code quality assessment\n2. Type safety evaluation\n3. Performance considerations\n4. Best practices compliance\n5. Suggested improvements\n\nBe thorough but concise in your analysis. Focus on TypeScript-specific patterns, type annotations, and modern TypeScript features.\n\nBe concise in your output or response.",
 					selectedTools: [],
@@ -170,7 +170,7 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 				},
 				data: {
 					name: "Python Specialist",
-					model: "gpt-5-nano",
+					model: "workflow-main-model",
 					systemPrompt:
 						"You are a Python expert. Analyze the provided Python code and provide detailed feedback including:\n\n1. Code quality assessment (PEP 8 compliance, readability)\n2. Performance considerations\n3. Pythonic patterns and best practices\n4. Error handling and edge cases\n5. Suggested improvements\n\nFocus on Python-specific idioms, efficient data structures, and modern Python features.\n\nBe concise in your output or response.",
 					selectedTools: [],
@@ -198,7 +198,7 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 				},
 				data: {
 					name: "JavaScript Specialist",
-					model: "gpt-5-nano",
+					model: "workflow-main-model",
 					systemPrompt:
 						"You are a JavaScript expert. Analyze the provided JavaScript code and provide detailed feedback including:\n\n1. Code quality assessment\n2. ES6+ features usage\n3. Performance considerations\n4. Browser compatibility\n5. Security considerations\n6. Suggested improvements\n\nFocus on modern JavaScript patterns, asynchronous programming, and best practices.\n\nBe concise in your output or response.",
 					selectedTools: [],
@@ -226,7 +226,7 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 				},
 				data: {
 					name: "Java Specialist",
-					model: "gpt-5-nano",
+					model: "workflow-main-model",
 					systemPrompt:
 						"You are a Java expert. Analyze the provided Java code and provide detailed feedback including:\n\n1. Code quality assessment\n2. Object-oriented design patterns\n3. Performance considerations\n4. Memory management\n5. Exception handling\n6. Suggested improvements\n\nFocus on Java-specific patterns, JVM considerations, and enterprise Java best practices.\n\nBe concise in your output or response.",
 					selectedTools: [],
@@ -254,7 +254,7 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 				},
 				data: {
 					name: "General Code Specialist",
-					model: "gpt-5-nano",
+					model: "workflow-main-model",
 					systemPrompt:
 						"You are a general programming expert. Analyze the provided code and provide feedback on:\n\n1. Overall code quality and structure\n2. Algorithm efficiency\n3. Error handling\n4. Documentation and readability\n5. General best practices\n6. Suggested improvements\n\nProvide comprehensive analysis regardless of the programming language.\n\nBe concise in your output or response.",
 					selectedTools: [],
