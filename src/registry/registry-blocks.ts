@@ -873,6 +873,7 @@ export const blocks: Registry["items"] = [
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
+			"@simple-ai/json-schema-editor",
 		],
 		files: [
 			{
@@ -898,16 +899,6 @@ export const blocks: Registry["items"] = [
 			{
 				path: "blocks/workflow-01/components/chat.tsx",
 				target: "components/chat.tsx",
-				type: "registry:component",
-			},
-			{
-				path: "blocks/workflow-01/components/editor/schema-preview.tsx",
-				target: "components/editor/schema-preview.tsx",
-				type: "registry:component",
-			},
-			{
-				path: "blocks/workflow-01/components/editor/schema-editor.tsx",
-				target: "components/editor/schema-editor.tsx",
 				type: "registry:component",
 			},
 			{

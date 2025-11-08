@@ -338,6 +338,20 @@
 			]
 		},
 		{
+			"name": "json-schema-editor",
+			"type": "registry:ui",
+			"title": "JSON Schema Editor",
+			"description": "A visual editor for creating and editing JSON Schema definitions with support for nested objects, arrays, enums, and property descriptions.",
+			"dependencies": ["nanoid"],
+			"registryDependencies": ["button", "dialog", "input", "select"],
+			"files": [
+				{
+					"path": "./src/registry/ui/json-schema-editor.tsx",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
 			"name": "use-textarea-resize",
 			"type": "registry:hook",
 			"files": [
@@ -1511,7 +1525,8 @@
 				"@simple-ai/chat-message-area",
 				"@simple-ai/chat-message",
 				"@simple-ai/tool-invocation",
-				"@simple-ai/chat-suggestions"
+				"@simple-ai/chat-suggestions",
+				"@simple-ai/json-schema-editor"
 			],
 			"files": [
 				{
@@ -1538,16 +1553,6 @@
 					"path": "./src/registry/blocks/workflow-01/components/chat.tsx",
 					"type": "registry:component",
 					"target": "components/chat.tsx"
-				},
-				{
-					"path": "./src/registry/blocks/workflow-01/components/editor/schema-preview.tsx",
-					"type": "registry:component",
-					"target": "components/editor/schema-preview.tsx"
-				},
-				{
-					"path": "./src/registry/blocks/workflow-01/components/editor/schema-editor.tsx",
-					"type": "registry:component",
-					"target": "components/editor/schema-editor.tsx"
 				},
 				{
 					"path": "./src/registry/blocks/workflow-01/components/editor/condition-editor.tsx",

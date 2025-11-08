@@ -311,4 +311,14 @@ export const ui: Registry["items"] = [
 			},
 		],
 	},
+	{
+		name: "json-schema-editor",
+		title: "JSON Schema Editor",
+		description:
+			"A visual editor for creating and editing JSON Schema definitions with support for nested objects, arrays, enums, and property descriptions.",
+		type: "registry:ui",
+		dependencies: ["nanoid"],
+		registryDependencies: ["button", "dialog", "input", "select"],
+		files: [{ type: "registry:ui", path: "ui/json-schema-editor.tsx" }],
+	},
 ];

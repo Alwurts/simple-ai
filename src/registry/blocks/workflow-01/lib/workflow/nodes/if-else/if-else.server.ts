@@ -6,6 +6,10 @@ import type {
 	NodeServerDefinition,
 } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
 
+// Cache the CEL environment since it's stateless and reusable
+const celEnv = new Environment();
+celEnv.registerVariable("input", "dyn");
+
 function executeIfElseNode(
 	context: ExecutionContext<IfElseNode>,
 ): NodeExecutionResult {
@@ -19,11 +23,6 @@ function executeIfElseNode(
 	let nextNodeId: string | null = null;
 
 	if (previousContext) {
-		const env = new Environment();
-
-		// Register the input variable so CEL knows about it
-		env.registerVariable("input", "dyn");
-
 		const evalContext = {
 			input: previousContext.structured
 				? previousContext.structured
@@ -36,7 +35,7 @@ function executeIfElseNode(
 			}
 
 			try {
-				const conditionResult = env.evaluate(
+				const conditionResult = celEnv.evaluate(
 					handle.condition,
 					evalContext,
 				);
@@ -62,7 +61,8 @@ function executeIfElseNode(
 		if (!nextNodeId) {
 			const elseEdge = edges.find(
 				(edge) =>
-					edge.source === node.id && edge.sourceHandle === "else",
+					edge.source === node.id &&
+					edge.sourceHandle === "output-else",
 			);
 			nextNodeId = elseEdge ? elseEdge.target : null;
 		}

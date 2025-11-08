@@ -104,8 +104,6 @@ export function Flow() {
 			},
 		});
 
-	console.log("messages", messages);
-
 	const isLoading = status === "streaming" || status === "submitted";
 
 	useOnSelectionChange({

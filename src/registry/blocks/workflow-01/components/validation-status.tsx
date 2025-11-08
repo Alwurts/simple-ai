@@ -85,14 +85,11 @@ export function ValidationStatus() {
 								{validationState.warnings.map(
 									(warning, idx) => (
 										<div
-											key={`warning-${warning}-${
-												// biome-ignore lint/suspicious/noArrayIndexKey: Neede it
-												idx
-											}`}
+											key={`warning-${warning.type}-${warning.message}-${idx}`}
 											className="text-xs p-2 bg-yellow-50 border border-yellow-200 rounded"
 										>
 											<div className="text-yellow-700">
-												{warning}
+												{warning.message}
 											</div>
 										</div>
 									),

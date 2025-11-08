@@ -576,6 +576,32 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"json-schema-editor": {
+		name: "json-schema-editor",
+		description:
+			"A visual editor for creating and editing JSON Schema definitions with support for nested objects, arrays, enums, and property descriptions.",
+		type: "registry:ui",
+		registryDependencies: ["button", "dialog", "input", "select"],
+		files: [
+			{
+				path: "./src/registry/ui/json-schema-editor.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/json-schema-editor.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"use-textarea-resize": {
 		name: "use-textarea-resize",
 		description: "",
@@ -2299,6 +2325,7 @@ export const Index: Record<string, any> = {
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
+			"@simple-ai/json-schema-editor",
 		],
 		files: [
 			{
@@ -2325,16 +2352,6 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/blocks/workflow-01/components/chat.tsx",
 				type: "registry:component",
 				target: "components/chat.tsx",
-			},
-			{
-				path: "./src/registry/blocks/workflow-01/components/editor/schema-preview.tsx",
-				type: "registry:component",
-				target: "components/editor/schema-preview.tsx",
-			},
-			{
-				path: "./src/registry/blocks/workflow-01/components/editor/schema-editor.tsx",
-				type: "registry:component",
-				target: "components/editor/schema-editor.tsx",
 			},
 			{
 				path: "./src/registry/blocks/workflow-01/components/editor/condition-editor.tsx",

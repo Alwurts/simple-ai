@@ -23,7 +23,7 @@ export interface WorkflowState {
 	validationState: {
 		valid: boolean;
 		errors: ValidationError[];
-		warnings: string[];
+		warnings: ValidationError[];
 		lastValidated: number | null;
 	};
 	onNodesChange: (changes: NodeChange<FlowNode>[]) => void;

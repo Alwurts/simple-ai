@@ -163,6 +163,7 @@ export function Chat({
 	};
 
 	const resetMessages = () => {
+		stop();
 		setMessages([]);
 		resetNodeStatuses();
 	};

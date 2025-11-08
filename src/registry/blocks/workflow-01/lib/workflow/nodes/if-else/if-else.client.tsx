@@ -100,7 +100,7 @@ export function IfElseNode({ selected, data, deletable, id }: IfElseNodeProps) {
 						);
 					})}
 					<LabeledHandle
-						id="else"
+						id="output-else"
 						title="Else"
 						labelClassName="max-w-32 truncate"
 						type="source"
@@ -142,7 +142,7 @@ export function IfElseNodePanel({ node }: { node: IfElseNodeType }) {
 				dynamicSourceHandles: [
 					...node.data.dynamicSourceHandles,
 					{
-						id: nanoid(),
+						id: `output-${nanoid()}`,
 						label: null,
 						condition: "",
 					},
@@ -288,7 +288,7 @@ export function createIfElseNode(position: {
 			status: "idle",
 			dynamicSourceHandles: [
 				{
-					id: nanoid(),
+					id: `output-${nanoid()}`,
 					label: "If",
 					condition: "",
 				},

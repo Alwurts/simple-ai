@@ -29,7 +29,7 @@ export function StartNode({ id, selected, data }: StartNodeProps) {
 
 	const isHandleConnectable = canConnectHandle({
 		nodeId: id,
-		handleId: "message",
+		handleId: "output",
 		type: "source",
 	});
 
@@ -55,7 +55,7 @@ export function StartNode({ id, selected, data }: StartNodeProps) {
 			</NodeHeader>
 
 			<BaseHandle
-				id="message"
+				id="output"
 				type="source"
 				position={Position.Right}
 				isConnectable={isHandleConnectable}
