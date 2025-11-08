@@ -1,6 +1,9 @@
 import type { JSONSchema7 } from "ai";
 import type { StatusEdge } from "@/registry/blocks/workflow-01/components/workflow/status-edge";
-import type { FlowNode, FlowNodeType } from "./nodes";
+import type {
+	FlowNode,
+	FlowNodeType,
+} from "@/registry/blocks/workflow-01/lib/workflow/nodes";
 
 export type TextNodeOutput = {
 	type: "text";

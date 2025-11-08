@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import {
 	type ParsedSchemaProperty,
 	parseJSONSchema,
-} from "@/registry/blocks/workflow-01/lib/workflow/json-schema-utils";
+} from "@/registry/blocks/workflow-01/lib/workflow/context/schema-introspection";
 
 interface SchemaPreviewProps {
 	schema: JSONSchema7;

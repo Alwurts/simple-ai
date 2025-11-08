@@ -1,9 +1,9 @@
-import { agentNodeDefinition } from "./agent";
-import { endNodeDefinition } from "./end";
-import { ifElseNodeDefinition } from "./if-else";
-import { noteNodeDefinition } from "./note";
-import { startNodeDefinition } from "./start";
-import { waitNodeDefinition } from "./wait";
+import { agentNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/agent";
+import { endNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/end";
+import { ifElseNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/if-else";
+import { noteNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/note";
+import { startNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/start";
+import { waitNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/wait";
 
 const nodeDefinitions = {
 	agent: agentNodeDefinition,

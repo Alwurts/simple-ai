@@ -1,10 +1,10 @@
-import jexl from "jexl";
+import { Environment } from "@marcbachmann/cel-js";
+import type { IfElseNode } from "@/registry/blocks/workflow-01/lib/workflow/nodes/if-else/if-else.shared";
 import type {
 	ExecutionContext,
 	NodeExecutionResult,
 	NodeServerDefinition,
-} from "../types";
-import type { IfElseNode } from "./if-else.shared";
+} from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
 
 function executeIfElseNode(
 	context: ExecutionContext<IfElseNode>,
@@ -16,28 +16,32 @@ function executeIfElseNode(
 	};
 
 	const previousContext = executionMemory[previousNodeId];
-
 	let nextNodeId: string | null = null;
 
 	if (previousContext) {
+		const env = new Environment();
+
+		// Register the input variable so CEL knows about it
+		env.registerVariable("input", "dyn");
+
+		const evalContext = {
+			input: previousContext.structured
+				? previousContext.structured
+				: previousContext.text,
+		};
+
 		for (const handle of node.data.dynamicSourceHandles) {
 			if (!handle.condition || handle.condition.trim() === "") {
 				continue;
 			}
 
 			try {
-				const jexlContext = {
-					input: previousContext.structured
-						? previousContext.structured
-						: previousContext.text,
-				};
-
-				const conditionResult = jexl.evalSync(
+				const conditionResult = env.evaluate(
 					handle.condition,
-					jexlContext,
+					evalContext,
 				);
 
-				if (conditionResult) {
+				if (conditionResult === true) {
 					const outgoingEdge = edges.find(
 						(edge) =>
 							edge.source === node.id &&
@@ -49,11 +53,9 @@ function executeIfElseNode(
 						break;
 					}
 				}
-			} catch (error) {
-				console.error(
-					`Error evaluating condition: ${handle.condition}`,
-					error,
-				);
+			} catch {
+				// Silently continue to next condition if evaluation fails
+				// Validation should have caught this earlier
 			}
 		}
 

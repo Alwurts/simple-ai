@@ -1,8 +1,10 @@
-import type { NodeDefinition } from "../types";
-import { startClientDefinition } from "./start.client";
-import { startServerDefinition } from "./start.server";
-import type { StartNode } from "./start.shared";
-import { startSharedDefinition } from "./start.shared";
+import { startClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/start/start.client";
+import { startServerDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/start/start.server";
+import {
+	type StartNode,
+	startSharedDefinition,
+} from "@/registry/blocks/workflow-01/lib/workflow/nodes/start/start.shared";
+import type { NodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
 
 export const startNodeDefinition: NodeDefinition<StartNode> = {
 	shared: startSharedDefinition,

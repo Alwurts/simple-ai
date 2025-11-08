@@ -1,9 +1,9 @@
+import type { EndNode } from "@/registry/blocks/workflow-01/lib/workflow/nodes/end/end.shared";
 import type {
 	ExecutionContext,
 	NodeExecutionResult,
 	NodeServerDefinition,
-} from "../types";
-import type { EndNode } from "./end.shared";
+} from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
 
 function executeEndNode(
 	context: ExecutionContext<EndNode>,

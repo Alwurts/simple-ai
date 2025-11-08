@@ -844,8 +844,7 @@ export const blocks: Registry["items"] = [
 			"@ai-sdk/react",
 			"@ai-sdk/openai",
 			"nanoid",
-			"jexl",
-			"@types/jexl",
+			"@marcbachmann/cel-js",
 			"@uiw/react-codemirror",
 			"@codemirror/language",
 			"@lezer/highlight",
@@ -1162,11 +1161,6 @@ export const blocks: Registry["items"] = [
 				type: "registry:lib",
 			},
 			{
-				path: "blocks/workflow-01/lib/workflow/json-schema-utils.ts",
-				target: "lib/workflow/json-schema-utils.ts",
-				type: "registry:lib",
-			},
-			{
 				path: "blocks/workflow-01/lib/workflow/messages.ts",
 				target: "lib/workflow/messages.ts",
 				type: "registry:lib",
@@ -1187,8 +1181,13 @@ export const blocks: Registry["items"] = [
 				type: "registry:lib",
 			},
 			{
-				path: "blocks/workflow-01/lib/workflow/variables.ts",
-				target: "lib/workflow/variables.ts",
+				path: "blocks/workflow-01/lib/workflow/context/schema-introspection.ts",
+				target: "lib/workflow/context/schema-introspection.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/context/variable-resolver.ts",
+				target: "lib/workflow/context/variable-resolver.ts",
 				type: "registry:lib",
 			},
 			{

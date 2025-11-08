@@ -14,8 +14,8 @@ import {
 	NodeHeaderTitle,
 } from "@/registry/blocks/workflow-01/components/workflow/primitives/node-header";
 import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
-import type { NodeClientDefinition } from "../types";
-import type { StartNode as StartNodeType } from "./start.shared";
+import type { StartNode as StartNodeType } from "@/registry/blocks/workflow-01/lib/workflow/nodes/start/start.shared";
+import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
 
 export interface StartNodeProps extends NodeProps<StartNodeType> {}
 

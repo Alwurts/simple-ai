@@ -1,7 +1,10 @@
 import type { Node } from "@xyflow/react";
 import { z } from "zod";
-import type { ValidationError } from "../../types";
-import type { NodeSharedDefinition, ValidationContext } from "../types";
+import type {
+	NodeSharedDefinition,
+	ValidationContext,
+} from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+import type { ValidationError } from "@/registry/blocks/workflow-01/lib/workflow/types";
 
 const textNodeOutputSchema = z.object({
 	type: z.literal("text"),

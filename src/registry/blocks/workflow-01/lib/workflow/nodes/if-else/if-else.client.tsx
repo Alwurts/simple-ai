@@ -24,9 +24,9 @@ import {
 	NodeHeaderTitle,
 } from "@/registry/blocks/workflow-01/components/workflow/primitives/node-header";
 import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
-import { getAvailableVariables } from "@/registry/blocks/workflow-01/lib/workflow/variables";
-import type { NodeClientDefinition } from "../types";
-import type { IfElseNode as IfElseNodeType } from "./if-else.shared";
+import { getUnionOfVariables } from "@/registry/blocks/workflow-01/lib/workflow/context/variable-resolver";
+import type { IfElseNode as IfElseNodeType } from "@/registry/blocks/workflow-01/lib/workflow/nodes/if-else/if-else.shared";
+import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
 
 export interface IfElseNodeProps extends NodeProps<IfElseNodeType> {}
 
@@ -119,9 +119,21 @@ export function IfElseNodePanel({ node }: { node: IfElseNodeType }) {
 	const updateNodeInternals = useUpdateNodeInternals();
 
 	const availableVariables = useMemo(
-		() => getAvailableVariables(node.id, nodes, edges),
+		() => getUnionOfVariables(node.id, nodes, edges),
 		[node.id, nodes, edges],
 	);
+
+	const getConditionError = (handleId: string): string | undefined => {
+		return node.data.validationErrors?.find(
+			(err: {
+				type?: string;
+				condition?: { handleId?: string; error?: string };
+			}) =>
+				err.type === "invalid-condition" &&
+				err.condition?.handleId === handleId,
+		)?.condition?.error;
+	};
+
 	const addSourceHandle = () => {
 		updateNode({
 			id: node.id,
@@ -238,6 +250,9 @@ export function IfElseNodePanel({ node }: { node: IfElseNodeType }) {
 											})
 										}
 										availableVariables={availableVariables}
+										validationError={getConditionError(
+											handle.id,
+										)}
 										placeholder="Enter condition expression"
 									/>
 								</div>

@@ -2,8 +2,8 @@ import type {
 	ExecutionContext,
 	NodeExecutionResult,
 	NodeServerDefinition,
-} from "../types";
-import type { WaitNode } from "./wait.shared";
+} from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+import type { WaitNode } from "@/registry/blocks/workflow-01/lib/workflow/nodes/wait/wait.shared";
 
 async function executeWaitNode(
 	context: ExecutionContext<WaitNode>,

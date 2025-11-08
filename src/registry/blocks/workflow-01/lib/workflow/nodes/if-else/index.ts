@@ -1,8 +1,10 @@
-import type { NodeDefinition } from "../types";
-import { ifElseClientDefinition } from "./if-else.client";
-import { ifElseServerDefinition } from "./if-else.server";
-import type { IfElseNode } from "./if-else.shared";
-import { ifElseSharedDefinition } from "./if-else.shared";
+import { ifElseClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/if-else/if-else.client";
+import { ifElseServerDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/if-else/if-else.server";
+import {
+	type IfElseNode,
+	ifElseSharedDefinition,
+} from "@/registry/blocks/workflow-01/lib/workflow/nodes/if-else/if-else.shared";
+import type { NodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
 
 export const ifElseNodeDefinition: NodeDefinition<IfElseNode> = {
 	shared: ifElseSharedDefinition,

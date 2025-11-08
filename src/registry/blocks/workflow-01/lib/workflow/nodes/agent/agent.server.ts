@@ -11,12 +11,12 @@ import {
 	workflowTools,
 } from "@/registry/blocks/workflow-01/lib/tools";
 import { workflowModel } from "@/registry/blocks/workflow-01/lib/workflow/models";
+import type { AgentNode } from "@/registry/blocks/workflow-01/lib/workflow/nodes/agent/agent.shared";
 import type {
 	ExecutionContext,
 	NodeExecutionResult,
 	NodeServerDefinition,
-} from "../types";
-import type { AgentNode } from "./agent.shared";
+} from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
 
 async function executeAgentNode(
 	context: ExecutionContext<AgentNode>,

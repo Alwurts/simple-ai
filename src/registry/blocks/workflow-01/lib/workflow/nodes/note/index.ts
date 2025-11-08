@@ -1,8 +1,10 @@
-import type { NodeDefinition } from "../types";
-import { noteClientDefinition } from "./note.client";
-import { noteServerDefinition } from "./note.server";
-import type { NoteNode } from "./note.shared";
-import { noteSharedDefinition } from "./note.shared";
+import { noteClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/note/note.client";
+import { noteServerDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/note/note.server";
+import {
+	type NoteNode,
+	noteSharedDefinition,
+} from "@/registry/blocks/workflow-01/lib/workflow/nodes/note/note.shared";
+import type { NodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
 
 export const noteNodeDefinition: NodeDefinition<NoteNode> = {
 	shared: noteSharedDefinition,

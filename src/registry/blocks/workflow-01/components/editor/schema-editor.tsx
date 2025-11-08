@@ -21,7 +21,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { parseJSONSchemaProperty } from "@/registry/blocks/workflow-01/lib/workflow/json-schema-utils";
+import { parseJSONSchemaProperty } from "@/registry/blocks/workflow-01/lib/workflow/context/schema-introspection";
 
 const MAX_NESTING_LEVEL = 5;
 

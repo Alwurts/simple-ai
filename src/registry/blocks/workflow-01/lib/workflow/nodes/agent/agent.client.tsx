@@ -39,10 +39,10 @@ import {
 	WORKFLOW_TOOLS,
 	workflowTools,
 } from "@/registry/blocks/workflow-01/lib/tools";
+import type { workflowModelID } from "@/registry/blocks/workflow-01/lib/workflow/models";
+import type { AgentNode as AgentNodeType } from "@/registry/blocks/workflow-01/lib/workflow/nodes/agent/agent.shared";
+import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
 import { idToReadableText } from "@/registry/lib/id-to-readable-text";
-import type { workflowModelID } from "../../models";
-import type { NodeClientDefinition } from "../types";
-import type { AgentNode as AgentNodeType } from "./agent.shared";
 
 export interface AgentNodeProps extends NodeProps<AgentNodeType> {}
 

@@ -1,9 +1,12 @@
 import type { NodeProps } from "@xyflow/react";
 import type { ModelMessage, UIMessageStreamWriter } from "ai";
 import type { z } from "zod";
-import type { WorkflowUIMessage } from "../messages";
-import type { FlowEdge, ValidationError } from "../types";
-import type { FlowNode } from "./index";
+import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/lib/workflow/messages";
+import type { FlowNode } from "@/registry/blocks/workflow-01/lib/workflow/nodes/index";
+import type {
+	FlowEdge,
+	ValidationError,
+} from "@/registry/blocks/workflow-01/lib/workflow/types";
 
 export type ExecutionResult = {
 	text: string;

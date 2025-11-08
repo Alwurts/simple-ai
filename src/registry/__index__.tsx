@@ -2587,11 +2587,6 @@ export const Index: Record<string, any> = {
 				target: "lib/workflow/executor.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/json-schema-utils.ts",
-				type: "registry:lib",
-				target: "lib/workflow/json-schema-utils.ts",
-			},
-			{
 				path: "./src/registry/blocks/workflow-01/lib/workflow/messages.ts",
 				type: "registry:lib",
 				target: "lib/workflow/messages.ts",
@@ -2612,9 +2607,14 @@ export const Index: Record<string, any> = {
 				target: "lib/workflow/validation.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/variables.ts",
+				path: "./src/registry/blocks/workflow-01/lib/workflow/context/schema-introspection.ts",
 				type: "registry:lib",
-				target: "lib/workflow/variables.ts",
+				target: "lib/workflow/context/schema-introspection.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/context/variable-resolver.ts",
+				type: "registry:lib",
+				target: "lib/workflow/context/variable-resolver.ts",
 			},
 			{
 				path: "./src/registry/blocks/workflow-01/hooks/use-workflow.ts",
