@@ -421,3 +421,17 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 			},
 		],
 	};
+
+export const CODE_ANALYSIS_TEMPLATE = {
+	id: "code-analysis",
+	name: "Code Agent",
+	description: "Intelligent routing to language-specific code experts",
+	category: "Development",
+	nodes: CODE_ANALYSIS_WORKFLOW.nodes,
+	edges: CODE_ANALYSIS_WORKFLOW.edges,
+	suggestions: [
+		"Show me how to write a functional React component",
+		"Explain how to create a Python function with error handling",
+		"Teach me how to write an efficient SQL query",
+	],
+};

@@ -402,3 +402,17 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 		},
 	],
 };
+
+export const CUSTOMER_SUPPORT_TEMPLATE = {
+	id: "customer-support",
+	name: "Support Agent",
+	description: "Intelligent customer support with priority-based routing",
+	category: "Business",
+	nodes: CUSTOMER_SUPPORT_WORKFLOW.nodes,
+	edges: CUSTOMER_SUPPORT_WORKFLOW.edges,
+	suggestions: [
+		"I can't log into my account, can you help?",
+		"My billing statement shows incorrect charges",
+		"The website is loading very slowly, what's wrong?",
+	],
+};

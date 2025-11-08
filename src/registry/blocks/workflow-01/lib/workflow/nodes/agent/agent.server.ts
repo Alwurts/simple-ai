@@ -48,12 +48,23 @@ async function executeAgentNode(
 		}
 	}
 
+	const maxSteps = node.data.maxSteps ?? 5;
+
 	const streamResult = streamText({
 		model: workflowModel.languageModel(node.data.model),
 		system: node.data.systemPrompt,
 		messages: accumulatedMessages,
 		tools: agentTools,
-		stopWhen: stepCountIs(node.data.maxSteps ?? 5),
+		stopWhen: stepCountIs(maxSteps),
+		prepareStep: async ({ stepNumber }) => {
+			if (stepNumber === maxSteps - 1) {
+				return {
+					//activeTools: [],
+					toolChoice: "none",
+				};
+			}
+			return {};
+		},
 		experimental_transform: smoothStream(),
 		experimental_output: output,
 	});
@@ -69,6 +80,8 @@ async function executeAgentNode(
 
 	const response = await streamResult.response;
 	const text = await streamResult.text;
+
+	console.log("text", text);
 
 	let structured: unknown;
 	if (node.data.sourceType.type === "structured") {

@@ -2,15 +2,16 @@
 
 ## Components
 
+- [ ] Add reasoning
+- [x] Add tool invocation
+- [ ] Add suggestions component
+
 ### Bugs
 
 - [ ] For tiptap chat input we should have a way to restrict how many agents or items to be able to select min and max
 - [ ] Add Markdown styling inside of chat input and a toolbar to edit
-- [ ] Add reasoning
-- [x] Add tool invocation
 - [ ] Work on markdown viewer
-- [ ] Add suggestions component
-
+- [ ] Check why reasoning is not streaming in workflow
 - [x] Add new workflow builder to announcements
 
 ### Workflow Builder

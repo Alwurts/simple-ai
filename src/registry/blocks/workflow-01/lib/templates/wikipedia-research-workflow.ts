@@ -229,3 +229,18 @@ export const WIKIPEDIA_RESEARCH_WORKFLOW: {
 		},
 	],
 };
+
+export const WIKIPEDIA_RESEARCH_TEMPLATE = {
+	id: "wikipedia-research",
+	name: "Wikipedia Agent",
+	description:
+		"Comprehensive research workflow using Wikipedia search and summary tools",
+	category: "Research",
+	nodes: WIKIPEDIA_RESEARCH_WORKFLOW.nodes,
+	edges: WIKIPEDIA_RESEARCH_WORKFLOW.edges,
+	suggestions: [
+		"Research the history of artificial intelligence",
+		"What are the key principles of quantum physics?",
+		"Research the biography of Albert Einstein",
+	],
+};
