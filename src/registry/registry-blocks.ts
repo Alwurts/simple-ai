@@ -873,6 +873,7 @@ export const blocks: Registry["items"] = [
 			"@simple-ai/chat-message-area",
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
+			"@simple-ai/chat-suggestions",
 		],
 		files: [
 			{
@@ -956,24 +957,134 @@ export const blocks: Registry["items"] = [
 				type: "registry:component",
 			},
 			{
-				path: "blocks/workflow-01/components/workflow/agent-node.tsx",
-				target: "components/workflow/agent-node.tsx",
+				path: "blocks/workflow-01/lib/workflow/nodes/types.ts",
+				target: "lib/workflow/nodes/types.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/index.ts",
+				target: "lib/workflow/nodes/index.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/agent/agent.shared.ts",
+				target: "lib/workflow/nodes/agent/agent.shared.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/agent/agent.client.tsx",
+				target: "lib/workflow/nodes/agent/agent.client.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/workflow-01/components/workflow/end-node.tsx",
-				target: "components/workflow/end-node.tsx",
+				path: "blocks/workflow-01/lib/workflow/nodes/agent/agent.server.ts",
+				target: "lib/workflow/nodes/agent/agent.server.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/agent/index.ts",
+				target: "lib/workflow/nodes/agent/index.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/if-else/if-else.shared.ts",
+				target: "lib/workflow/nodes/if-else/if-else.shared.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/if-else/if-else.client.tsx",
+				target: "lib/workflow/nodes/if-else/if-else.client.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/workflow-01/components/workflow/if-else-node.tsx",
-				target: "components/workflow/if-else-node.tsx",
+				path: "blocks/workflow-01/lib/workflow/nodes/if-else/if-else.server.ts",
+				target: "lib/workflow/nodes/if-else/if-else.server.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/if-else/index.ts",
+				target: "lib/workflow/nodes/if-else/index.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/start/start.shared.ts",
+				target: "lib/workflow/nodes/start/start.shared.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/start/start.client.tsx",
+				target: "lib/workflow/nodes/start/start.client.tsx",
 				type: "registry:component",
 			},
 			{
-				path: "blocks/workflow-01/components/workflow/note-node.tsx",
-				target: "components/workflow/note-node.tsx",
+				path: "blocks/workflow-01/lib/workflow/nodes/start/start.server.ts",
+				target: "lib/workflow/nodes/start/start.server.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/start/index.ts",
+				target: "lib/workflow/nodes/start/index.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/end/end.shared.ts",
+				target: "lib/workflow/nodes/end/end.shared.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/end/end.client.tsx",
+				target: "lib/workflow/nodes/end/end.client.tsx",
 				type: "registry:component",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/end/end.server.ts",
+				target: "lib/workflow/nodes/end/end.server.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/end/index.ts",
+				target: "lib/workflow/nodes/end/index.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/note/note.shared.ts",
+				target: "lib/workflow/nodes/note/note.shared.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/note/note.client.tsx",
+				target: "lib/workflow/nodes/note/note.client.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/note/note.server.ts",
+				target: "lib/workflow/nodes/note/note.server.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/note/index.ts",
+				target: "lib/workflow/nodes/note/index.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/wait/wait.shared.ts",
+				target: "lib/workflow/nodes/wait/wait.shared.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/wait/wait.client.tsx",
+				target: "lib/workflow/nodes/wait/wait.client.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/wait/wait.server.ts",
+				target: "lib/workflow/nodes/wait/wait.server.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/nodes/wait/index.ts",
+				target: "lib/workflow/nodes/wait/index.ts",
+				type: "registry:lib",
 			},
 			{
 				path: "blocks/workflow-01/components/workflow/primitives/base-handle.tsx",
@@ -1001,11 +1112,6 @@ export const blocks: Registry["items"] = [
 				type: "registry:component",
 			},
 			{
-				path: "blocks/workflow-01/components/workflow/start-node.tsx",
-				target: "components/workflow/start-node.tsx",
-				type: "registry:component",
-			},
-			{
 				path: "blocks/workflow-01/components/workflow/status-edge.tsx",
 				target: "components/workflow/status-edge.tsx",
 				type: "registry:component",
@@ -1016,18 +1122,28 @@ export const blocks: Registry["items"] = [
 				type: "registry:component",
 			},
 			{
-				path: "blocks/workflow-01/lib/templates/code-analysis-workflow.ts",
-				target: "lib/templates/code-analysis-workflow.ts",
-				type: "registry:lib",
-			},
-			{
 				path: "blocks/workflow-01/lib/templates/index.ts",
 				target: "lib/templates/index.ts",
 				type: "registry:lib",
 			},
 			{
+				path: "blocks/workflow-01/lib/templates/code-analysis-workflow.ts",
+				target: "lib/templates/code-analysis-workflow.ts",
+				type: "registry:lib",
+			},
+			{
 				path: "blocks/workflow-01/lib/templates/wikipedia-research-workflow.ts",
 				target: "lib/templates/wikipedia-research-workflow.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/templates/wait-demo-workflow.ts",
+				target: "lib/templates/wait-demo-workflow.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/templates/customer-support-workflow.ts",
+				target: "lib/templates/customer-support-workflow.ts",
 				type: "registry:lib",
 			},
 			{
@@ -1056,13 +1172,8 @@ export const blocks: Registry["items"] = [
 				type: "registry:lib",
 			},
 			{
-				path: "blocks/workflow-01/lib/workflow/models.ts",
+				path: "blocks/workflow-01/lib/workflow/models-external.ts",
 				target: "lib/workflow/models.ts",
-				type: "registry:lib",
-			},
-			{
-				path: "blocks/workflow-01/lib/workflow/node-factory.ts",
-				target: "lib/workflow/node-factory.ts",
 				type: "registry:lib",
 			},
 			{
@@ -1081,7 +1192,7 @@ export const blocks: Registry["items"] = [
 				type: "registry:lib",
 			},
 			{
-				path: "blocks/workflow-01/workflow/use-workflow.ts",
+				path: "blocks/workflow-01/hooks/use-workflow.ts",
 				target: "hooks/workflow/use-workflow.ts",
 				type: "registry:hook",
 			},

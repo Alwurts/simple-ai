@@ -1,30 +1,16 @@
 import { Panel } from "@xyflow/react";
-import { Bot, FileText, GitBranch, Square } from "lucide-react";
 import type React from "react";
 import { Button } from "@/components/ui/button";
+import { getAllNodeDefinitions } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
 
-const nodeTypes = [
-	{
-		type: "agent",
-		label: "Agent",
-		icon: Bot,
-	},
-	{
-		type: "if-else",
-		label: "If/Else",
-		icon: GitBranch,
-	},
-	{
-		type: "note",
-		label: "Note",
-		icon: FileText,
-	},
-	{
-		type: "end",
-		label: "End",
-		icon: Square,
-	},
-];
+const nodeDefinitions = getAllNodeDefinitions().filter(
+	(def) => def.shared.type !== "start",
+);
+const nodeTypes = nodeDefinitions.map((def) => ({
+	type: def.shared.type,
+	label: def.client.meta.label,
+	icon: def.client.meta.icon,
+}));
 
 export function NodeSelectorPanel() {
 	const onDragStart = (event: React.DragEvent, nodeType: string) => {

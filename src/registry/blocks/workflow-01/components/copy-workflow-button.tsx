@@ -4,7 +4,7 @@ import { ClipboardCopy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { cn } from "@/lib/utils";
-import { useWorkflow } from "@/registry/blocks/workflow-01/workflow/use-workflow";
+import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 
 export const CopyWorkflowButton = ({
 	className,

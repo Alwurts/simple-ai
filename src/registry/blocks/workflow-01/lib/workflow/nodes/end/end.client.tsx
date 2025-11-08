@@ -1,5 +1,8 @@
-import { type Node, type NodeProps, Position } from "@xyflow/react";
+"use client";
+
+import { type NodeProps, Position } from "@xyflow/react";
 import { Square, Trash } from "lucide-react";
+import { nanoid } from "nanoid";
 import { cn } from "@/lib/utils";
 import { BaseHandle } from "@/registry/blocks/workflow-01/components/workflow/primitives/base-handle";
 import { BaseNode } from "@/registry/blocks/workflow-01/components/workflow/primitives/base-node";
@@ -11,20 +14,11 @@ import {
 	NodeHeaderStatus,
 	NodeHeaderTitle,
 } from "@/registry/blocks/workflow-01/components/workflow/primitives/node-header";
-import type {
-	NodeStatus,
-	ValidationError,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
-import { useWorkflow } from "@/registry/blocks/workflow-01/workflow/use-workflow";
+import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
+import type { NodeClientDefinition } from "../types";
+import type { EndNode as EndNodeType } from "./end.shared";
 
-export type EndNodeData = {
-	status?: NodeStatus;
-	validationErrors?: ValidationError[];
-};
-
-export type EndNode = Node<EndNodeData, "end">;
-
-export interface EndNodeProps extends NodeProps<EndNode> {}
+export interface EndNodeProps extends NodeProps<EndNodeType> {}
 
 export function EndNode({ selected, data, deletable, id }: EndNodeProps) {
 	const deleteNode = useWorkflow((state) => state.deleteNode);
@@ -81,7 +75,7 @@ export function EndNode({ selected, data, deletable, id }: EndNodeProps) {
 	);
 }
 
-export function EndNodePanel({ node: _node }: { node: EndNode }) {
+export function EndNodePanel({ node: _node }: { node: EndNodeType }) {
 	return (
 		<div className="space-y-4">
 			<div>
@@ -93,3 +87,23 @@ export function EndNodePanel({ node: _node }: { node: EndNode }) {
 		</div>
 	);
 }
+
+export function createEndNode(position: { x: number; y: number }): EndNodeType {
+	return {
+		id: nanoid(),
+		type: "end",
+		position,
+		data: {},
+	};
+}
+
+export const endClientDefinition: NodeClientDefinition<EndNodeType> = {
+	component: EndNode,
+	panelComponent: EndNodePanel,
+	create: createEndNode,
+	meta: {
+		label: "End",
+		icon: Square,
+		description: "Terminates the workflow execution",
+	},
+};

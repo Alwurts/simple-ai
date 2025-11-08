@@ -7,15 +7,15 @@
 - [ ] For tiptap chat input we should have a way to restrict how many agents or items to be able to select min and max
 - [ ] Add Markdown styling inside of chat input and a toolbar to edit
 - [ ] Add reasoning
-- [ ] Add tool invocation
+- [x] Add tool invocation
 - [ ] Work on markdown viewer
-- [ ] Add suggestions to docs
+- [ ] Add suggestions component
 
 - [x] Add new workflow builder to announcements
 
 ### Workflow Builder
 
-- [ ] Separate the nodes logic from execution and validation
+- [x] Separate the nodes logic from execution and validation
   - Have a folder that is nodes and inside you can place agent/client.ts and agent/server.ts
 
 #### Stretch gaols

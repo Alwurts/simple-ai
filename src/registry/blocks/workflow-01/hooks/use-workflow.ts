@@ -1,11 +1,8 @@
 import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
 import { createWithEqualityFn } from "zustand/traditional";
-import type { AgentNode } from "@/registry/blocks/workflow-01/components/workflow/agent-node";
-import type { EndNode } from "@/registry/blocks/workflow-01/components/workflow/end-node";
-import type { IfElseNode } from "@/registry/blocks/workflow-01/components/workflow/if-else-node";
-import type { StartNode } from "@/registry/blocks/workflow-01/components/workflow/start-node";
-import { createNode } from "@/registry/blocks/workflow-01/lib/workflow/node-factory";
+import type { FlowNodeType } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
+import { getNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
 import {
 	type FlowEdge,
 	type FlowNode,
@@ -38,51 +35,15 @@ export interface WorkflowState {
 		nodeType: FlowNode["type"],
 		position: { x: number; y: number },
 	) => FlowNode;
-	updateNode({
+	updateNode: <T extends FlowNodeType>({
 		id,
 		nodeType,
 		data,
 	}: {
 		id: string;
-		nodeType: "agent";
-		data: Partial<AgentNode["data"]>;
-	}): void;
-	updateNode({
-		id,
-		nodeType,
-		data,
-	}: {
-		id: string;
-		nodeType: "start";
-		data: Partial<StartNode["data"]>;
-	}): void;
-	updateNode({
-		id,
-		nodeType,
-		data,
-	}: {
-		id: string;
-		nodeType: "end";
-		data: Partial<EndNode["data"]>;
-	}): void;
-	updateNode({
-		id,
-		nodeType,
-		data,
-	}: {
-		id: string;
-		nodeType: "if-else";
-		data: Partial<IfElseNode["data"]>;
-	}): void;
-	updateNode({
-		id,
-		nodeType,
-		data,
-	}: {
-		id: string;
-		nodeType: FlowNode["type"];
-		data: Partial<FlowNode["data"]>;
-	}): void;
+		nodeType: T;
+		data: Partial<Extract<FlowNode, { type: T }>["data"]>;
+	}) => void;
 
 	deleteNode: (id: string) => void;
 
@@ -117,7 +78,6 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		get().validateWorkflow();
 	},
 	onNodesChange: (changes) => {
-		// Filter out deletion changes for start nodes
 		const filteredChanges = changes.filter((change) => {
 			if (change.type === "remove") {
 				const node = get().nodes.find((n) => n.id === change.id);
@@ -131,13 +91,29 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		set({
 			nodes: applyNodeChanges<FlowNode>(filteredChanges, get().nodes),
 		});
-		get().validateWorkflow();
+
+		// Only validate on meaningful structural changes
+		const shouldValidate = changes.some(
+			(change) => change.type === "add" || change.type === "remove",
+		);
+
+		if (shouldValidate) {
+			get().validateWorkflow();
+		}
 	},
 	onEdgesChange: (changes) => {
 		set({
 			edges: applyEdgeChanges(changes, get().edges),
 		});
-		get().validateWorkflow();
+
+		// Only validate on structural edge changes
+		const shouldValidate = changes.some(
+			(change) => change.type === "add" || change.type === "remove",
+		);
+
+		if (shouldValidate) {
+			get().validateWorkflow();
+		}
 	},
 	onConnect: (connection) => {
 		const valid = isValidConnection({
@@ -173,7 +149,11 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		edges: get().edges,
 	}),
 	createNode(nodeType, position) {
-		const newNode = createNode(nodeType, position);
+		const definition = getNodeDefinition(nodeType);
+		if (!definition) {
+			throw new Error(`Unknown node type: ${nodeType}`);
+		}
+		const newNode = definition.client.create(position);
 		set((state) => ({
 			nodes: [...state.nodes, newNode],
 		}));
@@ -190,11 +170,12 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 							...node.data,
 							...data,
 						},
-					} as FlowNode;
+					};
 				}
 				return node;
 			}),
 		}));
+		get().validateWorkflow();
 	},
 	deleteNode(id) {
 		const node = get().nodes.find((n) => n.id === id);

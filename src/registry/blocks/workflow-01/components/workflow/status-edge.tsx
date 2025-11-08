@@ -44,28 +44,24 @@ export function StatusEdge({
 	const validationErrors = data?.validationErrors || [];
 	const hasValidationError = validationErrors.length > 0;
 
-	// Determine edge color and styling based on state
 	const getEdgeColor = () => {
-		// Validation errors take highest priority (red)
 		if (hasValidationError) {
-			return "#ef4444"; // Red for validation errors
+			return "#ef4444";
 		}
 		// Execution errors
 		if (data?.execution?.error) {
-			return "#f97316"; // Orange for execution errors
+			return "#f97316";
 		}
 		// Selected state
 		if (selected) {
-			return "#3b82f6"; // Blue when selected
+			return "#3b82f6";
 		}
-		// Default
-		return "#b1b1b7"; // Gray default
+		return "#b1b1b7";
 	};
 
 	const edgeStyle: CSSProperties = {
 		stroke: getEdgeColor(),
 		strokeWidth: hasValidationError ? 3 : selected ? 3 : 2,
-		// Dashed pattern for validation errors
 		strokeDasharray: hasValidationError ? "5,5" : "0",
 		transition: "stroke 0.2s, stroke-width 0.2s, stroke-dasharray 0.2s",
 	};

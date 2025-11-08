@@ -1,13 +1,9 @@
 import type { InferUITools, ToolUIPart, UIMessage } from "ai";
-import type { getWorkflowTools } from "@/registry/blocks/workflow-01/lib/tools";
+import type { workflowTools } from "@/registry/blocks/workflow-01/lib/tools";
 import type {
 	FlowNode,
 	NodeStatus,
 } from "@/registry/blocks/workflow-01/lib/workflow/types";
-
-/////////////////////
-// AI UI Messages //
-/////////////////////
 
 type WorkflowAIMetadata = Record<string, unknown>;
 
@@ -26,7 +22,7 @@ type WorkflowAIDataPart = {
 	};
 };
 
-type WorkflowAgentToolSet = ReturnType<typeof getWorkflowTools>;
+type WorkflowAgentToolSet = typeof workflowTools;
 type WorkflowAITools = InferUITools<WorkflowAgentToolSet>;
 
 export type WorkflowAIToolUIPart = ToolUIPart<WorkflowAITools>;

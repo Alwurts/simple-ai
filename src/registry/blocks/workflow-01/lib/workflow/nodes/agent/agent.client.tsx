@@ -1,5 +1,8 @@
-import { type Node, type NodeProps, Position } from "@xyflow/react";
+"use client";
+
+import { type NodeProps, Position } from "@xyflow/react";
 import { Bot, ChevronDown, Trash } from "lucide-react";
+import { nanoid } from "nanoid";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -31,35 +34,17 @@ import {
 	NodeHeaderStatus,
 	NodeHeaderTitle,
 } from "@/registry/blocks/workflow-01/components/workflow/primitives/node-header";
+import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 import {
 	WORKFLOW_TOOLS,
-	type WorkflowToolId,
+	workflowTools,
 } from "@/registry/blocks/workflow-01/lib/tools";
-import type {
-	NodeOutput,
-	NodeStatus,
-	ValidationError,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
-import { useWorkflow } from "@/registry/blocks/workflow-01/workflow/use-workflow";
 import { idToReadableText } from "@/registry/lib/id-to-readable-text";
-import type { workflowModelID } from "../../lib/workflow/models";
+import type { workflowModelID } from "../../models";
+import type { NodeClientDefinition } from "../types";
+import type { AgentNode as AgentNodeType } from "./agent.shared";
 
-export type AgentNodeData = {
-	name: string;
-	model: workflowModelID;
-	systemPrompt: string;
-	status: NodeStatus;
-	selectedTools: WorkflowToolId[];
-	sourceType: NodeOutput;
-	hideResponseInChat: boolean;
-	excludeFromConversation: boolean;
-	maxSteps: number;
-	validationErrors?: ValidationError[];
-};
-
-export type AgentNode = Node<AgentNodeData, "agent">;
-
-export interface AgentNodeProps extends NodeProps<AgentNode> {}
+export interface AgentNodeProps extends NodeProps<AgentNodeType> {}
 
 export function AgentNode({ selected, data, deletable, id }: AgentNodeProps) {
 	const deleteNode = useWorkflow((state) => state.deleteNode);
@@ -131,13 +116,7 @@ export function AgentNode({ selected, data, deletable, id }: AgentNodeProps) {
 	);
 }
 
-export function AgentNodePanel({
-	node,
-	toolDescriptions,
-}: {
-	node: AgentNode;
-	toolDescriptions: Record<WorkflowToolId, string>;
-}) {
+export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 	const updateNode = useWorkflow((state) => state.updateNode);
 	const [advancedOpen, setAdvancedOpen] = useState(false);
 
@@ -177,7 +156,7 @@ export function AgentNodePanel({
 							Model
 						</label>
 						<ModelSelector
-							value={node.data.model}
+							value={node.data.model as workflowModelID}
 							onChange={(model) => {
 								updateNode({
 									id: node.id,
@@ -235,7 +214,9 @@ export function AgentNodePanel({
 												{idToReadableText(toolId)}
 											</span>
 											<span className="text-xs text-muted-foreground">
-												{toolDescriptions[toolId]}
+												{workflowTools[toolId]
+													.description ??
+													"No description"}
 											</span>
 										</label>
 									</div>
@@ -432,3 +413,36 @@ export function AgentNodePanel({
 		</div>
 	);
 }
+
+export function createAgentNode(position: {
+	x: number;
+	y: number;
+}): AgentNodeType {
+	return {
+		id: nanoid(),
+		type: "agent",
+		position,
+		data: {
+			name: "Agent",
+			status: "idle",
+			model: "gpt-5-nano",
+			systemPrompt: "",
+			selectedTools: [],
+			sourceType: { type: "text" },
+			hideResponseInChat: false,
+			excludeFromConversation: false,
+			maxSteps: 5,
+		},
+	};
+}
+
+export const agentClientDefinition: NodeClientDefinition<AgentNodeType> = {
+	component: AgentNode,
+	panelComponent: AgentNodePanel,
+	create: createAgentNode,
+	meta: {
+		label: "Agent",
+		icon: Bot,
+		description: "An AI agent that can process input and generate output",
+	},
+};

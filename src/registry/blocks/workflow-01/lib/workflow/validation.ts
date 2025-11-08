@@ -1,22 +1,10 @@
-import jexl from "jexl";
+import { getNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
 import type {
-	CycleError,
 	FlowEdge,
 	FlowNode,
-	InvalidConditionError,
-	InvalidNodeConfigError,
-	MultipleOutgoingError,
-	NoEndNodeError,
-	NoStartNodeError,
-	UnreachableNodeError,
 	ValidationError,
 } from "@/registry/blocks/workflow-01/lib/workflow/types";
 import { isNodeOfType } from "@/registry/blocks/workflow-01/lib/workflow/types";
-import {
-	extractVariableReferences,
-	getAvailableVariables,
-	isVariableAvailable,
-} from "@/registry/blocks/workflow-01/lib/workflow/variables";
 
 type ValidationResult = {
 	valid: boolean;
@@ -25,52 +13,65 @@ type ValidationResult = {
 };
 
 /**
- * Main validation function - validates the entire workflow
- * Explores all possible paths to detect structural issues
+ * Get all node IDs reachable from the start node using BFS traversal.
+ * Returns a Set of node IDs that can be reached from the start node.
  */
-export function validateWorkflow(
+function getReachableNodeIds(
 	nodes: FlowNode[],
 	edges: FlowEdge[],
+): Set<string> {
+	const startNode = nodes.find((node) => isNodeOfType(node, "start"));
+	if (!startNode) {
+		return new Set<string>();
+	}
+
+	const reachable = new Set<string>();
+	const queue: string[] = [startNode.id];
+
+	while (queue.length > 0) {
+		// biome-ignore lint/style/noNonNullAssertion: We checked queue.length > 0
+		const nodeId = queue.shift()!;
+		if (reachable.has(nodeId)) {
+			continue;
+		}
+
+		reachable.add(nodeId);
+
+		const outgoingEdges = edges.filter((e) => e.source === nodeId);
+		for (const edge of outgoingEdges) {
+			if (!reachable.has(edge.target)) {
+				queue.push(edge.target);
+			}
+		}
+	}
+
+	return reachable;
+}
+
+/**
+ * Get all nodes reachable from the start node.
+ * Only validates reachable nodes to avoid cluttering the UI with errors from disconnected nodes.
+ */
+function getReachableNodes(nodes: FlowNode[], edges: FlowEdge[]): FlowNode[] {
+	const reachableIds = getReachableNodeIds(nodes, edges);
+	return nodes.filter((node) => reachableIds.has(node.id));
+}
+
+/**
+ * Separates validation errors into errors and warnings based on severity.
+ */
+function separateErrorsAndWarnings(
+	validationErrors: ValidationError[],
 ): ValidationResult {
 	const errors: ValidationError[] = [];
 	const warnings: string[] = [];
 
-	// 1. Check for start node
-	const startNodeError = validateStartNode(nodes);
-	if (startNodeError) {
-		errors.push(startNodeError);
-	}
-
-	// 2. Check for at least one end node
-	const endNodeError = validateEndNode(nodes);
-	if (endNodeError) {
-		errors.push(endNodeError);
-	}
-
-	// 3. Validate multiple outgoing edges from single source handle
-	const multipleOutgoingErrors = validateMultipleOutgoing(edges);
-	errors.push(...multipleOutgoingErrors);
-
-	// 4. Validate node-specific rules
-	const nodeConfigErrors = validateNodeConfigurations(nodes, edges);
-	errors.push(...nodeConfigErrors);
-
-	// 5. Validate JEXL conditions in if-else nodes
-	const conditionErrors = validateIfElseConditions(nodes);
-	errors.push(...conditionErrors);
-
-	// 6. Validate that condition variables exist in incoming edge
-	const conditionVariableErrors = validateConditionVariables(nodes, edges);
-	errors.push(...conditionVariableErrors);
-
-	// 7. Check for cycles (exploring all possible paths)
-	const cycleErrors = detectCycles(nodes, edges);
-	errors.push(...cycleErrors);
-
-	// 8. Check for unreachable nodes
-	const unreachableError = detectUnreachableNodes(nodes, edges);
-	if (unreachableError && unreachableError.nodes.length > 0) {
-		warnings.push(unreachableError.message);
+	for (const error of validationErrors) {
+		if (error.severity === "warning") {
+			warnings.push(error.message);
+		} else {
+			errors.push(error);
+		}
 	}
 
 	return {
@@ -81,111 +82,25 @@ export function validateWorkflow(
 }
 
 /**
- * Connection validator for a specific node type
- * Returns true if the handle can accept more connections
+ * Validates the entire workflow by running validation phases in order.
+ * Only validates reachable nodes to avoid cluttering the UI with errors from disconnected nodes.
  */
-type ConnectionValidator = (params: {
-	nodeId: string;
-	handleId: string;
-	type: "source" | "target";
-	nodes: FlowNode[];
-	edges: FlowEdge[];
-}) => boolean;
+export function validateWorkflow(
+	nodes: FlowNode[],
+	edges: FlowEdge[],
+): ValidationResult {
+	const errors: ValidationError[] = [];
 
-/**
- * Start node connection rules:
- * - No incoming connections allowed
- * - Max 1 outgoing connection total
- */
-const canConnectStartNode: ConnectionValidator = ({ nodeId, type, edges }) => {
-	if (type === "target") {
-		return false; // Start node cannot have incoming connections
-	}
+	errors.push(...validateGraphStructure(nodes));
+	errors.push(...validateEdgeConstraints(edges));
+	errors.push(...validateNoCycles(nodes, edges));
 
-	if (type === "source") {
-		const outgoingEdges = edges.filter((e) => e.source === nodeId);
-		return outgoingEdges.length === 0; // Max 1 outgoing
-	}
+	const reachableNodes = getReachableNodes(nodes, edges);
+	errors.push(...validateNodeConfigurations(reachableNodes, edges));
+	errors.push(...validateReachability(nodes, reachableNodes));
 
-	return true;
-};
-
-/**
- * Agent node connection rules:
- * - Multiple incoming connections allowed (converging paths)
- * - Max 1 outgoing connection (but 0 is allowed if unreachable)
- */
-const canConnectAgentNode: ConnectionValidator = ({ nodeId, type, edges }) => {
-	if (type === "target") {
-		// Allow multiple incoming connections
-		return true;
-	}
-
-	if (type === "source") {
-		const outgoingEdges = edges.filter((e) => e.source === nodeId);
-		return outgoingEdges.length === 0; // Max 1 outgoing
-	}
-
-	return true;
-};
-
-/**
- * If-else node connection rules:
- * - Multiple incoming connections allowed (converging paths)
- * - Max 1 outgoing per handle (but multiple handles allowed)
- */
-const canConnectIfElseNode: ConnectionValidator = ({
-	nodeId,
-	handleId,
-	type,
-	edges,
-}) => {
-	if (type === "target") {
-		// Allow multiple incoming connections
-		return true;
-	}
-
-	if (type === "source") {
-		// Can have multiple outgoing, but only one per handle
-		const edgeOnHandle = edges.find(
-			(e) => e.source === nodeId && e.sourceHandle === handleId,
-		);
-		return !edgeOnHandle;
-	}
-
-	return true;
-};
-
-/**
- * End node connection rules:
- * - Multiple incoming connections allowed (converging paths)
- * - No outgoing connections allowed
- */
-const canConnectEndNode: ConnectionValidator = ({ type }) => {
-	if (type === "target") {
-		// Allow multiple incoming connections
-		return true;
-	}
-
-	if (type === "source") {
-		return false; // End node cannot have outgoing connections
-	}
-
-	return true;
-};
-
-/**
- * Registry of connection validators for all node types
- */
-const NODE_CONNECTION_VALIDATORS: Record<
-	Exclude<FlowNode["type"], "note">,
-	ConnectionValidator
-> = {
-	start: canConnectStartNode,
-	agent: canConnectAgentNode,
-	"if-else": canConnectIfElseNode,
-	end: canConnectEndNode,
-};
+	return separateErrorsAndWarnings(errors);
+}
 
 /**
  * Check if a connection is valid before making it
@@ -195,7 +110,7 @@ export function isValidConnection({
 	sourceNodeId,
 	sourceHandle,
 	targetNodeId,
-	targetHandle,
+	targetHandle: _targetHandle,
 	nodes,
 	edges,
 }: {
@@ -209,42 +124,34 @@ export function isValidConnection({
 	const sourceNode = nodes.find((n) => n.id === sourceNodeId);
 	const targetNode = nodes.find((n) => n.id === targetNodeId);
 
-	// Both nodes must exist
 	if (!sourceNode || !targetNode) {
 		return false;
 	}
 
-	// Cannot connect to itself
 	if (sourceNodeId === targetNodeId) {
 		return false;
 	}
 
-	// Note nodes can't connect to anything
 	if (sourceNode.type === "note" || targetNode.type === "note") {
 		return false;
 	}
 
-	// Use validators to check if source and target can connect
-	const sourceValidator = NODE_CONNECTION_VALIDATORS[sourceNode.type];
-	const targetValidator = NODE_CONNECTION_VALIDATORS[targetNode.type];
+	if (targetNode.type === "start") {
+		return false;
+	}
 
-	const sourceCanConnect = sourceValidator({
-		nodeId: sourceNodeId,
-		handleId: sourceHandle || "default",
-		type: "source",
-		nodes,
-		edges,
-	});
+	if (sourceNode.type === "end") {
+		return false;
+	}
 
-	const targetCanConnect = targetValidator({
-		nodeId: targetNodeId,
-		handleId: targetHandle || "default",
-		type: "target",
-		nodes,
-		edges,
-	});
+	const existingSourceEdge = edges.find(
+		(e) => e.source === sourceNodeId && e.sourceHandle === sourceHandle,
+	);
+	if (existingSourceEdge) {
+		return false;
+	}
 
-	return sourceCanConnect && targetCanConnect;
+	return true;
 }
 
 /**
@@ -265,65 +172,72 @@ export function canConnectHandle(params: {
 		return true;
 	}
 
-	// Note nodes don't have handles, so they can't connect
 	if (node.type === "note") {
 		return false;
 	}
 
-	// Use the validator for this node type
-	const validator = NODE_CONNECTION_VALIDATORS[node.type];
-	return validator({ nodeId, handleId, type, nodes, edges });
+	if (node.type === "start" && type === "target") {
+		return false;
+	}
+
+	if (node.type === "end" && type === "source") {
+		return false;
+	}
+
+	if (type === "source") {
+		const existingEdge = edges.find(
+			(e) => e.source === nodeId && e.sourceHandle === handleId,
+		);
+		if (existingEdge) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 /**
- * Validate that exactly one start node exists
+ * Validates graph structure requirements: exactly one start node and at least one end node.
  */
-function validateStartNode(nodes: FlowNode[]): NoStartNodeError | null {
-	const startNodes = nodes.filter((node) => isNodeOfType(node, "start"));
+function validateGraphStructure(nodes: FlowNode[]): ValidationError[] {
+	const errors: ValidationError[] = [];
 
+	const startNodes = nodes.filter((node) => isNodeOfType(node, "start"));
 	if (startNodes.length === 0) {
-		return {
+		errors.push({
 			type: "no-start-node",
+			severity: "error",
 			message: "Workflow must have exactly one start node",
 			count: 0,
-		};
-	}
-
-	if (startNodes.length > 1) {
-		return {
+		});
+	} else if (startNodes.length > 1) {
+		errors.push({
 			type: "no-start-node",
+			severity: "error",
 			message: `Workflow has ${startNodes.length} start nodes, but must have exactly one`,
 			count: startNodes.length,
-		};
+		});
 	}
 
-	return null;
-}
-
-/**
- * Validate that at least one end node exists
- */
-function validateEndNode(nodes: FlowNode[]): NoEndNodeError | null {
 	const endNodes = nodes.filter((node) => isNodeOfType(node, "end"));
-
 	if (endNodes.length === 0) {
-		return {
+		errors.push({
 			type: "no-end-node",
+			severity: "error",
 			message: "Workflow must have at least one end node",
-		};
+		});
 	}
 
-	return null;
+	return errors;
 }
 
 /**
- * Validate that no source handle has multiple outgoing edges
+ * Validates edge constraints: ensures no source handle has multiple outgoing connections.
  */
-function validateMultipleOutgoing(edges: FlowEdge[]): MultipleOutgoingError[] {
-	const errors: MultipleOutgoingError[] = [];
+function validateEdgeConstraints(edges: FlowEdge[]): ValidationError[] {
+	const errors: ValidationError[] = [];
 	const sourceHandleMap = new Map<string, FlowEdge[]>();
 
-	// Group edges by source + sourceHandle
 	for (const edge of edges) {
 		const key = `${edge.source}:${edge.sourceHandle || "default"}`;
 		const existing = sourceHandleMap.get(key) || [];
@@ -331,12 +245,12 @@ function validateMultipleOutgoing(edges: FlowEdge[]): MultipleOutgoingError[] {
 		sourceHandleMap.set(key, existing);
 	}
 
-	// Check for multiple outgoing from same source handle
 	for (const [key, edgeGroup] of sourceHandleMap.entries()) {
 		if (edgeGroup.length > 1) {
 			const [sourceId, sourceHandle] = key.split(":");
 			errors.push({
 				type: "multiple-outgoing-from-source-handle",
+				severity: "error",
 				message: `Node ${sourceId} handle "${sourceHandle}" has ${edgeGroup.length} outgoing connections (maximum 1 allowed)`,
 				edges: edgeGroup.map((e) => ({
 					id: e.id,
@@ -353,81 +267,28 @@ function validateMultipleOutgoing(edges: FlowEdge[]): MultipleOutgoingError[] {
 }
 
 /**
- * Validate node-specific configuration rules
+ * Validates node-specific configuration rules by delegating to each node's validator.
  */
 function validateNodeConfigurations(
 	nodes: FlowNode[],
 	edges: FlowEdge[],
-): InvalidNodeConfigError[] {
-	const errors: InvalidNodeConfigError[] = [];
+): ValidationError[] {
+	const errors: ValidationError[] = [];
 
 	for (const node of nodes) {
-		// Start node should have no incoming edges
-		if (isNodeOfType(node, "start")) {
-			const incomingEdges = edges.filter((e) => e.target === node.id);
-			if (incomingEdges.length > 0) {
-				errors.push({
-					type: "invalid-node-config",
-					message: "Start node cannot have incoming connections",
-					node: { id: node.id },
-				});
-			}
-
-			// Start node should have exactly one outgoing edge
-			const outgoingEdges = edges.filter((e) => e.source === node.id);
-			if (outgoingEdges.length === 0) {
-				errors.push({
-					type: "invalid-node-config",
-					message:
-						"Start node must have exactly one outgoing connection",
-					node: { id: node.id },
-				});
-			} else if (outgoingEdges.length > 1) {
-				errors.push({
-					type: "invalid-node-config",
-					message: `Start node can only have one outgoing connection (found ${outgoingEdges.length})`,
-					node: { id: node.id },
-				});
-			}
-		}
-
-		// End node should have no outgoing edges
-		if (isNodeOfType(node, "end")) {
-			const outgoingEdges = edges.filter((e) => e.source === node.id);
-			if (outgoingEdges.length > 0) {
-				errors.push({
-					type: "invalid-node-config",
-					message: "End node cannot have outgoing connections",
-					node: { id: node.id },
-				});
-			}
-		}
-
-		// If-else node should have at least one condition or else branch
-		if (isNodeOfType(node, "if-else")) {
-			const outgoingEdges = edges.filter((e) => e.source === node.id);
-			if (outgoingEdges.length === 0) {
-				errors.push({
-					type: "invalid-node-config",
-					message:
-						"If-else node must have at least one outgoing connection",
-					node: { id: node.id },
-				});
-			}
-
-			// Check that all dynamic handles with edges have non-empty conditions
-			for (const handle of node.data.dynamicSourceHandles) {
-				const edgeForHandle = outgoingEdges.find(
-					(e) => e.sourceHandle === handle.id,
-				);
-				if (edgeForHandle && !handle.condition.trim()) {
-					errors.push({
-						type: "invalid-node-config",
-						message: `If-else condition "${handle.label || handle.id}" has a connection but no condition expression`,
-						node: { id: node.id },
-					});
-				}
-			}
+		const definition = getNodeDefinition(node.type);
+		if (definition) {
+			const context = { nodes, edges };
+			// biome-ignore lint/suspicious/noExplicitAny: Type assertion needed for registry-based validation
+			const nodeErrors = definition.shared.validate(node as any, context);
+			errors.push(...(nodeErrors as ValidationError[]));
+		} else {
+			errors.push({
+				type: "invalid-node-config",
+				severity: "error",
+				message: `Unknown node type: ${node.type}`,
+				node: { id: node.id },
+			});
 		}
 	}
 
@@ -435,129 +296,13 @@ function validateNodeConfigurations(
 }
 
 /**
- * Validate JEXL expressions in if-else nodes
+ * Validates that the workflow contains no cycles by performing DFS traversal.
  */
-function validateIfElseConditions(nodes: FlowNode[]): InvalidConditionError[] {
-	const errors: InvalidConditionError[] = [];
-
-	for (const node of nodes) {
-		if (!isNodeOfType(node, "if-else")) {
-			continue;
-		}
-
-		for (const handle of node.data.dynamicSourceHandles) {
-			if (!handle.condition || !handle.condition.trim()) {
-				continue; // Empty conditions are checked in node config validation
-			}
-
-			try {
-				// Try to compile the expression to check syntax
-				jexl.compile(handle.condition);
-			} catch (error) {
-				errors.push({
-					type: "invalid-condition",
-					message: "Invalid condition expression in if-else node",
-					condition: {
-						nodeId: node.id,
-						handleId: handle.id,
-						condition: handle.condition,
-						error:
-							error instanceof Error
-								? error.message
-								: String(error),
-					},
-				});
-			}
-		}
-	}
-
-	return errors;
-}
-
-/**
- * Validate that variables referenced in conditions exist in incoming edge
- */
-function validateConditionVariables(
+function validateNoCycles(
 	nodes: FlowNode[],
 	edges: FlowEdge[],
-): InvalidConditionError[] {
-	const errors: InvalidConditionError[] = [];
-
-	for (const node of nodes) {
-		if (!isNodeOfType(node, "if-else")) {
-			continue;
-		}
-
-		const availableVariables = getAvailableVariables(node.id, nodes, edges);
-
-		const hasIncomingEdge = edges.some(
-			(e) => e.target === node.id && e.targetHandle === "input",
-		);
-
-		for (const handle of node.data.dynamicSourceHandles) {
-			if (!handle.condition?.trim()) {
-				continue;
-			}
-
-			// Skip if syntax error (already reported)
-			try {
-				jexl.compile(handle.condition);
-			} catch {
-				continue;
-			}
-
-			const references = extractVariableReferences(handle.condition);
-
-			// Check if references exist but no input connection
-			if (!hasIncomingEdge && references.length > 0) {
-				errors.push({
-					type: "invalid-condition",
-					message:
-						"Condition references variables but node has no input connection",
-					condition: {
-						nodeId: node.id,
-						handleId: handle.id,
-						condition: handle.condition,
-						error: `Variables referenced: ${references.join(", ")}. Connect an input node first.`,
-					},
-				});
-				continue;
-			}
-
-			// Validate each reference
-			const missingVariables = references.filter((ref) => {
-				const isAvailable = isVariableAvailable(
-					ref,
-					availableVariables,
-				);
-				return !isAvailable;
-			});
-
-			if (missingVariables.length > 0) {
-				const availablePaths =
-					availableVariables.map((v) => v.path).join(", ") || "none";
-				errors.push({
-					type: "invalid-condition",
-					message: "Condition references undefined variables",
-					condition: {
-						nodeId: node.id,
-						handleId: handle.id,
-						condition: handle.condition,
-						error: `Not found: ${missingVariables.join(", ")}. Available: ${availablePaths}`,
-					},
-				});
-			}
-		}
-	}
-
-	return errors;
-}
-
-/**
- * Detect cycles by exploring all possible paths through if-else branches
- */
-function detectCycles(nodes: FlowNode[], edges: FlowEdge[]): CycleError[] {
-	const errors: CycleError[] = [];
+): ValidationError[] {
+	const errors: ValidationError[] = [];
 	const visited = new Set<string>();
 	const recursionStack = new Set<string>();
 	const edgePath: FlowEdge[] = [];
@@ -576,7 +321,6 @@ function detectCycles(nodes: FlowNode[], edges: FlowEdge[]): CycleError[] {
 			return;
 		}
 
-		// Get all outgoing edges (explore all branches for if-else)
 		const outgoingEdges = edges.filter((e) => e.source === nodeId);
 
 		for (const edge of outgoingEdges) {
@@ -585,7 +329,6 @@ function detectCycles(nodes: FlowNode[], edges: FlowEdge[]): CycleError[] {
 			if (!visited.has(edge.target)) {
 				dfs(edge.target);
 			} else if (recursionStack.has(edge.target)) {
-				// Cycle detected! Find the cycle in edgePath
 				const cycleStartIndex = edgePath.findIndex(
 					(e) => e.target === edge.target,
 				);
@@ -593,6 +336,7 @@ function detectCycles(nodes: FlowNode[], edges: FlowEdge[]): CycleError[] {
 
 				errors.push({
 					type: "cycle",
+					severity: "error",
 					message: `Cycle detected in workflow involving nodes: ${cycleEdges.map((e) => e.source).join(" → ")} → ${edge.target}`,
 					edges: cycleEdges.map((e) => ({
 						id: e.id,
@@ -616,53 +360,32 @@ function detectCycles(nodes: FlowNode[], edges: FlowEdge[]): CycleError[] {
 }
 
 /**
- * Detect unreachable nodes by doing a full traversal from start
+ * Validates reachability and generates warnings for unreachable nodes.
+ * Note nodes are excluded from reachability checks as they are informational only.
  */
-function detectUnreachableNodes(
-	nodes: FlowNode[],
-	edges: FlowEdge[],
-): UnreachableNodeError | null {
-	const startNode = nodes.find((node) => isNodeOfType(node, "start"));
-	if (!startNode) {
-		return null;
-	}
+function validateReachability(
+	allNodes: FlowNode[],
+	reachableNodes: FlowNode[],
+): ValidationError[] {
+	const errors: ValidationError[] = [];
+	const reachableIds = new Set(reachableNodes.map((n) => n.id));
 
-	const reachable = new Set<string>();
-	const queue: string[] = [startNode.id];
-
-	while (queue.length > 0) {
-		// biome-ignore lint/style/noNonNullAssertion: We checked queue.length > 0
-		const nodeId = queue.shift()!;
-		if (reachable.has(nodeId)) {
-			continue;
-		}
-
-		reachable.add(nodeId);
-
-		// Add all targets of outgoing edges (all possible paths)
-		const outgoingEdges = edges.filter((e) => e.source === nodeId);
-		for (const edge of outgoingEdges) {
-			if (!reachable.has(edge.target)) {
-				queue.push(edge.target);
-			}
-		}
-	}
-
-	const unreachableNodes = nodes
+	const unreachableNodes = allNodes
 		.filter(
-			(node) => !reachable.has(node.id) && !isNodeOfType(node, "note"),
+			(node) => !reachableIds.has(node.id) && !isNodeOfType(node, "note"),
 		)
 		.map((node) => ({ id: node.id }));
 
 	if (unreachableNodes.length > 0) {
-		return {
+		errors.push({
 			type: "unreachable-node",
+			severity: "warning",
 			message: `${unreachableNodes.length} node(s) are unreachable from the start node`,
 			nodes: unreachableNodes,
-		};
+		});
 	}
 
-	return null;
+	return errors;
 }
 
 /**
@@ -686,7 +409,6 @@ function getAffectedNodeIds(error: ValidationError): string[] {
 		case "cycle":
 		case "multiple-outgoing-from-source-handle":
 		case "multiple-sources-for-target-handle": {
-			// Extract unique node IDs from edges
 			const nodeIds = new Set<string>();
 			for (const edge of error.edges) {
 				nodeIds.add(edge.source);
