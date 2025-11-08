@@ -87,5 +87,5 @@ export const Groq = (props: SVGProps<SVGSVGElement>) => (
 );
 
 const ModelIcons: Record<workflowModelID, ElementType> = {
-	"workflow-main-model": OpenAI,
+	"gpt-5-mini": OpenAI,
 };

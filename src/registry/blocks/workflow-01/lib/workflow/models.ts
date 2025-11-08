@@ -13,7 +13,7 @@ const openaiClient = createOpenAI({
 });
 
 const languageModels = {
-	"workflow-main-model": wrapLanguageModel({
+	"gpt-5-mini": wrapLanguageModel({
 		model: openaiClient.chat("gpt-5-mini"),
 		middleware: defaultSettingsMiddleware({
 			settings: {

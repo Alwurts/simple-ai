@@ -7,7 +7,7 @@ import {
 } from "ai";
 
 const languageModels = {
-	"workflow-main-model": wrapLanguageModel({
+	"gpt-5-mini": wrapLanguageModel({
 		model: openai.chat("gpt-5-mini"),
 		middleware: defaultSettingsMiddleware({
 			settings: {

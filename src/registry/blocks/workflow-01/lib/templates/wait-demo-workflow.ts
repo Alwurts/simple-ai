@@ -37,7 +37,7 @@ export const WAIT_DEMO_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } = {
 				hideResponseInChat: false,
 				excludeFromConversation: false,
 				maxSteps: 5,
-				model: "workflow-main-model",
+				model: "gpt-5-mini",
 				systemPrompt:
 					"You are a task initiator. Generate a simple task that requires some processing time. For example: 'I need to process customer feedback data' or 'I need to analyze sales reports'. Keep it brief and clear.",
 				selectedTools: [],
@@ -84,7 +84,7 @@ export const WAIT_DEMO_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } = {
 				hideResponseInChat: false,
 				excludeFromConversation: false,
 				maxSteps: 5,
-				model: "workflow-main-model",
+				model: "gpt-5-mini",
 				systemPrompt:
 					"You are a task processor. The previous agent initiated a task, and there was a brief wait (simulating processing time). Now complete the task with a detailed response. Provide a comprehensive and helpful result.",
 				selectedTools: [],
