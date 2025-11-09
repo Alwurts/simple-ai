@@ -1379,6 +1379,60 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"chat-suggestions-demo": {
+		name: "chat-suggestions-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-suggestions-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-suggestions-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-suggestions-demo-simple": {
+		name: "chat-suggestions-demo-simple",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-suggestions-demo-simple.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-suggestions-demo-simple.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"chat-01": {
 		name: "chat-01",
 		description: "A simple chat page.",
@@ -1396,6 +1450,7 @@ export const Index: Record<string, any> = {
 			"@simple-ai/chat-message-area",
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
+			"@simple-ai/chat-suggestions",
 		],
 		files: [
 			{
@@ -1417,6 +1472,16 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/blocks/chat-01/lib/tools.ts",
 				type: "registry:lib",
 				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/lib/messages.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/types/ai-messages.ts",
+				type: "registry:lib",
+				target: "types/ai-messages.ts",
 			},
 			{
 				path: "./src/registry/blocks/chat-01/components/layout/app-layout.tsx",

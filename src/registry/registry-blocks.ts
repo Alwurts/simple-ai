@@ -38,6 +38,7 @@ export const blocks: Registry["items"] = [
 			"@simple-ai/chat-message-area",
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
+			"@simple-ai/chat-suggestions",
 		],
 		files: [
 			{
@@ -56,6 +57,15 @@ export const blocks: Registry["items"] = [
 			},
 			{
 				path: "blocks/chat-01/lib/tools.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-01/lib/messages.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-01/types/ai-messages.ts",
+				target: "types/ai-messages.ts",
 				type: "registry:lib",
 			},
 			{

@@ -51,7 +51,8 @@ import {
 import {
 	ChatSuggestion,
 	ChatSuggestions,
-	ChatSuggestionsList,
+	ChatSuggestionsContent,
+	ChatSuggestionsHeader,
 	ChatSuggestionsTitle,
 } from "@/registry/ui/chat-suggestions";
 import {
@@ -460,17 +461,21 @@ function NoChatMessages({
 	return (
 		<div className="flex flex-col gap-2 p-2 justify-end items-center h-full">
 			<ChatSuggestions>
-				<ChatSuggestionsTitle>Try these prompts:</ChatSuggestionsTitle>
-				<ChatSuggestionsList>
+				<ChatSuggestionsHeader>
+					<ChatSuggestionsTitle>
+						Try these prompts:
+					</ChatSuggestionsTitle>
+				</ChatSuggestionsHeader>
+				<ChatSuggestionsContent>
 					{template.suggestions.map((suggestion) => (
 						<ChatSuggestion
 							key={suggestion}
-							onSuggestionClick={onSuggestionClick}
+							onClick={() => onSuggestionClick(suggestion)}
 						>
 							{suggestion}
 						</ChatSuggestion>
 					))}
-				</ChatSuggestionsList>
+				</ChatSuggestionsContent>
 			</ChatSuggestions>
 		</div>
 	);

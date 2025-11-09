@@ -1,4 +1,7 @@
-import { MessagesSquare, Users } from "lucide-react";
+"use client";
+
+import type { useChat } from "@ai-sdk/react";
+import { MessagesSquare, RotateCcw, Users } from "lucide-react";
 import type { ComponentProps } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,8 +15,13 @@ import {
 	AppHeaderIcon,
 	AppHeaderSeparator,
 } from "@/registry/blocks/chat-01/components/layout/app-header";
+import type { AIUIMessage } from "@/registry/blocks/chat-01/types/ai-messages";
 
-export function ChatHeader() {
+export function ChatHeader({
+	setMessages,
+}: {
+	setMessages: ReturnType<typeof useChat<AIUIMessage>>["setMessages"];
+}) {
 	const connectionStatus = "connected";
 	return (
 		<AppHeader>
@@ -24,6 +32,16 @@ export function ChatHeader() {
 
 			<ChatHeaderRoomName>Dev Team</ChatHeaderRoomName>
 			<div className="ml-auto flex items-center">
+				<Button
+					variant="outline"
+					size="icon"
+					onClick={() => setMessages([])}
+					className="h-7 w-7 mr-2"
+					title="Reset chat messages"
+				>
+					<RotateCcw className="h-4 w-4" />
+				</Button>
+
 				<ChatHeaderRoomMemberCount>{10}</ChatHeaderRoomMemberCount>
 				<AppHeaderSeparator />
 				<Tooltip>

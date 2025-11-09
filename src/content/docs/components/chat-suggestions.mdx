@@ -1,0 +1,102 @@
+---
+title: Chat Suggestions
+description: A composable component for displaying chat prompt suggestions as clickable buttons.
+component: true
+---
+
+<ComponentPreview name="chat-suggestions-demo" description="Chat suggestions with header and description" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @simple-ai/chat-suggestions
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+`chat-suggestions.tsx`
+
+<ComponentSource name="chat-suggestions" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## About
+
+The Chat Suggestions component provides a composable way to display prompt suggestions to users in your chat interface. Following the shadcn/ui design philosophy, it's built with small, reusable pieces that can be composed together to create flexible layouts.
+
+Perfect for onboarding new users, suggesting common queries, or providing quick actions in empty chat states.
+
+## Usage
+
+```tsx
+import {
+  ChatSuggestion,
+  ChatSuggestions,
+  ChatSuggestionsContent,
+  ChatSuggestionsDescription,
+  ChatSuggestionsHeader,
+  ChatSuggestionsTitle,
+} from "@/components/ui/chat-suggestions"
+```
+
+### Basic Usage
+
+```tsx
+<ChatSuggestions>
+  <ChatSuggestionsTitle>Try these prompts:</ChatSuggestionsTitle>
+  <ChatSuggestionsContent>
+    <ChatSuggestion onClick={() => console.log("What can you help me with?")}>
+      What can you help me with?
+    </ChatSuggestion>
+    <ChatSuggestion onClick={() => console.log("Show me examples")}>
+      Show me examples
+    </ChatSuggestion>
+  </ChatSuggestionsContent>
+</ChatSuggestions>
+```
+
+### With Header and Description
+
+```tsx
+<ChatSuggestions>
+  <ChatSuggestionsHeader>
+    <ChatSuggestionsTitle>Quick start</ChatSuggestionsTitle>
+    <ChatSuggestionsDescription>
+      Click a suggestion to get started
+    </ChatSuggestionsDescription>
+  </ChatSuggestionsHeader>
+  <ChatSuggestionsContent>
+    <ChatSuggestion>Tell me about your features</ChatSuggestion>
+    <ChatSuggestion>How do I get started?</ChatSuggestion>
+  </ChatSuggestionsContent>
+</ChatSuggestions>
+```
+
+## Examples
+
+### Simple Suggestions
+
+A minimal chat suggestions layout with just a title and suggestions.
+
+<ComponentPreview name="chat-suggestions-demo-simple" description="Simple chat suggestions" />
+
