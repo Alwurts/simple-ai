@@ -4,7 +4,7 @@ import {
 	type NoteNode,
 	noteSharedDefinition,
 } from "@/registry/blocks/workflow-01/lib/workflow/nodes/note/note.shared";
-import type { NodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+import type { NodeDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 
 export const noteNodeDefinition: NodeDefinition<NoteNode> = {
 	shared: noteSharedDefinition,

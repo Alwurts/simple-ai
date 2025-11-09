@@ -1,11 +1,11 @@
 import { createUIMessageStream, createUIMessageStreamResponse } from "ai";
 import type { NextRequest } from "next/server";
 import { executeWorkflow } from "@/registry/blocks/workflow-01/lib/workflow/executor";
-import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/lib/workflow/messages";
+import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/types/messages";
 import type {
 	FlowEdge,
 	FlowNode,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 export const maxDuration = 60;
 

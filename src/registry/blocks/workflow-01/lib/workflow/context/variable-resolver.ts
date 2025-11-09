@@ -7,7 +7,7 @@ import {
 	type FlowEdge,
 	type FlowNode,
 	isNodeOfType,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 export type VariableInfo = {
 	path: string;

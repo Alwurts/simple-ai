@@ -3,19 +3,17 @@ import {
 	type ModelMessage,
 	type UIMessageStreamWriter,
 } from "ai";
-import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/lib/workflow/messages";
 import { getNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
+import { validateWorkflow } from "@/registry/blocks/workflow-01/lib/workflow/validation";
+import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/types/messages";
 import type {
 	ExecutionContext,
 	ExecutionResult,
-	NodeExecutionResult,
-} from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
-import type {
 	FlowEdge,
 	FlowNode,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
-import { isNodeOfType } from "@/registry/blocks/workflow-01/lib/workflow/types";
-import { validateWorkflow } from "@/registry/blocks/workflow-01/lib/workflow/validation";
+	NodeExecutionResult,
+} from "@/registry/blocks/workflow-01/types/workflow";
+import { isNodeOfType } from "@/registry/blocks/workflow-01/types/workflow";
 
 /**
  * Main workflow execution function

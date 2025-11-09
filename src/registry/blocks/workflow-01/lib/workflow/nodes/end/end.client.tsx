@@ -16,7 +16,7 @@ import {
 } from "@/registry/blocks/workflow-01/components/workflow/primitives/node-header";
 import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 import type { EndNode as EndNodeType } from "@/registry/blocks/workflow-01/lib/workflow/nodes/end/end.shared";
-import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 
 export interface EndNodeProps extends NodeProps<EndNodeType> {}
 

@@ -2464,11 +2464,6 @@ export const Index: Record<string, any> = {
 				target: "components/validation-status.tsx",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/types.ts",
-				type: "registry:lib",
-				target: "lib/workflow/nodes/types.ts",
-			},
-			{
 				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/index.ts",
 				type: "registry:lib",
 				target: "lib/workflow/nodes/index.ts",
@@ -2669,19 +2664,19 @@ export const Index: Record<string, any> = {
 				target: "lib/workflow/executor.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/messages.ts",
-				type: "registry:lib",
-				target: "lib/workflow/messages.ts",
-			},
-			{
 				path: "./src/registry/blocks/workflow-01/lib/workflow/models-external.ts",
 				type: "registry:lib",
 				target: "lib/workflow/models.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/types.ts",
+				path: "./src/registry/blocks/workflow-01/types/messages.ts",
 				type: "registry:lib",
-				target: "lib/workflow/types.ts",
+				target: "types/messages.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/types/workflow.ts",
+				type: "registry:lib",
+				target: "types/workflow.ts",
 			},
 			{
 				path: "./src/registry/blocks/workflow-01/lib/workflow/validation.ts",

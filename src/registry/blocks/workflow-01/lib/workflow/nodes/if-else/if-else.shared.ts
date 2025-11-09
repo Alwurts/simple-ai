@@ -9,11 +9,11 @@ import { getPotentialInputSchemas } from "@/registry/blocks/workflow-01/lib/work
 import type {
 	NodeSharedDefinition,
 	ValidationContext,
-} from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 import {
 	isNodeOfType,
 	type ValidationError,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 const dynamicHandleSchema = z.object({
 	id: z.string(),

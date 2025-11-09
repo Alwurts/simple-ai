@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { ResizableNode } from "@/registry/blocks/workflow-01/components/workflow/primitives/resizable-node";
 import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 import type { NoteNode as NoteNodeType } from "@/registry/blocks/workflow-01/lib/workflow/nodes/note/note.shared";
-import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 
 export interface NoteNodeProps extends NodeProps<NoteNodeType> {}
 

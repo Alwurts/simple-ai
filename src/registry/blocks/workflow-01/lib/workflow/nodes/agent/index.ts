@@ -4,7 +4,7 @@ import {
 	type AgentNode,
 	agentSharedDefinition,
 } from "@/registry/blocks/workflow-01/lib/workflow/nodes/agent/agent.shared";
-import type { NodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+import type { NodeDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 
 export const agentNodeDefinition: NodeDefinition<AgentNode> = {
 	shared: agentSharedDefinition,

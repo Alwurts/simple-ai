@@ -2,7 +2,7 @@ import { WORKFLOW_MODELS } from "@/registry/blocks/workflow-01/lib/workflow/mode
 import type {
 	FlowEdge,
 	FlowNode,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 	{

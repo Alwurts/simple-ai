@@ -3,8 +3,8 @@ import { z } from "zod";
 import type {
 	NodeSharedDefinition,
 	ValidationContext,
-} from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
-import type { ValidationError } from "@/registry/blocks/workflow-01/lib/workflow/types";
+	ValidationError,
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 export const waitNodeDataSchema = z.object({
 	status: z.enum(["processing", "error", "success", "idle"]).optional(),

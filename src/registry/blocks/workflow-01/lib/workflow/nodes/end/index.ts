@@ -4,7 +4,7 @@ import {
 	type EndNode,
 	endSharedDefinition,
 } from "@/registry/blocks/workflow-01/lib/workflow/nodes/end/end.shared";
-import type { NodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+import type { NodeDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 
 export const endNodeDefinition: NodeDefinition<EndNode> = {
 	shared: endSharedDefinition,

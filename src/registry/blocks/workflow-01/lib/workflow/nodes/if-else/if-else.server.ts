@@ -4,7 +4,7 @@ import type {
 	ExecutionContext,
 	NodeExecutionResult,
 	NodeServerDefinition,
-} from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 // Cache the CEL environment since it's stateless and reusable
 const celEnv = new Environment();

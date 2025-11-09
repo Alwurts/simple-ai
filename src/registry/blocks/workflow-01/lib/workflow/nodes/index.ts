@@ -4,6 +4,10 @@ import { ifElseNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow
 import { noteNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/note";
 import { startNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/start";
 import { waitNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/wait";
+import type {
+	AnyNodeDefinition,
+	FlowNodeType,
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 const nodeDefinitions = {
 	agent: agentNodeDefinition,
@@ -15,18 +19,6 @@ const nodeDefinitions = {
 } as const;
 
 export const nodeRegistry = nodeDefinitions;
-
-type NodeMap = {
-	[K in keyof typeof nodeRegistry]: ReturnType<
-		(typeof nodeRegistry)[K]["client"]["create"]
-	>;
-};
-
-export type FlowNode = NodeMap[keyof NodeMap];
-export type FlowNodeType = FlowNode["type"];
-
-export type AnyNodeDefinition =
-	(typeof nodeRegistry)[keyof typeof nodeRegistry];
 
 export function getNodeDefinition<T extends FlowNodeType>(
 	type: T,

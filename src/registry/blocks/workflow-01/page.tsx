@@ -42,9 +42,9 @@ import {
 	DEFAULT_TEMPLATE,
 	getTemplateById,
 } from "@/registry/blocks/workflow-01/lib/templates";
-import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/lib/workflow/messages";
 import { getAllNodeDefinitions } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
-import type { FlowNode } from "@/registry/blocks/workflow-01/lib/workflow/types";
+import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/types/messages";
+import type { FlowNode } from "@/registry/blocks/workflow-01/types/workflow";
 
 const nodeDefinitions = getAllNodeDefinitions();
 const nodeTypes: NodeTypes = {} as NodeTypes;

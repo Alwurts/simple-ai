@@ -5,7 +5,7 @@ import { WIKIPEDIA_RESEARCH_TEMPLATE } from "@/registry/blocks/workflow-01/lib/t
 import type {
 	FlowEdge,
 	FlowNode,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 export type WorkflowTemplate = {
 	id: string;

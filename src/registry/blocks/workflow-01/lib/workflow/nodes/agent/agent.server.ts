@@ -16,7 +16,7 @@ import type {
 	ExecutionContext,
 	NodeExecutionResult,
 	NodeServerDefinition,
-} from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 async function executeAgentNode(
 	context: ExecutionContext<AgentNode>,

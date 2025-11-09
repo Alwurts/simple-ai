@@ -26,7 +26,7 @@ import {
 import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 import { getUnionOfVariables } from "@/registry/blocks/workflow-01/lib/workflow/context/variable-resolver";
 import type { IfElseNode as IfElseNodeType } from "@/registry/blocks/workflow-01/lib/workflow/nodes/if-else/if-else.shared";
-import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 
 export interface IfElseNodeProps extends NodeProps<IfElseNodeType> {}
 

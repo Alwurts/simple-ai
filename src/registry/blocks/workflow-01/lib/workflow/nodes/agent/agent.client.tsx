@@ -42,7 +42,7 @@ import {
 	type workflowModelID,
 } from "@/registry/blocks/workflow-01/lib/workflow/models";
 import type { AgentNode as AgentNodeType } from "@/registry/blocks/workflow-01/lib/workflow/nodes/agent/agent.shared";
-import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 import { idToReadableText } from "@/registry/lib/id-to-readable-text";
 import {
 	JsonSchemaEditorDialog,

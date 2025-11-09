@@ -1,14 +1,7 @@
 import type { Connection, EdgeChange, NodeChange } from "@xyflow/react";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "@xyflow/react";
 import { createWithEqualityFn } from "zustand/traditional";
-import type { FlowNodeType } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
 import { getNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
-import {
-	type FlowEdge,
-	type FlowNode,
-	isNodeOfType,
-	type ValidationError,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
 import {
 	canConnectHandle,
 	getErrorsForEdge,
@@ -16,6 +9,13 @@ import {
 	isValidConnection,
 	validateWorkflow as validateWorkflowFn,
 } from "@/registry/blocks/workflow-01/lib/workflow/validation";
+import type {
+	FlowEdge,
+	FlowNode,
+	FlowNodeType,
+	ValidationError,
+} from "@/registry/blocks/workflow-01/types/workflow";
+import { isNodeOfType } from "@/registry/blocks/workflow-01/types/workflow";
 
 export interface WorkflowState {
 	nodes: FlowNode[];

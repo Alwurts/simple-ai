@@ -4,7 +4,7 @@ import {
 	type StartNode,
 	startSharedDefinition,
 } from "@/registry/blocks/workflow-01/lib/workflow/nodes/start/start.shared";
-import type { NodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/types";
+import type { NodeDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 
 export const startNodeDefinition: NodeDefinition<StartNode> = {
 	shared: startSharedDefinition,

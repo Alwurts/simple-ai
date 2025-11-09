@@ -3,8 +3,8 @@ import type {
 	FlowEdge,
 	FlowNode,
 	ValidationError,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
-import { isNodeOfType } from "@/registry/blocks/workflow-01/lib/workflow/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
+import { isNodeOfType } from "@/registry/blocks/workflow-01/types/workflow";
 
 type ValidationResult = {
 	valid: boolean;

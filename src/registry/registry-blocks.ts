@@ -957,11 +957,6 @@ export const blocks: Registry["items"] = [
 				type: "registry:component",
 			},
 			{
-				path: "blocks/workflow-01/lib/workflow/nodes/types.ts",
-				target: "lib/workflow/nodes/types.ts",
-				type: "registry:lib",
-			},
-			{
 				path: "blocks/workflow-01/lib/workflow/nodes/index.ts",
 				target: "lib/workflow/nodes/index.ts",
 				type: "registry:lib",
@@ -1162,18 +1157,18 @@ export const blocks: Registry["items"] = [
 				type: "registry:lib",
 			},
 			{
-				path: "blocks/workflow-01/lib/workflow/messages.ts",
-				target: "lib/workflow/messages.ts",
-				type: "registry:lib",
-			},
-			{
 				path: "blocks/workflow-01/lib/workflow/models-external.ts",
 				target: "lib/workflow/models.ts",
 				type: "registry:lib",
 			},
 			{
-				path: "blocks/workflow-01/lib/workflow/types.ts",
-				target: "lib/workflow/types.ts",
+				path: "blocks/workflow-01/types/messages.ts",
+				target: "types/messages.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/types/workflow.ts",
+				target: "types/workflow.ts",
 				type: "registry:lib",
 			},
 			{

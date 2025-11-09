@@ -5,7 +5,7 @@ import {
 	getBezierPath,
 } from "@xyflow/react";
 import type { CSSProperties } from "react";
-import type { ValidationError } from "@/registry/blocks/workflow-01/lib/workflow/types";
+import type { ValidationError } from "@/registry/blocks/workflow-01/types/workflow";
 
 export type StatusEdgeData = {
 	execution?: {
