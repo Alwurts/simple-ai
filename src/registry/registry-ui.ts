@@ -321,4 +321,14 @@ export const ui: Registry["items"] = [
 		registryDependencies: ["button", "dialog", "input", "select"],
 		files: [{ type: "registry:ui", path: "ui/json-schema-editor.tsx" }],
 	},
+	{
+		name: "reasoning",
+		title: "Reasoning",
+		description:
+			"A component for displaying AI reasoning content with collapsible sections and streaming support.",
+		type: "registry:ui",
+		dependencies: ["ai"],
+		registryDependencies: ["collapsible", "@simple-ai/markdown-content"],
+		files: [{ type: "registry:ui", path: "ui/reasoning.tsx" }],
+	},
 ];

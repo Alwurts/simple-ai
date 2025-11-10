@@ -602,6 +602,32 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	reasoning: {
+		name: "reasoning",
+		description:
+			"A component for displaying AI reasoning content with collapsible sections and streaming support.",
+		type: "registry:ui",
+		registryDependencies: ["collapsible", "@simple-ai/markdown-content"],
+		files: [
+			{
+				path: "./src/registry/ui/reasoning.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/reasoning.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"use-textarea-resize": {
 		name: "use-textarea-resize",
 		description: "",
@@ -1451,6 +1477,7 @@ export const Index: Record<string, any> = {
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
 		],
 		files: [
 			{
@@ -2390,6 +2417,7 @@ export const Index: Record<string, any> = {
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
 			"@simple-ai/json-schema-editor",
 		],
 		files: [

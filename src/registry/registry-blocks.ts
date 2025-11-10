@@ -39,6 +39,7 @@ export const blocks: Registry["items"] = [
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
 		],
 		files: [
 			{
@@ -883,6 +884,7 @@ export const blocks: Registry["items"] = [
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
 			"@simple-ai/json-schema-editor",
 		],
 		files: [

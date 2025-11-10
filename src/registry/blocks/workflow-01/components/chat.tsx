@@ -55,6 +55,7 @@ import {
 	ChatSuggestionsHeader,
 	ChatSuggestionsTitle,
 } from "@/registry/ui/chat-suggestions";
+import { Reasoning } from "@/registry/ui/reasoning";
 import {
 	ToolInvocation,
 	ToolInvocationContentCollapsible,
@@ -224,6 +225,24 @@ export function Chat({
 																	key={`text-${message.id}-${index}`}
 																	content={
 																		part.text
+																	}
+																/>
+															);
+														}
+
+														case "reasoning": {
+															return (
+																<Reasoning
+																	key={`reasoning-${message.id}-${index}`}
+																	content={
+																		part.text
+																	}
+																	isLastPart={
+																		index ===
+																		message
+																			.parts
+																			.length -
+																			1
 																	}
 																/>
 															);

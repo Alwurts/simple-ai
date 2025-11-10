@@ -352,6 +352,23 @@
 			]
 		},
 		{
+			"name": "reasoning",
+			"type": "registry:ui",
+			"title": "Reasoning",
+			"description": "A component for displaying AI reasoning content with collapsible sections and streaming support.",
+			"dependencies": ["ai"],
+			"registryDependencies": [
+				"collapsible",
+				"@simple-ai/markdown-content"
+			],
+			"files": [
+				{
+					"path": "./src/registry/ui/reasoning.tsx",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
 			"name": "use-textarea-resize",
 			"type": "registry:hook",
 			"files": [
@@ -685,7 +702,8 @@
 				"@simple-ai/chat-message-area",
 				"@simple-ai/chat-message",
 				"@simple-ai/tool-invocation",
-				"@simple-ai/chat-suggestions"
+				"@simple-ai/chat-suggestions",
+				"@simple-ai/reasoning"
 			],
 			"files": [
 				{
@@ -1556,6 +1574,7 @@
 				"@simple-ai/chat-message",
 				"@simple-ai/tool-invocation",
 				"@simple-ai/chat-suggestions",
+				"@simple-ai/reasoning",
 				"@simple-ai/json-schema-editor"
 			],
 			"files": [

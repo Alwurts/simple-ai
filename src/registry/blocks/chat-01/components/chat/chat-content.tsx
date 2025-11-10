@@ -37,6 +37,7 @@ import {
 	ChatSuggestionsHeader,
 	ChatSuggestionsTitle,
 } from "@/registry/ui/chat-suggestions";
+import { Reasoning } from "@/registry/ui/reasoning";
 import {
 	ToolInvocation,
 	ToolInvocationContentCollapsible,
@@ -168,6 +169,28 @@ export function ChatContent({
 															/>
 														);
 													}
+
+													if (
+														part.type ===
+														"reasoning"
+													) {
+														return (
+															<Reasoning
+																key={`reasoning-${message.id}-${index}`}
+																content={
+																	part.text
+																}
+																isLastPart={
+																	index ===
+																	message
+																		.parts
+																		.length -
+																		1
+																}
+															/>
+														);
+													}
+
 													if (
 														part.type.startsWith(
 															"tool-",

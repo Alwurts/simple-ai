@@ -59,7 +59,6 @@ async function executeAgentNode(
 		prepareStep: async ({ stepNumber }) => {
 			if (stepNumber === maxSteps - 1) {
 				return {
-					//activeTools: [],
 					toolChoice: "none",
 				};
 			}
@@ -74,6 +73,7 @@ async function executeAgentNode(
 			streamResult.toUIMessageStream({
 				sendStart: false,
 				sendFinish: false,
+				sendReasoning: true,
 			}),
 		);
 	}

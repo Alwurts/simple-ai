@@ -23,7 +23,8 @@ const languageModels = {
 			settings: {
 				providerOptions: {
 					openai: {
-						reasoningEffort: "low", // 'minimal' | 'low' | 'medium' | 'high'
+						reasoningSummary: "auto", // 'auto' for condensed or 'detailed' for comprehensive
+						reasoningEffort: "minimal", // 'minimal' | 'low' | 'medium' | 'high'
 					},
 				},
 			},
@@ -35,6 +36,7 @@ const languageModels = {
 			settings: {
 				providerOptions: {
 					openai: {
+						reasoningSummary: "detailed", // 'auto' for condensed or 'detailed' for comprehensive
 						reasoningEffort: "low", // 'minimal' | 'low' | 'medium' | 'high'
 					},
 				},
@@ -47,7 +49,8 @@ const languageModels = {
 			settings: {
 				providerOptions: {
 					openai: {
-						reasoningEffort: "low", // 'minimal' | 'low' | 'medium' | 'high'
+						reasoningSummary: "detailed", // 'auto' for condensed or 'detailed' for comprehensive
+						reasoningEffort: "medium", // 'minimal' | 'low' | 'medium' | 'high'
 					},
 				},
 			},
