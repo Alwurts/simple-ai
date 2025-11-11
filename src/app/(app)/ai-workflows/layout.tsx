@@ -9,7 +9,7 @@ import {
 } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 
-const title = "AI Agent Workflowr";
+const title = "AI Agent Workflows";
 const description =
 	"Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK";
 
