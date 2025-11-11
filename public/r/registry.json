@@ -338,6 +338,37 @@
 			]
 		},
 		{
+			"name": "json-schema-editor",
+			"type": "registry:ui",
+			"title": "JSON Schema Editor",
+			"description": "A visual editor for creating and editing JSON Schema definitions with support for nested objects, arrays, enums, and property descriptions.",
+			"dependencies": ["nanoid"],
+			"registryDependencies": ["button", "dialog", "input", "select"],
+			"files": [
+				{
+					"path": "./src/registry/ui/json-schema-editor.tsx",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "reasoning",
+			"type": "registry:ui",
+			"title": "Reasoning",
+			"description": "A component for displaying AI reasoning content with collapsible sections and streaming support.",
+			"dependencies": ["ai"],
+			"registryDependencies": [
+				"collapsible",
+				"@simple-ai/markdown-content"
+			],
+			"files": [
+				{
+					"path": "./src/registry/ui/reasoning.tsx",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
 			"name": "use-textarea-resize",
 			"type": "registry:hook",
 			"files": [
@@ -634,6 +665,26 @@
 			]
 		},
 		{
+			"name": "chat-suggestions-demo",
+			"type": "registry:example",
+			"files": [
+				{
+					"path": "./src/registry/examples/chat-suggestions-demo.tsx",
+					"type": "registry:example"
+				}
+			]
+		},
+		{
+			"name": "chat-suggestions-demo-simple",
+			"type": "registry:example",
+			"files": [
+				{
+					"path": "./src/registry/examples/chat-suggestions-demo-simple.tsx",
+					"type": "registry:example"
+				}
+			]
+		},
+		{
 			"name": "chat-01",
 			"type": "registry:block",
 			"description": "A simple chat page.",
@@ -650,7 +701,9 @@
 				"@simple-ai/chat-input",
 				"@simple-ai/chat-message-area",
 				"@simple-ai/chat-message",
-				"@simple-ai/tool-invocation"
+				"@simple-ai/tool-invocation",
+				"@simple-ai/chat-suggestions",
+				"@simple-ai/reasoning"
 			],
 			"files": [
 				{
@@ -670,6 +723,15 @@
 				{
 					"path": "./src/registry/blocks/chat-01/lib/tools.ts",
 					"type": "registry:lib"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/lib/messages.ts",
+					"type": "registry:lib"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/types/ai-messages.ts",
+					"type": "registry:lib",
+					"target": "types/ai-messages.ts"
 				},
 				{
 					"path": "./src/registry/blocks/chat-01/components/layout/app-layout.tsx",
@@ -1483,8 +1545,7 @@
 				"@ai-sdk/react",
 				"@ai-sdk/openai",
 				"nanoid",
-				"jexl",
-				"@types/jexl",
+				"@marcbachmann/cel-js",
 				"@uiw/react-codemirror",
 				"@codemirror/language",
 				"@lezer/highlight",
@@ -1512,7 +1573,9 @@
 				"@simple-ai/chat-message-area",
 				"@simple-ai/chat-message",
 				"@simple-ai/tool-invocation",
-				"@simple-ai/chat-suggestions"
+				"@simple-ai/chat-suggestions",
+				"@simple-ai/reasoning",
+				"@simple-ai/json-schema-editor"
 			],
 			"files": [
 				{
@@ -1539,16 +1602,6 @@
 					"path": "./src/registry/blocks/workflow-01/components/chat.tsx",
 					"type": "registry:component",
 					"target": "components/chat.tsx"
-				},
-				{
-					"path": "./src/registry/blocks/workflow-01/components/editor/schema-preview.tsx",
-					"type": "registry:component",
-					"target": "components/editor/schema-preview.tsx"
-				},
-				{
-					"path": "./src/registry/blocks/workflow-01/components/editor/schema-editor.tsx",
-					"type": "registry:component",
-					"target": "components/editor/schema-editor.tsx"
 				},
 				{
 					"path": "./src/registry/blocks/workflow-01/components/editor/condition-editor.tsx",
@@ -1594,11 +1647,6 @@
 					"path": "./src/registry/blocks/workflow-01/components/validation-status.tsx",
 					"type": "registry:component",
 					"target": "components/validation-status.tsx"
-				},
-				{
-					"path": "./src/registry/blocks/workflow-01/lib/workflow/nodes/types.ts",
-					"type": "registry:lib",
-					"target": "lib/workflow/nodes/types.ts"
 				},
 				{
 					"path": "./src/registry/blocks/workflow-01/lib/workflow/nodes/index.ts",
@@ -1801,24 +1849,19 @@
 					"target": "lib/workflow/executor.ts"
 				},
 				{
-					"path": "./src/registry/blocks/workflow-01/lib/workflow/json-schema-utils.ts",
-					"type": "registry:lib",
-					"target": "lib/workflow/json-schema-utils.ts"
-				},
-				{
-					"path": "./src/registry/blocks/workflow-01/lib/workflow/messages.ts",
-					"type": "registry:lib",
-					"target": "lib/workflow/messages.ts"
-				},
-				{
 					"path": "./src/registry/blocks/workflow-01/lib/workflow/models-external.ts",
 					"type": "registry:lib",
 					"target": "lib/workflow/models.ts"
 				},
 				{
-					"path": "./src/registry/blocks/workflow-01/lib/workflow/types.ts",
+					"path": "./src/registry/blocks/workflow-01/types/messages.ts",
 					"type": "registry:lib",
-					"target": "lib/workflow/types.ts"
+					"target": "types/messages.ts"
+				},
+				{
+					"path": "./src/registry/blocks/workflow-01/types/workflow.ts",
+					"type": "registry:lib",
+					"target": "types/workflow.ts"
 				},
 				{
 					"path": "./src/registry/blocks/workflow-01/lib/workflow/validation.ts",
@@ -1826,9 +1869,14 @@
 					"target": "lib/workflow/validation.ts"
 				},
 				{
-					"path": "./src/registry/blocks/workflow-01/lib/workflow/variables.ts",
+					"path": "./src/registry/blocks/workflow-01/lib/workflow/context/schema-introspection.ts",
 					"type": "registry:lib",
-					"target": "lib/workflow/variables.ts"
+					"target": "lib/workflow/context/schema-introspection.ts"
+				},
+				{
+					"path": "./src/registry/blocks/workflow-01/lib/workflow/context/variable-resolver.ts",
+					"type": "registry:lib",
+					"target": "lib/workflow/context/variable-resolver.ts"
 				},
 				{
 					"path": "./src/registry/blocks/workflow-01/hooks/use-workflow.ts",

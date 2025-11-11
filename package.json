@@ -23,6 +23,7 @@
 		"@codemirror/language": "^6.11.3",
 		"@codemirror/view": "^6.38.6",
 		"@hookform/resolvers": "^5.2.2",
+		"@marcbachmann/cel-js": "^4.1.1",
 		"@next/third-parties": "^15.5.4",
 		"@radix-ui/react-accordion": "^1.2.12",
 		"@radix-ui/react-aspect-ratio": "^1.1.7",
@@ -61,7 +62,6 @@
 		"fumadocs-core": "^15.8.5",
 		"fumadocs-docgen": "^3.0.2",
 		"fumadocs-mdx": "^12.0.3",
-		"jexl": "^2.3.0",
 		"lucide-react": "^0.545.0",
 		"marked": "^16.4.0",
 		"next": "15.5.4",
@@ -90,7 +90,6 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.2.0",
 		"@tailwindcss/postcss": "^4",
-		"@types/jexl": "^2.3.4",
 		"@types/node": "^20",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",

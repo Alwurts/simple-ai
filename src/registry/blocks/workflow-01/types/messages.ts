@@ -3,7 +3,7 @@ import type { workflowTools } from "@/registry/blocks/workflow-01/lib/tools";
 import type {
 	FlowNode,
 	NodeStatus,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 type WorkflowAIMetadata = Record<string, unknown>;
 

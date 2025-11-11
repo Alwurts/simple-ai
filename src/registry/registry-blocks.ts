@@ -38,6 +38,8 @@ export const blocks: Registry["items"] = [
 			"@simple-ai/chat-message-area",
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
+			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
 		],
 		files: [
 			{
@@ -56,6 +58,15 @@ export const blocks: Registry["items"] = [
 			},
 			{
 				path: "blocks/chat-01/lib/tools.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-01/lib/messages.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-01/types/ai-messages.ts",
+				target: "types/ai-messages.ts",
 				type: "registry:lib",
 			},
 			{
@@ -844,8 +855,7 @@ export const blocks: Registry["items"] = [
 			"@ai-sdk/react",
 			"@ai-sdk/openai",
 			"nanoid",
-			"jexl",
-			"@types/jexl",
+			"@marcbachmann/cel-js",
 			"@uiw/react-codemirror",
 			"@codemirror/language",
 			"@lezer/highlight",
@@ -874,6 +884,8 @@ export const blocks: Registry["items"] = [
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
+			"@simple-ai/json-schema-editor",
 		],
 		files: [
 			{
@@ -899,16 +911,6 @@ export const blocks: Registry["items"] = [
 			{
 				path: "blocks/workflow-01/components/chat.tsx",
 				target: "components/chat.tsx",
-				type: "registry:component",
-			},
-			{
-				path: "blocks/workflow-01/components/editor/schema-preview.tsx",
-				target: "components/editor/schema-preview.tsx",
-				type: "registry:component",
-			},
-			{
-				path: "blocks/workflow-01/components/editor/schema-editor.tsx",
-				target: "components/editor/schema-editor.tsx",
 				type: "registry:component",
 			},
 			{
@@ -955,11 +957,6 @@ export const blocks: Registry["items"] = [
 				path: "blocks/workflow-01/components/validation-status.tsx",
 				target: "components/validation-status.tsx",
 				type: "registry:component",
-			},
-			{
-				path: "blocks/workflow-01/lib/workflow/nodes/types.ts",
-				target: "lib/workflow/nodes/types.ts",
-				type: "registry:lib",
 			},
 			{
 				path: "blocks/workflow-01/lib/workflow/nodes/index.ts",
@@ -1162,23 +1159,18 @@ export const blocks: Registry["items"] = [
 				type: "registry:lib",
 			},
 			{
-				path: "blocks/workflow-01/lib/workflow/json-schema-utils.ts",
-				target: "lib/workflow/json-schema-utils.ts",
-				type: "registry:lib",
-			},
-			{
-				path: "blocks/workflow-01/lib/workflow/messages.ts",
-				target: "lib/workflow/messages.ts",
-				type: "registry:lib",
-			},
-			{
 				path: "blocks/workflow-01/lib/workflow/models-external.ts",
 				target: "lib/workflow/models.ts",
 				type: "registry:lib",
 			},
 			{
-				path: "blocks/workflow-01/lib/workflow/types.ts",
-				target: "lib/workflow/types.ts",
+				path: "blocks/workflow-01/types/messages.ts",
+				target: "types/messages.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/types/workflow.ts",
+				target: "types/workflow.ts",
 				type: "registry:lib",
 			},
 			{
@@ -1187,8 +1179,13 @@ export const blocks: Registry["items"] = [
 				type: "registry:lib",
 			},
 			{
-				path: "blocks/workflow-01/lib/workflow/variables.ts",
-				target: "lib/workflow/variables.ts",
+				path: "blocks/workflow-01/lib/workflow/context/schema-introspection.ts",
+				target: "lib/workflow/context/schema-introspection.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/workflow-01/lib/workflow/context/variable-resolver.ts",
+				target: "lib/workflow/context/variable-resolver.ts",
 				type: "registry:lib",
 			},
 			{

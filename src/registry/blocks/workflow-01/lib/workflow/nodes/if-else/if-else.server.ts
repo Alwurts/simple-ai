@@ -1,10 +1,14 @@
-import jexl from "jexl";
+import { Environment } from "@marcbachmann/cel-js";
+import type { IfElseNode } from "@/registry/blocks/workflow-01/lib/workflow/nodes/if-else/if-else.shared";
 import type {
 	ExecutionContext,
 	NodeExecutionResult,
 	NodeServerDefinition,
-} from "../types";
-import type { IfElseNode } from "./if-else.shared";
+} from "@/registry/blocks/workflow-01/types/workflow";
+
+// Cache the CEL environment since it's stateless and reusable
+const celEnv = new Environment();
+celEnv.registerVariable("input", "dyn");
 
 function executeIfElseNode(
 	context: ExecutionContext<IfElseNode>,
@@ -16,28 +20,27 @@ function executeIfElseNode(
 	};
 
 	const previousContext = executionMemory[previousNodeId];
-
 	let nextNodeId: string | null = null;
 
 	if (previousContext) {
+		const evalContext = {
+			input: previousContext.structured
+				? previousContext.structured
+				: previousContext.text,
+		};
+
 		for (const handle of node.data.dynamicSourceHandles) {
 			if (!handle.condition || handle.condition.trim() === "") {
 				continue;
 			}
 
 			try {
-				const jexlContext = {
-					input: previousContext.structured
-						? previousContext.structured
-						: previousContext.text,
-				};
-
-				const conditionResult = jexl.evalSync(
+				const conditionResult = celEnv.evaluate(
 					handle.condition,
-					jexlContext,
+					evalContext,
 				);
 
-				if (conditionResult) {
+				if (conditionResult === true) {
 					const outgoingEdge = edges.find(
 						(edge) =>
 							edge.source === node.id &&
@@ -49,18 +52,17 @@ function executeIfElseNode(
 						break;
 					}
 				}
-			} catch (error) {
-				console.error(
-					`Error evaluating condition: ${handle.condition}`,
-					error,
-				);
+			} catch {
+				// Silently continue to next condition if evaluation fails
+				// Validation should have caught this earlier
 			}
 		}
 
 		if (!nextNodeId) {
 			const elseEdge = edges.find(
 				(edge) =>
-					edge.source === node.id && edge.sourceHandle === "else",
+					edge.source === node.id &&
+					edge.sourceHandle === "output-else",
 			);
 			nextNodeId = elseEdge ? elseEdge.target : null;
 		}

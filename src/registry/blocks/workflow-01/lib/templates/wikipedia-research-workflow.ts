@@ -1,7 +1,8 @@
+import { WORKFLOW_MODELS } from "@/registry/blocks/workflow-01/lib/workflow/models";
 import type {
 	FlowEdge,
 	FlowNode,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 export const WIKIPEDIA_RESEARCH_WORKFLOW: {
 	nodes: FlowNode[];
@@ -36,7 +37,7 @@ export const WIKIPEDIA_RESEARCH_WORKFLOW: {
 			},
 			data: {
 				name: "Wikipedia Researcher",
-				model: "gpt-5-mini",
+				model: WORKFLOW_MODELS[0],
 				systemPrompt:
 					'You are a research assistant powered by Wikipedia. Use the wikipedia-query tool to gather comprehensive research data.\n\nYour process:\n1. Use the "search" action to find the most relevant Wikipedia articles for the query\n2. Use the "summary" action to retrieve detailed information from 2-4 key articles\n3. Extract key facts, dates, people, events, and concepts\n4. Return structured research data that will be used by another agent for summarization\n\nFocus on gathering raw data rather than writing responses. Be thorough in your research.',
 				selectedTools: ["wikipedia-query"],
@@ -122,7 +123,7 @@ export const WIKIPEDIA_RESEARCH_WORKFLOW: {
 			},
 			data: {
 				name: "Wikipedia Summarizer",
-				model: "gpt-5-mini",
+				model: WORKFLOW_MODELS[0],
 				systemPrompt:
 					"You are a content summarizer that takes structured research data from Wikipedia and creates comprehensive, well-written responses for users.\n\nYour process:\n1. Analyze the structured research data provided\n2. Synthesize information from multiple articles into a coherent narrative\n3. Create engaging, well-structured content that answers the original query\n4. Include relevant citations and source links\n5. Be thorough but concise, avoiding unnecessary details\n\nFormat your response with:\n- Clear introduction answering the main query\n- Well-organized sections with descriptive headers\n- Key facts, dates, and concepts highlighted appropriately\n- Source citations with links\n- Professional, informative tone\n\nBe concise in your output or response.",
 				selectedTools: [],
@@ -204,8 +205,8 @@ export const WIKIPEDIA_RESEARCH_WORKFLOW: {
 			id: "start-to-researcher",
 			source: "start-node",
 			target: "wikipedia-researcher-node",
-			sourceHandle: "message",
-			targetHandle: "prompt",
+			sourceHandle: "output",
+			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
@@ -213,8 +214,8 @@ export const WIKIPEDIA_RESEARCH_WORKFLOW: {
 			id: "researcher-to-summarizer",
 			source: "wikipedia-researcher-node",
 			target: "wikipedia-summarizer-node",
-			sourceHandle: "result",
-			targetHandle: "prompt",
+			sourceHandle: "output",
+			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
@@ -222,10 +223,25 @@ export const WIKIPEDIA_RESEARCH_WORKFLOW: {
 			id: "summarizer-to-end",
 			source: "wikipedia-summarizer-node",
 			target: "end-node",
-			sourceHandle: "result",
+			sourceHandle: "output",
 			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
+	],
+};
+
+export const WIKIPEDIA_RESEARCH_TEMPLATE = {
+	id: "wikipedia-research",
+	name: "Wikipedia Agent",
+	description:
+		"Comprehensive research workflow using Wikipedia search and summary tools",
+	category: "Research",
+	nodes: WIKIPEDIA_RESEARCH_WORKFLOW.nodes,
+	edges: WIKIPEDIA_RESEARCH_WORKFLOW.edges,
+	suggestions: [
+		"Research the history of artificial intelligence",
+		"What are the key principles of quantum physics?",
+		"Research the biography of Albert Einstein",
 	],
 };

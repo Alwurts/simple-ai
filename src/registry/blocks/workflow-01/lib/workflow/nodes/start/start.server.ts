@@ -1,9 +1,9 @@
+import type { StartNode } from "@/registry/blocks/workflow-01/lib/workflow/nodes/start/start.shared";
 import type {
 	ExecutionContext,
 	NodeExecutionResult,
 	NodeServerDefinition,
-} from "../types";
-import type { StartNode } from "./start.shared";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 function executeStartNode(
 	context: ExecutionContext<StartNode>,

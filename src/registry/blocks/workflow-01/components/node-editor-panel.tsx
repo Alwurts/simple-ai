@@ -1,7 +1,7 @@
 import { Panel } from "@xyflow/react";
 import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 import { getNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
-import type { FlowNode } from "@/registry/blocks/workflow-01/lib/workflow/types";
+import type { FlowNode } from "@/registry/blocks/workflow-01/types/workflow";
 
 export function NodeEditorPanel({ nodeId }: { nodeId: FlowNode["id"] }) {
 	const node = useWorkflow((state) => state.getNodeById(nodeId));

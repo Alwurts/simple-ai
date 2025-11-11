@@ -29,7 +29,7 @@ This is the best way to understand what's possible with the workflow builder!
 
 - 🎨 **Visual Workflow Design**: Drag-and-drop interface for building complex agent flows
 - 🤖 **Agent Nodes**: Configure AI agents with custom models, system prompts, tools, and structured outputs
-- 🔀 **Conditional Routing**: Use if-else nodes with CEL expressions to create dynamic branching workflows
+- 🔀 **Conditional Routing**: Create dynamic, branching workflows using if-else nodes. Conditions are written in the powerful and standard **Common Expression Language (CEL)**, providing a secure and flexible way to evaluate node outputs.
 - 💬 **Chat Integration**: Seamlessly integrates with the `useChat` hook and UI message streams
 - ⚡ **Real-time Streaming**: Stream agent responses and workflow status updates live to your chat
 - ✅ **Workflow Validation**: Real-time validation with helpful error messages
@@ -57,13 +57,16 @@ Every workflow consists of **nodes** (the steps) and **edges** (the connections)
 ### Node Types
 
 1. **Start Node**: Entry point for every workflow - receives the user message
+
 2. **Agent Node**: AI agents that process inputs using `streamText` from Vercel AI SDK
    - Configure model, system prompt, tools, and max steps
    - Choose between text or structured JSON output
    - Control conversation history inclusion
-3. **If-Else Node**: Conditional routing based on previous node outputs using JEXL expressions
-4. **End Node**: Terminal point for workflow execution paths
-5. **Note Node**: Documentation and comments (not executed)
+
+3. **If-Else Node**: Conditional routing based on previous node outputs using CEL expressions
+4. **Wait Node**: Pauses the workflow for a specified duration (seconds, minutes, or hours) before continuing to the next node
+5. **End Node**: Terminal point for workflow execution paths
+6. **Note Node**: Documentation and comments (not executed)
 
 ### Execution Flow
 
@@ -106,6 +109,75 @@ const result = await executeWorkflow({
 ```
 
 This means you can build workflows visually, save them, and then execute them programmatically in the background - perfect for automation, scheduled tasks, or API endpoints.
+
+## Extending the Workflow
+
+The new architecture makes it incredibly easy to add new, custom nodes to the workflow builder. Each node's logic is cleanly separated into three distinct parts, making them easy to manage and for AI tools to generate.
+
+### Understanding the Node Architecture
+
+Every node is defined by a folder within `src/registry/blocks/workflow-01/lib/workflow/nodes/`. This folder contains three key files that separate its concerns:
+
+- **`*.shared.ts`**: Defines the node's data structure using a `zod` schema, its type definitions, and its validation logic. This code runs on both the client and server.
+
+- **`*.client.tsx`**: Contains the React components for the node. This includes the visual representation on the React Flow canvas and the configuration panel that appears when a node is selected.
+
+- **`*.server.ts`**: Holds the server-side execution logic. This is where the node's primary function is implemented, determining what happens when the workflow executes this step.
+
+### Adding a New Node
+
+Here's how you can add a new custom node, such as a simple `console-log` node:
+
+**1. Create the Node Directory**
+
+First, create a new folder for your node:
+
+```bash
+mkdir src/lib/workflow/nodes/console-log
+```
+
+**2. Define Shared Logic (`console-log.shared.ts`)**
+
+Create the shared file to define the node's data schema and validation rules. For a simple log node, this might just include a message template.
+
+**3. Create the Client Component (`console-log.client.tsx`)**
+
+This file defines the node's appearance on the canvas and its settings panel. You'll export a React component for the node itself and another for its editor panel.
+
+**4. Implement Server-side Execution (`console-log.server.ts`)**
+
+This is where the node's backend logic lives. The `execute` function receives the current workflow context and returns the result and the ID of the next node to execute.
+
+```typescript  
+function executeConsoleLogNode(context) {
+  const { node, executionMemory, previousNodeId } = context;
+  const previousResult = executionMemory[previousNodeId];
+
+  console.log(`[Workflow Log] From node ${node.id}:`, previousResult?.text);
+
+  // ... find next node and return
+}
+```
+
+**5. Create the Node Definition (`index.ts`)**
+
+Combine the shared, client, and server parts into a single `NodeDefinition` object in the node's `index.ts` file.
+
+**6. Register the Node**
+
+Finally, import your new node definition and add it to the `nodeRegistry` object in `src/lib/workflow/nodes/index.ts`.
+
+```typescript                  
+import { consoleLogNodeDefinition } from "./console-log";
+// ... other imports
+
+const nodeDefinitions = {
+  // ... other nodes
+  "console-log": consoleLogNodeDefinition,
+} as const;
+```
+
+Your `console-log` node will now appear in the "Add Nodes" panel and be fully integrated into the workflow system.
 
 ## Full Application Example
 

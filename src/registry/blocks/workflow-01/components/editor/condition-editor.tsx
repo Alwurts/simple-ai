@@ -10,7 +10,7 @@ import {
 } from "@codemirror/view";
 import { tags } from "@lezer/highlight";
 import CodeMirror, { type ReactCodeMirrorRef } from "@uiw/react-codemirror";
-import { Code, Variable } from "lucide-react";
+import { Code, GitBranch, Variable } from "lucide-react";
 import { useTheme } from "next-themes";
 import React from "react";
 import { Button } from "@/components/ui/button";
@@ -19,14 +19,24 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import type { VariableInfo } from "@/registry/blocks/workflow-01/lib/workflow/variables";
-import { buildVariablePathSet } from "@/registry/blocks/workflow-01/lib/workflow/variables";
+import type {
+	TaggedVariableInfo,
+	VariableInfo,
+} from "@/registry/blocks/workflow-01/lib/workflow/context/variable-resolver";
+import { buildVariablePathSet } from "@/registry/blocks/workflow-01/lib/workflow/context/variable-resolver";
 
 type ConditionEditorProps = {
 	value: string;
 	onChange: (value: string) => void;
-	availableVariables: VariableInfo[];
+	availableVariables: VariableInfo[] | TaggedVariableInfo[];
+	validationError?: string;
 	placeholder?: string;
 };
 
@@ -40,18 +50,27 @@ const OPERATORS = [
 	{ label: "&&", description: "And" },
 	{ label: "||", description: "Or" },
 	{ label: "!", description: "Not" },
+	{ label: "+", description: "Addition" },
+	{ label: "-", description: "Subtraction" },
+	{ label: "*", description: "Multiplication" },
+	{ label: "/", description: "Division" },
+	{ label: "%", description: "Modulo" },
 	{ label: "in", description: "In array" },
 	{ label: "matches", description: "Regex match" },
+	{ label: "has", description: "Check if field exists" },
+	{ label: "size", description: "Get size/length" },
+	{ label: "?", description: "Ternary operator" },
+	{ label: ":", description: "Ternary separator" },
 ];
 
-const jexlHighlightStyle = HighlightStyle.define([
+const celHighlightStyle = HighlightStyle.define([
 	{ tag: tags.keyword, color: "#0550ae" },
 	{ tag: tags.operator, color: "#953800" },
 	{ tag: tags.number, color: "#0550ae" },
 	{ tag: tags.string, color: "#0a3069" },
 ]);
 
-function createJexlDecorations(
+function createCelDecorations(
 	view: EditorView,
 	availableVariables: VariableInfo[],
 ): DecorationSet {
@@ -62,24 +81,26 @@ function createJexlDecorations(
 	}> = [];
 	const text = view.state.doc.toString();
 
-	const operatorRegex = /(==|!=|>=|<=|&&|\|\||[><!])/g;
+	// CEL operators: ==, !=, >=, <=, &&, ||, !, +, -, *, /, %, <, >, ?, :
+	const operatorRegex = /(==|!=|>=|<=|&&|\|\||[+\-*/%><!?:])/g;
 	let match: RegExpExecArray | null = operatorRegex.exec(text);
 	while (match !== null) {
 		decorations.push({
 			from: match.index,
 			to: match.index + match[0].length,
-			decoration: Decoration.mark({ class: "cm-jexl-operator" }),
+			decoration: Decoration.mark({ class: "cm-cel-operator" }),
 		});
 		match = operatorRegex.exec(text);
 	}
 
-	const keywordRegex = /\b(true|false|null|in|matches)\b/g;
+	// CEL keywords: true, false, null, in, matches, has, size
+	const keywordRegex = /\b(true|false|null|in|matches|has|size)\b/g;
 	match = keywordRegex.exec(text);
 	while (match !== null) {
 		decorations.push({
 			from: match.index,
 			to: match.index + match[0].length,
-			decoration: Decoration.mark({ class: "cm-jexl-keyword" }),
+			decoration: Decoration.mark({ class: "cm-cel-keyword" }),
 		});
 		match = keywordRegex.exec(text);
 	}
@@ -90,7 +111,7 @@ function createJexlDecorations(
 		decorations.push({
 			from: match.index,
 			to: match.index + match[0].length,
-			decoration: Decoration.mark({ class: "cm-jexl-number" }),
+			decoration: Decoration.mark({ class: "cm-cel-number" }),
 		});
 		match = numberRegex.exec(text);
 	}
@@ -101,7 +122,7 @@ function createJexlDecorations(
 		decorations.push({
 			from: match.index,
 			to: match.index + match[0].length,
-			decoration: Decoration.mark({ class: "cm-jexl-string" }),
+			decoration: Decoration.mark({ class: "cm-cel-string" }),
 		});
 		match = stringRegex.exec(text);
 	}
@@ -117,7 +138,7 @@ function createJexlDecorations(
 			decorations.push({
 				from: match.index,
 				to: match.index + match[0].length,
-				decoration: Decoration.mark({ class: "cm-jexl-variable" }),
+				decoration: Decoration.mark({ class: "cm-cel-variable" }),
 			});
 		}
 		match = variablePathRegex.exec(text);
@@ -129,7 +150,7 @@ function createJexlDecorations(
 	);
 }
 
-function createJexlHighlightPlugin(
+function createCelHighlightPlugin(
 	availableVariables: VariableInfo[],
 ): Extension {
 	return ViewPlugin.fromClass(
@@ -137,7 +158,7 @@ function createJexlHighlightPlugin(
 			decorations: DecorationSet;
 
 			constructor(view: EditorView) {
-				this.decorations = createJexlDecorations(
+				this.decorations = createCelDecorations(
 					view,
 					availableVariables,
 				);
@@ -145,7 +166,7 @@ function createJexlHighlightPlugin(
 
 			update(update: ViewUpdate) {
 				if (update.docChanged || update.viewportChanged) {
-					this.decorations = createJexlDecorations(
+					this.decorations = createCelDecorations(
 						update.view,
 						availableVariables,
 					);
@@ -162,17 +183,28 @@ export function ConditionEditor({
 	value,
 	onChange,
 	availableVariables,
+	validationError,
 	placeholder = "Enter condition expression",
 }: ConditionEditorProps) {
 	const { theme } = useTheme();
 	const editorRef = React.useRef<ReactCodeMirrorRef>(null);
 
+	// Convert to VariableInfo[] for highlighting (TaggedVariableInfo extends VariableInfo)
+	const variablesForHighlighting: VariableInfo[] = availableVariables.map(
+		(v) => ({
+			path: v.path,
+			type: v.type,
+			description: v.description,
+			children: v.children,
+		}),
+	);
+
 	const extensions = React.useMemo(() => {
 		return [
-			createJexlHighlightPlugin(availableVariables),
-			syntaxHighlighting(jexlHighlightStyle),
+			createCelHighlightPlugin(variablesForHighlighting),
+			syntaxHighlighting(celHighlightStyle),
 		];
-	}, [availableVariables]);
+	}, [variablesForHighlighting]);
 
 	const insertAtCursor = React.useCallback((text: string) => {
 		if (editorRef.current?.view) {
@@ -274,7 +306,12 @@ export function ConditionEditor({
 				</Popover>
 			</div>
 
-			<div className="border rounded-md overflow-hidden jexl-editor">
+			<div
+				className={cn(
+					"border rounded-md overflow-hidden cel-editor",
+					validationError ? "border-red-500" : "",
+				)}
+			>
 				<CodeMirror
 					value={value}
 					onChange={onChange}
@@ -292,6 +329,11 @@ export function ConditionEditor({
 					theme={theme === "dark" ? "dark" : "light"}
 				/>
 			</div>
+			{validationError && (
+				<div className="text-xs text-red-600 dark:text-red-400 px-1">
+					{validationError}
+				</div>
+			)}
 		</div>
 	);
 }
@@ -301,48 +343,136 @@ function VariableList({
 	onSelect,
 	level = 0,
 }: {
-	variables: VariableInfo[];
+	variables: VariableInfo[] | TaggedVariableInfo[];
 	onSelect: (variable: VariableInfo) => void;
 	level?: number;
 }) {
+	// Separate common and path-specific variables
+	const commonVars: TaggedVariableInfo[] = [];
+	const pathSpecificVars: TaggedVariableInfo[] = [];
+
+	for (const variable of variables) {
+		if ("tag" in variable && variable.tag === "path-specific") {
+			pathSpecificVars.push(variable);
+		} else {
+			commonVars.push(variable as TaggedVariableInfo);
+		}
+	}
+
 	return (
 		<div className="p-1">
-			{variables.map((variable) => (
-				<div key={variable.path}>
-					<button
-						type="button"
-						onClick={() => onSelect(variable)}
-						className="w-full flex items-start gap-2 px-3 py-2 text-xs hover:bg-accent rounded-sm transition-colors"
-						style={{ paddingLeft: `${8 + level * 16}px` }}
-					>
-						<div className="flex-1 text-left">
-							<div className="font-mono font-semibold">
-								{variable.path}
-							</div>
-							{variable.description && (
-								<div className="text-muted-foreground mt-0.5">
-									{variable.description}
-								</div>
-							)}
+			{commonVars.length > 0 && (
+				<>
+					{level === 0 && (
+						<div className="px-2 py-1.5 text-[10px] font-semibold text-muted-foreground uppercase">
+							Common Variables
 						</div>
-						<span
-							className={cn(
-								"px-1.5 py-0.5 rounded text-[10px] font-medium",
-								"bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
-							)}
-						>
-							{variable.type}
-						</span>
-					</button>
-					{variable.children && variable.children.length > 0 && (
-						<VariableList
-							variables={variable.children}
-							onSelect={onSelect}
-							level={level + 1}
-						/>
 					)}
-				</div>
-			))}
+					{commonVars.map((variable) => (
+						<VariableItem
+							key={variable.path}
+							variable={variable}
+							onSelect={onSelect}
+							level={level}
+						/>
+					))}
+				</>
+			)}
+			{pathSpecificVars.length > 0 && (
+				<>
+					{level === 0 && commonVars.length > 0 && (
+						<div className="h-px bg-border my-1 mx-2" />
+					)}
+					{level === 0 && (
+						<div className="px-2 py-1.5 text-[10px] font-semibold text-muted-foreground uppercase">
+							Path-Specific Variables
+						</div>
+					)}
+					{pathSpecificVars.map((variable) => (
+						<VariableItem
+							key={variable.path}
+							variable={variable}
+							onSelect={onSelect}
+							level={level}
+						/>
+					))}
+				</>
+			)}
 		</div>
 	);
+}
+
+function VariableItem({
+	variable,
+	onSelect,
+	level,
+}: {
+	variable: TaggedVariableInfo | VariableInfo;
+	onSelect: (variable: VariableInfo) => void;
+	level: number;
+}) {
+	const isPathSpecific =
+		"tag" in variable && variable.tag === "path-specific";
+	const sourceNodeIds =
+		"sourceNodeIds" in variable ? variable.sourceNodeIds : [];
+
+	const content = (
+		<button
+			type="button"
+			onClick={() => onSelect(variable)}
+			className={cn(
+				"w-full flex items-start gap-2 px-3 py-2 text-xs hover:bg-accent rounded-sm transition-colors",
+				isPathSpecific && "opacity-70",
+			)}
+			style={{ paddingLeft: `${8 + level * 16}px` }}
+		>
+			<div className="flex-1 text-left">
+				<div className="flex items-center gap-1.5">
+					<div className="font-mono font-semibold">
+						{variable.path}
+					</div>
+					{isPathSpecific && (
+						<GitBranch className="w-3 h-3 text-muted-foreground shrink-0" />
+					)}
+				</div>
+				{variable.description && (
+					<div className="text-muted-foreground mt-0.5">
+						{variable.description}
+					</div>
+				)}
+				{isPathSpecific && sourceNodeIds.length > 0 && (
+					<div className="text-[10px] text-muted-foreground mt-0.5">
+						From: {sourceNodeIds.length} source
+						{sourceNodeIds.length > 1 ? "s" : ""}
+					</div>
+				)}
+			</div>
+			<span
+				className={cn(
+					"px-1.5 py-0.5 rounded text-[10px] font-medium shrink-0",
+					"bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300",
+				)}
+			>
+				{variable.type}
+			</span>
+		</button>
+	);
+
+	if (isPathSpecific && sourceNodeIds.length > 0) {
+		return (
+			<TooltipProvider>
+				<Tooltip>
+					<TooltipTrigger asChild>{content}</TooltipTrigger>
+					<TooltipContent>
+						<p className="text-xs">
+							Only available when input is from:{" "}
+							{sourceNodeIds.join(", ")}
+						</p>
+					</TooltipContent>
+				</Tooltip>
+			</TooltipProvider>
+		);
+	}
+
+	return <div key={variable.path}>{content}</div>;
 }

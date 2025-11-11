@@ -265,4 +265,24 @@ export const examples: Registry["items"] = [
 			},
 		],
 	},
+	{
+		name: "chat-suggestions-demo",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/chat-suggestions-demo.tsx",
+				type: "registry:example",
+			},
+		],
+	},
+	{
+		name: "chat-suggestions-demo-simple",
+		type: "registry:example",
+		files: [
+			{
+				path: "examples/chat-suggestions-demo-simple.tsx",
+				type: "registry:example",
+			},
+		],
+	},
 ];

@@ -1,7 +1,8 @@
+import { WORKFLOW_MODELS } from "@/registry/blocks/workflow-01/lib/workflow/models";
 import type {
 	FlowEdge,
 	FlowNode,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 export const WAIT_DEMO_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } = {
 	nodes: [
@@ -37,7 +38,7 @@ export const WAIT_DEMO_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } = {
 				hideResponseInChat: false,
 				excludeFromConversation: false,
 				maxSteps: 5,
-				model: "gpt-5-mini",
+				model: WORKFLOW_MODELS[0],
 				systemPrompt:
 					"You are a task initiator. Generate a simple task that requires some processing time. For example: 'I need to process customer feedback data' or 'I need to analyze sales reports'. Keep it brief and clear.",
 				selectedTools: [],
@@ -84,7 +85,7 @@ export const WAIT_DEMO_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } = {
 				hideResponseInChat: false,
 				excludeFromConversation: false,
 				maxSteps: 5,
-				model: "gpt-5-mini",
+				model: WORKFLOW_MODELS[0],
 				systemPrompt:
 					"You are a task processor. The previous agent initiated a task, and there was a brief wait (simulating processing time). Now complete the task with a detailed response. Provide a comprehensive and helpful result.",
 				selectedTools: [],
@@ -141,8 +142,8 @@ export const WAIT_DEMO_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } = {
 			id: "start-to-initiator",
 			source: "start-node",
 			target: "initial-agent-node",
-			sourceHandle: "message",
-			targetHandle: "prompt",
+			sourceHandle: "output",
+			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
@@ -150,7 +151,7 @@ export const WAIT_DEMO_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } = {
 			id: "initiator-to-wait",
 			source: "initial-agent-node",
 			target: "wait-node",
-			sourceHandle: "result",
+			sourceHandle: "output",
 			targetHandle: "input",
 			type: "status",
 			data: {},
@@ -160,7 +161,7 @@ export const WAIT_DEMO_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } = {
 			source: "wait-node",
 			target: "processing-agent-node",
 			sourceHandle: "output",
-			targetHandle: "prompt",
+			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
@@ -168,10 +169,25 @@ export const WAIT_DEMO_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } = {
 			id: "processor-to-end",
 			source: "processing-agent-node",
 			target: "end-node",
-			sourceHandle: "result",
+			sourceHandle: "output",
 			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
+	],
+};
+
+export const WAIT_DEMO_TEMPLATE = {
+	id: "wait-demo",
+	name: "Wait Node Demo",
+	description:
+		"Demonstrates workflow timing control with delay functionality",
+	category: "Examples",
+	nodes: WAIT_DEMO_WORKFLOW.nodes,
+	edges: WAIT_DEMO_WORKFLOW.edges,
+	suggestions: [
+		"Process customer feedback with realistic delays",
+		"Simulate data processing workflows",
+		"Test timing-dependent business logic",
 	],
 };

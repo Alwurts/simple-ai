@@ -7,17 +7,21 @@ import { cn } from "@/lib/utils";
 function ChatSuggestions({ className, ...props }: ComponentProps<"div">) {
 	return (
 		<div
-			className={cn("flex flex-col gap-2 px-2 py-2", className)}
+			className={cn("flex flex-col gap-2.5 px-2 py-2", className)}
 			{...props}
 		/>
 	);
+}
+
+function ChatSuggestionsHeader({ className, ...props }: ComponentProps<"div">) {
+	return <div className={cn("flex flex-col gap-1", className)} {...props} />;
 }
 
 function ChatSuggestionsTitle({ className, ...props }: ComponentProps<"p">) {
 	return (
 		<p
 			className={cn(
-				"text-xs font-medium text-muted-foreground",
+				"text-sm font-medium text-muted-foreground",
 				className,
 			)}
 			{...props}
@@ -25,49 +29,49 @@ function ChatSuggestionsTitle({ className, ...props }: ComponentProps<"p">) {
 	);
 }
 
-function ChatSuggestionsList({ className, ...props }: ComponentProps<"div">) {
-	return <div className={cn("flex flex-wrap gap-2", className)} {...props} />;
+function ChatSuggestionsDescription({
+	className,
+	...props
+}: ComponentProps<"p">) {
+	return (
+		<p
+			className={cn("text-xs text-muted-foreground/80", className)}
+			{...props}
+		/>
+	);
 }
 
-interface ChatSuggestionProps extends ComponentProps<typeof Button> {
-	onSuggestionClick?: (suggestion: string) => void;
+function ChatSuggestionsContent({
+	className,
+	...props
+}: ComponentProps<"div">) {
+	return <div className={cn("flex flex-wrap gap-2", className)} {...props} />;
 }
 
 function ChatSuggestion({
 	className,
-	children,
-	onSuggestionClick,
-	onClick,
 	...props
-}: ChatSuggestionProps) {
-	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-		if (onSuggestionClick && typeof children === "string") {
-			onSuggestionClick(children);
-		}
-		onClick?.(e);
-	};
-
+}: ComponentProps<typeof Button>) {
 	return (
 		<Button
 			variant="outline"
-			size="sm"
+			size="default"
 			className={cn(
-				"h-auto py-2 px-3 text-xs font-normal whitespace-normal text-left justify-start",
+				"h-auto py-2 px-3 text-sm font-normal whitespace-normal text-left justify-start",
 				"hover:bg-accent/50 hover:text-accent-foreground",
 				"transition-colors",
 				className,
 			)}
-			onClick={handleClick}
 			{...props}
-		>
-			{children}
-		</Button>
+		/>
 	);
 }
 
 export {
 	ChatSuggestions,
+	ChatSuggestionsHeader,
 	ChatSuggestionsTitle,
-	ChatSuggestionsList,
+	ChatSuggestionsDescription,
+	ChatSuggestionsContent,
 	ChatSuggestion,
 };

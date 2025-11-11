@@ -51,7 +51,9 @@ export async function POST(req: Request) {
 			experimental_transform: smoothStream(),
 		});
 
-		return result.toUIMessageStreamResponse();
+		return result.toUIMessageStreamResponse({
+			sendReasoning: true,
+		});
 	} catch (error) {
 		console.error(error);
 		return new Response("Internal Server Error", { status: 500 });

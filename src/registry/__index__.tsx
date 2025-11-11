@@ -576,6 +576,58 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"json-schema-editor": {
+		name: "json-schema-editor",
+		description:
+			"A visual editor for creating and editing JSON Schema definitions with support for nested objects, arrays, enums, and property descriptions.",
+		type: "registry:ui",
+		registryDependencies: ["button", "dialog", "input", "select"],
+		files: [
+			{
+				path: "./src/registry/ui/json-schema-editor.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/json-schema-editor.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	reasoning: {
+		name: "reasoning",
+		description:
+			"A component for displaying AI reasoning content with collapsible sections and streaming support.",
+		type: "registry:ui",
+		registryDependencies: ["collapsible", "@simple-ai/markdown-content"],
+		files: [
+			{
+				path: "./src/registry/ui/reasoning.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/reasoning.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"use-textarea-resize": {
 		name: "use-textarea-resize",
 		description: "",
@@ -1353,6 +1405,60 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"chat-suggestions-demo": {
+		name: "chat-suggestions-demo",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-suggestions-demo.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-suggestions-demo.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"chat-suggestions-demo-simple": {
+		name: "chat-suggestions-demo-simple",
+		description: "",
+		type: "registry:example",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/examples/chat-suggestions-demo-simple.tsx",
+				type: "registry:example",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import(
+				"@/registry/examples/chat-suggestions-demo-simple.tsx"
+			);
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	"chat-01": {
 		name: "chat-01",
 		description: "A simple chat page.",
@@ -1370,6 +1476,8 @@ export const Index: Record<string, any> = {
 			"@simple-ai/chat-message-area",
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
+			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
 		],
 		files: [
 			{
@@ -1391,6 +1499,16 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/blocks/chat-01/lib/tools.ts",
 				type: "registry:lib",
 				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/lib/messages.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/types/ai-messages.ts",
+				type: "registry:lib",
+				target: "types/ai-messages.ts",
 			},
 			{
 				path: "./src/registry/blocks/chat-01/components/layout/app-layout.tsx",
@@ -2299,6 +2417,8 @@ export const Index: Record<string, any> = {
 			"@simple-ai/chat-message",
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
+			"@simple-ai/json-schema-editor",
 		],
 		files: [
 			{
@@ -2325,16 +2445,6 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/blocks/workflow-01/components/chat.tsx",
 				type: "registry:component",
 				target: "components/chat.tsx",
-			},
-			{
-				path: "./src/registry/blocks/workflow-01/components/editor/schema-preview.tsx",
-				type: "registry:component",
-				target: "components/editor/schema-preview.tsx",
-			},
-			{
-				path: "./src/registry/blocks/workflow-01/components/editor/schema-editor.tsx",
-				type: "registry:component",
-				target: "components/editor/schema-editor.tsx",
 			},
 			{
 				path: "./src/registry/blocks/workflow-01/components/editor/condition-editor.tsx",
@@ -2380,11 +2490,6 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/blocks/workflow-01/components/validation-status.tsx",
 				type: "registry:component",
 				target: "components/validation-status.tsx",
-			},
-			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/types.ts",
-				type: "registry:lib",
-				target: "lib/workflow/nodes/types.ts",
 			},
 			{
 				path: "./src/registry/blocks/workflow-01/lib/workflow/nodes/index.ts",
@@ -2587,24 +2692,19 @@ export const Index: Record<string, any> = {
 				target: "lib/workflow/executor.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/json-schema-utils.ts",
-				type: "registry:lib",
-				target: "lib/workflow/json-schema-utils.ts",
-			},
-			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/messages.ts",
-				type: "registry:lib",
-				target: "lib/workflow/messages.ts",
-			},
-			{
 				path: "./src/registry/blocks/workflow-01/lib/workflow/models-external.ts",
 				type: "registry:lib",
 				target: "lib/workflow/models.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/types.ts",
+				path: "./src/registry/blocks/workflow-01/types/messages.ts",
 				type: "registry:lib",
-				target: "lib/workflow/types.ts",
+				target: "types/messages.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/types/workflow.ts",
+				type: "registry:lib",
+				target: "types/workflow.ts",
 			},
 			{
 				path: "./src/registry/blocks/workflow-01/lib/workflow/validation.ts",
@@ -2612,9 +2712,14 @@ export const Index: Record<string, any> = {
 				target: "lib/workflow/validation.ts",
 			},
 			{
-				path: "./src/registry/blocks/workflow-01/lib/workflow/variables.ts",
+				path: "./src/registry/blocks/workflow-01/lib/workflow/context/schema-introspection.ts",
 				type: "registry:lib",
-				target: "lib/workflow/variables.ts",
+				target: "lib/workflow/context/schema-introspection.ts",
+			},
+			{
+				path: "./src/registry/blocks/workflow-01/lib/workflow/context/variable-resolver.ts",
+				type: "registry:lib",
+				target: "lib/workflow/context/variable-resolver.ts",
 			},
 			{
 				path: "./src/registry/blocks/workflow-01/hooks/use-workflow.ts",

@@ -1,8 +1,10 @@
-import type { NodeDefinition } from "../types";
-import { endClientDefinition } from "./end.client";
-import { endServerDefinition } from "./end.server";
-import type { EndNode } from "./end.shared";
-import { endSharedDefinition } from "./end.shared";
+import { endClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/end/end.client";
+import { endServerDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/end/end.server";
+import {
+	type EndNode,
+	endSharedDefinition,
+} from "@/registry/blocks/workflow-01/lib/workflow/nodes/end/end.shared";
+import type { NodeDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 
 export const endNodeDefinition: NodeDefinition<EndNode> = {
 	shared: endSharedDefinition,

@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 export function AppLayout(props: ComponentProps<typeof SidebarProvider>) {
 	return (
 		<SidebarProvider
+			defaultOpen={true}
 			style={{
 				// @ts-expect-error CSS custom properties
 				"--sidebar-width": "28rem",

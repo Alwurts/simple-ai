@@ -3,13 +3,13 @@ import type {
 	FlowEdge,
 	FlowNode,
 	ValidationError,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
-import { isNodeOfType } from "@/registry/blocks/workflow-01/lib/workflow/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
+import { isNodeOfType } from "@/registry/blocks/workflow-01/types/workflow";
 
 type ValidationResult = {
 	valid: boolean;
 	errors: ValidationError[];
-	warnings: string[];
+	warnings: ValidationError[];
 };
 
 /**
@@ -64,11 +64,11 @@ function separateErrorsAndWarnings(
 	validationErrors: ValidationError[],
 ): ValidationResult {
 	const errors: ValidationError[] = [];
-	const warnings: string[] = [];
+	const warnings: ValidationError[] = [];
 
 	for (const error of validationErrors) {
 		if (error.severity === "warning") {
-			warnings.push(error.message);
+			warnings.push(error);
 		} else {
 			errors.push(error);
 		}

@@ -11,12 +11,12 @@ import {
 	workflowTools,
 } from "@/registry/blocks/workflow-01/lib/tools";
 import { workflowModel } from "@/registry/blocks/workflow-01/lib/workflow/models";
+import type { AgentNode } from "@/registry/blocks/workflow-01/lib/workflow/nodes/agent/agent.shared";
 import type {
 	ExecutionContext,
 	NodeExecutionResult,
 	NodeServerDefinition,
-} from "../types";
-import type { AgentNode } from "./agent.shared";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 async function executeAgentNode(
 	context: ExecutionContext<AgentNode>,
@@ -48,12 +48,22 @@ async function executeAgentNode(
 		}
 	}
 
+	const maxSteps = node.data.maxSteps ?? 5;
+
 	const streamResult = streamText({
 		model: workflowModel.languageModel(node.data.model),
 		system: node.data.systemPrompt,
 		messages: accumulatedMessages,
 		tools: agentTools,
-		stopWhen: stepCountIs(node.data.maxSteps ?? 5),
+		stopWhen: stepCountIs(maxSteps),
+		prepareStep: async ({ stepNumber }) => {
+			if (stepNumber === maxSteps - 1) {
+				return {
+					toolChoice: "none",
+				};
+			}
+			return {};
+		},
 		experimental_transform: smoothStream(),
 		experimental_output: output,
 	});
@@ -63,12 +73,15 @@ async function executeAgentNode(
 			streamResult.toUIMessageStream({
 				sendStart: false,
 				sendFinish: false,
+				sendReasoning: true,
 			}),
 		);
 	}
 
 	const response = await streamResult.response;
 	const text = await streamResult.text;
+
+	console.log("text", text);
 
 	let structured: unknown;
 	if (node.data.sourceType.type === "structured") {

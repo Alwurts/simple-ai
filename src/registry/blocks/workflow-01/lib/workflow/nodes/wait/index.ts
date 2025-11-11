@@ -1,8 +1,10 @@
-import type { NodeDefinition } from "../types";
-import { waitClientDefinition } from "./wait.client";
-import { waitServerDefinition } from "./wait.server";
-import type { WaitNode } from "./wait.shared";
-import { waitSharedDefinition } from "./wait.shared";
+import { waitClientDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/wait/wait.client";
+import { waitServerDefinition } from "@/registry/blocks/workflow-01/lib/workflow/nodes/wait/wait.server";
+import {
+	type WaitNode,
+	waitSharedDefinition,
+} from "@/registry/blocks/workflow-01/lib/workflow/nodes/wait/wait.shared";
+import type { NodeDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 
 export const waitNodeDefinition: NodeDefinition<WaitNode> = {
 	shared: waitSharedDefinition,

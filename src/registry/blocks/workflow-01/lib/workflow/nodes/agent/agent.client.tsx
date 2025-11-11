@@ -21,8 +21,6 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { SchemaEditorDialog } from "@/registry/blocks/workflow-01/components/editor/schema-editor";
-import { SchemaPreview } from "@/registry/blocks/workflow-01/components/editor/schema-preview";
 import { ModelSelector } from "@/registry/blocks/workflow-01/components/model-selector";
 import { BaseHandle } from "@/registry/blocks/workflow-01/components/workflow/primitives/base-handle";
 import { BaseNode } from "@/registry/blocks/workflow-01/components/workflow/primitives/base-node";
@@ -39,10 +37,18 @@ import {
 	WORKFLOW_TOOLS,
 	workflowTools,
 } from "@/registry/blocks/workflow-01/lib/tools";
+import {
+	WORKFLOW_MODELS,
+	type workflowModelID,
+} from "@/registry/blocks/workflow-01/lib/workflow/models";
+import type { AgentNode as AgentNodeType } from "@/registry/blocks/workflow-01/lib/workflow/nodes/agent/agent.shared";
+import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 import { idToReadableText } from "@/registry/lib/id-to-readable-text";
-import type { workflowModelID } from "../../models";
-import type { NodeClientDefinition } from "../types";
-import type { AgentNode as AgentNodeType } from "./agent.shared";
+import {
+	JsonSchemaEditorDialog,
+	JsonSchemaPreview,
+	JsonSchemaPreviewEmpty,
+} from "@/registry/ui/json-schema-editor";
 
 export interface AgentNodeProps extends NodeProps<AgentNodeType> {}
 
@@ -57,12 +63,12 @@ export function AgentNode({ selected, data, deletable, id }: AgentNodeProps) {
 
 	const isSourceConnectable = canConnectHandle({
 		nodeId: id,
-		handleId: "result",
+		handleId: "output",
 		type: "source",
 	});
 	const isTargetConnectable = canConnectHandle({
 		nodeId: id,
-		handleId: "prompt",
+		handleId: "input",
 		type: "target",
 	});
 
@@ -100,14 +106,14 @@ export function AgentNode({ selected, data, deletable, id }: AgentNodeProps) {
 			</div>
 
 			<BaseHandle
-				id="prompt"
+				id="input"
 				type="target"
 				position={Position.Left}
 				isConnectable={isTargetConnectable}
 			/>
 
 			<BaseHandle
-				id="result"
+				id="output"
 				type="source"
 				position={Position.Right}
 				isConnectable={isSourceConnectable}
@@ -267,7 +273,7 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 									JSON Schema
 								</div>
 							</div>
-							<SchemaEditorDialog
+							<JsonSchemaEditorDialog
 								schema={node.data.sourceType.schema}
 								onSave={(schema) => {
 									updateNode({
@@ -282,13 +288,15 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 									});
 								}}
 							/>
-							{node.data.sourceType.schema && (
-								<div className="mt-2">
-									<SchemaPreview
+							<div className="mt-2">
+								{node.data.sourceType.schema ? (
+									<JsonSchemaPreview
 										schema={node.data.sourceType.schema}
 									/>
-								</div>
-							)}
+								) : (
+									<JsonSchemaPreviewEmpty />
+								)}
+							</div>
 						</div>
 					)}
 					<div>
@@ -425,7 +433,7 @@ export function createAgentNode(position: {
 		data: {
 			name: "Agent",
 			status: "idle",
-			model: "gpt-5-nano",
+			model: WORKFLOW_MODELS[0],
 			systemPrompt: "",
 			selectedTools: [],
 			sourceType: { type: "text" },

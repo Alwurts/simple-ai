@@ -1,7 +1,8 @@
+import { WORKFLOW_MODELS } from "@/registry/blocks/workflow-01/lib/workflow/models";
 import type {
 	FlowEdge,
 	FlowNode,
-} from "@/registry/blocks/workflow-01/lib/workflow/types";
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 export const CUSTOMER_SUPPORT_WORKFLOW: {
 	nodes: FlowNode[];
@@ -38,7 +39,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 				hideResponseInChat: false,
 				excludeFromConversation: true,
 				maxSteps: 5,
-				model: "gpt-5-mini",
+				model: WORKFLOW_MODELS[0],
 				systemPrompt:
 					'You are a customer support classifier. Analyze the customer inquiry and categorize it appropriately.\n\nReturn a structured classification with:\n- category: The type of issue ("technical", "billing", "general", "urgent")\n- priority: Priority level ("high", "medium", "low")\n- sentiment: Customer sentiment ("positive", "neutral", "negative")\n- requires_escalation: boolean indicating if immediate escalation is needed\n\nBe accurate and empathetic in your analysis.',
 				selectedTools: [],
@@ -100,31 +101,25 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 				status: "idle",
 				dynamicSourceHandles: [
 					{
-						id: "urgent-route",
+						id: "output-urgent",
 						label: "Urgent",
 						condition:
 							"input.category == 'urgent' || input.requires_escalation == true",
 					},
 					{
-						id: "technical-route",
+						id: "output-technical",
 						label: "Technical",
 						condition: "input.category == 'technical'",
 					},
 					{
-						id: "billing-route",
+						id: "output-billing",
 						label: "Billing",
 						condition: "input.category == 'billing'",
 					},
 					{
-						id: "general-route",
+						id: "output-general",
 						label: "General",
 						condition: "input.category == 'general'",
-					},
-					{
-						id: "not-applicable-route",
-						label: "Not Applicable",
-						condition:
-							"!input.category || (input.category != 'urgent' && input.category != 'technical' && input.category != 'billing' && input.category != 'general')",
 					},
 				],
 			},
@@ -144,7 +139,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			},
 			data: {
 				name: "Urgent Support Specialist",
-				model: "gpt-5-mini",
+				model: WORKFLOW_MODELS[0],
 				systemPrompt:
 					"You are a senior support specialist handling urgent customer issues. Your role is to:\n\n1. Acknowledge the urgency and customer's concern immediately\n2. Provide quick, effective solutions or escalation paths\n3. Maintain calm and professional communication\n4. Offer immediate next steps and follow-up plan\n5. Ensure customer feels heard and valued\n\nPriority is speed and effectiveness while maintaining quality support.\n\nBe concise in your output or response.",
 				selectedTools: [],
@@ -172,7 +167,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			},
 			data: {
 				name: "Technical Support Specialist",
-				model: "gpt-5-mini",
+				model: WORKFLOW_MODELS[0],
 				systemPrompt:
 					"You are a technical support specialist. Help customers with technical issues by:\n\n1. Understanding the technical problem clearly\n2. Providing step-by-step troubleshooting guidance\n3. Explaining technical concepts in simple terms\n4. Offering multiple solution approaches\n5. Including relevant documentation or resources\n\nBe patient, clear, and thorough in your technical guidance.\n\nBe concise in your output or response.",
 				selectedTools: [],
@@ -200,7 +195,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			},
 			data: {
 				name: "Billing Support Specialist",
-				model: "gpt-5-mini",
+				model: WORKFLOW_MODELS[0],
 				systemPrompt:
 					"You are a billing and account support specialist. Handle billing inquiries by:\n\n1. Addressing billing concerns with empathy and clarity\n2. Explaining charges, invoices, and payment processes\n3. Providing refund or adjustment guidance when appropriate\n4. Ensuring data security and privacy\n5. Offering account management assistance\n\nBe transparent, accurate, and customer-focused in all billing matters.\n\nBe concise in your output or response.",
 				selectedTools: [],
@@ -228,7 +223,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			},
 			data: {
 				name: "General Support Agent",
-				model: "gpt-5-mini",
+				model: WORKFLOW_MODELS[0],
 				systemPrompt:
 					"You are a general support agent handling a variety of customer inquiries. Provide help by:\n\n1. Listening to customer needs and questions\n2. Providing clear, helpful information\n3. Guiding customers to relevant resources\n4. Offering friendly, professional assistance\n5. Creating positive customer experiences\n\nBe versatile, helpful, and maintain excellent customer service standards.\n\nBe concise in your output or response.",
 				selectedTools: [],
@@ -263,7 +258,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			dragging: false,
 		},
 		{
-			id: "not-applicable-end-node",
+			id: "else-end-node",
 			type: "end",
 			position: {
 				x: 711.0671595108819,
@@ -286,7 +281,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			},
 			data: {
 				content:
-					"Customer Support Workflow\n\nIntelligent routing system:\n1. Classifier analyzes and categorizes inquiries\n2. Router directs to specialists (Urgent/Technical/Billing/General)\n3. Agents provide domain-specific support\n\nFeatures: Sentiment analysis, escalation detection, multi-category routing\n\nTest with different inquiry types!",
+					"Customer Support Workflow\n\nIntelligent routing system:\n1. Classifier analyzes and categorizes inquiries\n2. Router directs to specialists (Urgent/Technical/Billing/General)\n3. Else output routes unmatched inquiries to separate end block\n\nFeatures: Sentiment analysis, escalation detection, clear routing paths\n\nTest with different inquiry types!",
 			},
 			measured: {
 				width: 558,
@@ -304,8 +299,8 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			id: "start-to-classifier",
 			source: "start-node",
 			target: "support-classifier-node",
-			sourceHandle: "message",
-			targetHandle: "prompt",
+			sourceHandle: "output",
+			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
@@ -313,7 +308,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			id: "classifier-to-router",
 			source: "support-classifier-node",
 			target: "priority-router-node",
-			sourceHandle: "result",
+			sourceHandle: "output",
 			targetHandle: "input",
 			type: "status",
 			data: {},
@@ -322,8 +317,8 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			id: "router-to-urgent",
 			source: "priority-router-node",
 			target: "urgent-support-node",
-			sourceHandle: "urgent-route",
-			targetHandle: "prompt",
+			sourceHandle: "output-urgent",
+			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
@@ -331,8 +326,8 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			id: "router-to-technical",
 			source: "priority-router-node",
 			target: "technical-support-node",
-			sourceHandle: "technical-route",
-			targetHandle: "prompt",
+			sourceHandle: "output-technical",
+			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
@@ -340,8 +335,8 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			id: "router-to-billing",
 			source: "priority-router-node",
 			target: "billing-support-node",
-			sourceHandle: "billing-route",
-			targetHandle: "prompt",
+			sourceHandle: "output-billing",
+			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
@@ -349,8 +344,8 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			id: "router-to-general",
 			source: "priority-router-node",
 			target: "general-support-node",
-			sourceHandle: "general-route",
-			targetHandle: "prompt",
+			sourceHandle: "output-general",
+			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
@@ -358,7 +353,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			id: "urgent-to-end",
 			source: "urgent-support-node",
 			target: "end-node",
-			sourceHandle: "result",
+			sourceHandle: "output",
 			targetHandle: "input",
 			type: "status",
 			data: {},
@@ -368,7 +363,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			id: "technical-to-end",
 			source: "technical-support-node",
 			target: "end-node",
-			sourceHandle: "result",
+			sourceHandle: "output",
 			targetHandle: "input",
 			type: "status",
 			data: {},
@@ -377,7 +372,7 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			id: "billing-to-end",
 			source: "billing-support-node",
 			target: "end-node",
-			sourceHandle: "result",
+			sourceHandle: "output",
 			targetHandle: "input",
 			type: "status",
 			data: {},
@@ -386,19 +381,33 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 			id: "general-to-end",
 			source: "general-support-node",
 			target: "end-node",
-			sourceHandle: "result",
+			sourceHandle: "output",
 			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
 		{
-			id: "router-to-not-applicable",
+			id: "router-to-else-end",
 			source: "priority-router-node",
-			target: "not-applicable-end-node",
-			sourceHandle: "not-applicable-route",
+			target: "else-end-node",
+			sourceHandle: "output-else",
 			targetHandle: "input",
 			type: "status",
 			data: {},
 		},
+	],
+};
+
+export const CUSTOMER_SUPPORT_TEMPLATE = {
+	id: "customer-support",
+	name: "Support Agent",
+	description: "Intelligent customer support with priority-based routing",
+	category: "Business",
+	nodes: CUSTOMER_SUPPORT_WORKFLOW.nodes,
+	edges: CUSTOMER_SUPPORT_WORKFLOW.edges,
+	suggestions: [
+		"I can't log into my account, can you help?",
+		"My billing statement shows incorrect charges",
+		"The website is loading very slowly, what's wrong?",
 	],
 };

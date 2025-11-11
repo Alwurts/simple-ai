@@ -1,7 +1,10 @@
 import type { Node } from "@xyflow/react";
 import { z } from "zod";
-import type { ValidationError } from "../../types";
-import type { NodeSharedDefinition, ValidationContext } from "../types";
+import type {
+	NodeSharedDefinition,
+	ValidationContext,
+	ValidationError,
+} from "@/registry/blocks/workflow-01/types/workflow";
 
 export const noteNodeDataSchema = z.object({
 	content: z.string(),

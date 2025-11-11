@@ -23,8 +23,8 @@ import {
 	NodeHeaderTitle,
 } from "@/registry/blocks/workflow-01/components/workflow/primitives/node-header";
 import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
-import type { NodeClientDefinition } from "../types";
-import type { WaitNode as WaitNodeType } from "./wait.shared";
+import type { WaitNode as WaitNodeType } from "@/registry/blocks/workflow-01/lib/workflow/nodes/wait/wait.shared";
+import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/types/workflow";
 
 export interface WaitNodeProps extends NodeProps<WaitNodeType> {}
 

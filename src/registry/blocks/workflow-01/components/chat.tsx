@@ -21,7 +21,7 @@ import {
 } from "@/registry/blocks/workflow-01/components/node-execution";
 import { useWorkflow } from "@/registry/blocks/workflow-01/hooks/use-workflow";
 import { getTemplateById } from "@/registry/blocks/workflow-01/lib/templates";
-import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/lib/workflow/messages";
+import type { WorkflowUIMessage } from "@/registry/blocks/workflow-01/types/messages";
 import {
 	ChatInput,
 	ChatInputEditor,
@@ -51,9 +51,11 @@ import {
 import {
 	ChatSuggestion,
 	ChatSuggestions,
-	ChatSuggestionsList,
+	ChatSuggestionsContent,
+	ChatSuggestionsHeader,
 	ChatSuggestionsTitle,
 } from "@/registry/ui/chat-suggestions";
+import { Reasoning } from "@/registry/ui/reasoning";
 import {
 	ToolInvocation,
 	ToolInvocationContentCollapsible,
@@ -163,6 +165,7 @@ export function Chat({
 	};
 
 	const resetMessages = () => {
+		stop();
 		setMessages([]);
 		resetNodeStatuses();
 	};
@@ -222,6 +225,24 @@ export function Chat({
 																	key={`text-${message.id}-${index}`}
 																	content={
 																		part.text
+																	}
+																/>
+															);
+														}
+
+														case "reasoning": {
+															return (
+																<Reasoning
+																	key={`reasoning-${message.id}-${index}`}
+																	content={
+																		part.text
+																	}
+																	isLastPart={
+																		index ===
+																		message
+																			.parts
+																			.length -
+																			1
 																	}
 																/>
 															);
@@ -459,17 +480,21 @@ function NoChatMessages({
 	return (
 		<div className="flex flex-col gap-2 p-2 justify-end items-center h-full">
 			<ChatSuggestions>
-				<ChatSuggestionsTitle>Try these prompts:</ChatSuggestionsTitle>
-				<ChatSuggestionsList>
+				<ChatSuggestionsHeader>
+					<ChatSuggestionsTitle>
+						Try these prompts:
+					</ChatSuggestionsTitle>
+				</ChatSuggestionsHeader>
+				<ChatSuggestionsContent>
 					{template.suggestions.map((suggestion) => (
 						<ChatSuggestion
 							key={suggestion}
-							onSuggestionClick={onSuggestionClick}
+							onClick={() => onSuggestionClick(suggestion)}
 						>
 							{suggestion}
 						</ChatSuggestion>
 					))}
-				</ChatSuggestionsList>
+				</ChatSuggestionsContent>
 			</ChatSuggestions>
 		</div>
 	);
