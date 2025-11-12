@@ -247,13 +247,14 @@ function BlockViewerIframe({ className }: { className?: string }) {
 }
 
 function BlockViewerView() {
-	const { resizablePanelRef } = useBlockViewer();
+	const { resizablePanelRef, item } = useBlockViewer();
 
 	return (
 		<div className="hidden group-data-[view=code]/block-view-wrapper:hidden md:h-(--height) lg:flex">
 			<div className="relative grid w-full gap-4">
 				<div className="absolute inset-0 right-4 bg-muted rounded-xl"></div>
 				<ResizablePanelGroup
+					id={`block-viewer-${item.name}`}
 					direction="horizontal"
 					className="after:bg-surface/50 relative z-10 after:absolute after:inset-0 after:right-3 after:z-0 after:rounded-xl"
 				>
@@ -265,7 +266,7 @@ function BlockViewerView() {
 					>
 						<BlockViewerIframe />
 					</ResizablePanel>
-					<ResizableHandle className="after:bg-border relative hidden w-3 bg-transparent p-0 after:absolute after:top-1/2 after:right-0 after:h-8 after:w-[6px] after:translate-x-[-1px] after:-translate-y-1/2 after:rounded-full after:transition-all after:hover:h-10 md:block" />
+					<ResizableHandle className="after:bg-border relative w-3 bg-transparent p-0 after:absolute after:top-1/2 after:right-0 after:h-8 after:w-[6px] after:translate-x-[-1px] after:-translate-y-1/2 after:rounded-full after:transition-all after:hover:h-10 pointer-events-none opacity-0 md:pointer-events-auto md:opacity-100" />
 					<ResizablePanel defaultSize={0} minSize={0} />
 				</ResizablePanelGroup>
 			</div>
