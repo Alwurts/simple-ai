@@ -1,5 +1,11 @@
 # create-simple-ai
 
+## 0.2.7
+
+### Patch Changes
+
+- 57e0a03: fix config copying path
+
 ## 0.2.6
 
 ### Patch Changes
