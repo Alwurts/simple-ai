@@ -7,10 +7,16 @@
 	],
 	"scripts": {
 		"dev": "npm run dev --workspace=@simple-ai/docs",
-		"build": "npm run build --workspaces --if-present"
+		"build": "npm run build --workspaces --if-present",
+		"test": "npm run test -w create-simple-ai",
+		"test:run": "npm run test:run -w create-simple-ai",
+
+		"changeset": "changeset",
+		"version": "changeset version",
+		"release": "npm run build && changeset publish",
+		"check:release": "npm run check:release -w create-simple-ai"
 	},
 	"devDependencies": {
-		"typescript": "^5",
-		"tsx": "^4.20.6"
+		"@changesets/cli": "^2.29.7"
 	}
 }

@@ -47,7 +47,7 @@ npm install
 Verify that all tests, linting, and build steps are passing.
 
 ```bash
-npm run release:check
+npm run check:release
 ```
 
 This script will validate the project state and ensure you're ready to publish. Fix any issues before proceeding.
@@ -57,7 +57,7 @@ This script will validate the project state and ensure you're ready to publish. 
 This is the step where Changesets updates the `package.json` version and `CHANGELOG.md` based on all the collected changeset files.
 
 ```bash
-npm run changeset:version
+npm run version
 ```
 
 This will consume all `.md` files in the `.changeset` directory and then delete them.
@@ -101,8 +101,8 @@ The previous custom canary script has been removed in favor of the standard Chan
 npm run changeset
 
 # When you are ready to release a new version
-npm run release:check
-npm run changeset:version
+npm run check:release
+npm run version
 git add . && git commit -m "chore(release): version packages"
 npm run release
 git push origin main
