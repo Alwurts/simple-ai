@@ -1,0 +1,14 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "labeled-handle",
+	"type": "registry:ui",
+	"dependencies": ["@xyflow/react"],
+	"files": [
+		{
+			"path": "./src/registry/ui/flow/labeled-handle.tsx",
+			"content": "\"use client\";\n\nimport type { HandleProps } from \"@xyflow/react\";\nimport React from \"react\";\nimport { cn } from \"@/lib/utils\";\n\nimport { BaseHandle } from \"@/registry/ui/flow/base-handle\";\n\nconst flexDirections = {\n\ttop: \"flex-col\",\n\tright: \"flex-row-reverse justify-end\",\n\tbottom: \"flex-col-reverse justify-end\",\n\tleft: \"flex-row\",\n};\n\nconst LabeledHandle = React.forwardRef<\n\tHTMLDivElement,\n\tHandleProps &\n\t\tReact.HTMLAttributes<HTMLDivElement> & {\n\t\t\ttitle: string;\n\t\t\thandleClassName?: string;\n\t\t\tlabelClassName?: string;\n\t\t}\n>(({ className, labelClassName, handleClassName, title, position, ...props }, ref) => (\n\t<div\n\t\tref={ref}\n\t\ttitle={title}\n\t\tclassName={cn(\"relative flex items-center\", flexDirections[position], className)}\n\t>\n\t\t<BaseHandle position={position} className={handleClassName} {...props} />\n\t\t{/* biome-ignore lint/a11y/noLabelWithoutControl: Needed */}\n\t\t<label className={cn(\"px-3 text-foreground\", labelClassName)}>{title}</label>\n\t</div>\n));\n\nLabeledHandle.displayName = \"LabeledHandle\";\n\nexport { LabeledHandle };\n",
+			"type": "registry:ui",
+			"target": "components/flow/labeled-handle.tsx"
+		}
+	]
+}

@@ -1,0 +1,12 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "chat-suggestions-demo",
+	"type": "registry:example",
+	"files": [
+		{
+			"path": "./src/registry/examples/chat-suggestions-demo.tsx",
+			"content": "\"use client\";\n\nimport { useState } from \"react\";\nimport {\n\tChatSuggestion,\n\tChatSuggestions,\n\tChatSuggestionsContent,\n\tChatSuggestionsDescription,\n\tChatSuggestionsHeader,\n\tChatSuggestionsTitle,\n} from \"@/registry/ui/chat-suggestions\";\n\nexport default function ChatSuggestionsDemo() {\n\tconst [selectedSuggestion, setSelectedSuggestion] = useState<string>(\"\");\n\n\tconst suggestions = [\n\t\t\"Tell me about your features\",\n\t\t\"How do I get started?\",\n\t\t\"Show me an example\",\n\t\t\"What are the pricing options?\",\n\t];\n\n\treturn (\n\t\t<div className=\"flex flex-col gap-4 p-4\">\n\t\t\t<ChatSuggestions>\n\t\t\t\t<ChatSuggestionsHeader>\n\t\t\t\t\t<ChatSuggestionsTitle>Try these prompts:</ChatSuggestionsTitle>\n\t\t\t\t\t<ChatSuggestionsDescription>Click a suggestion to get started</ChatSuggestionsDescription>\n\t\t\t\t</ChatSuggestionsHeader>\n\t\t\t\t<ChatSuggestionsContent>\n\t\t\t\t\t{suggestions.map(suggestion => (\n\t\t\t\t\t\t<ChatSuggestion key={suggestion} onClick={() => setSelectedSuggestion(suggestion)}>\n\t\t\t\t\t\t\t{suggestion}\n\t\t\t\t\t\t</ChatSuggestion>\n\t\t\t\t\t))}\n\t\t\t\t</ChatSuggestionsContent>\n\t\t\t</ChatSuggestions>\n\n\t\t\t{selectedSuggestion && (\n\t\t\t\t<div className=\"p-3 bg-muted rounded-md text-sm\">\n\t\t\t\t\t<span className=\"font-medium\">Selected:</span> {selectedSuggestion}\n\t\t\t\t</div>\n\t\t\t)}\n\t\t</div>\n\t);\n}\n",
+			"type": "registry:example"
+		}
+	]
+}

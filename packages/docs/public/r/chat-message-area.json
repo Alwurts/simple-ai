@@ -1,0 +1,16 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "chat-message-area",
+	"type": "registry:ui",
+	"title": "Chat Message Area",
+	"description": "A component that adds auto scrolling functionality to a list of messages.",
+	"dependencies": ["use-stick-to-bottom"],
+	"registryDependencies": ["button"],
+	"files": [
+		{
+			"path": "./src/registry/ui/chat-message-area.tsx",
+			"content": "import { ChevronDown } from \"lucide-react\";\nimport { type ComponentProps, useCallback } from \"react\";\nimport { StickToBottom, useStickToBottomContext } from \"use-stick-to-bottom\";\nimport { Button } from \"@/components/ui/button\";\nimport { cn } from \"@/lib/utils\";\n\ninterface ChatMessageAreaScrollButtonProps {\n\talignment?: \"left\" | \"center\" | \"right\";\n\tclassName?: string;\n}\n\nexport function ChatMessageAreaScrollButton({\n\talignment = \"center\",\n\tclassName,\n}: ChatMessageAreaScrollButtonProps) {\n\tconst { isAtBottom, scrollToBottom } = useStickToBottomContext();\n\n\tconst handleScrollToBottom = useCallback(() => {\n\t\tscrollToBottom();\n\t}, [scrollToBottom]);\n\n\tif (isAtBottom) {\n\t\treturn null;\n\t}\n\n\tconst alignmentClasses = {\n\t\tleft: \"left-4\",\n\t\tcenter: \"left-1/2 -translate-x-1/2\",\n\t\tright: \"right-4\",\n\t};\n\n\treturn (\n\t\t<Button\n\t\t\tvariant=\"secondary\"\n\t\t\tsize=\"icon\"\n\t\t\tclassName={cn(\n\t\t\t\t\"absolute bottom-4 rounded-full shadow-lg hover:bg-secondary\",\n\t\t\t\talignmentClasses[alignment],\n\t\t\t\tclassName,\n\t\t\t)}\n\t\t\tonClick={handleScrollToBottom}\n\t\t>\n\t\t\t<ChevronDown className=\"h-4 w-4\" />\n\t\t</Button>\n\t);\n}\n\ntype ChatMessageAreaProps = ComponentProps<typeof StickToBottom>;\n\nexport function ChatMessageArea({ className, ...props }: ChatMessageAreaProps) {\n\treturn (\n\t\t<StickToBottom\n\t\t\tclassName={cn(\"flex-1 relative h-full overflow-y-auto\", className)}\n\t\t\tresize=\"smooth\"\n\t\t\tinitial=\"smooth\"\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n\ntype ChatMessageAreaContentProps = ComponentProps<typeof StickToBottom.Content>;\n\nexport function ChatMessageAreaContent({ className, ...props }: ChatMessageAreaContentProps) {\n\treturn (\n\t\t<StickToBottom.Content\n\t\t\tclassName={cn(\"max-w-2xl mx-auto w-full h-full py-2\", className)}\n\t\t\t{...props}\n\t\t/>\n\t);\n}\n",
+			"type": "registry:ui"
+		}
+	]
+}

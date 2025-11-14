@@ -1,0 +1,12 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "chat-input-demo-simple",
+	"type": "registry:example",
+	"files": [
+		{
+			"path": "./src/registry/examples/chat-input-demo-simple.tsx",
+			"content": "\"use client\";\n\nimport { useState } from \"react\";\nimport { toast } from \"sonner\";\nimport {\n\tChatInput,\n\tChatInputEditor,\n\tChatInputGroupAddon,\n\tChatInputSubmitButton,\n\tuseChatInput,\n} from \"@/registry/ui/chat-input\";\n\nexport default function ChatInputDemo() {\n\tconst [isLoading, setIsLoading] = useState(false);\n\n\tconst { value, onChange, handleSubmit } = useChatInput({\n\t\tonSubmit: parsed => {\n\t\t\tsetIsLoading(true);\n\t\t\ttoast(parsed.content);\n\t\t\tsetTimeout(() => setIsLoading(false), 1000);\n\t\t},\n\t});\n\n\treturn (\n\t\t<div className=\"w-full h-full flex justify-center items-center\">\n\t\t\t<div className=\"w-full max-w-md\">\n\t\t\t\t<ChatInput\n\t\t\t\t\tonSubmit={handleSubmit}\n\t\t\t\t\tvalue={value}\n\t\t\t\t\tonChange={onChange}\n\t\t\t\t\tisStreaming={isLoading}\n\t\t\t\t\tonStop={() => setIsLoading(false)}\n\t\t\t\t>\n\t\t\t\t\t<ChatInputEditor placeholder=\"Type a message...\" />\n\t\t\t\t\t<ChatInputGroupAddon align=\"block-end\">\n\t\t\t\t\t\t<ChatInputSubmitButton className=\"ml-auto\" />\n\t\t\t\t\t</ChatInputGroupAddon>\n\t\t\t\t</ChatInput>\n\t\t\t</div>\n\t\t</div>\n\t);\n}\n",
+			"type": "registry:example"
+		}
+	]
+}

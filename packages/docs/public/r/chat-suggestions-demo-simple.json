@@ -1,0 +1,12 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "chat-suggestions-demo-simple",
+	"type": "registry:example",
+	"files": [
+		{
+			"path": "./src/registry/examples/chat-suggestions-demo-simple.tsx",
+			"content": "\"use client\";\n\nimport {\n\tChatSuggestion,\n\tChatSuggestions,\n\tChatSuggestionsContent,\n\tChatSuggestionsHeader,\n\tChatSuggestionsTitle,\n} from \"@/registry/ui/chat-suggestions\";\n\nexport default function ChatSuggestionsDemoSimple() {\n\tconst suggestions = [\"What can you help me with?\", \"Show me examples\", \"Explain the basics\"];\n\n\treturn (\n\t\t<div className=\"p-4\">\n\t\t\t<ChatSuggestions>\n\t\t\t\t<ChatSuggestionsHeader>\n\t\t\t\t\t<ChatSuggestionsTitle>Quick start:</ChatSuggestionsTitle>\n\t\t\t\t</ChatSuggestionsHeader>\n\t\t\t\t<ChatSuggestionsContent>\n\t\t\t\t\t{suggestions.map(suggestion => (\n\t\t\t\t\t\t<ChatSuggestion key={suggestion}>{suggestion}</ChatSuggestion>\n\t\t\t\t\t))}\n\t\t\t\t</ChatSuggestionsContent>\n\t\t\t</ChatSuggestions>\n\t\t</div>\n\t);\n}\n",
+			"type": "registry:example"
+		}
+	]
+}
