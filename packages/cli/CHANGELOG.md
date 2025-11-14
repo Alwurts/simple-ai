@@ -1,5 +1,11 @@
 # create-simple-ai
 
+## 0.2.6
+
+### Patch Changes
+
+- 4523609: Fix templates not being included
+
 ## 0.2.5
 
 ### Patch Changes
