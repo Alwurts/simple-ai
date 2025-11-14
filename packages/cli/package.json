@@ -38,7 +38,7 @@
 		"zod": "^4.1.12"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.3.4",
+		"@biomejs/biome": "2.3.5",
 		"@types/fs-extra": "^11.0.4",
 		"@types/node": "^24.10.0",
 		"@vitest/ui": "^4.0.8",

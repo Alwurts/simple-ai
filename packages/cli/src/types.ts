@@ -11,15 +11,15 @@ export const ProjectNameSchema = z
 	.min(1, "Project name cannot be empty")
 	.max(255, "Project name must be less than 255 characters")
 	.refine(
-		name => name === "." || !name.startsWith("."),
+		(name) => name === "." || !name.startsWith("."),
 		"Project name cannot start with a dot (except for '.')",
 	)
-	.refine(name => name === "." || !name.startsWith("-"), "Project name cannot start with a dash")
-	.refine(name => {
+	.refine((name) => name === "." || !name.startsWith("-"), "Project name cannot start with a dash")
+	.refine((name) => {
 		const invalidChars = ["<", ">", ":", '"', "|", "?", "*"];
-		return !invalidChars.some(char => name.includes(char));
+		return !invalidChars.some((char) => name.includes(char));
 	}, "Project name contains invalid characters")
-	.refine(name => name.toLowerCase() !== "node_modules", "Project name is reserved");
+	.refine((name) => name.toLowerCase() !== "node_modules", "Project name is reserved");
 
 export type Framework = z.infer<typeof FrameworkSchema>;
 export type PackageManager = z.infer<typeof PackageManagerSchema>;

@@ -30,16 +30,16 @@ export const PACKAGE_MANAGER_COMMANDS: Record<
 	npm: {
 		install: ["npm", ["install"]],
 		add: (deps, dev = false) => ["npm", ["install", ...(dev ? ["-D"] : []), ...deps]],
-		run: script => ["npm", ["run", script]],
+		run: (script) => ["npm", ["run", script]],
 	},
 	pnpm: {
 		install: ["pnpm", ["install"]],
 		add: (deps, dev = false) => ["pnpm", ["add", ...(dev ? ["-D"] : []), ...deps]],
-		run: script => ["pnpm", ["run", script]],
+		run: (script) => ["pnpm", ["run", script]],
 	},
 	bun: {
 		install: ["bun", ["install"]],
 		add: (deps, dev = false) => ["bun", ["add", ...(dev ? ["-D"] : []), ...deps]],
-		run: script => ["bun", ["run", script]],
+		run: (script) => ["bun", ["run", script]],
 	},
 } as const;

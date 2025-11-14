@@ -14,7 +14,7 @@ export async function getProjectName(providedName?: string): Promise<string> {
 	const name = await p.text({
 		message: "What will your project be called?",
 		placeholder: "my-app",
-		validate: value => {
+		validate: (value) => {
 			const result = ProjectNameSchema.safeParse(value);
 			if (!result.success) {
 				return result.error.issues[0]?.message || "Invalid project name";

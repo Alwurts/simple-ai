@@ -24,13 +24,13 @@ program
 	});
 
 // Handle unhandled promise rejections
-process.on("unhandledRejection", error => {
+process.on("unhandledRejection", (error) => {
 	handleError(error);
 	process.exit(1);
 });
 
 // Handle uncaught exceptions
-process.on("uncaughtException", error => {
+process.on("uncaughtException", (error) => {
 	handleError(error);
 	process.exit(1);
 });

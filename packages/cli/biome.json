@@ -1,19 +1,18 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.5/schema.json",
+	"files": {
+		"includes": ["**", "!!**/dist", "!**/node_modules", "!**/templates"]
+	},
 	"vcs": {
-		"enabled": true,
+		"enabled": false,
 		"clientKind": "git",
 		"useIgnoreFile": true
-	},
-	"files": {
-		"ignoreUnknown": true,
-		"includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",
-		"indentWidth": 4,
-		"lineWidth": 80
+		"indentWidth": 2,
+		"lineWidth": 100
 	},
 	"linter": {
 		"enabled": true,
@@ -23,8 +22,7 @@
 				"noUnusedFunctionParameters": "error",
 				"noUnusedImports": "error",
 				"noUnusedVariables": "error",
-				"useHookAtTopLevel": "error",
-				"useUniqueElementIds": "off"
+				"useHookAtTopLevel": "error"
 			},
 			"complexity": {
 				"noBannedTypes": "off"

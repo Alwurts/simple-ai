@@ -79,8 +79,8 @@ async function checkGitClean(): Promise<boolean | string> {
 		const uncommittedFiles = stdout
 			.trim()
 			.split("\n")
-			.filter(line => line.trim())
-			.filter(line => !line.includes(".changeset/"));
+			.filter((line) => line.trim())
+			.filter((line) => !line.includes(".changeset/"));
 
 		if (uncommittedFiles.length > 0) {
 			return `You have uncommitted changes (excluding changesets). Commit or stash them before releasing:\n${uncommittedFiles.join("\n")}`;
@@ -170,7 +170,7 @@ async function main(): Promise<void> {
 
 	console.log();
 
-	const failedChecks = checks.filter(check => !check.passed);
+	const failedChecks = checks.filter((check) => !check.passed);
 
 	if (failedChecks.length > 0) {
 		console.log(pc.red(`\n❌ ${failedChecks.length} check(s) failed:\n`));
@@ -194,7 +194,7 @@ async function main(): Promise<void> {
 	}
 }
 
-main().catch(error => {
+main().catch((error) => {
 	console.error(pc.red("Fatal error:"), error);
 	process.exit(1);
 });
