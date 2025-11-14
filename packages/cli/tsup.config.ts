@@ -14,7 +14,7 @@ export default defineConfig({
 	},
 	shims: false,
 	// Copy the templates directory into the dist folder
-	publicDir: path.resolve(__dirname, "../../packages/templates"),
+	publicDir: path.resolve(__dirname, "templates"),
 	// Ensure the file is executable
 	outExtension() {
 		return {

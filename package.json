@@ -13,7 +13,7 @@
 
 		"changeset": "changeset",
 		"version": "changeset version",
-		"release": "npm run build && changeset publish",
+		"release": "npm run build -w create-simple-ai && changeset publish",
 		"check:release": "npm run check:release -w create-simple-ai"
 	},
 	"devDependencies": {
