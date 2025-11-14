@@ -1,6 +1,7 @@
 import path from "node:path";
-import { pathExists, readJSON } from "fs-extra";
+import { pathExists, readJSON, readFile } from "fs-extra";
 import { afterEach, describe, expect, it } from "vitest";
+import { TEMPLATES_DIR } from "../src/lib/config.js";
 import {
 	cleanupSmokeDirectory,
 	expectFileContains,
@@ -92,11 +93,17 @@ describe("Basic Project Creation", () => {
 		expectSuccess(result);
 		const projectDir = expectSuccessWithProjectDir(result);
 
-		// Check that package-lock.json does NOT exist (it would be created by npm install)
-		const packageLockExists = await pathExists(path.join(projectDir, "package-lock.json"));
-		expect(packageLockExists).toBe(false);
+		// Check that package-lock.json is identical to the template (npm install was not run)
+		const templatePackageLockPath = path.join(TEMPLATES_DIR, "project-starter-nextjs-vercel", "package-lock.json");
+		const projectPackageLockPath = path.join(projectDir, "package-lock.json");
 
-		// node_modules exists because it's copied from the template, but no package-lock.json means npm install wasn't run
+		const templatePackageLock = await readFile(templatePackageLockPath, "utf-8");
+		const projectPackageLock = await readFile(projectPackageLockPath, "utf-8");
+
+		// If npm install ran, the package-lock.json would be different or updated
+		expect(projectPackageLock).toBe(templatePackageLock);
+
+		// node_modules exists because it's copied from the template
 	});
 
 	it("should create project with proper dotfiles (.gitignore and .env.example)", async () => {
