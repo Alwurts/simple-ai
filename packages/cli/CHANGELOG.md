@@ -1,5 +1,11 @@
 # create-simple-ai
 
+## 0.2.5
+
+### Patch Changes
+
+- 39e7dbd: Change todo to something more generic like items
+
 ## 0.2.4
 
 ### Patch Changes
