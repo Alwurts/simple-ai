@@ -1,5 +1,11 @@
 # create-simple-ai
 
+## 0.2.8
+
+### Patch Changes
+
+- 9971cfe: Add AGENTS.md and auto create .env.local on start
+
 ## 0.2.7
 
 ### Patch Changes
