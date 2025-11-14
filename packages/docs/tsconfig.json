@@ -1,8 +1,20 @@
 {
-	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
 		"target": "ES2017",
-		"lib": ["dom", "dom.iterable", "esnext"],
+		"lib": [
+			"dom",
+			"dom.iterable",
+			"esnext"
+		],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
 		"jsx": "preserve",
 		"incremental": true,
 		"plugins": [
@@ -12,18 +24,23 @@
 		],
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"],
-			"react": ["./node_modules/@types/react"]
-		},
-		"allowJs": true
+			"@/*": [
+				"./src/*"
+			],
+			"react": [
+				"../../node_modules/@types/react"
+			]
+		}
 	},
 	"include": [
+		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		"next-env.d.ts",
-		"next.config.mjs",
-		"src/scripts/**/*.mts",
-		".next/types/**/*.ts"
+		".next/types/**/*.ts",
+		"./src/scripts/build-registry.mts",
+		"next.config.mjs"
 	],
-	"exclude": ["node_modules", "dist", "build", ".next"]
+	"exclude": [
+		"node_modules"
+	]
 }

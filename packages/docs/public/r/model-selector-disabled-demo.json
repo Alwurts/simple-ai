@@ -5,7 +5,7 @@
 	"files": [
 		{
 			"path": "./src/registry/examples/model-selector-disabled-demo.tsx",
-			"content": "\"use client\";\n\nimport { useState } from \"react\";\nimport { type Model, ModelSelector } from \"@/registry/ui/model-selector\";\n\nexport default function ModelSelectorDisabledDemo() {\n\tconst [model, setModel] = useState<Model>(\"deepseek-chat\");\n\n\treturn (\n\t\t<div className=\"w-full max-w-sm\">\n\t\t\t<ModelSelector\n\t\t\t\tvalue={model}\n\t\t\t\tonChange={setModel}\n\t\t\t\tdisabledModels={[\"gpt-4o\", \"gpt-4o-mini\", \"deepseek-r1-distill-llama-70b\"]}\n\t\t\t/>\n\t\t</div>\n\t);\n}\n",
+			"content": "\"use client\";\n\nimport { useState } from \"react\";\nimport { type Model, ModelSelector } from \"@/registry/ui/model-selector\";\n\nexport default function ModelSelectorDisabledDemo() {\n\tconst [model, setModel] = useState<Model>(\"deepseek-chat\");\n\n\treturn (\n\t\t<div className=\"w-full max-w-sm\">\n\t\t\t<ModelSelector\n\t\t\t\tvalue={model}\n\t\t\t\tonChange={setModel}\n\t\t\t\tdisabledModels={[\n\t\t\t\t\t\"gpt-4o\",\n\t\t\t\t\t\"gpt-4o-mini\",\n\t\t\t\t\t\"deepseek-r1-distill-llama-70b\",\n\t\t\t\t]}\n\t\t\t/>\n\t\t</div>\n\t);\n}\n",
 			"type": "registry:example"
 		}
 	]
