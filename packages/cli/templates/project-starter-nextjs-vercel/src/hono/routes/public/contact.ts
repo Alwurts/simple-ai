@@ -10,7 +10,7 @@ const contactSchema = z.object({
 });
 
 const contactRoutes = new Hono<HonoContext>()
-	.post("/", zValidator("json", contactSchema), async c => {
+	.post("/", zValidator("json", contactSchema), async (c) => {
 		const { name, email, message } = c.req.valid("json");
 
 		// In a real application, you would send this to an email service
@@ -23,7 +23,7 @@ const contactRoutes = new Hono<HonoContext>()
 			timestamp: new Date().toISOString(),
 		});
 	})
-	.get("/", async c => {
+	.get("/", async (c) => {
 		return c.json({
 			message: "Contact form endpoint",
 			method: "POST",

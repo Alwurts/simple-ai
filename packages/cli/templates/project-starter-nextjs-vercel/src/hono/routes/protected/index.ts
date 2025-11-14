@@ -1,11 +1,11 @@
 import { Hono } from "hono";
 import type { HonoContext } from "@/types/hono";
 import { honoAuthCheckMiddleware, honoAuthMiddleware } from "../../middleware/auth";
-import todosRoutes from "./todos";
+import itemsRoutes from "./items";
 
 const protectedRoutes = new Hono<HonoContext>()
 	.use(honoAuthMiddleware)
 	.use(honoAuthCheckMiddleware)
-	.route("/todos", todosRoutes);
+	.route("/items", itemsRoutes);
 
 export default protectedRoutes;

@@ -51,7 +51,7 @@ export default function SignUpPage() {
 					<CardContent className="space-y-4">
 						<div className="space-y-2">
 							<Label htmlFor="name">Name</Label>
-							<Input id="name" value={name} onChange={e => setName(e.target.value)} required />
+							<Input id="name" value={name} onChange={(e) => setName(e.target.value)} required />
 						</div>
 						<div className="space-y-2">
 							<Label htmlFor="email">Email</Label>
@@ -59,7 +59,7 @@ export default function SignUpPage() {
 								id="email"
 								type="email"
 								value={email}
-								onChange={e => setEmail(e.target.value)}
+								onChange={(e) => setEmail(e.target.value)}
 								required
 							/>
 						</div>
@@ -69,7 +69,7 @@ export default function SignUpPage() {
 								id="password"
 								type="password"
 								value={password}
-								onChange={e => setPassword(e.target.value)}
+								onChange={(e) => setPassword(e.target.value)}
 								required
 							/>
 						</div>

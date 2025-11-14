@@ -17,7 +17,7 @@ export const app = new Hono().basePath("/api").use(
 	}),
 );
 
-app.on(["POST", "GET"], "/auth/**", c => auth.handler(c.req.raw));
+app.on(["POST", "GET"], "/auth/**", (c) => auth.handler(c.req.raw));
 
 // Add both public and protected routes
 const routes = app.route("/", publicRoutes).route("/", protectedRoutes);

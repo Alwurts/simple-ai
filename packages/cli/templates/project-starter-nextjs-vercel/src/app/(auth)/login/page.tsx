@@ -50,7 +50,7 @@ export default function LoginPage() {
 					<CardContent className="space-y-4">
 						<div className="space-y-2">
 							<Label htmlFor="email">Email</Label>
-							<Input id="email" value={email} onChange={e => setEmail(e.target.value)} required />
+							<Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
 						</div>
 						<div className="space-y-2">
 							<Label htmlFor="password">Password</Label>
@@ -58,7 +58,7 @@ export default function LoginPage() {
 								id="password"
 								type="password"
 								value={password}
-								onChange={e => setPassword(e.target.value)}
+								onChange={(e) => setPassword(e.target.value)}
 								required
 							/>
 						</div>

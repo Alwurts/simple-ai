@@ -1,6 +1,6 @@
-# Simple Next.js + Hono + Better Auth Starter
+# Simple Next.js + Hono + Better Auth
 
-A simple starter project demonstrating end-to-end type safety with Next.js, HonoJS RPC, query handling, and Better Auth integration.
+A simple starter project demonstrating end-to-end type safety with Next.js, HonoJS RPC, query handling, and Better Auth integration. This foundation is designed to be extended with specific business logic through blocks and components.
 
 ## Features
 
@@ -8,15 +8,16 @@ A simple starter project demonstrating end-to-end type safety with Next.js, Hono
 - **HonoJS RPC**: Efficient API routing with RPC pattern
 - **Query Handling**: Integrated query management for data fetching
 - **Better Auth**: Secure authentication system
-- **Todo App**: Example CRUD operations with todos
-- **Database**: Drizzle ORM with SQLite (easily configurable)
+- **Example CRUD**: Generic item management example (easily replaceable)
+- **Database**: Drizzle ORM with PostgreSQL
+- **Extensible**: Designed to add blocks and components on top
 
 ## Tech Stack
 
 - **Frontend**: Next.js 15, React, TypeScript
 - **Backend**: HonoJS with RPC
 - **Auth**: Better Auth
-- **Database**: Drizzle ORM, SQLite
+- **Database**: Drizzle ORM, PostgreSQL
 - **Styling**: Tailwind CSS
 - **UI Components**: shadcn/ui
 
@@ -51,7 +52,7 @@ A simple starter project demonstrating end-to-end type safety with Next.js, Hono
 - Visit `/signup` to create an account
 - Visit `/login` to sign in
 - Access protected routes after authentication
-- Manage todos in the protected area
+- The example shows generic item management - replace with your business logic
 
 ## Project Structure
 
@@ -72,4 +73,4 @@ A simple starter project demonstrating end-to-end type safety with Next.js, Hono
 
 ## Contributing
 
-This is a simple starter project. Feel free to fork and customize for your needs.
+This is a generic foundation project. Feel free to fork and customize for your needs, or use it as a base to add specific business logic through blocks and components.
