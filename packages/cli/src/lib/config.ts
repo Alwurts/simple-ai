@@ -5,7 +5,7 @@ import type { PackageManager, ProjectConfig } from "../types";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const TEMPLATES_DIR = __dirname.endsWith("/dist")
-	? path.resolve(__dirname, "../templates")
+	? __dirname
 	: path.resolve(__dirname, "../../templates");
 
 export const DEFAULT_CLI_CONFIG_BASE: Omit<ProjectConfig, "projectDir"> = {
