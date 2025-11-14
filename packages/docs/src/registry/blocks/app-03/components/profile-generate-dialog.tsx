@@ -70,14 +70,18 @@ export function ProfileGenerateDialog({
 					<DialogTitle>Generate your X bio</DialogTitle>
 				</DialogHeader>
 
-				<Button variant="outline" onClick={handleRandomize} className="group">
+				<Button
+					variant="outline"
+					onClick={handleRandomize}
+					className="group"
+				>
 					<span className="mr-2 group-hover:animate-spin">🎲</span>
 					Try Random Example
 				</Button>
 
 				<form
 					id="user-persona-demo-form"
-					onSubmit={form.handleSubmit(values => {
+					onSubmit={form.handleSubmit((values) => {
 						onSubmit(values);
 						setDialogOpen(false);
 					})}
@@ -100,7 +104,9 @@ export function ProfileGenerateDialog({
 										autoComplete="off"
 									/>
 									{fieldState.invalid && (
-										<FieldError errors={[fieldState.error]} />
+										<FieldError
+											errors={[fieldState.error]}
+										/>
 									)}
 								</Field>
 							)}
@@ -122,7 +128,9 @@ export function ProfileGenerateDialog({
 										autoComplete="off"
 									/>
 									{fieldState.invalid && (
-										<FieldError errors={[fieldState.error]} />
+										<FieldError
+											errors={[fieldState.error]}
+										/>
 									)}
 								</Field>
 							)}
@@ -144,7 +152,9 @@ export function ProfileGenerateDialog({
 										className="resize-none"
 									/>
 									{fieldState.invalid && (
-										<FieldError errors={[fieldState.error]} />
+										<FieldError
+											errors={[fieldState.error]}
+										/>
 									)}
 								</Field>
 							)}
@@ -158,23 +168,36 @@ export function ProfileGenerateDialog({
 										Generation Type
 									</FieldLabel>
 
-									<Select value={field.value} onValueChange={field.onChange}>
+									<Select
+										value={field.value}
+										onValueChange={field.onChange}
+									>
 										<SelectTrigger>
 											<SelectValue placeholder="Select a generation type" />
 										</SelectTrigger>
 
 										<SelectContent>
-											<SelectItem value="fun">🎉 Fun</SelectItem>
+											<SelectItem value="fun">
+												🎉 Fun
+											</SelectItem>
 											<SelectItem value="professional">
 												👨‍💻 Professional
 											</SelectItem>
-											<SelectItem value="casual">👋 Casual</SelectItem>
-											<SelectItem value="technical">💻 Technical</SelectItem>
-											<SelectItem value="creative">🎨 Creative</SelectItem>
+											<SelectItem value="casual">
+												👋 Casual
+											</SelectItem>
+											<SelectItem value="technical">
+												💻 Technical
+											</SelectItem>
+											<SelectItem value="creative">
+												🎨 Creative
+											</SelectItem>
 										</SelectContent>
 									</Select>
 									{fieldState.invalid && (
-										<FieldError errors={[fieldState.error]} />
+										<FieldError
+											errors={[fieldState.error]}
+										/>
 									)}
 								</Field>
 							)}

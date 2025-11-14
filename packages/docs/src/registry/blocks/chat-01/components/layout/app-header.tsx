@@ -35,7 +35,9 @@ export function AppHeaderTitle({
 	className,
 }: React.ComponentProps<"span">) {
 	return (
-		<span className={cn("text-base font-medium", className)}>{children}</span>
+		<span className={cn("text-base font-medium", className)}>
+			{children}
+		</span>
 	);
 }
 

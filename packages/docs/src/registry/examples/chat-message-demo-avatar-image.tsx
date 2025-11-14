@@ -60,7 +60,7 @@ const messages: UIMessage<{
 export default function ChatMessageDemoAvatarImage() {
 	return (
 		<div className="w-full max-h-[400px] overflow-y-auto">
-			{messages.map(message => (
+			{messages.map((message) => (
 				<ChatMessage key={message.id}>
 					<ChatMessageAvatar>
 						<ChatMessageAvatarImage
@@ -78,9 +78,12 @@ export default function ChatMessageDemoAvatarImage() {
 						</ChatMessageHeader>
 						<ChatMessageContent>
 							{message.parts
-								.filter(part => part.type === "text")
-								.map(part => (
-									<ChatMessageMarkdown key={part.type} content={part.text} />
+								.filter((part) => part.type === "text")
+								.map((part) => (
+									<ChatMessageMarkdown
+										key={part.type}
+										content={part.text}
+									/>
 								))}
 						</ChatMessageContent>
 					</ChatMessageContainer>

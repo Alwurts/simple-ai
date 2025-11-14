@@ -13,7 +13,7 @@ import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/types/w
 export interface NoteNodeProps extends NodeProps<NoteNodeType> {}
 
 export function NoteNode({ id, selected, data }: NoteNodeProps) {
-	const updateNode = useWorkflow(store => store.updateNode);
+	const updateNode = useWorkflow((store) => store.updateNode);
 
 	const handleContentChange = (content: string) => {
 		updateNode({
@@ -27,7 +27,7 @@ export function NoteNode({ id, selected, data }: NoteNodeProps) {
 		<ResizableNode selected={selected} className="p-4">
 			<Textarea
 				value={data.content}
-				onChange={e => handleContentChange(e.target.value)}
+				onChange={(e) => handleContentChange(e.target.value)}
 				placeholder="Enter your note here..."
 				className={cn(
 					"h-full w-full resize-none border-none bg-transparent dark:bg-transparent focus-visible:ring-0 p-0 shadow-none",

@@ -357,7 +357,10 @@
 			"title": "Reasoning",
 			"description": "A component for displaying AI reasoning content with collapsible sections and streaming support.",
 			"dependencies": ["ai"],
-			"registryDependencies": ["collapsible", "@simple-ai/markdown-content"],
+			"registryDependencies": [
+				"collapsible",
+				"@simple-ai/markdown-content"
+			],
 			"files": [
 				{
 					"path": "./src/registry/ui/reasoning.tsx",

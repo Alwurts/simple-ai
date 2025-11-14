@@ -53,7 +53,7 @@ const PromptCrafterNodeController = ({
 		setDynamicHandles({
 			...dynamicHandles,
 			"template-tags": dynamicHandles["template-tags"].filter(
-				input => input.id !== "name",
+				(input) => input.id !== "name",
 			),
 		});
 		return true;
@@ -63,8 +63,10 @@ const PromptCrafterNodeController = ({
 		(handleId: string, newLabel: string) => {
 			setDynamicHandles({
 				...dynamicHandles,
-				"template-tags": dynamicHandles["template-tags"].map(input =>
-					input.id === handleId ? { ...input, name: newLabel } : input,
+				"template-tags": dynamicHandles["template-tags"].map((input) =>
+					input.id === handleId
+						? { ...input, name: newLabel }
+						: input,
 				),
 			});
 			return true;
@@ -115,16 +117,16 @@ export default function ResizableNodeDemo() {
 
 	const onNodesChange = useCallback(
 		(changes: NodeChange<Node>[]) =>
-			setNodes(nds => applyNodeChanges(changes, nds)),
+			setNodes((nds) => applyNodeChanges(changes, nds)),
 		[],
 	);
 	const onEdgesChange = useCallback(
 		(changes: EdgeChange<never>[]) =>
-			setEdges(eds => applyEdgeChanges(changes, eds)),
+			setEdges((eds) => applyEdgeChanges(changes, eds)),
 		[],
 	);
 	const onConnect = useCallback(
-		(connection: Connection) => setEdges(eds => addEdge(connection, eds)),
+		(connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
 		[],
 	);
 	return (

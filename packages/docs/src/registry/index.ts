@@ -12,7 +12,7 @@ export const registry: Registry = {
 	name: "simple-ai",
 	homepage: "https://simple-ai.dev",
 	items: z.array(registryItemSchema).parse(
-		[...ui, ...hooks, ...lib, ...examples, ...blocks].filter(item => {
+		[...ui, ...hooks, ...lib, ...examples, ...blocks].filter((item) => {
 			return !DEPRECATED_ITEMS.includes(item.name);
 		}),
 	),

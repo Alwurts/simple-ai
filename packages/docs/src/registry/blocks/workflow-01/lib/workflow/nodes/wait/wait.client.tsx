@@ -29,11 +29,11 @@ import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/types/w
 export interface WaitNodeProps extends NodeProps<WaitNodeType> {}
 
 export function WaitNode({ selected, data, deletable, id }: WaitNodeProps) {
-	const deleteNode = useWorkflow(state => state.deleteNode);
-	const canConnectHandle = useWorkflow(store => store.canConnectHandle);
+	const deleteNode = useWorkflow((state) => state.deleteNode);
+	const canConnectHandle = useWorkflow((store) => store.canConnectHandle);
 
 	const validationErrors =
-		data.validationErrors?.map(error => ({
+		data.validationErrors?.map((error) => ({
 			message: error.message,
 		})) || [];
 
@@ -62,7 +62,10 @@ export function WaitNode({ selected, data, deletable, id }: WaitNodeProps) {
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Wait</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<NodeHeaderStatus status={data.status} errors={validationErrors} />
+					<NodeHeaderStatus
+						status={data.status}
+						errors={validationErrors}
+					/>
 					{deletable && (
 						<NodeHeaderAction
 							onClick={() => deleteNode(id)}
@@ -96,7 +99,7 @@ export function WaitNode({ selected, data, deletable, id }: WaitNodeProps) {
 }
 
 export function WaitNodePanel({ node }: { node: WaitNodeType }) {
-	const updateNode = useWorkflow(state => state.updateNode);
+	const updateNode = useWorkflow((state) => state.updateNode);
 
 	return (
 		<div className="space-y-4">
@@ -122,8 +125,11 @@ export function WaitNodePanel({ node }: { node: WaitNodeType }) {
 										: "3600"
 							}
 							value={node.data.duration}
-							onChange={e => {
-								const value = Number.parseInt(e.target.value, 10);
+							onChange={(e) => {
+								const value = Number.parseInt(
+									e.target.value,
+									10,
+								);
 								if (!Number.isNaN(value) && value >= 1) {
 									updateNode({
 										id: node.id,
@@ -147,7 +153,9 @@ export function WaitNodePanel({ node }: { node: WaitNodeType }) {
 						</label>
 						<Select
 							value={node.data.unit}
-							onValueChange={(value: "seconds" | "minutes" | "hours") => {
+							onValueChange={(
+								value: "seconds" | "minutes" | "hours",
+							) => {
 								updateNode({
 									id: node.id,
 									nodeType: "wait",
@@ -172,8 +180,8 @@ export function WaitNodePanel({ node }: { node: WaitNodeType }) {
 			<div>
 				<h4 className="font-medium text-sm mb-2">Description</h4>
 				<p className="text-xs text-muted-foreground">
-					The wait node pauses workflow execution for the specified duration
-					before passing data to the next node.
+					The wait node pauses workflow execution for the specified
+					duration before passing data to the next node.
 				</p>
 			</div>
 		</div>

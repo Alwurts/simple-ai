@@ -16,7 +16,7 @@ function useActiveItem(itemIds: string[]) {
 
 	React.useEffect(() => {
 		const observer = new IntersectionObserver(
-			entries => {
+			(entries) => {
 				for (const entry of entries) {
 					if (entry.isIntersecting) {
 						setActiveId(entry.target.id);
@@ -61,7 +61,7 @@ export function DocsTableOfContents({
 }) {
 	const [open, setOpen] = React.useState(false);
 	const itemIds = React.useMemo(
-		() => toc.map(item => item.url.replace("#", "")),
+		() => toc.map((item) => item.url.replace("#", "")),
 		[toc],
 	);
 	const activeHeading = useActiveItem(itemIds);
@@ -86,7 +86,7 @@ export function DocsTableOfContents({
 					align="start"
 					className="no-scrollbar max-h-[70svh]"
 				>
-					{toc.map(item => (
+					{toc.map((item) => (
 						<DropdownMenuItem
 							key={item.url}
 							asChild
@@ -109,7 +109,7 @@ export function DocsTableOfContents({
 			<p className="text-muted-foreground bg-background sticky top-0 h-6 text-xs">
 				On This Page
 			</p>
-			{toc.map(item => (
+			{toc.map((item) => (
 				<a
 					key={item.url}
 					href={item.url}

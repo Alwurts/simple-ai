@@ -83,17 +83,21 @@ export const wikipediaQueryTool = () =>
 					const response = await fetch(searchUrl);
 
 					if (!response.ok) {
-						throw new Error(`Wikipedia API error: ${response.status}`);
+						throw new Error(
+							`Wikipedia API error: ${response.status}`,
+						);
 					}
 
 					const data = await response.json();
 					const [, titles, descriptions] = data;
 
-					const results = titles.map((title: string, index: number) => ({
-						title,
-						pageid: 0,
-						snippet: descriptions[index] || "",
-					}));
+					const results = titles.map(
+						(title: string, index: number) => ({
+							title,
+							pageid: 0,
+							snippet: descriptions[index] || "",
+						}),
+					);
 
 					return {
 						success: true,
@@ -113,7 +117,9 @@ export const wikipediaQueryTool = () =>
 								message: `Article "${query}" not found on Wikipedia. Try using the search action first to find the correct article title.`,
 							};
 						}
-						throw new Error(`Wikipedia API error: ${response.status}`);
+						throw new Error(
+							`Wikipedia API error: ${response.status}`,
+						);
 					}
 
 					const data = await response.json();

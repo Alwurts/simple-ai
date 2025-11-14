@@ -27,7 +27,10 @@ export function ComponentPreviewTabs({
 
 	return (
 		<div
-			className={cn("group relative mt-4 mb-12 flex flex-col gap-2", className)}
+			className={cn(
+				"group relative mt-4 mb-12 flex flex-col gap-2",
+				className,
+			)}
 			{...props}
 		>
 			<Tabs

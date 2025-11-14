@@ -19,10 +19,12 @@ export function PromptCrafterNodeController({
 	data,
 	...props
 }: NodeProps<PromptCrafterNodeController>) {
-	const updateNode = useWorkflow(state => state.updateNode);
-	const addDynamicHandle = useWorkflow(state => state.addDynamicHandle);
-	const removeDynamicHandle = useWorkflow(state => state.removeDynamicHandle);
-	const deleteNode = useWorkflow(state => state.deleteNode);
+	const updateNode = useWorkflow((state) => state.updateNode);
+	const addDynamicHandle = useWorkflow((state) => state.addDynamicHandle);
+	const removeDynamicHandle = useWorkflow(
+		(state) => state.removeDynamicHandle,
+	);
+	const deleteNode = useWorkflow((state) => state.deleteNode);
 
 	const handlePromptTextChange = useCallback(
 		(value: string) => {
@@ -39,7 +41,7 @@ export function PromptCrafterNodeController({
 			}
 
 			const existingInput = data.dynamicHandles["template-tags"]?.find(
-				input => input.name === name,
+				(input) => input.name === name,
 			);
 			if (existingInput) {
 				toast.error("Input name already exists");
@@ -56,7 +58,12 @@ export function PromptCrafterNodeController({
 
 	const handleRemoveInput = useCallback(
 		(handleId: string) => {
-			removeDynamicHandle(id, "prompt-crafter", "template-tags", handleId);
+			removeDynamicHandle(
+				id,
+				"prompt-crafter",
+				"template-tags",
+				handleId,
+			);
 		},
 		[id, removeDynamicHandle],
 	);
@@ -69,7 +76,7 @@ export function PromptCrafterNodeController({
 			}
 
 			const existingInput = data.dynamicHandles["template-tags"]?.find(
-				input => input.name === newLabel,
+				(input) => input.name === newLabel,
 			);
 			if (existingInput && existingInput.id !== handleId) {
 				toast.error("Input name already exists");
@@ -77,7 +84,7 @@ export function PromptCrafterNodeController({
 			}
 
 			const oldInput = data.dynamicHandles["template-tags"]?.find(
-				input => input.id === handleId,
+				(input) => input.id === handleId,
 			);
 			if (!oldInput) {
 				return false;
@@ -93,9 +100,12 @@ export function PromptCrafterNodeController({
 				},
 				dynamicHandles: {
 					...data.dynamicHandles,
-					"template-tags": (data.dynamicHandles["template-tags"] || []).map(
-						input =>
-							input.id === handleId ? { ...input, name: newLabel } : input,
+					"template-tags": (
+						data.dynamicHandles["template-tags"] || []
+					).map((input) =>
+						input.id === handleId
+							? { ...input, name: newLabel }
+							: input,
 					),
 				},
 			});

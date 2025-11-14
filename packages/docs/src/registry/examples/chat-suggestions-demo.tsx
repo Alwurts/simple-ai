@@ -24,13 +24,15 @@ export default function ChatSuggestionsDemo() {
 		<div className="flex flex-col gap-4 p-4">
 			<ChatSuggestions>
 				<ChatSuggestionsHeader>
-					<ChatSuggestionsTitle>Try these prompts:</ChatSuggestionsTitle>
+					<ChatSuggestionsTitle>
+						Try these prompts:
+					</ChatSuggestionsTitle>
 					<ChatSuggestionsDescription>
 						Click a suggestion to get started
 					</ChatSuggestionsDescription>
 				</ChatSuggestionsHeader>
 				<ChatSuggestionsContent>
-					{suggestions.map(suggestion => (
+					{suggestions.map((suggestion) => (
 						<ChatSuggestion
 							key={suggestion}
 							onClick={() => setSelectedSuggestion(suggestion)}
@@ -43,7 +45,8 @@ export default function ChatSuggestionsDemo() {
 
 			{selectedSuggestion && (
 				<div className="p-3 bg-muted rounded-md text-sm">
-					<span className="font-medium">Selected:</span> {selectedSuggestion}
+					<span className="font-medium">Selected:</span>{" "}
+					{selectedSuggestion}
 				</div>
 			)}
 		</div>

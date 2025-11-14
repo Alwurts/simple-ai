@@ -39,7 +39,10 @@ export default function Canvas() {
 	useEffect(() => {
 		window.addEventListener("message", handleMessageFromCanvasParent);
 		return () =>
-			window.removeEventListener("message", handleMessageFromCanvasParent);
+			window.removeEventListener(
+				"message",
+				handleMessageFromCanvasParent,
+			);
 	}, [handleMessageFromCanvasParent]);
 
 	const components = useMemo(() => {

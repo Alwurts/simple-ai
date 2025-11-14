@@ -8,7 +8,9 @@ export const getProjectManagementResourcesTool = tool({
 	inputSchema: z.object({
 		topic: z
 			.string()
-			.describe("The specific project management topic to get resources for"),
+			.describe(
+				"The specific project management topic to get resources for",
+			),
 	}),
 	outputSchema: z.string(),
 	execute: async ({ topic }) => {
@@ -100,13 +102,16 @@ export const recommendProjectToolsTool = tool({
 						"Git integration",
 						"Mobile apps available",
 					],
-					setup:
-						"Sprint Length: 2 weeks, Board Structure: Backlog → To Do → In Progress → Code Review → Testing → Done",
+					setup: "Sprint Length: 2 weeks, Board Structure: Backlog → To Do → In Progress → Code Review → Testing → Done",
 				},
 				alternatives: [
 					{
 						name: "ClickUp",
-						benefits: ["Cost-effective", "More flexible", "Faster setup"],
+						benefits: [
+							"Cost-effective",
+							"More flexible",
+							"Faster setup",
+						],
 					},
 				],
 			};

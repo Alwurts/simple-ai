@@ -39,7 +39,7 @@ const highlightStep = (svg: SVGSVGElement, step: WorkflowStep) => {
 };
 
 // Sleep helper
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export function useWorkflowAnimation({
 	delay = 500,
@@ -57,25 +57,32 @@ export function useWorkflowAnimation({
 			for (const workflow of workflows) {
 				for (const step of workflow.steps) {
 					for (const nodeId of step.nodes) {
-						const element = svg.getElementById(nodeId) as SVGElement | null;
+						const element = svg.getElementById(
+							nodeId,
+						) as SVGElement | null;
 						if (!element) {
 							continue;
 						}
 
 						if (nodeId.startsWith("event-")) {
-							element.style.stroke = "hsl(var(--workflow-event-stroke))";
+							element.style.stroke =
+								"hsl(var(--workflow-event-stroke))";
 							element.style.strokeWidth = "2";
 						} else if (nodeId.startsWith("task-")) {
-							element.style.stroke = "hsl(var(--workflow-task-stroke))";
+							element.style.stroke =
+								"hsl(var(--workflow-task-stroke))";
 							element.style.strokeWidth = "2";
 						} else if (nodeId.startsWith("gateway-")) {
-							element.style.stroke = "hsl(var(--workflow-gateway-stroke))";
+							element.style.stroke =
+								"hsl(var(--workflow-gateway-stroke))";
 							element.style.strokeWidth = "2";
 						}
 					}
 
 					for (const pathId of step.paths) {
-						const element = svg.getElementById(pathId) as SVGElement | null;
+						const element = svg.getElementById(
+							pathId,
+						) as SVGElement | null;
 						if (element) {
 							element.style.fill = "currentColor";
 						}

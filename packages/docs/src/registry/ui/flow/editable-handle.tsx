@@ -81,7 +81,7 @@ const EditableHandleDialog = ({
 						<Input
 							id="label"
 							value={localLabel}
-							onChange={e => setLocalLabel(e.target.value)}
+							onChange={(e) => setLocalLabel(e.target.value)}
 							placeholder="Enter label"
 							className="h-8"
 							autoFocus
@@ -89,20 +89,29 @@ const EditableHandleDialog = ({
 					</div>
 					{showDescription && (
 						<div className="flex flex-col gap-2">
-							<label htmlFor="description" className="text-sm font-medium">
+							<label
+								htmlFor="description"
+								className="text-sm font-medium"
+							>
 								Description (optional)
 							</label>
 							<Textarea
 								id="description"
 								value={localDescription}
-								onChange={e => setLocalDescription(e.target.value)}
+								onChange={(e) =>
+									setLocalDescription(e.target.value)
+								}
 								placeholder="Enter description"
 								className="resize-none h-20"
 							/>
 						</div>
 					)}
 					<div className="flex justify-end gap-2">
-						<Button variant="outline" size="sm" onClick={handleCancel}>
+						<Button
+							variant="outline"
+							size="sm"
+							onClick={handleCancel}
+						>
 							Cancel
 						</Button>
 						<Button size="sm" onClick={handleSave}>
@@ -158,7 +167,7 @@ const EditableHandle = React.forwardRef<HTMLDivElement, EditableHandleProps>(
 		// biome-ignore lint/correctness/useExhaustiveDependencies: Needed
 		const handleSelectionChange = useCallback(
 			({ nodes }: { nodes: Node[] }) => {
-				if (isEditing && !nodes.some(node => node.id === nodeId)) {
+				if (isEditing && !nodes.some((node) => node.id === nodeId)) {
 					resetEditing();
 				}
 			},

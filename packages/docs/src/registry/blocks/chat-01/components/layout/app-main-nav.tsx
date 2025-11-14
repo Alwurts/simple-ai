@@ -21,7 +21,9 @@ export function AppMainNav({
 						<SidebarMenuItem key={`${item.path}-${index}`}>
 							<SidebarMenuButton
 								tooltip={item.label}
-								isActive={item.matchExpression.test(currentPath)}
+								isActive={item.matchExpression.test(
+									currentPath,
+								)}
 								asChild
 							>
 								<Link href={item.path}>

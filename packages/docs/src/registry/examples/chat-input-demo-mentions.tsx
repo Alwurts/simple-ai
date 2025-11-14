@@ -57,7 +57,7 @@ export default function ChatInputWithMentions() {
 					items: files,
 				}),
 			},
-			onSubmit: parsedValue => {
+			onSubmit: (parsedValue) => {
 				console.log("Submitted parsed:", parsedValue);
 				console.log("Members mentioned:", parsedValue.member);
 				console.log("Files mentioned:", parsedValue.file);
@@ -73,20 +73,26 @@ export default function ChatInputWithMentions() {
 	return (
 		<div className="w-full h-full flex justify-center items-center">
 			<div className="w-full max-w-md space-y-4">
-				<ChatInput onSubmit={handleSubmit} value={value} onChange={onChange}>
+				<ChatInput
+					onSubmit={handleSubmit}
+					value={value}
+					onChange={onChange}
+				>
 					<ChatInputMention
 						type={mentionConfigs.member.type}
 						trigger={mentionConfigs.member.trigger}
 						items={mentionConfigs.member.items}
 					>
-						{item => (
+						{(item) => (
 							<>
 								<Avatar className="h-6 w-6">
 									<AvatarImage
 										src={item.image ?? "/placeholder.jpg"}
 										alt={item.name}
 									/>
-									<AvatarFallback>{item.name[0].toUpperCase()}</AvatarFallback>
+									<AvatarFallback>
+										{item.name[0].toUpperCase()}
+									</AvatarFallback>
 								</Avatar>
 
 								<span
@@ -106,7 +112,7 @@ export default function ChatInputWithMentions() {
 						trigger={mentionConfigs.file.trigger}
 						items={mentionConfigs.file.items}
 					>
-						{item => (
+						{(item) => (
 							<>
 								<FileIcon className="h-4 w-4 text-muted-foreground" />
 								<span
@@ -127,7 +133,9 @@ export default function ChatInputWithMentions() {
 				{/* Debug output */}
 				<div className="space-y-2">
 					<div>
-						<h4 className="font-semibold mb-2 text-sm">Parsed Output:</h4>
+						<h4 className="font-semibold mb-2 text-sm">
+							Parsed Output:
+						</h4>
 						<div className="bg-code rounded-lg border border-border p-0 text-sm max-h-32 overflow-y-auto">
 							<div
 								dangerouslySetInnerHTML={{

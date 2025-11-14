@@ -34,7 +34,11 @@ export function LabeledHandle({
 				className,
 			)}
 		>
-			<BaseHandle position={position} className={handleClassName} {...props} />
+			<BaseHandle
+				position={position}
+				className={handleClassName}
+				{...props}
+			/>
 			{/* biome-ignore lint/a11y/noLabelWithoutControl: Needed */}
 			<label className={cn("px-3 text-foreground", labelClassName)}>
 				{title}

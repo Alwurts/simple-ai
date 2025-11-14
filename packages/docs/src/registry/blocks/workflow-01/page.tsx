@@ -60,7 +60,7 @@ const edgeTypes: EdgeTypes = {
 export function Flow() {
 	const { theme } = useTheme();
 	const store = useWorkflow(
-		store => ({
+		(store) => ({
 			nodes: store.nodes,
 			edges: store.edges,
 			onNodesChange: store.onNodesChange,
@@ -83,7 +83,7 @@ export function Flow() {
 			transport: new DefaultChatTransport({
 				api: "/api/workflow",
 			}),
-			onData: dataPart => {
+			onData: (dataPart) => {
 				if (dataPart.type === "data-node-execution-status") {
 					store.updateNode({
 						id: dataPart.data.nodeId,
@@ -91,7 +91,10 @@ export function Flow() {
 						data: { status: dataPart.data.status },
 					});
 
-					if (dataPart.data.status === "error" && dataPart.data.error) {
+					if (
+						dataPart.data.status === "error" &&
+						dataPart.data.error
+					) {
 						console.error(
 							`Node ${dataPart.data.nodeId} error:`,
 							dataPart.data.error,
@@ -165,7 +168,9 @@ export function Flow() {
 					<AppHeaderIcon>
 						<Workflow />
 					</AppHeaderIcon>
-					<AppHeaderTitle className="ml-2">Workflow Builder</AppHeaderTitle>
+					<AppHeaderTitle className="ml-2">
+						Workflow Builder
+					</AppHeaderTitle>
 					<AppHeaderSeparator />
 					<TemplateSelector
 						selectedTemplateId={selectedTemplateId}

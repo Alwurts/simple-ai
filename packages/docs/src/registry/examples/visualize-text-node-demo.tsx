@@ -28,8 +28,7 @@ const initialNodes = [
 		type: "visualize-text",
 		position: { x: 0, y: -50 },
 		data: {
-			input:
-				"### I support markdown\n\nVisualize text coming from other nodes\n\n- 1\n- 2\n- 3",
+			input: "### I support markdown\n\nVisualize text coming from other nodes\n\n- 1\n- 2\n- 3",
 			status: "success",
 		},
 	},
@@ -44,16 +43,16 @@ export default function VisualizeTextNodeDemo() {
 
 	const onNodesChange = useCallback(
 		(changes: NodeChange<Node>[]) =>
-			setNodes(nds => applyNodeChanges(changes, nds)),
+			setNodes((nds) => applyNodeChanges(changes, nds)),
 		[],
 	);
 	const onEdgesChange = useCallback(
 		(changes: EdgeChange<never>[]) =>
-			setEdges(eds => applyEdgeChanges(changes, eds)),
+			setEdges((eds) => applyEdgeChanges(changes, eds)),
 		[],
 	);
 	const onConnect = useCallback(
-		(connection: Connection) => setEdges(eds => addEdge(connection, eds)),
+		(connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
 		[],
 	);
 	return (

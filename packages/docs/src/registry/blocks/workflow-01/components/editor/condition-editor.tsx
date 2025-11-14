@@ -145,7 +145,9 @@ function createCelDecorations(
 	}
 
 	decorations.sort((a, b) => a.from - b.from);
-	return Decoration.set(decorations.map(d => d.decoration.range(d.from, d.to)));
+	return Decoration.set(
+		decorations.map((d) => d.decoration.range(d.from, d.to)),
+	);
 }
 
 function createCelHighlightPlugin(
@@ -156,7 +158,10 @@ function createCelHighlightPlugin(
 			decorations: DecorationSet;
 
 			constructor(view: EditorView) {
-				this.decorations = createCelDecorations(view, availableVariables);
+				this.decorations = createCelDecorations(
+					view,
+					availableVariables,
+				);
 			}
 
 			update(update: ViewUpdate) {
@@ -169,7 +174,7 @@ function createCelHighlightPlugin(
 			}
 		},
 		{
-			decorations: v => v.decorations,
+			decorations: (v) => v.decorations,
 		},
 	);
 }
@@ -186,7 +191,7 @@ export function ConditionEditor({
 
 	// Convert to VariableInfo[] for highlighting (TaggedVariableInfo extends VariableInfo)
 	const variablesForHighlighting: VariableInfo[] = availableVariables.map(
-		v => ({
+		(v) => ({
 			path: v.path,
 			type: v.type,
 			description: v.description,
@@ -226,7 +231,12 @@ export function ConditionEditor({
 			<div className="flex gap-2">
 				<Popover>
 					<PopoverTrigger asChild>
-						<Button type="button" variant="outline" size="sm" className="gap-2">
+						<Button
+							type="button"
+							variant="outline"
+							size="sm"
+							className="gap-2"
+						>
 							<Variable className="w-3 h-3" />
 							Variables
 						</Button>
@@ -234,11 +244,14 @@ export function ConditionEditor({
 					<PopoverContent className="w-80 p-0" align="start">
 						<div className="max-h-[300px] overflow-y-auto">
 							<div className="p-2 border-b bg-muted/50">
-								<h4 className="text-xs font-semibold">Available Variables</h4>
+								<h4 className="text-xs font-semibold">
+									Available Variables
+								</h4>
 							</div>
 							{availableVariables.length === 0 ? (
 								<div className="p-4 text-xs text-muted-foreground text-center">
-									No variables available. Connect an input node first.
+									No variables available. Connect an input
+									node first.
 								</div>
 							) : (
 								<VariableList
@@ -252,7 +265,12 @@ export function ConditionEditor({
 
 				<Popover>
 					<PopoverTrigger asChild>
-						<Button type="button" variant="outline" size="sm" className="gap-2">
+						<Button
+							type="button"
+							variant="outline"
+							size="sm"
+							className="gap-2"
+						>
 							<Code className="w-3 h-3" />
 							Operators
 						</Button>
@@ -260,17 +278,23 @@ export function ConditionEditor({
 					<PopoverContent className="w-64 p-0" align="start">
 						<div className="max-h-[300px] overflow-y-auto">
 							<div className="p-2 border-b bg-muted/50">
-								<h4 className="text-xs font-semibold">Common Operators</h4>
+								<h4 className="text-xs font-semibold">
+									Common Operators
+								</h4>
 							</div>
 							<div className="p-1">
-								{OPERATORS.map(op => (
+								{OPERATORS.map((op) => (
 									<button
 										key={op.label}
 										type="button"
-										onClick={() => handleOperatorClick(op.label)}
+										onClick={() =>
+											handleOperatorClick(op.label)
+										}
 										className="w-full flex items-center justify-between px-3 py-2 text-xs hover:bg-accent rounded-sm transition-colors"
 									>
-										<code className="font-mono font-semibold">{op.label}</code>
+										<code className="font-mono font-semibold">
+											{op.label}
+										</code>
 										<span className="text-muted-foreground">
 											{op.description}
 										</span>
@@ -344,7 +368,7 @@ function VariableList({
 							Common Variables
 						</div>
 					)}
-					{commonVars.map(variable => (
+					{commonVars.map((variable) => (
 						<VariableItem
 							key={variable.path}
 							variable={variable}
@@ -364,7 +388,7 @@ function VariableList({
 							Path-Specific Variables
 						</div>
 					)}
-					{pathSpecificVars.map(variable => (
+					{pathSpecificVars.map((variable) => (
 						<VariableItem
 							key={variable.path}
 							variable={variable}
@@ -387,7 +411,8 @@ function VariableItem({
 	onSelect: (variable: VariableInfo) => void;
 	level: number;
 }) {
-	const isPathSpecific = "tag" in variable && variable.tag === "path-specific";
+	const isPathSpecific =
+		"tag" in variable && variable.tag === "path-specific";
 	const sourceNodeIds =
 		"sourceNodeIds" in variable ? variable.sourceNodeIds : [];
 
@@ -403,7 +428,9 @@ function VariableItem({
 		>
 			<div className="flex-1 text-left">
 				<div className="flex items-center gap-1.5">
-					<div className="font-mono font-semibold">{variable.path}</div>
+					<div className="font-mono font-semibold">
+						{variable.path}
+					</div>
 					{isPathSpecific && (
 						<GitBranch className="w-3 h-3 text-muted-foreground shrink-0" />
 					)}
@@ -438,7 +465,8 @@ function VariableItem({
 					<TooltipTrigger asChild>{content}</TooltipTrigger>
 					<TooltipContent>
 						<p className="text-xs">
-							Only available when input is from: {sourceNodeIds.join(", ")}
+							Only available when input is from:{" "}
+							{sourceNodeIds.join(", ")}
 						</p>
 					</TooltipContent>
 				</Tooltip>

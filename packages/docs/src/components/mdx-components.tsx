@@ -94,14 +94,20 @@ export const mdxComponents = {
 	),
 	a: ({ className, ...props }) => (
 		<a
-			className={cn("font-medium underline underline-offset-4", className)}
+			className={cn(
+				"font-medium underline underline-offset-4",
+				className,
+			)}
 			{...props}
 			ref={undefined}
 		/>
 	),
 	p: ({ className, ...props }) => (
 		<p
-			className={cn("leading-relaxed [&:not(:first-child)]:mt-6", className)}
+			className={cn(
+				"leading-relaxed [&:not(:first-child)]:mt-6",
+				className,
+			)}
 			{...props}
 			ref={undefined}
 		/>
@@ -146,7 +152,7 @@ export const mdxComponents = {
 			ref={undefined}
 		/>
 	),
-	hr: props => <hr className="my-4 md:my-8" {...props} ref={undefined} />,
+	hr: (props) => <hr className="my-4 md:my-8" {...props} ref={undefined} />,
 	table: ({ className, ...props }) => (
 		<div className="no-scrollbar my-6 w-full overflow-y-auto rounded-lg border">
 			<table
@@ -160,7 +166,11 @@ export const mdxComponents = {
 		</div>
 	),
 	tr: ({ className, ...props }) => (
-		<tr className={cn("m-0 border-b", className)} {...props} ref={undefined} />
+		<tr
+			className={cn("m-0 border-b", className)}
+			{...props}
+			ref={undefined}
+		/>
 	),
 	th: ({ className, ...props }) => (
 		<th
@@ -201,7 +211,8 @@ export const mdxComponents = {
 	},
 	figcaption: ({ className, children, ...props }) => {
 		const iconExtension =
-			"data-language" in props && typeof props["data-language"] === "string"
+			"data-language" in props &&
+			typeof props["data-language"] === "string"
 				? getIconForLanguageExtension(props["data-language"])
 				: null;
 
@@ -304,7 +315,10 @@ export const mdxComponents = {
 	),
 	Tabs: ({ className, ...props }: React.ComponentProps<typeof Tabs>) => {
 		return (
-			<Tabs className={cn("relative mt-6 w-full", className)} {...props} />
+			<Tabs
+				className={cn("relative mt-6 w-full", className)}
+				{...props}
+			/>
 		);
 	},
 	TabsList: ({
@@ -363,11 +377,17 @@ export const mdxComponents = {
 	ComponentsList,
 	Link: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
 		<Link
-			className={cn("font-medium underline underline-offset-4", className)}
+			className={cn(
+				"font-medium underline underline-offset-4",
+				className,
+			)}
 			{...props}
 		/>
 	),
-	LinkedCard: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
+	LinkedCard: ({
+		className,
+		...props
+	}: React.ComponentProps<typeof Link>) => (
 		<Link
 			className={cn(
 				"bg-surface text-surface-foreground hover:bg-surface/80 flex w-full flex-col items-center rounded-xl p-6 transition-colors sm:p-10",

@@ -184,7 +184,11 @@ export default function ChatMessageAreaDemo() {
 
 	return (
 		<div className="space-y-4 w-full h-full">
-			<Button onClick={handleStart} disabled={isStreaming} className="w-full">
+			<Button
+				onClick={handleStart}
+				disabled={isStreaming}
+				className="w-full"
+			>
 				{streamContent ? "Restart Story" : "Start Story"}{" "}
 				{isStreaming && "(Streaming...)"}
 			</Button>
@@ -197,7 +201,9 @@ export default function ChatMessageAreaDemo() {
 									src={userMessage.metadata?.member.image}
 								/>
 								<ChatMessageAvatarFallback>
-									{userMessage.metadata?.member.name.charAt(0).toUpperCase()}
+									{userMessage.metadata?.member.name
+										.charAt(0)
+										.toUpperCase()}
 								</ChatMessageAvatarFallback>
 							</ChatMessageAvatar>
 
@@ -206,13 +212,15 @@ export default function ChatMessageAreaDemo() {
 									<ChatMessageAuthor>
 										{userMessage.metadata?.member.name}
 									</ChatMessageAuthor>
-									<ChatMessageTimestamp createdAt={new Date()} />
+									<ChatMessageTimestamp
+										createdAt={new Date()}
+									/>
 								</ChatMessageHeader>
 
 								<ChatMessageContent>
 									{userMessage.parts
-										.filter(part => part.type === "text")
-										.map(part => (
+										.filter((part) => part.type === "text")
+										.map((part) => (
 											<ChatMessageMarkdown
 												key={part.type}
 												content={part.text}
@@ -226,17 +234,25 @@ export default function ChatMessageAreaDemo() {
 							<ChatMessage key="2" id="2">
 								<ChatMessageAvatar>
 									<ChatMessageAvatarImage src="/avatar-2.png" />
-									<ChatMessageAvatarFallback>A</ChatMessageAvatarFallback>
+									<ChatMessageAvatarFallback>
+										A
+									</ChatMessageAvatarFallback>
 								</ChatMessageAvatar>
 
 								<ChatMessageContainer>
 									<ChatMessageHeader>
-										<ChatMessageAuthor>Assistant</ChatMessageAuthor>
-										<ChatMessageTimestamp createdAt={new Date()} />
+										<ChatMessageAuthor>
+											Assistant
+										</ChatMessageAuthor>
+										<ChatMessageTimestamp
+											createdAt={new Date()}
+										/>
 									</ChatMessageHeader>
 
 									<ChatMessageContent>
-										<ChatMessageMarkdown content={streamContent} />
+										<ChatMessageMarkdown
+											content={streamContent}
+										/>
 									</ChatMessageContent>
 								</ChatMessageContainer>
 							</ChatMessage>

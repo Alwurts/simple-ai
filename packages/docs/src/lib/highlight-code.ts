@@ -10,24 +10,48 @@ export const transformers = [
 
 				if (raw.startsWith("npm install")) {
 					node.properties.__npm__ = raw;
-					node.properties.__yarn__ = raw.replace("npm install", "yarn add");
-					node.properties.__pnpm__ = raw.replace("npm install", "pnpm add");
-					node.properties.__bun__ = raw.replace("npm install", "bun add");
+					node.properties.__yarn__ = raw.replace(
+						"npm install",
+						"yarn add",
+					);
+					node.properties.__pnpm__ = raw.replace(
+						"npm install",
+						"pnpm add",
+					);
+					node.properties.__bun__ = raw.replace(
+						"npm install",
+						"bun add",
+					);
 				}
 
 				if (raw.startsWith("npx create-")) {
 					node.properties.__npm__ = raw;
-					node.properties.__yarn__ = raw.replace("npx create-", "yarn create ");
-					node.properties.__pnpm__ = raw.replace("npx create-", "pnpm create ");
+					node.properties.__yarn__ = raw.replace(
+						"npx create-",
+						"yarn create ",
+					);
+					node.properties.__pnpm__ = raw.replace(
+						"npx create-",
+						"pnpm create ",
+					);
 					node.properties.__bun__ = raw.replace("npx", "bunx --bun");
 				}
 
 				// npm create.
 				if (raw.startsWith("npm create")) {
 					node.properties.__npm__ = raw;
-					node.properties.__yarn__ = raw.replace("npm create", "yarn create");
-					node.properties.__pnpm__ = raw.replace("npm create", "pnpm create");
-					node.properties.__bun__ = raw.replace("npm create", "bun create");
+					node.properties.__yarn__ = raw.replace(
+						"npm create",
+						"yarn create",
+					);
+					node.properties.__pnpm__ = raw.replace(
+						"npm create",
+						"pnpm create",
+					);
+					node.properties.__bun__ = raw.replace(
+						"npm create",
+						"bun create",
+					);
 				}
 
 				// npx.

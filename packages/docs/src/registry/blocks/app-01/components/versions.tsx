@@ -10,9 +10,9 @@ export function Versions({
 	className,
 	...props
 }: ComponentPropsWithoutRef<"div">) {
-	const versions = useGenerationStore(state => state.versions);
-	const currentVersion = useGenerationStore(state => state.currentVersion);
-	const setChatOpen = useGenerationStore(state => state.setChatOpen);
+	const versions = useGenerationStore((state) => state.versions);
+	const currentVersion = useGenerationStore((state) => state.currentVersion);
+	const setChatOpen = useGenerationStore((state) => state.setChatOpen);
 	const currentVersionData = versions[currentVersion];
 	const isGenerating = currentVersionData?.status === "generating";
 
@@ -30,12 +30,13 @@ export function Versions({
 						No versions yet
 					</div>
 				) : (
-					versions.map(version => (
+					versions.map((version) => (
 						<Card
 							key={version.versionNumber}
 							className={cn(
 								"transition-all",
-								version.versionNumber === currentVersion && "border-primary",
+								version.versionNumber === currentVersion &&
+									"border-primary",
 								version.status === "generating" &&
 									"border-primary animate-pulse",
 							)}
@@ -45,7 +46,8 @@ export function Versions({
 									<div className="text-xs font-medium">
 										Version {version.versionNumber + 1}
 									</div>
-									{version.versionNumber === currentVersion && (
+									{version.versionNumber ===
+										currentVersion && (
 										<Badge
 											variant="secondary"
 											className="text-[10px] px-1 py-0"

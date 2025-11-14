@@ -24,13 +24,13 @@ export function NodesPanel() {
 
 	return (
 		<Panel position="top-center" className="flex gap-2">
-			{nodeTypes.map(nodeType => (
+			{nodeTypes.map((nodeType) => (
 				<Button
 					key={nodeType.type}
 					variant="outline"
 					className="cursor-grab"
 					draggable
-					onDragStart={e => onDragStart(e, nodeType.type)}
+					onDragStart={(e) => onDragStart(e, nodeType.type)}
 				>
 					<nodeType.icon className="mr-2 h-4 w-4" />
 					{nodeType.label}

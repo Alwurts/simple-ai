@@ -64,7 +64,7 @@ export function DocsSidebar({
 						</SidebarMenu>
 					</SidebarGroupContent>
 				</SidebarGroup> */}
-				{tree.children.map(item => {
+				{tree.children.map((item) => {
 					if (EXCLUDED_SECTIONS.includes(item.$id ?? "")) {
 						return null;
 					}
@@ -77,17 +77,26 @@ export function DocsSidebar({
 							<SidebarGroupContent>
 								{item.type === "folder" && (
 									<SidebarMenu className="gap-0.5">
-										{item.children.map(item => {
+										{item.children.map((item) => {
 											return (
 												item.type === "page" &&
-												!EXCLUDED_PAGES.includes(item.url) && (
-													<SidebarMenuItem key={item.url}>
+												!EXCLUDED_PAGES.includes(
+													item.url,
+												) && (
+													<SidebarMenuItem
+														key={item.url}
+													>
 														<SidebarMenuButton
 															asChild
-															isActive={item.url === pathname}
+															isActive={
+																item.url ===
+																pathname
+															}
 															className="data-[active=true]:bg-accent data-[active=true]:border-accent 3xl:fixed:w-full 3xl:fixed:max-w-48 relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md"
 														>
-															<Link href={item.url}>
+															<Link
+																href={item.url}
+															>
 																<span className="absolute inset-0 flex w-(--sidebar-width) bg-transparent" />
 																{item.name}
 															</Link>

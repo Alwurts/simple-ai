@@ -70,7 +70,7 @@ export function Chat() {
 	const isLoading = status === "streaming" || status === "submitted";
 
 	const { value, onChange, handleSubmit } = useChatInput({
-		onSubmit: parsedValue => {
+		onSubmit: (parsedValue) => {
 			sendMessage({
 				role: "user",
 				parts: [{ type: "text", text: parsedValue.content }],
@@ -82,7 +82,7 @@ export function Chat() {
 		<div className="flex flex-col h-full overflow-y-auto">
 			<ChatMessageArea>
 				<ChatMessageAreaContent>
-					{messages.map(message => {
+					{messages.map((message) => {
 						return (
 							<ChatMessage key={message.id}>
 								<ChatMessageAvatar>
@@ -96,14 +96,20 @@ export function Chat() {
 								<ChatMessageContainer>
 									<ChatMessageHeader>
 										<ChatMessageAuthor>
-											{message.role === "user" ? "You" : "Assistant"}
+											{message.role === "user"
+												? "You"
+												: "Assistant"}
 										</ChatMessageAuthor>
-										<ChatMessageTimestamp createdAt={new Date()} />
+										<ChatMessageTimestamp
+											createdAt={new Date()}
+										/>
 									</ChatMessageHeader>
 									<ChatMessageContent>
 										{message.parts
-											.filter(part => part.type === "text")
-											.map(part => (
+											.filter(
+												(part) => part.type === "text",
+											)
+											.map((part) => (
 												<ChatMessageMarkdown
 													key={part.type}
 													content={part.text}

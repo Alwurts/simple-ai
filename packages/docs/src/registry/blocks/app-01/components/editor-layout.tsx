@@ -12,9 +12,9 @@ import {
 import { useGenerationStore } from "@/registry/blocks/app-01/hooks/generation-store";
 
 export const EditorLayout = () => {
-	const view = useGenerationStore(state => state.view);
-	const versions = useGenerationStore(state => state.versions);
-	const currentVersion = useGenerationStore(state => state.currentVersion);
+	const view = useGenerationStore((state) => state.view);
+	const versions = useGenerationStore((state) => state.versions);
+	const currentVersion = useGenerationStore((state) => state.currentVersion);
 	const currentCode = versions[currentVersion]?.code ?? "";
 	const [viewerSize, setViewerSize] = useState("100");
 

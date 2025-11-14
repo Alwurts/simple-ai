@@ -83,8 +83,7 @@ const messages: Array<
 				input: {
 					query: "magical forest stories",
 				},
-				output:
-					"Found several stories about magical forests, including 'The Whispering Woods' - a tale about a magical forest where trees can talk and animals sing beautiful songs. The story follows Luna, a young fox with silver fur who can speak with ancient trees.",
+				output: "Found several stories about magical forests, including 'The Whispering Woods' - a tale about a magical forest where trees can talk and animals sing beautiful songs. The story follows Luna, a young fox with silver fur who can speak with ancient trees.",
 			},
 			{
 				type: "text",
@@ -105,12 +104,16 @@ export default function ChatMessageAreaDemo() {
 	return (
 		<ChatMessageArea>
 			<ChatMessageAreaContent>
-				{messages.map(message => (
+				{messages.map((message) => (
 					<ChatMessage key={message.id}>
 						<ChatMessageAvatar>
-							<ChatMessageAvatarImage src={message.metadata?.member.image} />
+							<ChatMessageAvatarImage
+								src={message.metadata?.member.image}
+							/>
 							<ChatMessageAvatarFallback>
-								{message.metadata?.member.name.charAt(0).toUpperCase()}
+								{message.metadata?.member.name
+									.charAt(0)
+									.toUpperCase()}
 							</ChatMessageAvatarFallback>
 						</ChatMessageAvatar>
 
@@ -123,7 +126,7 @@ export default function ChatMessageAreaDemo() {
 							</ChatMessageHeader>
 
 							<ChatMessageContent>
-								{message.parts.map(part => {
+								{message.parts.map((part) => {
 									if (part.type === "text") {
 										return (
 											<ChatMessageMarkdown
@@ -134,25 +137,37 @@ export default function ChatMessageAreaDemo() {
 									}
 									if (part.type === "tool-search-database") {
 										const hasInput =
-											part.input != null && part.input !== undefined;
+											part.input != null &&
+											part.input !== undefined;
 										const hasOutput =
-											part.output != null && part.output !== undefined;
+											part.output != null &&
+											part.output !== undefined;
 
 										const toolName = part.type.slice(5);
 										return (
-											<ToolInvocation key={part.toolCallId} className="w-full">
+											<ToolInvocation
+												key={part.toolCallId}
+												className="w-full"
+											>
 												<ToolInvocationHeader>
 													<ToolInvocationName
 														name={toolName}
 														type={part.state}
-														isError={part.state === "output-error"}
+														isError={
+															part.state ===
+															"output-error"
+														}
 													/>
 												</ToolInvocationHeader>
-												{(hasInput || hasOutput || part.errorText) && (
+												{(hasInput ||
+													hasOutput ||
+													part.errorText) && (
 													<ToolInvocationContentCollapsible>
 														{hasInput && (
 															<ToolInvocationRawData
-																data={part.input}
+																data={
+																	part.input
+																}
 																title="Arguments"
 															/>
 														)}
@@ -166,7 +181,9 @@ export default function ChatMessageAreaDemo() {
 														)}
 														{hasOutput && (
 															<ToolInvocationRawData
-																data={part.output}
+																data={
+																	part.output
+																}
 																title="Result"
 															/>
 														)}

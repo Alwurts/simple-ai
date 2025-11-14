@@ -93,7 +93,8 @@ function BlockViewerProvider({
 }: Pick<BlockViewerContext, "item" | "tree" | "highlightedFiles"> & {
 	children: React.ReactNode;
 }) {
-	const [view, setView] = React.useState<BlockViewerContext["view"]>("preview");
+	const [view, setView] =
+		React.useState<BlockViewerContext["view"]>("preview");
 	const [activeFile, setActiveFile] = React.useState<
 		BlockViewerContext["activeFile"]
 	>(highlightedFiles?.[0].target ?? null);
@@ -140,7 +141,7 @@ function BlockViewerToolbar() {
 		<div className="hidden w-full items-center gap-2 pl-2 md:pr-6 lg:flex">
 			<Tabs
 				value={view}
-				onValueChange={value => setView(value as "preview" | "code")}
+				onValueChange={(value) => setView(value as "preview" | "code")}
 			>
 				<TabsList className="grid h-8 grid-cols-2 items-center rounded-md p-1 *:data-[slot=tabs-trigger]:h-6 *:data-[slot=tabs-trigger]:rounded-sm *:data-[slot=tabs-trigger]:px-2 *:data-[slot=tabs-trigger]:text-xs">
 					<TabsTrigger value="preview">Preview</TabsTrigger>
@@ -159,10 +160,12 @@ function BlockViewerToolbar() {
 					<ToggleGroup
 						type="single"
 						defaultValue="100"
-						onValueChange={value => {
+						onValueChange={(value) => {
 							setView("preview");
 							if (resizablePanelRef?.current) {
-								resizablePanelRef.current.resize(Number.parseInt(value, 10));
+								resizablePanelRef.current.resize(
+									Number.parseInt(value, 10),
+								);
 							}
 						}}
 						className="gap-1 *:data-[slot=toggle-group-item]:!size-6 *:data-[slot=toggle-group-item]:!rounded-sm"
@@ -197,7 +200,7 @@ function BlockViewerToolbar() {
 							title="Refresh Preview"
 							onClick={() => {
 								if (setIframeKey) {
-									setIframeKey(k => k + 1);
+									setIframeKey((k) => k + 1);
 								}
 							}}
 						>
@@ -212,7 +215,9 @@ function BlockViewerToolbar() {
 					className="w-fit gap-1 px-2 shadow-none"
 					size="sm"
 					onClick={() => {
-						copyToClipboard(`npx shadcn@latest add @simple-ai/${item.name}`);
+						copyToClipboard(
+							`npx shadcn@latest add @simple-ai/${item.name}`,
+						);
 					}}
 				>
 					{isCopied ? <Check /> : <Terminal />}
@@ -312,7 +317,7 @@ function BlockViewerCode() {
 	const { activeFile, highlightedFiles } = useBlockViewer();
 
 	const file = React.useMemo(() => {
-		return highlightedFiles?.find(file => file.target === activeFile);
+		return highlightedFiles?.find((file) => file.target === activeFile);
 	}, [highlightedFiles, activeFile]);
 
 	if (!file) {
@@ -369,7 +374,11 @@ export function BlockViewerFileTree() {
 					<SidebarGroupContent>
 						<SidebarMenu className="translate-x-0 gap-1.5">
 							{tree.map((file, index) => (
-								<Tree key={`${file.name}-${index}`} item={file} index={1} />
+								<Tree
+									key={`${file.name}-${index}`}
+									item={file}
+									index={1}
+								/>
 							))}
 						</SidebarMenu>
 					</SidebarGroupContent>
@@ -445,7 +454,7 @@ function BlockCopyCodeButton() {
 	const { copyToClipboard, isCopied } = useCopyToClipboard();
 
 	const file = React.useMemo(() => {
-		return item.files?.find(file => file.target === activeFile);
+		return item.files?.find((file) => file.target === activeFile);
 	}, [activeFile, item.files]);
 
 	const content = file?.content;

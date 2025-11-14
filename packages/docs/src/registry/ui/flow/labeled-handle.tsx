@@ -23,7 +23,14 @@ const LabeledHandle = React.forwardRef<
 		}
 >(
 	(
-		{ className, labelClassName, handleClassName, title, position, ...props },
+		{
+			className,
+			labelClassName,
+			handleClassName,
+			title,
+			position,
+			...props
+		},
 		ref,
 	) => (
 		<div
@@ -35,7 +42,11 @@ const LabeledHandle = React.forwardRef<
 				className,
 			)}
 		>
-			<BaseHandle position={position} className={handleClassName} {...props} />
+			<BaseHandle
+				position={position}
+				className={handleClassName}
+				{...props}
+			/>
 			{/* biome-ignore lint/a11y/noLabelWithoutControl: Needed */}
 			<label className={cn("px-3 text-foreground", labelClassName)}>
 				{title}

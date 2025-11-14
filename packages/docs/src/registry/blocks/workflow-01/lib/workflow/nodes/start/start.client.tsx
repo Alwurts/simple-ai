@@ -20,10 +20,10 @@ import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/types/w
 export interface StartNodeProps extends NodeProps<StartNodeType> {}
 
 export function StartNode({ id, selected, data }: StartNodeProps) {
-	const canConnectHandle = useWorkflow(store => store.canConnectHandle);
+	const canConnectHandle = useWorkflow((store) => store.canConnectHandle);
 
 	const validationErrors =
-		data.validationErrors?.map(error => ({
+		data.validationErrors?.map((error) => ({
 			message: error.message,
 		})) || [];
 
@@ -47,7 +47,10 @@ export function StartNode({ id, selected, data }: StartNodeProps) {
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Start</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<NodeHeaderStatus status={data.status} errors={validationErrors} />
+					<NodeHeaderStatus
+						status={data.status}
+						errors={validationErrors}
+					/>
 				</NodeHeaderActions>
 			</NodeHeader>
 

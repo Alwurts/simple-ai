@@ -12,7 +12,7 @@ export async function getAllBlockIds(
 ): Promise<string[]> {
 	const blocks = await getAllBlocks(types, categories);
 
-	return blocks.map(block => block.name);
+	return blocks.map((block) => block.name);
 }
 
 export async function getAllBlocks(
@@ -26,10 +26,12 @@ export async function getAllBlocks(
 	const index = z.record(z.string(), registryItemSchema).parse(Index);
 
 	return Object.values(index).filter(
-		block =>
+		(block) =>
 			types.includes(block.type) &&
 			(categories.length === 0 ||
-				block.categories?.some(category => categories.includes(category))) &&
+				block.categories?.some((category) =>
+					categories.includes(category),
+				)) &&
 			!block.name.startsWith("chart-"),
 	);
 }

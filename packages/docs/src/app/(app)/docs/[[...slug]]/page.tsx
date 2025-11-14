@@ -113,9 +113,13 @@ export default async function Page(props: {
 											className="extend-touch-target ml-auto size-8 shadow-none md:size-7"
 											asChild
 										>
-											<Link href={neighbours.previous.url}>
+											<Link
+												href={neighbours.previous.url}
+											>
 												<ArrowLeftIcon />
-												<span className="sr-only">Previous</span>
+												<span className="sr-only">
+													Previous
+												</span>
 											</Link>
 										</Button>
 									)}
@@ -127,7 +131,9 @@ export default async function Page(props: {
 											asChild
 										>
 											<Link href={neighbours.next.url}>
-												<span className="sr-only">Next</span>
+												<span className="sr-only">
+													Next
+												</span>
 												<ArrowRightIcon />
 											</Link>
 										</Button>
@@ -143,15 +149,31 @@ export default async function Page(props: {
 						{links ? (
 							<div className="flex items-center gap-2 pt-4">
 								{links?.doc && (
-									<Badge asChild variant="secondary" className="rounded-full">
-										<a href={links.doc} target="_blank" rel="noreferrer">
+									<Badge
+										asChild
+										variant="secondary"
+										className="rounded-full"
+									>
+										<a
+											href={links.doc}
+											target="_blank"
+											rel="noreferrer"
+										>
 											Docs <ArrowUpRightIcon />
 										</a>
 									</Badge>
 								)}
 								{links?.api && (
-									<Badge asChild variant="secondary" className="rounded-full">
-										<a href={links.api} target="_blank" rel="noreferrer">
+									<Badge
+										asChild
+										variant="secondary"
+										className="rounded-full"
+									>
+										<a
+											href={links.api}
+											target="_blank"
+											rel="noreferrer"
+										>
 											API Reference <ArrowUpRightIcon />
 										</a>
 									</Badge>

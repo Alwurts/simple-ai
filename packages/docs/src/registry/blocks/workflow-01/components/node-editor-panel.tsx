@@ -4,7 +4,7 @@ import { getNodeDefinition } from "@/registry/blocks/workflow-01/lib/workflow/no
 import type { FlowNode } from "@/registry/blocks/workflow-01/types/workflow";
 
 export function NodeEditorPanel({ nodeId }: { nodeId: FlowNode["id"] }) {
-	const node = useWorkflow(state => state.getNodeById(nodeId));
+	const node = useWorkflow((state) => state.getNodeById(nodeId));
 	if (!node) {
 		return <NodeEditorPanelNotFound />;
 	}

@@ -47,7 +47,7 @@ const GenerateTextNodeController = ({
 	const handleRemoveTool = useCallback(() => {
 		setToolHandles({
 			...toolHandles,
-			tools: toolHandles.tools.filter(tool => tool.id !== "name"),
+			tools: toolHandles.tools.filter((tool) => tool.id !== "name"),
 		});
 		return true;
 	}, [toolHandles]);
@@ -56,7 +56,7 @@ const GenerateTextNodeController = ({
 		(toolId: string, newName: string, newDescription?: string) => {
 			setToolHandles({
 				...toolHandles,
-				tools: toolHandles.tools.map(tool =>
+				tools: toolHandles.tools.map((tool) =>
 					tool.id === toolId
 						? {
 								...tool,
@@ -81,7 +81,7 @@ const GenerateTextNodeController = ({
 			}}
 			{...props}
 			type="generate-text"
-			onModelChange={model => setModel(model)}
+			onModelChange={(model) => setModel(model)}
 			onCreateTool={handleCreateTool}
 			onRemoveTool={handleRemoveTool}
 			onUpdateTool={handleUpdateTool}
@@ -112,16 +112,16 @@ export default function ResizableNodeDemo() {
 
 	const onNodesChange = useCallback(
 		(changes: NodeChange<Node>[]) =>
-			setNodes(nds => applyNodeChanges(changes, nds)),
+			setNodes((nds) => applyNodeChanges(changes, nds)),
 		[],
 	);
 	const onEdgesChange = useCallback(
 		(changes: EdgeChange<never>[]) =>
-			setEdges(eds => applyEdgeChanges(changes, eds)),
+			setEdges((eds) => applyEdgeChanges(changes, eds)),
 		[],
 	);
 	const onConnect = useCallback(
-		(connection: Connection) => setEdges(eds => addEdge(connection, eds)),
+		(connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
 		[],
 	);
 	return (

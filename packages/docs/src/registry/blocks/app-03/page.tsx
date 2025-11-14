@@ -18,7 +18,7 @@ export default function XProfileGenerator() {
 	const { isLoading, complete, completion } = useCompletion({
 		api: "/api/ai/x-profile",
 		onFinish: (_prompt, completion) => {
-			setProfile(profile => ({
+			setProfile((profile) => ({
 				...profile,
 				bio: completion,
 			}));
@@ -28,7 +28,7 @@ export default function XProfileGenerator() {
 
 	useEffect(() => {
 		if (completion) {
-			setProfile(profile => ({
+			setProfile((profile) => ({
 				...profile,
 				bio: completion,
 			}));

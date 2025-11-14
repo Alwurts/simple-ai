@@ -96,7 +96,7 @@ const messages: UIMessage<{
 export default function ChatMessageDemo() {
 	return (
 		<div className="w-full max-h-[400px] overflow-y-auto">
-			{messages.map(message => (
+			{messages.map((message) => (
 				<ChatMessage key={message.id}>
 					<ChatMessageActions>
 						<ChatMessageAction label="Copy">
@@ -108,9 +108,13 @@ export default function ChatMessageDemo() {
 					</ChatMessageActions>
 
 					<ChatMessageAvatar>
-						<ChatMessageAvatarImage src={message.metadata?.member.image} />
+						<ChatMessageAvatarImage
+							src={message.metadata?.member.image}
+						/>
 						<ChatMessageAvatarFallback>
-							{message.metadata?.member.name.charAt(0).toUpperCase()}
+							{message.metadata?.member.name
+								.charAt(0)
+								.toUpperCase()}
 						</ChatMessageAvatarFallback>
 					</ChatMessageAvatar>
 
@@ -124,9 +128,12 @@ export default function ChatMessageDemo() {
 
 						<ChatMessageContent>
 							{message.parts
-								.filter(part => part.type === "text")
-								.map(part => (
-									<ChatMessageMarkdown key={part.type} content={part.text} />
+								.filter((part) => part.type === "text")
+								.map((part) => (
+									<ChatMessageMarkdown
+										key={part.type}
+										content={part.text}
+									/>
 								))}
 						</ChatMessageContent>
 
@@ -134,7 +141,10 @@ export default function ChatMessageDemo() {
 							<ChatMessageThread>
 								<ChatMessageAvatar>
 									<ChatMessageAvatarImage
-										src={message.metadata?.threadData.member.image}
+										src={
+											message.metadata?.threadData.member
+												.image
+										}
 									/>
 									<ChatMessageAvatarFallback>
 										{message.metadata?.threadData.member.name
@@ -143,7 +153,8 @@ export default function ChatMessageDemo() {
 									</ChatMessageAvatarFallback>
 								</ChatMessageAvatar>
 								<ChatMessageThreadReplyCount>
-									{message.metadata.threadData.messageCount} replies
+									{message.metadata.threadData.messageCount}{" "}
+									replies
 								</ChatMessageThreadReplyCount>
 								<ChatMessageThreadTimestamp
 									date={message.metadata.threadData.lastReply}

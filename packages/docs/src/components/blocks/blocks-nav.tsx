@@ -17,7 +17,7 @@ export function BlocksNav() {
 						category={{ name: "Featured", slug: "", hidden: false }}
 						isActive={pathname === "/blocks"}
 					/>
-					{registryCategories.map(category => (
+					{registryCategories.map((category) => (
 						<BlocksNavLink
 							key={category.slug}
 							category={category}

@@ -31,14 +31,14 @@ export async function executeWorkflow({
 }): Promise<void> {
 	const validation = validateWorkflow(nodes, edges);
 
-	const errors = validation.errors.filter(e => e.severity === "error");
+	const errors = validation.errors.filter((e) => e.severity === "error");
 	if (errors.length > 0) {
-		const errorMessages = errors.map(e => `- ${e.message}`).join("\n");
+		const errorMessages = errors.map((e) => `- ${e.message}`).join("\n");
 		throw new Error(`Workflow has errors:\n${errorMessages}`);
 	}
 
 	// Log warnings but don't block
-	const warnings = validation.errors.filter(e => e.severity === "warning");
+	const warnings = validation.errors.filter((e) => e.severity === "warning");
 	if (warnings.length > 0) {
 		console.warn("Workflow warnings:", warnings);
 	}
@@ -47,7 +47,7 @@ export async function executeWorkflow({
 		console.warn("Workflow warnings (legacy):", validation.warnings);
 	}
 
-	const startNode = nodes.find(node => isNodeOfType(node, "start"));
+	const startNode = nodes.find((node) => isNodeOfType(node, "start"));
 	if (!startNode) {
 		throw new Error("No start node found");
 	}
@@ -68,7 +68,7 @@ export async function executeWorkflow({
 			);
 		}
 
-		const node = nodes.find(n => n.id === currentNodeId);
+		const node = nodes.find((n) => n.id === currentNodeId);
 		if (!node) {
 			throw new Error(`Node ${currentNodeId} not found`);
 		}
@@ -155,7 +155,10 @@ export async function executeWorkflow({
 					nodeType: node.type,
 					name: nodeName,
 					status: "error",
-					error: error instanceof Error ? error.message : "Unknown error",
+					error:
+						error instanceof Error
+							? error.message
+							: "Unknown error",
 				},
 			});
 

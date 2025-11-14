@@ -11,7 +11,7 @@ const FEATURED_BLOCKS = ["chat-01", "app-01", "app-02"];
 export default async function BlocksPage() {
 	return (
 		<div className="flex flex-col gap-12 md:gap-24">
-			{FEATURED_BLOCKS.map(name => (
+			{FEATURED_BLOCKS.map((name) => (
 				<BlockDisplay name={name} key={name} />
 			))}
 			<div className="container-wrapper">

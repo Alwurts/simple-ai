@@ -30,7 +30,7 @@ export function ErrorIndicator({
 				<div className="space-y-2">
 					<h4 className="font-medium">Workflow Errors</h4>
 					<div className="space-y-1">
-						{errors.map(error => (
+						{errors.map((error) => (
 							<div
 								key={`${error.type}-${error.message}`}
 								className="text-sm text-red-500"

@@ -43,8 +43,8 @@ export default function WorkflowsLayout({ children }: { children: ReactNode }) {
 			<PageHeader>
 				<PageHeaderHeading>{title}</PageHeaderHeading>
 				<PageHeaderDescription>
-					Build sophisticated AI agent workflows using an interactive visual
-					interface powered by{" "}
+					Build sophisticated AI agent workflows using an interactive
+					visual interface powered by{" "}
 					<a
 						href="https://reactflow.dev/"
 						className="underline"
@@ -65,9 +65,9 @@ export default function WorkflowsLayout({ children }: { children: ReactNode }) {
 					.
 				</PageHeaderDescription>
 				<PageHeaderDescription>
-					Create linear, branching, and conditional workflows with real-time
-					streaming and state management. Switch between templates to explore
-					different workflow patterns.
+					Create linear, branching, and conditional workflows with
+					real-time streaming and state management. Switch between
+					templates to explore different workflow patterns.
 				</PageHeaderDescription>
 				<PageActions>
 					<Button asChild size="sm">

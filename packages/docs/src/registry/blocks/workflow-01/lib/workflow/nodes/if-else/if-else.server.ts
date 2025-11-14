@@ -35,11 +35,16 @@ function executeIfElseNode(
 			}
 
 			try {
-				const conditionResult = celEnv.evaluate(handle.condition, evalContext);
+				const conditionResult = celEnv.evaluate(
+					handle.condition,
+					evalContext,
+				);
 
 				if (conditionResult === true) {
 					const outgoingEdge = edges.find(
-						edge => edge.source === node.id && edge.sourceHandle === handle.id,
+						(edge) =>
+							edge.source === node.id &&
+							edge.sourceHandle === handle.id,
 					);
 
 					if (outgoingEdge) {
@@ -55,7 +60,9 @@ function executeIfElseNode(
 
 		if (!nextNodeId) {
 			const elseEdge = edges.find(
-				edge => edge.source === node.id && edge.sourceHandle === "output-else",
+				(edge) =>
+					edge.source === node.id &&
+					edge.sourceHandle === "output-else",
 			);
 			nextNodeId = elseEdge ? elseEdge.target : null;
 		}

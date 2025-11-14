@@ -25,7 +25,9 @@ export const nodeFactory = {
 		},
 	}),
 
-	"prompt-crafter": (position: NodePosition): PromptCrafterNodeController => ({
+	"prompt-crafter": (
+		position: NodePosition,
+	): PromptCrafterNodeController => ({
 		id: nanoid(),
 		type: "prompt-crafter",
 		position,
@@ -39,7 +41,9 @@ export const nodeFactory = {
 		},
 	}),
 
-	"visualize-text": (position: NodePosition): VisualizeTextNodeController => ({
+	"visualize-text": (
+		position: NodePosition,
+	): VisualizeTextNodeController => ({
 		id: nanoid(),
 		type: "visualize-text",
 		position,

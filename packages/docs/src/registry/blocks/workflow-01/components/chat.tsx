@@ -112,9 +112,9 @@ export function Chat({
 	selectedTemplateId,
 	...props
 }: ChatProps) {
-	const getWorkflowData = useWorkflow(store => store.getWorkflowData);
-	const resetNodeStatuses = useWorkflow(store => store.resetNodeStatuses);
-	const validationState = useWorkflow(store => store.validationState);
+	const getWorkflowData = useWorkflow((store) => store.getWorkflowData);
+	const resetNodeStatuses = useWorkflow((store) => store.resetNodeStatuses);
+	const validationState = useWorkflow((store) => store.validationState);
 
 	const isLoading = status === "streaming" || status === "submitted";
 	const hasValidationErrors = !validationState.valid;
@@ -125,7 +125,7 @@ export function Chat({
 		: undefined;
 
 	const { value, onChange, handleSubmit } = useChatInput({
-		onSubmit: parsedValue => {
+		onSubmit: (parsedValue) => {
 			resetNodeStatuses();
 
 			const workflowData = getWorkflowData();
@@ -184,8 +184,9 @@ export function Chat({
 							onSuggestionClick={handleSuggestionClick}
 						/>
 					) : (
-						messages.map(message => {
-							const userName = message.role === "user" ? "You" : "Assistant";
+						messages.map((message) => {
+							const userName =
+								message.role === "user" ? "You" : "Assistant";
 							return (
 								<ChatMessage key={message.id}>
 									<ChatMessageActions>
@@ -206,133 +207,217 @@ export function Chat({
 
 									<ChatMessageContainer>
 										<ChatMessageHeader>
-											<ChatMessageAuthor>{userName}</ChatMessageAuthor>
-											<ChatMessageTimestamp createdAt={new Date()} />
+											<ChatMessageAuthor>
+												{userName}
+											</ChatMessageAuthor>
+											<ChatMessageTimestamp
+												createdAt={new Date()}
+											/>
 										</ChatMessageHeader>
 
 										<ChatMessageContent className="gap-3">
-											{message.parts.map((part, index) => {
-												switch (part.type) {
-													case "text": {
-														return (
-															<ChatMessageMarkdown
-																key={`text-${message.id}-${index}`}
-																content={part.text}
-															/>
-														);
-													}
+											{message.parts.map(
+												(part, index) => {
+													switch (part.type) {
+														case "text": {
+															return (
+																<ChatMessageMarkdown
+																	key={`text-${message.id}-${index}`}
+																	content={
+																		part.text
+																	}
+																/>
+															);
+														}
 
-													case "reasoning": {
-														return (
-															<Reasoning
-																key={`reasoning-${message.id}-${index}`}
-																content={part.text}
-																isLastPart={index === message.parts.length - 1}
-															/>
-														);
-													}
+														case "reasoning": {
+															return (
+																<Reasoning
+																	key={`reasoning-${message.id}-${index}`}
+																	content={
+																		part.text
+																	}
+																	isLastPart={
+																		index ===
+																		message
+																			.parts
+																			.length -
+																			1
+																	}
+																/>
+															);
+														}
 
-													case "data-node-execution-status": {
-														return (
-															<NodeExecutionStatus
-																key={`status-${message.id}-${index}`}
-															>
-																<NodeExecutionStatusHeader>
-																	<NodeExecutionStatusIcon
-																		status={part.data.status}
-																	/>
-																	<NodeExecutionStatusContent>
-																		<NodeExecutionStatusType
-																			nodeType={part.data.nodeType}
+														case "data-node-execution-status": {
+															return (
+																<NodeExecutionStatus
+																	key={`status-${message.id}-${index}`}
+																>
+																	<NodeExecutionStatusHeader>
+																		<NodeExecutionStatusIcon
+																			status={
+																				part
+																					.data
+																					.status
+																			}
 																		/>
-																		<NodeExecutionStatusBadge
-																			status={part.data.status}
-																		/>
-																	</NodeExecutionStatusContent>
-																</NodeExecutionStatusHeader>
-																{part.data.error && (
-																	<NodeExecutionStatusError>
-																		{part.data.error}
-																	</NodeExecutionStatusError>
-																)}
-															</NodeExecutionStatus>
-														);
-													}
-												}
-
-												if (
-													(part.type.startsWith("tool-") ||
-														part.type === "dynamic-tool") &&
-													"toolCallId" in part
-												) {
-													let input: unknown | undefined;
-													let output: unknown | undefined;
-													let error: string | undefined;
-
-													if (part.state === "output-error") {
-														error = part.errorText;
-														output = part.output;
-													}
-
-													if (
-														part.state === "input-streaming" ||
-														part.state === "output-error"
-													) {
-														if ("rawInput" in part && part.rawInput != null) {
-															input = part.rawInput;
-														} else if ("input" in part && part.input != null) {
-															input = part.input;
+																		<NodeExecutionStatusContent>
+																			<NodeExecutionStatusType
+																				nodeType={
+																					part
+																						.data
+																						.nodeType
+																				}
+																			/>
+																			<NodeExecutionStatusBadge
+																				status={
+																					part
+																						.data
+																						.status
+																				}
+																			/>
+																		</NodeExecutionStatusContent>
+																	</NodeExecutionStatusHeader>
+																	{part.data
+																		.error && (
+																		<NodeExecutionStatusError>
+																			{
+																				part
+																					.data
+																					.error
+																			}
+																		</NodeExecutionStatusError>
+																	)}
+																</NodeExecutionStatus>
+															);
 														}
 													}
 
-													if (part.state === "input-available") {
-														input = part.input;
+													if (
+														(part.type.startsWith(
+															"tool-",
+														) ||
+															part.type ===
+																"dynamic-tool") &&
+														"toolCallId" in part
+													) {
+														let input:
+															| unknown
+															| undefined;
+														let output:
+															| unknown
+															| undefined;
+														let error:
+															| string
+															| undefined;
+
+														if (
+															part.state ===
+															"output-error"
+														) {
+															error =
+																part.errorText;
+															output =
+																part.output;
+														}
+
+														if (
+															part.state ===
+																"input-streaming" ||
+															part.state ===
+																"output-error"
+														) {
+															if (
+																"rawInput" in
+																	part &&
+																part.rawInput !=
+																	null
+															) {
+																input =
+																	part.rawInput;
+															} else if (
+																"input" in
+																	part &&
+																part.input !=
+																	null
+															) {
+																input =
+																	part.input;
+															}
+														}
+
+														if (
+															part.state ===
+															"input-available"
+														) {
+															input = part.input;
+														}
+
+														if (
+															part.state ===
+															"output-available"
+														) {
+															input = part.input;
+															output =
+																part.output;
+														}
+
+														const toolName =
+															"toolName" in part
+																? part.toolName
+																: part.type.slice(
+																		5,
+																	);
+
+														return (
+															<ToolInvocation
+																key={
+																	part.toolCallId
+																}
+																className="w-full"
+															>
+																<ToolInvocationHeader>
+																	<ToolInvocationName
+																		name={`Used ${toolName}`}
+																		type={
+																			part.state
+																		}
+																		isError={
+																			!!error
+																		}
+																	/>
+																</ToolInvocationHeader>
+																{(input !==
+																	undefined ||
+																	output !==
+																		undefined) && (
+																	<ToolInvocationContentCollapsible>
+																		{input !==
+																			undefined && (
+																			<ToolInvocationRawData
+																				data={
+																					input
+																				}
+																				title="Arguments"
+																			/>
+																		)}
+																		{output !==
+																			undefined && (
+																			<ToolInvocationRawData
+																				data={
+																					output
+																				}
+																				title="Result"
+																			/>
+																		)}
+																	</ToolInvocationContentCollapsible>
+																)}
+															</ToolInvocation>
+														);
 													}
-
-													if (part.state === "output-available") {
-														input = part.input;
-														output = part.output;
-													}
-
-													const toolName =
-														"toolName" in part
-															? part.toolName
-															: part.type.slice(5);
-
-													return (
-														<ToolInvocation
-															key={part.toolCallId}
-															className="w-full"
-														>
-															<ToolInvocationHeader>
-																<ToolInvocationName
-																	name={`Used ${toolName}`}
-																	type={part.state}
-																	isError={!!error}
-																/>
-															</ToolInvocationHeader>
-															{(input !== undefined ||
-																output !== undefined) && (
-																<ToolInvocationContentCollapsible>
-																	{input !== undefined && (
-																		<ToolInvocationRawData
-																			data={input}
-																			title="Arguments"
-																		/>
-																	)}
-																	{output !== undefined && (
-																		<ToolInvocationRawData
-																			data={output}
-																			title="Result"
-																		/>
-																	)}
-																</ToolInvocationContentCollapsible>
-															)}
-														</ToolInvocation>
-													);
-												}
-												return null;
-											})}
+													return null;
+												},
+											)}
 										</ChatMessageContent>
 									</ChatMessageContainer>
 								</ChatMessage>
@@ -365,7 +450,10 @@ export function Chat({
 						disabled={isDisabled}
 					/>
 					<ChatInputGroupAddon align="block-end">
-						<ChatInputSubmitButton className="ml-auto" disabled={isDisabled} />
+						<ChatInputSubmitButton
+							className="ml-auto"
+							disabled={isDisabled}
+						/>
 					</ChatInputGroupAddon>
 				</ChatInput>
 			</div>
@@ -383,7 +471,9 @@ function NoChatMessages({
 	if (!template || template.suggestions.length === 0) {
 		return (
 			<div className="flex flex-col gap-2 p-2 items-center justify-center h-full">
-				<p className="text-muted-foreground text-lg">No chat messages</p>
+				<p className="text-muted-foreground text-lg">
+					No chat messages
+				</p>
 			</div>
 		);
 	}
@@ -391,10 +481,12 @@ function NoChatMessages({
 		<div className="flex flex-col gap-2 p-2 justify-end items-center h-full">
 			<ChatSuggestions>
 				<ChatSuggestionsHeader>
-					<ChatSuggestionsTitle>Try these prompts:</ChatSuggestionsTitle>
+					<ChatSuggestionsTitle>
+						Try these prompts:
+					</ChatSuggestionsTitle>
 				</ChatSuggestionsHeader>
 				<ChatSuggestionsContent>
-					{template.suggestions.map(suggestion => (
+					{template.suggestions.map((suggestion) => (
 						<ChatSuggestion
 							key={suggestion}
 							onClick={() => onSuggestionClick(suggestion)}

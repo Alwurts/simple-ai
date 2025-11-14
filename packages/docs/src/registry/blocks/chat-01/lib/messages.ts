@@ -21,8 +21,7 @@ export const INITIAL_MESSAGES: AIUIMessage[] = [
 				input: {
 					topic: "project management best practices",
 				},
-				output:
-					"Resources found: Project Initiation (defining objectives, identifying stakeholders), Planning Phase (task breakdown, timelines, responsibilities), Execution (monitoring progress), and Closure (documentation, lessons learned).",
+				output: "Resources found: Project Initiation (defining objectives, identifying stakeholders), Planning Phase (task breakdown, timelines, responsibilities), Execution (monitoring progress), and Closure (documentation, lessons learned).",
 			},
 			{
 				type: "text",
@@ -104,13 +103,16 @@ export const INITIAL_MESSAGES: AIUIMessage[] = [
 							"Git integration",
 							"Mobile apps available",
 						],
-						setup:
-							"Sprint Length: 2 weeks, Board Structure: Backlog → To Do → In Progress → Code Review → Testing → Done",
+						setup: "Sprint Length: 2 weeks, Board Structure: Backlog → To Do → In Progress → Code Review → Testing → Done",
 					},
 					alternatives: [
 						{
 							name: "ClickUp",
-							benefits: ["Cost-effective", "More flexible", "Faster setup"],
+							benefits: [
+								"Cost-effective",
+								"More flexible",
+								"Faster setup",
+							],
 						},
 					],
 				},
@@ -153,13 +155,16 @@ export const INITIAL_MESSAGES: AIUIMessage[] = [
 							"Git integration",
 							"Mobile apps available",
 						],
-						setup:
-							"Sprint Length: 2 weeks, Board Structure: Backlog → To Do → In Progress → Code Review → Testing → Done",
+						setup: "Sprint Length: 2 weeks, Board Structure: Backlog → To Do → In Progress → Code Review → Testing → Done",
 					},
 					alternatives: [
 						{
 							name: "ClickUp",
-							benefits: ["Cost-effective", "More flexible", "Faster setup"],
+							benefits: [
+								"Cost-effective",
+								"More flexible",
+								"Faster setup",
+							],
 						},
 					],
 				},

@@ -43,7 +43,8 @@ async function executeAgentNode(
 
 	for (const toolId of node.data.selectedTools) {
 		if (tools[toolId as WorkflowToolId]) {
-			agentTools[toolId as WorkflowToolId] = tools[toolId as WorkflowToolId];
+			agentTools[toolId as WorkflowToolId] =
+				tools[toolId as WorkflowToolId];
 		}
 	}
 
@@ -95,7 +96,7 @@ async function executeAgentNode(
 		accumulatedMessages.push(...response.messages);
 	}
 
-	const outgoingEdge = edges.find(edge => edge.source === node.id);
+	const outgoingEdge = edges.find((edge) => edge.source === node.id);
 	const nextNodeId = outgoingEdge ? outgoingEdge.target : null;
 
 	writer.write({

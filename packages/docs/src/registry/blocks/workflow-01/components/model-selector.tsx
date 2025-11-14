@@ -30,7 +30,7 @@ export function ModelSelector({
 				<SelectValue placeholder="Select model" />
 			</SelectTrigger>
 			<SelectContent>
-				{WORKFLOW_MODELS.map(model => {
+				{WORKFLOW_MODELS.map((model) => {
 					const Icon = ModelIcons[model];
 					return (
 						<SelectItem

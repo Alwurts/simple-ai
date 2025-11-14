@@ -14,7 +14,7 @@ export default function ChatInputDemo() {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const { value, onChange, handleSubmit } = useChatInput({
-		onSubmit: parsed => {
+		onSubmit: (parsed) => {
 			setIsLoading(true);
 			toast(parsed.content);
 			setTimeout(() => setIsLoading(false), 1000);

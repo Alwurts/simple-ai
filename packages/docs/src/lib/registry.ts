@@ -136,7 +136,7 @@ function fixFilePaths(files: z.infer<typeof registryItemSchema>["files"]) {
 	const firstFilePath = files[0].path;
 	const firstFilePathDir = path.dirname(firstFilePath);
 
-	return files.map(file => {
+	return files.map((file) => {
 		return {
 			...file,
 			path: path.relative(firstFilePathDir, file.path),
@@ -146,7 +146,8 @@ function fixFilePaths(files: z.infer<typeof registryItemSchema>["files"]) {
 }
 
 export function fixImport(content: string) {
-	const regex = /@\/(.+?)\/((?:.*?\/)?(?:components|ui|hooks|lib))\/([\w-]+)/g;
+	const regex =
+		/@\/(.+?)\/((?:.*?\/)?(?:components|ui|hooks|lib))\/([\w-]+)/g;
 
 	const replacement = (
 		match: string,
@@ -189,7 +190,9 @@ export function createFileTreeForRegistryItemFiles(
 		for (let i = 0; i < parts.length; i++) {
 			const part = parts[i];
 			const isFile = i === parts.length - 1;
-			const existingNode = currentLevel.find(node => node.name === part);
+			const existingNode = currentLevel.find(
+				(node) => node.name === part,
+			);
 
 			if (existingNode) {
 				if (isFile) {

@@ -12,11 +12,11 @@ interface EditorToolbarProps {
 }
 
 export const EditorToolbar: FC<EditorToolbarProps> = ({ actions }) => {
-	const view = useGenerationStore(state => state.view);
-	const setView = useGenerationStore(state => state.setView);
-	const setChatOpen = useGenerationStore(state => state.setChatOpen);
-	const versions = useGenerationStore(state => state.versions);
-	const currentVersion = useGenerationStore(state => state.currentVersion);
+	const view = useGenerationStore((state) => state.view);
+	const setView = useGenerationStore((state) => state.setView);
+	const setChatOpen = useGenerationStore((state) => state.setChatOpen);
+	const versions = useGenerationStore((state) => state.versions);
+	const currentVersion = useGenerationStore((state) => state.currentVersion);
 	const currentVersionData = versions[currentVersion];
 	const isGenerating = currentVersionData?.status === "generating";
 
@@ -34,7 +34,9 @@ export const EditorToolbar: FC<EditorToolbarProps> = ({ actions }) => {
 				<Code className="h-4 w-4" />
 				<Switch
 					checked={view === "preview"}
-					onCheckedChange={checked => setView(checked ? "preview" : "code")}
+					onCheckedChange={(checked) =>
+						setView(checked ? "preview" : "code")
+					}
 				/>
 				<EyeIcon className="h-4 w-4" />
 			</div>

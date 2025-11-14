@@ -122,7 +122,7 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 			}
 		}
 
-		set(state => ({
+		set((state) => ({
 			workflowExecutionState: {
 				...state.workflowExecutionState,
 				errors: workflow.errors,
@@ -130,19 +130,19 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		}));
 		return workflow;
 	},
-	onNodesChange: changes => {
+	onNodesChange: (changes) => {
 		set({
 			nodes: applyNodeChanges<FlowNode>(changes, get().nodes),
 		});
 		get().validateWorkflow();
 	},
-	onEdgesChange: changes => {
+	onEdgesChange: (changes) => {
 		set({
 			edges: applyEdgeChanges(changes, get().edges),
 		});
 		get().validateWorkflow();
 	},
-	onConnect: connection => {
+	onConnect: (connection) => {
 		const newEdge = addEdge({ ...connection, type: "status" }, get().edges);
 		const sourceNode = get().getNodeById(connection.source);
 
@@ -155,7 +155,7 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		if (sourceExecutionState?.sources) {
 			const sourceHandleData =
 				sourceExecutionState.sources[connection.sourceHandle];
-			const nodes = get().nodes.map(node => {
+			const nodes = get().nodes.map((node) => {
 				if (node.id === connection.target && connection.targetHandle) {
 					return {
 						...node,
@@ -166,14 +166,16 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 										...node.data.executionState,
 										targets: {
 											...node.data.executionState.targets,
-											[connection.targetHandle]: sourceHandleData,
+											[connection.targetHandle]:
+												sourceHandleData,
 										},
 									}
 								: {
 										status: "success",
 										timestamp: new Date().toISOString(),
 										targets: {
-											[connection.targetHandle]: sourceHandleData,
+											[connection.targetHandle]:
+												sourceHandleData,
 										},
 									},
 						},
@@ -192,8 +194,8 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		});
 		get().validateWorkflow();
 	},
-	getNodeById: nodeId => {
-		const node = get().nodes.find(node => node.id === nodeId);
+	getNodeById: (nodeId) => {
+		const node = get().nodes.find((node) => node.id === nodeId);
 		if (!node) {
 			throw new Error(`Node with id ${nodeId} not found`);
 		}
@@ -201,14 +203,14 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 	},
 	createNode(nodeType, position) {
 		const newNode = createNode(nodeType, position);
-		set(state => ({
+		set((state) => ({
 			nodes: [...state.nodes, newNode],
 		}));
 		return newNode;
 	},
 	updateNode(id, type, data) {
-		set(state => ({
-			nodes: state.nodes.map(node => {
+		set((state) => ({
+			nodes: state.nodes.map((node) => {
 				if (node.id === id && isNodeOfType(node, type)) {
 					return {
 						...node,
@@ -223,8 +225,8 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		}));
 	},
 	updateNodeExecutionState: (nodeId, state) => {
-		set(currentState => ({
-			nodes: currentState.nodes.map(node => {
+		set((currentState) => ({
+			nodes: currentState.nodes.map((node) => {
 				if (node.id === nodeId) {
 					return {
 						...node,
@@ -242,8 +244,8 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		}));
 	},
 	updateEdgeExecutionState: (edgeId, state) => {
-		set(currentState => ({
-			edges: currentState.edges.map(edge => {
+		set((currentState) => ({
+			edges: currentState.edges.map((edge) => {
 				if (edge.id === edgeId) {
 					return {
 						...edge,
@@ -262,16 +264,16 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 	},
 	deleteNode(id) {
 		set({
-			nodes: get().nodes.filter(node => node.id !== id),
+			nodes: get().nodes.filter((node) => node.id !== id),
 			edges: get().edges.filter(
-				edge => edge.source !== id && edge.target !== id,
+				(edge) => edge.source !== id && edge.target !== id,
 			),
 		});
 	},
 	addDynamicHandle(nodeId, type, handleCategory, handle) {
 		const newId = nanoid();
 		set({
-			nodes: get().nodes.map(node => {
+			nodes: get().nodes.map((node) => {
 				if (
 					node.id === nodeId &&
 					isNodeWithDynamicHandles(node) &&
@@ -304,7 +306,7 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 	},
 	removeDynamicHandle(nodeId, type, handleCategory, handleId) {
 		set({
-			nodes: get().nodes.map(node => {
+			nodes: get().nodes.map((node) => {
 				if (
 					node.id === nodeId &&
 					isNodeWithDynamicHandles(node) &&
@@ -314,7 +316,9 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 					const handles = dynamicHandles[
 						handleCategory as keyof typeof dynamicHandles
 					] as DynamicHandle[];
-					const newHandles = handles.filter(handle => handle.id !== handleId);
+					const newHandles = handles.filter(
+						(handle) => handle.id !== handleId,
+					);
 
 					return {
 						...node,
@@ -329,7 +333,7 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 				}
 				return node;
 			}),
-			edges: get().edges.filter(edge => {
+			edges: get().edges.filter((edge) => {
 				if (edge.source === nodeId && edge.sourceHandle === handleId) {
 					return false;
 				}
@@ -356,8 +360,8 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		}
 
 		// Reset execution state for all nodes
-		set(state => ({
-			nodes: state.nodes.map(node => ({
+		set((state) => ({
+			nodes: state.nodes.map((node) => ({
 				...node,
 				data: {
 					...node.data,
@@ -382,7 +386,7 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		}
 
 		// Set execution state to running
-		set(state => ({
+		set((state) => ({
 			workflowExecutionState: {
 				...state.workflowExecutionState,
 				isRunning: true,
@@ -398,16 +402,17 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 					onNodeUpdate: (nodeId, state) => {
 						updateNodeExecutionState(nodeId, state);
 					},
-					onError: error => {
+					onError: (error) => {
 						console.error("Error in execution:", error);
 						reject(error);
 					},
 					onComplete: ({ timestamp }) => {
-						set(state => ({
+						set((state) => ({
 							workflowExecutionState: {
 								...state.workflowExecutionState,
 								finishedAt: timestamp,
-								timesRun: state.workflowExecutionState.timesRun + 1,
+								timesRun:
+									state.workflowExecutionState.timesRun + 1,
 							},
 						}));
 						resolve(undefined);
@@ -424,11 +429,12 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 			return {
 				status: "error",
 				message: "Workflow execution failed",
-				error: error instanceof Error ? error : new Error(String(error)),
+				error:
+					error instanceof Error ? error : new Error(String(error)),
 			};
 		} finally {
 			// Reset execution state when done
-			set(state => ({
+			set((state) => ({
 				workflowExecutionState: {
 					...state.workflowExecutionState,
 					isRunning: false,

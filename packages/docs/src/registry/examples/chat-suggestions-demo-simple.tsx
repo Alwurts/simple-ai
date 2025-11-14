@@ -22,8 +22,10 @@ export default function ChatSuggestionsDemoSimple() {
 					<ChatSuggestionsTitle>Quick start:</ChatSuggestionsTitle>
 				</ChatSuggestionsHeader>
 				<ChatSuggestionsContent>
-					{suggestions.map(suggestion => (
-						<ChatSuggestion key={suggestion}>{suggestion}</ChatSuggestion>
+					{suggestions.map((suggestion) => (
+						<ChatSuggestion key={suggestion}>
+							{suggestion}
+						</ChatSuggestion>
 					))}
 				</ChatSuggestionsContent>
 			</ChatSuggestions>

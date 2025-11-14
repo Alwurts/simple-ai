@@ -10,8 +10,7 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 			id: "validationSystemPrompt",
 			data: {
 				config: {
-					value:
-						"You will receive a request by the user and your task is to route it to the appropiate expert.\n\nYou will ALWAYS route the ORIGINAL request to one assistant only\n\nRoute the original request without modifying any of its text\n\n- Use the blog-expert if the task is about writing blogs, or related\n\n- Use the short-form-expert if the task is about creating short form content for social media\n\n- Use the seo-web-expert if the task if about SEO optimization",
+					value: "You will receive a request by the user and your task is to route it to the appropiate expert.\n\nYou will ALWAYS route the ORIGINAL request to one assistant only\n\nRoute the original request without modifying any of its text\n\n- Use the blog-expert if the task is about writing blogs, or related\n\n- Use the short-form-expert if the task is about creating short form content for social media\n\n- Use the seo-web-expert if the task if about SEO optimization",
 				},
 			},
 			position: {
@@ -77,8 +76,7 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 			id: "97RH-yQMOC0ANhS2vFhcO",
 			data: {
 				config: {
-					value:
-						"You are an expert in creating short form content. Your task is to generate creative and well structured short content posts for instagram, twitter and others",
+					value: "You are an expert in creating short form content. Your task is to generate creative and well structured short content posts for instagram, twitter and others",
 				},
 			},
 			position: {
@@ -131,8 +129,7 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 			id: "3nEzzfbTIDDXw3WSEq4FR",
 			data: {
 				config: {
-					value:
-						"You are an expert in writing blogs. Your task is to generate creative and well structured blogs, using appropiate sections and subsections",
+					value: "You are an expert in writing blogs. Your task is to generate creative and well structured blogs, using appropiate sections and subsections",
 				},
 			},
 			position: {
@@ -163,8 +160,7 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 			id: "_4RcYkPOEDKn-hmGOAvy9",
 			data: {
 				config: {
-					value:
-						"You are an expert in Search Engine Optimization SEO. Your task is to analyze content and provide suggestions on what keywords could be better in order to improve SEO",
+					value: "You are an expert in Search Engine Optimization SEO. Your task is to analyze content and provide suggestions on what keywords could be better in order to improve SEO",
 				},
 			},
 			position: {
@@ -223,8 +219,7 @@ export const CONTENT_CREATOR_ROUTING_WORKFLOW: {
 			id: "VGFbBVUjlwdQ2cGhrCv72",
 			data: {
 				config: {
-					value:
-						"I want to create a twitter post for launching my new website simple-ai.dev",
+					value: "I want to create a twitter post for launching my new website simple-ai.dev",
 				},
 			},
 			position: {

@@ -14,9 +14,12 @@ async function captureScreenshots() {
 	const blockIds = await getAllBlockIds();
 	const blocks = clearExisting
 		? blockIds
-		: blockIds.filter(block => {
+		: blockIds.filter((block) => {
 				// Check if screenshots already exist
-				const lightPath = path.join(REGISTRY_PATH, `${block}-light.png`);
+				const lightPath = path.join(
+					REGISTRY_PATH,
+					`${block}-light.png`,
+				);
 				const darkPath = path.join(REGISTRY_PATH, `${block}-dark.png`);
 				return !existsSync(lightPath) || !existsSync(darkPath);
 			});
@@ -60,7 +63,7 @@ async function captureScreenshots() {
 			}
 
 			// Set theme and reload page
-			await page.evaluate(currentTheme => {
+			await page.evaluate((currentTheme) => {
 				localStorage.setItem("theme", currentTheme);
 			}, theme);
 
@@ -68,12 +71,14 @@ async function captureScreenshots() {
 
 			// Wait for animations to complete
 			if (block.startsWith("chart") || block.startsWith("dashboard")) {
-				await new Promise(resolve => setTimeout(resolve, 1000));
+				await new Promise((resolve) => setTimeout(resolve, 1000));
 			}
 
 			// Hide Tailwind indicator
 			await page.evaluate(() => {
-				const indicator = document.querySelector("[data-tailwind-indicator]");
+				const indicator = document.querySelector(
+					"[data-tailwind-indicator]",
+				);
 				if (indicator) {
 					indicator.remove();
 				}

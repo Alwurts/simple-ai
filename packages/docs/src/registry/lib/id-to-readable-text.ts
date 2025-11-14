@@ -9,6 +9,6 @@ export function idToReadableText(
 		.toLowerCase();
 
 	return capitalize
-		? readable.replace(/\b\w/g, l => l.toUpperCase())
+		? readable.replace(/\b\w/g, (l) => l.toUpperCase())
 		: readable;
 }

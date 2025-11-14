@@ -21,11 +21,11 @@ import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/types/w
 export interface EndNodeProps extends NodeProps<EndNodeType> {}
 
 export function EndNode({ selected, data, deletable, id }: EndNodeProps) {
-	const deleteNode = useWorkflow(state => state.deleteNode);
-	const canConnectHandle = useWorkflow(store => store.canConnectHandle);
+	const deleteNode = useWorkflow((state) => state.deleteNode);
+	const canConnectHandle = useWorkflow((store) => store.canConnectHandle);
 
 	const validationErrors =
-		data.validationErrors?.map(error => ({
+		data.validationErrors?.map((error) => ({
 			message: error.message,
 		})) || [];
 
@@ -49,7 +49,10 @@ export function EndNode({ selected, data, deletable, id }: EndNodeProps) {
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>End</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<NodeHeaderStatus status={data.status} errors={validationErrors} />
+					<NodeHeaderStatus
+						status={data.status}
+						errors={validationErrors}
+					/>
 					{deletable && (
 						<NodeHeaderAction
 							onClick={() => deleteNode(id)}

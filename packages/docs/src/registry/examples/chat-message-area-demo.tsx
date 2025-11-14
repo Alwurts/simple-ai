@@ -239,12 +239,16 @@ export default function ChatMessageAreaDemo() {
 	return (
 		<ChatMessageArea>
 			<ChatMessageAreaContent>
-				{messages.map(message => (
+				{messages.map((message) => (
 					<ChatMessage key={message.id}>
 						<ChatMessageAvatar>
-							<ChatMessageAvatarImage src={message.metadata?.member.image} />
+							<ChatMessageAvatarImage
+								src={message.metadata?.member.image}
+							/>
 							<ChatMessageAvatarFallback>
-								{message.metadata?.member.name.charAt(0).toUpperCase()}
+								{message.metadata?.member.name
+									.charAt(0)
+									.toUpperCase()}
 							</ChatMessageAvatarFallback>
 						</ChatMessageAvatar>
 
@@ -258,9 +262,12 @@ export default function ChatMessageAreaDemo() {
 
 							<ChatMessageContent>
 								{message.parts
-									.filter(part => part.type === "text")
-									.map(part => (
-										<ChatMessageMarkdown key={part.type} content={part.text} />
+									.filter((part) => part.type === "text")
+									.map((part) => (
+										<ChatMessageMarkdown
+											key={part.type}
+											content={part.text}
+										/>
 									))}
 							</ChatMessageContent>
 						</ChatMessageContainer>

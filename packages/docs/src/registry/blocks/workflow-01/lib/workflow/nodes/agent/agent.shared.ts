@@ -46,7 +46,7 @@ function validateAgentNode(
 	const errors: ValidationError[] = [];
 	const { edges } = context;
 
-	const outgoingEdges = edges.filter(e => e.source === node.id);
+	const outgoingEdges = edges.filter((e) => e.source === node.id);
 	if (outgoingEdges.length === 0) {
 		errors.push({
 			type: "invalid-node-config",

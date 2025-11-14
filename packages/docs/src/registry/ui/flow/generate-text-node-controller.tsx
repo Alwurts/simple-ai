@@ -20,10 +20,12 @@ export function GenerateTextNodeController({
 	data,
 	...props
 }: NodeProps<GenerateTextNodeController>) {
-	const updateNode = useWorkflow(state => state.updateNode);
-	const addDynamicHandle = useWorkflow(state => state.addDynamicHandle);
-	const removeDynamicHandle = useWorkflow(state => state.removeDynamicHandle);
-	const deleteNode = useWorkflow(state => state.deleteNode);
+	const updateNode = useWorkflow((state) => state.updateNode);
+	const addDynamicHandle = useWorkflow((state) => state.addDynamicHandle);
+	const removeDynamicHandle = useWorkflow(
+		(state) => state.removeDynamicHandle,
+	);
+	const deleteNode = useWorkflow((state) => state.deleteNode);
 
 	const handleModelChange = useCallback(
 		(model: Model) => {
@@ -45,7 +47,7 @@ export function GenerateTextNodeController({
 			}
 
 			const existingTool = data.dynamicHandles.tools.find(
-				tool => tool.name === name,
+				(tool) => tool.name === name,
 			);
 			if (existingTool) {
 				toast.error("Tool name already exists");
@@ -75,7 +77,7 @@ export function GenerateTextNodeController({
 			}
 
 			const existingTool = data.dynamicHandles.tools.find(
-				tool => tool.name === newName && tool.id !== toolId,
+				(tool) => tool.name === newName && tool.id !== toolId,
 			);
 			if (existingTool) {
 				toast.error("Tool name already exists");
@@ -85,7 +87,7 @@ export function GenerateTextNodeController({
 			updateNode(id, "generate-text", {
 				dynamicHandles: {
 					...data.dynamicHandles,
-					tools: data.dynamicHandles.tools.map(tool =>
+					tools: data.dynamicHandles.tools.map((tool) =>
 						tool.id === toolId
 							? {
 									...tool,

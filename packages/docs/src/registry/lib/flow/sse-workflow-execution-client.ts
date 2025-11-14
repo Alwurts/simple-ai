@@ -58,7 +58,10 @@ export class SSEWorkflowExecutionClient {
 
 							switch (data.type) {
 								case "nodeUpdate": {
-									handlers.onNodeUpdate(data.nodeId, data.executionState);
+									handlers.onNodeUpdate(
+										data.nodeId,
+										data.executionState,
+									);
 									break;
 								}
 								case "error": {
@@ -85,7 +88,9 @@ export class SSEWorkflowExecutionClient {
 				return;
 			}
 			handlers.onError(
-				error instanceof Error ? error : new Error("SSE connection failed"),
+				error instanceof Error
+					? error
+					: new Error("SSE connection failed"),
 			);
 		} finally {
 			this.disconnect();

@@ -14,7 +14,7 @@ export function CodeTabs({ children }: React.ComponentProps<typeof Tabs>) {
 	return (
 		<Tabs
 			value={installationType}
-			onValueChange={value =>
+			onValueChange={(value) =>
 				setConfig({
 					...config,
 					installationType: value as "cli" | "manual",

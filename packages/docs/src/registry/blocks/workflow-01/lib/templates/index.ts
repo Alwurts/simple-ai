@@ -25,7 +25,7 @@ export const WORKFLOW_TEMPLATES: WorkflowTemplate[] = [
 ];
 
 export function getTemplateById(id: string): WorkflowTemplate | undefined {
-	return WORKFLOW_TEMPLATES.find(template => template.id === id);
+	return WORKFLOW_TEMPLATES.find((template) => template.id === id);
 }
 
 export const DEFAULT_TEMPLATE = WORKFLOW_TEMPLATES[0];

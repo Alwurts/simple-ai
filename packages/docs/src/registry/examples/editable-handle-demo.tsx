@@ -46,7 +46,7 @@ const DynamicHandlesNode = ({ id }: NodeProps<Node>) => {
 				name,
 				description,
 			};
-			setHandles(prev => [...prev, newHandle]);
+			setHandles((prev) => [...prev, newHandle]);
 			updateNodeInternals(id);
 			return true;
 		},
@@ -55,8 +55,8 @@ const DynamicHandlesNode = ({ id }: NodeProps<Node>) => {
 
 	const handleUpdate = useCallback(
 		(handleId: string, newName: string, newDescription?: string) => {
-			setHandles(prev =>
-				prev.map(handle =>
+			setHandles((prev) =>
+				prev.map((handle) =>
 					handle.id === handleId
 						? {
 								...handle,
@@ -73,7 +73,9 @@ const DynamicHandlesNode = ({ id }: NodeProps<Node>) => {
 
 	const handleDelete = useCallback(
 		(handleId: string) => {
-			setHandles(prev => prev.filter(handle => handle.id !== handleId));
+			setHandles((prev) =>
+				prev.filter((handle) => handle.id !== handleId),
+			);
 			updateNodeInternals(id);
 		},
 		[id, updateNodeInternals],
@@ -98,7 +100,7 @@ const DynamicHandlesNode = ({ id }: NodeProps<Node>) => {
 			</EditableHandleDialog>
 
 			<div className="mt-4 space-y-2">
-				{handles.map(handle => (
+				{handles.map((handle) => (
 					<div key={handle.id} className="flex items-center gap-2">
 						<EditableHandle
 							nodeId={id}
@@ -139,16 +141,16 @@ export default function EditableHandleDemo() {
 
 	const onNodesChange = useCallback(
 		(changes: NodeChange<Node>[]) =>
-			setNodes(nds => applyNodeChanges(changes, nds)),
+			setNodes((nds) => applyNodeChanges(changes, nds)),
 		[],
 	);
 	const onEdgesChange = useCallback(
 		(changes: EdgeChange<never>[]) =>
-			setEdges(eds => applyEdgeChanges(changes, eds)),
+			setEdges((eds) => applyEdgeChanges(changes, eds)),
 		[],
 	);
 	const onConnect = useCallback(
-		(connection: Connection) => setEdges(eds => addEdge(connection, eds)),
+		(connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
 		[],
 	);
 

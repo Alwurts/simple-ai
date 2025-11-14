@@ -61,18 +61,18 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 		workflow: WorkflowDefinition,
 		nodeId: string,
 	): ProcessedData => {
-		const node = workflow.nodes.find(n => n.id === nodeId);
+		const node = workflow.nodes.find((n) => n.id === nodeId);
 		if (!node) {
 			return undefined;
 		}
 
 		const edgesConnectedToNode = workflow.edges.filter(
-			edge => edge.target === nodeId,
+			(edge) => edge.target === nodeId,
 		);
 
 		const targetsData: ProcessedData = {};
 		for (const edge of edgesConnectedToNode) {
-			const sourceNode = workflow.nodes.find(n => n.id === edge.source);
+			const sourceNode = workflow.nodes.find((n) => n.id === edge.source);
 			if (!sourceNode?.data.executionState?.sources) {
 				continue;
 			}
@@ -86,7 +86,7 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 	};
 
 	const checkBranchNodeStatus = (nodeId: string): NodeExecutionStatus => {
-		const node = context.workflow.nodes.find(n => n.id === nodeId);
+		const node = context.workflow.nodes.find((n) => n.id === nodeId);
 		if (!node) {
 			return "idle";
 		}
@@ -106,7 +106,10 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 
 		// If this node has no dependencies, check its own status
 		if (dependencies.length === 0) {
-			if (completedNodes.has(nodeId) && node.data.executionState?.sources) {
+			if (
+				completedNodes.has(nodeId) &&
+				node.data.executionState?.sources
+			) {
 				return "success";
 			}
 			return "idle";
@@ -133,14 +136,14 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 		nodeId: string,
 		handleId: string,
 	): NodeExecutionStatus => {
-		const node = context.workflow.nodes.find(n => n.id === nodeId);
+		const node = context.workflow.nodes.find((n) => n.id === nodeId);
 		if (!node) {
 			return "idle";
 		}
 
 		// Get all edges that connect to this handle
 		const incomingEdges = context.workflow.edges.filter(
-			edge => edge.target === nodeId && edge.targetHandle === handleId,
+			(edge) => edge.target === nodeId && edge.targetHandle === handleId,
 		);
 
 		// For each incoming edge, check the status of its source node and all its descendants
@@ -155,7 +158,7 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 	};
 
 	const canProcessNode = (nodeId: string) => {
-		const node = context.workflow.nodes.find(n => n.id === nodeId);
+		const node = context.workflow.nodes.find((n) => n.id === nodeId);
 		if (!node) {
 			return false;
 		}
@@ -165,19 +168,19 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 			// Get all target handles from dynamic handles
 			const targetHandles = (
 				node.data.dynamicHandles?.["template-tags"] || []
-			).map(handle => handle.id);
+			).map((handle) => handle.id);
 
 			// Check each target handle's branch status
-			const branchStatuses = targetHandles.map(handleId =>
+			const branchStatuses = targetHandles.map((handleId) =>
 				getBranchStatus(nodeId, handleId),
 			);
 
 			// Node can process if ALL branches are complete and NONE are processing
 			const allBranchesComplete = branchStatuses.every(
-				status => status === "success",
+				(status) => status === "success",
 			);
 			const hasProcessingBranch = branchStatuses.some(
-				status => status === "processing",
+				(status) => status === "processing",
 			);
 
 			return allBranchesComplete && !hasProcessingBranch;
@@ -185,19 +188,23 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 
 		// For regular nodes, check all dependencies
 		const nodeDependencies = context.workflow.dependencies[nodeId] || [];
-		return nodeDependencies.every(dep => {
+		return nodeDependencies.every((dep) => {
 			// Check if any dependency has failed
 			if (failedNodes.has(dep.node)) {
 				return false;
 			}
 			// Check if the node is completed AND the specific source handle has data
-			const sourceNode = context.workflow.nodes.find(n => n.id === dep.node);
+			const sourceNode = context.workflow.nodes.find(
+				(n) => n.id === dep.node,
+			);
 			if (!sourceNode?.data.executionState?.sources) {
 				return false;
 			}
 			const sourceHandleData =
 				sourceNode.data.executionState.sources[dep.sourceHandle];
-			return completedNodes.has(dep.node) && sourceHandleData !== undefined;
+			return (
+				completedNodes.has(dep.node) && sourceHandleData !== undefined
+			);
 		});
 	};
 
@@ -228,7 +235,10 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 				status: "error",
 				error: {
 					type: "processing-node",
-					message: error instanceof Error ? error.message : "Unknown error",
+					message:
+						error instanceof Error
+							? error.message
+							: "Unknown error",
 				},
 			});
 			console.error(error);
@@ -244,9 +254,12 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 			failedNodes.clear();
 			processingNodes.clear();
 
-			while (completedNodes.size + failedNodes.size < executionOrder.length) {
+			while (
+				completedNodes.size + failedNodes.size <
+				executionOrder.length
+			) {
 				const availableNodes = executionOrder.filter(
-					nodeId =>
+					(nodeId) =>
 						!completedNodes.has(nodeId) &&
 						!failedNodes.has(nodeId) &&
 						!processingNodes.has(nodeId) &&
@@ -255,7 +268,9 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 
 				if (availableNodes.length === 0) {
 					if (processingNodes.size > 0) {
-						await new Promise(resolve => setTimeout(resolve, 100));
+						await new Promise((resolve) =>
+							setTimeout(resolve, 100),
+						);
 						continue;
 					}
 					// If there are no available nodes and nothing is processing,
@@ -264,7 +279,7 @@ export const createWorkflowExecutionEngine = (context: ExecutionContext) => {
 					break;
 				}
 
-				const processingPromises = availableNodes.map(nodeId => {
+				const processingPromises = availableNodes.map((nodeId) => {
 					processingNodes.add(nodeId);
 					return processNode(nodeId);
 				});

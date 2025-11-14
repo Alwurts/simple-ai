@@ -51,7 +51,12 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 							category: {
 								type: "string",
 								description: "Type of support issue",
-								enum: ["technical", "billing", "general", "urgent"],
+								enum: [
+									"technical",
+									"billing",
+									"general",
+									"urgent",
+								],
 							},
 							priority: {
 								type: "string",
@@ -65,7 +70,8 @@ export const CUSTOMER_SUPPORT_WORKFLOW: {
 							},
 							requires_escalation: {
 								type: "boolean",
-								description: "Whether immediate escalation is needed",
+								description:
+									"Whether immediate escalation is needed",
 							},
 						},
 						required: [

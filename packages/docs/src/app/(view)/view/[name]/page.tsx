@@ -65,7 +65,7 @@ export async function generateStaticParams() {
 	const index = z.record(z.string(), registryItemSchema).parse(Index);
 
 	return Object.values(index)
-		.filter(block =>
+		.filter((block) =>
 			[
 				"registry:block",
 				"registry:component",
@@ -73,7 +73,7 @@ export async function generateStaticParams() {
 				"registry:internal",
 			].includes(block.type),
 		)
-		.map(block => ({
+		.map((block) => ({
 			name: block.name,
 		}));
 }

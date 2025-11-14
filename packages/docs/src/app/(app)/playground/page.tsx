@@ -78,10 +78,13 @@ export default function ChatExample() {
 					items: files,
 				}),
 			},
-			onSubmit: parsedValue => {
+			onSubmit: (parsedValue) => {
 				// Custom logic: log, send, access type-safe fields
 				console.log("Submitted parsed:", parsedValue);
-				console.log("Content with mentions as spans:", parsedValue.content);
+				console.log(
+					"Content with mentions as spans:",
+					parsedValue.content,
+				);
 				console.log("Members mentioned:", parsedValue.member); // TS-enforced
 				console.log("Files mentioned:", parsedValue.file); // TS-enforced
 			},
@@ -91,20 +94,26 @@ export default function ChatExample() {
 		<div className="max-w-2xl mx-auto p-4 w-full space-y-4">
 			<h2 className="text-lg font-semibold mb-4">Chat Input Example</h2>
 
-			<ChatInput onSubmit={handleSubmit} value={value} onChange={onChange}>
+			<ChatInput
+				onSubmit={handleSubmit}
+				value={value}
+				onChange={onChange}
+			>
 				<ChatInputMention
 					type={mentionConfigs.member.type}
 					trigger={mentionConfigs.member.trigger}
 					items={mentionConfigs.member.items}
 				>
-					{item => (
+					{(item) => (
 						<>
 							<Avatar className="h-6 w-6">
 								<AvatarImage
 									src={item.image ?? "/placeholder.jpg"}
 									alt={item.name}
 								/>
-								<AvatarFallback>{item.name[0].toUpperCase()}</AvatarFallback>
+								<AvatarFallback>
+									{item.name[0].toUpperCase()}
+								</AvatarFallback>
 							</Avatar>
 
 							<span
@@ -124,7 +133,7 @@ export default function ChatExample() {
 					trigger={mentionConfigs.file.trigger}
 					items={mentionConfigs.file.items}
 				>
-					{item => (
+					{(item) => (
 						<>
 							<FileIcon className="h-4 w-4 text-muted-foreground" />
 							<span
@@ -145,7 +154,9 @@ export default function ChatExample() {
 					>
 						<PlusIcon />
 					</InputGroupButton>
-					<InputGroupText className="ml-auto">52% used</InputGroupText>
+					<InputGroupText className="ml-auto">
+						52% used
+					</InputGroupText>
 					<Separator orientation="vertical" className="!h-6" />
 					<ChatInputSubmitButton />
 				</InputGroupAddon>
@@ -154,13 +165,17 @@ export default function ChatExample() {
 			{/* Debug output */}
 			<div className="space-y-2">
 				<div>
-					<h3 className="text-sm font-semibold mb-1">Raw TipTap JSON:</h3>
+					<h3 className="text-sm font-semibold mb-1">
+						Raw TipTap JSON:
+					</h3>
 					<pre className="text-xs bg-muted p-2 rounded overflow-auto max-h-48">
 						{JSON.stringify(value, null, 2)}
 					</pre>
 				</div>
 				<div>
-					<h3 className="text-sm font-semibold mb-1">Parsed Output:</h3>
+					<h3 className="text-sm font-semibold mb-1">
+						Parsed Output:
+					</h3>
 					<pre className="text-xs bg-muted p-2 rounded overflow-auto max-h-48">
 						{JSON.stringify(parsed, null, 2)}
 					</pre>

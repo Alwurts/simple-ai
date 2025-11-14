@@ -8,10 +8,10 @@ interface CodeEditorProps {
 }
 
 export function CodeEditor({ className }: CodeEditorProps) {
-	const versions = useGenerationStore(state => state.versions);
-	const currentVersion = useGenerationStore(state => state.currentVersion);
+	const versions = useGenerationStore((state) => state.versions);
+	const currentVersion = useGenerationStore((state) => state.currentVersion);
 	const updateCurrentCode = useGenerationStore(
-		state => state.updateCurrentCode,
+		(state) => state.updateCurrentCode,
 	);
 
 	const currentCode = versions[currentVersion]?.code ?? "";

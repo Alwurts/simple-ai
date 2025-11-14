@@ -48,7 +48,9 @@ export default function IndexPage() {
 		<div className="flex flex-1 flex-col">
 			<PageHeader>
 				<Announcement />
-				<PageHeaderHeading className="max-w-4xl">{title}</PageHeaderHeading>
+				<PageHeaderHeading className="max-w-4xl">
+					{title}
+				</PageHeaderHeading>
 				<PageHeaderDescription>{description}</PageHeaderDescription>
 				<PageActions>
 					<Button asChild size="sm">

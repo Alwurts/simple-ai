@@ -31,13 +31,21 @@ export function SiteHeader() {
 					>
 						<Link href="/">
 							<LogoIcon className="size-7" />
-							<span className="font-bold text-base">{siteConfig.name}</span>
+							<span className="font-bold text-base">
+								{siteConfig.name}
+							</span>
 						</Link>
 					</Button>
-					<MainNav items={siteConfig.navItems} className="hidden lg:flex" />
+					<MainNav
+						items={siteConfig.navItems}
+						className="hidden lg:flex"
+					/>
 					<div className="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
 						<div className="hidden w-full flex-1 md:flex md:w-auto md:flex-none">
-							<CommandMenu tree={pageTree} navItems={siteConfig.navItems} />
+							<CommandMenu
+								tree={pageTree}
+								navItems={siteConfig.navItems}
+							/>
 						</div>
 						<Separator
 							orientation="vertical"

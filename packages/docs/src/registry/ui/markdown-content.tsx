@@ -27,13 +27,21 @@ interface HighlightedPreProps extends React.HTMLAttributes<HTMLPreElement> {
 }
 
 const HighlightedPre = memo(
-	async ({ children, className, language, ...props }: HighlightedPreProps) => {
+	async ({
+		children,
+		className,
+		language,
+		...props
+	}: HighlightedPreProps) => {
 		const { codeToTokens, bundledLanguages } = await import("shiki");
 		const code = extractTextContent(children);
 
 		if (!(language in bundledLanguages)) {
 			return (
-				<pre {...props} className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}>
+				<pre
+					{...props}
+					className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}
+				>
 					<code className="whitespace-pre-wrap">{children}</code>
 				</pre>
 			);
@@ -99,7 +107,10 @@ const CodeBlock = ({
 	return (
 		<Suspense
 			fallback={
-				<pre {...props} className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}>
+				<pre
+					{...props}
+					className={cn(DEFAULT_PRE_BLOCK_CLASS, className)}
+				>
 					<code className="whitespace-pre-wrap">{children}</code>
 				</pre>
 			}
@@ -223,7 +234,10 @@ const components: Partial<Components> = {
 			{children}
 		</tr>
 	),
-	th: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
+	th: ({
+		children,
+		...props
+	}: React.HTMLAttributes<HTMLTableCellElement>) => (
 		<th
 			className="px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right"
 			{...props}
@@ -231,7 +245,10 @@ const components: Partial<Components> = {
 			{children}
 		</th>
 	),
-	td: ({ children, ...props }: React.HTMLAttributes<HTMLTableCellElement>) => (
+	td: ({
+		children,
+		...props
+	}: React.HTMLAttributes<HTMLTableCellElement>) => (
 		<td
 			className="px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right"
 			{...props}
@@ -272,7 +289,7 @@ function parseMarkdownIntoBlocks(markdown: string): string[] {
 		return [];
 	}
 	const tokens = marked.lexer(markdown);
-	return tokens.map(token => token.raw);
+	return tokens.map((token) => token.raw);
 }
 
 interface MarkdownBlockProps {
@@ -284,7 +301,10 @@ const MemoizedMarkdownBlock = memo(
 	({ content, className }: MarkdownBlockProps) => {
 		return (
 			<div className={className}>
-				<ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+				<ReactMarkdown
+					remarkPlugins={[remarkGfm]}
+					components={components}
+				>
 					{content}
 				</ReactMarkdown>
 			</div>

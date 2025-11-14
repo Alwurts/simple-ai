@@ -62,7 +62,7 @@ export default function JsxRendererStreamingDemo() {
 				setCurrentLines(jsxLines.slice(0, 1));
 				return;
 			}
-			setCurrentLines(prev => [...prev, jsxLines[prev.length]]);
+			setCurrentLines((prev) => [...prev, jsxLines[prev.length]]);
 		}, 100);
 
 		return () => clearInterval(interval);

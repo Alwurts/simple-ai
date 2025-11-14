@@ -18,8 +18,8 @@ export function TextInputNodeController({
 	data,
 	...props
 }: NodeProps<TextInputNodeController>) {
-	const updateNode = useWorkflow(state => state.updateNode);
-	const deleteNode = useWorkflow(state => state.deleteNode);
+	const updateNode = useWorkflow((state) => state.updateNode);
+	const deleteNode = useWorkflow((state) => state.deleteNode);
 
 	const handleTextChange = useCallback(
 		(value: string) => {

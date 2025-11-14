@@ -39,7 +39,7 @@ const edgeTypes: EdgeTypes = {
 
 export function Flow() {
 	const store = useWorkflow(
-		store => ({
+		(store) => ({
 			nodes: store.nodes,
 			edges: store.edges,
 			onNodesChange: store.onNodesChange,
@@ -126,7 +126,9 @@ export function Flow() {
 						store.workflowExecutionState.timesRun > 1
 					}
 				>
-					{store.workflowExecutionState.isRunning ? "Running..." : "Run Flow"}
+					{store.workflowExecutionState.isRunning
+						? "Running..."
+						: "Run Flow"}
 				</Button>
 			</Panel>
 		</ReactFlow>

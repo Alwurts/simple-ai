@@ -105,8 +105,10 @@ export function ChatInput({
 	// biome-ignore lint/suspicious/noExplicitAny: Needs to accept configs with different item types
 	const addMentionConfig = useCallback((config: MentionConfig<any>) => {
 		if (registeredTypesRef.current.has(config.type)) {
-			setMentionConfigs(prev => {
-				const existingIndex = prev.findIndex(c => c.type === config.type);
+			setMentionConfigs((prev) => {
+				const existingIndex = prev.findIndex(
+					(c) => c.type === config.type,
+				);
 				if (existingIndex >= 0) {
 					const updated = [...prev];
 					updated[existingIndex] = config;
@@ -116,7 +118,7 @@ export function ChatInput({
 			});
 		} else {
 			registeredTypesRef.current.add(config.type);
-			setMentionConfigs(prev => [...prev, config]);
+			setMentionConfigs((prev) => [...prev, config]);
 		}
 	}, []);
 
@@ -192,7 +194,7 @@ export function ChatInputEditor({
 			KeyboardShortcuts.configure({
 				getOnEnter: () => onEnterRef.current,
 			}),
-			...mentionConfigs.map(config => {
+			...mentionConfigs.map((config) => {
 				const MentionPlugin = MentionExtension.extend({
 					name: `${config.type}-mention`,
 				});
@@ -364,7 +366,7 @@ const GenericMentionList = forwardRef(
 		}, []);
 
 		const upHandler = useCallback(() => {
-			setSelectedIndex(prevIndex => {
+			setSelectedIndex((prevIndex) => {
 				const newIndex = (prevIndex + items.length - 1) % items.length;
 				scrollToItem(newIndex);
 				return newIndex;
@@ -372,7 +374,7 @@ const GenericMentionList = forwardRef(
 		}, [items.length, scrollToItem]);
 
 		const downHandler = useCallback(() => {
-			setSelectedIndex(prevIndex => {
+			setSelectedIndex((prevIndex) => {
 				const newIndex = (prevIndex + 1) % items.length;
 				scrollToItem(newIndex);
 				return newIndex;
@@ -422,7 +424,7 @@ const GenericMentionList = forwardRef(
 								selectedIndex === index && "bg-accent",
 							)}
 							onClick={() => selectItem(index)}
-							ref={el => {
+							ref={(el) => {
 								if (el) {
 									itemRefs.current[index] = el;
 								}
@@ -450,7 +452,7 @@ function getMentionSuggestion<T extends BaseMentionItem>(
 ) {
 	return {
 		items: ({ query }: { query: string }) => {
-			return config.items.filter(item =>
+			return config.items.filter((item) =>
 				item.name.toLowerCase().startsWith(query.toLowerCase()),
 			);
 		},
@@ -475,7 +477,8 @@ function getMentionSuggestion<T extends BaseMentionItem>(
 					}
 
 					popup = tippy(document.body, {
-						getReferenceClientRect: props.clientRect as () => DOMRect,
+						getReferenceClientRect:
+							props.clientRect as () => DOMRect,
 						appendTo: () => document.body,
 						content: component.element,
 						showOnCreate: true,
@@ -492,7 +495,8 @@ function getMentionSuggestion<T extends BaseMentionItem>(
 					}
 
 					popup.setProps({
-						getReferenceClientRect: props.clientRect as () => DOMRect,
+						getReferenceClientRect:
+							props.clientRect as () => DOMRect,
 					});
 				},
 				onKeyDown: (props: { event: KeyboardEvent }) => {
@@ -757,7 +761,7 @@ export function parseContent<Configs extends readonly MentionConfig<any>[]>(
 			content += "\n";
 		} else if (node.type?.endsWith("-mention")) {
 			const mentionType = node.type.slice(0, -8);
-			const config = configs.find(c => c.type === mentionType);
+			const config = configs.find((c) => c.type === mentionType);
 			if (config) {
 				const attrs = node.attrs ?? {};
 				const id = attrs.id as string;
@@ -768,10 +772,12 @@ export function parseContent<Configs extends readonly MentionConfig<any>[]>(
 				if (!mentions[mentionType]) {
 					mentions[mentionType] = [];
 				}
-				const item = config.items.find(i => i.id === id);
+				const item = config.items.find((i) => i.id === id);
 				if (
 					item &&
-					!mentions[mentionType].some(existing => existing.id === id)
+					!mentions[mentionType].some(
+						(existing) => existing.id === id,
+					)
 				) {
 					mentions[mentionType].push(item);
 				}

@@ -10,8 +10,7 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "articleInput",
 			data: {
 				config: {
-					value:
-						"AI Agents and Digital Identity Verification\n\nIn a surprising move, Sam Altman's World, formerly known as Worldcoin, is exploring linking AI agents to digital identities. This initiative could significantly alter how AI agents operate online by providing a \"proof of human\" verification, ensuring that these agents act on behalf of verified individuals. This development comes as platforms increasingly integrate with OpenAI's agents, suggesting a future where AI interactions online could be more secure and personalized",
+					value: "AI Agents and Digital Identity Verification\n\nIn a surprising move, Sam Altman's World, formerly known as Worldcoin, is exploring linking AI agents to digital identities. This initiative could significantly alter how AI agents operate online by providing a \"proof of human\" verification, ensuring that these agents act on behalf of verified individuals. This development comes as platforms increasingly integrate with OpenAI's agents, suggesting a future where AI interactions online could be more secure and personalized",
 				},
 			},
 			position: {
@@ -26,8 +25,7 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "summarySystemPrompt",
 			data: {
 				config: {
-					value:
-						"You take in as input a news article and summarize it into a very short paragraph.\n",
+					value: "You take in as input a news article and summarize it into a very short paragraph.\n",
 				},
 			},
 			position: {
@@ -58,8 +56,7 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "validationSystemPrompt",
 			data: {
 				config: {
-					value:
-						"You will receive an original article and a summarized version of the article. Your task is to compare the summarized version to the original to see if it contains all the main information, and if it's clear and well-written.\nIf the summary is not valid, you should return the failResponse tool. If the summary is valid, you should return the summary as the validResponse tool. You should ALWAYS! return the summary to either the valid or fail response",
+					value: "You will receive an original article and a summarized version of the article. Your task is to compare the summarized version to the original to see if it contains all the main information, and if it's clear and well-written.\nIf the summary is not valid, you should return the failResponse tool. If the summary is valid, you should return the summary as the validResponse tool. You should ALWAYS! return the summary to either the valid or fail response",
 				},
 			},
 			position: {
@@ -85,7 +82,8 @@ export const NEWS_SUMMARY_WORKFLOW: {
 						},
 						{
 							name: "validResponse",
-							description: "Use this if the article summary is valid",
+							description:
+								"Use this if the article summary is valid",
 							id: "77ew80gSbzRhvwhf3fnpa",
 						},
 					],
@@ -143,8 +141,7 @@ export const NEWS_SUMMARY_WORKFLOW: {
 			id: "97RH-yQMOC0ANhS2vFhcO",
 			data: {
 				config: {
-					value:
-						"You will receive a summary of an article and you are to generate a post for:\n\n- Instagram\n- Twitter",
+					value: "You will receive a summary of an article and you are to generate a post for:\n\n- Instagram\n- Twitter",
 				},
 			},
 			position: {

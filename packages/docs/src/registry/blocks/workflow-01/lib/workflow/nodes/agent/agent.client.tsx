@@ -53,11 +53,11 @@ import {
 export interface AgentNodeProps extends NodeProps<AgentNodeType> {}
 
 export function AgentNode({ selected, data, deletable, id }: AgentNodeProps) {
-	const deleteNode = useWorkflow(state => state.deleteNode);
-	const canConnectHandle = useWorkflow(store => store.canConnectHandle);
+	const deleteNode = useWorkflow((state) => state.deleteNode);
+	const canConnectHandle = useWorkflow((store) => store.canConnectHandle);
 
 	const validationErrors =
-		data.validationErrors?.map(error => ({
+		data.validationErrors?.map((error) => ({
 			message: error.message,
 		})) || [];
 
@@ -86,7 +86,10 @@ export function AgentNode({ selected, data, deletable, id }: AgentNodeProps) {
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>Agent</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<NodeHeaderStatus status={data.status} errors={validationErrors} />
+					<NodeHeaderStatus
+						status={data.status}
+						errors={validationErrors}
+					/>
 					{deletable && (
 						<NodeHeaderAction
 							onClick={() => deleteNode(id)}
@@ -120,7 +123,7 @@ export function AgentNode({ selected, data, deletable, id }: AgentNodeProps) {
 }
 
 export function AgentNodePanel({ node }: { node: AgentNodeType }) {
-	const updateNode = useWorkflow(state => state.updateNode);
+	const updateNode = useWorkflow((state) => state.updateNode);
 	const [advancedOpen, setAdvancedOpen] = useState(false);
 
 	return (
@@ -138,7 +141,7 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 						<Input
 							id={`name-${node.id}`}
 							value={node.data.name}
-							onChange={e => {
+							onChange={(e) => {
 								updateNode({
 									id: node.id,
 									nodeType: "agent",
@@ -160,7 +163,7 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 						</label>
 						<ModelSelector
 							value={node.data.model as workflowModelID}
-							onChange={model => {
+							onChange={(model) => {
 								updateNode({
 									id: node.id,
 									nodeType: "agent",
@@ -172,26 +175,39 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 						/>
 					</div>
 					<div>
-						<div className="block text-xs font-medium mb-2">Tools</div>
+						<div className="block text-xs font-medium mb-2">
+							Tools
+						</div>
 						<div className="space-y-2 rounded-md border border-input p-3 bg-background">
-							{WORKFLOW_TOOLS.map(toolId => {
-								const isSelected = node.data.selectedTools.includes(toolId);
+							{WORKFLOW_TOOLS.map((toolId) => {
+								const isSelected =
+									node.data.selectedTools.includes(toolId);
 
 								return (
-									<div key={toolId} className="flex items-start gap-2">
+									<div
+										key={toolId}
+										className="flex items-start gap-2"
+									>
 										<Checkbox
 											id={`tool-${toolId}-${node.id}`}
 											checked={isSelected}
-											onCheckedChange={checked => {
+											onCheckedChange={(checked) => {
 												const newSelectedTools = checked
-													? [...node.data.selectedTools, toolId]
-													: node.data.selectedTools.filter(t => t !== toolId);
+													? [
+															...node.data
+																.selectedTools,
+															toolId,
+														]
+													: node.data.selectedTools.filter(
+															(t) => t !== toolId,
+														);
 
 												updateNode({
 													id: node.id,
 													nodeType: "agent",
 													data: {
-														selectedTools: newSelectedTools,
+														selectedTools:
+															newSelectedTools,
 													},
 												});
 											}}
@@ -204,7 +220,9 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 												{idToReadableText(toolId)}
 											</span>
 											<span className="text-xs text-muted-foreground">
-												{workflowTools[toolId].description ?? "No description"}
+												{workflowTools[toolId]
+													.description ??
+													"No description"}
 											</span>
 										</label>
 									</div>
@@ -242,18 +260,22 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 							</SelectTrigger>
 							<SelectContent>
 								<SelectItem value="text">Text</SelectItem>
-								<SelectItem value="structured">Structured</SelectItem>
+								<SelectItem value="structured">
+									Structured
+								</SelectItem>
 							</SelectContent>
 						</Select>
 					</div>
 					{node.data.sourceType.type === "structured" && (
 						<div>
 							<div className="flex items-center gap-2 mb-1">
-								<div className="text-xs font-medium">JSON Schema</div>
+								<div className="text-xs font-medium">
+									JSON Schema
+								</div>
 							</div>
 							<JsonSchemaEditorDialog
 								schema={node.data.sourceType.schema}
-								onSave={schema => {
+								onSave={(schema) => {
 									updateNode({
 										id: node.id,
 										nodeType: "agent",
@@ -268,7 +290,9 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 							/>
 							<div className="mt-2">
 								{node.data.sourceType.schema ? (
-									<JsonSchemaPreview schema={node.data.sourceType.schema} />
+									<JsonSchemaPreview
+										schema={node.data.sourceType.schema}
+									/>
 								) : (
 									<JsonSchemaPreviewEmpty />
 								)}
@@ -285,7 +309,7 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 						<Textarea
 							id={`prompt-${node.id}`}
 							value={node.data.systemPrompt}
-							onChange={e => {
+							onChange={(e) => {
 								updateNode({
 									id: node.id,
 									nodeType: "agent",
@@ -322,7 +346,7 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 							<Switch
 								id={`hideResponse-${node.id}`}
 								checked={node.data.hideResponseInChat ?? false}
-								onCheckedChange={checked => {
+								onCheckedChange={(checked) => {
 									updateNode({
 										id: node.id,
 										nodeType: "agent",
@@ -342,8 +366,10 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 							</label>
 							<Switch
 								id={`excludeConversation-${node.id}`}
-								checked={node.data.excludeFromConversation ?? false}
-								onCheckedChange={checked => {
+								checked={
+									node.data.excludeFromConversation ?? false
+								}
+								onCheckedChange={(checked) => {
 									updateNode({
 										id: node.id,
 										nodeType: "agent",
@@ -367,9 +393,16 @@ export function AgentNodePanel({ node }: { node: AgentNodeType }) {
 								min="1"
 								max="50"
 								value={node.data.maxSteps ?? 5}
-								onChange={e => {
-									const value = Number.parseInt(e.target.value, 10);
-									if (!Number.isNaN(value) && value >= 1 && value <= 50) {
+								onChange={(e) => {
+									const value = Number.parseInt(
+										e.target.value,
+										10,
+									);
+									if (
+										!Number.isNaN(value) &&
+										value >= 1 &&
+										value <= 50
+									) {
 										updateNode({
 											id: node.id,
 											nodeType: "agent",

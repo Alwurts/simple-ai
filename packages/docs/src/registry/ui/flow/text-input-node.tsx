@@ -65,7 +65,7 @@ export function TextInputNode({
 			<div className="p-2 flex-1 overflow-auto flex flex-col gap-4">
 				<Textarea
 					value={data.config.value || ""}
-					onChange={e => onTextChange?.(e.target.value)}
+					onChange={(e) => onTextChange?.(e.target.value)}
 					className="w-full flex-1 resize-none nodrag nopan nowheel"
 					placeholder="Enter your text here..."
 				/>

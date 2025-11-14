@@ -18,7 +18,7 @@ export function VisualizeTextNodeController({
 	data,
 	...props
 }: NodeProps<VisualizeTextNodeController>) {
-	const deleteNode = useWorkflow(state => state.deleteNode);
+	const deleteNode = useWorkflow((state) => state.deleteNode);
 
 	const handleDeleteNode = useCallback(() => {
 		deleteNode(id);

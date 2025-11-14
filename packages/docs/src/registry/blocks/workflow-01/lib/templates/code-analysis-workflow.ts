@@ -50,7 +50,8 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 							properties: {
 								language: {
 									type: "string",
-									description: "The programming language of the code",
+									description:
+										"The programming language of the code",
 									enum: [
 										"typescript",
 										"javascript",
@@ -69,7 +70,8 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 								},
 								framework: {
 									type: "string",
-									description: "Framework or library used (if any)",
+									description:
+										"Framework or library used (if any)",
 								},
 								complexity: {
 									type: "string",
@@ -78,7 +80,8 @@ export const CODE_ANALYSIS_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } =
 								},
 								has_errors: {
 									type: "boolean",
-									description: "Whether the code has obvious errors",
+									description:
+										"Whether the code has obvious errors",
 								},
 							},
 							required: ["language", "complexity", "has_errors"],

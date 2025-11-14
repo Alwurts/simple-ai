@@ -16,7 +16,7 @@ import * as React from "react"
 
 export const Index: Record<string, any> = {`;
 	for (const item of registry.items) {
-		const resolveFiles = item.files?.map(file => `registry/${file.path}`);
+		const resolveFiles = item.files?.map((file) => `registry/${file.path}`);
 		if (!resolveFiles) {
 			continue;
 		}
@@ -31,26 +31,26 @@ export const Index: Record<string, any> = {`;
     description: "${item.description ?? ""}",
     type: "${item.type}",
     registryDependencies: ${JSON.stringify(item.registryDependencies)},
-    files: [${item.files?.map(file => {
-			const filePath = `./src/registry/${typeof file === "string" ? file : file.path}`;
-			const resolvedFilePath = path.resolve(filePath);
-			return typeof file === "string"
-				? `"${resolvedFilePath}"`
-				: `{
+    files: [${item.files?.map((file) => {
+		const filePath = `./src/registry/${typeof file === "string" ? file : file.path}`;
+		const resolvedFilePath = path.resolve(filePath);
+		return typeof file === "string"
+			? `"${resolvedFilePath}"`
+			: `{
       path: "${filePath}",
       type: "${file.type}",
       target: "${file.target ?? ""}"
     }`;
-		})}],
+	})}],
     component: ${
-			componentPath
-				? `React.lazy(async () => {
+		componentPath
+			? `React.lazy(async () => {
       const mod = await import("${componentPath}")
       const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
       return { default: mod.default || mod[exportName] }
     })`
-				: "null"
-		},
+			: "null"
+	},
     categories: ${JSON.stringify(item.categories)},
     meta: ${JSON.stringify(item.meta)},
   },`;
@@ -73,8 +73,8 @@ async function buildRegistryJsonFile() {
 	// 1. Fix the path for registry items.
 	const fixedRegistry = {
 		...registry,
-		items: registry.items.map(item => {
-			const files = item.files?.map(file => {
+		items: registry.items.map((item) => {
+			const files = item.files?.map((file) => {
 				return {
 					...file,
 					path: `./src/registry/${file.path}`,
@@ -109,10 +109,12 @@ async function buildRegistryJsonFile() {
 async function buildRegistry() {
 	return new Promise((resolve, reject) => {
 		// Use local shadcn copy.
-		const process = exec(`npx shadcn build registry.json --output ./public/r`);
+		const process = exec(
+			`npx shadcn build registry.json --output ./public/r`,
+		);
 		//const process = exec(`pnpm dlx shadcn build registry.json --output ../www/public/r`);
 
-		process.on("exit", code => {
+		process.on("exit", (code) => {
 			if (code === 0) {
 				resolve(undefined);
 			} else {
@@ -126,7 +128,7 @@ async function buildBlocksIndex() {
 	const { getAllBlocks } = await import("../lib/blocks");
 	const blocks = await getAllBlocks(["registry:block"]);
 
-	const payload = blocks.map(block => ({
+	const payload = blocks.map((block) => ({
 		name: block.name,
 		description: block.description,
 		categories: block.categories,

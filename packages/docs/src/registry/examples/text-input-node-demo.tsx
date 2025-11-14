@@ -32,7 +32,7 @@ const TextInputNodeController = ({ id, data, ...props }: NodeProps<Node>) => {
 			}}
 			{...props}
 			type="text-input"
-			onTextChange={value => setValue(value)}
+			onTextChange={(value) => setValue(value)}
 			onDeleteNode={() => {}}
 		/>
 	);
@@ -60,16 +60,16 @@ export default function ResizableNodeDemo() {
 
 	const onNodesChange = useCallback(
 		(changes: NodeChange<Node>[]) =>
-			setNodes(nds => applyNodeChanges(changes, nds)),
+			setNodes((nds) => applyNodeChanges(changes, nds)),
 		[],
 	);
 	const onEdgesChange = useCallback(
 		(changes: EdgeChange<never>[]) =>
-			setEdges(eds => applyEdgeChanges(changes, eds)),
+			setEdges((eds) => applyEdgeChanges(changes, eds)),
 		[],
 	);
 	const onConnect = useCallback(
-		(connection: Connection) => setEdges(eds => addEdge(connection, eds)),
+		(connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
 		[],
 	);
 	return (

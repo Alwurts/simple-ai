@@ -57,13 +57,18 @@ export default function PersonaGenerator() {
 					AI Persona Generator
 				</h4>
 				<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-					Generate detailed user and product personas for your business using
-					AI. Fill in the details below or try a random example to get started.
+					Generate detailed user and product personas for your
+					business using AI. Fill in the details below or try a random
+					example to get started.
 				</p>
 			</div>
 
 			<div className="flex justify-end">
-				<Button variant="outline" onClick={handleRandomize} className="group">
+				<Button
+					variant="outline"
+					onClick={handleRandomize}
+					className="group"
+				>
 					<span className="mr-2 group-hover:animate-spin">🎲</span>
 					Try Random Example
 				</Button>
@@ -104,8 +109,8 @@ export default function PersonaGenerator() {
 					<div className="space-y-2">
 						<Label htmlFor="targetAudience">Target Audience</Label>
 						<p className="text-sm text-muted-foreground">
-							Describe your ideal customers including their age, occupation,
-							interests, and needs.
+							Describe your ideal customers including their age,
+							occupation, interests, and needs.
 						</p>
 						<Textarea
 							id="targetAudience"
@@ -121,10 +126,12 @@ export default function PersonaGenerator() {
 					</div>
 
 					<div className="space-y-2">
-						<Label htmlFor="productDescription">Product Description</Label>
+						<Label htmlFor="productDescription">
+							Product Description
+						</Label>
 						<p className="text-sm text-muted-foreground">
-							Describe what your product or service does and the main problems
-							it solves.
+							Describe what your product or service does and the
+							main problems it solves.
 						</p>
 						<Textarea
 							id="productDescription"

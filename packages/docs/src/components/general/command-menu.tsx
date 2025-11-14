@@ -60,7 +60,10 @@ export function CommandMenu({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Needed for the command
 	const handlePageHighlight = useCallback(
-		(isComponent: boolean, item: { url: string; name?: React.ReactNode }) => {
+		(
+			isComponent: boolean,
+			item: { url: string; name?: React.ReactNode },
+		) => {
 			if (isComponent) {
 				const componentName = item.url.split("/").pop();
 				setSelectedType("component");
@@ -78,7 +81,11 @@ export function CommandMenu({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Needed for the command
 	const handleBlockHighlight = useCallback(
-		(block: { name: string; description: string; categories: string[] }) => {
+		(block: {
+			name: string;
+			description: string;
+			categories: string[];
+		}) => {
 			setSelectedType("block");
 			setCopyPayload({
 				command: `${packageManager} dlx shadcn@latest add @simple-ai/${block.name}`,
@@ -97,7 +104,8 @@ export function CommandMenu({
 		const down = (e: KeyboardEvent) => {
 			if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
 				if (
-					(e.target instanceof HTMLElement && e.target.isContentEditable) ||
+					(e.target instanceof HTMLElement &&
+						e.target.isContentEditable) ||
 					e.target instanceof HTMLInputElement ||
 					e.target instanceof HTMLTextAreaElement ||
 					e.target instanceof HTMLSelectElement
@@ -106,14 +114,15 @@ export function CommandMenu({
 				}
 
 				e.preventDefault();
-				setOpen(open => !open);
+				setOpen((open) => !open);
 			}
 
 			if (e.key === "c" && (e.metaKey || e.ctrlKey)) {
 				runCommand(() => {
 					if (
 						copyPayload &&
-						(selectedType === "block" || selectedType === "component")
+						(selectedType === "block" ||
+							selectedType === "component")
 					) {
 						copyToClipboardWithMeta(copyPayload.command, {
 							name: "copy_npm_command",
@@ -142,7 +151,9 @@ export function CommandMenu({
 					onClick={() => setOpen(true)}
 					{...props}
 				>
-					<span className="hidden lg:inline-flex">Search documentation...</span>
+					<span className="hidden lg:inline-flex">
+						Search documentation...
+					</span>
 					<span className="inline-flex lg:hidden">Search...</span>
 					<div className="absolute top-1.5 right-1.5 hidden gap-1 sm:flex">
 						<KbdGroup>
@@ -158,13 +169,19 @@ export function CommandMenu({
 			>
 				<DialogHeader className="sr-only">
 					<DialogTitle>Search documentation...</DialogTitle>
-					<DialogDescription>Search for a command to run...</DialogDescription>
+					<DialogDescription>
+						Search for a command to run...
+					</DialogDescription>
 				</DialogHeader>
 				<Command
 					className="**:data-[slot=command-input-wrapper]:bg-input/50 **:data-[slot=command-input-wrapper]:border-input rounded-none bg-transparent **:data-[slot=command-input]:!h-9 **:data-[slot=command-input]:py-0 **:data-[slot=command-input-wrapper]:mb-0 **:data-[slot=command-input-wrapper]:!h-9 **:data-[slot=command-input-wrapper]:rounded-md **:data-[slot=command-input-wrapper]:border"
 					filter={(value, search, keywords) => {
 						const extendValue = `${value} ${keywords?.join(" ") || ""}`;
-						if (extendValue.toLowerCase().includes(search.toLowerCase())) {
+						if (
+							extendValue
+								.toLowerCase()
+								.includes(search.toLowerCase())
+						) {
 							return 1;
 						}
 						return 0;
@@ -180,17 +197,23 @@ export function CommandMenu({
 								heading="Pages"
 								className="!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1"
 							>
-								{navItems.map(item => (
+								{navItems.map((item) => (
 									<CommandMenuItem
 										key={item.href}
 										value={`Navigation ${item.label}`}
-										keywords={["nav", "navigation", item.label.toLowerCase()]}
+										keywords={[
+											"nav",
+											"navigation",
+											item.label.toLowerCase(),
+										]}
 										onHighlight={() => {
 											setSelectedType("page");
 											setCopyPayload(null);
 										}}
 										onSelect={() => {
-											runCommand(() => router.push(item.href));
+											runCommand(() =>
+												router.push(item.href),
+											);
 										}}
 									>
 										<ArrowRightIcon />
@@ -199,16 +222,19 @@ export function CommandMenu({
 								))}
 							</CommandGroup>
 						)}
-						{tree.children.map(group => (
+						{tree.children.map((group) => (
 							<CommandGroup
 								key={group.$id}
 								heading={group.name}
 								className="!p-0 [&_[cmdk-group-heading]]:scroll-mt-16 [&_[cmdk-group-heading]]:!p-3 [&_[cmdk-group-heading]]:!pb-1"
 							>
 								{group.type === "folder" &&
-									group.children.map(item => {
+									group.children.map((item) => {
 										if (item.type === "page") {
-											const isComponent = item.url.includes("/components/");
+											const isComponent =
+												item.url.includes(
+													"/components/",
+												);
 
 											return (
 												<CommandMenuItem
@@ -218,12 +244,23 @@ export function CommandMenu({
 															? `${group.name} ${item.name}`
 															: ""
 													}
-													keywords={isComponent ? ["component"] : undefined}
+													keywords={
+														isComponent
+															? ["component"]
+															: undefined
+													}
 													onHighlight={() =>
-														handlePageHighlight(isComponent, item)
+														handlePageHighlight(
+															isComponent,
+															item,
+														)
 													}
 													onSelect={() => {
-														runCommand(() => router.push(item.url));
+														runCommand(() =>
+															router.push(
+																item.url,
+															),
+														);
 													}}
 												>
 													{isComponent ? (
@@ -244,7 +281,7 @@ export function CommandMenu({
 								heading="Blocks"
 								className="!p-0 [&_[cmdk-group-heading]]:!p-3"
 							>
-								{blocks.map(block => (
+								{blocks.map((block) => (
 									<CommandMenuItem
 										key={block.name}
 										value={block.name}
@@ -288,9 +325,14 @@ export function CommandMenu({
 					</div>
 					{copyPayload && (
 						<>
-							<Separator orientation="vertical" className="!h-4" />
+							<Separator
+								orientation="vertical"
+								className="!h-4"
+							/>
 							<div className="flex items-center gap-1">
-								<CommandMenuKbd>{isMac ? "⌘" : "Ctrl"}</CommandMenuKbd>
+								<CommandMenuKbd>
+									{isMac ? "⌘" : "Ctrl"}
+								</CommandMenuKbd>
 								<CommandMenuKbd>C</CommandMenuKbd>
 								{copyPayload.label}
 							</div>
@@ -314,8 +356,8 @@ function CommandMenuItem({
 }) {
 	const ref = React.useRef<HTMLDivElement>(null);
 
-	useMutationObserver(ref, mutations => {
-		mutations.forEach(mutation => {
+	useMutationObserver(ref, (mutations) => {
+		mutations.forEach((mutation) => {
 			if (
 				mutation.type === "attributes" &&
 				mutation.attributeName === "aria-selected" &&

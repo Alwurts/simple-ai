@@ -14,7 +14,7 @@ function executeStartNode(
 		text: "start",
 	};
 
-	const outgoingEdge = edges.find(edge => edge.source === node.id);
+	const outgoingEdge = edges.find((edge) => edge.source === node.id);
 	const nextNodeId = outgoingEdge ? outgoingEdge.target : null;
 
 	writer.write({

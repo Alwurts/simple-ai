@@ -52,7 +52,8 @@ export const WIKIPEDIA_RESEARCH_WORKFLOW: {
 							},
 							articles: {
 								type: "array",
-								description: "List of researched articles with their content",
+								description:
+									"List of researched articles with their content",
 								items: {
 									type: "object",
 									properties: {
@@ -62,18 +63,21 @@ export const WIKIPEDIA_RESEARCH_WORKFLOW: {
 										},
 										url: {
 											type: "string",
-											description: "Wikipedia article URL",
+											description:
+												"Wikipedia article URL",
 										},
 										summary: {
 											type: "string",
-											description: "Key information extracted from the article",
+											description:
+												"Key information extracted from the article",
 										},
 										key_facts: {
 											type: "array",
 											items: {
 												type: "string",
 											},
-											description: "Important facts, dates, or concepts",
+											description:
+												"Important facts, dates, or concepts",
 										},
 									},
 									required: ["title", "summary"],
@@ -84,7 +88,8 @@ export const WIKIPEDIA_RESEARCH_WORKFLOW: {
 								items: {
 									type: "string",
 								},
-								description: "Main topics covered in the research",
+								description:
+									"Main topics covered in the research",
 							},
 							relevance_score: {
 								type: "number",

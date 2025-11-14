@@ -65,10 +65,14 @@ export function CodeBlockCommand({
 			<Tabs
 				value={packageManager}
 				className="gap-0"
-				onValueChange={value => {
+				onValueChange={(value) => {
 					setConfig({
 						...config,
-						packageManager: value as "pnpm" | "npm" | "yarn" | "bun",
+						packageManager: value as
+							| "pnpm"
+							| "npm"
+							| "yarn"
+							| "bun",
 					});
 				}}
 			>
@@ -93,7 +97,11 @@ export function CodeBlockCommand({
 				<div className="no-scrollbar overflow-x-auto">
 					{Object.entries(tabs).map(([key, value]) => {
 						return (
-							<TabsContent key={key} value={key} className="mt-0 px-4 py-3.5">
+							<TabsContent
+								key={key}
+								value={key}
+								className="mt-0 px-4 py-3.5"
+							>
 								<pre>
 									<code
 										className="relative font-mono text-sm leading-none"

@@ -16,7 +16,8 @@ export function useTextareaResize(
 		if (textArea) {
 			// Get the line height to calculate minimum height based on rows
 			const computedStyle = window.getComputedStyle(textArea);
-			const lineHeight = Number.parseInt(computedStyle.lineHeight, 10) || 20;
+			const lineHeight =
+				Number.parseInt(computedStyle.lineHeight, 10) || 20;
 			const padding =
 				Number.parseInt(computedStyle.paddingTop, 10) +
 				Number.parseInt(computedStyle.paddingBottom, 10);

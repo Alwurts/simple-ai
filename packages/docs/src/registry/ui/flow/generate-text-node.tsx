@@ -164,21 +164,27 @@ export function GenerateTextNode({
 			<div className="border-t border-border mt-2">
 				<div>
 					<div className="flex items-center justify-between py-2 px-4 bg-muted">
-						<span className="text-sm font-medium">Tool outputs</span>
+						<span className="text-sm font-medium">
+							Tool outputs
+						</span>
 						<EditableHandleDialog
 							variant="create"
 							onSave={handleCreateTool}
 							align="end"
 							showDescription
 						>
-							<Button variant="outline" size="sm" className="h-7 px-2">
+							<Button
+								variant="outline"
+								size="sm"
+								className="h-7 px-2"
+							>
 								<Plus className="h-4 w-4 mr-1" />
 								New tool output
 							</Button>
 						</EditableHandleDialog>
 					</div>
 					<div className="flex flex-col">
-						{data.dynamicHandles.tools.map(tool => (
+						{data.dynamicHandles.tools.map((tool) => (
 							<EditableHandle
 								key={tool.id}
 								nodeId={id}

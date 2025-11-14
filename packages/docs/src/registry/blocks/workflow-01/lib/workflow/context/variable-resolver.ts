@@ -39,7 +39,7 @@ export function getPotentialInputSchemas(
 	edges: FlowEdge[],
 ): InputSource[] {
 	const incomingEdges = edges.filter(
-		edge => edge.target === targetNodeId && edge.targetHandle === "input",
+		(edge) => edge.target === targetNodeId && edge.targetHandle === "input",
 	);
 
 	if (incomingEdges.length === 0) {
@@ -49,7 +49,7 @@ export function getPotentialInputSchemas(
 	const inputSources: InputSource[] = [];
 
 	for (const edge of incomingEdges) {
-		const sourceNode = nodes.find(node => node.id === edge.source);
+		const sourceNode = nodes.find((node) => node.id === edge.source);
 
 		if (!sourceNode) {
 			continue;
@@ -97,7 +97,7 @@ export function getUnionOfVariables(
 	}
 
 	// Extract variables from each source
-	const variablesBySource = inputSources.map(source => {
+	const variablesBySource = inputSources.map((source) => {
 		if (source.schema) {
 			return {
 				sourceNodeId: source.nodeId,
@@ -204,7 +204,10 @@ function convertParsedToVariableInfo(
 		};
 
 		if (parsed.type === "object" && parsed.properties) {
-			variable.children = convertParsedToVariableInfo(parsed.properties, path);
+			variable.children = convertParsedToVariableInfo(
+				parsed.properties,
+				path,
+			);
 		}
 
 		if (parsed.isArray && parsed.properties) {

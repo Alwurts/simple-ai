@@ -6,7 +6,8 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
 	console.log("Hello from the generate route");
 	const data = await req.json();
-	const { prompt, currentCode }: { prompt: string; currentCode: string } = data;
+	const { prompt, currentCode }: { prompt: string; currentCode: string } =
+		data;
 
 	console.log(prompt);
 	console.log(currentCode);

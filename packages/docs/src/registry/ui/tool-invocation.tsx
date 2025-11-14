@@ -84,7 +84,9 @@ export function ToolInvocationContent({
 				</span>
 			</div>
 
-			<div className={cn("px-4 py-3 space-y-4", className)}>{children}</div>
+			<div className={cn("px-4 py-3 space-y-4", className)}>
+				{children}
+			</div>
 		</div>
 	);
 }
@@ -106,7 +108,9 @@ export function ToolInvocationContentCollapsible({
 	return (
 		<Collapsible
 			open={open}
-			onOpenChange={controlledOpen !== undefined ? undefined : setInternalOpen}
+			onOpenChange={
+				controlledOpen !== undefined ? undefined : setInternalOpen
+			}
 		>
 			<CollapsibleTrigger className="w-full px-4 py-2 text-left border-b bg-muted/30 hover:bg-muted/50 transition-colors">
 				<div className="flex items-center justify-between">
@@ -120,7 +124,9 @@ export function ToolInvocationContentCollapsible({
 			</CollapsibleTrigger>
 
 			<CollapsibleContent>
-				<div className={cn("px-4 py-3 space-y-4", className)}>{children}</div>
+				<div className={cn("px-4 py-3 space-y-4", className)}>
+					{children}
+				</div>
 			</CollapsibleContent>
 		</Collapsible>
 	);
@@ -189,7 +195,11 @@ export function ToolInvocationLoadingIcon({
 				/>
 			</circle>
 
-			<circle cx={bottomRightPos.x} cy={bottomRightPos.y} r={sphereRadius}>
+			<circle
+				cx={bottomRightPos.x}
+				cy={bottomRightPos.y}
+				r={sphereRadius}
+			>
 				<animateMotion
 					path={path3to1}
 					dur={duration}

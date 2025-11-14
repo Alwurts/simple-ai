@@ -20,7 +20,10 @@ function ChatSuggestionsHeader({ className, ...props }: ComponentProps<"div">) {
 function ChatSuggestionsTitle({ className, ...props }: ComponentProps<"p">) {
 	return (
 		<p
-			className={cn("text-sm font-medium text-muted-foreground", className)}
+			className={cn(
+				"text-sm font-medium text-muted-foreground",
+				className,
+			)}
 			{...props}
 		/>
 	);

@@ -52,7 +52,7 @@ function validateWaitNode(
 		}
 	}
 
-	const incomingEdges = edges.filter(e => e.target === node.id);
+	const incomingEdges = edges.filter((e) => e.target === node.id);
 	if (incomingEdges.length === 0) {
 		errors.push({
 			type: "invalid-node-config",
@@ -69,7 +69,7 @@ function validateWaitNode(
 		});
 	}
 
-	const outgoingEdges = edges.filter(e => e.source === node.id);
+	const outgoingEdges = edges.filter((e) => e.source === node.id);
 	if (outgoingEdges.length === 0) {
 		errors.push({
 			type: "invalid-node-config",

@@ -20,7 +20,7 @@ function getReachableNodeIds(
 	nodes: FlowNode[],
 	edges: FlowEdge[],
 ): Set<string> {
-	const startNode = nodes.find(node => isNodeOfType(node, "start"));
+	const startNode = nodes.find((node) => isNodeOfType(node, "start"));
 	if (!startNode) {
 		return new Set<string>();
 	}
@@ -37,7 +37,7 @@ function getReachableNodeIds(
 
 		reachable.add(nodeId);
 
-		const outgoingEdges = edges.filter(e => e.source === nodeId);
+		const outgoingEdges = edges.filter((e) => e.source === nodeId);
 		for (const edge of outgoingEdges) {
 			if (!reachable.has(edge.target)) {
 				queue.push(edge.target);
@@ -54,7 +54,7 @@ function getReachableNodeIds(
  */
 function getReachableNodes(nodes: FlowNode[], edges: FlowEdge[]): FlowNode[] {
 	const reachableIds = getReachableNodeIds(nodes, edges);
-	return nodes.filter(node => reachableIds.has(node.id));
+	return nodes.filter((node) => reachableIds.has(node.id));
 }
 
 /**
@@ -121,8 +121,8 @@ export function isValidConnection({
 	nodes: FlowNode[];
 	edges: FlowEdge[];
 }): boolean {
-	const sourceNode = nodes.find(n => n.id === sourceNodeId);
-	const targetNode = nodes.find(n => n.id === targetNodeId);
+	const sourceNode = nodes.find((n) => n.id === sourceNodeId);
+	const targetNode = nodes.find((n) => n.id === targetNodeId);
 
 	if (!sourceNode || !targetNode) {
 		return false;
@@ -145,7 +145,7 @@ export function isValidConnection({
 	}
 
 	const existingSourceEdge = edges.find(
-		e => e.source === sourceNodeId && e.sourceHandle === sourceHandle,
+		(e) => e.source === sourceNodeId && e.sourceHandle === sourceHandle,
 	);
 	if (existingSourceEdge) {
 		return false;
@@ -166,7 +166,7 @@ export function canConnectHandle(params: {
 	edges: FlowEdge[];
 }): boolean {
 	const { nodeId, handleId, type, nodes, edges } = params;
-	const node = nodes.find(n => n.id === nodeId);
+	const node = nodes.find((n) => n.id === nodeId);
 
 	if (!node) {
 		return true;
@@ -186,7 +186,7 @@ export function canConnectHandle(params: {
 
 	if (type === "source") {
 		const existingEdge = edges.find(
-			e => e.source === nodeId && e.sourceHandle === handleId,
+			(e) => e.source === nodeId && e.sourceHandle === handleId,
 		);
 		if (existingEdge) {
 			return false;
@@ -202,7 +202,7 @@ export function canConnectHandle(params: {
 function validateGraphStructure(nodes: FlowNode[]): ValidationError[] {
 	const errors: ValidationError[] = [];
 
-	const startNodes = nodes.filter(node => isNodeOfType(node, "start"));
+	const startNodes = nodes.filter((node) => isNodeOfType(node, "start"));
 	if (startNodes.length === 0) {
 		errors.push({
 			type: "no-start-node",
@@ -219,7 +219,7 @@ function validateGraphStructure(nodes: FlowNode[]): ValidationError[] {
 		});
 	}
 
-	const endNodes = nodes.filter(node => isNodeOfType(node, "end"));
+	const endNodes = nodes.filter((node) => isNodeOfType(node, "end"));
 	if (endNodes.length === 0) {
 		errors.push({
 			type: "no-end-node",
@@ -252,7 +252,7 @@ function validateEdgeConstraints(edges: FlowEdge[]): ValidationError[] {
 				type: "multiple-outgoing-from-source-handle",
 				severity: "error",
 				message: `Node ${sourceId} handle "${sourceHandle}" has ${edgeGroup.length} outgoing connections (maximum 1 allowed)`,
-				edges: edgeGroup.map(e => ({
+				edges: edgeGroup.map((e) => ({
 					id: e.id,
 					source: e.source,
 					target: e.target,
@@ -307,7 +307,7 @@ function validateNoCycles(
 	const recursionStack = new Set<string>();
 	const edgePath: FlowEdge[] = [];
 
-	const startNode = nodes.find(node => isNodeOfType(node, "start"));
+	const startNode = nodes.find((node) => isNodeOfType(node, "start"));
 	if (!startNode) {
 		return errors;
 	}
@@ -316,12 +316,12 @@ function validateNoCycles(
 		visited.add(nodeId);
 		recursionStack.add(nodeId);
 
-		const node = nodes.find(n => n.id === nodeId);
+		const node = nodes.find((n) => n.id === nodeId);
 		if (!node) {
 			return;
 		}
 
-		const outgoingEdges = edges.filter(e => e.source === nodeId);
+		const outgoingEdges = edges.filter((e) => e.source === nodeId);
 
 		for (const edge of outgoingEdges) {
 			edgePath.push(edge);
@@ -330,15 +330,15 @@ function validateNoCycles(
 				dfs(edge.target);
 			} else if (recursionStack.has(edge.target)) {
 				const cycleStartIndex = edgePath.findIndex(
-					e => e.target === edge.target,
+					(e) => e.target === edge.target,
 				);
 				const cycleEdges = edgePath.slice(cycleStartIndex);
 
 				errors.push({
 					type: "cycle",
 					severity: "error",
-					message: `Cycle detected in workflow involving nodes: ${cycleEdges.map(e => e.source).join(" → ")} → ${edge.target}`,
-					edges: cycleEdges.map(e => ({
+					message: `Cycle detected in workflow involving nodes: ${cycleEdges.map((e) => e.source).join(" → ")} → ${edge.target}`,
+					edges: cycleEdges.map((e) => ({
 						id: e.id,
 						source: e.source,
 						target: e.target,
@@ -368,11 +368,13 @@ function validateReachability(
 	reachableNodes: FlowNode[],
 ): ValidationError[] {
 	const errors: ValidationError[] = [];
-	const reachableIds = new Set(reachableNodes.map(n => n.id));
+	const reachableIds = new Set(reachableNodes.map((n) => n.id));
 
 	const unreachableNodes = allNodes
-		.filter(node => !reachableIds.has(node.id) && !isNodeOfType(node, "note"))
-		.map(node => ({ id: node.id }));
+		.filter(
+			(node) => !reachableIds.has(node.id) && !isNodeOfType(node, "note"),
+		)
+		.map((node) => ({ id: node.id }));
 
 	if (unreachableNodes.length > 0) {
 		errors.push({
@@ -402,7 +404,7 @@ function getAffectedNodeIds(error: ValidationError): string[] {
 			return [error.condition.nodeId];
 
 		case "unreachable-node":
-			return error.nodes.map(n => n.id);
+			return error.nodes.map((n) => n.id);
 
 		case "cycle":
 		case "multiple-outgoing-from-source-handle":
@@ -434,7 +436,7 @@ function getAffectedEdgeIds(error: ValidationError): string[] {
 		case "cycle":
 		case "multiple-outgoing-from-source-handle":
 		case "multiple-sources-for-target-handle":
-			return error.edges.map(e => e.id);
+			return error.edges.map((e) => e.id);
 
 		default:
 			return [];
@@ -448,7 +450,7 @@ export function getErrorsForNode(
 	nodeId: string,
 	errors: ValidationError[],
 ): ValidationError[] {
-	return errors.filter(error => getAffectedNodeIds(error).includes(nodeId));
+	return errors.filter((error) => getAffectedNodeIds(error).includes(nodeId));
 }
 
 /**
@@ -458,5 +460,5 @@ export function getErrorsForEdge(
 	edgeId: string,
 	errors: ValidationError[],
 ): ValidationError[] {
-	return errors.filter(error => getAffectedEdgeIds(error).includes(edgeId));
+	return errors.filter((error) => getAffectedEdgeIds(error).includes(edgeId));
 }

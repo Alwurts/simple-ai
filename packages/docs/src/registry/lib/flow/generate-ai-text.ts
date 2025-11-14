@@ -32,14 +32,15 @@ function mapToolsForAI(
 	tools: GenerateTextNode["data"]["dynamicHandles"]["tools"],
 ) {
 	return Object.fromEntries(
-		tools.map(toolToMap => [
+		tools.map((toolToMap) => [
 			toolToMap.name,
 			{
 				description: toolToMap.description,
 				inputSchema: z.object({
 					toolValue: z.string(),
 				}),
-				execute: async ({ toolValue }: { toolValue: string }) => toolValue,
+				execute: async ({ toolValue }: { toolValue: string }) =>
+					toolValue,
 			},
 		]),
 	);
@@ -72,8 +73,10 @@ export async function generateAIText({
 
 	let toolResults: ToolResult[] = [];
 	if (tools.length > 0 && result.toolResults) {
-		toolResults = result.toolResults.map(step => {
-			const originalTool = tools.find(tool => tool.name === step.toolName);
+		toolResults = result.toolResults.map((step) => {
+			const originalTool = tools.find(
+				(tool) => tool.name === step.toolName,
+			);
 			return {
 				id: originalTool?.id || "",
 				name: step.toolName,

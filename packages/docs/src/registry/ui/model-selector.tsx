@@ -37,7 +37,7 @@ export function ModelSelector({
 				<SelectValue placeholder="Select model" />
 			</SelectTrigger>
 			<SelectContent>
-				{MODELS.map(model => {
+				{MODELS.map((model) => {
 					const Icon = ModelIcons[model];
 					return (
 						<SelectItem

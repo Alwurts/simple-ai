@@ -23,7 +23,11 @@ export async function BlockDisplay({ name }: { name: string }) {
 	]);
 
 	return (
-		<BlockViewer item={item} tree={tree} highlightedFiles={highlightedFiles}>
+		<BlockViewer
+			item={item}
+			tree={tree}
+			highlightedFiles={highlightedFiles}
+		>
 			<ComponentPreview
 				name={item.name}
 				hideCode
@@ -53,7 +57,7 @@ const getCachedFileTree = React.cache(
 const getCachedHighlightedFiles = React.cache(
 	async (files: z.infer<typeof registryItemFileSchema>[]) => {
 		return await Promise.all(
-			files.map(async file => ({
+			files.map(async (file) => ({
 				...file,
 				highlightedContent: await highlightCode(file.content ?? ""),
 			})),

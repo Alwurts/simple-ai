@@ -16,7 +16,7 @@ export function MainNav({
 
 	return (
 		<nav className={cn("items-center gap-0.5", className)} {...props}>
-			{items.map(item => (
+			{items.map((item) => (
 				<Button key={item.href} variant="ghost" asChild size="sm">
 					<Link
 						href={item.href}

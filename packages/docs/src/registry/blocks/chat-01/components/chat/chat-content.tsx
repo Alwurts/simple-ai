@@ -62,10 +62,12 @@ function NoChatMessages({
 		<div className="flex flex-col gap-2 p-2 justify-end items-center h-full">
 			<ChatSuggestions>
 				<ChatSuggestionsHeader>
-					<ChatSuggestionsTitle>Try these prompts:</ChatSuggestionsTitle>
+					<ChatSuggestionsTitle>
+						Try these prompts:
+					</ChatSuggestionsTitle>
 				</ChatSuggestionsHeader>
 				<ChatSuggestionsContent>
-					{DEFAULT_CHAT_SUGGESTIONS.map(suggestion => (
+					{DEFAULT_CHAT_SUGGESTIONS.map((suggestion) => (
 						<ChatSuggestion
 							key={suggestion}
 							onClick={() => onSuggestionClick(suggestion)}
@@ -98,7 +100,7 @@ export function ChatContent({
 
 	// Use the new hook with custom onSubmit
 	const { value, onChange, handleSubmit } = useChatInput({
-		onSubmit: parsedValue => {
+		onSubmit: (parsedValue) => {
 			// Custom logic: log, send, access type-safe fields
 			console.log("Submitted parsed:", parsedValue);
 
@@ -115,7 +117,7 @@ export function ChatContent({
 				<ChatMessageAreaContent className="pt-6">
 					{messages.length === 0 ? (
 						<NoChatMessages
-							onSuggestionClick={suggestion => {
+							onSuggestionClick={(suggestion) => {
 								sendMessage({
 									role: "user",
 									parts: [{ type: "text", text: suggestion }],
@@ -123,8 +125,9 @@ export function ChatContent({
 							}}
 						/>
 					) : (
-						messages.map(message => {
-							const userName = message.role === "user" ? "You" : "Assistant";
+						messages.map((message) => {
+							const userName =
+								message.role === "user" ? "You" : "Assistant";
 							return (
 								<ChatMessage key={message.id}>
 									<ChatMessageActions>
@@ -145,100 +148,150 @@ export function ChatContent({
 
 									<ChatMessageContainer>
 										<ChatMessageHeader>
-											<ChatMessageAuthor>{userName}</ChatMessageAuthor>
-											<ChatMessageTimestamp createdAt={new Date()} />
+											<ChatMessageAuthor>
+												{userName}
+											</ChatMessageAuthor>
+											<ChatMessageTimestamp
+												createdAt={new Date()}
+											/>
 										</ChatMessageHeader>
 
 										<ChatMessageContent>
-											{message.parts.map((part, index) => {
-												if (part.type === "text") {
-													return (
-														<ChatMessageMarkdown
-															key={`${message.id}-text-${index}`}
-															content={part.text}
-														/>
-													);
-												}
-
-												if (part.type === "reasoning") {
-													return (
-														<Reasoning
-															key={`reasoning-${message.id}-${index}`}
-															content={part.text}
-															isLastPart={index === message.parts.length - 1}
-														/>
-													);
-												}
-
-												if (part.type.startsWith("tool-")) {
-													if (!("toolCallId" in part) || !("state" in part)) {
-														return null;
+											{message.parts.map(
+												(part, index) => {
+													if (part.type === "text") {
+														return (
+															<ChatMessageMarkdown
+																key={`${message.id}-text-${index}`}
+																content={
+																	part.text
+																}
+															/>
+														);
 													}
 
-													const toolPart = part as {
-														type: string;
-														toolCallId: string;
-														state:
-															| "input-streaming"
-															| "input-available"
-															| "output-available"
-															| "output-error";
-														input?: unknown;
-														output?: unknown;
-														errorText?: string;
-													};
+													if (
+														part.type ===
+														"reasoning"
+													) {
+														return (
+															<Reasoning
+																key={`reasoning-${message.id}-${index}`}
+																content={
+																	part.text
+																}
+																isLastPart={
+																	index ===
+																	message
+																		.parts
+																		.length -
+																		1
+																}
+															/>
+														);
+													}
 
-													const hasInput =
-														toolPart.input != null &&
-														toolPart.input !== undefined;
-													const hasOutput =
-														toolPart.output != null &&
-														toolPart.output !== undefined;
+													if (
+														part.type.startsWith(
+															"tool-",
+														)
+													) {
+														if (
+															!(
+																"toolCallId" in
+																part
+															) ||
+															!("state" in part)
+														) {
+															return null;
+														}
 
-													const toolName = toolPart.type.slice(5);
-													return (
-														<ToolInvocation
-															key={toolPart.toolCallId}
-															className="w-full"
-														>
-															<ToolInvocationHeader>
-																<ToolInvocationName
-																	name={toolName}
-																	type={toolPart.state}
-																	isError={toolPart.state === "output-error"}
-																/>
-															</ToolInvocationHeader>
-															{(hasInput ||
-																hasOutput ||
-																toolPart.errorText) && (
-																<ToolInvocationContentCollapsible>
-																	{hasInput && (
-																		<ToolInvocationRawData
-																			data={toolPart.input}
-																			title="Arguments"
-																		/>
-																	)}
-																	{toolPart.errorText && (
-																		<ToolInvocationRawData
-																			data={{
-																				error: toolPart.errorText,
-																			}}
-																			title="Error"
-																		/>
-																	)}
-																	{hasOutput && (
-																		<ToolInvocationRawData
-																			data={toolPart.output}
-																			title="Result"
-																		/>
-																	)}
-																</ToolInvocationContentCollapsible>
-															)}
-														</ToolInvocation>
-													);
-												}
-												return null;
-											})}
+														const toolPart =
+															part as {
+																type: string;
+																toolCallId: string;
+																state:
+																	| "input-streaming"
+																	| "input-available"
+																	| "output-available"
+																	| "output-error";
+																input?: unknown;
+																output?: unknown;
+																errorText?: string;
+															};
+
+														const hasInput =
+															toolPart.input !=
+																null &&
+															toolPart.input !==
+																undefined;
+														const hasOutput =
+															toolPart.output !=
+																null &&
+															toolPart.output !==
+																undefined;
+
+														const toolName =
+															toolPart.type.slice(
+																5,
+															);
+														return (
+															<ToolInvocation
+																key={
+																	toolPart.toolCallId
+																}
+																className="w-full"
+															>
+																<ToolInvocationHeader>
+																	<ToolInvocationName
+																		name={
+																			toolName
+																		}
+																		type={
+																			toolPart.state
+																		}
+																		isError={
+																			toolPart.state ===
+																			"output-error"
+																		}
+																	/>
+																</ToolInvocationHeader>
+																{(hasInput ||
+																	hasOutput ||
+																	toolPart.errorText) && (
+																	<ToolInvocationContentCollapsible>
+																		{hasInput && (
+																			<ToolInvocationRawData
+																				data={
+																					toolPart.input
+																				}
+																				title="Arguments"
+																			/>
+																		)}
+																		{toolPart.errorText && (
+																			<ToolInvocationRawData
+																				data={{
+																					error: toolPart.errorText,
+																				}}
+																				title="Error"
+																			/>
+																		)}
+																		{hasOutput && (
+																			<ToolInvocationRawData
+																				data={
+																					toolPart.output
+																				}
+																				title="Result"
+																			/>
+																		)}
+																	</ToolInvocationContentCollapsible>
+																)}
+															</ToolInvocation>
+														);
+													}
+													return null;
+												},
+											)}
 										</ChatMessageContent>
 									</ChatMessageContainer>
 								</ChatMessage>

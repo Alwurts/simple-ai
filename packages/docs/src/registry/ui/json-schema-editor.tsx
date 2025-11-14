@@ -159,7 +159,9 @@ function convertToStandardJSONSchema(
 				const nestedProperties: Record<string, unknown> = {};
 				const nestedRequired: string[] = [];
 
-				for (const [name, nestedProp] of Object.entries(prop.properties)) {
+				for (const [name, nestedProp] of Object.entries(
+					prop.properties,
+				)) {
 					nestedProperties[name] = convertProperty(nestedProp);
 					if (nestedProp.isRequired) {
 						nestedRequired.push(name);
@@ -187,7 +189,9 @@ function convertToStandardJSONSchema(
 				const nestedProperties: Record<string, unknown> = {};
 				const nestedRequired: string[] = [];
 
-				for (const [name, nestedProp] of Object.entries(prop.properties)) {
+				for (const [name, nestedProp] of Object.entries(
+					prop.properties,
+				)) {
 					nestedProperties[name] = convertProperty(nestedProp);
 					if (nestedProp.isRequired) {
 						nestedRequired.push(name);
@@ -262,9 +266,13 @@ function convertFromStandardJSONSchema(
 
 		if (parsed.properties) {
 			internal.properties = {};
-			const requiredArray = Array.isArray(prop.required) ? prop.required : [];
+			const requiredArray = Array.isArray(prop.required)
+				? prop.required
+				: [];
 
-			for (const [name, nestedParsed] of Object.entries(parsed.properties)) {
+			for (const [name, nestedParsed] of Object.entries(
+				parsed.properties,
+			)) {
 				internal.properties[name] = convertProperty(
 					nestedParsed as unknown as Record<string, unknown>,
 					requiredArray.includes(name),
@@ -281,13 +289,17 @@ function convertFromStandardJSONSchema(
 	};
 
 	if (schema.properties && typeof schema.properties === "object") {
-		const requiredArray = Array.isArray(schema.required) ? schema.required : [];
+		const requiredArray = Array.isArray(schema.required)
+			? schema.required
+			: [];
 
 		for (const [name, prop] of Object.entries(
 			schema.properties as Record<string, unknown>,
 		)) {
 			if (typeof prop === "object" && prop !== null) {
-				const converted = convertProperty(prop as Record<string, unknown>);
+				const converted = convertProperty(
+					prop as Record<string, unknown>,
+				);
 				converted.isRequired = requiredArray.includes(name);
 				result.properties[name] = converted;
 			}
@@ -438,13 +450,16 @@ export function JsonSchemaEditor({
 				</div>
 			</DialogHeader>
 			<div className="space-y-4">
-				<label htmlFor="schema-description" className="text-sm font-medium">
+				<label
+					htmlFor="schema-description"
+					className="text-sm font-medium"
+				>
 					Schema Description
 				</label>
 				<Input
 					id="schema-description"
 					value={schemaDescription}
-					onChange={e => setSchemaDescription(e.target.value)}
+					onChange={(e) => setSchemaDescription(e.target.value)}
 					placeholder="Overall schema description (optional)"
 					className="w-full"
 				/>
@@ -456,8 +471,12 @@ export function JsonSchemaEditor({
 							key={property.id}
 							name={name}
 							property={property}
-							onUpdate={updated => handleUpdateProperty(name, updated)}
-							onRename={newName => handleRenameProperty(name, newName)}
+							onUpdate={(updated) =>
+								handleUpdateProperty(name, updated)
+							}
+							onRename={(newName) =>
+								handleRenameProperty(name, newName)
+							}
 							onDelete={() => handleDeleteProperty(name)}
 							onAddProperty={handleAddProperty}
 							level={0}
@@ -599,7 +618,7 @@ function JsonSchemaEditorPropertyRow({
 			>
 				<Input
 					value={name}
-					onChange={e => {
+					onChange={(e) => {
 						onRename(e.target.value);
 					}}
 					className="flex-1 min-w-0 h-8"
@@ -608,7 +627,7 @@ function JsonSchemaEditorPropertyRow({
 
 				<Input
 					value={property.description || ""}
-					onChange={e => {
+					onChange={(e) => {
 						onUpdate({
 							...property,
 							description: e.target.value,
@@ -620,11 +639,12 @@ function JsonSchemaEditorPropertyRow({
 
 				<Select
 					value={property.type}
-					onValueChange={newType => {
-						const updated: JsonSchemaEditorInternalSchemaProperty = {
-							...property,
-							type: newType as JsonSchemaEditorJSONSchemaType,
-						};
+					onValueChange={(newType) => {
+						const updated: JsonSchemaEditorInternalSchemaProperty =
+							{
+								...property,
+								type: newType as JsonSchemaEditorJSONSchemaType,
+							};
 
 						if (newType === "object" && !property.properties) {
 							updated.properties = {};
@@ -641,7 +661,7 @@ function JsonSchemaEditorPropertyRow({
 						<SelectValue placeholder="Type" />
 					</SelectTrigger>
 					<SelectContent>
-						{SCHEMA_TYPES.map(type => (
+						{SCHEMA_TYPES.map((type) => (
 							<SelectItem key={type} value={type}>
 								{type}
 							</SelectItem>
@@ -681,17 +701,25 @@ function JsonSchemaEditorPropertyRow({
 			</div>
 
 			{property.type === "enum" && (
-				<div className="py-2" style={{ paddingLeft: `${level * 20 + 12}px` }}>
+				<div
+					className="py-2"
+					style={{ paddingLeft: `${level * 20 + 12}px` }}
+				>
 					<div className="text-xs font-medium mb-2 text-muted-foreground">
 						Enum Values:
 					</div>
 					<div className="space-y-1 mb-2 ml-4">
 						{(property.enumValues || []).map((value, index) => (
-							<div key={`enum-${value}`} className="flex items-center gap-2">
+							<div
+								key={`enum-${value}`}
+								className="flex items-center gap-2"
+							>
 								<Input
 									value={value}
-									onChange={e => {
-										const newEnumValues = [...(property.enumValues || [])];
+									onChange={(e) => {
+										const newEnumValues = [
+											...(property.enumValues || []),
+										];
 										newEnumValues[index] = e.target.value;
 										onUpdate({
 											...property,
@@ -707,9 +735,9 @@ function JsonSchemaEditorPropertyRow({
 									onClick={() => {
 										onUpdate({
 											...property,
-											enumValues: (property.enumValues || []).filter(
-												(_, i) => i !== index,
-											),
+											enumValues: (
+												property.enumValues || []
+											).filter((_, i) => i !== index),
 										});
 									}}
 								>
@@ -725,7 +753,10 @@ function JsonSchemaEditorPropertyRow({
 							onClick={() => {
 								onUpdate({
 									...property,
-									enumValues: [...(property.enumValues || []), ""],
+									enumValues: [
+										...(property.enumValues || []),
+										"",
+									],
 								});
 							}}
 							className="h-7 px-2 text-xs"
@@ -739,22 +770,32 @@ function JsonSchemaEditorPropertyRow({
 
 			{isNested && canNest && (
 				<div>
-					{Object.entries(property.properties || {}).map(([propName, prop]) => (
-						<JsonSchemaEditorPropertyRow
-							key={prop.id}
-							name={propName}
-							property={prop}
-							onUpdate={updated =>
-								handleUpdateNestedProperty(propName, updated)
-							}
-							onRename={newName =>
-								handleRenameNestedProperty(propName, newName)
-							}
-							onDelete={() => handleDeleteNestedProperty(propName)}
-							onAddProperty={onAddProperty}
-							level={level + 1}
-						/>
-					))}
+					{Object.entries(property.properties || {}).map(
+						([propName, prop]) => (
+							<JsonSchemaEditorPropertyRow
+								key={prop.id}
+								name={propName}
+								property={prop}
+								onUpdate={(updated) =>
+									handleUpdateNestedProperty(
+										propName,
+										updated,
+									)
+								}
+								onRename={(newName) =>
+									handleRenameNestedProperty(
+										propName,
+										newName,
+									)
+								}
+								onDelete={() =>
+									handleDeleteNestedProperty(propName)
+								}
+								onAddProperty={onAddProperty}
+								level={level + 1}
+							/>
+						),
+					)}
 
 					<Button
 						onClick={handleAddNestedProperty}
@@ -899,7 +940,7 @@ export function JsonSchemaPreview({
 						No properties defined
 					</div>
 				) : (
-					properties.map(property => (
+					properties.map((property) => (
 						<JsonSchemaPreviewPropertyRow
 							key={property.name}
 							property={property}
@@ -938,7 +979,9 @@ function JsonSchemaPreviewPropertyRow({
 			>
 				<div className="flex-1 text-left min-w-0">
 					<div className="flex items-center gap-2">
-						<span className="font-mono font-semibold">{property.name}</span>
+						<span className="font-mono font-semibold">
+							{property.name}
+						</span>
 						{property.isRequired && (
 							<span className="text-red-500 text-[10px]">*</span>
 						)}
@@ -965,7 +1008,7 @@ function JsonSchemaPreviewPropertyRow({
 			</div>
 			{property.properties && property.properties.length > 0 && (
 				<div>
-					{property.properties.map(nestedProp => (
+					{property.properties.map((nestedProp) => (
 						<JsonSchemaPreviewPropertyRow
 							key={nestedProp.name}
 							property={nestedProp}

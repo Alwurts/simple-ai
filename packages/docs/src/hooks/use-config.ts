@@ -10,10 +10,10 @@ const useConfigStore = create<
 	Config & { setConfig: (config: Partial<Config>) => void }
 >()(
 	persist(
-		set => ({
+		(set) => ({
 			packageManager: "pnpm",
 			installationType: "cli",
-			setConfig: config => set(state => ({ ...state, ...config })),
+			setConfig: (config) => set((state) => ({ ...state, ...config })),
 		}),
 		{
 			name: "config",

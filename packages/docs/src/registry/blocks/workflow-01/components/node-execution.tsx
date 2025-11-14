@@ -46,7 +46,10 @@ export function NodeExecutionStatusIcon({
 		case "processing":
 			return (
 				<Play
-					className={cn("size-3.5 text-blue-500 animate-pulse", className)}
+					className={cn(
+						"size-3.5 text-blue-500 animate-pulse",
+						className,
+					)}
 					{...props}
 				/>
 			);
@@ -156,7 +159,10 @@ export function NodeExecutionStatusType({
 	capitalize?: boolean;
 }) {
 	return (
-		<span className={cn("text-xs text-muted-foreground", className)} {...props}>
+		<span
+			className={cn("text-xs text-muted-foreground", className)}
+			{...props}
+		>
 			{idToReadableText(nodeType, { capitalize })} node
 		</span>
 	);

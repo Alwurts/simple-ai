@@ -180,7 +180,8 @@ export const WAIT_DEMO_WORKFLOW: { nodes: FlowNode[]; edges: FlowEdge[] } = {
 export const WAIT_DEMO_TEMPLATE = {
 	id: "wait-demo",
 	name: "Wait Node Demo",
-	description: "Demonstrates workflow timing control with delay functionality",
+	description:
+		"Demonstrates workflow timing control with delay functionality",
 	category: "Examples",
 	nodes: WAIT_DEMO_WORKFLOW.nodes,
 	edges: WAIT_DEMO_WORKFLOW.edges,

@@ -77,10 +77,10 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		set({ nodes: nodes, edges });
 		get().validateWorkflow();
 	},
-	onNodesChange: changes => {
-		const filteredChanges = changes.filter(change => {
+	onNodesChange: (changes) => {
+		const filteredChanges = changes.filter((change) => {
 			if (change.type === "remove") {
-				const node = get().nodes.find(n => n.id === change.id);
+				const node = get().nodes.find((n) => n.id === change.id);
 				if (node?.type === "start") {
 					return false;
 				}
@@ -94,28 +94,28 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 
 		// Only validate on meaningful structural changes
 		const shouldValidate = changes.some(
-			change => change.type === "add" || change.type === "remove",
+			(change) => change.type === "add" || change.type === "remove",
 		);
 
 		if (shouldValidate) {
 			get().validateWorkflow();
 		}
 	},
-	onEdgesChange: changes => {
+	onEdgesChange: (changes) => {
 		set({
 			edges: applyEdgeChanges(changes, get().edges),
 		});
 
 		// Only validate on structural edge changes
 		const shouldValidate = changes.some(
-			change => change.type === "add" || change.type === "remove",
+			(change) => change.type === "add" || change.type === "remove",
 		);
 
 		if (shouldValidate) {
 			get().validateWorkflow();
 		}
 	},
-	onConnect: connection => {
+	onConnect: (connection) => {
 		const valid = isValidConnection({
 			sourceNodeId: connection.source || "",
 			sourceHandle: connection.sourceHandle ?? null,
@@ -140,8 +140,8 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		});
 		get().validateWorkflow();
 	},
-	getNodeById: nodeId => {
-		const node = get().nodes.find(node => node.id === nodeId);
+	getNodeById: (nodeId) => {
+		const node = get().nodes.find((node) => node.id === nodeId);
 		return node || null;
 	},
 	getWorkflowData: () => ({
@@ -154,15 +154,15 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 			throw new Error(`Unknown node type: ${nodeType}`);
 		}
 		const newNode = definition.client.create(position);
-		set(state => ({
+		set((state) => ({
 			nodes: [...state.nodes, newNode],
 		}));
 		get().validateWorkflow();
 		return newNode;
 	},
 	updateNode({ id, nodeType, data }) {
-		set(state => ({
-			nodes: state.nodes.map(node => {
+		set((state) => ({
+			nodes: state.nodes.map((node) => {
 				if (node.id === id && isNodeOfType(node, nodeType)) {
 					return {
 						...node,
@@ -178,22 +178,22 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		get().validateWorkflow();
 	},
 	deleteNode(id) {
-		const node = get().nodes.find(n => n.id === id);
+		const node = get().nodes.find((n) => n.id === id);
 		if (node?.type === "start") {
 			return;
 		}
 
 		set({
-			nodes: get().nodes.filter(node => node.id !== id),
+			nodes: get().nodes.filter((node) => node.id !== id),
 			edges: get().edges.filter(
-				edge => edge.source !== id && edge.target !== id,
+				(edge) => edge.source !== id && edge.target !== id,
 			),
 		});
 		get().validateWorkflow();
 	},
 	resetNodeStatuses: () => {
-		set(state => ({
-			nodes: state.nodes.map(node => ({
+		set((state) => ({
+			nodes: state.nodes.map((node) => ({
 				...node,
 				data: {
 					...node.data,
@@ -206,24 +206,26 @@ const useWorkflow = createWithEqualityFn<WorkflowState>((set, get) => ({
 		const { nodes, edges } = get();
 		const result = validateWorkflowFn(nodes, edges);
 
-		const updatedNodes = nodes.map(node => {
+		const updatedNodes = nodes.map((node) => {
 			const nodeErrors = getErrorsForNode(node.id, result.errors);
 			return {
 				...node,
 				data: {
 					...node.data,
-					validationErrors: nodeErrors.length > 0 ? nodeErrors : undefined,
+					validationErrors:
+						nodeErrors.length > 0 ? nodeErrors : undefined,
 				},
 			} as FlowNode;
 		});
 
-		const updatedEdges = edges.map(edge => {
+		const updatedEdges = edges.map((edge) => {
 			const edgeErrors = getErrorsForEdge(edge.id, result.errors);
 			return {
 				...edge,
 				data: {
 					...edge.data,
-					validationErrors: edgeErrors.length > 0 ? edgeErrors : undefined,
+					validationErrors:
+						edgeErrors.length > 0 ? edgeErrors : undefined,
 				},
 			};
 		});

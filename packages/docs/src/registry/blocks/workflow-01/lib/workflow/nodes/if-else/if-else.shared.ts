@@ -43,7 +43,7 @@ function validateIfElseNode(
 
 	const { nodes, edges } = context;
 
-	const outgoingEdges = edges.filter(e => e.source === node.id);
+	const outgoingEdges = edges.filter((e) => e.source === node.id);
 
 	if (outgoingEdges.length === 0) {
 		errors.push({
@@ -55,12 +55,16 @@ function validateIfElseNode(
 	}
 
 	// Get all potential input schemas for multi-path validation
-	const potentialInputSchemas = getPotentialInputSchemas(node.id, nodes, edges);
+	const potentialInputSchemas = getPotentialInputSchemas(
+		node.id,
+		nodes,
+		edges,
+	);
 
 	// Check for schema mismatch warning
 	if (potentialInputSchemas.length > 1) {
 		const schemas = potentialInputSchemas
-			.map(source => source.schema)
+			.map((source) => source.schema)
 			.filter(
 				(
 					schema,
@@ -81,7 +85,9 @@ function validateIfElseNode(
 	}
 
 	for (const handle of node.data.dynamicSourceHandles) {
-		const edgeForHandle = outgoingEdges.find(e => e.sourceHandle === handle.id);
+		const edgeForHandle = outgoingEdges.find(
+			(e) => e.sourceHandle === handle.id,
+		);
 		if (edgeForHandle && !handle.condition.trim()) {
 			errors.push({
 				type: "invalid-node-config",
@@ -93,7 +99,7 @@ function validateIfElseNode(
 
 		if (handle.condition?.trim()) {
 			const hasIncomingEdge = edges.some(
-				e => e.target === node.id && e.targetHandle === "input",
+				(e) => e.target === node.id && e.targetHandle === "input",
 			);
 
 			if (!hasIncomingEdge) {
@@ -123,7 +129,10 @@ function validateIfElseNode(
 							nodeId: node.id,
 							handleId: handle.id,
 							condition: handle.condition,
-							error: error instanceof Error ? error.message : String(error),
+							error:
+								error instanceof Error
+									? error.message
+									: String(error),
 						},
 					});
 				}
@@ -143,7 +152,10 @@ function validateIfElseNode(
 								nodeId: node.id,
 								handleId: handle.id,
 								condition: handle.condition,
-								error: error instanceof Error ? error.message : String(error),
+								error:
+									error instanceof Error
+										? error.message
+										: String(error),
 							},
 						});
 					}
@@ -155,9 +167,10 @@ function validateIfElseNode(
 
 							// Register types and variables based on schema
 							if (source.schema) {
-								const conversion = convertSchemaToCelDeclarations(
-									source.schema,
-								);
+								const conversion =
+									convertSchemaToCelDeclarations(
+										source.schema,
+									);
 
 								// Register all nested types first (they're already in dependency order)
 								for (const typeDef of conversion.typeDefinitions) {
@@ -183,9 +196,12 @@ function validateIfElseNode(
 
 							// Report validation errors
 							if (!checkResult.valid && checkResult.error) {
-								const sourceNode = nodes.find(n => n.id === source.nodeId);
+								const sourceNode = nodes.find(
+									(n) => n.id === source.nodeId,
+								);
 								const nodeName =
-									sourceNode && isNodeOfType(sourceNode, "agent")
+									sourceNode &&
+									isNodeOfType(sourceNode, "agent")
 										? sourceNode.data.name
 										: source.nodeName || source.nodeId;
 
@@ -193,11 +209,14 @@ function validateIfElseNode(
 
 								// Extract field name from error message if possible
 								let enhancedMessage = errorMessage;
-								const fieldMatch = errorMessage.match(/No such key: (\w+)/);
+								const fieldMatch =
+									errorMessage.match(/No such key: (\w+)/);
 								if (fieldMatch) {
 									const fieldName = fieldMatch[1];
 									enhancedMessage = `Field 'input.${fieldName}' not found in schema from '${nodeName}'. Ensure all converging paths have compatible schemas.`;
-								} else if (errorMessage.includes("Unknown variable")) {
+								} else if (
+									errorMessage.includes("Unknown variable")
+								) {
 									// Extract variable name from error
 									const varMatch = errorMessage.match(
 										/Unknown variable: (\S+)/,
@@ -222,7 +241,9 @@ function validateIfElseNode(
 							}
 						} catch (error) {
 							// Catch syntax errors and other exceptions
-							const sourceNode = nodes.find(n => n.id === source.nodeId);
+							const sourceNode = nodes.find(
+								(n) => n.id === source.nodeId,
+							);
 							const nodeName =
 								sourceNode && isNodeOfType(sourceNode, "agent")
 									? sourceNode.data.name
@@ -232,13 +253,18 @@ function validateIfElseNode(
 								type: "invalid-condition",
 								severity: "error",
 								message: `Expression failed validation for input from '${nodeName}': ${
-									error instanceof Error ? error.message : String(error)
+									error instanceof Error
+										? error.message
+										: String(error)
 								}`,
 								condition: {
 									nodeId: node.id,
 									handleId: handle.id,
 									condition: handle.condition,
-									error: error instanceof Error ? error.message : String(error),
+									error:
+										error instanceof Error
+											? error.message
+											: String(error),
 								},
 							});
 						}

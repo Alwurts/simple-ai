@@ -6,11 +6,11 @@
 		"dev": "next dev --turbopack -p 4567",
 		"build": "npm run registry:build && next build --turbopack",
 		"start": "next start -p 4567",
-		"lint": "cd ../.. && biome check packages/docs/src --write",
+		"lint": "biome check src --write",
 		"typecheck": "tsc --noEmit",
 		"postinstall": "fumadocs-mdx",
-		"registry:build": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/build-registry.mts && cd ../.. && npx biome check packages/docs/src/registry --write && npx biome check packages/docs/public/r/*.json --write",
-		"registry:build:local": "tsx --env-file=.env.local --tsconfig ./tsconfig.scripts.json ./src/scripts/build-registry.mts && cd ../.. && biome check packages/docs/src/registry --write && biome check packages/docs/public/r/*.json --write",
+		"registry:build": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/build-registry.mts && biome check src/registry --write && biome check ./public/r/*.json --write",
+		"registry:build:local": "tsx --env-file=.env.local --tsconfig ./tsconfig.scripts.json ./src/scripts/build-registry.mts && biome check src/registry --write && biome check ./public/r/*.json --write",
 		"registry:capture": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/capture-registry.mts"
 	},
 	"dependencies": {

@@ -20,7 +20,7 @@ function createSSEWorkflowExecutionEngine(
 	return createWorkflowExecutionEngine({
 		workflow,
 		processNode: async (nodeId, targetsData) => {
-			const node = workflow.nodes.find(n => n.id === nodeId);
+			const node = workflow.nodes.find((n) => n.id === nodeId);
 			if (!node) {
 				throw new Error(`Node ${nodeId} not found`);
 			}
@@ -28,8 +28,11 @@ function createSSEWorkflowExecutionEngine(
 			const processor = nodeProcessor[node.type];
 			return await processor(node, targetsData);
 		},
-		updateNodeExecutionState: (nodeId, state: Partial<NodeExecutionState>) => {
-			const node = workflow.nodes.find(n => n.id === nodeId);
+		updateNodeExecutionState: (
+			nodeId,
+			state: Partial<NodeExecutionState>,
+		) => {
+			const node = workflow.nodes.find((n) => n.id === nodeId);
 			if (!node) {
 				return;
 			}

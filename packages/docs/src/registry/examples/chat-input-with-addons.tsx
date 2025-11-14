@@ -14,7 +14,7 @@ import {
 
 export default function ChatInputWithAddons() {
 	const { value, onChange, handleSubmit } = useChatInput({
-		onSubmit: parsed => {
+		onSubmit: (parsed) => {
 			console.log("Submitted:", parsed.content);
 		},
 	});
@@ -22,7 +22,11 @@ export default function ChatInputWithAddons() {
 	return (
 		<div className="w-full h-full flex justify-center items-center">
 			<div className="w-full max-w-md">
-				<ChatInput onSubmit={handleSubmit} value={value} onChange={onChange}>
+				<ChatInput
+					onSubmit={handleSubmit}
+					value={value}
+					onChange={onChange}
+				>
 					<ChatInputEditor placeholder="Type a message..." />
 					<ChatInputGroupAddon align="block-end">
 						<ChatInputGroupButton

@@ -166,7 +166,7 @@ export function completeJsxTag(code: string) {
 		result +
 		stack
 			.reverse()
-			.map(tag => `</${tag}>`)
+			.map((tag) => `</${tag}>`)
 			.join("")
 	);
 }

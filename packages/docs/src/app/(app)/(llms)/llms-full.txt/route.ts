@@ -7,7 +7,7 @@ export const revalidate = false;
 
 export async function GET() {
 	const pages = source.getPages();
-	const parsedPages = pages.map(async page => {
+	const parsedPages = pages.map(async (page) => {
 		const markdownTextRaw = await page.data.getText("raw");
 		const processedContent = processMdxForLLMs(markdownTextRaw);
 		return { url: page.url, text: processedContent };

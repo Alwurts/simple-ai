@@ -16,16 +16,16 @@ import {
 } from "@/registry/ui/chat-input";
 
 export function ChatDialog() {
-	const versions = useGenerationStore(state => state.versions);
-	const currentVersion = useGenerationStore(state => state.currentVersion);
-	const setView = useGenerationStore(state => state.setView);
+	const versions = useGenerationStore((state) => state.versions);
+	const currentVersion = useGenerationStore((state) => state.currentVersion);
+	const setView = useGenerationStore((state) => state.setView);
 	const updateCurrentCode = useGenerationStore(
-		state => state.updateCurrentCode,
+		(state) => state.updateCurrentCode,
 	);
-	const updateStatus = useGenerationStore(state => state.updateStatus);
-	const addVersion = useGenerationStore(state => state.addVersion);
-	const chatOpen = useGenerationStore(state => state.chatOpen);
-	const setChatOpen = useGenerationStore(state => state.setChatOpen);
+	const updateStatus = useGenerationStore((state) => state.updateStatus);
+	const addVersion = useGenerationStore((state) => state.addVersion);
+	const chatOpen = useGenerationStore((state) => state.chatOpen);
+	const setChatOpen = useGenerationStore((state) => state.setChatOpen);
 
 	const { completion, isLoading, complete, stop } = useCompletion({
 		api: "/api/ai/generate",
@@ -45,7 +45,7 @@ export function ChatDialog() {
 		onChange,
 		handleSubmit: chatInputSubmit,
 	} = useChatInput({
-		onSubmit: parsedValue => {
+		onSubmit: (parsedValue) => {
 			addVersion("", parsedValue.content);
 			complete(parsedValue.content);
 			setChatOpen(false);

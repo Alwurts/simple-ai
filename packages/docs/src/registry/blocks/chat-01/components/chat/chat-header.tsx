@@ -46,7 +46,9 @@ export function ChatHeader({
 				<AppHeaderSeparator />
 				<Tooltip>
 					<TooltipTrigger>
-						<ChatRoomConnectionStatus connectionStatus={connectionStatus} />
+						<ChatRoomConnectionStatus
+							connectionStatus={connectionStatus}
+						/>
 					</TooltipTrigger>
 					<TooltipContent side="bottom">
 						<p className="capitalize">{connectionStatus}</p>

@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { getAllNodeDefinitions } from "@/registry/blocks/workflow-01/lib/workflow/nodes";
 
 const nodeDefinitions = getAllNodeDefinitions().filter(
-	def => def.shared.type !== "start",
+	(def) => def.shared.type !== "start",
 );
-const nodeTypes = nodeDefinitions.map(def => ({
+const nodeTypes = nodeDefinitions.map((def) => ({
 	type: def.shared.type,
 	label: def.client.meta.label,
 	icon: def.client.meta.icon,
@@ -26,13 +26,13 @@ export function NodeSelectorPanel() {
 			<div className="flex flex-col gap-2">
 				<h3 className="font-semibold text-sm mb-2">Add Nodes</h3>
 				<div className="flex flex-col gap-2">
-					{nodeTypes.map(nodeType => (
+					{nodeTypes.map((nodeType) => (
 						<Button
 							key={nodeType.type}
 							variant="outline"
 							className="cursor-grab justify-start text-left"
 							draggable
-							onDragStart={e => onDragStart(e, nodeType.type)}
+							onDragStart={(e) => onDragStart(e, nodeType.type)}
 						>
 							<nodeType.icon className="mr-2" />
 							{nodeType.label}

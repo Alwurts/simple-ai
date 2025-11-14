@@ -36,7 +36,7 @@ export function PreviewControls({
 			size="sm"
 			defaultValue="100"
 			value={viewerSize}
-			onValueChange={value => {
+			onValueChange={(value) => {
 				onViewerSizeChange(value);
 			}}
 			className="items-center gap-1.5 rounded-md border p-1 shadow-sm flex bg-background"
@@ -59,8 +59,8 @@ export function Preview({
 	viewerSize,
 	onViewerSizeChange,
 }: PreviewProps) {
-	const versions = useGenerationStore(state => state.versions);
-	const currentVersion = useGenerationStore(state => state.currentVersion);
+	const versions = useGenerationStore((state) => state.versions);
+	const currentVersion = useGenerationStore((state) => state.currentVersion);
 	const currentCode = versions[currentVersion]?.code ?? "";
 	const isGenerating = versions[currentVersion]?.status === "generating";
 	const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -105,7 +105,7 @@ export function Preview({
 							"relative rounded-lg border bg-background border-border",
 						)}
 						defaultSize={Number.parseInt(viewerSize, 10)}
-						onResize={size => {
+						onResize={(size) => {
 							onViewerSizeChange(size.toString());
 						}}
 						minSize={30}

@@ -1,17 +1,20 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.5/schema.json",
 	"vcs": {
-		"enabled": false,
+		"enabled": true,
 		"clientKind": "git",
 		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",
-		"indentWidth": 2,
-		"lineWidth": 100
+		"indentWidth": 4,
+		"lineWidth": 80
 	},
-	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {
@@ -20,7 +23,14 @@
 				"noUnusedFunctionParameters": "error",
 				"noUnusedImports": "error",
 				"noUnusedVariables": "error",
-				"useHookAtTopLevel": "error"
+				"useHookAtTopLevel": "error",
+				"useUniqueElementIds": "off"
+			},
+			"complexity": {
+				"noBannedTypes": "off"
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "off"
 			},
 			"style": {
 				"useBlockStatements": "error",
@@ -42,9 +52,11 @@
 			"arrowParentheses": "always"
 		}
 	},
-	"css": {
-		"parser": {
-			"tailwindDirectives": true
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
 		}
 	}
 }

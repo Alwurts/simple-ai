@@ -231,7 +231,7 @@ function validateMultipleSources(
 			errors.push({
 				type: "multiple-sources-for-target-handle",
 				message: `Target handle "${targetHandle}" on node "${targetNode}" has ${edges.length} sources.`,
-				edges: edges.map(edge => ({
+				edges: edges.map((edge) => ({
 					id: edge.id,
 					source: edge.source,
 					target: edge.target,
@@ -294,8 +294,9 @@ function detectCycles(
 		.map(([nodeId]) => nodeId);
 
 	const cycleEdges = edges.filter(
-		edge =>
-			cycleNodes.includes(edge.source) && cycleNodes.includes(edge.target),
+		(edge) =>
+			cycleNodes.includes(edge.source) &&
+			cycleNodes.includes(edge.target),
 	);
 
 	if (cycleEdges.length === 0) {
@@ -305,7 +306,7 @@ function detectCycles(
 	const error: CycleError = {
 		type: "cycle",
 		message: `Workflow contains cycles between nodes: ${cycleNodes.join(", ")}`,
-		edges: cycleEdges.map(edge => ({
+		edges: cycleEdges.map((edge) => ({
 			id: edge.id,
 			source: edge.source,
 			target: edge.target,

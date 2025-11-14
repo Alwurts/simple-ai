@@ -83,7 +83,9 @@ export function XPreview({
 											</AvatarFallback>
 										</Avatar>
 									</div>
-									<div className="flex justify-end mb-4">{generateDialog}</div>
+									<div className="flex justify-end mb-4">
+										{generateDialog}
+									</div>
 									<div className="mt-6">
 										<h4 className="font-bold text-xl mb-2">
 											<DisplayLoader
@@ -143,22 +145,32 @@ export function XPreview({
 											<span className="flex items-center gap-1">
 												<strong>
 													<DisplayLoader
-														value={Math.floor(Math.random() * 1000)}
+														value={Math.floor(
+															Math.random() *
+																1000,
+														)}
 														isLoading={isLoading}
 														forceLoading
 													/>
 												</strong>
-												<span className="text-gray-500">Following</span>
+												<span className="text-gray-500">
+													Following
+												</span>
 											</span>
 											<span className="flex items-center gap-1">
 												<strong>
 													<DisplayLoader
-														value={Math.floor(Math.random() * 1000)}
+														value={Math.floor(
+															Math.random() *
+																1000,
+														)}
 														isLoading={isLoading}
 														forceLoading
 													/>
 												</strong>
-												<span className="text-gray-500">Followers</span>
+												<span className="text-gray-500">
+													Followers
+												</span>
 											</span>
 										</div>
 									</div>
@@ -176,7 +188,7 @@ export function XPreview({
 										},
 										{ id: "media", label: "Media" },
 										{ id: "likes", label: "Likes" },
-									].map(tab => (
+									].map((tab) => (
 										<button
 											type="button"
 											key={tab.id}
@@ -196,7 +208,7 @@ export function XPreview({
 							</div>
 
 							<div className="space-y-4">
-								{[1, 2, 3].map(i => (
+								{[1, 2, 3].map((i) => (
 									<div
 										key={i}
 										className="flex flex-col border-b border-gray-200 dark:border-zinc-800"
@@ -211,20 +223,30 @@ export function XPreview({
 												<div className="flex items-center gap-2">
 													<span className="font-bold">
 														<DisplayLoader
-															value={profile.displayName}
-															isLoading={isLoading}
+															value={
+																profile.displayName
+															}
+															isLoading={
+																isLoading
+															}
 															width="w-20"
 														/>
 													</span>
 													<span className="flex items-center text-gray-500">
 														@
 														<DisplayLoader
-															value={profile.username}
-															isLoading={isLoading}
+															value={
+																profile.username
+															}
+															isLoading={
+																isLoading
+															}
 															width="w-10"
 														/>
 													</span>
-													<span className="text-gray-500">{i * 10}h</span>
+													<span className="text-gray-500">
+														{i * 10}h
+													</span>
 												</div>
 												<p>
 													<div className="h-4 bg-gray-200 dark:bg-zinc-700 rounded w-2/3" />
@@ -236,7 +258,9 @@ export function XPreview({
 												<MessageCircle size={18} />
 												<span className="text-sm">
 													<DisplayLoader
-														value={Math.floor(Math.random() * 100)}
+														value={Math.floor(
+															Math.random() * 100,
+														)}
 														isLoading={isLoading}
 														forceLoading
 														width="w-6"
@@ -247,7 +271,9 @@ export function XPreview({
 												<Repeat2 size={18} />
 												<span className="text-sm">
 													<DisplayLoader
-														value={Math.floor(Math.random() * 100)}
+														value={Math.floor(
+															Math.random() * 100,
+														)}
 														isLoading={isLoading}
 														forceLoading
 														width="w-6"
@@ -258,7 +284,9 @@ export function XPreview({
 												<Heart size={18} />
 												<span className="text-sm">
 													<DisplayLoader
-														value={Math.floor(Math.random() * 100)}
+														value={Math.floor(
+															Math.random() * 100,
+														)}
 														isLoading={isLoading}
 														forceLoading
 														width="w-6"
@@ -269,7 +297,10 @@ export function XPreview({
 												<ChartNoAxesColumn size={18} />
 												<span className="text-sm">
 													<DisplayLoader
-														value={Math.floor(Math.random() * 1000)}
+														value={Math.floor(
+															Math.random() *
+																1000,
+														)}
 														isLoading={isLoading}
 														forceLoading
 														width="w-6"

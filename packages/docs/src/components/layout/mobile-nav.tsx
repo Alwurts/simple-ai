@@ -89,13 +89,19 @@ export function MobileNav({
 							Sections
 						</div>
 						<div className="flex flex-col gap-3">
-							{siteConfig.topLevelSections.map(({ name, href }) => {
-								return (
-									<MobileLink key={name} href={href} onOpenChange={setOpen}>
-										{name}
-									</MobileLink>
-								);
-							})}
+							{siteConfig.topLevelSections.map(
+								({ name, href }) => {
+									return (
+										<MobileLink
+											key={name}
+											href={href}
+											onOpenChange={setOpen}
+										>
+											{name}
+										</MobileLink>
+									);
+								},
+							)}
 						</div>
 					</div>
 					<div className="flex flex-col gap-8">
@@ -111,13 +117,15 @@ export function MobileNav({
 											{group.name}
 										</div>
 										<div className="flex flex-col gap-3">
-											{group.children.map(item => {
+											{group.children.map((item) => {
 												if (item.type === "page") {
 													return (
 														<MobileLink
 															key={`${item.url}-${index}`}
 															href={item.url}
-															onOpenChange={setOpen}
+															onOpenChange={
+																setOpen
+															}
 															className="flex items-center gap-2"
 														>
 															{item.name}{" "}

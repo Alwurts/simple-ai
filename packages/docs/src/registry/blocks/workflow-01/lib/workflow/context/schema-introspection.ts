@@ -166,7 +166,8 @@ function buildCelTypeFromProperty(
 	// Handle arrays
 	if (propType === "array" && prop.items && typeof prop.items === "object") {
 		const items = prop.items as Record<string, unknown>;
-		const itemsType = typeof items.type === "string" ? items.type : undefined;
+		const itemsType =
+			typeof items.type === "string" ? items.type : undefined;
 
 		// Array of objects - create nested type
 		if (itemsType === "object" && items.properties) {
@@ -292,7 +293,7 @@ export function areSchemasIdentical(schemas: JSONSchema7[]): boolean {
 	}
 
 	// Convert all schemas to type definitions for comparison
-	const conversions = schemas.map(schema =>
+	const conversions = schemas.map((schema) =>
 		convertSchemaToCelDeclarations(schema),
 	);
 
@@ -310,10 +311,10 @@ export function areSchemasIdentical(schemas: JSONSchema7[]): boolean {
 
 		// Compare root type fields
 		const firstRootType = firstConversion.typeDefinitions.find(
-			t => t.typename === firstConversion.variableDeclaration.type,
+			(t) => t.typename === firstConversion.variableDeclaration.type,
 		);
 		const currentRootType = currentConversion.typeDefinitions.find(
-			t => t.typename === currentConversion.variableDeclaration.type,
+			(t) => t.typename === currentConversion.variableDeclaration.type,
 		);
 
 		if (!firstRootType || !currentRootType) {

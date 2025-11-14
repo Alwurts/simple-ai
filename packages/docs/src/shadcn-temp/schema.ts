@@ -32,7 +32,10 @@ export const registryItemFileSchema = z.discriminatedUnion("type", [
 	z.object({
 		path: z.string(),
 		content: z.string().optional(),
-		type: registryItemTypeSchema.exclude(["registry:file", "registry:page"]),
+		type: registryItemTypeSchema.exclude([
+			"registry:file",
+			"registry:page",
+		]),
 		target: z.string().optional(),
 	}),
 ]);
@@ -133,12 +136,12 @@ export const registryConfigItemSchema = z.union([
 	// Simple string format: "https://example.com/{name}.json"
 	z
 		.string()
-		.refine(s => s.includes("{name}"), {
+		.refine((s) => s.includes("{name}"), {
 			message: "Registry URL must include {name} placeholder",
 		}),
 	// Advanced object format with auth options
 	z.object({
-		url: z.string().refine(s => s.includes("{name}"), {
+		url: z.string().refine((s) => s.includes("{name}"), {
 			message: "Registry URL must include {name} placeholder",
 		}),
 		params: z.record(z.string(), z.string()).optional(),
@@ -147,7 +150,7 @@ export const registryConfigItemSchema = z.union([
 ]);
 
 export const registryConfigSchema = z.record(
-	z.string().refine(key => key.startsWith("@"), {
+	z.string().refine((key) => key.startsWith("@"), {
 		message: "Registry names must start with @ (e.g., @v0, @acme)",
 	}),
 	registryConfigItemSchema,

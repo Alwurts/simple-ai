@@ -10,7 +10,7 @@ export const CopyWorkflowButton = ({
 	className,
 	...props
 }: React.ComponentProps<typeof Button>) => {
-	const { nodes, edges } = useWorkflow(store => ({
+	const { nodes, edges } = useWorkflow((store) => ({
 		nodes: store.nodes,
 		edges: store.edges,
 	}));
@@ -36,7 +36,9 @@ export const CopyWorkflowButton = ({
 			title="Copy workflow as JSON"
 			{...props}
 		>
-			<ClipboardCopy className={cn("size-4", isCopied && "text-green-600")} />
+			<ClipboardCopy
+				className={cn("size-4", isCopied && "text-green-600")}
+			/>
 			<span className="sr-only">
 				{isCopied ? "Copied to clipboard" : "Copy workflow as JSON"}
 			</span>

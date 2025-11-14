@@ -7,28 +7,10 @@
 	],
 	"scripts": {
 		"dev": "npm run dev --workspace=@simple-ai/docs",
-		"build": "npm run build --workspaces --if-present",
-		"test": "npm run test --workspaces --if-present",
-		"lint": "biome check --write .",
-		"typecheck": "npm run typecheck --workspaces --if-present",
-		"cli:dev": "npm run dev --workspace=create-simple-ai",
-		"cli:build": "npm run build --workspace=create-simple-ai",
-		"cli:test": "npm run test --workspace=create-simple-ai",
-		"cli:test:run": "npm run test:run --workspace=create-simple-ai",
-		"docs:dev": "npm run dev --workspace=@simple-ai/docs",
-		"docs:build": "npm run build --workspace=@simple-ai/docs",
-		"changeset": "changeset",
-		"changeset:version": "changeset version",
-		"release": "npm run cli:build && changeset publish",
-		"release:check": "tsx scripts/pre-release-check.ts"
+		"build": "npm run build --workspaces --if-present"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.5",
-		"@changesets/cli": "^2.29.7",
-		"typescript": "^5.9.3",
+		"typescript": "^5",
 		"tsx": "^4.20.6"
-	},
-	"engines": {
-		"node": ">=18.0.0"
 	}
 }

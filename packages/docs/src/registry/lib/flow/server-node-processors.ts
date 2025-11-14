@@ -6,7 +6,7 @@ import type { PromptCrafterNode } from "@/registry/ui/flow/prompt-crafter-node";
 import type { TextInputNode } from "@/registry/ui/flow/text-input-node";
 
 export const serverNodeProcessors: Record<FlowNode["type"], NodeProcessor> = {
-	"text-input": async node => {
+	"text-input": async (node) => {
 		const textNode = node as TextInputNode;
 		return {
 			result: textNode.data.config.value,
@@ -22,7 +22,7 @@ export const serverNodeProcessors: Record<FlowNode["type"], NodeProcessor> = {
 		let parsedTemplate = promptNode.data.config.template;
 		for (const [targetId, targetValue] of Object.entries(targetsData)) {
 			const tag = promptNode.data.dynamicHandles["template-tags"].find(
-				handle => handle.id === targetId,
+				(handle) => handle.id === targetId,
 			);
 			if (!tag) {
 				throw new Error(`Tag with id ${targetId} not found`);

@@ -23,7 +23,10 @@ export const UserPersonaSchema = z.object({
 	}),
 	bio: z.string().describe("Short biographical description"),
 	goals: z.array(z.string()).min(1).describe("User's primary goals"),
-	frustrations: z.array(z.string()).min(1).describe("User's main frustrations"),
+	frustrations: z
+		.array(z.string())
+		.min(1)
+		.describe("User's main frustrations"),
 	preferredChannels: z
 		.array(z.string())
 		.describe("Preferred communication channels"),

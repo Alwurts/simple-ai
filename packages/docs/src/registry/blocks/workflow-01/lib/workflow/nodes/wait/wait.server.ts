@@ -47,7 +47,7 @@ async function executeWaitNode(
 	});
 
 	// Wait for the specified duration
-	await new Promise(resolve => setTimeout(resolve, delayMs));
+	await new Promise((resolve) => setTimeout(resolve, delayMs));
 
 	// Send completion status update
 	writer.write({
@@ -63,7 +63,7 @@ async function executeWaitNode(
 		},
 	});
 
-	const outgoingEdge = edges.find(edge => edge.source === node.id);
+	const outgoingEdge = edges.find((edge) => edge.source === node.id);
 	const nextNodeId = outgoingEdge ? outgoingEdge.target : null;
 
 	return {

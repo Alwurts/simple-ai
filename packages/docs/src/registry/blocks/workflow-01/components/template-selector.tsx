@@ -21,10 +21,10 @@ export function TemplateSelector({
 	className,
 }: TemplateSelectorProps) {
 	const selectedTemplate = WORKFLOW_TEMPLATES.find(
-		template => template.id === selectedTemplateId,
+		(template) => template.id === selectedTemplateId,
 	);
 
-	const categories = [...new Set(WORKFLOW_TEMPLATES.map(t => t.category))];
+	const categories = [...new Set(WORKFLOW_TEMPLATES.map((t) => t.category))];
 
 	return (
 		<div className={cn("flex items-center gap-2", className)}>
@@ -41,23 +41,28 @@ export function TemplateSelector({
 					</div>
 				</SelectTrigger>
 				<SelectContent>
-					{categories.map(category => (
+					{categories.map((category) => (
 						<div key={category}>
 							<div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
 								{category}
 							</div>
-							{WORKFLOW_TEMPLATES.filter(t => t.category === category).map(
-								template => (
-									<SelectItem key={template.id} value={template.id}>
-										<div className="flex flex-col items-start">
-											<span className="font-medium">{template.name}</span>
-											<span className="text-xs text-muted-foreground">
-												{template.description}
-											</span>
-										</div>
-									</SelectItem>
-								),
-							)}
+							{WORKFLOW_TEMPLATES.filter(
+								(t) => t.category === category,
+							).map((template) => (
+								<SelectItem
+									key={template.id}
+									value={template.id}
+								>
+									<div className="flex flex-col items-start">
+										<span className="font-medium">
+											{template.name}
+										</span>
+										<span className="text-xs text-muted-foreground">
+											{template.description}
+										</span>
+									</div>
+								</SelectItem>
+							))}
 							{category !== categories[categories.length - 1] && (
 								<div className="border-b my-1" />
 							)}

@@ -103,7 +103,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const isLoading = status === "streaming" || status === "submitted";
 
 	const { value, onChange, handleSubmit } = useChatInput({
-		onSubmit: parsedValue => {
+		onSubmit: (parsedValue) => {
 			sendMessage({
 				role: "user",
 				parts: [{ type: "text", text: parsedValue.content }],
@@ -141,7 +141,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 			<div className="flex-1 flex flex-col h-full overflow-y-auto">
 				<ChatMessageArea>
 					<ChatMessageAreaContent>
-						{messages.map(message => {
+						{messages.map((message) => {
 							return (
 								<ChatMessage key={message.id}>
 									<ChatMessageAvatar>
@@ -155,14 +155,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 									<ChatMessageContainer>
 										<ChatMessageHeader>
 											<ChatMessageAuthor>
-												{message.role === "user" ? "You" : "Assistant"}
+												{message.role === "user"
+													? "You"
+													: "Assistant"}
 											</ChatMessageAuthor>
-											<ChatMessageTimestamp createdAt={new Date()} />
+											<ChatMessageTimestamp
+												createdAt={new Date()}
+											/>
 										</ChatMessageHeader>
 										<ChatMessageContent>
 											{message.parts
-												.filter(part => part.type === "text")
-												.map(part => (
+												.filter(
+													(part) =>
+														part.type === "text",
+												)
+												.map((part) => (
 													<ChatMessageMarkdown
 														key={part.type}
 														content={part.text}

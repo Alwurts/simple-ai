@@ -31,10 +31,10 @@ import type { NodeClientDefinition } from "@/registry/blocks/workflow-01/types/w
 export interface IfElseNodeProps extends NodeProps<IfElseNodeType> {}
 
 export function IfElseNode({ selected, data, deletable, id }: IfElseNodeProps) {
-	const deleteNode = useWorkflow(state => state.deleteNode);
+	const deleteNode = useWorkflow((state) => state.deleteNode);
 
 	const validationErrors =
-		data.validationErrors?.map(error => ({
+		data.validationErrors?.map((error) => ({
 			message: error.message,
 		})) || [];
 
@@ -52,7 +52,10 @@ export function IfElseNode({ selected, data, deletable, id }: IfElseNodeProps) {
 				</NodeHeaderIcon>
 				<NodeHeaderTitle>If/Else</NodeHeaderTitle>
 				<NodeHeaderActions>
-					<NodeHeaderStatus status={data.status} errors={validationErrors} />
+					<NodeHeaderStatus
+						status={data.status}
+						errors={validationErrors}
+					/>
 					{deletable && (
 						<NodeHeaderAction
 							onClick={() => deleteNode(id)}
@@ -75,9 +78,11 @@ export function IfElseNode({ selected, data, deletable, id }: IfElseNodeProps) {
 					/>
 				</div>
 				<div className="col-span-2 flex flex-col gap-2 justify-self-end">
-					{data.dynamicSourceHandles.map(handle => {
-						const displayText = handle.label || handle.condition || "-";
-						const isPlaceholder = !handle.label && !handle.condition;
+					{data.dynamicSourceHandles.map((handle) => {
+						const displayText =
+							handle.label || handle.condition || "-";
+						const isPlaceholder =
+							!handle.label && !handle.condition;
 						return (
 							<LabeledHandle
 								key={handle.id}
@@ -85,7 +90,9 @@ export function IfElseNode({ selected, data, deletable, id }: IfElseNodeProps) {
 								title={displayText}
 								labelClassName={cn(
 									"max-w-56 truncate",
-									isPlaceholder ? "text-muted-foreground" : "",
+									isPlaceholder
+										? "text-muted-foreground"
+										: "",
 								)}
 								type="source"
 								position={Position.Right}
@@ -106,9 +113,9 @@ export function IfElseNode({ selected, data, deletable, id }: IfElseNodeProps) {
 }
 
 export function IfElseNodePanel({ node }: { node: IfElseNodeType }) {
-	const updateNode = useWorkflow(state => state.updateNode);
-	const nodes = useWorkflow(state => state.nodes);
-	const edges = useWorkflow(state => state.edges);
+	const updateNode = useWorkflow((state) => state.updateNode);
+	const nodes = useWorkflow((state) => state.nodes);
+	const edges = useWorkflow((state) => state.edges);
 	const updateNodeInternals = useUpdateNodeInternals();
 
 	const availableVariables = useMemo(
@@ -153,8 +160,11 @@ export function IfElseNodePanel({ node }: { node: IfElseNodeType }) {
 			id: node.id,
 			nodeType: "if-else",
 			data: {
-				dynamicSourceHandles: node.data.dynamicSourceHandles.map(handle =>
-					handle.id === handleId ? { ...handle, ...updates } : handle,
+				dynamicSourceHandles: node.data.dynamicSourceHandles.map(
+					(handle) =>
+						handle.id === handleId
+							? { ...handle, ...updates }
+							: handle,
 				),
 			},
 		});
@@ -166,7 +176,7 @@ export function IfElseNodePanel({ node }: { node: IfElseNodeType }) {
 			nodeType: "if-else",
 			data: {
 				dynamicSourceHandles: node.data.dynamicSourceHandles.filter(
-					handle => handle.id !== handleId,
+					(handle) => handle.id !== handleId,
 				),
 			},
 		});
@@ -177,9 +187,9 @@ export function IfElseNodePanel({ node }: { node: IfElseNodeType }) {
 		<div className="space-y-4">
 			<div>
 				<p className="text-xs text-gray-600">
-					This node routes execution based on a condition. The "If" output
-					executes when the condition is true, and the "Else" output executes
-					when the condition is false.
+					This node routes execution based on a condition. The "If"
+					output executes when the condition is true, and the "Else"
+					output executes when the condition is false.
 				</p>
 			</div>
 
@@ -195,7 +205,9 @@ export function IfElseNodePanel({ node }: { node: IfElseNodeType }) {
 								</span>
 								{node.data.dynamicSourceHandles.length > 1 && (
 									<Button
-										onClick={() => removeSourceHandle(handle.id)}
+										onClick={() =>
+											removeSourceHandle(handle.id)
+										}
 										size="icon-sm"
 										variant="destructive"
 									>
@@ -214,7 +226,7 @@ export function IfElseNodePanel({ node }: { node: IfElseNodeType }) {
 									<Input
 										id={`label-${handle.id}`}
 										value={handle.label || ""}
-										onChange={e =>
+										onChange={(e) =>
 											updateSourceHandle(handle.id, {
 												label: e.target.value || null,
 											})
@@ -232,18 +244,21 @@ export function IfElseNodePanel({ node }: { node: IfElseNodeType }) {
 									</label>
 									<ConditionEditor
 										value={handle.condition}
-										onChange={value =>
+										onChange={(value) =>
 											updateSourceHandle(handle.id, {
 												condition: value,
 											})
 										}
 										availableVariables={availableVariables}
-										validationError={getConditionError(handle.id)}
+										validationError={getConditionError(
+											handle.id,
+										)}
 										placeholder="Enter condition expression"
 									/>
 								</div>
 							</div>
-							{index < node.data.dynamicSourceHandles.length - 1 && (
+							{index <
+								node.data.dynamicSourceHandles.length - 1 && (
 								<Separator className="my-2" />
 							)}
 						</div>
