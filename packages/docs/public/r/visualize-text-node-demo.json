@@ -1,0 +1,12 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "visualize-text-node-demo",
+	"type": "registry:example",
+	"files": [
+		{
+			"path": "./src/registry/examples/visualize-text-node-demo.tsx",
+			"content": "\"use client\";\n\nimport \"@xyflow/react/dist/style.css\";\n\nimport {\n\taddEdge,\n\tapplyEdgeChanges,\n\tapplyNodeChanges,\n\tBackground,\n\ttype Connection,\n\ttype EdgeChange,\n\ttype Node,\n\ttype NodeChange,\n\ttype NodeTypes,\n\tReactFlow,\n\tReactFlowProvider,\n} from \"@xyflow/react\";\nimport { useCallback, useState } from \"react\";\nimport { VisualizeTextNode } from \"@/registry/ui/flow/visualize-text-node\";\n\nconst nodeTypes: NodeTypes = {\n\t\"visualize-text\": VisualizeTextNode,\n};\n\nconst initialNodes = [\n\t{\n\t\tid: \"node-1\",\n\t\ttype: \"visualize-text\",\n\t\tposition: { x: 0, y: -50 },\n\t\tdata: {\n\t\t\tinput: \"### I support markdown\\n\\nVisualize text coming from other nodes\\n\\n- 1\\n- 2\\n- 3\",\n\t\t\tstatus: \"success\",\n\t\t},\n\t},\n];\n\nexport default function VisualizeTextNodeDemo() {\n\tconst [nodes, setNodes] = useState<Node[]>(initialNodes);\n\tconst [edges, setEdges] = useState([]);\n\n\t// Add default viewport configuration\n\tconst defaultViewport = { x: 100, y: 75, zoom: 1 };\n\n\tconst onNodesChange = useCallback(\n\t\t(changes: NodeChange<Node>[]) => setNodes(nds => applyNodeChanges(changes, nds)),\n\t\t[],\n\t);\n\tconst onEdgesChange = useCallback(\n\t\t(changes: EdgeChange<never>[]) => setEdges(eds => applyEdgeChanges(changes, eds)),\n\t\t[],\n\t);\n\tconst onConnect = useCallback(\n\t\t(connection: Connection) => setEdges(eds => addEdge(connection, eds)),\n\t\t[],\n\t);\n\treturn (\n\t\t<div className=\"w-full h-full\">\n\t\t\t<ReactFlowProvider>\n\t\t\t\t<ReactFlow\n\t\t\t\t\tnodes={nodes}\n\t\t\t\t\tedges={edges}\n\t\t\t\t\tonNodesChange={onNodesChange}\n\t\t\t\t\tonEdgesChange={onEdgesChange}\n\t\t\t\t\tonConnect={onConnect}\n\t\t\t\t\tnodeTypes={nodeTypes}\n\t\t\t\t\tdefaultViewport={defaultViewport}\n\t\t\t\t\t/* fitView */\n\t\t\t\t>\n\t\t\t\t\t<Background />\n\t\t\t\t</ReactFlow>\n\t\t\t</ReactFlowProvider>\n\t\t</div>\n\t);\n}\n",
+			"type": "registry:example"
+		}
+	]
+}

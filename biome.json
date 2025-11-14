@@ -1,18 +1,20 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
-	"vcs": {
-		"enabled": true,
-		"clientKind": "git",
-		"useIgnoreFile": true
-	},
+	"$schema": "https://biomejs.dev/schemas/2.3.5/schema.json",
+	"vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
+		"includes": [
+			"**",
+			"!!**/dist",
+			"!!**/build",
+			"!!**/.next",
+			"!!**/node_modules",
+			"!!packages/cli/templates"
+		]
 	},
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",
-		"indentWidth": 4,
 		"lineWidth": 80
 	},
 	"linter": {
@@ -26,20 +28,13 @@
 				"useHookAtTopLevel": "error",
 				"useUniqueElementIds": "off"
 			},
-			"complexity": {
-				"noBannedTypes": "off"
-			},
-			"security": {
-				"noDangerouslySetInnerHtml": "off"
-			},
+			"complexity": { "noBannedTypes": "off" },
+			"security": { "noDangerouslySetInnerHtml": "off" },
 			"style": {
 				"useBlockStatements": "error",
 				"useFilenamingConvention": {
 					"level": "error",
-					"options": {
-						"strictCase": true,
-						"filenameCases": ["kebab-case"]
-					}
+					"options": { "strictCase": true, "filenameCases": ["kebab-case"] }
 				}
 			}
 		}
@@ -49,14 +44,8 @@
 			"quoteStyle": "double",
 			"trailingCommas": "all",
 			"semicolons": "always",
-			"arrowParentheses": "always"
+			"arrowParentheses": "asNeeded"
 		}
 	},
-	"assist": {
-		"actions": {
-			"source": {
-				"organizeImports": "on"
-			}
-		}
-	}
+	"css": { "parser": { "tailwindDirectives": true } }
 }
