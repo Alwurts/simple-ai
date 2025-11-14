@@ -1,5 +1,5 @@
 import path from "node:path";
-import { pathExists, readJSON, readFile } from "fs-extra";
+import { readFile, readJSON } from "fs-extra";
 import { afterEach, describe, expect, it } from "vitest";
 import { TEMPLATES_DIR } from "../src/lib/config.js";
 import {
@@ -94,7 +94,11 @@ describe("Basic Project Creation", () => {
 		const projectDir = expectSuccessWithProjectDir(result);
 
 		// Check that package-lock.json is identical to the template (npm install was not run)
-		const templatePackageLockPath = path.join(TEMPLATES_DIR, "project-starter-nextjs-vercel", "package-lock.json");
+		const templatePackageLockPath = path.join(
+			TEMPLATES_DIR,
+			"project-starter-nextjs-vercel",
+			"package-lock.json",
+		);
 		const projectPackageLockPath = path.join(projectDir, "package-lock.json");
 
 		const templatePackageLock = await readFile(templatePackageLockPath, "utf-8");
