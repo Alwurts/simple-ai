@@ -34,18 +34,24 @@ export async function setupProject(config: ProjectConfig): Promise<void> {
 			await fs.rename(envExampleSrc, envExampleDest);
 		}
 
-		// 6. Post-process: Update package.json
+		// 5. Copy .env.example to .env.local for local development
+		const envLocalDest = path.join(config.projectDir, ".env.local");
+		if (await fs.pathExists(envExampleDest)) {
+			await fs.copy(envExampleDest, envLocalDest);
+		}
+
+		// 7. Post-process: Update package.json
 		const packageJsonPath = path.join(config.projectDir, "package.json");
 		const packageJson = await fs.readJSON(packageJsonPath);
 		packageJson.name = config.projectName;
 		await fs.writeJSON(packageJsonPath, packageJson, { spaces: 2 });
 
-		// 7. Install dependencies
+		// 8. Install dependencies
 		if (config.install) {
 			await installDependencies(config);
 		}
 
-		// 8. Initialize Git repository
+		// 9. Initialize Git repository
 		if (config.git) {
 			await initializeGit(config.projectDir);
 		}
