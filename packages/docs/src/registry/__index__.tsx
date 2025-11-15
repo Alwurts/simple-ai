@@ -1465,6 +1465,7 @@ export const Index: Record<string, any> = {
 		type: "registry:block",
 		registryDependencies: [
 			"card",
+			"badge",
 			"breadcrumb",
 			"separator",
 			"sidebar",
@@ -1478,6 +1479,12 @@ export const Index: Record<string, any> = {
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
 			"@simple-ai/reasoning",
+			"@simple-ai/agents",
+			"@simple-ai/messages",
+			"@simple-ai/models",
+			"@simple-ai/tools",
+			"@simple-ai/agent-respond",
+			"@simple-ai/ai-utils",
 		],
 		files: [
 			{
@@ -1494,21 +1501,6 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/blocks/chat-01/lib/config.ts",
 				type: "registry:lib",
 				target: "",
-			},
-			{
-				path: "./src/registry/blocks/chat-01/lib/tools.ts",
-				type: "registry:lib",
-				target: "",
-			},
-			{
-				path: "./src/registry/blocks/chat-01/lib/messages.ts",
-				type: "registry:lib",
-				target: "",
-			},
-			{
-				path: "./src/registry/blocks/chat-01/types/ai-messages.ts",
-				type: "registry:lib",
-				target: "types/ai-messages.ts",
 			},
 			{
 				path: "./src/registry/blocks/chat-01/components/layout/app-layout.tsx",
@@ -2738,6 +2730,261 @@ export const Index: Record<string, any> = {
 			return { default: mod.default || mod[exportName] };
 		}),
 		categories: ["workflow"],
+		meta: undefined,
+	},
+	agents: {
+		name: "agents",
+		description: "A set of default agents.",
+		type: "registry:lib",
+		registryDependencies: [
+			"@simple-ai/models",
+			"@simple-ai/weather-agent",
+			"@simple-ai/search-agent",
+			"@simple-ai/id-to-readable-text",
+		],
+		files: [
+			{
+				path: "./src/registry/ai/agents/agents.ts",
+				type: "registry:lib",
+				target: "lib/ai/agents.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/agents/agents.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"weather-agent": {
+		name: "weather-agent",
+		description: "A weather agent with tools for getting the weather.",
+		type: "registry:lib",
+		registryDependencies: ["@simple-ai/models", "@simple-ai/get-weather"],
+		files: [
+			{
+				path: "./src/registry/ai/agents/weather-agent.ts",
+				type: "registry:lib",
+				target: "lib/ai/agents/weather-agent.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/agents/weather-agent.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"search-agent": {
+		name: "search-agent",
+		description: "A search agent with tools for web searching.",
+		type: "registry:lib",
+		registryDependencies: ["@simple-ai/models", "@simple-ai/web-search"],
+		files: [
+			{
+				path: "./src/registry/ai/agents/search-agent.ts",
+				type: "registry:lib",
+				target: "lib/ai/agents/search-agent.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/agents/search-agent.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	tools: {
+		name: "tools",
+		description: "A set of tools for the AI SDK.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/tools/tools.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/tools/tools.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"get-weather": {
+		name: "get-weather",
+		description: "A tool for getting the weather.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/tools/get-weather.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/tools/get-weather.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"web-search": {
+		name: "web-search",
+		description: "A tool for searching the web.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/tools/web-search.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/tools/web-search.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"agent-respond": {
+		name: "agent-respond",
+		description: "A function to respond to a message with an agent.",
+		type: "registry:lib",
+		registryDependencies: ["@simple-ai/id-to-readable-text"],
+		files: [
+			{
+				path: "./src/registry/ai/agent-route-respond.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/agent-route-respond.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	models: {
+		name: "models",
+		description: "A set of models for the AI SDK.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/models.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/models.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	messages: {
+		name: "messages",
+		description: "UIMessage types for the AI SDK.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/messages.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/messages.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"ai-utils": {
+		name: "ai-utils",
+		description: "A set of utilities for the AI SDK.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/ai-utils.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/ai-utils.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
 		meta: undefined,
 	},
 };

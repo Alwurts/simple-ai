@@ -10,12 +10,12 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import type { AIUIMessage } from "@/registry/ai/messages";
 import {
 	AppHeader,
 	AppHeaderIcon,
 	AppHeaderSeparator,
 } from "@/registry/blocks/chat-01/components/layout/app-header";
-import type { AIUIMessage } from "@/registry/blocks/chat-01/types/ai-messages";
 
 export function ChatHeader({
 	setMessages,

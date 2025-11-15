@@ -1,0 +1,14 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "get-weather",
+	"type": "registry:lib",
+	"description": "A tool for getting the weather.",
+	"dependencies": ["ai"],
+	"files": [
+		{
+			"path": "./src/registry/ai/tools/get-weather.ts",
+			"content": "import { type InferUITool, tool } from \"ai\";\nimport { z } from \"zod\";\n\nconst getWeatherParamsSchema = z.object({\n\tcity: z.string().describe(\"The city to get the weather for\"),\n\tunit: z.enum([\"fahrenheit\", \"celsius\"]).describe(\"The unit of temperature\"),\n});\n\nexport type GetWeatherParams = z.infer<typeof getWeatherParamsSchema>;\n\nconst getWeatherResultSchema = z.union([\n\tz.object({\n\t\tsuccess: z.literal(true),\n\t\tmessage: z.string(),\n\t}),\n\tz.object({\n\t\tsuccess: z.literal(false),\n\t\terror: z.string(),\n\t}),\n]);\n\nexport type GetWeatherResult = z.infer<typeof getWeatherResultSchema>;\n\nexport const getWeatherTool = tool({\n\tdescription: \"Get the weather in a location (in Fahrenheit)\",\n\tinputSchema: getWeatherParamsSchema,\n\toutputSchema: getWeatherResultSchema,\n\texecute: async (params) => {\n\t\tconst temperature =\n\t\t\tparams.unit === \"fahrenheit\"\n\t\t\t\t? 72 + Math.floor(Math.random() * 21) - 10\n\t\t\t\t: (72 + Math.floor(Math.random() * 21) - 10) * (5 / 9);\n\n\t\treturn {\n\t\t\tsuccess: true,\n\t\t\tmessage: `The weather in ${params.city} is ${temperature} degrees ${params.unit}`,\n\t\t};\n\t},\n});\n\nexport type GetWeatherTool = InferUITool<typeof getWeatherTool>;\n",
+			"type": "registry:lib"
+		}
+	]
+}

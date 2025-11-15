@@ -89,7 +89,13 @@
 			"type": "registry:ui",
 			"title": "Markdown Content",
 			"description": "A component that renders markdown content.",
-			"dependencies": ["react-markdown", "marked", "remark-gfm", "shiki"],
+			"dependencies": [
+				"react-markdown",
+				"marked",
+				"shiki",
+				"remark-gfm",
+				"rehype-raw"
+			],
 			"files": [
 				{
 					"path": "./src/registry/ui/markdown-content.tsx",
@@ -691,6 +697,7 @@
 			"dependencies": ["ai", "@ai-sdk/react", "@ai-sdk/openai"],
 			"registryDependencies": [
 				"card",
+				"badge",
 				"breadcrumb",
 				"separator",
 				"sidebar",
@@ -703,7 +710,13 @@
 				"@simple-ai/chat-message",
 				"@simple-ai/tool-invocation",
 				"@simple-ai/chat-suggestions",
-				"@simple-ai/reasoning"
+				"@simple-ai/reasoning",
+				"@simple-ai/agents",
+				"@simple-ai/messages",
+				"@simple-ai/models",
+				"@simple-ai/tools",
+				"@simple-ai/agent-respond",
+				"@simple-ai/ai-utils"
 			],
 			"files": [
 				{
@@ -719,19 +732,6 @@
 				{
 					"path": "./src/registry/blocks/chat-01/lib/config.ts",
 					"type": "registry:lib"
-				},
-				{
-					"path": "./src/registry/blocks/chat-01/lib/tools.ts",
-					"type": "registry:lib"
-				},
-				{
-					"path": "./src/registry/blocks/chat-01/lib/messages.ts",
-					"type": "registry:lib"
-				},
-				{
-					"path": "./src/registry/blocks/chat-01/types/ai-messages.ts",
-					"type": "registry:lib",
-					"target": "types/ai-messages.ts"
 				},
 				{
 					"path": "./src/registry/blocks/chat-01/components/layout/app-layout.tsx",
@@ -1889,6 +1889,146 @@
 			},
 			"docs": "Get an OpenAI API key from https://platform.openai.com/ and add it to the environment variables file and run the dev server. \n\nLearn more about how to use the Vercel AI SDK https://ai-sdk.dev/docs/introduction.",
 			"categories": ["workflow"]
+		},
+		{
+			"name": "agents",
+			"type": "registry:lib",
+			"description": "A set of default agents.",
+			"dependencies": ["ai"],
+			"registryDependencies": [
+				"@simple-ai/models",
+				"@simple-ai/weather-agent",
+				"@simple-ai/search-agent",
+				"@simple-ai/id-to-readable-text"
+			],
+			"files": [
+				{
+					"path": "./src/registry/ai/agents/agents.ts",
+					"type": "registry:lib",
+					"target": "lib/ai/agents.ts"
+				}
+			]
+		},
+		{
+			"name": "weather-agent",
+			"type": "registry:lib",
+			"title": "Weather Agent",
+			"description": "A weather agent with tools for getting the weather.",
+			"dependencies": ["ai"],
+			"registryDependencies": [
+				"@simple-ai/models",
+				"@simple-ai/get-weather"
+			],
+			"files": [
+				{
+					"path": "./src/registry/ai/agents/weather-agent.ts",
+					"type": "registry:lib",
+					"target": "lib/ai/agents/weather-agent.ts"
+				}
+			]
+		},
+		{
+			"name": "search-agent",
+			"type": "registry:lib",
+			"title": "Search Agent",
+			"description": "A search agent with tools for web searching.",
+			"dependencies": ["ai"],
+			"registryDependencies": [
+				"@simple-ai/models",
+				"@simple-ai/web-search"
+			],
+			"files": [
+				{
+					"path": "./src/registry/ai/agents/search-agent.ts",
+					"type": "registry:lib",
+					"target": "lib/ai/agents/search-agent.ts"
+				}
+			]
+		},
+		{
+			"name": "tools",
+			"type": "registry:lib",
+			"description": "A set of tools for the AI SDK.",
+			"dependencies": ["ai"],
+			"files": [
+				{
+					"path": "./src/registry/ai/tools/tools.ts",
+					"type": "registry:lib"
+				}
+			]
+		},
+		{
+			"name": "get-weather",
+			"type": "registry:lib",
+			"description": "A tool for getting the weather.",
+			"dependencies": ["ai"],
+			"files": [
+				{
+					"path": "./src/registry/ai/tools/get-weather.ts",
+					"type": "registry:lib"
+				}
+			]
+		},
+		{
+			"name": "web-search",
+			"type": "registry:lib",
+			"description": "A tool for searching the web.",
+			"dependencies": ["ai"],
+			"files": [
+				{
+					"path": "./src/registry/ai/tools/web-search.ts",
+					"type": "registry:lib"
+				}
+			]
+		},
+		{
+			"name": "agent-respond",
+			"type": "registry:lib",
+			"description": "A function to respond to a message with an agent.",
+			"dependencies": ["ai"],
+			"registryDependencies": ["@simple-ai/id-to-readable-text"],
+			"files": [
+				{
+					"path": "./src/registry/ai/agent-route-respond.ts",
+					"type": "registry:lib"
+				}
+			]
+		},
+		{
+			"name": "models",
+			"type": "registry:lib",
+			"description": "A set of models for the AI SDK.",
+			"dependencies": ["ai", "@ai-sdk/openai"],
+			"files": [
+				{
+					"path": "./src/registry/ai/models.ts",
+					"type": "registry:lib"
+				}
+			]
+		},
+		{
+			"name": "messages",
+			"type": "registry:lib",
+			"description": "UIMessage types for the AI SDK.",
+			"dependencies": ["ai"],
+			"files": [
+				{
+					"path": "./src/registry/ai/messages.ts",
+					"type": "registry:lib"
+				}
+			]
+		},
+		{
+			"name": "ai-utils",
+			"type": "registry:lib",
+			"description": "A set of utilities for the AI SDK.",
+			"dependencies": ["ai"],
+			"files": [
+				{
+					"path": "./src/registry/ai/ai-utils.ts",
+					"type": "registry:lib"
+				}
+			]
 		}
 	]
 }

@@ -68,7 +68,13 @@ export const ui: Registry["items"] = [
 		title: "Markdown Content",
 		description: "A component that renders markdown content.",
 		type: "registry:ui",
-		dependencies: ["react-markdown", "marked", "remark-gfm", "shiki"],
+		dependencies: [
+			"react-markdown",
+			"marked",
+			"shiki",
+			"remark-gfm",
+			"rehype-raw",
+		],
 		files: [{ type: "registry:ui", path: "ui/markdown-content.tsx" }],
 	},
 	{

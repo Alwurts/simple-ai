@@ -27,6 +27,7 @@ export const blocks: Registry["items"] = [
 		dependencies: ["ai", "@ai-sdk/react", "@ai-sdk/openai"],
 		registryDependencies: [
 			"card",
+			"badge",
 			"breadcrumb",
 			"separator",
 			"sidebar",
@@ -40,6 +41,12 @@ export const blocks: Registry["items"] = [
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
 			"@simple-ai/reasoning",
+			"@simple-ai/agents",
+			"@simple-ai/messages",
+			"@simple-ai/models",
+			"@simple-ai/tools",
+			"@simple-ai/agent-respond",
+			"@simple-ai/ai-utils",
 		],
 		files: [
 			{
@@ -54,19 +61,6 @@ export const blocks: Registry["items"] = [
 			},
 			{
 				path: "blocks/chat-01/lib/config.ts",
-				type: "registry:lib",
-			},
-			{
-				path: "blocks/chat-01/lib/tools.ts",
-				type: "registry:lib",
-			},
-			{
-				path: "blocks/chat-01/lib/messages.ts",
-				type: "registry:lib",
-			},
-			{
-				path: "blocks/chat-01/types/ai-messages.ts",
-				target: "types/ai-messages.ts",
 				type: "registry:lib",
 			},
 			{

@@ -1,0 +1,14 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "ai-utils",
+	"type": "registry:lib",
+	"description": "A set of utilities for the AI SDK.",
+	"dependencies": ["ai"],
+	"files": [
+		{
+			"path": "./src/registry/ai/ai-utils.ts",
+			"content": "import type { AIUIMessage } from \"@/registry/ai/messages\";\nimport { idToReadableText } from \"@/registry/lib/id-to-readable-text\";\n\nexport function uiMessageToText(message: AIUIMessage) {\n\treturn message.parts\n\t\t.map((part) => {\n\t\t\tif (part.type === \"text\") {\n\t\t\t\treturn part.text;\n\t\t\t}\n\t\t\tif (part.type === \"reasoning\") {\n\t\t\t\treturn `Reasoning:\\n${part.text}`;\n\t\t\t}\n\t\t\tif (part.type === \"dynamic-tool\" || part.type.startsWith(\"tool\")) {\n\t\t\t\treturn `Tool call: ${idToReadableText(part.type)}`;\n\t\t\t}\n\t\t\treturn \"\";\n\t\t})\n\t\t.join(\"\\n\");\n}\n",
+			"type": "registry:lib"
+		}
+	]
+}

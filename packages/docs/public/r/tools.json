@@ -1,0 +1,14 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "tools",
+	"type": "registry:lib",
+	"description": "A set of tools for the AI SDK.",
+	"dependencies": ["ai"],
+	"files": [
+		{
+			"path": "./src/registry/ai/tools/tools.ts",
+			"content": "import type { InferUITools, ToolSet } from \"ai\";\nimport { getWeatherTool } from \"@/registry/ai/tools/get-weather\";\nimport { webSearchTool } from \"@/registry/ai/tools/web-search\";\n\nexport const tools = {\n\t\"get-weather\": getWeatherTool,\n\t\"web-search\": webSearchTool,\n\t// Add more tools here\n} satisfies ToolSet;\n\nexport type Tools = InferUITools<typeof tools>;\n\nexport type toolId = keyof typeof tools;\n",
+			"type": "registry:lib"
+		}
+	]
+}

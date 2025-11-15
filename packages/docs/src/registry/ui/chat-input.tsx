@@ -47,9 +47,9 @@ type MentionConfig<T extends BaseMentionItem = BaseMentionItem> = {
 	editorMentionClass?: string;
 };
 
-export function createMentionConfig<T extends BaseMentionItem>(
-	config: MentionConfig<T>,
-): MentionConfig<T> {
+export function createMentionConfig<
+	T extends BaseMentionItem = BaseMentionItem,
+>(config: MentionConfig<T>): MentionConfig<T> {
 	return config;
 }
 

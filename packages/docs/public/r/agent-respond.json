@@ -1,0 +1,15 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "agent-respond",
+	"type": "registry:lib",
+	"description": "A function to respond to a message with an agent.",
+	"dependencies": ["ai"],
+	"registryDependencies": ["@simple-ai/id-to-readable-text"],
+	"files": [
+		{
+			"path": "./src/registry/ai/agent-route-respond.ts",
+			"content": "import { convertToModelMessages } from \"ai\";\nimport { AGENTS, type agentId, agents } from \"@/registry/ai/agents/agents\";\nimport type { AIUIMessage } from \"@/registry/ai/messages\";\nimport { idToReadableText } from \"@/registry/lib/id-to-readable-text\";\n\nexport async function agentRouteAndRespond(\n\tmessages: AIUIMessage[],\n\tmentions: {\n\t\tid: string;\n\t\tname: string;\n\t}[],\n) {\n\tlet mentionedAgentId = mentions?.[0]?.id;\n\n\tif (!mentionedAgentId) {\n\t\tmentionedAgentId = AGENTS[0];\n\t}\n\n\tconst agentResponding = agents[mentionedAgentId as agentId];\n\n\tconst agentStream = agentResponding.stream({\n\t\tmessages: convertToModelMessages(messages),\n\t});\n\n\treturn agentStream.toUIMessageStreamResponse({\n\t\toriginalMessages: messages,\n\t\tsendReasoning: true,\n\t\tmessageMetadata: ({ part }) => {\n\t\t\tif (part.type === \"start\") {\n\t\t\t\treturn {\n\t\t\t\t\ttimestamp: new Date().toISOString(),\n\t\t\t\t\tagent: {\n\t\t\t\t\t\tid: mentionedAgentId,\n\t\t\t\t\t\tname: idToReadableText(mentionedAgentId),\n\t\t\t\t\t},\n\t\t\t\t};\n\t\t\t}\n\n\t\t\tif (part.type === \"finish\") {\n\t\t\t\treturn {\n\t\t\t\t\toutputTokens: part.totalUsage.outputTokens,\n\t\t\t\t};\n\t\t\t}\n\t\t},\n\t});\n}\n",
+			"type": "registry:lib"
+		}
+	]
+}
