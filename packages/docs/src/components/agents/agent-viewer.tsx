@@ -14,11 +14,9 @@ import type {
 	registryItemSchema,
 } from "@/shadcn-temp/schema";
 import { AgentChat } from "./agent-chat";
-import {
-	AgentCodeView,
-	AgentProfileCard,
-	AgentProfileView,
-} from "./agent-tools";
+import { AgentCodeView } from "./agent-code-view";
+import { AgentProfileCard } from "./agent-profile-card";
+import { AgentProfileView } from "./agent-profile-view";
 
 type AgentViewerContext = {
 	item: z.infer<typeof registryItemSchema>;

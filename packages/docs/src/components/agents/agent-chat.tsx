@@ -2,6 +2,7 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
+import { Button } from "@/components/ui/button";
 import type { AIUIMessage } from "@/registry/ai/messages";
 import {
 	ChatInput,
@@ -28,7 +29,6 @@ import {
 	ChatMessageAreaScrollButton,
 } from "@/registry/ui/chat-message-area";
 import { useAgentViewer } from "./agent-viewer";
-import { Button } from "@/components/ui/button";
 
 function AgentChat() {
 	const { agentId, item } = useAgentViewer();
@@ -74,22 +74,29 @@ function AgentChat() {
 										Try asking:
 									</div>
 									<div className="flex flex-col gap-2">
-										{suggestions.slice(0, 3).map((suggestion) => (
-											<Button
-												key={suggestion}
-												variant="outline"
-												size="sm"
-												className="text-left justify-start h-auto py-2 px-3 text-xs"
-												onClick={() => {
-													sendMessage({
-														role: "user",
-														parts: [{ type: "text", text: suggestion }],
-													});
-												}}
-											>
-												{suggestion}
-											</Button>
-										))}
+										{suggestions
+											.slice(0, 3)
+											.map((suggestion) => (
+												<Button
+													key={suggestion}
+													variant="outline"
+													size="sm"
+													className="text-left justify-start h-auto py-2 px-3 text-xs"
+													onClick={() => {
+														sendMessage({
+															role: "user",
+															parts: [
+																{
+																	type: "text",
+																	text: suggestion,
+																},
+															],
+														});
+													}}
+												>
+													{suggestion}
+												</Button>
+											))}
 									</div>
 								</div>
 							)}

@@ -5,22 +5,10 @@ import * as React from "react";
 import { getIconForLanguageExtension } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import {
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import {
-	ResizableHandle,
-	ResizablePanel,
-	ResizablePanelGroup,
-} from "@/components/ui/resizable";
 import {
 	Sidebar,
 	SidebarGroup,
@@ -30,140 +18,11 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarMenuSub,
-	SidebarProvider,
 } from "@/components/ui/sidebar";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { trackEvent } from "@/lib/events";
 import type { FileTree } from "@/lib/registry";
-import { idToReadableText } from "@/registry/lib/id-to-readable-text";
-import { JsonSchemaViewer } from "@/registry/ui/json-schema-viewer";
-import { AgentChat } from "./agent-chat";
 import { useAgentViewer } from "./agent-viewer";
-
-function ToolCard({ toolId }: { toolId: string }) {
-	const { toolMetadata } = useAgentViewer();
-	const toolDetails = toolMetadata[toolId];
-	const readableName = idToReadableText(toolId);
-
-	if (!toolDetails) {
-		return (
-			<Card className="w-full">
-				<CardHeader>
-					<CardTitle className="text-lg">{readableName}</CardTitle>
-					<CardDescription>Tool details unavailable</CardDescription>
-				</CardHeader>
-			</Card>
-		);
-	}
-
-	return (
-		<Card className="w-full">
-			<CardHeader>
-				<CardTitle className="text-lg">{readableName}</CardTitle>
-				<CardDescription>{toolDetails.description}</CardDescription>
-			</CardHeader>
-			{toolDetails.inputSchema && (
-				<CardContent>
-					<div className="space-y-3">
-						<h5 className="text-sm font-medium">Input Schema:</h5>
-						<JsonSchemaViewer schema={toolDetails.inputSchema} />
-					</div>
-				</CardContent>
-			)}
-			{toolDetails.outputSchema && (
-				<CardContent>
-					<div className="space-y-3">
-						<h5 className="text-sm font-medium">Output Schema:</h5>
-						<JsonSchemaViewer schema={toolDetails.outputSchema} />
-					</div>
-				</CardContent>
-			)}
-		</Card>
-	);
-}
-
-function AgentProfileCard() {
-	const { item } = useAgentViewer();
-	const meta = item.meta as
-		| {
-				toolIds: string[];
-				suggestions?: string[];
-				prompt?: string;
-		  }
-		| undefined;
-
-	if (!item.categories?.includes("agent") || !meta) {
-		return null;
-	}
-
-	return (
-		<Card className="w-full">
-			<CardHeader>
-				<div className="space-y-2">
-					<CardTitle className="text-2xl font-bold">
-						{item.title ?? item.name}
-					</CardTitle>
-					<CardDescription className="text-base">
-						{item.description}
-					</CardDescription>
-				</div>
-			</CardHeader>
-			<CardContent className="space-y-4">
-				{meta.prompt && (
-					<div>
-						<Collapsible defaultOpen={false}>
-							<CollapsibleTrigger className="flex items-center gap-2 w-full">
-								<h4 className="text-sm font-medium">Prompt</h4>
-								<ChevronRight className="h-3 w-3 transition-transform group-data-[state=open]/collapsible:rotate-90 ml-auto" />
-							</CollapsibleTrigger>
-							<CollapsibleContent className="mt-2">
-								<div className="bg-muted rounded-md p-3">
-									<pre className="text-xs whitespace-pre-wrap font-mono leading-relaxed">
-										{meta.prompt}
-									</pre>
-								</div>
-							</CollapsibleContent>
-						</Collapsible>
-					</div>
-				)}
-				<div>
-					<h4 className="text-sm font-medium mb-3">Tools</h4>
-					<div className="space-y-3">
-						{meta.toolIds.map((toolId) => (
-							<ToolCard key={toolId} toolId={toolId} />
-						))}
-					</div>
-				</div>
-			</CardContent>
-		</Card>
-	);
-}
-
-function AgentProfileView() {
-	const { view, item } = useAgentViewer();
-
-	if (view === "code") {
-		return null;
-	}
-
-	return (
-		<div className="hidden group-data-[view=code]/agent-view-wrapper:hidden lg:flex lg:h-[600px]">
-			<ResizablePanelGroup
-				id={`agent-viewer-${item.name}`}
-				direction="horizontal"
-				className="gap-4"
-			>
-				<ResizablePanel defaultSize={40} minSize={30}>
-					<AgentProfileCard />
-				</ResizablePanel>
-				<ResizableHandle className="w-2" />
-				<ResizablePanel defaultSize={60} minSize={40}>
-					<AgentChat />
-				</ResizablePanel>
-			</ResizablePanelGroup>
-		</div>
-	);
-}
 
 function AgentCodeView() {
 	const { activeFile, highlightedFiles, view } = useAgentViewer();
@@ -217,26 +76,27 @@ function AgentViewerFileTree() {
 	}
 
 	return (
-		<SidebarProvider className="flex min-h-full! flex-col border-r">
-			<Sidebar collapsible="none" className="w-full flex-1">
-				<SidebarGroupLabel className="h-12 rounded-none border-b px-4 text-sm">
-					Files
-				</SidebarGroupLabel>
-				<SidebarGroup className="p-0">
-					<SidebarGroupContent>
-						<SidebarMenu className="translate-x-0 gap-1.5">
-							{tree.map((file, index) => (
-								<Tree
-									key={`${file.name}-${index}`}
-									item={file}
-									index={1}
-								/>
-							))}
-						</SidebarMenu>
-					</SidebarGroupContent>
-				</SidebarGroup>
-			</Sidebar>
-		</SidebarProvider>
+		<Sidebar
+			collapsible="none"
+			className="flex min-h-full! flex-col border-r"
+		>
+			<SidebarGroupLabel className="h-12 rounded-none border-b px-4 text-sm">
+				Files
+			</SidebarGroupLabel>
+			<SidebarGroup className="p-0">
+				<SidebarGroupContent>
+					<SidebarMenu className="translate-x-0 gap-1.5">
+						{tree.map((file, index) => (
+							<Tree
+								key={`${file.name}-${index}`}
+								item={file}
+								index={1}
+							/>
+						))}
+					</SidebarMenu>
+				</SidebarGroupContent>
+			</SidebarGroup>
+		</Sidebar>
 	);
 }
 
@@ -336,12 +196,4 @@ function AgentCopyCodeButton() {
 	);
 }
 
-export {
-	ToolCard,
-	AgentProfileCard,
-	AgentProfileView,
-	AgentCodeView,
-	AgentViewerFileTree,
-	Tree,
-	AgentCopyCodeButton,
-};
+export { AgentCodeView, AgentViewerFileTree, Tree, AgentCopyCodeButton };
