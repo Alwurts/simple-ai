@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Announcement } from "@/components/general/announcement";
 import {
 	PageActions,
 	PageHeader,
@@ -41,6 +42,7 @@ export default function WorkflowsLayout({ children }: { children: ReactNode }) {
 	return (
 		<>
 			<PageHeader>
+				<Announcement />
 				<PageHeaderHeading>{title}</PageHeaderHeading>
 				<PageHeaderDescription>
 					Build sophisticated AI agent workflows using an interactive

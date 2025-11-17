@@ -9,9 +9,20 @@
 	"files": [
 		{
 			"path": "./src/registry/ai/agents/search-agent.ts",
-			"content": "import { Experimental_Agent as Agent, stepCountIs } from \"ai\";\n\nimport { model } from \"@/registry/ai/models\";\nimport { webSearchTool } from \"@/registry/ai/tools/web-search\";\n\nexport const searchAgent = new Agent({\n\tmodel: model.languageModel(\"gpt-5.1\"),\n\ttools: {\n\t\t\"web-search\": webSearchTool,\n\t},\n\tstopWhen: stepCountIs(20),\n});\n",
+			"content": "import { Experimental_Agent as Agent, stepCountIs } from \"ai\";\n\nimport { model } from \"@/registry/ai/models\";\nimport { webSearchTool } from \"@/registry/ai/tools/web-search\";\n\nexport const searchAgentPrompt = `You are a helpful search assistant. Your role is to find and provide accurate information from the web.\n\nWhen users ask questions or need information:\n- Use the web-search tool to find relevant information\n- Search for the most relevant and up-to-date information\n- Synthesize search results into clear, helpful answers\n- Cite sources when appropriate\n- If search results don't contain the answer, let the user know\n- Be thorough but concise in your responses`;\n\nexport const searchAgent = new Agent({\n\tmodel: model.languageModel(\"gpt-5.1\"),\n\tsystem: searchAgentPrompt,\n\ttools: {\n\t\t\"web-search\": webSearchTool,\n\t},\n\tstopWhen: stepCountIs(20),\n});\n",
 			"type": "registry:lib",
 			"target": "lib/ai/agents/search-agent.ts"
 		}
-	]
+	],
+	"meta": {
+		"toolIds": ["web-search"],
+		"suggestions": [
+			"Search for the latest AI news",
+			"Find information about React hooks",
+			"What are the current trends in web development?",
+			"Search for recipes for chocolate chip cookies"
+		],
+		"prompt": "You are a helpful search assistant. Your role is to find and provide accurate information from the web.\n\nWhen users ask questions or need information:\n- Use the web-search tool to find relevant information\n- Search for the most relevant and up-to-date information\n- Synthesize search results into clear, helpful answers\n- Cite sources when appropriate\n- If search results don't contain the answer, let the user know\n- Be thorough but concise in your responses"
+	},
+	"categories": ["agent"]
 }

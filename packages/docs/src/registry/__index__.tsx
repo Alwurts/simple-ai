@@ -602,6 +602,32 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"json-schema-viewer": {
+		name: "json-schema-viewer",
+		description:
+			"A read-only component for displaying JSON Schema structures with support for union types, nested objects, arrays, and enums.",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ui/json-schema-viewer.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/json-schema-viewer.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	reasoning: {
 		name: "reasoning",
 		description:
@@ -2784,8 +2810,17 @@ export const Index: Record<string, any> = {
 				) || item.name;
 			return { default: mod.default || mod[exportName] };
 		}),
-		categories: undefined,
-		meta: undefined,
+		categories: ["agent"],
+		meta: {
+			toolIds: ["get-weather"],
+			suggestions: [
+				"What's the weather like today?",
+				"Will it rain tomorrow?",
+				"What's the forecast for next week?",
+				"How's the weather in New York?",
+			],
+			prompt: "You are a helpful weather assistant. Your role is to provide accurate and helpful weather information to users.\n\nWhen users ask about weather:\n- Use the get-weather tool to retrieve current weather conditions\n- Always specify the city and preferred temperature unit (fahrenheit or celsius)\n- Provide clear, concise weather information\n- If a user doesn't specify a unit, default to fahrenheit\n- Be friendly and helpful in your responses",
+		},
 	},
 	"search-agent": {
 		name: "search-agent",
@@ -2809,8 +2844,17 @@ export const Index: Record<string, any> = {
 				) || item.name;
 			return { default: mod.default || mod[exportName] };
 		}),
-		categories: undefined,
-		meta: undefined,
+		categories: ["agent"],
+		meta: {
+			toolIds: ["web-search"],
+			suggestions: [
+				"Search for the latest AI news",
+				"Find information about React hooks",
+				"What are the current trends in web development?",
+				"Search for recipes for chocolate chip cookies",
+			],
+			prompt: "You are a helpful search assistant. Your role is to find and provide accurate information from the web.\n\nWhen users ask questions or need information:\n- Use the web-search tool to find relevant information\n- Search for the most relevant and up-to-date information\n- Synthesize search results into clear, helpful answers\n- Cite sources when appropriate\n- If search results don't contain the answer, let the user know\n- Be thorough but concise in your responses",
+		},
 	},
 	tools: {
 		name: "tools",

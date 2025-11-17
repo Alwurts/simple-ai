@@ -22,6 +22,7 @@ const getWeatherResultSchema = z.union([
 export type GetWeatherResult = z.infer<typeof getWeatherResultSchema>;
 
 export const getWeatherTool = tool({
+	name: "get-weather",
 	description: "Get the weather in a location (in Fahrenheit)",
 	inputSchema: getWeatherParamsSchema,
 	outputSchema: getWeatherResultSchema,

@@ -328,6 +328,14 @@ export const ui: Registry["items"] = [
 		files: [{ type: "registry:ui", path: "ui/json-schema-editor.tsx" }],
 	},
 	{
+		name: "json-schema-viewer",
+		title: "JSON Schema Viewer",
+		description:
+			"A read-only component for displaying JSON Schema structures with support for union types, nested objects, arrays, and enums.",
+		type: "registry:ui",
+		files: [{ type: "registry:ui", path: "ui/json-schema-viewer.tsx" }],
+	},
+	{
 		name: "reasoning",
 		title: "Reasoning",
 		description:

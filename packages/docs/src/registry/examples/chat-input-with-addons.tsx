@@ -39,7 +39,7 @@ export default function ChatInputWithAddons() {
 						<ChatInputGroupText className="ml-auto">
 							52% used
 						</ChatInputGroupText>
-						<Separator orientation="vertical" className="!h-6" />
+						<Separator orientation="vertical" className="h-6!" />
 						<ChatInputSubmitButton />
 					</ChatInputGroupAddon>
 				</ChatInput>

@@ -32,6 +32,7 @@ const webSearchResultSchema = z.union([
 export type WebSearchResult = z.infer<typeof webSearchResultSchema>;
 
 export const webSearchTool = tool({
+	name: "web-search",
 	description: "Search the web for information",
 	inputSchema: webSearchParamsSchema,
 	outputSchema: webSearchResultSchema,

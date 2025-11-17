@@ -36,7 +36,7 @@
 		},
 		{
 			"path": "./src/registry/blocks/chat-01/route.ts",
-			"content": "import { agentRouteAndRespond } from \"@/registry/ai/agent-route-respond\";\n\nexport async function POST(req: Request) {\n\tconst { messages, mentions } = await req.json();\n\treturn agentRouteAndRespond(messages, mentions);\n}\n",
+			"content": "import { agentExecute, agentRoute } from \"@/registry/ai/agent-route-respond\";\n\nexport async function POST(req: Request) {\n\tconst { messages, mentions } = await req.json();\n\tconst agentId = agentRoute(mentions);\n\treturn agentExecute(agentId, messages);\n}\n",
 			"type": "registry:page",
 			"target": "app/api/ai/chat/route.ts"
 		},

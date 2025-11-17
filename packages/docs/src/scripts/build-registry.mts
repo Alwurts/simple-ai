@@ -144,8 +144,8 @@ async function buildRegistry() {
 }
 
 async function buildBlocksIndex() {
-	const { getAllBlocks } = await import("../lib/blocks");
-	const blocks = await getAllBlocks(["registry:block"]);
+	const { getAllRegistryItems } = await import("../lib/registry");
+	const blocks = await getAllRegistryItems(["registry:block"], []);
 
 	const payload = blocks.map((block) => ({
 		name: block.name,

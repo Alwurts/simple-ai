@@ -1,5 +1,5 @@
 import { BlockDisplay } from "@/components/blocks/block-display";
-import { getAllBlockIds } from "@/lib/blocks";
+import { getAllRegistryItemIds } from "@/lib/registry";
 import { registryCategories } from "@/registry/registry-categories";
 
 export const revalidate = false;
@@ -18,7 +18,7 @@ export default async function BlocksPage({
 	params: Promise<{ categories?: string[] }>;
 }) {
 	const { categories = [] } = await params;
-	const blocks = await getAllBlockIds(["registry:block"], categories);
+	const blocks = await getAllRegistryItemIds(["registry:block"], categories);
 
 	return (
 		<div className="flex flex-col gap-12 md:gap-24">

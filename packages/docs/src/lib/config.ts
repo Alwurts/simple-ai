@@ -25,11 +25,16 @@ export const siteConfig = {
 			href: "/ai-workflows",
 			label: "Workflows",
 		},
+		{
+			href: "/agents",
+			label: "Agents",
+		},
 	],
 	topLevelSections: [
 		{ name: "Get Started", href: "/docs" },
 		{ name: "Components", href: "/docs/components" },
 		{ name: "Workflows", href: "/docs/workflows" },
+		{ name: "Agents", href: "/docs/agents" },
 	],
 };
 
