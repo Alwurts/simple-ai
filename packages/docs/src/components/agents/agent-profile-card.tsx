@@ -13,7 +13,7 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ToolCard } from "./agent-tool-card";
+import { AgentToolCard } from "./agent-tool-card";
 import { useAgentViewer } from "./agent-viewer";
 
 function AgentProfileCard() {
@@ -64,7 +64,7 @@ function AgentProfileCard() {
 					<h4 className="text-sm font-medium mb-3">Tools</h4>
 					<div className="space-y-3">
 						{meta.toolIds.map((toolId) => (
-							<ToolCard key={toolId} toolId={toolId} />
+							<AgentToolCard key={toolId} toolId={toolId} />
 						))}
 					</div>
 				</div>

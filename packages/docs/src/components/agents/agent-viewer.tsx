@@ -9,19 +9,22 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import type { createFileTreeForRegistryItemFiles } from "@/lib/registry";
 import type { ToolDetails } from "@/lib/tool-metadata";
+import { idToReadableText } from "@/registry/lib/id-to-readable-text";
 import type {
 	registryItemFileSchema,
 	registryItemSchema,
 } from "@/shadcn-temp/schema";
 import { AgentChat } from "./agent-chat";
 import { AgentCodeView } from "./agent-code-view";
-import { AgentProfileCard } from "./agent-profile-card";
+import { AgentInfo } from "./agent-info";
 import { AgentProfileView } from "./agent-profile-view";
 
 type AgentViewerContext = {
 	item: z.infer<typeof registryItemSchema>;
 	view: "profile" | "code";
 	setView: (view: "profile" | "code") => void;
+	mobileView: "view" | "chat" | "code";
+	setMobileView: (view: "view" | "chat" | "code") => void;
 	activeFile: string | null;
 	setActiveFile: (file: string) => void;
 	tree: ReturnType<typeof createFileTreeForRegistryItemFiles> | null;
@@ -61,6 +64,8 @@ function AgentViewerProvider({
 }) {
 	const [view, setView] =
 		React.useState<AgentViewerContext["view"]>("profile");
+	const [mobileView, setMobileView] =
+		React.useState<AgentViewerContext["mobileView"]>("view");
 	const [activeFile, setActiveFile] = React.useState<
 		AgentViewerContext["activeFile"]
 	>(highlightedFiles?.[0].target ?? null);
@@ -71,6 +76,8 @@ function AgentViewerProvider({
 				item,
 				view,
 				setView,
+				mobileView,
+				setMobileView,
 				activeFile,
 				setActiveFile,
 				tree,
@@ -79,13 +86,7 @@ function AgentViewerProvider({
 				toolMetadata,
 			}}
 		>
-			<div
-				id={item.name}
-				data-view={view}
-				className="group/agent-view-wrapper flex min-w-0 scroll-mt-24 flex-col items-stretch gap-4 overflow-hidden"
-			>
-				{children}
-			</div>
+			{children}
 		</AgentViewerContext.Provider>
 	);
 }
@@ -107,8 +108,8 @@ function AgentViewerToolbar() {
 			</Tabs>
 			<Separator orientation="vertical" className="mx-2 h-4!" />
 			<div className="flex flex-col flex-1">
-				<div className="text-lg font-semibold">
-					{item.title ?? item.name}
+				<div className="text-sm font-medium">
+					{idToReadableText(item.name)}
 				</div>
 				<div className="text-sm text-muted-foreground">
 					{item.description?.replace(/\.$/, "")}
@@ -135,36 +136,41 @@ function AgentViewerToolbar() {
 }
 
 function AgentViewerMobile() {
-	const { item, view, setView } = useAgentViewer();
+	const { item, mobileView, setMobileView } = useAgentViewer();
 
 	return (
 		<div className="flex flex-col gap-4 lg:hidden">
-			<div className="flex items-center gap-2 px-2">
-				<div className="line-clamp-1 text-sm font-medium">
-					{item.description}
+			<div className="flex items-center gap-2">
+				<div className="flex-1 min-w-0">
+					<div className="text-sm font-medium line-clamp-1">
+						{idToReadableText(item.name)}
+					</div>
+					<div className="text-muted-foreground text-sm line-clamp-1">
+						{item.description}
+					</div>
 				</div>
-				<div className="text-muted-foreground ml-auto shrink-0 font-mono text-xs">
+				<div className="text-muted-foreground shrink-0 font-mono text-xs">
 					{item.name}
 				</div>
 			</div>
 			<Tabs
-				value={view}
-				onValueChange={(value) => setView(value as "profile" | "code")}
+				value={mobileView}
+				onValueChange={(value) =>
+					setMobileView(value as "view" | "chat" | "code")
+				}
 				className="w-full"
 			>
-				<TabsList className="grid w-full grid-cols-2">
-					<TabsTrigger value="profile">View</TabsTrigger>
+				<TabsList className="grid h-8 grid-cols-3 items-center rounded-md p-1 *:data-[slot=tabs-trigger]:h-6 *:data-[slot=tabs-trigger]:rounded-sm *:data-[slot=tabs-trigger]:px-2 *:data-[slot=tabs-trigger]:text-xs">
+					<TabsTrigger value="view">View</TabsTrigger>
+					<TabsTrigger value="chat">Chat</TabsTrigger>
 					<TabsTrigger value="code">Code</TabsTrigger>
 				</TabsList>
 			</Tabs>
-			{view === "profile" ? (
-				<div className="space-y-4">
-					<AgentProfileCard />
-					<AgentChat />
-				</div>
-			) : (
-				<AgentCodeView />
-			)}
+			<div className="rounded-xl border overflow-hidden min-h-[500px] max-h-[700px] h-[600px]">
+				{mobileView === "view" && <AgentInfo />}
+				{mobileView === "chat" && <AgentChat />}
+				{mobileView === "code" && <AgentCodeView />}
+			</div>
 		</div>
 	);
 }
@@ -189,10 +195,14 @@ export function AgentViewer({
 			toolMetadata={toolMetadata}
 			{...props}
 		>
-			<AgentViewerToolbar />
-			<AgentProfileView />
-			<AgentCodeView />
-			<AgentViewerMobile />
+			<div className="flex flex-col gap-4">
+				<AgentViewerToolbar />
+				<AgentProfileView />
+				<div className="hidden lg:block">
+					<AgentCodeView />
+				</div>
+				<AgentViewerMobile />
+			</div>
 		</AgentViewerProvider>
 	);
 }

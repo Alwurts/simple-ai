@@ -13,7 +13,7 @@ When users ask about weather:
 - Be friendly and helpful in your responses`;
 
 export const weatherAgent = new Agent({
-	model: model.languageModel("gpt-5.1"),
+	model: model.languageModel("gpt-5-nano"),
 	system: weatherAgentPrompt,
 	tools: {
 		"get-weather": getWeatherTool,

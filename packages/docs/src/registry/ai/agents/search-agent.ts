@@ -14,7 +14,7 @@ When users ask questions or need information:
 - Be thorough but concise in your responses`;
 
 export const searchAgent = new Agent({
-	model: model.languageModel("gpt-5.1"),
+	model: model.languageModel("gpt-5-nano"),
 	system: searchAgentPrompt,
 	tools: {
 		"web-search": webSearchTool,

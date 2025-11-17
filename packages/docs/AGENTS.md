@@ -2,7 +2,7 @@
 
 ## Build & Test Commands
 
-- **Dev server:** `npm run dev` (runs on port 4567 do not use, instead let the user run it)
+- **Dev server:** `npm run dev` (never run the dev server command, its just for reference)
 - **Lint & format:** `npm run lint` (Biome: fixes in-place)
 - **Type check:** `npm run typecheck` (tsc --noEmit) - use this instead of npm run build
 - **Registry rebuild:** `npm run registry:build` - run after modifying registry files

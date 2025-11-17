@@ -2410,8 +2410,7 @@ export const Index: Record<string, any> = {
 	},
 	"workflow-01": {
 		name: "workflow-01",
-		description:
-			"Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK.",
+		description: "Build powerful AI agent workflows",
 		type: "registry:block",
 		registryDependencies: [
 			"button",
@@ -2812,12 +2811,13 @@ export const Index: Record<string, any> = {
 		}),
 		categories: ["agent"],
 		meta: {
+			icon: "CloudRain",
 			toolIds: ["get-weather"],
 			suggestions: [
-				"What's the weather like today?",
-				"Will it rain tomorrow?",
-				"What's the forecast for next week?",
-				"How's the weather in New York?",
+				"What's the weather like in New York today?",
+				"Will it rain in London tomorrow?",
+				"What's the forecast for Tokyo next week?",
+				"How's the weather in Paris right now?",
 			],
 			prompt: "You are a helpful weather assistant. Your role is to provide accurate and helpful weather information to users.\n\nWhen users ask about weather:\n- Use the get-weather tool to retrieve current weather conditions\n- Always specify the city and preferred temperature unit (fahrenheit or celsius)\n- Provide clear, concise weather information\n- If a user doesn't specify a unit, default to fahrenheit\n- Be friendly and helpful in your responses",
 		},
@@ -2846,6 +2846,7 @@ export const Index: Record<string, any> = {
 		}),
 		categories: ["agent"],
 		meta: {
+			icon: "Search",
 			toolIds: ["web-search"],
 			suggestions: [
 				"Search for the latest AI news",

@@ -9,18 +9,19 @@
 	"files": [
 		{
 			"path": "./src/registry/ai/agents/weather-agent.ts",
-			"content": "import { Experimental_Agent as Agent, stepCountIs } from \"ai\";\n\nimport { model } from \"@/registry/ai/models\";\nimport { getWeatherTool } from \"@/registry/ai/tools/get-weather\";\n\nexport const weatherAgentPrompt = `You are a helpful weather assistant. Your role is to provide accurate and helpful weather information to users.\n\nWhen users ask about weather:\n- Use the get-weather tool to retrieve current weather conditions\n- Always specify the city and preferred temperature unit (fahrenheit or celsius)\n- Provide clear, concise weather information\n- If a user doesn't specify a unit, default to fahrenheit\n- Be friendly and helpful in your responses`;\n\nexport const weatherAgent = new Agent({\n\tmodel: model.languageModel(\"gpt-5.1\"),\n\tsystem: weatherAgentPrompt,\n\ttools: {\n\t\t\"get-weather\": getWeatherTool,\n\t},\n\tstopWhen: stepCountIs(20),\n});\n",
+			"content": "import { Experimental_Agent as Agent, stepCountIs } from \"ai\";\n\nimport { model } from \"@/registry/ai/models\";\nimport { getWeatherTool } from \"@/registry/ai/tools/get-weather\";\n\nexport const weatherAgentPrompt = `You are a helpful weather assistant. Your role is to provide accurate and helpful weather information to users.\n\nWhen users ask about weather:\n- Use the get-weather tool to retrieve current weather conditions\n- Always specify the city and preferred temperature unit (fahrenheit or celsius)\n- Provide clear, concise weather information\n- If a user doesn't specify a unit, default to fahrenheit\n- Be friendly and helpful in your responses`;\n\nexport const weatherAgent = new Agent({\n\tmodel: model.languageModel(\"gpt-5-nano\"),\n\tsystem: weatherAgentPrompt,\n\ttools: {\n\t\t\"get-weather\": getWeatherTool,\n\t},\n\tstopWhen: stepCountIs(20),\n});\n",
 			"type": "registry:lib",
 			"target": "lib/ai/agents/weather-agent.ts"
 		}
 	],
 	"meta": {
+		"icon": "CloudRain",
 		"toolIds": ["get-weather"],
 		"suggestions": [
-			"What's the weather like today?",
-			"Will it rain tomorrow?",
-			"What's the forecast for next week?",
-			"How's the weather in New York?"
+			"What's the weather like in New York today?",
+			"Will it rain in London tomorrow?",
+			"What's the forecast for Tokyo next week?",
+			"How's the weather in Paris right now?"
 		],
 		"prompt": "You are a helpful weather assistant. Your role is to provide accurate and helpful weather information to users.\n\nWhen users ask about weather:\n- Use the get-weather tool to retrieve current weather conditions\n- Always specify the city and preferred temperature unit (fahrenheit or celsius)\n- Provide clear, concise weather information\n- If a user doesn't specify a unit, default to fahrenheit\n- Be friendly and helpful in your responses"
 	},

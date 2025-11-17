@@ -36,12 +36,13 @@ const agents: Registry["items"] = [
 			},
 		],
 		meta: {
+			icon: "CloudRain",
 			toolIds: ["get-weather"],
 			suggestions: [
-				"What's the weather like today?",
-				"Will it rain tomorrow?",
-				"What's the forecast for next week?",
-				"How's the weather in New York?",
+				"What's the weather like in New York today?",
+				"Will it rain in London tomorrow?",
+				"What's the forecast for Tokyo next week?",
+				"How's the weather in Paris right now?",
 			],
 			prompt: "You are a helpful weather assistant. Your role is to provide accurate and helpful weather information to users.\n\nWhen users ask about weather:\n- Use the get-weather tool to retrieve current weather conditions\n- Always specify the city and preferred temperature unit (fahrenheit or celsius)\n- Provide clear, concise weather information\n- If a user doesn't specify a unit, default to fahrenheit\n- Be friendly and helpful in your responses",
 		},
@@ -62,6 +63,7 @@ const agents: Registry["items"] = [
 			},
 		],
 		meta: {
+			icon: "Search",
 			toolIds: ["web-search"],
 			suggestions: [
 				"Search for the latest AI news",

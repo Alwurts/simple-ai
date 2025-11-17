@@ -4,14 +4,15 @@ import type { AIUIMessage } from "@/registry/ai/messages";
 
 export async function POST(
 	req: Request,
-	{ params }: { params: { agentId: string } },
+	{ params }: { params: Promise<{ agentId: string }> },
 ) {
 	const { messages } = (await req.json()) as { messages: AIUIMessage[] };
 
 	// Validate that the agent exists
-	const agentId = params.agentId as agentId;
+	const { agentId } = await params;
+	const agentIdTyped = agentId as agentId;
 
-	const agentResponding = agents[agentId];
+	const agentResponding = agents[agentIdTyped];
 
 	if (!agentResponding) {
 		return new Response(JSON.stringify({ error: "Agent not found" }), {
@@ -20,5 +21,5 @@ export async function POST(
 		});
 	}
 
-	return agentExecute(agentId, messages);
+	return agentExecute(agentIdTyped, messages);
 }

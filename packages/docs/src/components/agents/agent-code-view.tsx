@@ -18,6 +18,7 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarMenuSub,
+	SidebarProvider,
 } from "@/components/ui/sidebar";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { trackEvent } from "@/lib/events";
@@ -25,20 +26,23 @@ import type { FileTree } from "@/lib/registry";
 import { useAgentViewer } from "./agent-viewer";
 
 function AgentCodeView() {
-	const { activeFile, highlightedFiles, view } = useAgentViewer();
+	const { activeFile, highlightedFiles, view, mobileView } = useAgentViewer();
 
 	const file = React.useMemo(() => {
 		return highlightedFiles?.find((file) => file.target === activeFile);
 	}, [highlightedFiles, activeFile]);
 
-	if (view === "profile" || !file) {
+	// Show when desktop view is "code" OR mobile view is "code" (but not globally on mobile)
+	const shouldShow = view === "code" || mobileView === "code";
+
+	if (!shouldShow || !file) {
 		return null;
 	}
 
 	const language = file.path.split(".").pop() ?? "tsx";
 
 	return (
-		<div className="bg-code text-code-foreground mr-[14px] flex overflow-hidden rounded-xl border group-data-[view=profile]/agent-view-wrapper:hidden lg:h-[600px]">
+		<div className="bg-code text-code-foreground flex overflow-hidden rounded-xl lg:border h-full">
 			<div className="w-72">
 				<AgentViewerFileTree />
 			</div>
@@ -76,27 +80,26 @@ function AgentViewerFileTree() {
 	}
 
 	return (
-		<Sidebar
-			collapsible="none"
-			className="flex min-h-full! flex-col border-r"
-		>
-			<SidebarGroupLabel className="h-12 rounded-none border-b px-4 text-sm">
-				Files
-			</SidebarGroupLabel>
-			<SidebarGroup className="p-0">
-				<SidebarGroupContent>
-					<SidebarMenu className="translate-x-0 gap-1.5">
-						{tree.map((file, index) => (
-							<Tree
-								key={`${file.name}-${index}`}
-								item={file}
-								index={1}
-							/>
-						))}
-					</SidebarMenu>
-				</SidebarGroupContent>
-			</SidebarGroup>
-		</Sidebar>
+		<SidebarProvider className="flex min-h-full! flex-col border-r">
+			<Sidebar collapsible="none" className="w-full flex-1">
+				<SidebarGroupLabel className="h-12 rounded-none border-b px-4 text-sm">
+					Files
+				</SidebarGroupLabel>
+				<SidebarGroup className="p-0">
+					<SidebarGroupContent>
+						<SidebarMenu className="translate-x-0 gap-1.5">
+							{tree.map((file, index) => (
+								<Tree
+									key={`${file.name}-${index}`}
+									item={file}
+									index={1}
+								/>
+							))}
+						</SidebarMenu>
+					</SidebarGroupContent>
+				</SidebarGroup>
+			</Sidebar>
+		</SidebarProvider>
 	);
 }
 

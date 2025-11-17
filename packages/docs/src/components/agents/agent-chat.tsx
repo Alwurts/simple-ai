@@ -28,6 +28,14 @@ import {
 	ChatMessageAreaContent,
 	ChatMessageAreaScrollButton,
 } from "@/registry/ui/chat-message-area";
+import { Reasoning } from "@/registry/ui/reasoning";
+import {
+	ToolInvocation,
+	ToolInvocationContentCollapsible,
+	ToolInvocationHeader,
+	ToolInvocationName,
+	ToolInvocationRawData,
+} from "@/registry/ui/tool-invocation";
 import { useAgentViewer } from "./agent-viewer";
 
 function AgentChat() {
@@ -60,7 +68,7 @@ function AgentChat() {
 	});
 
 	return (
-		<div className="flex flex-col h-full border rounded-lg overflow-hidden max-w-md mx-auto">
+		<div className="flex flex-col h-full border-0 overflow-hidden">
 			<ChatMessageArea className="flex-1">
 				<ChatMessageAreaContent>
 					{messages.length === 0 ? (
@@ -123,16 +131,100 @@ function AgentChat() {
 										/>
 									</ChatMessageHeader>
 									<ChatMessageContent>
-										{message.parts
-											.filter(
-												(part) => part.type === "text",
-											)
-											.map((part, index) => (
-												<ChatMessageMarkdown
-													key={`${message.id}-text-${index}`}
-													content={part.text}
-												/>
-											))}
+										{message.parts.map((part, index) => {
+											if (part.type === "text") {
+												return (
+													<ChatMessageMarkdown
+														key={`${message.id}-text-${index}`}
+														content={part.text}
+													/>
+												);
+											}
+
+											if (part.type === "reasoning") {
+												return (
+													<Reasoning
+														key={`reasoning-${message.id}-${index}`}
+														content={part.text}
+														isLastPart={
+															index ===
+															message.parts
+																.length -
+																1
+														}
+													/>
+												);
+											}
+
+											if (part.type.startsWith("tool-")) {
+												if (
+													!("toolCallId" in part) ||
+													!("state" in part)
+												) {
+													return null;
+												}
+
+												const hasInput =
+													part.input != null &&
+													part.input !== undefined;
+												const hasOutput =
+													part.output != null &&
+													part.output !== undefined;
+
+												const toolName =
+													part.type.slice(5);
+												return (
+													<ToolInvocation
+														key={part.toolCallId}
+														className="w-full"
+													>
+														<ToolInvocationHeader>
+															<ToolInvocationName
+																name={toolName}
+																type={
+																	part.state
+																}
+																isError={
+																	part.state ===
+																	"output-error"
+																}
+															/>
+														</ToolInvocationHeader>
+														{(hasInput ||
+															hasOutput ||
+															part.errorText) && (
+															<ToolInvocationContentCollapsible>
+																{hasInput && (
+																	<ToolInvocationRawData
+																		data={
+																			part.input
+																		}
+																		title="Arguments"
+																	/>
+																)}
+																{part.errorText && (
+																	<ToolInvocationRawData
+																		data={{
+																			error: part.errorText,
+																		}}
+																		title="Error"
+																	/>
+																)}
+																{hasOutput && (
+																	<ToolInvocationRawData
+																		data={
+																			part.output
+																		}
+																		title="Result"
+																	/>
+																)}
+															</ToolInvocationContentCollapsible>
+														)}
+													</ToolInvocation>
+												);
+											}
+											return null;
+										})}
 									</ChatMessageContent>
 								</ChatMessageContainer>
 							</ChatMessage>
