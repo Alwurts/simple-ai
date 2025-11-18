@@ -5,6 +5,11 @@
 		"categories": ["chat"]
 	},
 	{
+		"name": "chat-04",
+		"description": "A chat with multiple agents support.",
+		"categories": ["chat"]
+	},
+	{
 		"name": "chat-02",
 		"description": "A chat in a sidebar.",
 		"categories": ["chat"]

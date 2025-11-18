@@ -1,299 +1,164 @@
 ---
 title: Agents
-description: Pre-built AI agents with tools and prompts. Copy and paste into your apps.
+description: Get started with AI agents in your simple-ai project. Step-by-step guide to create multi-agent chat applications.
 ---
 
-# AI Agents
+# AI Agents Guide
 
-Pre-built AI agents with tools and prompts. Copy and paste into your apps. Open Source.
+Build multi-agent chat applications with pre-built AI agents. This guide walks you through creating your first project and adding agent capabilities.
 
-## Installation
+## 1. Create Your Project
 
-Copy complete agents into your project using the shadcn CLI:
+If you don't have a project yet, start by creating one with `create-simple-ai`:
 
 ```bash
-# Install all agents
-npx shadcn@latest add @simple-ai/agents
-
-# Or install specific agents
-npx shadcn@latest add @simple-ai/weather-agent
-npx shadcn@latest add @simple-ai/search-agent
+npx create-simple-ai my-ai-app
+cd my-ai-app
+npm run dev
 ```
 
-## Live Examples
+This sets up a full-stack Next.js application with:
+- ✅ Next.js with App Router
+- ✅ Tailwind CSS + Shadcn/ui components
+- ✅ Drizzle ORM for database
+- ✅ Better Auth for authentication
+- ✅ Hono for API routes
+- ✅ Ready-to-use chat foundation
 
-Before diving into the details, check out the [Agents Gallery](/agents) where you can:
+## 2. Add Multi-Agent Chat
 
-- **See all available agents** with their descriptions and tools
-- **Chat directly with agents** to see them in action
-- **View agent source code** to understand implementation details
-- **Copy agents directly** into your project with the shadcn CLI
+Install the chat-04 block to set up the basic multi-agent chat interface:
 
-This is the best way to understand what's possible with the agent system!
+```bash
+npx shadcn@latest add @simple-ai/chat-04
+```
 
-## Key Features
+This adds:
+- 🤖 **Multi-agent chat interface** - Chat with multiple AI agents
+- 🎯 **Agent routing** - Automatically route messages to the right agent
+- 💬 **Real-time streaming** - Live responses from agents
+- 🏗️ **Modular layout** - Header, sidebar, and chat components
 
-- 🤖 **Pre-built Agents**: Ready-to-use agents for common tasks like weather queries and web search
-- 🔧 **Tool Integration**: Agents come with pre-configured tools for enhanced capabilities
-- 💬 **Chat Interface**: Seamless integration with the `useChat` hook and UI message streams
-- 📝 **System Prompts**: Carefully crafted prompts optimized for each agent's purpose
-- 🎯 **Focused Roles**: Each agent has a specific, well-defined role and expertise
-- ⚡ **Real-time Streaming**: Stream agent responses live to your chat interface
-- 📦 **Easy Integration**: Copy-paste ready components that work out of the box
+The chat-04 block includes everything you need for multi-agent conversations out of the box.
 
-## The Tech Stack
+## 3. Install Agents from Registry
 
-- [Vercel AI SDK](https://ai-sdk.dev/docs/introduction) - AI capabilities with `generateText` and UI message streams
-- [shadcn/ui](https://ui.shadcn.com) - Beautiful, accessible UI components
-- [Experimental Agent API](https://ai-sdk.dev/docs/agents) - Multi-step agent execution with tool calling
+Once you have your chat setup, install agents from the registry to add specific capabilities:
 
-## How It Works
+```bash
+# Install weather agent
+npx shadcn@latest add @simple-ai/weather-agent
 
-### Agent Structure
-
-Every agent consists of three key components:
-
-```typescript
-// 1. Agent Definition
-export const weatherAgent = new Agent({
-  model: model.languageModel("gpt-5.1"),
-  tools: {
-    "get-weather": getWeatherTool,
-  },
-  stopWhen: stepCountIs(20),
-});
-
-// 2. System Prompt
-export const weatherAgentPrompt = `You are a helpful weather assistant...`;
-
-// 3. Tool Implementation
-export const getWeatherTool = tool({
-  description: "Get weather information for a location",
-  parameters: z.object({
-    location: z.string().describe("The location to get weather for"),
-  }),
-  execute: async ({ location }) => {
-    // Implementation here
-  },
-});
+# Install search agent
+npx shadcn@latest add @simple-ai/search-agent
 ```
 
 ### Available Agents
 
-#### Weather Agent (`@simple-ai/weather-agent`)
+**Weather Agent** (`@simple-ai/weather-agent`)
+- Get current weather conditions for any location
+- Supports temperature in Celsius or Fahrenheit
+- Real-time weather data and forecasts
 
-A helpful weather assistant that provides accurate weather information for any location.
-
-**Features:**
-- Current weather conditions
-- Temperature in Celsius or Fahrenheit
-- Location-based queries
-- Real-time weather data
-
-**System Prompt:** "You are a helpful weather assistant. Your role is to provide accurate and helpful weather information to users..."
-
-#### Search Agent (`@simple-ai/search-agent`)
-
-An intelligent search assistant that finds information from the web and provides up-to-date results.
-
-**Features:**
-- Web search capabilities
-- Information synthesis
-- Question answering
+**Search Agent** (`@simple-ai/search-agent`)
+- Intelligent web search capabilities
+- Find information from the internet
+- Answer questions with up-to-date results
 - Current events and news
 
-**System Prompt:** "You are a helpful search assistant. Your role is to find and provide accurate information from the web..."
+### Try Agents Live
 
-### Agent Execution Flow
+Visit the [Agents Gallery](/agents) to:
+- **Chat directly with agents** to see them in action
+- **View agent source code** to understand implementation
+- **Copy agents directly** into your project
 
-Agents work using the Vercel AI SDK's experimental Agent API:
+## How It Works
 
-1. **User sends a message** via the chat interface
-2. **Frontend sends the message** along with the agent ID using the `useChat` hook
-3. **Backend routes to the appropriate agent** based on the agent ID
-4. **Agent processes the request** using multi-step reasoning and tool calling:
-   - Agent analyzes the user query
-   - Agent decides which tools to use (if any)
-   - Agent calls tools and processes results
-   - Agent formulates a response based on tool outputs
-   - Agent streams the response back to the UI
-5. **Real-time responses** stream back to the chat interface
+When you chat with an agent:
 
-### Tool Integration
+1. **You mention an agent** in your message (like "@weather-agent")
+2. **The system routes** your message to the appropriate agent
+3. **The agent thinks** about your request and decides what to do
+4. **Tools are called** automatically (like fetching weather data)
+5. **Response streams back** in real-time to your chat
 
-Agents can use tools to enhance their capabilities:
-
-```typescript
-// Example tool definition
-export const getWeatherTool = tool({
-  description: "Get weather information for a location",
-  parameters: z.object({
-    location: z.string().describe("The location to get weather for"),
-  }),
-  execute: async ({ location }) => {
-    const response = await fetch(`https://api.weather.com/${location}`);
-    return await response.json();
-  },
-});
-```
-
-Tools are automatically called by the agent when needed, and their results are integrated into the agent's reasoning and response.
+Agents combine AI reasoning with practical tools to give you helpful, accurate answers.
 
 ## Creating Custom Agents
 
-### Basic Agent Structure
+Want to build your own agent? Start with the existing agent implementations in the registry as templates:
 
-To create your own agent:
+```bash
+# Copy an existing agent as a starting point
+npx shadcn@latest add @simple-ai/weather-agent
+```
 
-1. **Define the Agent** with model, tools, and stopping conditions
-2. **Create a System Prompt** that defines the agent's role and behavior
-3. **Implement Tools** for specific capabilities your agent needs
+Then modify the agent definition, system prompt, and tools to fit your needs. Check out the [Technical Reference](#technical-reference) below for implementation details.
 
-### Example: Custom Email Agent
+## Tech Stack
+
+- [Vercel AI SDK](https://ai-sdk.dev/docs/introduction) - AI capabilities and agent execution
+- [shadcn/ui](https://ui.shadcn.com) - Beautiful UI components
+- Multi-step agent reasoning with tool calling
+
+## Technical Reference
+
+### Agent Structure
+
+Each agent consists of:
 
 ```typescript
-// email-agent.ts
-import { Experimental_Agent as Agent, stepCountIs } from "ai";
-import { model } from "@/registry/ai/models";
-
-export const emailAgentPrompt = `You are a helpful email assistant...`;
-
-export const emailAgent = new Agent({
-  model: model.languageModel("gpt-5.1"),
-  tools: {
-    "send-email": sendEmailTool,
-    "read-emails": readEmailsTool,
-  },
-  stopWhen: stepCountIs(15),
+// Agent Definition
+export const myAgent = new Agent({
+  model: model.languageModel("gpt-4"),
+  tools: { "my-tool": myTool },
+  stopWhen: stepCountIs(20),
 });
+
+// System Prompt
+export const myAgentPrompt = `You are a helpful assistant...`;
+
+// Tool Implementation
+export const myTool = tool({
+  description: "Tool description",
+  parameters: z.object({ input: z.string() }),
+  execute: async ({ input }) => { /* logic */ },
+});
+```
+
+### Agent Execution Flow
+
+1. User mentions agent in message
+2. System routes to appropriate agent
+3. Agent analyzes query and decides on tools
+4. Tools execute and return data
+5. Agent formulates response with tool results
+6. Response streams back to UI
+
+### API Integration
+
+The chat-04 block handles all the complex routing and streaming automatically. Your API route simply needs to handle the agent execution:
+
+```typescript
+// app/api/chat/route.ts
+import { agentExecute, agentRoute } from "@/lib/ai/agent-route-respond";
+
+export async function POST(req: Request) {
+  const { messages, mentions } = await req.json();
+  const agentId = agentRoute(mentions);
+  return agentExecute(agentId, messages);
+}
 ```
 
 ### Best Practices
 
-- **Clear System Prompts**: Define the agent's role, capabilities, and limitations clearly
-- **Focused Tools**: Give agents only the tools they need for their specific tasks
-- **Appropriate Step Limits**: Set reasonable step limits to prevent infinite loops
-- **Error Handling**: Tools should handle errors gracefully and provide meaningful feedback
+- **Clear system prompts**: Define agent roles and limitations
+- **Focused tools**: Give agents only necessary tools
+- **Reasonable step limits**: Prevent infinite loops
+- **Error handling**: Tools should handle failures gracefully
 
-## Integration Examples
+For more implementation details, explore the agent source code in the registry or visit the [Agents Gallery](/agents).
 
-### Using Agents in Your App
 
-```typescript
-// In your chat component
-import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
-
-function ChatComponent() {
-  const { messages, sendMessage, status } = useChat({
-    id: "my-chat",
-    transport: new DefaultChatTransport({
-      api: "/api/chat", // Your API endpoint
-    }),
-  });
-
-  // Send message with agent context
-  const handleSend = (message: string, agentId: string) => {
-    sendMessage(message, {
-      body: {
-        agentId, // Route to specific agent
-      },
-    });
-  };
-
-  return (
-    // Your chat UI
-  );
-}
-```
-
-### Backend API Route
-
-```typescript
-// app/api/chat/route.ts
-import { openai } from "@ai-sdk/openai";
-import { streamText } from "ai";
-import { weatherAgent } from "@/lib/agents/weather-agent";
-
-export async function POST(req: Request) {
-  const { messages, agentId } = await req.json();
-
-  // Route to appropriate agent
-  const agent = getAgentById(agentId);
-
-  const result = await streamText({
-    model: openai("gpt-4"),
-    messages,
-    experimental_providerMetadata: {
-      agent,
-    },
-  });
-
-  return result.toDataStreamResponse();
-}
-```
-
-## Extending Agents
-
-### Adding New Tools
-
-Tools extend agent capabilities:
-
-```typescript
-import { tool } from "ai";
-import { z } from "zod";
-
-export const customTool = tool({
-  description: "A custom tool for your agent",
-  parameters: z.object({
-    input: z.string().describe("The input parameter"),
-  }),
-  execute: async ({ input }) => {
-    // Your tool logic here
-    return { result: "Processed: " + input };
-  },
-});
-```
-
-### Custom Agent Registry
-
-```typescript
-// agents.ts
-export const agents = {
-  "weather-agent": weatherAgent,
-  "search-agent": searchAgent,
-  "custom-agent": customAgent, // Your new agent
-} as const;
-
-export type AgentId = keyof typeof agents;
-```
-
-## Full Application Example
-
-A full application example using agents is **coming soon**. In the meantime, explore the [live agents gallery](/agents) to see agents in action and copy them directly into your projects.
-
-## API Reference
-
-### Agent Configuration
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `model` | `LanguageModel` | The AI model to use |
-| `tools` | `Record<string, Tool>` | Available tools for the agent |
-| `stopWhen` | `StopCondition` | When to stop agent execution |
-
-### Tool Configuration
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `description` | `string` | What the tool does |
-| `parameters` | `ZodSchema` | Input parameter schema |
-| `execute` | `Function` | Tool execution logic |
-
-### System Prompt Guidelines
-
-- Be specific about the agent's role and capabilities
-- Include examples of how the agent should respond
-- Define any limitations or boundaries
-- Specify the output format when relevant
 

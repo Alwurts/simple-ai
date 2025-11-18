@@ -27,7 +27,6 @@ export const blocks: Registry["items"] = [
 		dependencies: ["ai", "@ai-sdk/react", "@ai-sdk/openai"],
 		registryDependencies: [
 			"card",
-			"badge",
 			"breadcrumb",
 			"separator",
 			"sidebar",
@@ -41,12 +40,6 @@ export const blocks: Registry["items"] = [
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
 			"@simple-ai/reasoning",
-			"@simple-ai/agents",
-			"@simple-ai/messages",
-			"@simple-ai/models",
-			"@simple-ai/tools",
-			"@simple-ai/agent-respond",
-			"@simple-ai/ai-utils",
 		],
 		files: [
 			{
@@ -61,6 +54,19 @@ export const blocks: Registry["items"] = [
 			},
 			{
 				path: "blocks/chat-01/lib/config.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-01/lib/tools.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-01/lib/messages.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-01/types/ai-messages.ts",
+				target: "types/ai-messages.ts",
 				type: "registry:lib",
 			},
 			{
@@ -101,6 +107,94 @@ export const blocks: Registry["items"] = [
 			},
 			{
 				path: "blocks/chat-01/components/chat/chat-content.tsx",
+				type: "registry:component",
+			},
+		],
+		categories: ["chat"],
+	},
+	{
+		name: "chat-04",
+		description: "A chat with multiple agents support.",
+		docs: DEFAULT_OPENAI_DOCS,
+		type: "registry:block",
+		envVars: DEFAULT_OPENAI_ENV_VARS,
+		dependencies: ["ai", "@ai-sdk/react", "@ai-sdk/openai"],
+		registryDependencies: [
+			"card",
+			"badge",
+			"breadcrumb",
+			"separator",
+			"sidebar",
+			"tooltip",
+			"button",
+			"avatar",
+			"dropdown-menu",
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
+			"@simple-ai/tool-invocation",
+			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
+			"@simple-ai/agents",
+			"@simple-ai/messages",
+			"@simple-ai/models",
+			"@simple-ai/tools",
+			"@simple-ai/agent-respond",
+			"@simple-ai/ai-utils",
+		],
+		files: [
+			{
+				path: "blocks/chat-04/page.tsx",
+				target: "app/chat/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/chat-04/route.ts",
+				target: "app/api/ai/chat/route.ts",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/chat-04/lib/config.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-layout.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-layout-skeleton.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-header.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-sidebar.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-main-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-secondary-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-user-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/chat/chat-main.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/chat/chat-header.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/chat/chat-content.tsx",
 				type: "registry:component",
 			},
 		],

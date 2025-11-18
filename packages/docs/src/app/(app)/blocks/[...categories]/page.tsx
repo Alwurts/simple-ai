@@ -12,6 +12,8 @@ export async function generateStaticParams() {
 	}));
 }
 
+const EXCLUDED_BLOCKS = ["chat-01"];
+
 export default async function BlocksPage({
 	params,
 }: {
@@ -22,9 +24,11 @@ export default async function BlocksPage({
 
 	return (
 		<div className="flex flex-col gap-12 md:gap-24">
-			{blocks.map((name) => (
-				<BlockDisplay name={name} key={name} />
-			))}
+			{blocks
+				.filter((name) => !EXCLUDED_BLOCKS.includes(name))
+				.map((name) => (
+					<BlockDisplay name={name} key={name} />
+				))}
 		</div>
 	);
 }

@@ -1491,7 +1491,6 @@ export const Index: Record<string, any> = {
 		type: "registry:block",
 		registryDependencies: [
 			"card",
-			"badge",
 			"breadcrumb",
 			"separator",
 			"sidebar",
@@ -1505,12 +1504,6 @@ export const Index: Record<string, any> = {
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
 			"@simple-ai/reasoning",
-			"@simple-ai/agents",
-			"@simple-ai/messages",
-			"@simple-ai/models",
-			"@simple-ai/tools",
-			"@simple-ai/agent-respond",
-			"@simple-ai/ai-utils",
 		],
 		files: [
 			{
@@ -1527,6 +1520,21 @@ export const Index: Record<string, any> = {
 				path: "./src/registry/blocks/chat-01/lib/config.ts",
 				type: "registry:lib",
 				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/lib/tools.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/lib/messages.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-01/types/ai-messages.ts",
+				type: "registry:lib",
+				target: "types/ai-messages.ts",
 			},
 			{
 				path: "./src/registry/blocks/chat-01/components/layout/app-layout.tsx",
@@ -1581,6 +1589,113 @@ export const Index: Record<string, any> = {
 		],
 		component: React.lazy(async () => {
 			const mod = await import("@/registry/blocks/chat-01/page.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["chat"],
+		meta: undefined,
+	},
+	"chat-04": {
+		name: "chat-04",
+		description: "A chat with multiple agents support.",
+		type: "registry:block",
+		registryDependencies: [
+			"card",
+			"badge",
+			"breadcrumb",
+			"separator",
+			"sidebar",
+			"tooltip",
+			"button",
+			"avatar",
+			"dropdown-menu",
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
+			"@simple-ai/tool-invocation",
+			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
+			"@simple-ai/agents",
+			"@simple-ai/messages",
+			"@simple-ai/models",
+			"@simple-ai/tools",
+			"@simple-ai/agent-respond",
+			"@simple-ai/ai-utils",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/chat-04/page.tsx",
+				type: "registry:page",
+				target: "app/chat/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/route.ts",
+				type: "registry:page",
+				target: "app/api/ai/chat/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/lib/config.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-layout.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-layout-skeleton.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-header.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-sidebar.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-main-nav.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-secondary-nav.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-user-nav.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/chat/chat-main.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/chat/chat-header.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/chat/chat-content.tsx",
+				type: "registry:component",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/blocks/chat-04/page.tsx");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>

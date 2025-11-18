@@ -709,7 +709,6 @@
 			"dependencies": ["ai", "@ai-sdk/react", "@ai-sdk/openai"],
 			"registryDependencies": [
 				"card",
-				"badge",
 				"breadcrumb",
 				"separator",
 				"sidebar",
@@ -722,13 +721,7 @@
 				"@simple-ai/chat-message",
 				"@simple-ai/tool-invocation",
 				"@simple-ai/chat-suggestions",
-				"@simple-ai/reasoning",
-				"@simple-ai/agents",
-				"@simple-ai/messages",
-				"@simple-ai/models",
-				"@simple-ai/tools",
-				"@simple-ai/agent-respond",
-				"@simple-ai/ai-utils"
+				"@simple-ai/reasoning"
 			],
 			"files": [
 				{
@@ -744,6 +737,19 @@
 				{
 					"path": "./src/registry/blocks/chat-01/lib/config.ts",
 					"type": "registry:lib"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/lib/tools.ts",
+					"type": "registry:lib"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/lib/messages.ts",
+					"type": "registry:lib"
+				},
+				{
+					"path": "./src/registry/blocks/chat-01/types/ai-messages.ts",
+					"type": "registry:lib",
+					"target": "types/ai-messages.ts"
 				},
 				{
 					"path": "./src/registry/blocks/chat-01/components/layout/app-layout.tsx",
@@ -783,6 +789,96 @@
 				},
 				{
 					"path": "./src/registry/blocks/chat-01/components/chat/chat-content.tsx",
+					"type": "registry:component"
+				}
+			],
+			"envVars": {
+				"OPENAI_API_KEY": ""
+			},
+			"docs": "Get an OpenAI API key from https://platform.openai.com/ and add it to the environment variables file and run the dev server. \n\nLearn more about how to use the Vercel AI SDK https://ai-sdk.dev/docs/introduction.",
+			"categories": ["chat"]
+		},
+		{
+			"name": "chat-04",
+			"type": "registry:block",
+			"description": "A chat with multiple agents support.",
+			"dependencies": ["ai", "@ai-sdk/react", "@ai-sdk/openai"],
+			"registryDependencies": [
+				"card",
+				"badge",
+				"breadcrumb",
+				"separator",
+				"sidebar",
+				"tooltip",
+				"button",
+				"avatar",
+				"dropdown-menu",
+				"@simple-ai/chat-input",
+				"@simple-ai/chat-message-area",
+				"@simple-ai/chat-message",
+				"@simple-ai/tool-invocation",
+				"@simple-ai/chat-suggestions",
+				"@simple-ai/reasoning",
+				"@simple-ai/agents",
+				"@simple-ai/messages",
+				"@simple-ai/models",
+				"@simple-ai/tools",
+				"@simple-ai/agent-respond",
+				"@simple-ai/ai-utils"
+			],
+			"files": [
+				{
+					"path": "./src/registry/blocks/chat-04/page.tsx",
+					"type": "registry:page",
+					"target": "app/chat/page.tsx"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/route.ts",
+					"type": "registry:page",
+					"target": "app/api/ai/chat/route.ts"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/lib/config.ts",
+					"type": "registry:lib"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/components/layout/app-layout.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/components/layout/app-layout-skeleton.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/components/layout/app-header.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/components/layout/app-sidebar.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/components/layout/app-main-nav.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/components/layout/app-secondary-nav.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/components/layout/app-user-nav.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/components/chat/chat-main.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/components/chat/chat-header.tsx",
+					"type": "registry:component"
+				},
+				{
+					"path": "./src/registry/blocks/chat-04/components/chat/chat-content.tsx",
 					"type": "registry:component"
 				}
 			],

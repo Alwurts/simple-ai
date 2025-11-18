@@ -1,23 +1,32 @@
 "use client";
 
 import type { useChat } from "@ai-sdk/react";
-import { Copy, ThumbsUp } from "lucide-react";
+import { ThumbsUp } from "lucide-react";
 import type { ComponentPropsWithoutRef } from "react";
-import type { AIUIMessage } from "@/registry/blocks/chat-01/types/ai-messages";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { agentsList } from "@/registry/ai/agents/agents";
+import { uiMessageToText } from "@/registry/ai/ai-utils";
+import type { AIUIMessage } from "@/registry/ai/messages";
 import {
 	ChatInput,
 	ChatInputEditor,
 	ChatInputGroupAddon,
+	ChatInputMention,
 	ChatInputSubmitButton,
+	createMentionConfig,
 	useChatInput,
 } from "@/registry/ui/chat-input";
 import {
 	ChatMessage,
 	ChatMessageAction,
+	ChatMessageActionCopy,
 	ChatMessageActions,
 	ChatMessageAuthor,
 	ChatMessageAvatar,
 	ChatMessageAvatarAssistantIcon,
+	ChatMessageAvatarFallback,
+	ChatMessageAvatarImage,
 	ChatMessageAvatarUserIcon,
 	ChatMessageContainer,
 	ChatMessageContent,
@@ -99,15 +108,26 @@ export function ChatContent({
 	const isLoading = status === "streaming" || status === "submitted";
 
 	// Use the new hook with custom onSubmit
-	const { value, onChange, handleSubmit } = useChatInput({
+	const { value, onChange, handleSubmit, mentionConfigs } = useChatInput({
+		mentions: {
+			agents: createMentionConfig({
+				type: "agents",
+				trigger: "@",
+				items: agentsList,
+			}),
+		},
 		onSubmit: (parsedValue) => {
-			// Custom logic: log, send, access type-safe fields
-			console.log("Submitted parsed:", parsedValue);
-
-			sendMessage({
-				role: "user",
-				parts: [{ type: "text", text: parsedValue.content }],
-			});
+			sendMessage(
+				{
+					role: "user",
+					parts: [{ type: "text", text: parsedValue.content }],
+				},
+				{
+					body: {
+						mentions: parsedValue.agents,
+					},
+				},
+			);
 		},
 	});
 
@@ -127,13 +147,21 @@ export function ChatContent({
 					) : (
 						messages.map((message) => {
 							const userName =
-								message.role === "user" ? "You" : "Assistant";
+								message.role === "user"
+									? "You"
+									: (message.metadata?.agent?.name ??
+										"Assistant");
+
 							return (
 								<ChatMessage key={message.id}>
 									<ChatMessageActions>
-										<ChatMessageAction label="Copy">
-											<Copy className="size-4" />
-										</ChatMessageAction>
+										<ChatMessageActionCopy
+											onClick={() => {
+												navigator.clipboard.writeText(
+													uiMessageToText(message),
+												);
+											}}
+										/>
 										<ChatMessageAction label="Like">
 											<ThumbsUp className="size-4" />
 										</ChatMessageAction>
@@ -141,8 +169,22 @@ export function ChatContent({
 									<ChatMessageAvatar>
 										{message.role === "user" ? (
 											<ChatMessageAvatarUserIcon />
-										) : (
+										) : !message.metadata?.agent?.image ? (
 											<ChatMessageAvatarAssistantIcon />
+										) : (
+											<>
+												<ChatMessageAvatarImage
+													src={
+														message.metadata?.agent
+															?.image
+													}
+												/>
+												<ChatMessageAvatarFallback>
+													{message.metadata?.agent?.name
+														.charAt(0)
+														.toUpperCase()}
+												</ChatMessageAvatarFallback>
+											</>
 										)}
 									</ChatMessageAvatar>
 
@@ -307,10 +349,39 @@ export function ChatContent({
 					isStreaming={isLoading}
 					onStop={stop}
 				>
+					<ChatInputMention
+						type={mentionConfigs.agents.type}
+						trigger={mentionConfigs.agents.trigger}
+						items={mentionConfigs.agents.items}
+					>
+						{(item) => (
+							<>
+								<Avatar className="h-6 w-6">
+									<AvatarImage
+										//src={item.image ?? "/placeholder.jpg"}
+										alt={item.name}
+									/>
+									<AvatarFallback>
+										{item.name[0].toUpperCase()}
+									</AvatarFallback>
+								</Avatar>
+
+								<span
+									className="text-sm font-medium truncate max-w-[120px]"
+									title={item.name}
+								>
+									{item.name}
+								</span>
+								<Badge variant="outline" className="ml-auto">
+									Agent
+								</Badge>
+							</>
+						)}
+					</ChatInputMention>
 					<ChatInputEditor
 						value={value}
 						onChange={onChange}
-						placeholder="Type a message..."
+						placeholder="Type @ for agents"
 					/>
 					<ChatInputGroupAddon align="block-end">
 						<ChatInputSubmitButton className="ml-auto" />
