@@ -282,10 +282,17 @@ function UnionBranchView({
 	);
 }
 
+export interface JsonSchemaViewerProps extends ComponentProps<"div"> {
+	schema: JSONSchema7;
+	title?: string;
+	hideHeader?: boolean;
+}
+
 export function JsonSchemaViewer({
 	schema,
 	title = "Schema Structure",
 	className,
+	hideHeader = false,
 	...props
 }: JsonSchemaViewerProps) {
 	const { isUnion, properties, unions } = useMemo(
@@ -298,14 +305,16 @@ export function JsonSchemaViewer({
 			className={cn("border rounded-md overflow-hidden", className)}
 			{...props}
 		>
-			<div className="p-3 border-b bg-muted/50">
-				<h4 className="text-sm font-semibold">{title}</h4>
-				{schema.description && (
-					<p className="text-xs text-muted-foreground mt-1">
-						{schema.description}
-					</p>
-				)}
-			</div>
+			{!hideHeader && (
+				<div className="p-3 border-b bg-muted/50">
+					<h4 className="text-sm font-semibold">{title}</h4>
+					{schema.description && (
+						<p className="text-xs text-muted-foreground mt-1">
+							{schema.description}
+						</p>
+					)}
+				</div>
+			)}
 			<div className="max-h-[400px] overflow-y-auto p-2">
 				{isUnion ? (
 					unions && unions.length > 0 ? (

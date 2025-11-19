@@ -36,6 +36,8 @@
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
+	--color-brand: var(--brand);
+	--color-brand-foreground: var(--brand-foreground);
 	--color-chart-1: var(--chart-1);
 	--color-chart-2: var(--chart-2);
 	--color-chart-3: var(--chart-3);
@@ -68,6 +70,17 @@
 
 :root {
 	--radius: 0.625rem;
+
+	/* Layout Dimensions */
+	--header-height: 3.5rem; /* 56px - Height of the actual navbar */
+	--header-offset: 1rem; /* 16px - Gap between top of screen and navbar */
+
+	/*
+	   Total space the header occupies visually from the top of the viewport.
+	   (3.5rem + 1rem = 4.5rem)
+	*/
+	--header-total-height: calc(var(--header-height) + var(--header-offset));
+
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.145 0 0);
 	--card: oklch(1 0 0);
@@ -85,7 +98,11 @@
 	--destructive: oklch(0.577 0.245 27.325);
 	--border: oklch(0.922 0 0);
 	--input: oklch(0.922 0 0);
-	--ring: oklch(0.708 0 0);
+
+	--brand: oklch(0.7227 0.1207 232.2581);
+	--brand-foreground: oklch(1 0 0);
+
+	--ring: oklch(0.7227 0.1207 232.2581);
 	--chart-1: var(--color-blue-300);
 	--chart-2: var(--color-blue-500);
 	--chart-3: var(--color-blue-600);
@@ -134,7 +151,8 @@
 	--destructive: oklch(0.704 0.191 22.216);
 	--border: oklch(1 0 0 / 10%);
 	--input: oklch(1 0 0 / 15%);
-	--ring: oklch(0.556 0 0);
+
+	--ring: oklch(0.7227 0.1207 232.2581);
 	--chart-1: var(--color-blue-300);
 	--chart-2: var(--color-blue-500);
 	--chart-3: var(--color-blue-600);
@@ -238,6 +256,15 @@
 @utility extend-touch-target {
 	@media (pointer: coarse) {
 		@apply relative touch-manipulation after:absolute after:-inset-2;
+	}
+}
+
+@layer utilities {
+	.bg-grid-pattern {
+		background-size: 40px 40px;
+		background-image:
+			linear-gradient(to right, var(--border) 1px, transparent 1px),
+			linear-gradient(to bottom, var(--border) 1px, transparent 1px);
 	}
 }
 

@@ -7,8 +7,8 @@ import {
 	PageHeader,
 	PageHeaderDescription,
 	PageHeaderHeading,
+	PageHeaderPrimaryButton,
 } from "@/components/layout/page-header";
-import { Button } from "@/components/ui/button";
 
 const title = "AI Agent Workflows";
 const description =
@@ -72,9 +72,9 @@ export default function WorkflowsLayout({ children }: { children: ReactNode }) {
 					templates to explore different workflow patterns.
 				</PageHeaderDescription>
 				<PageActions>
-					<Button asChild size="sm">
+					<PageHeaderPrimaryButton asChild>
 						<Link href="/docs/workflows">Get More Information</Link>
-					</Button>
+					</PageHeaderPrimaryButton>
 				</PageActions>
 			</PageHeader>
 			{children}

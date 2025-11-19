@@ -12,8 +12,6 @@ import type { registryItemFileSchema } from "@/shadcn-temp/schema";
 export async function AgentDisplay({ name }: { name: string }) {
 	const item = await getCachedRegistryItem(name);
 
-	console.log("item", item);
-
 	if (!item?.files) {
 		return null;
 	}

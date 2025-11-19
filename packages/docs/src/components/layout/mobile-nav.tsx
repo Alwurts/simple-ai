@@ -1,14 +1,18 @@
 "use client";
 
 import Link, { type LinkProps } from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
+import { LogoIcon } from "@/components/icons/logo-icon";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "@/components/ui/sheet";
 import { siteConfig } from "@/lib/config";
 import type { source } from "@/lib/source";
 import { cn } from "@/lib/utils";
@@ -23,128 +27,162 @@ export function MobileNav({
 	className?: string;
 }) {
 	const [open, setOpen] = React.useState(false);
+	const pathname = usePathname();
 
 	return (
-		<Popover open={open} onOpenChange={setOpen}>
-			<PopoverTrigger asChild>
+		<Sheet open={open} onOpenChange={setOpen}>
+			<SheetTrigger asChild>
 				<Button
 					variant="ghost"
 					className={cn(
-						"extend-touch-target h-8 touch-manipulation items-center justify-start gap-2.5 !p-0 hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent dark:hover:bg-transparent",
+						"h-8 w-8 p-0 hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 active:bg-transparent",
 						className,
 					)}
 				>
-					<div className="relative flex h-8 w-4 items-center justify-center">
-						<div className="relative size-4">
-							<span
-								className={cn(
-									"bg-foreground absolute left-0 block h-0.5 w-4 transition-all duration-100",
-									open ? "top-[0.4rem] -rotate-45" : "top-1",
-								)}
-							/>
-							<span
-								className={cn(
-									"bg-foreground absolute left-0 block h-0.5 w-4 transition-all duration-100",
-									open ? "top-[0.4rem] rotate-45" : "top-2.5",
-								)}
-							/>
-						</div>
-						<span className="sr-only">Toggle Menu</span>
-					</div>
-					<span className="flex h-8 items-center text-lg leading-none font-medium">
-						Menu
-					</span>
-				</Button>
-			</PopoverTrigger>
-			<PopoverContent
-				className="bg-background/90 no-scrollbar h-(--radix-popper-available-height) w-(--radix-popper-available-width) overflow-y-auto rounded-none border-none p-0 shadow-none backdrop-blur duration-100"
-				align="start"
-				side="bottom"
-				alignOffset={-16}
-				sideOffset={14}
-			>
-				<div className="flex flex-col gap-12 overflow-auto px-6 py-6">
-					<div className="flex flex-col gap-4">
-						<div className="text-muted-foreground text-sm font-medium">
-							Menu
-						</div>
-						<div className="flex flex-col gap-3">
-							<MobileLink href="/" onOpenChange={setOpen}>
-								Home
-							</MobileLink>
-							{items.map((item, index) => (
-								<MobileLink
-									// biome-ignore lint/suspicious/noArrayIndexKey: Needed
-									key={index}
-									href={item.href}
-									onOpenChange={setOpen}
-								>
-									{item.label}
-								</MobileLink>
-							))}
-						</div>
-					</div>
-					<div className="flex flex-col gap-4">
-						<div className="text-muted-foreground text-sm font-medium">
-							Sections
-						</div>
-						<div className="flex flex-col gap-3">
-							{siteConfig.topLevelSections.map(
-								({ name, href }) => {
-									return (
-										<MobileLink
-											key={name}
-											href={href}
-											onOpenChange={setOpen}
-										>
-											{name}
-										</MobileLink>
-									);
-								},
+					<div className="relative flex h-3.5 w-4 flex-col justify-between">
+						<span
+							className={cn(
+								"bg-foreground block h-0.5 w-full rounded-full transition-all duration-200",
+								open
+									? "translate-y-[6px] rotate-45"
+									: "translate-y-0",
 							)}
+						/>
+						<span
+							className={cn(
+								"bg-foreground block h-0.5 w-full rounded-full transition-all duration-200",
+								open ? "opacity-0" : "opacity-100",
+							)}
+						/>
+						<span
+							className={cn(
+								"bg-foreground block h-0.5 w-full rounded-full transition-all duration-200",
+								open
+									? "-translate-y-[6px] -rotate-45"
+									: "translate-y-0",
+							)}
+						/>
+					</div>
+					<span className="sr-only">Toggle Menu</span>
+				</Button>
+			</SheetTrigger>
+			<SheetContent side="left" className="w-[300px] p-0 pr-0">
+				<SheetHeader className="px-6 pt-8 pb-4 text-left">
+					<SheetTitle asChild>
+						<Link
+							href="/"
+							className="flex items-center gap-2 text-lg font-bold"
+							onClick={() => setOpen(false)}
+						>
+							<LogoIcon className="size-6" />
+							<span className="tracking-tight">
+								{siteConfig.name}
+							</span>
+						</Link>
+					</SheetTitle>
+				</SheetHeader>
+				<ScrollArea className="h-[calc(100vh-5rem)] pb-10 pl-6 pr-6">
+					<div className="flex flex-col gap-8 pb-10">
+						<div className="flex flex-col gap-2">
+							<div className="text-foreground/70 px-2 text-xs font-bold uppercase tracking-wider mb-2">
+								Menu
+							</div>
+							<div className="flex flex-col gap-1">
+								<MobileLink
+									href="/"
+									onOpenChange={setOpen}
+									isActive={pathname === "/"}
+								>
+									Home
+								</MobileLink>
+								{items.map((item) => (
+									<MobileLink
+										key={item.href}
+										href={item.href}
+										onOpenChange={setOpen}
+										isActive={pathname === item.href}
+									>
+										{item.label}
+									</MobileLink>
+								))}
+							</div>
+						</div>
+						<div className="flex flex-col gap-2">
+							<div className="text-foreground/70 px-2 text-xs font-bold uppercase tracking-wider mb-2">
+								Sections
+							</div>
+							<div className="flex flex-col gap-1">
+								{siteConfig.topLevelSections.map(
+									({ name, href }) => {
+										const isActive =
+											href === "/docs"
+												? pathname === href
+												: pathname.startsWith(href);
+										return (
+											<MobileLink
+												key={name}
+												href={href}
+												onOpenChange={setOpen}
+												isActive={isActive}
+											>
+												{name}
+											</MobileLink>
+										);
+									},
+								)}
+							</div>
+						</div>
+						<div className="flex flex-col gap-6">
+							{tree?.children?.map((group) => {
+								if (group.type === "folder") {
+									return (
+										<div
+											key={group.$id}
+											className="flex flex-col gap-2"
+										>
+											<div className="text-foreground/70 px-2 text-xs font-bold uppercase tracking-wider mb-2">
+												{group.name}
+											</div>
+											<div className="flex flex-col gap-1">
+												{group.children.map((item) => {
+													if (item.type === "page") {
+														return (
+															<MobileLink
+																key={item.url}
+																href={item.url}
+																onOpenChange={
+																	setOpen
+																}
+																isActive={
+																	pathname ===
+																	item.url
+																}
+															>
+																{item.name}
+															</MobileLink>
+														);
+													}
+													return null;
+												})}
+											</div>
+										</div>
+									);
+								}
+								return null;
+							})}
 						</div>
 					</div>
-					<div className="flex flex-col gap-8">
-						{tree?.children?.map((group, index) => {
-							if (group.type === "folder") {
-								return (
-									<div
-										// biome-ignore lint/suspicious/noArrayIndexKey: Needed
-										key={index}
-										className="flex flex-col gap-4"
-									>
-										<div className="text-muted-foreground text-sm font-medium">
-											{group.name}
-										</div>
-										<div className="flex flex-col gap-3">
-											{group.children.map((item) => {
-												if (item.type === "page") {
-													return (
-														<MobileLink
-															key={`${item.url}-${index}`}
-															href={item.url}
-															onOpenChange={
-																setOpen
-															}
-															className="flex items-center gap-2"
-														>
-															{item.name}{" "}
-														</MobileLink>
-													);
-												}
-												return null;
-											})}
-										</div>
-									</div>
-								);
-							}
-							return null;
-						})}
-					</div>
-				</div>
-			</PopoverContent>
-		</Popover>
+				</ScrollArea>
+			</SheetContent>
+		</Sheet>
 	);
+}
+
+interface MobileLinkProps extends LinkProps {
+	onOpenChange?: (open: boolean) => void;
+	children: React.ReactNode;
+	className?: string;
+	isActive?: boolean;
 }
 
 function MobileLink({
@@ -152,12 +190,9 @@ function MobileLink({
 	onOpenChange,
 	className,
 	children,
+	isActive,
 	...props
-}: LinkProps & {
-	onOpenChange?: (open: boolean) => void;
-	children: React.ReactNode;
-	className?: string;
-}) {
+}: MobileLinkProps) {
 	const router = useRouter();
 	return (
 		<Link
@@ -166,9 +201,18 @@ function MobileLink({
 				router.push(href.toString());
 				onOpenChange?.(false);
 			}}
-			className={cn("text-2xl font-medium", className)}
+			className={cn(
+				"relative flex h-10 items-center rounded-md px-4 text-sm font-medium transition-colors",
+				"text-muted-foreground hover:text-foreground hover:bg-accent/50",
+				isActive &&
+					"bg-brand/5 text-brand font-semibold hover:bg-brand/10 hover:text-brand",
+				className,
+			)}
 			{...props}
 		>
+			{isActive && (
+				<div className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-[3px] rounded-r-full bg-brand" />
+			)}
 			{children}
 		</Link>
 	);

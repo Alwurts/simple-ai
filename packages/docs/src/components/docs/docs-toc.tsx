@@ -1,14 +1,7 @@
 "use client";
 
-import { MenuIcon } from "lucide-react";
 import * as React from "react";
-import { Button } from "@/components/ui/button";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { cn } from "@/lib/utils";
 
 function useActiveItem(itemIds: string[]) {
@@ -48,7 +41,6 @@ function useActiveItem(itemIds: string[]) {
 
 export function DocsTableOfContents({
 	toc,
-	variant = "list",
 	className,
 }: {
 	toc: {
@@ -56,10 +48,8 @@ export function DocsTableOfContents({
 		url: string;
 		depth: number;
 	}[];
-	variant?: "dropdown" | "list";
 	className?: string;
 }) {
-	const [open, setOpen] = React.useState(false);
 	const itemIds = React.useMemo(
 		() => toc.map((item) => item.url.replace("#", "")),
 		[toc],
@@ -70,56 +60,42 @@ export function DocsTableOfContents({
 		return null;
 	}
 
-	if (variant === "dropdown") {
-		return (
-			<DropdownMenu open={open} onOpenChange={setOpen}>
-				<DropdownMenuTrigger asChild>
-					<Button
-						variant="outline"
-						size="sm"
-						className={cn("h-8 md:h-7", className)}
-					>
-						<MenuIcon /> On This Page
-					</Button>
-				</DropdownMenuTrigger>
-				<DropdownMenuContent
-					align="start"
-					className="no-scrollbar max-h-[70svh]"
-				>
-					{toc.map((item) => (
-						<DropdownMenuItem
-							key={item.url}
-							asChild
-							onClick={() => {
-								setOpen(false);
-							}}
-							data-depth={item.depth}
-							className="data-[depth=3]:pl-6 data-[depth=4]:pl-8"
-						>
-							<a href={item.url}>{item.title}</a>
-						</DropdownMenuItem>
-					))}
-				</DropdownMenuContent>
-			</DropdownMenu>
-		);
-	}
-
 	return (
-		<div className={cn("flex flex-col gap-2 p-4 pt-0 text-sm", className)}>
-			<p className="text-muted-foreground bg-background sticky top-0 h-6 text-xs">
+		<div className={cn("flex flex-col gap-3 pb-8", className)}>
+			<h4 className="text-foreground/70 px-1 text-xs font-bold uppercase tracking-wider">
 				On This Page
-			</p>
-			{toc.map((item) => (
-				<a
-					key={item.url}
-					href={item.url}
-					className="text-muted-foreground hover:text-foreground data-[active=true]:text-foreground text-[0.8rem] no-underline transition-colors data-[depth=3]:pl-4 data-[depth=4]:pl-6"
-					data-active={item.url === `#${activeHeading}`}
-					data-depth={item.depth}
-				>
-					{item.title}
-				</a>
-			))}
+			</h4>
+			<div className="flex flex-col gap-0.5">
+				{toc.map((item) => {
+					const isActive = item.url === `#${activeHeading}`;
+					return (
+						<a
+							key={item.url}
+							href={item.url}
+							data-active={isActive}
+							data-depth={item.depth}
+							className={cn(
+								"relative block py-1.5 text-sm transition-colors",
+								// Indentation for depth
+								item.depth === 3 ? "pl-6" : "pl-3",
+								item.depth === 4 ? "pl-9" : "",
+
+								// Default State
+								"text-muted-foreground hover:text-foreground",
+
+								// Active State: Brand color text + Border Indicator
+								isActive && "font-medium text-brand",
+							)}
+						>
+							{/* Active Indicator Line */}
+							{isActive && (
+								<div className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[2px] rounded-r-full bg-brand" />
+							)}
+							{item.title}
+						</a>
+					);
+				})}
+			</div>
 		</div>
 	);
 }

@@ -93,8 +93,8 @@ export default async function Page(props: {
 			className="flex items-stretch text-[1.05rem] sm:text-[15px] xl:w-full"
 		>
 			<div className="flex min-w-0 flex-1 flex-col">
-				<div className="h-(--top-spacing) shrink-0" />
-				<div className="mx-auto flex w-full max-w-2xl min-w-0 flex-1 flex-col gap-8 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
+				<div className="mt-6" />
+				<div className="mx-auto flex w-full max-w-3xl min-w-0 flex-1 flex-col gap-8 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
 					<div className="flex flex-col gap-2">
 						<div className="flex flex-col gap-2">
 							<div className="flex items-start justify-between">
@@ -212,14 +212,12 @@ export default async function Page(props: {
 					)}
 				</div>
 			</div>
-			<div className="sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[calc(100svh-var(--footer-height)+2rem)] w-72 flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex">
-				<div className="h-(--top-spacing) shrink-0" />
-				{doc.toc?.length ? (
-					<div className="no-scrollbar overflow-y-auto px-8">
+			<div className="hidden xl:flex w-72 flex-col">
+				<div className="sticky top-[calc(var(--header-total-height)+2.5rem)] h-[calc(100svh-(var(--header-total-height)+3.5rem))] overflow-y-auto pb-8 pl-8">
+					{doc.toc?.length ? (
 						<DocsTableOfContents toc={doc.toc} />
-						<div className="h-12" />
-					</div>
-				) : null}
+					) : null}
+				</div>
 			</div>
 		</div>
 	);

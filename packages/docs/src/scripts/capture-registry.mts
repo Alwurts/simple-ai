@@ -9,9 +9,9 @@ const clearExisting = true;
 // Capture screenshots.
 // ----------------------------------------------------------------------------
 async function captureScreenshots() {
-	const { getAllBlockIds } = await import("../lib/blocks");
+	const { getAllRegistryItemIds } = await import("../lib/registry");
 
-	const blockIds = await getAllBlockIds();
+	const blockIds = await getAllRegistryItemIds(["registry:block"]);
 	const blocks = clearExisting
 		? blockIds
 		: blockIds.filter((block) => {

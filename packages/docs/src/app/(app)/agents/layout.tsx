@@ -5,8 +5,8 @@ import {
 	PageHeader,
 	PageHeaderDescription,
 	PageHeaderHeading,
+	PageHeaderPrimaryButton,
 } from "@/components/layout/page-header";
-import { Button } from "@/components/ui/button";
 
 const title = "AI Agents";
 const description =
@@ -47,12 +47,12 @@ export default function AgentsLayout({
 				<PageHeaderHeading>{title}</PageHeaderHeading>
 				<PageHeaderDescription>{description}</PageHeaderDescription>
 				<PageActions>
-					<Button asChild size="sm">
-						<Link href="/docs/agents">Get More Information</Link>
-					</Button>
+					<PageHeaderPrimaryButton asChild>
+						<Link href="/docs/agents">Get more nformation</Link>
+					</PageHeaderPrimaryButton>
 				</PageActions>
 			</PageHeader>
-			<div className="container-wrapper section-soft flex-1 md:py-12">
+			<div className="container-wrapper section-soft flex-1 py-12">
 				<div className="container">{children}</div>
 			</div>
 		</>
