@@ -12,7 +12,12 @@ export async function POST(
 	const { agentId } = await params;
 	const agentIdTyped = agentId as agentId;
 
+	console.log("agentIdTyped", agentIdTyped);
+	console.log("agents", agents);
+
 	const agentResponding = agents[agentIdTyped];
+
+	console.log("agentResponding", agentResponding);
 
 	if (!agentResponding) {
 		return new Response(JSON.stringify({ error: "Agent not found" }), {
@@ -21,6 +26,9 @@ export async function POST(
 		});
 	}
 
-	// @ts-expect-error - agentIdTyped is a valid agentId
-	return agentExecute(agentIdTyped, messages);
+	return agentExecute({
+		agentId: agentIdTyped,
+		agent: agentResponding,
+		messages,
+	});
 }
