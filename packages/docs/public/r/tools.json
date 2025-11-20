@@ -13,7 +13,8 @@
 		{
 			"path": "./src/registry/ai/tools/tools.ts",
 			"content": "import type { InferUITools, ToolSet } from \"ai\";\nimport { exaTool } from \"@/registry/ai/tools/exa-tool\";\nimport { firecrawlTool } from \"@/registry/ai/tools/firecrawl-tool\";\nimport { getWeatherTool } from \"@/registry/ai/tools/get-weather\";\n\nexport const tools = {\n\t\"get-weather\": getWeatherTool,\n\t\"exa-tool\": exaTool,\n\t\"firecrawl-tool\": firecrawlTool,\n\t// Add more tools here\n} satisfies ToolSet;\n\nexport type Tools = InferUITools<typeof tools>;\n\nexport type toolId = keyof typeof tools;\n",
-			"type": "registry:lib"
+			"type": "registry:lib",
+			"target": "lib/ai/tools.ts"
 		}
 	]
 }

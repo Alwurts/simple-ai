@@ -135,12 +135,14 @@ export const blocks: Registry["items"] = [
 			"@simple-ai/tool-invocation",
 			"@simple-ai/chat-suggestions",
 			"@simple-ai/reasoning",
-			"@simple-ai/agents",
 			"@simple-ai/messages",
 			"@simple-ai/models",
-			"@simple-ai/tools",
 			"@simple-ai/agent-respond",
 			"@simple-ai/ai-utils",
+			"@simple-ai/agents-tools-registry",
+			//"@simple-ai/tools-registry",
+			// "@simple-ai/weather-agent",
+			// "@simple-ai/get-weather",
 		],
 		files: [
 			{
@@ -150,7 +152,7 @@ export const blocks: Registry["items"] = [
 			},
 			{
 				path: "blocks/chat-04/route.ts",
-				target: "app/api/ai/chat/route.ts",
+				target: "app/api/ai/agents/route.ts",
 				type: "registry:page",
 			},
 			{
@@ -197,6 +199,16 @@ export const blocks: Registry["items"] = [
 				path: "blocks/chat-04/components/chat/chat-content.tsx",
 				type: "registry:component",
 			},
+			// {
+			// 	type: "registry:lib",
+			// 	path: "ai/agents/index.ts",
+			// 	target: "lib/ai/agents/index.ts",
+			// },
+			// {
+			// 	type: "registry:lib",
+			// 	path: "ai/tools/index.ts",
+			// 	target: "lib/ai/tools/index.ts",
+			// },
 		],
 		categories: ["chat"],
 	},

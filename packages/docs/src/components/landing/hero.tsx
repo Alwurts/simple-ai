@@ -49,14 +49,14 @@ export function LandingHero() {
 					<h1 className="text-4xl font-bold tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl max-w-4xl text-balance">
 						Build AI Agents <br className="hidden md:block" />
 						<span className="text-muted-foreground">
-							with shadcn/ui
+							with shadcn
 						</span>
 					</h1>
 
 					<p className="mx-auto max-w-[700px] text-muted-foreground text-lg sm:text-xl">
 						An open-source library of AI-focused UI components, app
-						blocks, and React Flow workflows. Designed to accelerate
-						your AI engineering.
+						blocks, and React Flow workflows designed to accelerate
+						development. Built with shadcn/UI and Vercel AI SDK.
 					</p>
 
 					<div className="flex flex-col sm:flex-row gap-4 w-full justify-center px-4 sm:px-0">

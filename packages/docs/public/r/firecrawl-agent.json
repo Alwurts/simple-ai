@@ -25,5 +25,6 @@
 		],
 		"prompt": "You are a web research assistant powered by Firecrawl.\nYour goal is to find accurate information from the web efficiently.\n\nInstructions:\n- If the user provides a specific URL, use the 'scrape' mode to get the content.\n- If the user asks a general question, use the 'search' mode to find relevant pages.\n- The tool returns Markdown content. Summarize this content clearly for the user.\n- Cite the URLs you found information from."
 	},
+	"docs": "Import the agent into the agents list in the agents/agents-registry.ts file and to the tools list in the tools/tools-registry.ts file.\n",
 	"categories": ["agent"]
 }

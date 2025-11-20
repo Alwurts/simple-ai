@@ -6,9 +6,10 @@
 	"dependencies": ["ai", "@ai-sdk/openai"],
 	"files": [
 		{
-			"path": "./src/registry/ai/models.ts",
+			"path": "./src/registry/ai/models-external.ts",
 			"content": "import { openai } from \"@ai-sdk/openai\";\nimport {\n\tcustomProvider,\n\tdefaultSettingsMiddleware,\n\twrapLanguageModel,\n} from \"ai\";\n\nconst languageModels = {\n\t\"gpt-5.1\": wrapLanguageModel({\n\t\tmodel: openai(\"gpt-5.1\"),\n\t\tmiddleware: defaultSettingsMiddleware({\n\t\t\tsettings: {\n\t\t\t\tproviderOptions: {\n\t\t\t\t\topenai: {\n\t\t\t\t\t\treasoningSummary: \"auto\", // 'auto' for condensed or 'detailed' for comprehensive\n\t\t\t\t\t\treasoningEffort: \"low\", // 'none' | 'low' | 'medium' | 'high'\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}),\n\t}),\n\t\"gpt-5\": wrapLanguageModel({\n\t\tmodel: openai(\"gpt-5\"),\n\t\tmiddleware: defaultSettingsMiddleware({\n\t\t\tsettings: {\n\t\t\t\tproviderOptions: {\n\t\t\t\t\topenai: {\n\t\t\t\t\t\treasoningSummary: \"auto\", // 'auto' for condensed or 'detailed' for comprehensive\n\t\t\t\t\t\treasoningEffort: \"minimal\", // 'minimal' | 'low' | 'medium' | 'high'\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}),\n\t}),\n\t\"gpt-5-mini\": wrapLanguageModel({\n\t\tmodel: openai(\"gpt-5-mini\"),\n\t\tmiddleware: defaultSettingsMiddleware({\n\t\t\tsettings: {\n\t\t\t\tproviderOptions: {\n\t\t\t\t\topenai: {\n\t\t\t\t\t\treasoningSummary: \"detailed\", // 'auto' for condensed or 'detailed' for comprehensive\n\t\t\t\t\t\treasoningEffort: \"low\", // 'minimal' | 'low' | 'medium' | 'high'\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}),\n\t}),\n\t\"gpt-5-nano\": wrapLanguageModel({\n\t\tmodel: openai(\"gpt-5-nano\"),\n\t\tmiddleware: defaultSettingsMiddleware({\n\t\t\tsettings: {\n\t\t\t\tproviderOptions: {\n\t\t\t\t\topenai: {\n\t\t\t\t\t\treasoningSummary: \"detailed\", // 'auto' for condensed or 'detailed' for comprehensive\n\t\t\t\t\t\treasoningEffort: \"low\", // 'minimal' | 'low' | 'medium' | 'high'\n\t\t\t\t\t},\n\t\t\t\t},\n\t\t\t},\n\t\t}),\n\t}),\n};\n\nexport const model = customProvider({ languageModels });\n\nexport type modelID = keyof typeof languageModels;\n\nexport const MODELS = Object.keys(languageModels);\n",
-			"type": "registry:lib"
+			"type": "registry:lib",
+			"target": "lib/ai/models.ts"
 		}
 	]
 }

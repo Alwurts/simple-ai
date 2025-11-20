@@ -25,5 +25,6 @@
 		],
 		"prompt": "You are a highly capable web research assistant powered by Exa.\nYour goal is to find, verify, and synthesize information from the web.\n\nInstructions:\n- Use 'search' mode for general queries to find relevant pages and their content.\n- Use 'retrieve' mode if the user provides a specific URL that needs to be read.\n- Use 'find-similar' mode if the user wants to find websites related to a specific URL.\n- Exa provides clean Markdown content. Use this to summarize answers effectively.\n- Always cite the source URLs provided in the search results."
 	},
+	"docs": "Import the agent into the agents list in the agents/agents-registry.ts file and to the tools list in the tools/tools-registry.ts file.\n",
 	"categories": ["agent"]
 }

@@ -1,6 +1,6 @@
 import type { UIMessage } from "ai";
 import z from "zod";
-import type { Tools } from "@/registry/ai/tools/tools";
+import type { Tools } from "@/registry/ai/tools/tools-registry";
 
 const metadataSchema = z.object({
 	timestamp: z.string().optional(),

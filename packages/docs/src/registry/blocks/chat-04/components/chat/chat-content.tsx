@@ -5,7 +5,7 @@ import { ThumbsUp } from "lucide-react";
 import type { ComponentPropsWithoutRef } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { agentsList } from "@/registry/ai/agents/agents";
+import { agentsList } from "@/registry/ai/agents/agents-registry";
 import { uiMessageToText } from "@/registry/ai/ai-utils";
 import type { AIUIMessage } from "@/registry/ai/messages";
 import {

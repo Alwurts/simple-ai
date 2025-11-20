@@ -1,5 +1,5 @@
 import { agentExecute } from "@/registry/ai/agent-route-respond";
-import { type agentId, agents } from "@/registry/ai/agents/agents";
+import { type agentId, agents } from "@/registry/ai/agents/registry-full";
 import type { AIUIMessage } from "@/registry/ai/messages";
 
 export async function POST(
@@ -21,5 +21,6 @@ export async function POST(
 		});
 	}
 
+	// @ts-expect-error - agentIdTyped is a valid agentId
 	return agentExecute(agentIdTyped, messages);
 }

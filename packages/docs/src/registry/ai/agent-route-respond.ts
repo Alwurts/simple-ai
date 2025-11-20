@@ -1,5 +1,9 @@
 import { convertToModelMessages } from "ai";
-import { AGENTS, type agentId, agents } from "@/registry/ai/agents/agents";
+import {
+	AGENTS,
+	type agentId,
+	agents,
+} from "@/registry/ai/agents/agents-registry";
 import type { AIUIMessage } from "@/registry/ai/messages";
 import { idToReadableText } from "@/registry/lib/id-to-readable-text";
 

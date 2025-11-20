@@ -819,12 +819,11 @@
 				"@simple-ai/tool-invocation",
 				"@simple-ai/chat-suggestions",
 				"@simple-ai/reasoning",
-				"@simple-ai/agents",
 				"@simple-ai/messages",
 				"@simple-ai/models",
-				"@simple-ai/tools",
 				"@simple-ai/agent-respond",
-				"@simple-ai/ai-utils"
+				"@simple-ai/ai-utils",
+				"@simple-ai/agents-tools-registry"
 			],
 			"files": [
 				{
@@ -835,7 +834,7 @@
 				{
 					"path": "./src/registry/blocks/chat-04/route.ts",
 					"type": "registry:page",
-					"target": "app/api/ai/chat/route.ts"
+					"target": "app/api/ai/agents/route.ts"
 				},
 				{
 					"path": "./src/registry/blocks/chat-04/lib/config.ts",
@@ -1999,26 +1998,6 @@
 			"categories": ["workflow"]
 		},
 		{
-			"name": "agents",
-			"type": "registry:lib",
-			"description": "A set of default agents.",
-			"dependencies": ["ai"],
-			"registryDependencies": [
-				"@simple-ai/models",
-				"@simple-ai/weather-agent",
-				"@simple-ai/exa-agent",
-				"@simple-ai/firecrawl-agent",
-				"@simple-ai/id-to-readable-text"
-			],
-			"files": [
-				{
-					"path": "./src/registry/ai/agents/agents.ts",
-					"type": "registry:lib",
-					"target": "lib/ai/agents.ts"
-				}
-			]
-		},
-		{
 			"name": "weather-agent",
 			"type": "registry:lib",
 			"title": "Weather Agent",
@@ -2046,6 +2025,7 @@
 				],
 				"prompt": "You are a helpful weather assistant. Your role is to provide accurate and helpful weather information to users.\n\nWhen users ask about weather:\n- Use the get-weather tool to retrieve current weather conditions\n- Always specify the city and preferred temperature unit (fahrenheit or celsius)\n- Provide clear, concise weather information\n- If a user doesn't specify a unit, default to fahrenheit\n- Be friendly and helpful in your responses"
 			},
+			"docs": "Import the agent into the agents list in the agents/agents-registry.ts file and to the tools list in the tools/tools-registry.ts file.\n",
 			"categories": ["agent"]
 		},
 		{
@@ -2076,6 +2056,7 @@
 				],
 				"prompt": "You are a web research assistant powered by Firecrawl.\nYour goal is to find accurate information from the web efficiently.\n\nInstructions:\n- If the user provides a specific URL, use the 'scrape' mode to get the content.\n- If the user asks a general question, use the 'search' mode to find relevant pages.\n- The tool returns Markdown content. Summarize this content clearly for the user.\n- Cite the URLs you found information from."
 			},
+			"docs": "Import the agent into the agents list in the agents/agents-registry.ts file and to the tools list in the tools/tools-registry.ts file.\n",
 			"categories": ["agent"]
 		},
 		{
@@ -2106,24 +2087,8 @@
 				],
 				"prompt": "You are a highly capable web research assistant powered by Exa.\nYour goal is to find, verify, and synthesize information from the web.\n\nInstructions:\n- Use 'search' mode for general queries to find relevant pages and their content.\n- Use 'retrieve' mode if the user provides a specific URL that needs to be read.\n- Use 'find-similar' mode if the user wants to find websites related to a specific URL.\n- Exa provides clean Markdown content. Use this to summarize answers effectively.\n- Always cite the source URLs provided in the search results."
 			},
+			"docs": "Import the agent into the agents list in the agents/agents-registry.ts file and to the tools list in the tools/tools-registry.ts file.\n",
 			"categories": ["agent"]
-		},
-		{
-			"name": "tools",
-			"type": "registry:lib",
-			"description": "A set of tools for the AI SDK.",
-			"dependencies": ["ai"],
-			"registryDependencies": [
-				"@simple-ai/exa-tool",
-				"@simple-ai/firecrawl-tool",
-				"@simple-ai/get-weather"
-			],
-			"files": [
-				{
-					"path": "./src/registry/ai/tools/tools.ts",
-					"type": "registry:lib"
-				}
-			]
 		},
 		{
 			"name": "get-weather",
@@ -2133,7 +2098,8 @@
 			"files": [
 				{
 					"path": "./src/registry/ai/tools/get-weather.ts",
-					"type": "registry:lib"
+					"type": "registry:lib",
+					"target": "lib/ai/tools/get-weather.ts"
 				}
 			]
 		},
@@ -2145,9 +2111,13 @@
 			"files": [
 				{
 					"path": "./src/registry/ai/tools/firecrawl-tool.ts",
-					"type": "registry:lib"
+					"type": "registry:lib",
+					"target": "lib/ai/tools/firecrawl-tool.ts"
 				}
-			]
+			],
+			"envVars": {
+				"FIRECRAWL_API_KEY": ""
+			}
 		},
 		{
 			"name": "exa-tool",
@@ -2157,7 +2127,35 @@
 			"files": [
 				{
 					"path": "./src/registry/ai/tools/exa-tool.ts",
-					"type": "registry:lib"
+					"type": "registry:lib",
+					"target": "lib/ai/tools/exa-tool.ts"
+				}
+			],
+			"envVars": {
+				"EXA_API_KEY": ""
+			}
+		},
+		{
+			"name": "agents-tools-registry",
+			"type": "registry:lib",
+			"description": "A set of default agents.",
+			"dependencies": ["ai"],
+			"registryDependencies": [
+				"@simple-ai/models",
+				"@simple-ai/weather-agent",
+				"@simple-ai/get-weather",
+				"@simple-ai/id-to-readable-text"
+			],
+			"files": [
+				{
+					"path": "./src/registry/ai/agents/agents-registry.ts",
+					"type": "registry:lib",
+					"target": "lib/ai/agents/agents-registry.ts"
+				},
+				{
+					"path": "./src/registry/ai/tools/tools-registry.ts",
+					"type": "registry:lib",
+					"target": "lib/ai/tools/tools-registry.ts"
 				}
 			]
 		},
@@ -2170,7 +2168,8 @@
 			"files": [
 				{
 					"path": "./src/registry/ai/agent-route-respond.ts",
-					"type": "registry:lib"
+					"type": "registry:lib",
+					"target": "lib/ai/agent-route-respond.ts"
 				}
 			]
 		},
@@ -2181,8 +2180,9 @@
 			"dependencies": ["ai", "@ai-sdk/openai"],
 			"files": [
 				{
-					"path": "./src/registry/ai/models.ts",
-					"type": "registry:lib"
+					"path": "./src/registry/ai/models-external.ts",
+					"type": "registry:lib",
+					"target": "lib/ai/models.ts"
 				}
 			]
 		},
@@ -2194,7 +2194,8 @@
 			"files": [
 				{
 					"path": "./src/registry/ai/messages.ts",
-					"type": "registry:lib"
+					"type": "registry:lib",
+					"target": "lib/ai/messages.ts"
 				}
 			]
 		},
@@ -2206,7 +2207,8 @@
 			"files": [
 				{
 					"path": "./src/registry/ai/ai-utils.ts",
-					"type": "registry:lib"
+					"type": "registry:lib",
+					"target": "lib/ai/ai-utils.ts"
 				}
 			]
 		}

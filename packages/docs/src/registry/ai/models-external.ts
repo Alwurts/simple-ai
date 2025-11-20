@@ -1,19 +1,13 @@
-import { createOpenAI } from "@ai-sdk/openai";
+import { openai } from "@ai-sdk/openai";
 import {
 	customProvider,
 	defaultSettingsMiddleware,
 	wrapLanguageModel,
 } from "ai";
 
-const AI_GATEWAY_URL = process.env.AI_GATEWAY_URL;
-
-const openaiClient = createOpenAI({
-	baseURL: `${AI_GATEWAY_URL}/openai`,
-});
-
 const languageModels = {
 	"gpt-5.1": wrapLanguageModel({
-		model: openaiClient("gpt-5.1"),
+		model: openai("gpt-5.1"),
 		middleware: defaultSettingsMiddleware({
 			settings: {
 				providerOptions: {
@@ -26,7 +20,7 @@ const languageModels = {
 		}),
 	}),
 	"gpt-5": wrapLanguageModel({
-		model: openaiClient("gpt-5"),
+		model: openai("gpt-5"),
 		middleware: defaultSettingsMiddleware({
 			settings: {
 				providerOptions: {
@@ -39,7 +33,7 @@ const languageModels = {
 		}),
 	}),
 	"gpt-5-mini": wrapLanguageModel({
-		model: openaiClient("gpt-5-mini"),
+		model: openai("gpt-5-mini"),
 		middleware: defaultSettingsMiddleware({
 			settings: {
 				providerOptions: {
@@ -52,7 +46,7 @@ const languageModels = {
 		}),
 	}),
 	"gpt-5-nano": wrapLanguageModel({
-		model: openaiClient("gpt-5-nano"),
+		model: openai("gpt-5-nano"),
 		middleware: defaultSettingsMiddleware({
 			settings: {
 				providerOptions: {
