@@ -7,7 +7,7 @@ import type { Editor, JSONContent } from "@tiptap/react";
 import { EditorContent, ReactRenderer, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import type { SuggestionProps } from "@tiptap/suggestion";
-import { ArrowUpIcon, Loader2 } from "lucide-react";
+import { ArrowUpIcon, Loader2, PlusIcon } from "lucide-react";
 
 import {
 	type ComponentProps,
@@ -24,6 +24,12 @@ import {
 } from "react";
 import tippy, { type Instance } from "tippy.js";
 import { Button } from "@/components/ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
 	InputGroup,
 	InputGroupAddon,
@@ -64,6 +70,8 @@ type ChatInputContextType = {
 	disabled: boolean;
 	value?: ChatInputValue;
 	onChange?: (value: ChatInputValue) => void;
+	editor: Editor | null;
+	setEditor: (editor: Editor | null) => void;
 };
 
 const ChatInputContext = createContext<ChatInputContextType>({
@@ -75,6 +83,8 @@ const ChatInputContext = createContext<ChatInputContextType>({
 	disabled: false,
 	value: undefined,
 	onChange: undefined,
+	editor: null,
+	setEditor: () => {},
 });
 
 export function ChatInput({
@@ -99,6 +109,7 @@ export function ChatInput({
 	const [mentionConfigs, setMentionConfigs] = useState<MentionConfig<any>[]>(
 		[],
 	);
+	const [editor, setEditor] = useState<Editor | null>(null);
 
 	const registeredTypesRef = useRef(new Set<string>());
 
@@ -133,6 +144,8 @@ export function ChatInput({
 				disabled,
 				value,
 				onChange,
+				editor,
+				setEditor,
 			}}
 		>
 			<InputGroup
@@ -171,6 +184,7 @@ export function ChatInputEditor({
 		disabled: contextDisabled,
 		value: contextValue,
 		onChange: contextOnChange,
+		setEditor,
 	} = useContext(ChatInputContext);
 
 	const effectiveValue = value ?? contextValue;
@@ -234,6 +248,13 @@ export function ChatInputEditor({
 		},
 		[extensions, disabled, contextDisabled],
 	);
+
+	useEffect(() => {
+		if (editor) {
+			setEditor(editor);
+		}
+		return () => setEditor(null);
+	}, [editor, setEditor]);
 
 	useEffect(() => {
 		if (
@@ -607,6 +628,48 @@ const StopIcon = ({ className }: { className?: string }) => (
 		<rect x="2" y="2" width="12" height="12" rx="2" fill="currentColor" />
 	</svg>
 );
+
+export function ChatInputMentionButton({
+	className,
+	...props
+}: ComponentProps<typeof InputGroupButton>) {
+	const { mentionConfigs, editor } = useContext(ChatInputContext);
+
+	if (!mentionConfigs.length) {
+		return null;
+	}
+
+	return (
+		<DropdownMenu>
+			<DropdownMenuTrigger asChild>
+				<InputGroupButton
+					variant="outline"
+					size="icon-sm"
+					className={cn("rounded-full shrink-0", className)}
+					{...props}
+				>
+					<PlusIcon className="h-4 w-4" />
+					<span className="sr-only">Add Mention</span>
+				</InputGroupButton>
+			</DropdownMenuTrigger>
+			<DropdownMenuContent align="start" className="w-48">
+				{mentionConfigs.map((config) => (
+					<DropdownMenuItem
+						key={config.type}
+						onClick={() => {
+							if (editor) {
+								editor.commands.insertContent(config.trigger);
+								editor.commands.focus();
+							}
+						}}
+					>
+						{config.trigger} {config.type}
+					</DropdownMenuItem>
+				))}
+			</DropdownMenuContent>
+		</DropdownMenu>
+	);
+}
 
 export type ChatInputGroupAddon = ComponentProps<typeof InputGroupAddon>;
 

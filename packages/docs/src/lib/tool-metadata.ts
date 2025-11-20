@@ -37,7 +37,6 @@ export async function getToolDetails(
 				inputSchema = z.toJSONSchema(
 					toolExport.inputSchema as z.ZodTypeAny,
 				);
-				console.log("inputSchema", inputSchema);
 			} catch (error) {
 				console.warn(
 					`Failed to convert input schema for ${toolId}:`,

@@ -1,11 +1,13 @@
 ---
 title: Agents
-description: Get started with AI agents in your simple-ai project. Step-by-step guide to create multi-agent chat applications.
+description: Get started with AI agents in your simple-ai project. A guide to create multi-agent chat applications.
 ---
 
 # AI Agents Guide
 
 Build multi-agent chat applications with pre-built AI agents. This guide walks you through creating your first project and adding agent capabilities.
+
+> This system is built on top of the **Vercel AI SDK Agents**. For deep dives into agent concepts, check out their [official documentation](https://ai-sdk.dev/docs/agents/overview).
 
 ## 1. Create Your Project
 
@@ -17,148 +19,43 @@ cd my-ai-app
 npm run dev
 ```
 
-This sets up a full-stack Next.js application with:
-- ✅ Next.js with App Router
-- ✅ Tailwind CSS + Shadcn/ui components
-- ✅ Drizzle ORM for database
-- ✅ Better Auth for authentication
-- ✅ Hono for API routes
-- ✅ Ready-to-use chat foundation
+This sets up a full-stack Next.js application with everything you need.
 
 ## 2. Add Multi-Agent Chat
 
-Install the chat-04 block to set up the basic multi-agent chat interface:
+The foundation of the agent system is the `chat-04` block. This component handles the UI, agent routing, and real-time streaming.
+
+Install it using the CLI:
 
 ```bash
 npx shadcn@latest add @simple-ai/chat-04
 ```
 
-This adds:
-- 🤖 **Multi-agent chat interface** - Chat with multiple AI agents
-- 🎯 **Agent routing** - Automatically route messages to the right agent
-- 💬 **Real-time streaming** - Live responses from agents
-- 🏗️ **Modular layout** - Header, sidebar, and chat components
+This adds the multi-agent chat interface where users can interact with different agents in a single conversation.
 
-The chat-04 block includes everything you need for multi-agent conversations out of the box.
+## 3. Install Agents
 
-## 3. Install Agents from Registry
+Now that you have the chat interface, you can install specific agents from the registry. Each agent adds new capabilities to your application.
 
-Once you have your chat setup, install agents from the registry to add specific capabilities:
+### Weather Agent
+Adds weather forecasting capabilities.
 
 ```bash
-# Install weather agent
 npx shadcn@latest add @simple-ai/weather-agent
+```
 
-# Install search agent
+### Search Agent
+Adds web search capabilities.
+
+```bash
 npx shadcn@latest add @simple-ai/search-agent
 ```
 
-### Available Agents
-
-**Weather Agent** (`@simple-ai/weather-agent`)
-- Get current weather conditions for any location
-- Supports temperature in Celsius or Fahrenheit
-- Real-time weather data and forecasts
-
-**Search Agent** (`@simple-ai/search-agent`)
-- Intelligent web search capabilities
-- Find information from the internet
-- Answer questions with up-to-date results
-- Current events and news
-
-### Try Agents Live
-
-Visit the [Agents Gallery](/agents) to:
-- **Chat directly with agents** to see them in action
-- **View agent source code** to understand implementation
-- **Copy agents directly** into your project
-
 ## How It Works
 
-When you chat with an agent:
+Once installed, agents are automatically available in your chat.
+1.  **Install** the agent using the CLI.
+2.  **Import** and add it to your agent configuration (usually in `app/api/chat/route.ts` or similar, depending on your setup).
+3.  **Chat** with the agent by mentioning it (e.g., "@weather-agent") or just asking a question if it's the default.
 
-1. **You mention an agent** in your message (like "@weather-agent")
-2. **The system routes** your message to the appropriate agent
-3. **The agent thinks** about your request and decides what to do
-4. **Tools are called** automatically (like fetching weather data)
-5. **Response streams back** in real-time to your chat
-
-Agents combine AI reasoning with practical tools to give you helpful, accurate answers.
-
-## Creating Custom Agents
-
-Want to build your own agent? Start with the existing agent implementations in the registry as templates:
-
-```bash
-# Copy an existing agent as a starting point
-npx shadcn@latest add @simple-ai/weather-agent
-```
-
-Then modify the agent definition, system prompt, and tools to fit your needs. Check out the [Technical Reference](#technical-reference) below for implementation details.
-
-## Tech Stack
-
-- [Vercel AI SDK](https://ai-sdk.dev/docs/introduction) - AI capabilities and agent execution
-- [shadcn/ui](https://ui.shadcn.com) - Beautiful UI components
-- Multi-step agent reasoning with tool calling
-
-## Technical Reference
-
-### Agent Structure
-
-Each agent consists of:
-
-```typescript
-// Agent Definition
-export const myAgent = new Agent({
-  model: model.languageModel("gpt-4"),
-  tools: { "my-tool": myTool },
-  stopWhen: stepCountIs(20),
-});
-
-// System Prompt
-export const myAgentPrompt = `You are a helpful assistant...`;
-
-// Tool Implementation
-export const myTool = tool({
-  description: "Tool description",
-  parameters: z.object({ input: z.string() }),
-  execute: async ({ input }) => { /* logic */ },
-});
-```
-
-### Agent Execution Flow
-
-1. User mentions agent in message
-2. System routes to appropriate agent
-3. Agent analyzes query and decides on tools
-4. Tools execute and return data
-5. Agent formulates response with tool results
-6. Response streams back to UI
-
-### API Integration
-
-The chat-04 block handles all the complex routing and streaming automatically. Your API route simply needs to handle the agent execution:
-
-```typescript
-// app/api/chat/route.ts
-import { agentExecute, agentRoute } from "@/lib/ai/agent-route-respond";
-
-export async function POST(req: Request) {
-  const { messages, mentions } = await req.json();
-  const agentId = agentRoute(mentions);
-  return agentExecute(agentId, messages);
-}
-```
-
-### Best Practices
-
-- **Clear system prompts**: Define agent roles and limitations
-- **Focused tools**: Give agents only necessary tools
-- **Reasonable step limits**: Prevent infinite loops
-- **Error handling**: Tools should handle failures gracefully
-
-For more implementation details, explore the agent source code in the registry or visit the [Agents Gallery](/agents).
-
-
-
+For more agents and examples, visit the [Agents Gallery](/agents).

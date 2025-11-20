@@ -10,6 +10,7 @@ import {
 	ChatInputEditor,
 	ChatInputGroupAddon,
 	ChatInputMention,
+	ChatInputMentionButton,
 	ChatInputSubmitButton,
 	createMentionConfig,
 	useChatInput,
@@ -126,6 +127,7 @@ export default function ChatInputWithMentions() {
 					</ChatInputMention>
 					<ChatInputEditor placeholder="Type @ for agents, / for files..." />
 					<ChatInputGroupAddon align="block-end">
+						<ChatInputMentionButton />
 						<ChatInputSubmitButton className="ml-auto" />
 					</ChatInputGroupAddon>
 				</ChatInput>

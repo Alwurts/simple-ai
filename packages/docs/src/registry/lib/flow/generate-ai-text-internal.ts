@@ -11,18 +11,24 @@ interface ToolResult {
 	result: string;
 }
 
+const AI_GATEWAY_URL = process.env.AI_GATEWAY_URL;
+
+const deepseekClient = createDeepSeek({
+	baseURL: `${AI_GATEWAY_URL}/deepseek`,
+});
+
+const groqClient = createGroq({
+	baseURL: `${AI_GATEWAY_URL}/groq`,
+});
+
 function createAIClient(model: Model) {
 	switch (model) {
 		case "deepseek-chat":
-			return createDeepSeek({
-				baseURL: process.env.AI_GATEWAY_DEEPSEEK_URL,
-			});
+			return deepseekClient;
 		case "llama-3.3-70b-versatile":
 		case "llama-3.1-8b-instant":
 		case "deepseek-r1-distill-llama-70b":
-			return createGroq({
-				baseURL: process.env.AI_GATEWAY_GROQ_URL,
-			});
+			return groqClient;
 		default:
 			throw new Error(`Unsupported model: ${model}`);
 	}

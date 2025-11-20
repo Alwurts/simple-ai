@@ -2,7 +2,7 @@
 
 ## Components
 
-- [ ] Add reasoning
+- [x] Add reasoning
 - [x] Add tool invocation
 - [ ] Add suggestions component
 
