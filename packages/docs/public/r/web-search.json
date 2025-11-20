@@ -3,7 +3,7 @@
 	"name": "web-search",
 	"type": "registry:lib",
 	"description": "A tool for searching the web.",
-	"dependencies": ["ai"],
+	"dependencies": ["ai", "zod"],
 	"files": [
 		{
 			"path": "./src/registry/ai/tools/web-search.ts",

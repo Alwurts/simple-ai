@@ -9,7 +9,7 @@ const agents: Registry["items"] = [
 		registryDependencies: [
 			"@simple-ai/models",
 			"@simple-ai/weather-agent",
-			"@simple-ai/search-agent",
+			"@simple-ai/firecrawl-agent",
 			"@simple-ai/id-to-readable-text",
 		],
 		files: [
@@ -48,30 +48,33 @@ const agents: Registry["items"] = [
 		},
 	},
 	{
-		title: "Search Agent",
-		name: "search-agent",
-		description: "A search agent with tools for web searching.",
+		title: "Firecrawl Agent",
+		name: "firecrawl-agent",
+		description: "A web research agent powered by Firecrawl.",
 		type: "registry:lib",
 		dependencies: ["ai"],
-		registryDependencies: ["@simple-ai/models", "@simple-ai/web-search"],
+		registryDependencies: [
+			"@simple-ai/models",
+			"@simple-ai/firecrawl-tool",
+		],
 		categories: ["agent"],
 		files: [
 			{
 				type: "registry:lib",
-				path: "ai/agents/search-agent.ts",
-				target: "lib/ai/agents/search-agent.ts",
+				path: "ai/agents/firecrawl-agent.ts",
+				target: "lib/ai/agents/firecrawl-agent.ts",
 			},
 		],
 		meta: {
-			icon: "Search",
-			toolIds: ["web-search"],
+			icon: "FirecrawlIcon",
+			toolIds: ["firecrawl"],
 			suggestions: [
-				"Search for the latest AI news",
-				"Find information about React hooks",
-				"What are the current trends in web development?",
-				"Search for recipes for chocolate chip cookies",
+				"Scrape https://example.com",
+				"Search for recent news about AI agents",
+				"Find documentation for the Vercel AI SDK",
+				"Get content from a specific URL",
 			],
-			prompt: "You are a helpful search assistant. Your role is to find and provide accurate information from the web.\n\nWhen users ask questions or need information:\n- Use the web-search tool to find relevant information\n- Search for the most relevant and up-to-date information\n- Synthesize search results into clear, helpful answers\n- Cite sources when appropriate\n- If search results don't contain the answer, let the user know\n- Be thorough but concise in your responses",
+			prompt: "You are a web research assistant powered by Firecrawl.\nYour goal is to find accurate information from the web efficiently.\n\nInstructions:\n- If the user provides a specific URL, use the 'scrape' mode to get the content.\n- If the user asks a general question, use the 'search' mode to find relevant pages.\n- The tool returns Markdown content. Summarize this content clearly for the user.\n- Cite the URLs you found information from.",
 		},
 	},
 ];
@@ -81,6 +84,10 @@ const tools: Registry["items"] = [
 		name: "tools",
 		description: "A set of tools for the AI SDK.",
 		type: "registry:lib",
+		registryDependencies: [
+			"@simple-ai/firecrawl-tool",
+			"@simple-ai/get-weather",
+		],
 		dependencies: ["ai"],
 		files: [{ type: "registry:lib", path: "ai/tools/tools.ts" }],
 	},
@@ -88,15 +95,19 @@ const tools: Registry["items"] = [
 		name: "get-weather",
 		description: "A tool for getting the weather.",
 		type: "registry:lib",
-		dependencies: ["ai"],
+		dependencies: ["ai", "zod"],
 		files: [{ type: "registry:lib", path: "ai/tools/get-weather.ts" }],
 	},
 	{
-		name: "web-search",
-		description: "A tool for searching the web.",
+		name: "firecrawl-tool",
+		envVars: {
+			FIRECRAWL_API_KEY: "",
+		},
+		description:
+			"A tool for searching and scraping the web using Firecrawl.",
 		type: "registry:lib",
-		dependencies: ["ai"],
-		files: [{ type: "registry:lib", path: "ai/tools/web-search.ts" }],
+		dependencies: ["ai", "@mendable/firecrawl-js", "zod"],
+		files: [{ type: "registry:lib", path: "ai/tools/firecrawl.ts" }],
 	},
 ];
 

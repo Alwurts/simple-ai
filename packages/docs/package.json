@@ -24,6 +24,7 @@
 		"@codemirror/view": "^6.38.6",
 		"@hookform/resolvers": "^5.2.2",
 		"@marcbachmann/cel-js": "^4.1.1",
+		"@mendable/firecrawl-js": "^4.6.1",
 		"@next/third-parties": "^15.5.4",
 		"@radix-ui/react-accordion": "^1.2.12",
 		"@radix-ui/react-aspect-ratio": "^1.1.8",

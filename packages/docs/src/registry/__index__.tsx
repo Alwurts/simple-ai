@@ -2879,7 +2879,7 @@ export const Index: Record<string, any> = {
 		registryDependencies: [
 			"@simple-ai/models",
 			"@simple-ai/weather-agent",
-			"@simple-ai/search-agent",
+			"@simple-ai/firecrawl-agent",
 			"@simple-ai/id-to-readable-text",
 		],
 		files: [
@@ -2937,20 +2937,23 @@ export const Index: Record<string, any> = {
 			prompt: "You are a helpful weather assistant. Your role is to provide accurate and helpful weather information to users.\n\nWhen users ask about weather:\n- Use the get-weather tool to retrieve current weather conditions\n- Always specify the city and preferred temperature unit (fahrenheit or celsius)\n- Provide clear, concise weather information\n- If a user doesn't specify a unit, default to fahrenheit\n- Be friendly and helpful in your responses",
 		},
 	},
-	"search-agent": {
-		name: "search-agent",
-		description: "A search agent with tools for web searching.",
+	"firecrawl-agent": {
+		name: "firecrawl-agent",
+		description: "A web research agent powered by Firecrawl.",
 		type: "registry:lib",
-		registryDependencies: ["@simple-ai/models", "@simple-ai/web-search"],
+		registryDependencies: [
+			"@simple-ai/models",
+			"@simple-ai/firecrawl-tool",
+		],
 		files: [
 			{
-				path: "./src/registry/ai/agents/search-agent.ts",
+				path: "./src/registry/ai/agents/firecrawl-agent.ts",
 				type: "registry:lib",
-				target: "lib/ai/agents/search-agent.ts",
+				target: "lib/ai/agents/firecrawl-agent.ts",
 			},
 		],
 		component: React.lazy(async () => {
-			const mod = await import("@/registry/ai/agents/search-agent.ts");
+			const mod = await import("@/registry/ai/agents/firecrawl-agent.ts");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>
@@ -2961,22 +2964,25 @@ export const Index: Record<string, any> = {
 		}),
 		categories: ["agent"],
 		meta: {
-			icon: "Search",
-			toolIds: ["web-search"],
+			icon: "FirecrawlIcon",
+			toolIds: ["firecrawl"],
 			suggestions: [
-				"Search for the latest AI news",
-				"Find information about React hooks",
-				"What are the current trends in web development?",
-				"Search for recipes for chocolate chip cookies",
+				"Scrape https://example.com",
+				"Search for recent news about AI agents",
+				"Find documentation for the Vercel AI SDK",
+				"Get content from a specific URL",
 			],
-			prompt: "You are a helpful search assistant. Your role is to find and provide accurate information from the web.\n\nWhen users ask questions or need information:\n- Use the web-search tool to find relevant information\n- Search for the most relevant and up-to-date information\n- Synthesize search results into clear, helpful answers\n- Cite sources when appropriate\n- If search results don't contain the answer, let the user know\n- Be thorough but concise in your responses",
+			prompt: "You are a web research assistant powered by Firecrawl.\nYour goal is to find accurate information from the web efficiently.\n\nInstructions:\n- If the user provides a specific URL, use the 'scrape' mode to get the content.\n- If the user asks a general question, use the 'search' mode to find relevant pages.\n- The tool returns Markdown content. Summarize this content clearly for the user.\n- Cite the URLs you found information from.",
 		},
 	},
 	tools: {
 		name: "tools",
 		description: "A set of tools for the AI SDK.",
 		type: "registry:lib",
-		registryDependencies: undefined,
+		registryDependencies: [
+			"@simple-ai/firecrawl-tool",
+			"@simple-ai/get-weather",
+		],
 		files: [
 			{
 				path: "./src/registry/ai/tools/tools.ts",
@@ -3022,20 +3028,21 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
-	"web-search": {
-		name: "web-search",
-		description: "A tool for searching the web.",
+	"firecrawl-tool": {
+		name: "firecrawl-tool",
+		description:
+			"A tool for searching and scraping the web using Firecrawl.",
 		type: "registry:lib",
 		registryDependencies: undefined,
 		files: [
 			{
-				path: "./src/registry/ai/tools/web-search.ts",
+				path: "./src/registry/ai/tools/firecrawl.ts",
 				type: "registry:lib",
 				target: "",
 			},
 		],
 		component: React.lazy(async () => {
-			const mod = await import("@/registry/ai/tools/web-search.ts");
+			const mod = await import("@/registry/ai/tools/firecrawl.ts");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>

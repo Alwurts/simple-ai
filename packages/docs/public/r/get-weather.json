@@ -3,7 +3,7 @@
 	"name": "get-weather",
 	"type": "registry:lib",
 	"description": "A tool for getting the weather.",
-	"dependencies": ["ai"],
+	"dependencies": ["ai", "zod"],
 	"files": [
 		{
 			"path": "./src/registry/ai/tools/get-weather.ts",

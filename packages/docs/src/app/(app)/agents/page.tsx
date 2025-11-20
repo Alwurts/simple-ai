@@ -1,15 +1,14 @@
 import { AgentDisplay } from "@/components/agents/agent-display";
-import { getAllRegistryItemIds } from "@/lib/registry";
 
 export const dynamic = "force-static";
 export const revalidate = false;
 
-export default async function AgentsPage() {
-	const agentIds = await getAllRegistryItemIds(["registry:lib"], ["agent"]);
+const DISPLAYED_AGENTS = ["firecrawl-agent", "weather-agent"];
 
+export default async function AgentsPage() {
 	return (
 		<div className="flex flex-col gap-12 md:gap-24">
-			{agentIds.map((name) => (
+			{DISPLAYED_AGENTS.map((name) => (
 				<AgentDisplay name={name} key={name} />
 			))}
 		</div>

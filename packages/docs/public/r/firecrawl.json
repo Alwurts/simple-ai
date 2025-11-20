@@ -1,0 +1,14 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "firecrawl",
+	"type": "registry:lib",
+	"description": "A tool for searching and scraping the web using Firecrawl.",
+	"dependencies": ["ai", "@mendable/firecrawl-js", "zod"],
+	"files": [
+		{
+			"path": "./src/registry/ai/tools/firecrawl.ts",
+			"content": "import { FirecrawlAppV1 as FirecrawlApp } from \"@mendable/firecrawl-js\";\nimport { type InferUITool, tool } from \"ai\";\nimport { z } from \"zod\";\n\nconst firecrawlParamsSchema = z.object({\n\tmode: z\n\t\t.enum([\"search\", \"scrape\"])\n\t\t.describe(\n\t\t\t\"The operation to perform: 'search' for general queries, 'scrape' for a specific URL\",\n\t\t),\n\tquery: z\n\t\t.string()\n\t\t.describe(\"The search query or the specific URL to scrape\"),\n});\n\nexport type FirecrawlParams = z.infer<typeof firecrawlParamsSchema>;\n\nconst firecrawlResultSchema = z.union([\n\tz.object({\n\t\tsuccess: z.literal(true),\n\t\tmarkdown: z.string(),\n\t}),\n\tz.object({\n\t\tsuccess: z.literal(true),\n\t\tdocuments: z.array(z.any()),\n\t}),\n\tz.object({\n\t\tsuccess: z.literal(false),\n\t\terror: z.string(),\n\t}),\n]);\n\nexport type FirecrawlResult = z.infer<typeof firecrawlResultSchema>;\n\nexport const firecrawlTool = tool({\n\tname: \"firecrawl\",\n\tdescription:\n\t\t\"Search the web or scrape a specific URL using Firecrawl. Use this to find live information.\",\n\tinputSchema: firecrawlParamsSchema,\n\toutputSchema: firecrawlResultSchema,\n\texecute: async (params) => {\n\t\tconst apiKey = process.env.FIRECRAWL_API_KEY;\n\n\t\tif (!apiKey) {\n\t\t\treturn { success: false, error: \"FIRECRAWL_API_KEY is not set\" };\n\t\t}\n\n\t\ttry {\n\t\t\tconst app = new FirecrawlApp({ apiKey });\n\n\t\t\tif (params.mode === \"scrape\") {\n\t\t\t\tconst scrapeResult = await app.scrapeUrl(params.query, {\n\t\t\t\t\tformats: [\"markdown\"],\n\t\t\t\t});\n\n\t\t\t\tif (!scrapeResult.success) {\n\t\t\t\t\treturn {\n\t\t\t\t\t\tsuccess: false,\n\t\t\t\t\t\terror: `Failed to scrape: ${scrapeResult.error || \"Unknown error\"}`,\n\t\t\t\t\t};\n\t\t\t\t}\n\n\t\t\t\treturn { success: true, markdown: scrapeResult.markdown };\n\t\t\t} else {\n\t\t\t\tconst searchResult = await app.search(params.query, {\n\t\t\t\t\tlimit: 3,\n\t\t\t\t\tscrapeOptions: {\n\t\t\t\t\t\tformats: [\"markdown\"],\n\t\t\t\t\t},\n\t\t\t\t});\n\n\t\t\t\tif (!searchResult.success) {\n\t\t\t\t\treturn {\n\t\t\t\t\t\tsuccess: false,\n\t\t\t\t\t\terror: `Failed to search: ${searchResult.error || \"Unknown error\"}`,\n\t\t\t\t\t};\n\t\t\t\t}\n\n\t\t\t\treturn { success: true, documents: searchResult.data };\n\t\t\t}\n\t\t} catch (error) {\n\t\t\treturn {\n\t\t\t\tsuccess: false,\n\t\t\t\terror:\n\t\t\t\t\terror instanceof Error\n\t\t\t\t\t\t? error.message\n\t\t\t\t\t\t: \"Unknown error occurred\",\n\t\t\t};\n\t\t}\n\t},\n});\n\nexport type FirecrawlTool = InferUITool<typeof firecrawlTool>;\n",
+			"type": "registry:lib"
+		}
+	]
+}

@@ -4,6 +4,7 @@ import * as LucideIcons from "lucide-react";
 import { Check, ChevronDown, ChevronUp, Copy } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import { FirecrawlIcon } from "@/components/icons/firecrawl-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,8 +31,23 @@ function AgentInfo() {
 	const [isPromptOpen, setIsPromptOpen] = useState(false);
 	const { copyToClipboard, isCopied } = useCopyToClipboard();
 
+	// Custom icon mapping
+	const customIcons: Record<
+		string,
+		React.ComponentType<{ className?: string }>
+	> = {
+		FirecrawlIcon: FirecrawlIcon,
+	};
+
 	// Dynamic icon renderer
 	const renderIcon = (iconName: string) => {
+		// Check for custom icons first
+		const CustomIconComponent = customIcons[iconName];
+		if (CustomIconComponent) {
+			return <CustomIconComponent className="h-8 w-8" />;
+		}
+
+		// Fall back to Lucide icons
 		const IconComponent = (LucideIcons as Record<string, unknown>)[
 			iconName
 		] as React.ComponentType<{ className?: string }>;

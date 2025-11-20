@@ -52,7 +52,7 @@ const languageModels = {
 				providerOptions: {
 					openai: {
 						reasoningSummary: "detailed", // 'auto' for condensed or 'detailed' for comprehensive
-						reasoningEffort: "medium", // 'minimal' | 'low' | 'medium' | 'high'
+						reasoningEffort: "low", // 'minimal' | 'low' | 'medium' | 'high'
 					},
 				},
 			},
