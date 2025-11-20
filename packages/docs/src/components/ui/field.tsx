@@ -200,16 +200,20 @@ function FieldError({
 			return null;
 		}
 
+		const uniqueErrors = [
+			...new Map(errors.map((error) => [error?.message, error])).values(),
+		];
+
 		// biome-ignore lint/suspicious/noDoubleEquals: Ok
-		if (errors?.length == 1) {
-			return errors[0]?.message;
+		if (uniqueErrors?.length == 1) {
+			return uniqueErrors[0]?.message;
 		}
 
 		return (
 			<ul className="ml-4 flex list-disc flex-col gap-1">
-				{errors.map(
+				{uniqueErrors.map(
 					(error, index) =>
-						// biome-ignore lint/suspicious/noArrayIndexKey: Ok to use index as key
+						// biome-ignore lint/suspicious/noArrayIndexKey: Ok
 						error?.message && <li key={index}>{error.message}</li>,
 				)}
 			</ul>

@@ -1,0 +1,15 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "messages",
+	"type": "registry:lib",
+	"description": "UIMessage types for the AI SDK.",
+	"dependencies": ["ai"],
+	"files": [
+		{
+			"path": "./src/registry/ai/messages.ts",
+			"content": "import type { UIMessage } from \"ai\";\nimport z from \"zod\";\nimport type { Tools } from \"@/registry/ai/tools/tools-registry\";\n\nconst metadataSchema = z.object({\n\ttimestamp: z.string().optional(),\n\toutputTokens: z.number().optional(),\n\tagent: z\n\t\t.object({\n\t\t\tid: z.string(),\n\t\t\tname: z.string(),\n\t\t\timage: z.string().optional(),\n\t\t})\n\t\t.optional(),\n\tmentions: z\n\t\t.array(\n\t\t\tz.object({\n\t\t\t\tid: z.string(),\n\t\t\t\tname: z.string(),\n\t\t\t}),\n\t\t)\n\t\t.optional(),\n});\n\ntype AIUIMetadata = z.infer<typeof metadataSchema>;\n\nconst dataPartSchema = z.object({\n\tsomeDataPart: z.object({}),\n});\n\ntype AIUIDataPart = z.infer<typeof dataPartSchema>;\n\ntype AIUITools = Tools;\n\nexport type AIUIMessage = UIMessage<AIUIMetadata, AIUIDataPart, AIUITools>;\n",
+			"type": "registry:lib",
+			"target": "lib/ai/messages.ts"
+		}
+	]
+}

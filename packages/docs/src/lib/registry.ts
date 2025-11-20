@@ -2,7 +2,7 @@ import { promises as fs } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { Project, ScriptKind } from "ts-morph";
-import type { z } from "zod";
+import { z } from "zod";
 import { Index } from "@/registry/__index__";
 import {
 	type registryItemFileSchema,
@@ -219,4 +219,28 @@ export function createFileTreeForRegistryItemFiles(
 	}
 
 	return root;
+}
+
+export async function getAllRegistryItems(
+	types: z.infer<typeof registryItemSchema>["type"][] = [],
+	categories: string[] = [],
+) {
+	const index = z.record(z.string(), registryItemSchema).parse(Index);
+
+	return Object.values(index).filter((item) => {
+		const typeMatch = types.length === 0 || types.includes(item.type);
+		const categoryMatch =
+			categories.length === 0 ||
+			item.categories?.some((cat) => categories.includes(cat));
+
+		return typeMatch && categoryMatch;
+	});
+}
+
+export async function getAllRegistryItemIds(
+	types: z.infer<typeof registryItemSchema>["type"][] = [],
+	categories: string[] = [],
+): Promise<string[]> {
+	const items = await getAllRegistryItems(types, categories);
+	return items.map((item) => item.name);
 }

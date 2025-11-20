@@ -1,0 +1,27 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "agents-tools-registry",
+	"type": "registry:lib",
+	"description": "A set of default agents.",
+	"dependencies": ["ai"],
+	"registryDependencies": [
+		"@simple-ai/models",
+		"@simple-ai/weather-agent",
+		"@simple-ai/get-weather",
+		"@simple-ai/id-to-readable-text"
+	],
+	"files": [
+		{
+			"path": "./src/registry/ai/agents/agents-registry.ts",
+			"content": "import { weatherAgent } from \"@/registry/ai/agents/weather-agent\";\nimport { idToReadableText } from \"@/registry/lib/id-to-readable-text\";\n\nexport const agents = {\n\t\"weather-agent\": weatherAgent,\n\t// Import and add more agents here\n};\n\nexport const agentsList = Object.keys(agents).map((key) => ({\n\tid: key,\n\tname: idToReadableText(key),\n}));\n\nexport type agentId = keyof typeof agents;\n\nexport const AGENTS = Object.keys(agents);\n",
+			"type": "registry:lib",
+			"target": "lib/ai/agents/agents-registry.ts"
+		},
+		{
+			"path": "./src/registry/ai/tools/tools-registry.ts",
+			"content": "import type { InferUITools, ToolSet } from \"ai\";\nimport { getWeatherTool } from \"@/registry/ai/tools/get-weather\";\n\nexport const tools = {\n\t\"get-weather\": getWeatherTool,\n\t// Add more tools here\n} satisfies ToolSet;\n\nexport type Tools = InferUITools<typeof tools>;\n\nexport type toolId = keyof typeof tools;\n",
+			"type": "registry:lib",
+			"target": "lib/ai/tools/tools-registry.ts"
+		}
+	]
+}

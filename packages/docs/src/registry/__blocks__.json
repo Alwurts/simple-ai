@@ -5,6 +5,11 @@
 		"categories": ["chat"]
 	},
 	{
+		"name": "chat-04",
+		"description": "A chat with multiple agents support.",
+		"categories": ["chat"]
+	},
+	{
 		"name": "chat-02",
 		"description": "A chat in a sidebar.",
 		"categories": ["chat"]
@@ -51,7 +56,7 @@
 	},
 	{
 		"name": "workflow-01",
-		"description": "Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK.",
+		"description": "Build powerful AI agent workflows",
 		"categories": ["workflow"]
 	}
 ]

@@ -1,0 +1,47 @@
+---
+title: Agents
+description: Get started with AI agents in your simple-ai project. A guide to create multi-agent chat applications.
+---
+
+# AI Agents Guide
+
+Build multi-agent chat applications with pre-built AI agents. This guide walks you through creating your first project and adding agent capabilities.
+
+> This system is built on top of the **Vercel AI SDK Agents**. For deep dives into agent concepts, check out their [official documentation](https://ai-sdk.dev/docs/agents/overview).
+
+
+## 1. Add Multi-Agent Chat
+
+The foundation of the agent system is the `chat-04` block. This component handles the UI, agent routing, and real-time streaming.
+
+Install it using the CLI:
+
+```bash
+npx shadcn@latest add @simple-ai/chat-04
+```
+
+This adds the multi-agent chat interface where users can interact with different agents in a single conversation.
+
+## 2. Install Agents
+
+Now that you have the chat interface, you can install specific agents from the registry. Each agent adds new capabilities to your application.
+
+### Weather Agent
+Adds weather forecasting capabilities.
+
+```bash
+npx shadcn@latest add @simple-ai/weather-agent
+```
+
+## 3. Import the agents
+
+Import the agents into your agent and tool registry files at `lib/ai/agents/agents-registry.ts` and `lib/ai/tools/tools-registry.ts`.
+
+## How It Works
+
+Once installed, agents are automatically available in your chat.
+1.  **Install** the agent using the CLI.
+2.  **Import** and add it to your agent and tool configuration (usually in `lib/ai/agents/agents-registry.ts` and `lib/ai/tools/tools-registry.ts`).
+3.  **Chat** with the agent by mentioning it (e.g., "@weather-agent") or just asking a question if it's the default.
+
+For more agents and examples, visit the [Agents Gallery](/agents).

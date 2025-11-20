@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Announcement } from "@/components/general/announcement";
 import {
 	PageActions,
 	PageHeader,
 	PageHeaderDescription,
 	PageHeaderHeading,
+	PageHeaderPrimaryButton,
 } from "@/components/layout/page-header";
-import { Button } from "@/components/ui/button";
 
 const title = "AI Agent Workflows";
 const description =
@@ -41,6 +42,7 @@ export default function WorkflowsLayout({ children }: { children: ReactNode }) {
 	return (
 		<>
 			<PageHeader>
+				<Announcement />
 				<PageHeaderHeading>{title}</PageHeaderHeading>
 				<PageHeaderDescription>
 					Build sophisticated AI agent workflows using an interactive
@@ -70,9 +72,9 @@ export default function WorkflowsLayout({ children }: { children: ReactNode }) {
 					templates to explore different workflow patterns.
 				</PageHeaderDescription>
 				<PageActions>
-					<Button asChild size="sm">
+					<PageHeaderPrimaryButton asChild>
 						<Link href="/docs/workflows">Get More Information</Link>
-					</Button>
+					</PageHeaderPrimaryButton>
 				</PageActions>
 			</PageHeader>
 			{children}

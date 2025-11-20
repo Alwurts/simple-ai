@@ -113,6 +113,106 @@ export const blocks: Registry["items"] = [
 		categories: ["chat"],
 	},
 	{
+		name: "chat-04",
+		description: "A chat with multiple agents support.",
+		docs: DEFAULT_OPENAI_DOCS,
+		type: "registry:block",
+		envVars: DEFAULT_OPENAI_ENV_VARS,
+		dependencies: ["ai", "@ai-sdk/react", "@ai-sdk/openai"],
+		registryDependencies: [
+			"card",
+			"badge",
+			"breadcrumb",
+			"separator",
+			"sidebar",
+			"tooltip",
+			"button",
+			"avatar",
+			"dropdown-menu",
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
+			"@simple-ai/tool-invocation",
+			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
+			"@simple-ai/messages",
+			"@simple-ai/models",
+			"@simple-ai/agent-respond",
+			"@simple-ai/ai-utils",
+			"@simple-ai/agents-tools-registry",
+			//"@simple-ai/tools-registry",
+			// "@simple-ai/weather-agent",
+			// "@simple-ai/get-weather",
+		],
+		files: [
+			{
+				path: "blocks/chat-04/page.tsx",
+				target: "app/chat/page.tsx",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/chat-04/route.ts",
+				target: "app/api/ai/agents/route.ts",
+				type: "registry:page",
+			},
+			{
+				path: "blocks/chat-04/lib/config.ts",
+				type: "registry:lib",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-layout.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-layout-skeleton.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-header.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-sidebar.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-main-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-secondary-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/layout/app-user-nav.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/chat/chat-main.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/chat/chat-header.tsx",
+				type: "registry:component",
+			},
+			{
+				path: "blocks/chat-04/components/chat/chat-content.tsx",
+				type: "registry:component",
+			},
+			// {
+			// 	type: "registry:lib",
+			// 	path: "ai/agents/index.ts",
+			// 	target: "lib/ai/agents/index.ts",
+			// },
+			// {
+			// 	type: "registry:lib",
+			// 	path: "ai/tools/index.ts",
+			// 	target: "lib/ai/tools/index.ts",
+			// },
+		],
+		categories: ["chat"],
+	},
+	{
 		name: "chat-02",
 		description: "A chat in a sidebar.",
 		docs: DEFAULT_OPENAI_DOCS,
@@ -842,8 +942,7 @@ export const blocks: Registry["items"] = [
 	},
 	{
 		name: "workflow-01",
-		description:
-			"Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK.",
+		description: "Build powerful AI agent workflows",
 		type: "registry:block",
 		docs: DEFAULT_OPENAI_DOCS,
 		envVars: DEFAULT_OPENAI_ENV_VARS,

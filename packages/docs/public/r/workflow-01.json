@@ -2,7 +2,7 @@
 	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
 	"name": "workflow-01",
 	"type": "registry:block",
-	"description": "Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK.",
+	"description": "Build powerful AI agent workflows",
 	"dependencies": [
 		"@xyflow/react",
 		"zustand",

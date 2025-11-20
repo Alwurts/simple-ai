@@ -1,18 +1,31 @@
+import { cva, type VariantProps } from "class-variance-authority";
 import { ArrowRightIcon } from "lucide-react";
+
 import Link from "next/link";
 
-import { Badge } from "@/components/ui/badge";
+const announcementVariants = cva(
+	"inline-flex items-center rounded-full border bg-background px-3 py-1 font-medium backdrop-blur-sm",
+	{
+		variants: {
+			size: {
+				sm: "text-xs gap-1.5 [&>span:first-child]:size-1.5",
+				lg: "text-sm gap-2 [&>span:first-child]:size-2",
+			},
+		},
+		defaultVariants: {
+			size: "sm",
+		},
+	},
+);
 
-export function Announcement() {
+interface AnnouncementProps extends VariantProps<typeof announcementVariants> {}
+
+export function Announcement({ size }: AnnouncementProps = {}) {
 	return (
-		<Badge asChild variant="secondary" className="rounded-full">
-			<Link href="/ai-workflows">
-				<span
-					className="flex size-2 rounded-full bg-primary"
-					title="New"
-				/>
-				Newly Released Agent Builder <ArrowRightIcon />
-			</Link>
-		</Badge>
+		<Link href="/agents" className={announcementVariants({ size })}>
+			<span className="flex h-2 w-2 rounded-full bg-brand mr-1 animate-pulse" />
+			New AI Agents Gallery
+			<ArrowRightIcon className="h-3 w-3" />
+		</Link>
 	);
 }

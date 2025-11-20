@@ -2,6 +2,7 @@ import { marked } from "marked";
 import type * as React from "react";
 import { isValidElement, memo, Suspense, useMemo } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
+import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import { cn } from "@/lib/utils";
 
@@ -180,6 +181,45 @@ const components: Partial<Components> = {
 			{children}
 		</span>
 	),
+	span: ({
+		children,
+		className,
+		...props
+	}: {
+		"data-type"?: string;
+		"data-id"?: string;
+		"data-label"?: string;
+	} & React.HTMLAttributes<HTMLSpanElement>) => {
+		const dataType = props["data-type"];
+		const dataId = props["data-id"];
+		const dataLabel = props["data-label"];
+
+		console.log("dataType", className);
+
+		if (className?.includes("mention")) {
+			return (
+				<span
+					className={cn(
+						"bg-primary text-primary-foreground rounded-sm px-2 py-0.5",
+						className,
+					)}
+					data-type={dataType}
+					data-id={dataId}
+					data-label={dataLabel}
+					title={dataLabel}
+					{...props}
+				>
+					{children}
+				</span>
+			);
+		}
+
+		return (
+			<span className={className} {...props}>
+				{children}
+			</span>
+		);
+	},
 	a: ({
 		children,
 		...props
@@ -239,7 +279,7 @@ const components: Partial<Components> = {
 		...props
 	}: React.HTMLAttributes<HTMLTableCellElement>) => (
 		<th
-			className="px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right"
+			className="px-4 py-2 text-left font-bold [[align=center]]:text-center [[align=right]]:text-right"
 			{...props}
 		>
 			{children}
@@ -250,7 +290,7 @@ const components: Partial<Components> = {
 		...props
 	}: React.HTMLAttributes<HTMLTableCellElement>) => (
 		<td
-			className="px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right"
+			className="px-4 py-2 text-left [[align=center]]:text-center [[align=right]]:text-right"
 			{...props}
 		>
 			{children}
@@ -303,6 +343,7 @@ const MemoizedMarkdownBlock = memo(
 			<div className={className}>
 				<ReactMarkdown
 					remarkPlugins={[remarkGfm]}
+					rehypePlugins={[rehypeRaw]}
 					components={components}
 				>
 					{content}

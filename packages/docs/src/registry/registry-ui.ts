@@ -68,7 +68,13 @@ export const ui: Registry["items"] = [
 		title: "Markdown Content",
 		description: "A component that renders markdown content.",
 		type: "registry:ui",
-		dependencies: ["react-markdown", "marked", "remark-gfm", "shiki"],
+		dependencies: [
+			"react-markdown",
+			"marked",
+			"shiki",
+			"remark-gfm",
+			"rehype-raw",
+		],
 		files: [{ type: "registry:ui", path: "ui/markdown-content.tsx" }],
 	},
 	{
@@ -320,6 +326,14 @@ export const ui: Registry["items"] = [
 		dependencies: ["nanoid"],
 		registryDependencies: ["button", "dialog", "input", "select"],
 		files: [{ type: "registry:ui", path: "ui/json-schema-editor.tsx" }],
+	},
+	{
+		name: "json-schema-viewer",
+		title: "JSON Schema Viewer",
+		description:
+			"A read-only component for displaying JSON Schema structures with support for union types, nested objects, arrays, and enums.",
+		type: "registry:ui",
+		files: [{ type: "registry:ui", path: "ui/json-schema-viewer.tsx" }],
 	},
 	{
 		name: "reasoning",

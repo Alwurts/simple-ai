@@ -602,6 +602,32 @@ export const Index: Record<string, any> = {
 		categories: undefined,
 		meta: undefined,
 	},
+	"json-schema-viewer": {
+		name: "json-schema-viewer",
+		description:
+			"A read-only component for displaying JSON Schema structures with support for union types, nested objects, arrays, and enums.",
+		type: "registry:ui",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ui/json-schema-viewer.tsx",
+				type: "registry:ui",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ui/json-schema-viewer.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
 	reasoning: {
 		name: "reasoning",
 		description:
@@ -1574,6 +1600,112 @@ export const Index: Record<string, any> = {
 		categories: ["chat"],
 		meta: undefined,
 	},
+	"chat-04": {
+		name: "chat-04",
+		description: "A chat with multiple agents support.",
+		type: "registry:block",
+		registryDependencies: [
+			"card",
+			"badge",
+			"breadcrumb",
+			"separator",
+			"sidebar",
+			"tooltip",
+			"button",
+			"avatar",
+			"dropdown-menu",
+			"@simple-ai/chat-input",
+			"@simple-ai/chat-message-area",
+			"@simple-ai/chat-message",
+			"@simple-ai/tool-invocation",
+			"@simple-ai/chat-suggestions",
+			"@simple-ai/reasoning",
+			"@simple-ai/messages",
+			"@simple-ai/models",
+			"@simple-ai/agent-respond",
+			"@simple-ai/ai-utils",
+			"@simple-ai/agents-tools-registry",
+		],
+		files: [
+			{
+				path: "./src/registry/blocks/chat-04/page.tsx",
+				type: "registry:page",
+				target: "app/chat/page.tsx",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/route.ts",
+				type: "registry:page",
+				target: "app/api/ai/agents/route.ts",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/lib/config.ts",
+				type: "registry:lib",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-layout.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-layout-skeleton.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-header.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-sidebar.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-main-nav.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-secondary-nav.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/layout/app-user-nav.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/chat/chat-main.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/chat/chat-header.tsx",
+				type: "registry:component",
+				target: "",
+			},
+			{
+				path: "./src/registry/blocks/chat-04/components/chat/chat-content.tsx",
+				type: "registry:component",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/blocks/chat-04/page.tsx");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["chat"],
+		meta: undefined,
+	},
 	"chat-02": {
 		name: "chat-02",
 		description: "A chat in a sidebar.",
@@ -2392,8 +2524,7 @@ export const Index: Record<string, any> = {
 	},
 	"workflow-01": {
 		name: "workflow-01",
-		description:
-			"Build powerful AI agent workflows with React Flow components integrated with Vercel AI SDK.",
+		description: "Build powerful AI agent workflows",
 		type: "registry:block",
 		registryDependencies: [
 			"button",
@@ -2738,6 +2869,325 @@ export const Index: Record<string, any> = {
 			return { default: mod.default || mod[exportName] };
 		}),
 		categories: ["workflow"],
+		meta: undefined,
+	},
+	"weather-agent": {
+		name: "weather-agent",
+		description: "A weather agent with tools for getting the weather.",
+		type: "registry:lib",
+		registryDependencies: ["@simple-ai/models", "@simple-ai/get-weather"],
+		files: [
+			{
+				path: "./src/registry/ai/agents/weather-agent.ts",
+				type: "registry:lib",
+				target: "lib/ai/agents/weather-agent.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/agents/weather-agent.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["agent"],
+		meta: {
+			icon: "CloudRain",
+			toolIds: ["get-weather"],
+			suggestions: [
+				"What's the weather like in New York today?",
+				"Will it rain in London tomorrow?",
+				"What's the forecast for Tokyo next week?",
+				"How's the weather in Paris right now?",
+			],
+			prompt: "You are a helpful weather assistant. Your role is to provide accurate and helpful weather information to users.\n\nWhen users ask about weather:\n- Use the get-weather tool to retrieve current weather conditions\n- Always specify the city and preferred temperature unit (fahrenheit or celsius)\n- Provide clear, concise weather information\n- If a user doesn't specify a unit, default to fahrenheit\n- Be friendly and helpful in your responses",
+		},
+	},
+	"firecrawl-agent": {
+		name: "firecrawl-agent",
+		description: "A web research agent powered by Firecrawl.",
+		type: "registry:lib",
+		registryDependencies: [
+			"@simple-ai/models",
+			"@simple-ai/firecrawl-tool",
+		],
+		files: [
+			{
+				path: "./src/registry/ai/agents/firecrawl-agent.ts",
+				type: "registry:lib",
+				target: "lib/ai/agents/firecrawl-agent.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/agents/firecrawl-agent.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["agent"],
+		meta: {
+			icon: "FirecrawlIcon",
+			toolIds: ["firecrawl-tool"],
+			suggestions: [
+				"Scrape https://example.com",
+				"Search for recent news about AI agents",
+				"Find documentation for the Vercel AI SDK",
+				"Get content from a specific URL",
+			],
+			prompt: "You are a web research assistant powered by Firecrawl.\nYour goal is to find accurate information from the web efficiently.\n\nInstructions:\n- If the user provides a specific URL, use the 'scrape' mode to get the content.\n- If the user asks a general question, use the 'search' mode to find relevant pages.\n- The tool returns Markdown content. Summarize this content clearly for the user.\n- Cite the URLs you found information from.",
+		},
+	},
+	"exa-agent": {
+		name: "exa-agent",
+		description: "A web research agent powered by Exa.",
+		type: "registry:lib",
+		registryDependencies: ["@simple-ai/models", "@simple-ai/exa-tool"],
+		files: [
+			{
+				path: "./src/registry/ai/agents/exa-agent.ts",
+				type: "registry:lib",
+				target: "lib/ai/agents/exa-agent.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/agents/exa-agent.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["agent"],
+		meta: {
+			icon: "ExaIcon",
+			toolIds: ["exa-tool"],
+			suggestions: [
+				"Find similar companies to https://exa.ai",
+				"Research the latest trends in generative AI",
+				"Retrieve content from https://example.com",
+				"Find blog posts about Rust programming",
+			],
+			prompt: "You are a highly capable web research assistant powered by Exa.\nYour goal is to find, verify, and synthesize information from the web.\n\nInstructions:\n- Use 'search' mode for general queries to find relevant pages and their content.\n- Use 'retrieve' mode if the user provides a specific URL that needs to be read.\n- Use 'find-similar' mode if the user wants to find websites related to a specific URL.\n- Exa provides clean Markdown content. Use this to summarize answers effectively.\n- Always cite the source URLs provided in the search results.",
+		},
+	},
+	"get-weather": {
+		name: "get-weather",
+		description: "A tool for getting the weather.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/tools/get-weather.ts",
+				type: "registry:lib",
+				target: "lib/ai/tools/get-weather.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/tools/get-weather.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"firecrawl-tool": {
+		name: "firecrawl-tool",
+		description:
+			"A tool for searching and scraping the web using Firecrawl.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/tools/firecrawl-tool.ts",
+				type: "registry:lib",
+				target: "lib/ai/tools/firecrawl-tool.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/tools/firecrawl-tool.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"exa-tool": {
+		name: "exa-tool",
+		description: "A tool for searching and scraping the web using Exa.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/tools/exa-tool.ts",
+				type: "registry:lib",
+				target: "lib/ai/tools/exa-tool.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/tools/exa-tool.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"agents-tools-registry": {
+		name: "agents-tools-registry",
+		description: "A set of default agents.",
+		type: "registry:lib",
+		registryDependencies: [
+			"@simple-ai/models",
+			"@simple-ai/weather-agent",
+			"@simple-ai/get-weather",
+			"@simple-ai/id-to-readable-text",
+		],
+		files: [
+			{
+				path: "./src/registry/ai/agents/agents-registry.ts",
+				type: "registry:lib",
+				target: "lib/ai/agents/agents-registry.ts",
+			},
+			{
+				path: "./src/registry/ai/tools/tools-registry.ts",
+				type: "registry:lib",
+				target: "lib/ai/tools/tools-registry.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/agents/agents-registry.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"agent-respond": {
+		name: "agent-respond",
+		description: "A function to respond to a message with an agent.",
+		type: "registry:lib",
+		registryDependencies: ["@simple-ai/id-to-readable-text"],
+		files: [
+			{
+				path: "./src/registry/ai/agent-route-respond.ts",
+				type: "registry:lib",
+				target: "lib/ai/agent-route-respond.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/agent-route-respond.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	models: {
+		name: "models",
+		description: "A set of models for the AI SDK.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/models-external.ts",
+				type: "registry:lib",
+				target: "lib/ai/models.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/models-external.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	messages: {
+		name: "messages",
+		description: "UIMessage types for the AI SDK.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/messages.ts",
+				type: "registry:lib",
+				target: "lib/ai/messages.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/messages.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"ai-utils": {
+		name: "ai-utils",
+		description: "A set of utilities for the AI SDK.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/ai-utils.ts",
+				type: "registry:lib",
+				target: "lib/ai/ai-utils.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/ai-utils.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
 		meta: undefined,
 	},
 };

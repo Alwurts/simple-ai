@@ -1,0 +1,30 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "firecrawl-agent",
+	"type": "registry:lib",
+	"title": "Firecrawl Agent",
+	"description": "A web research agent powered by Firecrawl.",
+	"dependencies": ["ai"],
+	"registryDependencies": ["@simple-ai/models", "@simple-ai/firecrawl-tool"],
+	"files": [
+		{
+			"path": "./src/registry/ai/agents/firecrawl-agent.ts",
+			"content": "import { Experimental_Agent as Agent, stepCountIs } from \"ai\";\n\nimport { model } from \"@/registry/ai/models\";\nimport { firecrawlTool } from \"@/registry/ai/tools/firecrawl-tool\";\n\nexport const firecrawlAgentPrompt = `You are a web research assistant powered by Firecrawl.\n\nYour goal is to find accurate information from the web efficiently.\n\nInstructions:\n\n- If the user provides a specific URL, use the 'scrape' mode to get the content.\n\n- If the user asks a general question, use the 'search' mode to find relevant pages.\n\n- The tool returns Markdown content. Summarize this content clearly for the user.\n\n- Cite the URLs you found information from.`;\n\nexport const firecrawlAgent = new Agent({\n\tmodel: model.languageModel(\"gpt-5-nano\"),\n\tsystem: firecrawlAgentPrompt,\n\ttools: {\n\t\t\"firecrawl-tool\": firecrawlTool,\n\t},\n\tstopWhen: stepCountIs(10), // Low step count to keep it cheap\n});\n",
+			"type": "registry:lib",
+			"target": "lib/ai/agents/firecrawl-agent.ts"
+		}
+	],
+	"meta": {
+		"icon": "FirecrawlIcon",
+		"toolIds": ["firecrawl-tool"],
+		"suggestions": [
+			"Scrape https://example.com",
+			"Search for recent news about AI agents",
+			"Find documentation for the Vercel AI SDK",
+			"Get content from a specific URL"
+		],
+		"prompt": "You are a web research assistant powered by Firecrawl.\nYour goal is to find accurate information from the web efficiently.\n\nInstructions:\n- If the user provides a specific URL, use the 'scrape' mode to get the content.\n- If the user asks a general question, use the 'search' mode to find relevant pages.\n- The tool returns Markdown content. Summarize this content clearly for the user.\n- Cite the URLs you found information from."
+	},
+	"docs": "Import the agent into the agents list in the agents/agents-registry.ts file and to the tools list in the tools/tools-registry.ts file.\n",
+	"categories": ["agent"]
+}

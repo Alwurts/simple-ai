@@ -7,9 +7,10 @@ import {
 	PageHeader,
 	PageHeaderDescription,
 	PageHeaderHeading,
+	PageHeaderPrimaryButton,
+	PageHeaderSecondaryButton,
 } from "@/components/layout/page-header";
 import { PageNav } from "@/components/layout/page-nav";
-import { Button } from "@/components/ui/button";
 
 const title = "Building Blocks for AI";
 const description =
@@ -51,26 +52,24 @@ export default function BlocksLayout({
 				<PageHeaderHeading>{title}</PageHeaderHeading>
 				<PageHeaderDescription>{description}</PageHeaderDescription>
 				<PageActions>
-					<Button asChild size="sm">
+					<PageHeaderPrimaryButton asChild>
 						<a href="#blocks">Browse Blocks</a>
-					</Button>
-					<Button asChild variant="ghost" size="sm">
+					</PageHeaderPrimaryButton>
+					<PageHeaderSecondaryButton asChild>
 						<Link href="/docs/blocks">See docs</Link>
-					</Button>
+					</PageHeaderSecondaryButton>
 				</PageActions>
 			</PageHeader>
 			<PageNav id="blocks">
 				<BlocksNav />
-				<Button
+				<PageHeaderSecondaryButton
 					asChild
-					variant="secondary"
-					size="sm"
 					className="mr-7 hidden shadow-none lg:flex"
 				>
 					<Link href="/blocks/chat">Browse all blocks</Link>
-				</Button>
+				</PageHeaderSecondaryButton>
 			</PageNav>
-			<div className="container-wrapper section-soft flex-1 md:py-12">
+			<div className="container-wrapper section-soft flex-1 md:py-6">
 				<div className="container">{children}</div>
 			</div>
 		</>

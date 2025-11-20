@@ -1,5 +1,13 @@
-import { ChevronRight, SparklesIcon, UserIcon } from "lucide-react";
-import type { ComponentProps, ReactNode } from "react";
+"use client";
+
+import {
+	Check,
+	ChevronRight,
+	Copy,
+	SparklesIcon,
+	UserIcon,
+} from "lucide-react";
+import { type ComponentProps, type ReactNode, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -134,7 +142,7 @@ function ChatMessageActions({
 	);
 }
 
-interface ChatMessageActionProps {
+interface ChatMessageActionProps extends ComponentProps<typeof Button> {
 	className?: string;
 	children?: ReactNode;
 	label: string;
@@ -163,6 +171,31 @@ function ChatMessageAction({
 				<p>{label}</p>
 			</TooltipContent>
 		</Tooltip>
+	);
+}
+
+function ChatMessageActionCopy({
+	className,
+	onClick,
+	...props
+}: ComponentProps<typeof Button>) {
+	const [hasCopied, setHasCopied] = useState(false);
+	return (
+		<ChatMessageAction
+			label="Copy"
+			onClick={(e) => {
+				onClick?.(e);
+				setHasCopied(true);
+				setTimeout(() => setHasCopied(false), 2000);
+			}}
+			{...props}
+		>
+			{hasCopied ? (
+				<Check className="size-4" />
+			) : (
+				<Copy className="size-4" />
+			)}
+		</ChatMessageAction>
 	);
 }
 
@@ -265,6 +298,7 @@ export {
 	ChatMessageFooter,
 	ChatMessageActions,
 	ChatMessageAction,
+	ChatMessageActionCopy,
 	ChatMessageThread,
 	ChatMessageThreadReplyCount,
 	ChatMessageThreadTimestamp,

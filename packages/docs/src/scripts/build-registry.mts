@@ -114,19 +114,38 @@ async function buildRegistry() {
 		);
 		//const process = exec(`pnpm dlx shadcn build registry.json --output ../www/public/r`);
 
+		// Pipe stdout and stderr to console for debugging
+		process.stdout?.on("data", (data) => {
+			console.log(data.toString().trim());
+		});
+
+		process.stderr?.on("data", (data) => {
+			console.error(data.toString().trim());
+		});
+
+		process.on("error", (error) => {
+			reject(
+				new Error(
+					`Failed to start shadcn build process: ${error.message}`,
+				),
+			);
+		});
+
 		process.on("exit", (code) => {
 			if (code === 0) {
 				resolve(undefined);
 			} else {
-				reject(new Error(`Process exited with code ${code}`));
+				reject(
+					new Error(`shadcn build process exited with code ${code}`),
+				);
 			}
 		});
 	});
 }
 
 async function buildBlocksIndex() {
-	const { getAllBlocks } = await import("../lib/blocks");
-	const blocks = await getAllBlocks(["registry:block"]);
+	const { getAllRegistryItems } = await import("../lib/registry");
+	const blocks = await getAllRegistryItems(["registry:block"], []);
 
 	const payload = blocks.map((block) => ({
 		name: block.name,
