@@ -1,10 +1,12 @@
 import type { InferUITools, ToolSet } from "ai";
-import { firecrawlTool } from "@/registry/ai/tools/firecrawl";
+import { exaTool } from "@/registry/ai/tools/exa-tool";
+import { firecrawlTool } from "@/registry/ai/tools/firecrawl-tool";
 import { getWeatherTool } from "@/registry/ai/tools/get-weather";
 
 export const tools = {
 	"get-weather": getWeatherTool,
-	firecrawl: firecrawlTool,
+	"exa-tool": exaTool,
+	"firecrawl-tool": firecrawlTool,
 	// Add more tools here
 } satisfies ToolSet;
 

@@ -9,6 +9,7 @@ const agents: Registry["items"] = [
 		registryDependencies: [
 			"@simple-ai/models",
 			"@simple-ai/weather-agent",
+			"@simple-ai/exa-agent",
 			"@simple-ai/firecrawl-agent",
 			"@simple-ai/id-to-readable-text",
 		],
@@ -67,7 +68,7 @@ const agents: Registry["items"] = [
 		],
 		meta: {
 			icon: "FirecrawlIcon",
-			toolIds: ["firecrawl"],
+			toolIds: ["firecrawl-tool"],
 			suggestions: [
 				"Scrape https://example.com",
 				"Search for recent news about AI agents",
@@ -75,6 +76,33 @@ const agents: Registry["items"] = [
 				"Get content from a specific URL",
 			],
 			prompt: "You are a web research assistant powered by Firecrawl.\nYour goal is to find accurate information from the web efficiently.\n\nInstructions:\n- If the user provides a specific URL, use the 'scrape' mode to get the content.\n- If the user asks a general question, use the 'search' mode to find relevant pages.\n- The tool returns Markdown content. Summarize this content clearly for the user.\n- Cite the URLs you found information from.",
+		},
+	},
+	{
+		title: "Exa Agent",
+		name: "exa-agent",
+		description: "A web research agent powered by Exa.",
+		type: "registry:lib",
+		dependencies: ["ai"],
+		registryDependencies: ["@simple-ai/models", "@simple-ai/exa-tool"],
+		categories: ["agent"],
+		files: [
+			{
+				type: "registry:lib",
+				path: "ai/agents/exa-agent.ts",
+				target: "lib/ai/agents/exa-agent.ts",
+			},
+		],
+		meta: {
+			icon: "ExaIcon",
+			toolIds: ["exa-tool"],
+			suggestions: [
+				"Find similar companies to https://exa.ai",
+				"Research the latest trends in generative AI",
+				"Retrieve content from https://example.com",
+				"Find blog posts about Rust programming",
+			],
+			prompt: "You are a highly capable web research assistant powered by Exa.\nYour goal is to find, verify, and synthesize information from the web.\n\nInstructions:\n- Use 'search' mode for general queries to find relevant pages and their content.\n- Use 'retrieve' mode if the user provides a specific URL that needs to be read.\n- Use 'find-similar' mode if the user wants to find websites related to a specific URL.\n- Exa provides clean Markdown content. Use this to summarize answers effectively.\n- Always cite the source URLs provided in the search results.",
 		},
 	},
 ];
@@ -85,6 +113,7 @@ const tools: Registry["items"] = [
 		description: "A set of tools for the AI SDK.",
 		type: "registry:lib",
 		registryDependencies: [
+			"@simple-ai/exa-tool",
 			"@simple-ai/firecrawl-tool",
 			"@simple-ai/get-weather",
 		],
@@ -100,14 +129,18 @@ const tools: Registry["items"] = [
 	},
 	{
 		name: "firecrawl-tool",
-		envVars: {
-			FIRECRAWL_API_KEY: "",
-		},
 		description:
 			"A tool for searching and scraping the web using Firecrawl.",
 		type: "registry:lib",
 		dependencies: ["ai", "@mendable/firecrawl-js", "zod"],
-		files: [{ type: "registry:lib", path: "ai/tools/firecrawl.ts" }],
+		files: [{ type: "registry:lib", path: "ai/tools/firecrawl-tool.ts" }],
+	},
+	{
+		name: "exa-tool",
+		description: "A tool for searching and scraping the web using Exa.",
+		type: "registry:lib",
+		dependencies: ["ai", "exa-js", "zod"],
+		files: [{ type: "registry:lib", path: "ai/tools/exa-tool.ts" }],
 	},
 ];
 

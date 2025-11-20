@@ -7,13 +7,14 @@
 	"registryDependencies": [
 		"@simple-ai/models",
 		"@simple-ai/weather-agent",
+		"@simple-ai/exa-agent",
 		"@simple-ai/firecrawl-agent",
 		"@simple-ai/id-to-readable-text"
 	],
 	"files": [
 		{
 			"path": "./src/registry/ai/agents/agents.ts",
-			"content": "import { firecrawlAgent } from \"@/registry/ai/agents/firecrawl-agent\";\nimport { weatherAgent } from \"@/registry/ai/agents/weather-agent\";\nimport { idToReadableText } from \"@/registry/lib/id-to-readable-text\";\n\nexport const agents = {\n\t\"weather-agent\": weatherAgent,\n\t\"firecrawl-agent\": firecrawlAgent,\n\t// Import and add more agents here\n};\n\nexport const agentsList = Object.keys(agents).map((key) => ({\n\tid: key,\n\tname: idToReadableText(key),\n}));\n\nexport type agentId = keyof typeof agents;\n\nexport const AGENTS = Object.keys(agents);\n",
+			"content": "import { exaAgent } from \"@/registry/ai/agents/exa-agent\";\nimport { firecrawlAgent } from \"@/registry/ai/agents/firecrawl-agent\";\nimport { weatherAgent } from \"@/registry/ai/agents/weather-agent\";\nimport { idToReadableText } from \"@/registry/lib/id-to-readable-text\";\n\nexport const agents = {\n\t\"weather-agent\": weatherAgent,\n\t\"exa-agent\": exaAgent,\n\t\"firecrawl-agent\": firecrawlAgent,\n\t// Import and add more agents here\n};\n\nexport const agentsList = Object.keys(agents).map((key) => ({\n\tid: key,\n\tname: idToReadableText(key),\n}));\n\nexport type agentId = keyof typeof agents;\n\nexport const AGENTS = Object.keys(agents);\n",
 			"type": "registry:lib",
 			"target": "lib/ai/agents.ts"
 		}

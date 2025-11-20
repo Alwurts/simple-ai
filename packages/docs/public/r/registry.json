@@ -2006,6 +2006,7 @@
 			"registryDependencies": [
 				"@simple-ai/models",
 				"@simple-ai/weather-agent",
+				"@simple-ai/exa-agent",
 				"@simple-ai/firecrawl-agent",
 				"@simple-ai/id-to-readable-text"
 			],
@@ -2066,7 +2067,7 @@
 			],
 			"meta": {
 				"icon": "FirecrawlIcon",
-				"toolIds": ["firecrawl"],
+				"toolIds": ["firecrawl-tool"],
 				"suggestions": [
 					"Scrape https://example.com",
 					"Search for recent news about AI agents",
@@ -2078,11 +2079,42 @@
 			"categories": ["agent"]
 		},
 		{
+			"name": "exa-agent",
+			"type": "registry:lib",
+			"title": "Exa Agent",
+			"description": "A web research agent powered by Exa.",
+			"dependencies": ["ai"],
+			"registryDependencies": [
+				"@simple-ai/models",
+				"@simple-ai/exa-tool"
+			],
+			"files": [
+				{
+					"path": "./src/registry/ai/agents/exa-agent.ts",
+					"type": "registry:lib",
+					"target": "lib/ai/agents/exa-agent.ts"
+				}
+			],
+			"meta": {
+				"icon": "ExaIcon",
+				"toolIds": ["exa-tool"],
+				"suggestions": [
+					"Find similar companies to https://exa.ai",
+					"Research the latest trends in generative AI",
+					"Retrieve content from https://example.com",
+					"Find blog posts about Rust programming"
+				],
+				"prompt": "You are a highly capable web research assistant powered by Exa.\nYour goal is to find, verify, and synthesize information from the web.\n\nInstructions:\n- Use 'search' mode for general queries to find relevant pages and their content.\n- Use 'retrieve' mode if the user provides a specific URL that needs to be read.\n- Use 'find-similar' mode if the user wants to find websites related to a specific URL.\n- Exa provides clean Markdown content. Use this to summarize answers effectively.\n- Always cite the source URLs provided in the search results."
+			},
+			"categories": ["agent"]
+		},
+		{
 			"name": "tools",
 			"type": "registry:lib",
 			"description": "A set of tools for the AI SDK.",
 			"dependencies": ["ai"],
 			"registryDependencies": [
+				"@simple-ai/exa-tool",
 				"@simple-ai/firecrawl-tool",
 				"@simple-ai/get-weather"
 			],
@@ -2112,13 +2144,22 @@
 			"dependencies": ["ai", "@mendable/firecrawl-js", "zod"],
 			"files": [
 				{
-					"path": "./src/registry/ai/tools/firecrawl.ts",
+					"path": "./src/registry/ai/tools/firecrawl-tool.ts",
 					"type": "registry:lib"
 				}
-			],
-			"envVars": {
-				"FIRECRAWL_API_KEY": ""
-			}
+			]
+		},
+		{
+			"name": "exa-tool",
+			"type": "registry:lib",
+			"description": "A tool for searching and scraping the web using Exa.",
+			"dependencies": ["ai", "exa-js", "zod"],
+			"files": [
+				{
+					"path": "./src/registry/ai/tools/exa-tool.ts",
+					"type": "registry:lib"
+				}
+			]
 		},
 		{
 			"name": "agent-respond",

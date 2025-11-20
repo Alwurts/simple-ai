@@ -3,7 +3,7 @@ import { AgentDisplay } from "@/components/agents/agent-display";
 export const dynamic = "force-static";
 export const revalidate = false;
 
-const DISPLAYED_AGENTS = ["firecrawl-agent", "weather-agent"];
+const DISPLAYED_AGENTS = ["firecrawl-agent", "exa-agent", "weather-agent"];
 
 export default async function AgentsPage() {
 	return (

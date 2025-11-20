@@ -2879,6 +2879,7 @@ export const Index: Record<string, any> = {
 		registryDependencies: [
 			"@simple-ai/models",
 			"@simple-ai/weather-agent",
+			"@simple-ai/exa-agent",
 			"@simple-ai/firecrawl-agent",
 			"@simple-ai/id-to-readable-text",
 		],
@@ -2965,7 +2966,7 @@ export const Index: Record<string, any> = {
 		categories: ["agent"],
 		meta: {
 			icon: "FirecrawlIcon",
-			toolIds: ["firecrawl"],
+			toolIds: ["firecrawl-tool"],
 			suggestions: [
 				"Scrape https://example.com",
 				"Search for recent news about AI agents",
@@ -2975,11 +2976,47 @@ export const Index: Record<string, any> = {
 			prompt: "You are a web research assistant powered by Firecrawl.\nYour goal is to find accurate information from the web efficiently.\n\nInstructions:\n- If the user provides a specific URL, use the 'scrape' mode to get the content.\n- If the user asks a general question, use the 'search' mode to find relevant pages.\n- The tool returns Markdown content. Summarize this content clearly for the user.\n- Cite the URLs you found information from.",
 		},
 	},
+	"exa-agent": {
+		name: "exa-agent",
+		description: "A web research agent powered by Exa.",
+		type: "registry:lib",
+		registryDependencies: ["@simple-ai/models", "@simple-ai/exa-tool"],
+		files: [
+			{
+				path: "./src/registry/ai/agents/exa-agent.ts",
+				type: "registry:lib",
+				target: "lib/ai/agents/exa-agent.ts",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/agents/exa-agent.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: ["agent"],
+		meta: {
+			icon: "ExaIcon",
+			toolIds: ["exa-tool"],
+			suggestions: [
+				"Find similar companies to https://exa.ai",
+				"Research the latest trends in generative AI",
+				"Retrieve content from https://example.com",
+				"Find blog posts about Rust programming",
+			],
+			prompt: "You are a highly capable web research assistant powered by Exa.\nYour goal is to find, verify, and synthesize information from the web.\n\nInstructions:\n- Use 'search' mode for general queries to find relevant pages and their content.\n- Use 'retrieve' mode if the user provides a specific URL that needs to be read.\n- Use 'find-similar' mode if the user wants to find websites related to a specific URL.\n- Exa provides clean Markdown content. Use this to summarize answers effectively.\n- Always cite the source URLs provided in the search results.",
+		},
+	},
 	tools: {
 		name: "tools",
 		description: "A set of tools for the AI SDK.",
 		type: "registry:lib",
 		registryDependencies: [
+			"@simple-ai/exa-tool",
 			"@simple-ai/firecrawl-tool",
 			"@simple-ai/get-weather",
 		],
@@ -3036,13 +3073,38 @@ export const Index: Record<string, any> = {
 		registryDependencies: undefined,
 		files: [
 			{
-				path: "./src/registry/ai/tools/firecrawl.ts",
+				path: "./src/registry/ai/tools/firecrawl-tool.ts",
 				type: "registry:lib",
 				target: "",
 			},
 		],
 		component: React.lazy(async () => {
-			const mod = await import("@/registry/ai/tools/firecrawl.ts");
+			const mod = await import("@/registry/ai/tools/firecrawl-tool.ts");
+			const exportName =
+				Object.keys(mod).find(
+					(key) =>
+						typeof mod[key] === "function" ||
+						typeof mod[key] === "object",
+				) || item.name;
+			return { default: mod.default || mod[exportName] };
+		}),
+		categories: undefined,
+		meta: undefined,
+	},
+	"exa-tool": {
+		name: "exa-tool",
+		description: "A tool for searching and scraping the web using Exa.",
+		type: "registry:lib",
+		registryDependencies: undefined,
+		files: [
+			{
+				path: "./src/registry/ai/tools/exa-tool.ts",
+				type: "registry:lib",
+				target: "",
+			},
+		],
+		component: React.lazy(async () => {
+			const mod = await import("@/registry/ai/tools/exa-tool.ts");
 			const exportName =
 				Object.keys(mod).find(
 					(key) =>

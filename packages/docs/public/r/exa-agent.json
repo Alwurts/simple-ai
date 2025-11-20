@@ -1,0 +1,29 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "exa-agent",
+	"type": "registry:lib",
+	"title": "Exa Agent",
+	"description": "A web research agent powered by Exa.",
+	"dependencies": ["ai"],
+	"registryDependencies": ["@simple-ai/models", "@simple-ai/exa-tool"],
+	"files": [
+		{
+			"path": "./src/registry/ai/agents/exa-agent.ts",
+			"content": "import { Experimental_Agent as Agent, stepCountIs } from \"ai\";\n\nimport { model } from \"@/registry/ai/models\";\nimport { exaTool } from \"@/registry/ai/tools/exa-tool\";\n\nexport const exaAgentPrompt = `You are a highly capable web research assistant powered by Exa.\n\nYour goal is to find, verify, and synthesize information from the web.\n\nInstructions:\n\n- Use 'search' mode for general queries to find relevant pages and their content.\n\n- Use 'retrieve' mode if the user provides a specific URL that needs to be read.\n\n- Use 'find-similar' mode if the user wants to find websites related to a specific URL.\n\n- Exa provides clean Markdown content. Use this to summarize answers effectively.\n\n- Always cite the source URLs provided in the search results.`;\n\nexport const exaAgent = new Agent({\n\tmodel: model.languageModel(\"gpt-5-nano\"),\n\tsystem: exaAgentPrompt,\n\ttools: {\n\t\t\"exa-tool\": exaTool,\n\t},\n\tstopWhen: stepCountIs(10),\n});\n",
+			"type": "registry:lib",
+			"target": "lib/ai/agents/exa-agent.ts"
+		}
+	],
+	"meta": {
+		"icon": "ExaIcon",
+		"toolIds": ["exa-tool"],
+		"suggestions": [
+			"Find similar companies to https://exa.ai",
+			"Research the latest trends in generative AI",
+			"Retrieve content from https://example.com",
+			"Find blog posts about Rust programming"
+		],
+		"prompt": "You are a highly capable web research assistant powered by Exa.\nYour goal is to find, verify, and synthesize information from the web.\n\nInstructions:\n- Use 'search' mode for general queries to find relevant pages and their content.\n- Use 'retrieve' mode if the user provides a specific URL that needs to be read.\n- Use 'find-similar' mode if the user wants to find websites related to a specific URL.\n- Exa provides clean Markdown content. Use this to summarize answers effectively.\n- Always cite the source URLs provided in the search results."
+	},
+	"categories": ["agent"]
+}

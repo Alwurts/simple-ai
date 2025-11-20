@@ -4,6 +4,7 @@ import * as LucideIcons from "lucide-react";
 import { Check, ChevronDown, ChevronUp, Copy } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import { ExaIcon } from "@/components/icons/exa-icon";
 import { FirecrawlIcon } from "@/components/icons/firecrawl-icon";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,7 @@ function AgentInfo() {
 		string,
 		React.ComponentType<{ className?: string }>
 	> = {
+		ExaIcon: ExaIcon,
 		FirecrawlIcon: FirecrawlIcon,
 	};
 

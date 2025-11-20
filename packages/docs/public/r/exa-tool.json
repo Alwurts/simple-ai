@@ -1,0 +1,14 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry-item.json",
+	"name": "exa-tool",
+	"type": "registry:lib",
+	"description": "A tool for searching and scraping the web using Exa.",
+	"dependencies": ["ai", "exa-js", "zod"],
+	"files": [
+		{
+			"path": "./src/registry/ai/tools/exa-tool.ts",
+			"content": "import { type InferUITool, tool } from \"ai\";\nimport Exa from \"exa-js\";\nimport { z } from \"zod\";\n\nconst exaParamsSchema = z.object({\n\tquery: z.string().describe(\"The search query or URL to process\"),\n\tmode: z\n\t\t.enum([\"search\", \"retrieve\", \"find-similar\"])\n\t\t.describe(\n\t\t\t\"The mode of operation: 'search' for general queries, 'retrieve' to get content of a specific URL, 'find-similar' to find websites similar to a URL\",\n\t\t),\n\tnumResults: z\n\t\t.number()\n\t\t.optional()\n\t\t.default(5)\n\t\t.describe(\"Number of results to return (default: 5)\"),\n});\n\nexport type ExaParams = z.infer<typeof exaParamsSchema>;\n\nconst exaResultSchema = z.union([\n\tz.object({\n\t\tsuccess: z.literal(true),\n\t\tdata: z.any(),\n\t}),\n\tz.object({\n\t\tsuccess: z.literal(false),\n\t\terror: z.string(),\n\t}),\n]);\n\nexport type ExaResult = z.infer<typeof exaResultSchema>;\n\nexport const exaTool = tool({\n\tname: \"exa\",\n\tdescription:\n\t\t\"Search the web, retrieve content, or find similar pages using Exa. Ideal for AI-powered research.\",\n\tinputSchema: exaParamsSchema,\n\toutputSchema: exaResultSchema,\n\texecute: async ({ query, mode, numResults }) => {\n\t\tconst apiKey = process.env.EXA_API_KEY;\n\n\t\tif (!apiKey) {\n\t\t\treturn { success: false, error: \"EXA_API_KEY is not set\" };\n\t\t}\n\n\t\ttry {\n\t\t\tconst exa = new Exa(apiKey);\n\n\t\t\tlet result: any;\n\n\t\t\tif (mode === \"search\") {\n\t\t\t\t// \"auto\" type uses Exa's decision logic to switch between keyword and neural search\n\t\t\t\tresult = await exa.searchAndContents(query, {\n\t\t\t\t\ttype: \"auto\",\n\t\t\t\t\ttext: true, // Returns clean markdown by default\n\t\t\t\t\tnumResults,\n\t\t\t\t});\n\t\t\t} else if (mode === \"retrieve\") {\n\t\t\t\t// Get content for specific URLs\n\t\t\t\tresult = await exa.getContents([query], {\n\t\t\t\t\ttext: true,\n\t\t\t\t});\n\t\t\t} else if (mode === \"find-similar\") {\n\t\t\t\t// Find pages similar to a given URL\n\t\t\t\tresult = await exa.findSimilarAndContents(query, {\n\t\t\t\t\ttext: true,\n\t\t\t\t\tnumResults,\n\t\t\t\t});\n\t\t\t} else {\n\t\t\t\treturn { success: false, error: \"Invalid mode\" };\n\t\t\t}\n\n\t\t\treturn { success: true, data: result };\n\t\t} catch (error) {\n\t\t\treturn {\n\t\t\t\tsuccess: false,\n\t\t\t\terror:\n\t\t\t\t\terror instanceof Error\n\t\t\t\t\t\t? error.message\n\t\t\t\t\t\t: \"Unknown error occurred\",\n\t\t\t};\n\t\t}\n\t},\n});\n\nexport type ExaTool = InferUITool<typeof exaTool>;\n",
+			"type": "registry:lib"
+		}
+	]
+}

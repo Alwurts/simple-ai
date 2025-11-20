@@ -1,7 +1,7 @@
 import { Experimental_Agent as Agent, stepCountIs } from "ai";
 
 import { model } from "@/registry/ai/models";
-import { firecrawlTool } from "@/registry/ai/tools/firecrawl";
+import { firecrawlTool } from "@/registry/ai/tools/firecrawl-tool";
 
 export const firecrawlAgentPrompt = `You are a web research assistant powered by Firecrawl.
 
@@ -21,7 +21,7 @@ export const firecrawlAgent = new Agent({
 	model: model.languageModel("gpt-5-nano"),
 	system: firecrawlAgentPrompt,
 	tools: {
-		firecrawl: firecrawlTool,
+		"firecrawl-tool": firecrawlTool,
 	},
 	stopWhen: stepCountIs(10), // Low step count to keep it cheap
 });
