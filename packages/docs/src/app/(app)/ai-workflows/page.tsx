@@ -1,5 +1,8 @@
 import { BlockDisplay } from "@/components/blocks/block-display";
 
+export const dynamic = "force-static";
+export const revalidate = false;
+
 export default async function WorkflowsPage() {
 	return (
 		<div className="container-wrapper flex-1">
