@@ -4,6 +4,9 @@ import { ParallelizationWorkflow } from "@/components/agents/workflows/paralleli
 import { RoutingWorkflow } from "@/components/agents/workflows/routing-workflow";
 import { BlockDisplay } from "@/components/blocks/block-display";
 
+export const dynamic = "force-static";
+export const revalidate = false;
+
 export default async function BlocksPage() {
 	return (
 		<>
