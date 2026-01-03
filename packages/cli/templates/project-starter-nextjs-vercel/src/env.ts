@@ -11,6 +11,8 @@ export const env = createEnv({
 		POSTGRES_URL: z.string().min(1),
 		// Better Auth
 		BETTER_AUTH_SECRET: z.string().min(1),
+		// AI
+		AI_GATEWAY_API_KEY: z.string().min(1),
 	},
 	/*
 	 * Environment variables available on the client (and server).
@@ -33,6 +35,8 @@ export const env = createEnv({
 		POSTGRES_URL: process.env.POSTGRES_URL,
 		// Better Auth
 		BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+		// AI
+		AI_GATEWAY_API_KEY: process.env.AI_GATEWAY_API_KEY,
 		// Vercel
 		NEXT_PUBLIC_VERCEL_ENV: process.env.NEXT_PUBLIC_VERCEL_ENV,
 		NEXT_PUBLIC_VERCEL_BRANCH_URL: process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL,
