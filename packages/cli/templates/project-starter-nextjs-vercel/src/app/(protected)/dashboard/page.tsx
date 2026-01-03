@@ -1,8 +1,5 @@
-import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { ChatInputArea } from "@/components/chat/parts/chat-input-area";
-import { Chat, ChatHeader, ChatHeaderTitle } from "@/components/chat/parts/chat-layout";
-import { ChatMessages } from "@/components/chat/parts/chat-messages";
+import { ChatSidePanel } from "@/components/chat/chat-side-panel";
 import { DemoContent } from "@/components/demo-content";
 import {
 	AppLayoutHeader,
@@ -21,9 +18,8 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Button } from "@/components/ui/button";
 
-export default function LayoutDemo1Page() {
+export default function DashboardPage() {
 	return (
 		<AppLayoutPage>
 			<AppLayoutResizable>
@@ -43,12 +39,6 @@ export default function LayoutDemo1Page() {
 							</BreadcrumbList>
 						</Breadcrumb>
 						<AppLayoutHeaderActions>
-							<Button variant="outline" asChild>
-								<Link href="/design-system">
-									<ArrowLeft className="h-4 w-4 mr-2" />
-									Back to Demos
-								</Link>
-							</Button>
 							<AppLayoutResizablePanelTrigger panelId="chat-panel" />
 						</AppLayoutHeaderActions>
 					</AppLayoutHeader>
@@ -63,15 +53,7 @@ export default function LayoutDemo1Page() {
 					minSize={25}
 					defaultOpen={true}
 				>
-					<Chat id="layout-demo-1-chat" initialMessages={[]}>
-						<ChatHeader>
-							<ChatHeaderTitle>
-								Layout Demo 1: Resizable Panels with Chat in Right Panel
-							</ChatHeaderTitle>
-						</ChatHeader>
-						<ChatMessages />
-						<ChatInputArea />
-					</Chat>
+					<ChatSidePanel />
 				</AppLayoutResizablePanelSecondary>
 			</AppLayoutResizable>
 		</AppLayoutPage>

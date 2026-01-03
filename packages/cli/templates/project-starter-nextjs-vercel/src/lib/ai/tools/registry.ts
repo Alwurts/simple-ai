@@ -1,11 +1,9 @@
-import type { InferUITools, UIMessageStreamWriter } from "ai";
-import { getWeatherTool } from "./get-weather";
+import type { InferUITools } from "ai";
+import { weatherTool } from "./get-weather";
 
-export const getAiTools = ({ uiStreamWriter }: { uiStreamWriter: UIMessageStreamWriter }) => {
-	return {
-		"get-weather": getWeatherTool(uiStreamWriter),
-	};
+export const aiTools = {
+	"get-weather": weatherTool,
 };
 
-export type AITools = InferUITools<ReturnType<typeof getAiTools>>;
-export type aiToolId = keyof ReturnType<typeof getAiTools>;
+export type AITools = InferUITools<typeof aiTools>;
+export type aiToolId = keyof typeof aiTools;

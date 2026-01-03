@@ -2,8 +2,14 @@
 
 import type { DynamicToolUIPart, ToolUIPart } from "ai";
 import { memo } from "react";
+import {
+	Tool,
+	ToolContent,
+	ToolHeader,
+	ToolInput,
+	ToolOutput,
+} from "@/components/ai-elements/tool";
 import { idToReadableText } from "@/lib/id-to-readable-text";
-import { Tool, ToolContent, ToolHeader, ToolInput, ToolOutput } from "../ai-elements/tool";
 
 export type ComposedToolProps = {
 	part: ToolUIPart | DynamicToolUIPart;

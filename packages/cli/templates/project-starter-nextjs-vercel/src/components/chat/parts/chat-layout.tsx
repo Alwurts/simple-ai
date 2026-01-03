@@ -9,7 +9,8 @@ import type { AIUIMessage } from "@/types/ai";
 
 interface ChatProps extends ComponentProps<"div"> {
 	id: string;
-	initialMessages?: AIUIMessage[];
+	initialMessages: AIUIMessage[];
+	onNewChat?: (chatId: string) => void;
 }
 
 export function Chat({ id, initialMessages = [], ...props }: ChatProps) {
@@ -20,15 +21,18 @@ export function Chat({ id, initialMessages = [], ...props }: ChatProps) {
 	);
 }
 
-function ChatInner({ id, initialMessages = [], children, className, ...props }: ChatProps) {
+function ChatInner({ id, initialMessages, children, className, onNewChat, ...props }: ChatProps) {
 	//const queryClient = useQueryClient();
 
 	useChat<AIUIMessage>({
 		id,
 		messages: initialMessages,
 		transport: new DefaultChatTransport({
-			api: "/api/chat",
+			api: "/api/chat/messages",
 			prepareSendMessagesRequest({ messages, body }) {
+				if (initialMessages.length === 0 && onNewChat) {
+					onNewChat(id);
+				}
 				return {
 					body: {
 						...body,
@@ -40,6 +44,11 @@ function ChatInner({ id, initialMessages = [], children, className, ...props }: 
 		}),
 		generateId: () => createId("msg"),
 		onFinish: () => {
+			// console.log("onFinish", id);
+			// if (onNewChat) {
+			// 	console.log("onNewChat", id);
+			// 	onNewChat(id);
+			// }
 			//queryClient.invalidateQueries({ queryKey: chatsKeysAll() });
 		},
 		sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithApprovalResponses,

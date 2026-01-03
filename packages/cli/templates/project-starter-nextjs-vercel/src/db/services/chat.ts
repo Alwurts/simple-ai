@@ -20,6 +20,7 @@ export async function createChat({
 		const [result] = await tx.insert(chats).values({ id, userId, title }).returning();
 		await tx.insert(messages).values({
 			id: message.id,
+			userId,
 			chatId: result.id,
 			role: message.role,
 			parts: message.parts,
@@ -67,15 +68,52 @@ export async function getChats(userId: string): Promise<DBChat[]> {
 export async function addMessageToChat({
 	chatId,
 	message,
+	userId,
 }: {
 	chatId: string;
 	message: AIUIMessage;
+	userId: string;
 }): Promise<void> {
 	await db.insert(messages).values({
 		id: message.id,
 		chatId,
+		userId,
 		role: message.role,
 		parts: message.parts,
 		metadata: message.metadata,
 	});
+}
+
+export async function upsertMessageToChat({
+	chatId,
+	message,
+	userId,
+}: {
+	chatId: string;
+	message: AIUIMessage;
+	userId: string;
+}): Promise<void> {
+	console.log("upsertMessageToChat", chatId, message.id, userId);
+	const metadata = message.metadata ?? {
+		createdAt: new Date().toISOString(),
+		status: "success",
+	};
+	await db
+		.insert(messages)
+		.values({
+			id: message.id,
+			chatId,
+			userId,
+			role: message.role,
+			parts: message.parts,
+			metadata,
+		})
+		.onConflictDoUpdate({
+			target: messages.id,
+			set: {
+				role: message.role,
+				parts: message.parts,
+				metadata,
+			},
+		});
 }

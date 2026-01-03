@@ -3,7 +3,7 @@
 import { ArrowLeft, MessageSquare } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { SidePanelChat } from "@/components/chat/side-panel-chat";
+import { SidePanelChat } from "@/components/chat/chat-floating-panel";
 import { DemoContent } from "@/components/demo-content";
 import {
 	AppLayoutContent,

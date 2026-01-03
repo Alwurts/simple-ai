@@ -1,8 +1,8 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { ChatInputArea } from "@/components/chat/chat-input-area";
-import { Chat } from "@/components/chat/chat-layout";
-import { ChatMessages } from "@/components/chat/chat-messages";
+import { ChatInputArea } from "@/components/chat/parts/chat-input-area";
+import { Chat } from "@/components/chat/parts/chat-layout";
+import { ChatMessages } from "@/components/chat/parts/chat-messages";
 import {
 	AppLayoutContent,
 	AppLayoutHeader,

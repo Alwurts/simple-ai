@@ -5,16 +5,16 @@ import type { JSONContent } from "@tiptap/react";
 import { XIcon } from "lucide-react";
 import { useCallback } from "react";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
-import type { AIUIMessage } from "@/types/ai";
 import {
 	ChatInput,
 	ChatInputEditor,
 	ChatInputGroupAddon,
 	ChatInputSubmitButton,
 	useChatInput,
-} from "../ai-elements/chat-input";
-import { Button } from "../ui/button";
+} from "@/components/ai-elements/chat-input";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import type { AIUIMessage } from "@/types/ai";
 
 export function ChatInputArea() {
 	const { stop, sendMessage } = useChatActions<AIUIMessage>();

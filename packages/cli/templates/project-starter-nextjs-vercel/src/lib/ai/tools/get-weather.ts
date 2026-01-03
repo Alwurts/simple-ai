@@ -1,4 +1,4 @@
-import { tool, type UIMessageStreamWriter } from "ai";
+import { tool } from "ai";
 import { z } from "zod";
 
 const getWeatherInputSchema = z.object({
@@ -14,17 +14,16 @@ const getWeatherOutputSchema = z.object({
 
 export type GetWeatherOutput = z.infer<typeof getWeatherOutputSchema>;
 
-export const getWeatherTool = (_dataStream: UIMessageStreamWriter) =>
-	tool({
-		description: "Get current weather information for a location",
-		inputSchema: getWeatherInputSchema,
-		outputSchema: getWeatherOutputSchema,
-		execute: async () => {
-			return {
-				temperature: 20,
-				condition: "sunny",
-				humidity: 50,
-				windSpeed: 10,
-			};
-		},
-	});
+export const weatherTool = tool({
+	description: "Get current weather information for a location",
+	inputSchema: getWeatherInputSchema,
+	outputSchema: getWeatherOutputSchema,
+	execute: async () => {
+		return {
+			temperature: 20,
+			condition: "sunny",
+			humidity: 50,
+			windSpeed: 10,
+		};
+	},
+});

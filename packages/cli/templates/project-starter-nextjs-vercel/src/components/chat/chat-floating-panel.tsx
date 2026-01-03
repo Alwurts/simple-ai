@@ -1,5 +1,8 @@
 "use client";
 
+import { ChatInputArea } from "@/components/chat/parts/chat-input-area";
+import { Chat } from "@/components/chat/parts/chat-layout";
+import { ChatMessages } from "@/components/chat/parts/chat-messages";
 import {
 	ResizableSheet,
 	ResizableSheetContent,
@@ -7,9 +10,6 @@ import {
 	ResizableSheetHeader,
 	ResizableSheetTitle,
 } from "@/components/ui/resizable-sheet";
-import { ChatInputArea } from "./chat-input-area";
-import { Chat } from "./chat-layout";
-import { ChatMessages } from "./chat-messages";
 
 interface SidePanelChatProps extends React.ComponentProps<typeof ResizableSheet> {
 	id: string;

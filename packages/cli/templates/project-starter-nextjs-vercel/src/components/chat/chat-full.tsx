@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
-import { ChatInputArea } from "./chat-input-area";
-import { Chat } from "./chat-layout";
-import { ChatMessages } from "./chat-messages";
+import { ChatInputArea } from "@/components/chat/parts/chat-input-area";
+import { Chat } from "@/components/chat/parts/chat-layout";
+import { ChatMessages } from "@/components/chat/parts/chat-messages";
 
 export function ChatFull(props: ComponentProps<typeof Chat>) {
 	return (

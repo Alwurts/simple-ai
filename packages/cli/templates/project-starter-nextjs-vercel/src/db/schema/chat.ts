@@ -15,6 +15,10 @@ export const chats = pgTable("chats", (t) => ({
 
 export const messages = pgTable("messages", (t) => ({
 	id: t.text("id").primaryKey(),
+	userId: t
+		.text("user_id")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
 	chatId: t
 		.text("chat_id")
 		.notNull()
