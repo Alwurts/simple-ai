@@ -1,8 +1,13 @@
-import type { InferUITools, ToolUIPart, UIMessage } from "ai";
+import type { LanguageModelUsage, ToolUIPart, UIMessage } from "ai";
 import { z } from "zod";
-import type { AgentToolSet } from "@/lib/ai/tools";
+import type { AITools } from "@/lib/ai/tools/registry";
 
-const aiMetadataSchema = z.record(z.string(), z.unknown());
+const aiMetadataSchema = z.object({
+	createdAt: z.iso.datetime(),
+	status: z.enum(["pending", "success", "error"]),
+	usage: z.custom<LanguageModelUsage>().optional(),
+	responseTime: z.number().optional(),
+});
 
 type AIMetadata = z.infer<typeof aiMetadataSchema>;
 
@@ -11,8 +16,6 @@ export const querySchema = z.object({});
 const aiDataPartSchema = z.object({});
 
 type AIDataPart = z.infer<typeof aiDataPartSchema>;
-
-type AITools = InferUITools<AgentToolSet>;
 
 export type AIToolUIPart = ToolUIPart<AITools>;
 
