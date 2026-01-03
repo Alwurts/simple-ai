@@ -21,6 +21,7 @@ import {
 import {
 	Conversation,
 	ConversationContent,
+	ConversationEmptyState,
 	ConversationScrollButton,
 } from "@/components/ai-elements/conversation";
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
@@ -143,28 +144,6 @@ function ChatContentInternal({ className, ...props }: ChatContentProps) {
 		[sendMessage],
 	);
 
-	if (messages.length === 0) {
-		return (
-			<div className="flex-1 flex flex-col h-full items-center justify-center p-4">
-				<div className="w-full max-w-2xl flex flex-col gap-8">
-					<div className="text-center space-y-2">
-						<h1 className="text-2xl font-semibold tracking-tight">How can I help you today?</h1>
-						<p className="text-muted-foreground">
-							Start a new conversation by typing a message below.
-						</p>
-					</div>
-
-					<ChatInput onSubmit={handleSubmit} isStreaming={isLoading} onStop={stop}>
-						<ChatInputEditor value={value} onChange={onChange} placeholder="Type a message..." />
-						<ChatInputGroupAddon align="block-end">
-							<ChatInputSubmitButton className="ml-auto" />
-						</ChatInputGroupAddon>
-					</ChatInput>
-				</div>
-			</div>
-		);
-	}
-
 	if (status === "error" || error) {
 		return (
 			<div className="flex h-full min-h-0 w-full flex-1 flex-col" {...props}>
@@ -177,16 +156,20 @@ function ChatContentInternal({ className, ...props }: ChatContentProps) {
 
 	return (
 		<div className="flex h-full min-h-0 w-full flex-1 flex-col" {...props}>
-			<Conversation className="h-full flex-1 overflow-y-hidden">
-				<ConversationContent className="container gap-2 mx-auto w-full pb-6 sm:max-w-2xl md:max-w-3xl">
-					<ChatMessagesMemo />
-				</ConversationContent>
-				<ConversationScrollButton />
-			</Conversation>
+			{messages.length > 0 ? (
+				<Conversation className="h-full flex-1 overflow-y-hidden">
+					<ConversationContent className="container gap-2 mx-auto w-full pb-6 sm:max-w-2xl md:max-w-3xl">
+						<ChatMessagesMemo />
+					</ConversationContent>
+					<ConversationScrollButton />
+				</Conversation>
+			) : (
+				<ConversationEmptyState />
+			)}
 
 			<div className="relative bottom-4 z-10 w-full">
 				<div className="mx-auto w-full p-2 @[500px]:px-4 @[500px]:pb-4 md:max-w-3xl @[500px]:md:pb-6">
-					<ChatInput onSubmit={handleSubmit} isStreaming={isLoading} onStop={() => {}}>
+					<ChatInput onSubmit={handleSubmit} isStreaming={isLoading} onStop={stop}>
 						<ChatInputEditor value={value} onChange={onChange} placeholder="Type a message..." />
 						<ChatInputGroupAddon align="block-end">
 							<ChatInputSubmitButton className="ml-auto" />

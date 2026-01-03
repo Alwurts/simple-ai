@@ -9,14 +9,14 @@ import type { AIUIMessage } from "@/types/ai";
 import { getAgentSystemPrompt } from "./prompts/agent-prompt";
 import { getAgentTools } from "./tools";
 
-export function generateResponse({ messages, cwd }: { messages: AIUIMessage[]; cwd: string }) {
+export function generateResponse({ messages }: { messages: AIUIMessage[] }) {
 	const stream = createUIMessageStream<AIUIMessage>({
 		execute: async ({ writer }) => {
 			const result = streamText({
 				model: "openai/gpt-5-mini",
 				system: getAgentSystemPrompt(),
 				messages: await convertToModelMessages(messages),
-				tools: getAgentTools({ uiStreamWriter: writer, cwd }),
+				tools: getAgentTools({ uiStreamWriter: writer }),
 				stopWhen: stepCountIs(10),
 				maxRetries: 10,
 			});
