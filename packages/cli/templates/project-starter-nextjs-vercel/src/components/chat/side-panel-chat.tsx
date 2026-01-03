@@ -1,24 +1,17 @@
 "use client";
 
 import { ChatMain } from "@/components/chat/chat-main";
-import { Button } from "@/components/ui/button";
 import {
 	ResizableSheet,
 	ResizableSheetContent,
 	ResizableSheetDescription,
 	ResizableSheetHeader,
 	ResizableSheetTitle,
-	ResizableSheetTrigger,
 } from "@/components/ui/resizable-sheet";
 
-export function SidePanelChat() {
+export function SidePanelChat(props: React.ComponentProps<typeof ResizableSheet>) {
 	return (
-		<ResizableSheet defaultWidth={400} minWidth={300} maxWidth={600}>
-			<ResizableSheetTrigger asChild>
-				<Button variant="outline" className="w-full">
-					Open Chat Panel
-				</Button>
-			</ResizableSheetTrigger>
+		<ResizableSheet defaultWidth={400} minWidth={300} maxWidth={600} {...props}>
 			<ResizableSheetContent side="right" className="p-0">
 				<SidePanelChatContent />
 			</ResizableSheetContent>

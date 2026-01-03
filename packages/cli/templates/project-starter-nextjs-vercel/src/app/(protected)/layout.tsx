@@ -1,4 +1,4 @@
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { AppLayout } from "@/components/layout/app-layout";
 import { auth } from "@/lib/auth";
@@ -13,9 +13,12 @@ export default async function ProtectedLayout({
 		headers: headersList,
 	});
 
+	const cookieStore = await cookies();
+	const defaultOpen = cookieStore.get("sidebar_state")?.value === "true";
+
 	if (!session) {
 		redirect("/login");
 	}
 
-	return <AppLayout>{children}</AppLayout>;
+	return <AppLayout defaultOpen={defaultOpen}>{children}</AppLayout>;
 }

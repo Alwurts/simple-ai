@@ -1,7 +1,6 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { ChatMain } from "@/components/chat/chat-main";
-import { SidePanelChat } from "@/components/chat/side-panel-chat";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
@@ -43,15 +42,6 @@ export default function ProtectedPage() {
 									This is your main dashboard. You can add components and content here.
 								</p>
 							</div>
-
-							<div className="p-6 bg-card rounded-lg border">
-								<h3 className="font-semibold mb-2">Chat Panel Demo</h3>
-								<p className="text-sm text-muted-foreground mb-4">
-									Click the button below to open a resizable chat panel on the right.
-								</p>
-								<SidePanelChat />
-							</div>
-
 							<div className="p-6 bg-card rounded-lg border">
 								<h3 className="font-semibold mb-2">Getting Started</h3>
 								<p className="text-sm text-muted-foreground">

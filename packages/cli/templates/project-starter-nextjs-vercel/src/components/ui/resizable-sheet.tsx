@@ -14,8 +14,6 @@ import { cn } from "@/lib/utils";
 
 // Context for shared state
 interface ResizableSheetContextValue {
-	isOpen: boolean;
-	setIsOpen: (open: boolean) => void;
 	width: number;
 	setWidth: (width: number) => void;
 	defaultWidth: number;
@@ -34,8 +32,7 @@ function useResizableSheet() {
 }
 
 // Root component that provides context
-interface ResizableSheetProps {
-	children: React.ReactNode;
+interface ResizableSheetProps extends React.ComponentProps<typeof Sheet> {
 	defaultWidth?: number;
 	minWidth?: number;
 	maxWidth?: number;
@@ -46,13 +43,11 @@ function ResizableSheet({
 	defaultWidth = 400,
 	minWidth = 300,
 	maxWidth = 800,
+	...props
 }: ResizableSheetProps) {
-	const [isOpen, setIsOpen] = useState(false);
 	const [width, setWidth] = useState(defaultWidth);
 
 	const contextValue: ResizableSheetContextValue = {
-		isOpen,
-		setIsOpen,
 		width,
 		setWidth,
 		defaultWidth,
@@ -62,9 +57,7 @@ function ResizableSheet({
 
 	return (
 		<ResizableSheetContext.Provider value={contextValue}>
-			<Sheet open={isOpen} onOpenChange={setIsOpen}>
-				{children}
-			</Sheet>
+			<Sheet {...props}>{children}</Sheet>
 		</ResizableSheetContext.Provider>
 	);
 }

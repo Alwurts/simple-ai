@@ -102,10 +102,6 @@ export function AppLayoutHeaderActions({
 
 // --- 4. Content Area ---
 
-interface AppLayoutContentProps extends React.ComponentProps<"div"> {
-	variant?: "fixed" | "scrollable";
-}
-
 /**
  *
  * @param className - The class name to apply to the content area.
@@ -114,19 +110,10 @@ interface AppLayoutContentProps extends React.ComponentProps<"div"> {
  * @param props - The props to apply to the content area.
  * @returns
  */
-export function AppLayoutContent({
-	className,
-	children,
-	variant = "fixed",
-	...props
-}: AppLayoutContentProps) {
+export function AppLayoutContent({ className, children, ...props }: React.ComponentProps<"div">) {
 	return (
 		<div
-			className={cn(
-				"flex-1 min-h-0 w-full",
-				variant === "scrollable" ? "overflow-y-auto" : "overflow-hidden flex flex-col",
-				className,
-			)}
+			className={cn("flex-1 min-h-0 w-full overflow-hidden flex flex-col", className)}
 			{...props}
 		>
 			{children}
