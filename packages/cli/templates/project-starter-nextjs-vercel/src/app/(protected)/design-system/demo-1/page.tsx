@@ -1,6 +1,8 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { ChatMain } from "@/components/chat/chat-main";
+import { ChatInputArea } from "@/components/chat/chat-input-area";
+import { Chat, ChatHeader, ChatHeaderTitle } from "@/components/chat/chat-layout";
+import { ChatMessages } from "@/components/chat/chat-messages";
 import { DemoContent } from "@/components/demo-content";
 import {
 	AppLayoutHeader,
@@ -42,7 +44,7 @@ export default function LayoutDemo1Page() {
 						</Breadcrumb>
 						<AppLayoutHeaderActions>
 							<Button variant="outline" asChild>
-								<Link href="/layout">
+								<Link href="/design-system">
 									<ArrowLeft className="h-4 w-4 mr-2" />
 									Back to Demos
 								</Link>
@@ -61,7 +63,15 @@ export default function LayoutDemo1Page() {
 					minSize={25}
 					defaultOpen={true}
 				>
-					<ChatMain id="layout-demo-1-chat" />
+					<Chat id="layout-demo-1-chat" initialMessages={[]}>
+						<ChatHeader>
+							<ChatHeaderTitle>
+								Layout Demo 1: Resizable Panels with Chat in Right Panel
+							</ChatHeaderTitle>
+						</ChatHeader>
+						<ChatMessages />
+						<ChatInputArea />
+					</Chat>
 				</AppLayoutResizablePanelSecondary>
 			</AppLayoutResizable>
 		</AppLayoutPage>

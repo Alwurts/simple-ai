@@ -1,6 +1,8 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import { ChatMain } from "@/components/chat/chat-main";
+import { ChatInputArea } from "@/components/chat/chat-input-area";
+import { Chat } from "@/components/chat/chat-layout";
+import { ChatMessages } from "@/components/chat/chat-messages";
 import {
 	AppLayoutContent,
 	AppLayoutHeader,
@@ -36,7 +38,7 @@ export default function LayoutDemo3Page() {
 				</Breadcrumb>
 				<AppLayoutHeaderActions>
 					<Button variant="outline" asChild>
-						<Link href="/layout">
+						<Link href="/design-system">
 							<ArrowLeft className="h-4 w-4 mr-2" />
 							Back to Demos
 						</Link>
@@ -44,7 +46,13 @@ export default function LayoutDemo3Page() {
 				</AppLayoutHeaderActions>
 			</AppLayoutHeader>
 			<AppLayoutContent>
-				<ChatMain id="layout-demo-3-chat" />
+				<Chat id="layout-demo-3-chat" initialMessages={[]}>
+					{/* <ChatHeader>
+						<ChatHeaderTitle>Layout Demo 3: Full Page Chat</ChatHeaderTitle>
+					</ChatHeader> */}
+					<ChatMessages />
+					<ChatInputArea />
+				</Chat>
 			</AppLayoutContent>
 		</AppLayoutPage>
 	);

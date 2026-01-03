@@ -1,6 +1,5 @@
 "use client";
 
-import { ChatMain } from "@/components/chat/chat-main";
 import {
 	ResizableSheet,
 	ResizableSheetContent,
@@ -8,18 +7,25 @@ import {
 	ResizableSheetHeader,
 	ResizableSheetTitle,
 } from "@/components/ui/resizable-sheet";
+import { ChatInputArea } from "./chat-input-area";
+import { Chat } from "./chat-layout";
+import { ChatMessages } from "./chat-messages";
 
-export function SidePanelChat(props: React.ComponentProps<typeof ResizableSheet>) {
+interface SidePanelChatProps extends React.ComponentProps<typeof ResizableSheet> {
+	id: string;
+}
+
+export function SidePanelChat({ id, ...props }: SidePanelChatProps) {
 	return (
 		<ResizableSheet defaultWidth={400} minWidth={300} maxWidth={600} {...props}>
 			<ResizableSheetContent side="right" className="p-0">
-				<SidePanelChatContent />
+				<SidePanelChatContent id={id} />
 			</ResizableSheetContent>
 		</ResizableSheet>
 	);
 }
 
-export function SidePanelChatContent() {
+export function SidePanelChatContent({ id }: { id: string }) {
 	return (
 		<>
 			<ResizableSheetHeader>
@@ -29,7 +35,10 @@ export function SidePanelChatContent() {
 				</ResizableSheetDescription>
 			</ResizableSheetHeader>
 
-			<ChatMain id="side-panel-chat" />
+			<Chat id={id} initialMessages={[]}>
+				<ChatMessages />
+				<ChatInputArea />
+			</Chat>
 		</>
 	);
 }

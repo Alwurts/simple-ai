@@ -44,7 +44,7 @@ export default function LayoutPage() {
 							</CardHeader>
 							<CardContent>
 								<Button asChild className="w-full">
-									<Link href="/layout/demo-1">View Demo</Link>
+									<Link href="/design-system/demo-1">View Demo</Link>
 								</Button>
 							</CardContent>
 						</Card>
@@ -56,7 +56,7 @@ export default function LayoutPage() {
 							</CardHeader>
 							<CardContent>
 								<Button asChild className="w-full">
-									<Link href="/layout/demo-2">View Demo</Link>
+									<Link href="/design-system/demo-2">View Demo</Link>
 								</Button>
 							</CardContent>
 						</Card>
@@ -68,7 +68,7 @@ export default function LayoutPage() {
 							</CardHeader>
 							<CardContent>
 								<Button asChild className="w-full">
-									<Link href="/layout/demo-3">View Demo</Link>
+									<Link href="/design-system/demo-3">View Demo</Link>
 								</Button>
 							</CardContent>
 						</Card>

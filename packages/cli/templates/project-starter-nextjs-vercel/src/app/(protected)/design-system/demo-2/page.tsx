@@ -41,7 +41,7 @@ export default function LayoutDemo2Page() {
 				</Breadcrumb>
 				<AppLayoutHeaderActions>
 					<Button variant="outline" asChild>
-						<Link href="/layout">
+						<Link href="/design-system">
 							<ArrowLeft className="h-4 w-4 mr-2" />
 							Back to Demos
 						</Link>
@@ -52,7 +52,7 @@ export default function LayoutDemo2Page() {
 				</AppLayoutHeaderActions>
 			</AppLayoutHeader>
 			<AppLayoutContent>
-				<SidePanelChat open={open} onOpenChange={setOpen} />
+				<SidePanelChat id="layout-demo-2-chat" open={open} onOpenChange={setOpen} />
 
 				<DemoContent />
 			</AppLayoutContent>

@@ -5,7 +5,7 @@ import { RefreshCcwIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { AIUIMessage } from "@/types/ai";
 
-export function ResponseErrorMessage() {
+export function ChatErrorMessage() {
 	const { setMessages } = useChatActions<AIUIMessage>();
 	const chatStore = useChatStoreApi<AIUIMessage>();
 
