@@ -1,5 +1,11 @@
 # create-simple-ai
 
+## 0.3.0
+
+### Minor Changes
+
+- cc4e639: Update nextjs and react versions
+
 ## 0.2.8
 
 ### Patch Changes
