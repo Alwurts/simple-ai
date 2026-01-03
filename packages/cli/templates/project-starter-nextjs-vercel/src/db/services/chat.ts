@@ -23,7 +23,10 @@ export async function createChat({
 			chatId: result.id,
 			role: message.role,
 			parts: message.parts,
-			metadata: message.metadata,
+			metadata: message.metadata ?? {
+				createdAt: new Date().toISOString(),
+				status: "success",
+			},
 		});
 		return result.id;
 	});
@@ -68,13 +71,11 @@ export async function addMessageToChat({
 	chatId: string;
 	message: AIUIMessage;
 }): Promise<void> {
-	return await db.transaction(async (tx) => {
-		await tx.insert(messages).values({
-			id: message.id,
-			chatId,
-			role: message.role,
-			parts: message.parts,
-			metadata: message.metadata,
-		});
+	await db.insert(messages).values({
+		id: message.id,
+		chatId,
+		role: message.role,
+		parts: message.parts,
+		metadata: message.metadata,
 	});
 }

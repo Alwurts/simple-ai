@@ -3,20 +3,19 @@
 import { Provider, useChat } from "@ai-sdk-tools/store";
 //import { useQueryClient } from "@tanstack/react-query";
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithApprovalResponses } from "ai";
-import type { ComponentProps, ReactNode } from "react";
+import type { ComponentProps } from "react";
 import { cn, createId } from "@/lib/utils";
 import type { AIUIMessage } from "@/types/ai";
 
 interface ChatProps extends ComponentProps<"div"> {
 	id: string;
 	initialMessages?: AIUIMessage[];
-	children: ReactNode;
 }
 
-export function Chat({ id, ...props }: ChatProps) {
+export function Chat({ id, initialMessages = [], ...props }: ChatProps) {
 	return (
-		<Provider key={id}>
-			<ChatInner id={id} {...props} />
+		<Provider key={id} initialMessages={initialMessages}>
+			<ChatInner id={id} initialMessages={initialMessages} {...props} />
 		</Provider>
 	);
 }

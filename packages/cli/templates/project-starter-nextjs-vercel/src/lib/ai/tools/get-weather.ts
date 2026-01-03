@@ -19,4 +19,12 @@ export const getWeatherTool = (_dataStream: UIMessageStreamWriter) =>
 		description: "Get current weather information for a location",
 		inputSchema: getWeatherInputSchema,
 		outputSchema: getWeatherOutputSchema,
+		execute: async () => {
+			return {
+				temperature: 20,
+				condition: "sunny",
+				humidity: 50,
+				windSpeed: 10,
+			};
+		},
 	});
