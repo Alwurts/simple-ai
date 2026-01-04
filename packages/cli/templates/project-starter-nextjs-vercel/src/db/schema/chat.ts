@@ -1,5 +1,5 @@
 import { pgTable } from "drizzle-orm/pg-core";
-import type { AIUIMessage } from "@/types/ai";
+import type { BaseAIUIMessage } from "@/types/ai";
 import { user } from "./auth";
 
 export const chats = pgTable("chats", (t) => ({
@@ -23,8 +23,8 @@ export const messages = pgTable("messages", (t) => ({
 		.text("chat_id")
 		.notNull()
 		.references(() => chats.id, { onDelete: "cascade" }),
-	role: t.jsonb("data").$type<AIUIMessage["role"]>().notNull(),
-	parts: t.jsonb("parts").$type<AIUIMessage["parts"]>().notNull(),
-	metadata: t.jsonb("metadata").$type<AIUIMessage["metadata"]>().notNull(),
+	role: t.jsonb("data").$type<BaseAIUIMessage["role"]>().notNull(),
+	parts: t.jsonb("parts").$type<BaseAIUIMessage["parts"]>().notNull(),
+	metadata: t.jsonb("metadata").$type<BaseAIUIMessage["metadata"]>().notNull(),
 	createdAt: t.timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
 }));

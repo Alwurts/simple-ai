@@ -22,6 +22,8 @@ export type AIToolUIPart = ToolUIPart<AITools>;
 
 export type AIUIMessage = UIMessage<AIMetadata, AIDataPart, AITools>;
 
+export type BaseAIUIMessage = UIMessage<AIMetadata, AIDataPart>;
+
 // Skill Definition
 
 export const skillDefinitionSchema = z.object({

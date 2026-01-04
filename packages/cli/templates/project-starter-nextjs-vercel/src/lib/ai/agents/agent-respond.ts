@@ -41,7 +41,7 @@ export async function agentRespond({
 	}
 
 	const streamResult = streamText({
-		model: "openai/gpt-5-nano",
+		model: "openai/gpt-5-mini",
 		system: finalSystemPrompt,
 		messages: await convertToModelMessages(initialMessages),
 		abortSignal,

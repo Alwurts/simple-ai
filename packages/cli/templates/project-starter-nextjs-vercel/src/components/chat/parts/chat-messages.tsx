@@ -11,6 +11,7 @@ import {
 } from "@/components/ai-elements/conversation";
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
 import { Reasoning, ReasoningContent, ReasoningTrigger } from "@/components/ai-elements/reasoning";
+import { LoadSkillTool } from "@/components/tools/load-skill-tool";
 import { cn } from "@/lib/utils";
 import type { AIUIMessage } from "@/types/ai";
 import { ChatErrorMessage } from "./chat-error-message";
@@ -70,6 +71,15 @@ function ChatMessageListInternal({ className }: { className?: string }) {
 													<ReasoningTrigger />
 													<ReasoningContent>{part.text}</ReasoningContent>
 												</Reasoning>
+											);
+										}
+
+										if (part.type === "tool-load-skill") {
+											return (
+												<LoadSkillTool
+													key={`${message.id}-tool-load-skill-${partIndex}`}
+													part={part}
+												/>
 											);
 										}
 
