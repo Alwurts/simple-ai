@@ -3,7 +3,7 @@
 import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -72,13 +72,7 @@ export function ProductForm({
 										placeholder="Product Name"
 										aria-invalid={isInvalid}
 									/>
-									{isInvalid && (
-										<div className="text-sm text-destructive">
-											{field.state.meta.errors
-												.map((error) => (typeof error === "string" ? error : error?.message))
-												.join(", ")}
-										</div>
-									)}
+									{isInvalid && <FieldError errors={field.state.meta.errors} />}
 								</Field>
 							);
 						}}
@@ -99,13 +93,7 @@ export function ProductForm({
 										placeholder="PROD-001"
 										aria-invalid={isInvalid}
 									/>
-									{isInvalid && (
-										<div className="text-sm text-destructive">
-											{field.state.meta.errors
-												.map((error) => (typeof error === "string" ? error : error?.message))
-												.join(", ")}
-										</div>
-									)}
+									{isInvalid && <FieldError errors={field.state.meta.errors} />}
 								</Field>
 							);
 						}}
@@ -129,13 +117,7 @@ export function ProductForm({
 										onChange={(e) => field.handleChange(Number.parseFloat(e.target.value))}
 										aria-invalid={isInvalid}
 									/>
-									{isInvalid && (
-										<div className="text-sm text-destructive">
-											{field.state.meta.errors
-												.map((error) => (typeof error === "string" ? error : error?.message))
-												.join(", ")}
-										</div>
-									)}
+									{isInvalid && <FieldError errors={field.state.meta.errors} />}
 								</Field>
 							);
 						}}
@@ -157,41 +139,7 @@ export function ProductForm({
 										aria-invalid={isInvalid}
 									/>
 									<FieldDescription>Alert when stock falls below this.</FieldDescription>
-									{isInvalid && (
-										<div className="text-sm text-destructive">
-											{field.state.meta.errors
-												.map((error) => (typeof error === "string" ? error : error?.message))
-												.join(", ")}
-										</div>
-									)}
-								</Field>
-							);
-						}}
-					</form.Field>
-
-					<form.Field name="minStockLevel">
-						{(field) => {
-							const isInvalid = field.state.meta.isTouched && field.state.meta.errors.length > 0;
-							return (
-								<Field data-invalid={isInvalid}>
-									<FieldLabel htmlFor={field.name}>Low Stock Alert</FieldLabel>
-									<Input
-										id={field.name}
-										name={field.name}
-										type="number"
-										value={field.state.value}
-										onBlur={field.handleBlur}
-										onChange={(e) => field.handleChange(Number.parseInt(e.target.value, 10))}
-										aria-invalid={isInvalid}
-									/>
-									<FieldDescription>Alert when stock falls below this.</FieldDescription>
-									{isInvalid && (
-										<div className="text-sm text-destructive">
-											{field.state.meta.errors
-												.map((error) => (typeof error === "string" ? error : error?.message))
-												.join(", ")}
-										</div>
-									)}
+									{isInvalid && <FieldError errors={field.state.meta.errors} />}
 								</Field>
 							);
 						}}
@@ -214,13 +162,7 @@ export function ProductForm({
 									className="resize-none"
 									aria-invalid={isInvalid}
 								/>
-								{isInvalid && (
-									<div className="text-sm text-destructive">
-										{field.state.meta.errors
-											.map((error) => (typeof error === "string" ? error : error?.message))
-											.join(", ")}
-									</div>
-								)}
+								{isInvalid && <FieldError errors={field.state.meta.errors} />}
 							</Field>
 						);
 					}}

@@ -1,17 +1,27 @@
 "use client";
 
 import { format } from "date-fns";
-import { Box, DollarSign, History, Pencil, Plus, X } from "lucide-react";
+import { Box, DollarSign, History, Minus, Pencil, Plus, Trash2, X } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
+import { MovementForm, type MovementFormValues } from "@/components/inventory/movement-form";
 import { ProductForm, type ProductFormValues } from "@/components/inventory/product-form";
-import { RestockForm, type RestockFormValues } from "@/components/inventory/restock-form";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
 	AppLayoutPage,
 } from "@/components/layout/app-layout";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import {
 	Breadcrumb,
@@ -41,6 +51,7 @@ import {
 } from "@/components/ui/table";
 import {
 	useCreateMovement,
+	useDeleteProduct,
 	useProduct,
 	useProductMovements,
 	useUpdateProduct,
@@ -49,16 +60,19 @@ import type { Movement } from "@/types/inventory";
 
 export default function ProductPage() {
 	const [isEditing, setIsEditing] = useState(false);
-	const [isRestocking, setIsRestocking] = useState(false);
+	const [activeMovementType, setActiveMovementType] = useState<"IN" | "OUT" | null>(null);
 
 	const params = useParams();
 	const productId = params.id as string;
+	const router = useRouter();
+	const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
 	// All hooks must be called at the top level
 	const { data: product, isLoading: isLoadingProduct } = useProduct(productId || "");
 	const { data: movements, isLoading: isLoadingMovements } = useProductMovements(productId || "");
 	const updateProduct = useUpdateProduct();
 	const createMovement = useCreateMovement();
+	const deleteProduct = useDeleteProduct();
 
 	// Don't render anything if we don't have a productId yet
 	if (!productId) {
@@ -79,14 +93,21 @@ export default function ProductPage() {
 		setIsEditing(false);
 	};
 
-	const handleRestock = async (data: RestockFormValues) => {
+	const handleMovement = async (data: MovementFormValues) => {
 		await createMovement.mutateAsync({
 			productId,
-			type: "IN",
+			type: data.type,
 			quantity: data.quantity,
-			notes: data.notes || "Manual Restock via Details",
+			toWarehouseId: data.type === "IN" ? data.warehouseId : undefined,
+			fromWarehouseId: data.type === "OUT" ? data.warehouseId : undefined,
+			notes: data.notes || `Manual ${data.type} via Details`,
 		});
-		setIsRestocking(false);
+		setActiveMovementType(null);
+	};
+
+	const handleDelete = async () => {
+		await deleteProduct.mutateAsync(productId);
+		router.push("/inventory");
 	};
 
 	if (isLoadingProduct) {
@@ -143,7 +164,18 @@ export default function ProductPage() {
 							<Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
 								<Pencil className="mr-2 h-4 w-4" /> Edit
 							</Button>
-							<Button size="sm" onClick={() => setIsRestocking(true)}>
+							<Button
+								variant="outline"
+								size="sm"
+								className="text-destructive hover:text-destructive hover:bg-destructive/10"
+								onClick={() => setIsDeleteDialogOpen(true)}
+							>
+								<Trash2 className="mr-2 h-4 w-4" /> Delete
+							</Button>
+							<Button variant="outline" size="sm" onClick={() => setActiveMovementType("OUT")}>
+								<Minus className="mr-2 h-4 w-4" /> Remove
+							</Button>
+							<Button size="sm" onClick={() => setActiveMovementType("IN")}>
 								<Plus className="mr-2 h-4 w-4" /> Restock
 							</Button>
 						</>
@@ -347,22 +379,54 @@ export default function ProductPage() {
 				</div>
 			</div>
 
-			{/* Restock Dialog - Triggered from Header */}
-			<Dialog open={isRestocking} onOpenChange={setIsRestocking}>
+			{/* Movement Dialog - Triggered from Header */}
+			<Dialog
+				open={!!activeMovementType}
+				onOpenChange={(open) => !open && setActiveMovementType(null)}
+			>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle>Restock Product</DialogTitle>
+						<DialogTitle>
+							{activeMovementType === "IN" ? "Restock Product" : "Remove Stock"}
+						</DialogTitle>
 						<DialogDescription>
-							Add stock to <strong>{product.name}</strong>.
+							{activeMovementType === "IN"
+								? `Add stock to ${product.name}.`
+								: `Remove stock from ${product.name}.`}
 						</DialogDescription>
 					</DialogHeader>
-					<RestockForm
-						onSubmit={handleRestock}
-						onCancel={() => setIsRestocking(false)}
-						isLoading={createMovement.isPending}
-					/>
+					{activeMovementType && (
+						<MovementForm
+							onSubmit={handleMovement}
+							onCancel={() => setActiveMovementType(null)}
+							isLoading={createMovement.isPending}
+							initialType={activeMovementType}
+						/>
+					)}
 				</DialogContent>
 			</Dialog>
+
+			<AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+				<AlertDialogContent>
+					<AlertDialogHeader>
+						<AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+						<AlertDialogDescription>
+							This will permanently delete the product <strong>{product.name}</strong> and all its
+							movement history. This action cannot be undone.
+						</AlertDialogDescription>
+					</AlertDialogHeader>
+					<AlertDialogFooter>
+						<AlertDialogCancel disabled={deleteProduct.isPending}>Cancel</AlertDialogCancel>
+						<AlertDialogAction
+							onClick={handleDelete}
+							className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+							disabled={deleteProduct.isPending}
+						>
+							{deleteProduct.isPending ? "Deleting..." : "Delete Product"}
+						</AlertDialogAction>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
 		</AppLayoutPage>
 	);
 }

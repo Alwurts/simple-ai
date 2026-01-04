@@ -1,6 +1,13 @@
 "use client";
 
-import { LayoutDashboard, type LucideIcon, Package, Search } from "lucide-react";
+import {
+	LayoutDashboard,
+	type LucideIcon,
+	MessagesSquare,
+	Package,
+	Search,
+	Warehouse,
+} from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 import { LogoAlwurtsMonochrome } from "@/components/icons/logo-monochrome";
@@ -32,18 +39,23 @@ const mainNavigationItems: NavigationItem[] = [
 		icon: LayoutDashboard,
 		activeMatcher: /\/dashboard/,
 	},
-	// Hidden for now as we focus on inventory
-	// {
-	// 	title: "Chat",
-	// 	url: "/chat",
-	// 	icon: MessagesSquare,
-	// 	activeMatcher: /\/chat/,
-	// },
+	{
+		title: "Chat",
+		url: "/chat",
+		icon: MessagesSquare,
+		activeMatcher: /\/chat/,
+	},
 	{
 		title: "Inventory",
 		url: "/inventory",
 		icon: Package,
-		activeMatcher: /\/inventory/,
+		activeMatcher: /\/inventory$/,
+	},
+	{
+		title: "Warehouses",
+		url: "/inventory/warehouses",
+		icon: Warehouse,
+		activeMatcher: /\/inventory\/warehouses/,
 	},
 ];
 

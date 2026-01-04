@@ -5,7 +5,7 @@ import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { CreateProductDialog } from "@/components/inventory/create-product-dialog";
-import { RestockForm, type RestockFormValues } from "@/components/inventory/restock-form";
+import { MovementForm, type MovementFormValues } from "@/components/inventory/movement-form";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
@@ -46,18 +46,23 @@ export default function InventoryPage() {
 	const { data: products, isLoading } = useProducts();
 	const createMovement = useCreateMovement();
 
-	// Restock Dialog State
-	const [restockProduct, setRestockProduct] = useState<Product | null>(null);
+	// Movement Dialog State
+	const [activeMovement, setActiveMovement] = useState<{
+		product: Product;
+		type: "IN" | "OUT";
+	} | null>(null);
 
-	const handleRestockSubmit = async (data: RestockFormValues) => {
-		if (restockProduct) {
+	const handleMovementSubmit = async (data: MovementFormValues) => {
+		if (activeMovement) {
 			await createMovement.mutateAsync({
-				productId: restockProduct.id,
-				type: "IN",
+				productId: activeMovement.product.id,
+				type: data.type,
 				quantity: data.quantity,
-				notes: data.notes || "Manual Restock",
+				toWarehouseId: data.type === "IN" ? data.warehouseId : undefined,
+				fromWarehouseId: data.type === "OUT" ? data.warehouseId : undefined,
+				notes: data.notes || `Manual ${data.type}`,
 			});
-			setRestockProduct(null);
+			setActiveMovement(null);
 		}
 	};
 
@@ -188,8 +193,11 @@ export default function InventoryPage() {
 							<DropdownMenuItem asChild>
 								<Link href={`/inventory/${product.id}`}>View Details</Link>
 							</DropdownMenuItem>
-							<DropdownMenuItem onClick={() => setRestockProduct(product)}>
+							<DropdownMenuItem onClick={() => setActiveMovement({ product, type: "IN" })}>
 								Restock
+							</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => setActiveMovement({ product, type: "OUT" })}>
+								Remove Stock
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
@@ -229,20 +237,28 @@ export default function InventoryPage() {
 				)}
 			</div>
 
-			{/* Restock Dialog - Uses TanStack Form */}
-			<Dialog open={!!restockProduct} onOpenChange={(open) => !open && setRestockProduct(null)}>
+			{/* Movement Dialog - Uses TanStack Form */}
+			<Dialog open={!!activeMovement} onOpenChange={(open) => !open && setActiveMovement(null)}>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle>Restock {restockProduct?.name}</DialogTitle>
+						<DialogTitle>
+							{activeMovement?.type === "IN" ? "Restock" : "Remove Stock"}{" "}
+							{activeMovement?.product?.name}
+						</DialogTitle>
 						<DialogDescription>
-							Add inventory to the default warehouse. This will record an &apos;IN&apos; movement.
+							{activeMovement?.type === "IN"
+								? "Add inventory to a warehouse. This will record an 'IN' movement."
+								: "Remove inventory from a warehouse. This will record an 'OUT' movement."}
 						</DialogDescription>
 					</DialogHeader>
-					<RestockForm
-						onSubmit={handleRestockSubmit}
-						onCancel={() => setRestockProduct(null)}
-						isLoading={createMovement.isPending}
-					/>
+					{activeMovement && (
+						<MovementForm
+							onSubmit={handleMovementSubmit}
+							onCancel={() => setActiveMovement(null)}
+							isLoading={createMovement.isPending}
+							initialType={activeMovement.type}
+						/>
+					)}
 				</DialogContent>
 			</Dialog>
 		</AppLayoutPage>

@@ -1,5 +1,14 @@
 import { relations } from "drizzle-orm";
-import { decimal, integer, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+	boolean,
+	decimal,
+	integer,
+	pgEnum,
+	pgTable,
+	text,
+	timestamp,
+	uuid,
+} from "drizzle-orm/pg-core";
 import { user } from "./auth";
 
 export const movementTypeEnum = pgEnum("movement_type", ["IN", "OUT", "TRANSFER", "ADJUSTMENT"]);
@@ -11,6 +20,7 @@ export const warehouses = pgTable("warehouses", {
 		.references(() => user.id, { onDelete: "cascade" }),
 	name: text("name").notNull(),
 	location: text("location"),
+	isDefault: boolean("is_default").default(false).notNull(),
 	createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
 });
 

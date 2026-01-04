@@ -10,5 +10,11 @@ export const toolIdsGroups: Record<string, aiToolId[]> = {
 		"create-product",
 		"update-product",
 		"create-movement",
+		"list-warehouses",
+		"get-warehouse",
+		"create-warehouse",
+		"update-warehouse",
+		"delete-product",
+		"delete-warehouse",
 	],
 };

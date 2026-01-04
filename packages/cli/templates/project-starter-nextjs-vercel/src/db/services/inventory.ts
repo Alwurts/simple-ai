@@ -66,6 +66,14 @@ export const updateProduct = async (
 	return updated;
 };
 
+export const deleteProduct = async (id: string, userId: string) => {
+	const [deleted] = await db
+		.delete(products)
+		.where(and(eq(products.id, id), eq(products.userId, userId)))
+		.returning();
+	return deleted;
+};
+
 // --- Operations ---
 
 export const getProductMovements = async (productId: string, userId: string) => {

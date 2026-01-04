@@ -2,6 +2,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import {
 	createProduct,
+	deleteProduct,
 	getDashboardMetrics,
 	getProduct,
 	getProductMovements,
@@ -9,8 +10,21 @@ import {
 	performStockMovement,
 	updateProduct,
 } from "@/db/services/inventory";
+import {
+	createWarehouse,
+	deleteWarehouse,
+	getWarehouse,
+	getWarehouses,
+	updateWarehouse,
+} from "@/db/services/warehouses";
 import type { HonoContextWithAuth } from "@/types/hono";
-import { createMovementSchema, createProductSchema, updateProductSchema } from "@/types/inventory";
+import {
+	createMovementSchema,
+	createProductSchema,
+	createWarehouseSchema,
+	updateProductSchema,
+	updateWarehouseSchema,
+} from "@/types/inventory";
 
 const inventoryRoutes = new Hono<HonoContextWithAuth>()
 
@@ -71,6 +85,14 @@ const inventoryRoutes = new Hono<HonoContextWithAuth>()
 		return c.json(result);
 	})
 
+	// Delete Product
+	.delete("/products/:id", async (c) => {
+		const userId = c.get("user").id;
+		const productId = c.req.param("id");
+		const result = await deleteProduct(productId, userId);
+		return c.json(result);
+	})
+
 	// Execute Stock Movement (Receive, Transfer, Adjust)
 	.post("/movements", zValidator("json", createMovementSchema), async (c) => {
 		const userId = c.get("user").id;
@@ -82,6 +104,54 @@ const inventoryRoutes = new Hono<HonoContextWithAuth>()
 		} catch (e) {
 			return c.json({ error: "Failed to move stock", details: e }, 500);
 		}
+	})
+
+	// --- Warehouses ---
+
+	// List Warehouses
+	.get("/warehouses", async (c) => {
+		const userId = c.get("user").id;
+		const data = await getWarehouses(userId);
+		return c.json(data);
+	})
+
+	// Get Single Warehouse
+	.get("/warehouses/:id", async (c) => {
+		const userId = c.get("user").id;
+		const id = c.req.param("id");
+		const data = await getWarehouse(id, userId);
+		if (!data) {
+			return c.json({ error: "Warehouse not found" }, 404);
+		}
+		return c.json(data);
+	})
+
+	// Create Warehouse
+	.post("/warehouses", zValidator("json", createWarehouseSchema), async (c) => {
+		const userId = c.get("user").id;
+		const body = c.req.valid("json");
+		const result = await createWarehouse({
+			...body,
+			userId,
+		});
+		return c.json(result[0]);
+	})
+
+	// Update Warehouse
+	.put("/warehouses/:id", zValidator("json", updateWarehouseSchema), async (c) => {
+		const userId = c.get("user").id;
+		const id = c.req.param("id");
+		const body = c.req.valid("json");
+		const result = await updateWarehouse(id, userId, body);
+		return c.json(result);
+	})
+
+	// Delete Warehouse
+	.delete("/warehouses/:id", async (c) => {
+		const userId = c.get("user").id;
+		const id = c.req.param("id");
+		const result = await deleteWarehouse(id, userId);
+		return c.json(result);
 	});
 
 export default inventoryRoutes;

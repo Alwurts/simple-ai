@@ -8,6 +8,13 @@
       "when": 1767490985709,
       "tag": "0000_silent_lucky_pierre",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1767553054155,
+      "tag": "0001_rare_wither",
+      "breakpoints": true
     }
   ]
 }
