@@ -12,7 +12,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { useCreateWarehouse } from "@/hooks/query/use-inventory";
+import { useCreateWarehouse } from "@/hooks/query/use-warehouses";
 
 export function CreateWarehouseDialog() {
 	const [open, setOpen] = useState(false);

@@ -57,29 +57,6 @@ export const movementSchema = z.object({
 	notes: z.string().nullable(),
 });
 
-// Warehouse schemas
-export const createWarehouseSchema = z.object({
-	name: z.string().min(2, "Name must be at least 2 characters"),
-	location: z.string(),
-	isDefault: z.boolean(),
-});
-
-export const updateWarehouseSchema = createWarehouseSchema.partial();
-
-export const warehouseSchema = z.object({
-	id: z.string(),
-	userId: z.string(),
-	name: z.string(),
-	location: z.string().nullable(),
-	isDefault: z.boolean(),
-	createdAt: z.string(),
-});
-
-export const warehouseListSchema = z.array(warehouseSchema);
-
-// Infer types from schemas (single source of truth)
 export type Product = z.infer<typeof productSchema>;
 export type ProductsList = z.infer<typeof productsListSchema>;
 export type Movement = z.infer<typeof movementSchema>;
-export type Warehouse = z.infer<typeof warehouseSchema>;
-export type WarehouseList = z.infer<typeof warehouseListSchema>;

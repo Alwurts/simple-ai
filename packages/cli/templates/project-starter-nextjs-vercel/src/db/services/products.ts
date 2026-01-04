@@ -1,6 +1,6 @@
 import { and, eq, gte, sql } from "drizzle-orm";
 import { db } from "@/db";
-import { movements, products, stockLevels } from "@/db/schema/inventory";
+import { movements, products, stockLevels } from "@/db/schema/products";
 
 // --- Products ---
 export const getProducts = async (userId: string) => {

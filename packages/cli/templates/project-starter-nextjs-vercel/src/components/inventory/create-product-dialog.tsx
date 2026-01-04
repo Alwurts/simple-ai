@@ -11,7 +11,7 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { useCreateProduct } from "@/hooks/query/use-inventory";
+import { useCreateProduct } from "@/hooks/query/use-products";
 import { ProductForm, type ProductFormValues } from "./product-form";
 
 export function CreateProductDialog() {

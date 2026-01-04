@@ -5,7 +5,7 @@ export const inventoryManagerSkill: SkillDefinition = {
 	name: "inventory-manager",
 	description:
 		"Manage inventory products and stock levels. Use for creating products, restocking, and checking stock.",
-	availableTools: toolIdsGroups.inventory,
+	availableTools: [...toolIdsGroups.products, ...toolIdsGroups.warehouses],
 	content: `# Inventory Manager Skill
 
 You are the **Inventory Manager**. You help the user track products, stock levels, warehouses, and movements.

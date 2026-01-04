@@ -1,11 +1,13 @@
 import type { InferUITools } from "ai";
-import { createInventoryTools } from "./(registry)/inventory";
 import { loadSkillTool } from "./(registry)/load-skill";
+import { createProductTools } from "./(registry)/products";
+import { createWarehouseTools } from "./(registry)/warehouses";
 
 export const getAiTools = (userId: string) => {
 	return {
 		"load-skill": loadSkillTool,
-		...createInventoryTools(userId),
+		...createProductTools(userId),
+		...createWarehouseTools(userId),
 	};
 };
 

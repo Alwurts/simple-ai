@@ -48,8 +48,8 @@ import {
 	useProduct,
 	useProductMovements,
 	useUpdateProduct,
-} from "@/hooks/query/use-inventory";
-import type { Movement } from "@/types/inventory";
+} from "@/hooks/query/use-products";
+import type { Movement } from "@/types/products";
 
 export default function ProductPage() {
 	const [isEditing, setIsEditing] = useState(false);

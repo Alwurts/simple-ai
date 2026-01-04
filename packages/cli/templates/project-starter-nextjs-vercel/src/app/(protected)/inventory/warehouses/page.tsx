@@ -21,8 +21,8 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useWarehouses } from "@/hooks/query/use-inventory";
-import type { Warehouse } from "@/types/inventory";
+import { useWarehouses } from "@/hooks/query/use-warehouses";
+import type { Warehouse } from "@/types/warehouses";
 
 export default function WarehousesPage() {
 	const { data: warehouses, isLoading } = useWarehouses();

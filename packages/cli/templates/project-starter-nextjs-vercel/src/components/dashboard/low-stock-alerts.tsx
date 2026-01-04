@@ -2,7 +2,7 @@
 
 import { AlertTriangle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useProducts } from "@/hooks/query/use-inventory";
+import { useProducts } from "@/hooks/query/use-products";
 
 export function LowStockAlerts() {
 	const { data: products } = useProducts();

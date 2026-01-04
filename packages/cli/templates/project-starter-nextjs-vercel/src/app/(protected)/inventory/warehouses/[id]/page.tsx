@@ -24,7 +24,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useDeleteWarehouse, useUpdateWarehouse, useWarehouse } from "@/hooks/query/use-inventory";
+import { useDeleteWarehouse, useUpdateWarehouse, useWarehouse } from "@/hooks/query/use-warehouses";
 
 export default function WarehouseDetailPage() {
 	const [isEditing, setIsEditing] = useState(false);

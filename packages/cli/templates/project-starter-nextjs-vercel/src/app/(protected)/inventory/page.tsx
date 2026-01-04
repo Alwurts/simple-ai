@@ -31,8 +31,8 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { useCreateMovement, useProducts } from "@/hooks/query/use-inventory";
-import type { Product } from "@/types/inventory";
+import { useCreateMovement, useProducts } from "@/hooks/query/use-products";
+import type { Product } from "@/types/products";
 import { DataTable } from "../../../components/ui/data-table";
 
 export default function InventoryPage() {

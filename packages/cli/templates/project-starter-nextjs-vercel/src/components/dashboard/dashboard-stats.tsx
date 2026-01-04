@@ -5,7 +5,7 @@ import Link from "next/link";
 import { CreateProductDialog } from "@/components/inventory/create-product-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useProducts } from "@/hooks/query/use-inventory";
+import { useProducts } from "@/hooks/query/use-products";
 
 export function DashboardStats() {
 	const { data: products } = useProducts();

@@ -1,6 +1,6 @@
 import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
-import { warehouses } from "@/db/schema/inventory";
+import { warehouses } from "@/db/schema/warehouses";
 
 export const getWarehouses = async (userId: string) => {
 	return await db

@@ -1,28 +1,9 @@
 import { relations } from "drizzle-orm";
-import {
-	boolean,
-	decimal,
-	integer,
-	pgEnum,
-	pgTable,
-	text,
-	timestamp,
-	uuid,
-} from "drizzle-orm/pg-core";
+import { decimal, integer, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { user } from "./auth";
+import { warehouses } from "./warehouses";
 
 export const movementTypeEnum = pgEnum("movement_type", ["IN", "OUT", "TRANSFER", "ADJUSTMENT"]);
-
-export const warehouses = pgTable("warehouses", {
-	id: uuid("id").primaryKey().defaultRandom(),
-	userId: text("user_id")
-		.notNull()
-		.references(() => user.id, { onDelete: "cascade" }),
-	name: text("name").notNull(),
-	location: text("location"),
-	isDefault: boolean("is_default").default(false).notNull(),
-	createdAt: timestamp("created_at", { mode: "string" }).defaultNow().notNull(),
-});
 
 export const products = pgTable("products", {
 	id: uuid("id").primaryKey().defaultRandom(),
@@ -76,4 +57,13 @@ export const productsRelations = relations(products, ({ many }) => ({
 export const stockLevelsRelations = relations(stockLevels, ({ one }) => ({
 	product: one(products, { fields: [stockLevels.productId], references: [products.id] }),
 	warehouse: one(warehouses, { fields: [stockLevels.warehouseId], references: [warehouses.id] }),
+}));
+
+export const movementsRelations = relations(movements, ({ one }) => ({
+	product: one(products, { fields: [movements.productId], references: [products.id] }),
+	fromWarehouse: one(warehouses, {
+		fields: [movements.fromWarehouseId],
+		references: [warehouses.id],
+	}),
+	toWarehouse: one(warehouses, { fields: [movements.toWarehouseId], references: [warehouses.id] }),
 }));

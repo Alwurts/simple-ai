@@ -11,7 +11,7 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useInventoryMetrics } from "@/hooks/query/use-inventory";
+import { useInventoryMetrics } from "@/hooks/query/use-products";
 
 const chartConfig = {
 	in: {

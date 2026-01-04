@@ -14,8 +14,8 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useWarehouses } from "@/hooks/query/use-inventory";
-import type { Warehouse } from "@/types/inventory";
+import { useWarehouses } from "@/hooks/query/use-warehouses";
+import type { Warehouse } from "@/types/warehouses";
 
 const movementSchema = z.object({
 	type: z.enum(["IN", "OUT", "TRANSFER", "ADJUSTMENT"]),
