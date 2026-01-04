@@ -23,6 +23,7 @@ export const env = createEnv({
 		NEXT_PUBLIC_VERCEL_ENV: z.string().optional(),
 		NEXT_PUBLIC_VERCEL_BRANCH_URL: z.string().optional(),
 		NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL: z.string().optional(),
+		NEXT_PUBLIC_DESIGN_SYSTEM_ENABLED: z.string().optional().default("false"),
 	},
 	/*
 	 * Due to how Next.js bundles environment variables on Edge and Client,
@@ -42,5 +43,7 @@ export const env = createEnv({
 		NEXT_PUBLIC_VERCEL_BRANCH_URL: process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL,
 		NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL:
 			process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL,
+		// Design System
+		NEXT_PUBLIC_DESIGN_SYSTEM_ENABLED: process.env.NEXT_PUBLIC_DESIGN_SYSTEM_ENABLED,
 	},
 });
