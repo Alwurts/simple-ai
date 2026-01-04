@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { ChatHistory } from "@/components/chat/chat-history";
+import { ChatHistory } from "@/components/chat/parts/chat-history";
 
 interface ChatHistoryWithNavigationProps {
 	currentChatId: string;

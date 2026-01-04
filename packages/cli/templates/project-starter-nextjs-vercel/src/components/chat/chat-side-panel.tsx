@@ -7,8 +7,8 @@ import { useCallback } from "react";
 import { AppLayoutHeader } from "@/components/layout/app-layout";
 import { Button } from "@/components/ui/button";
 import { useChatClientLogic } from "@/hooks/use-chat-client-logic";
-import { ChatHistory } from "./chat-history";
 import { ChatInterface } from "./chat-interface";
+import { ChatHistory } from "./parts/chat-history";
 
 export function ChatSidePanel() {
 	const pathname = usePathname();

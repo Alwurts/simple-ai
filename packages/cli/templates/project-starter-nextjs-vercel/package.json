@@ -51,6 +51,7 @@
 		"@t3-oss/env-nextjs": "^0.13.8",
 		"@tanstack/react-form": "^1.27.7",
 		"@tanstack/react-query": "^5.85.9",
+		"@tanstack/react-table": "^8.21.3",
 		"@tiptap/core": "^3.14.0",
 		"@tiptap/extension-mention": "^3.14.0",
 		"@tiptap/extension-placeholder": "^3.14.0",
