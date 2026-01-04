@@ -27,23 +27,23 @@ export default function DashboardPage() {
 						</AppLayoutHeaderActions>
 					</AppLayoutHeader>
 
-					<div className="flex-1 overflow-y-auto p-6 space-y-6">
+					<div className="flex-1 overflow-y-auto p-6 space-y-6 @container">
 						<DashboardStats />
 
-						<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-							<div className="col-span-4">
+						<div className="grid gap-6 @md:grid-cols-2 @lg:grid-cols-7">
+							<div className="@lg:col-span-4">
 								<StockTrendsChart />
 							</div>
-							<div className="col-span-3">
+							<div className="@lg:col-span-3">
 								<StockStatusChart />
 							</div>
 						</div>
 
-						<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-							<div className="col-span-4">
+						<div className="grid gap-6 @md:grid-cols-2 @lg:grid-cols-7">
+							<div className="@lg:col-span-4">
 								<InventoryValueChart />
 							</div>
-							<div className="col-span-3">
+							<div className="@lg:col-span-3">
 								<LowStockAlerts />
 							</div>
 						</div>
