@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ChatSidePanel } from "@/components/chat/chat-side-panel";
-import { DemoContent } from "@/components/demo-content";
+import { DashboardStats } from "@/components/dashboard/dashboard-stats";
+import { LowStockAlerts } from "@/components/dashboard/low-stock-alerts";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
@@ -34,7 +35,7 @@ export default function DashboardPage() {
 								</BreadcrumbItem>
 								<BreadcrumbSeparator />
 								<BreadcrumbItem>
-									<BreadcrumbPage>Layout Demo 1</BreadcrumbPage>
+									<BreadcrumbPage>Dashboard</BreadcrumbPage>
 								</BreadcrumbItem>
 							</BreadcrumbList>
 						</Breadcrumb>
@@ -43,7 +44,10 @@ export default function DashboardPage() {
 						</AppLayoutHeaderActions>
 					</AppLayoutHeader>
 
-					<DemoContent />
+					<div className="space-y-6 p-6">
+						<DashboardStats />
+						<LowStockAlerts />
+					</div>
 				</AppLayoutResizablePanelPrimary>
 
 				<AppLayoutResizablePanelSecondary

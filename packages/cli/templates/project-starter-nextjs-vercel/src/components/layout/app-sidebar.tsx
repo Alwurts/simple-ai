@@ -1,6 +1,13 @@
 "use client";
 
-import { LayoutDashboard, type LucideIcon, MessagesSquare, Search } from "lucide-react";
+import {
+	LayoutDashboard,
+	type LucideIcon,
+	MessagesSquare,
+	Package,
+	Palette,
+	Search,
+} from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 import { LogoAlwurtsMonochrome } from "@/components/icons/logo-monochrome";
@@ -37,6 +44,18 @@ const mainNavigationItems: NavigationItem[] = [
 		url: "/chat",
 		icon: MessagesSquare,
 		activeMatcher: /\/chat/,
+	},
+	{
+		title: "Inventory",
+		url: "/inventory",
+		icon: Package,
+		activeMatcher: /\/inventory/,
+	},
+	{
+		title: "Design System",
+		url: "/design-system",
+		icon: Palette,
+		activeMatcher: /\/design-system/,
 	},
 ];
 
