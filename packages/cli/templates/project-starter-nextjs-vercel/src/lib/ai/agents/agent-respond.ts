@@ -2,7 +2,8 @@ import { convertToModelMessages, stepCountIs, streamText } from "ai";
 import { createId } from "@/lib/utils";
 import type { AIUIMessage } from "@/types/ai";
 import { generateSystemPrompt } from "../agents/prompt";
-import { aiTools } from "../tools/registry";
+import type { LoadSkillResult } from "../tools/load-skill-tool";
+import { type aiToolId, aiTools } from "../tools/registry";
 
 export async function agentRespond({
 	messages: initialMessages,
@@ -16,15 +17,54 @@ export async function agentRespond({
 	const startTime = Date.now();
 
 	const finalSystemPrompt = await generateSystemPrompt();
-	const tools = aiTools;
+
+	const activeTools: Set<aiToolId> = new Set(["load-skill"]);
+
+	// If we loaded a skill in the past, we need to add its tools to the active tools
+	for (const message of initialMessages) {
+		for (const part of message.parts) {
+			if (
+				part.type === "tool-load-skill" &&
+				part.state === "output-available" &&
+				part.output.definition
+			) {
+				part.output.definition.availableTools.forEach((tool) => {
+					activeTools.add(tool as aiToolId);
+				});
+			}
+		}
+	}
 
 	const streamResult = streamText({
 		model: "openai/gpt-5-nano",
 		system: finalSystemPrompt,
 		messages: await convertToModelMessages(initialMessages),
 		abortSignal,
-		tools,
+		tools: aiTools,
 		stopWhen: stepCountIs(25),
+		activeTools: Array.from(activeTools),
+		prepareStep: ({ steps }) => {
+			const lastStep = steps[steps.length - 1];
+			if (lastStep && lastStep.toolResults.length > 0) {
+				for (const result of lastStep.toolResults) {
+					if (result.toolName === "load-skill") {
+						const output = result.output as LoadSkillResult;
+						if (output.success === false) {
+							continue;
+						}
+						const newTools = output.definition.availableTools;
+						for (const tool of newTools) {
+							activeTools.add(tool as aiToolId);
+						}
+					}
+				}
+
+				return {
+					activeTools: Array.from(activeTools),
+				};
+			}
+			return {};
+		},
 	});
 
 	return streamResult.toUIMessageStreamResponse<AIUIMessage>({

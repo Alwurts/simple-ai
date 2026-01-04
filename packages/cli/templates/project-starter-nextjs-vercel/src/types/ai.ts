@@ -5,6 +5,7 @@ import type { AITools } from "@/lib/ai/tools/registry";
 const aiMetadataSchema = z.object({
 	createdAt: z.iso.datetime(),
 	status: z.enum(["pending", "success", "error"]),
+	modelId: z.string().optional(),
 	usage: z.custom<LanguageModelUsage>().optional(),
 	responseTime: z.number().optional(),
 });
@@ -20,3 +21,14 @@ type AIDataPart = z.infer<typeof aiDataPartSchema>;
 export type AIToolUIPart = ToolUIPart<AITools>;
 
 export type AIUIMessage = UIMessage<AIMetadata, AIDataPart, AITools>;
+
+// Skill Definition
+
+export const skillDefinitionSchema = z.object({
+	name: z.string(),
+	description: z.string(),
+	content: z.string(),
+	availableTools: z.array(z.string()),
+});
+
+export type SkillDefinition = z.infer<typeof skillDefinitionSchema>;

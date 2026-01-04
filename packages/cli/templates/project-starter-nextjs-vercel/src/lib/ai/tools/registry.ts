@@ -1,8 +1,8 @@
 import type { InferUITools } from "ai";
-import { weatherTool } from "./get-weather";
+import { loadSkillTool } from "./load-skill-tool";
 
 export const aiTools = {
-	"get-weather": weatherTool,
+	"load-skill": loadSkillTool,
 };
 
 export type AITools = InferUITools<typeof aiTools>;
