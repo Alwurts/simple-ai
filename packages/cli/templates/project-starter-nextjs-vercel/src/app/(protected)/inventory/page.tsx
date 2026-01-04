@@ -6,20 +6,13 @@ import Link from "next/link";
 import { useState } from "react";
 import { CreateProductDialog } from "@/components/inventory/create-product-dialog";
 import { MovementForm, type MovementFormValues } from "@/components/inventory/movement-form";
+import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
 	AppLayoutPage,
 } from "@/components/layout/app-layout";
 import { Badge } from "@/components/ui/badge";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -209,19 +202,7 @@ export default function InventoryPage() {
 	return (
 		<AppLayoutPage>
 			<AppLayoutHeader>
-				<Breadcrumb>
-					<BreadcrumbList>
-						<BreadcrumbItem>
-							<BreadcrumbLink asChild>
-								<Link href="/dashboard">Dashboard</Link>
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbPage>Inventory</BreadcrumbPage>
-						</BreadcrumbItem>
-					</BreadcrumbList>
-				</Breadcrumb>
+				<AppBreadcrumbs items={[{ title: "Inventory" }]} />
 				<AppLayoutHeaderActions>
 					<CreateProductDialog />
 				</AppLayoutHeaderActions>

@@ -3,39 +3,20 @@ import Link from "next/link";
 import { ChatInputArea } from "@/components/chat/parts/chat-input-area";
 import { Chat } from "@/components/chat/parts/chat-layout";
 import { ChatMessages } from "@/components/chat/parts/chat-messages";
+import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
 import {
 	AppLayoutContent,
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
 	AppLayoutPage,
 } from "@/components/layout/app-layout";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 
 export default function LayoutDemo3Page() {
 	return (
 		<AppLayoutPage>
 			<AppLayoutHeader>
-				<Breadcrumb>
-					<BreadcrumbList>
-						<BreadcrumbItem>
-							<BreadcrumbLink asChild>
-								<Link href="/">Home</Link>
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbPage>Layout Demo 3: Full Page Chat</BreadcrumbPage>
-						</BreadcrumbItem>
-					</BreadcrumbList>
-				</Breadcrumb>
+				<AppBreadcrumbs items={[{ title: "Layout Demo 3: Full Page Chat" }]} />
 				<AppLayoutHeaderActions>
 					<Button variant="outline" asChild>
 						<Link href="/design-system">

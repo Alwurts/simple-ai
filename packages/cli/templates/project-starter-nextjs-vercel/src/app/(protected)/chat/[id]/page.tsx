@@ -1,20 +1,12 @@
-import Link from "next/link";
 import { ChatHistoryWithNavigation } from "@/components/chat/chat-history-with-navigation";
 import { ChatInterface } from "@/components/chat/chat-interface";
+import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
 import {
 	AppLayoutContent,
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
 	AppLayoutPage,
 } from "@/components/layout/app-layout";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { getChat, getChatMessages } from "@/db/services/chat";
 import type { AIUIMessage } from "@/types/ai";
 
@@ -35,19 +27,7 @@ export default async function ChatPage({ params }: { params: Promise<{ id: strin
 	return (
 		<AppLayoutPage>
 			<AppLayoutHeader>
-				<Breadcrumb>
-					<BreadcrumbList>
-						<BreadcrumbItem>
-							<BreadcrumbLink asChild>
-								<Link href="/">Home</Link>
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbPage>Chat {id}</BreadcrumbPage>
-						</BreadcrumbItem>
-					</BreadcrumbList>
-				</Breadcrumb>
+				<AppBreadcrumbs items={[{ title: `Chat ${id}` }]} />
 				<AppLayoutHeaderActions>
 					<ChatHistoryWithNavigation currentChatId={id} />
 				</AppLayoutHeaderActions>

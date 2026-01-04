@@ -1,10 +1,10 @@
-import Link from "next/link";
 import { ChatSidePanel } from "@/components/chat/chat-side-panel";
 import { DashboardStats } from "@/components/dashboard/dashboard-stats";
 import { InventoryValueChart } from "@/components/dashboard/inventory-value-chart";
 import { LowStockAlerts } from "@/components/dashboard/low-stock-alerts";
 import { StockStatusChart } from "@/components/dashboard/stock-status-chart";
 import { StockTrendsChart } from "@/components/dashboard/stock-trends-chart";
+import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
@@ -14,14 +14,6 @@ import {
 	AppLayoutResizablePanelSecondary,
 	AppLayoutResizablePanelTrigger,
 } from "@/components/layout/app-layout";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 
 export default function DashboardPage() {
 	return (
@@ -29,19 +21,7 @@ export default function DashboardPage() {
 			<AppLayoutResizable>
 				<AppLayoutResizablePanelPrimary id="content-panel" order={1} defaultSize={70} minSize={30}>
 					<AppLayoutHeader>
-						<Breadcrumb>
-							<BreadcrumbList>
-								<BreadcrumbItem>
-									<BreadcrumbLink asChild>
-										<Link href="/">Home</Link>
-									</BreadcrumbLink>
-								</BreadcrumbItem>
-								<BreadcrumbSeparator />
-								<BreadcrumbItem>
-									<BreadcrumbPage>Dashboard</BreadcrumbPage>
-								</BreadcrumbItem>
-							</BreadcrumbList>
-						</Breadcrumb>
+						<AppBreadcrumbs items={[{ title: "Dashboard" }]} />
 						<AppLayoutHeaderActions>
 							<AppLayoutResizablePanelTrigger panelId="chat-panel" />
 						</AppLayoutHeaderActions>

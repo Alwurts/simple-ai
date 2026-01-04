@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { WarehouseForm, type WarehouseFormValues } from "@/components/inventory/warehouse-form";
+import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
@@ -21,14 +22,6 @@ import {
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDeleteWarehouse, useUpdateWarehouse, useWarehouse } from "@/hooks/query/use-inventory";
@@ -86,25 +79,13 @@ export default function WarehouseDetailPage() {
 	return (
 		<AppLayoutPage>
 			<AppLayoutHeader>
-				<Breadcrumb>
-					<BreadcrumbList>
-						<BreadcrumbItem>
-							<BreadcrumbLink asChild>
-								<Link href="/inventory">Inventory</Link>
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbLink asChild>
-								<Link href="/inventory/warehouses">Warehouses</Link>
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbPage>{warehouse.name}</BreadcrumbPage>
-						</BreadcrumbItem>
-					</BreadcrumbList>
-				</Breadcrumb>
+				<AppBreadcrumbs
+					items={[
+						{ title: "Inventory", href: "/inventory" },
+						{ title: "Warehouses", href: "/inventory/warehouses" },
+						{ title: warehouse.name },
+					]}
+				/>
 				<AppLayoutHeaderActions>
 					{!isEditing && (
 						<>

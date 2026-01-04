@@ -4,6 +4,7 @@ import { ChatInputArea } from "@/components/chat/parts/chat-input-area";
 import { Chat, ChatHeader, ChatHeaderTitle } from "@/components/chat/parts/chat-layout";
 import { ChatMessages } from "@/components/chat/parts/chat-messages";
 import { DemoContent } from "@/components/demo-content";
+import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
@@ -13,14 +14,6 @@ import {
 	AppLayoutResizablePanelSecondary,
 	AppLayoutResizablePanelTrigger,
 } from "@/components/layout/app-layout";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 
 export default function LayoutDemo1Page() {
@@ -29,19 +22,7 @@ export default function LayoutDemo1Page() {
 			<AppLayoutResizable>
 				<AppLayoutResizablePanelPrimary id="content-panel" order={1} defaultSize={70} minSize={30}>
 					<AppLayoutHeader>
-						<Breadcrumb>
-							<BreadcrumbList>
-								<BreadcrumbItem>
-									<BreadcrumbLink asChild>
-										<Link href="/">Home</Link>
-									</BreadcrumbLink>
-								</BreadcrumbItem>
-								<BreadcrumbSeparator />
-								<BreadcrumbItem>
-									<BreadcrumbPage>Layout Demo 1</BreadcrumbPage>
-								</BreadcrumbItem>
-							</BreadcrumbList>
-						</Breadcrumb>
+						<AppBreadcrumbs items={[{ title: "Layout Demo 1" }]} />
 						<AppLayoutHeaderActions>
 							<Button variant="outline" asChild>
 								<Link href="/design-system">

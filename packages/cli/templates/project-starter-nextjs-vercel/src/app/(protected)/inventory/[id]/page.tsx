@@ -7,6 +7,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { MovementForm, type MovementFormValues } from "@/components/inventory/movement-form";
 import { ProductForm, type ProductFormValues } from "@/components/inventory/product-form";
+import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
@@ -23,14 +24,6 @@ import {
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -141,19 +134,9 @@ export default function ProductPage() {
 	return (
 		<AppLayoutPage>
 			<AppLayoutHeader>
-				<Breadcrumb>
-					<BreadcrumbList>
-						<BreadcrumbItem>
-							<BreadcrumbLink asChild>
-								<Link href="/inventory">Inventory</Link>
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbPage>{product.name}</BreadcrumbPage>
-						</BreadcrumbItem>
-					</BreadcrumbList>
-				</Breadcrumb>
+				<AppBreadcrumbs
+					items={[{ title: "Inventory", href: "/inventory" }, { title: product.name }]}
+				/>
 				<AppLayoutHeaderActions>
 					{isEditing ? (
 						<Button variant="ghost" size="sm" onClick={() => setIsEditing(false)}>

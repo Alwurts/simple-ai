@@ -5,20 +5,13 @@ import Link from "next/link";
 import { useState } from "react";
 import { SidePanelChat } from "@/components/chat/chat-floating-panel";
 import { DemoContent } from "@/components/demo-content";
+import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
 import {
 	AppLayoutContent,
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
 	AppLayoutPage,
 } from "@/components/layout/app-layout";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 
 export default function LayoutDemo2Page() {
@@ -26,19 +19,7 @@ export default function LayoutDemo2Page() {
 	return (
 		<AppLayoutPage>
 			<AppLayoutHeader>
-				<Breadcrumb>
-					<BreadcrumbList>
-						<BreadcrumbItem>
-							<BreadcrumbLink asChild>
-								<Link href="/">Home</Link>
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbPage>Layout Demo 2</BreadcrumbPage>
-						</BreadcrumbItem>
-					</BreadcrumbList>
-				</Breadcrumb>
+				<AppBreadcrumbs items={[{ title: "Layout Demo 2" }]} />
 				<AppLayoutHeaderActions>
 					<Button variant="outline" asChild>
 						<Link href="/design-system">

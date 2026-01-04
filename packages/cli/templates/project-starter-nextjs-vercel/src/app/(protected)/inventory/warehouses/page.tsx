@@ -4,20 +4,13 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MapPin, MoreHorizontal, Star } from "lucide-react";
 import Link from "next/link";
 import { CreateWarehouseDialog } from "@/components/inventory/create-warehouse-dialog";
+import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
 	AppLayoutPage,
 } from "@/components/layout/app-layout";
 import { Badge } from "@/components/ui/badge";
-import {
-	Breadcrumb,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
 import {
@@ -122,25 +115,9 @@ export default function WarehousesPage() {
 	return (
 		<AppLayoutPage>
 			<AppLayoutHeader>
-				<Breadcrumb>
-					<BreadcrumbList>
-						<BreadcrumbItem>
-							<BreadcrumbLink asChild>
-								<Link href="/dashboard">Dashboard</Link>
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbLink asChild>
-								<Link href="/inventory">Inventory</Link>
-							</BreadcrumbLink>
-						</BreadcrumbItem>
-						<BreadcrumbSeparator />
-						<BreadcrumbItem>
-							<BreadcrumbPage>Warehouses</BreadcrumbPage>
-						</BreadcrumbItem>
-					</BreadcrumbList>
-				</Breadcrumb>
+				<AppBreadcrumbs
+					items={[{ title: "Inventory", href: "/inventory" }, { title: "Warehouses" }]}
+				/>
 				<AppLayoutHeaderActions>
 					<CreateWarehouseDialog />
 				</AppLayoutHeaderActions>
