@@ -35,16 +35,11 @@ type NavigationItem = {
 const mainNavigationItems: NavigationItem[] = [
 	{
 		title: "Dashboard",
-		url: "/dashboard",
+		url: "/",
 		icon: LayoutDashboard,
-		activeMatcher: /\/dashboard/,
+		activeMatcher: /\//,
 	},
-	{
-		title: "Chat",
-		url: "/chat",
-		icon: MessagesSquare,
-		activeMatcher: /\/chat/,
-	},
+
 	{
 		title: "Inventory",
 		url: "/inventory",
@@ -56,6 +51,12 @@ const mainNavigationItems: NavigationItem[] = [
 		url: "/inventory/warehouses",
 		icon: Warehouse,
 		activeMatcher: /\/inventory\/warehouses/,
+	},
+	{
+		title: "Chat",
+		url: "/chat",
+		icon: MessagesSquare,
+		activeMatcher: /\/chat/,
 	},
 ];
 
