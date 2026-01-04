@@ -9,9 +9,10 @@ import {
 	Warehouse,
 } from "lucide-react";
 import Link from "next/link";
-import * as React from "react";
+import { useState } from "react";
 import { LogoAlwurtsMonochrome } from "@/components/icons/logo-monochrome";
 import { AppUserNav } from "@/components/layout/app-user-nav";
+import { SearchCommand } from "@/components/search/search-command";
 import {
 	Sidebar,
 	SidebarContent,
@@ -61,7 +62,7 @@ const mainNavigationItems: NavigationItem[] = [
 ];
 
 export function AppSidebar() {
-	const [_searchOpen, setSearchOpen] = React.useState(false);
+	const [searchOpen, setSearchOpen] = useState(false);
 
 	return (
 		<Sidebar variant="inset" collapsible="icon">
@@ -116,6 +117,8 @@ export function AppSidebar() {
 			<SidebarFooter>
 				<AppUserNav />
 			</SidebarFooter>
+
+			<SearchCommand open={searchOpen} setOpen={setSearchOpen} />
 		</Sidebar>
 	);
 }

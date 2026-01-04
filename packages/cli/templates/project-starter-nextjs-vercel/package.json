@@ -85,6 +85,7 @@
 		"streamdown": "^1.6.10",
 		"tailwind-merge": "^3.3.1",
 		"tippy.js": "^6.3.7",
+		"use-debounce": "^10.0.6",
 		"use-stick-to-bottom": "^1.1.1",
 		"vaul": "^1.1.2",
 		"zod": "^4.3.4"

@@ -4,11 +4,13 @@ import { getDashboardMetrics, performStockMovement } from "@/db/services/product
 import type { HonoContextWithAuth } from "@/types/hono";
 import { createMovementSchema } from "@/types/products";
 import productsRoutes from "./products";
+import searchRoutes from "./search";
 import warehousesRoutes from "./warehouses";
 
 const inventoryRoutes = new Hono<HonoContextWithAuth>()
 	.route("/products", productsRoutes)
 	.route("/warehouses", warehousesRoutes)
+	.route("/search", searchRoutes)
 	.get("/metrics", async (c) => {
 		const userId = c.get("user").id;
 		const data = await getDashboardMetrics(userId);
