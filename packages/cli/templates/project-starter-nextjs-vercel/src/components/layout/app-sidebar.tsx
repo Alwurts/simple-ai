@@ -1,6 +1,7 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { LayoutDashboard, type LucideIcon, MessagesSquare, Search } from "lucide-react";
+import Link from "next/link";
 import * as React from "react";
 import { LogoAlwurtsMonochrome } from "@/components/icons/logo-monochrome";
 import { AppUserNav } from "@/components/layout/app-user-nav";
@@ -8,12 +9,36 @@ import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
+	SidebarGroup,
+	SidebarGroupLabel,
 	SidebarHeader,
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
+
+type NavigationItem = {
+	title: string;
+	url: string;
+	icon?: LucideIcon;
+	activeMatcher: RegExp;
+};
+
+const mainNavigationItems: NavigationItem[] = [
+	{
+		title: "Dashboard",
+		url: "/dashboard",
+		icon: LayoutDashboard,
+		activeMatcher: /\/dashboard/,
+	},
+	{
+		title: "Chat",
+		url: "/chat",
+		icon: MessagesSquare,
+		activeMatcher: /\/chat/,
+	},
+];
 
 export function AppSidebar() {
 	const [_searchOpen, setSearchOpen] = React.useState(false);
@@ -66,13 +91,31 @@ export function AppSidebar() {
 				</SidebarMenu>
 			</SidebarHeader>
 			<SidebarContent className="overflow-x-hidden">
-				<div>
-					<h1>Sidebar</h1>
-				</div>
+				<AppSidebarMainNavigation />
 			</SidebarContent>
 			<SidebarFooter>
 				<AppUserNav />
 			</SidebarFooter>
 		</Sidebar>
+	);
+}
+
+export function AppSidebarMainNavigation() {
+	return (
+		<SidebarGroup>
+			<SidebarGroupLabel>Platform</SidebarGroupLabel>
+			<SidebarMenu>
+				{mainNavigationItems.map((item) => (
+					<SidebarMenuItem key={`${item.title}-${item.url}`}>
+						<SidebarMenuButton tooltip={item.title} asChild>
+							<Link href={item.url}>
+								{item.icon && <item.icon />}
+								<span>{item.title}</span>
+							</Link>
+						</SidebarMenuButton>
+					</SidebarMenuItem>
+				))}
+			</SidebarMenu>
+		</SidebarGroup>
 	);
 }

@@ -1,6 +1,12 @@
 import Link from "next/link";
-import { ChatFull } from "@/components/chat/chat-full";
-import { AppLayoutContent, AppLayoutHeader, AppLayoutPage } from "@/components/layout/app-layout";
+import { ChatHistoryWithNavigation } from "@/components/chat/chat-history-with-navigation";
+import { ChatInterface } from "@/components/chat/chat-interface";
+import {
+	AppLayoutContent,
+	AppLayoutHeader,
+	AppLayoutHeaderActions,
+	AppLayoutPage,
+} from "@/components/layout/app-layout";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -38,13 +44,16 @@ export default async function ChatPage({ params }: { params: Promise<{ id: strin
 						</BreadcrumbItem>
 						<BreadcrumbSeparator />
 						<BreadcrumbItem>
-							<BreadcrumbPage>Layout Demo 3: Full Page Chat</BreadcrumbPage>
+							<BreadcrumbPage>Chat {id}</BreadcrumbPage>
 						</BreadcrumbItem>
 					</BreadcrumbList>
 				</Breadcrumb>
+				<AppLayoutHeaderActions>
+					<ChatHistoryWithNavigation currentChatId={id} />
+				</AppLayoutHeaderActions>
 			</AppLayoutHeader>
 			<AppLayoutContent>
-				<ChatFull id={id} initialMessages={initialMessages} />
+				<ChatInterface id={id} initialMessages={initialMessages} />
 			</AppLayoutContent>
 		</AppLayoutPage>
 	);

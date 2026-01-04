@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { chats, messages } from "@/db/schema/chat";
 import { dbMessagesToAIMessages } from "@/lib/chat-utils";
@@ -58,9 +58,15 @@ export async function getChat(chatId: string): Promise<DBChat | null> {
 	return result;
 }
 
-export async function getChats(userId: string): Promise<DBChat[]> {
+export async function getChats(
+	userId: string,
+	options?: { sort?: "asc" | "desc" },
+): Promise<DBChat[]> {
+	const { sort = "desc" } = options || {};
+	const orderBy = sort === "asc" ? asc(chats.createdAt) : desc(chats.createdAt);
 	const result = await db.query.chats.findMany({
 		where: eq(chats.userId, userId),
+		orderBy,
 	});
 	return result;
 }

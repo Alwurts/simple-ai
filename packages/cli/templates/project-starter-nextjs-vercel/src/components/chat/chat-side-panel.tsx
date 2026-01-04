@@ -1,73 +1,71 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useMemo } from "react";
-import { useGetChat } from "@/hooks/query/use-chat";
-import { createId } from "@/lib/utils";
-import type { AIUIMessage } from "@/types/ai";
-import { AppLayoutHeader } from "../layout/app-layout";
-import { Button } from "../ui/button";
-import { ChatInputArea } from "./parts/chat-input-area";
-import { Chat } from "./parts/chat-layout";
-import { ChatMessages } from "./parts/chat-messages";
+import { useCallback } from "react";
+
+import { AppLayoutHeader } from "@/components/layout/app-layout";
+import { Button } from "@/components/ui/button";
+import { useChatClientLogic } from "@/hooks/use-chat-client-logic";
+import { ChatHistory } from "./chat-history";
+import { ChatInterface } from "./chat-interface";
 
 export function ChatSidePanel() {
 	const pathname = usePathname();
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	const chatId = searchParams.get("chatId");
+
+	const chatIdParam = searchParams.get("chatId");
+
+	const { id, isLoading, messages, onNewChatCreated } = useChatClientLogic({
+		chatId: chatIdParam,
+	});
 
 	const handleNewChat = useCallback(
 		(newChatId: string) => {
+			onNewChatCreated(newChatId);
 			const params = new URLSearchParams(searchParams.toString());
-			console.log("newChatId", newChatId);
 			params.set("chatId", newChatId);
-
-			const newParams = params.toString();
-			router.replace(`${pathname}?${newParams}`);
+			router.replace(`${pathname}?${params.toString()}`);
 		},
-		[pathname, router, searchParams],
+		[pathname, router, searchParams, onNewChatCreated],
 	);
 
-	const handleRemoveChatId = useCallback(() => {
+	const handleClearChat = useCallback(() => {
 		const params = new URLSearchParams(searchParams.toString());
 		params.delete("chatId");
-		return params.toString();
-	}, [searchParams]);
+		router.replace(`${pathname}?${params.toString()}`);
+	}, [pathname, router, searchParams]);
 
-	const effectiveChatId = useMemo(() => {
-		return chatId || createId("chat");
-	}, [chatId]);
-
-	const { data: chatData, isLoading: isLoadingChat } = useGetChat(chatId);
-
-	const chatMessagesLoaded = chatData?.messages as AIUIMessage[] | undefined;
-
-	if (isLoadingChat) {
-		return <div>Loading...</div>;
+	if (isLoading) {
+		return (
+			<div className="flex h-full items-center justify-center text-muted-foreground">
+				Loading chat...
+			</div>
+		);
 	}
 
 	return (
 		<>
 			<AppLayoutHeader>
-				<span>{chatId}</span>
-				<Button variant="outline" size="icon" className="ml-auto" asChild>
-					<Link href={`${pathname}?${handleRemoveChatId()}`}>
-						<Plus />
+				<span className="truncate font-mono text-xs text-muted-foreground">{id}</span>
+				<div className="ml-auto flex items-center gap-1">
+					<ChatHistory
+						onNavigate={(chatId) => {
+							const params = new URLSearchParams(searchParams.toString());
+							params.set("chatId", chatId);
+							router.replace(`${pathname}?${params.toString()}`);
+						}}
+						currentChatId={id}
+					/>
+					<Button variant="ghost" size="icon" onClick={handleClearChat}>
+						<Plus className="size-4" />
 						<span className="sr-only">New Chat</span>
-					</Link>
-				</Button>
+					</Button>
+				</div>
 			</AppLayoutHeader>
-			<Chat
-				id={effectiveChatId}
-				initialMessages={chatMessagesLoaded ?? []}
-				onNewChat={handleNewChat}
-			>
-				<ChatMessages />
-				<ChatInputArea />
-			</Chat>
+
+			<ChatInterface key={id} id={id} initialMessages={messages} onNewChat={handleNewChat} />
 		</>
 	);
 }

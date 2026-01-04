@@ -25,13 +25,6 @@ export function ChatInputArea() {
 	const handleSendMessage = useCallback(
 		async (content: string) => {
 			try {
-				// Optimistic UI update for sidebar list if this is the first message
-				// if (chatHelpers.messages.length === 0) {
-				// 	setTimeout(() => {
-				// 		queryClient.invalidateQueries({ queryKey: chatsKeysAll() });
-				// 	}, 1000);
-				// }
-
 				return await sendMessage({
 					role: "user",
 					parts: [{ type: "text", text: content }],

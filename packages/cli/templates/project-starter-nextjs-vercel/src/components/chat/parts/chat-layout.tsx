@@ -1,9 +1,10 @@
 "use client";
 
 import { Provider, useChat } from "@ai-sdk-tools/store";
-//import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithApprovalResponses } from "ai";
 import type { ComponentProps } from "react";
+import { getAllChatsKey } from "@/hooks/query/use-chat";
 import { cn, createId } from "@/lib/utils";
 import type { AIUIMessage } from "@/types/ai";
 
@@ -22,7 +23,7 @@ export function Chat({ id, initialMessages = [], ...props }: ChatProps) {
 }
 
 function ChatInner({ id, initialMessages, children, className, onNewChat, ...props }: ChatProps) {
-	//const queryClient = useQueryClient();
+	const queryClient = useQueryClient();
 
 	useChat<AIUIMessage>({
 		id,
@@ -44,12 +45,9 @@ function ChatInner({ id, initialMessages, children, className, onNewChat, ...pro
 		}),
 		generateId: () => createId("msg"),
 		onFinish: () => {
-			// console.log("onFinish", id);
-			// if (onNewChat) {
-			// 	console.log("onNewChat", id);
-			// 	onNewChat(id);
-			// }
-			//queryClient.invalidateQueries({ queryKey: chatsKeysAll() });
+			if (initialMessages.length === 0) {
+				queryClient.invalidateQueries({ queryKey: getAllChatsKey() });
+			}
 		},
 		sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithApprovalResponses,
 	});

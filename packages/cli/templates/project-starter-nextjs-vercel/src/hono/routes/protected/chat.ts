@@ -1,11 +1,29 @@
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import { createChat, getChat, getChatMessages, upsertMessageToChat } from "@/db/services/chat";
+import { z } from "zod";
+import {
+	createChat,
+	getChat,
+	getChatMessages,
+	getChats,
+	upsertMessageToChat,
+} from "@/db/services/chat";
 import { agentRespond } from "@/lib/ai/agents/agent-respond";
 import { generateChatTitle } from "@/lib/ai/title-generator";
 import type { AIUIMessage } from "@/types/ai";
 import type { HonoContextWithAuth } from "@/types/hono";
 
 const chatRoutes = new Hono<HonoContextWithAuth>()
+	.get(
+		"/",
+		zValidator("query", z.object({ sort: z.enum(["asc", "desc"]).optional().default("desc") })),
+		async (c) => {
+			const { sort } = c.req.valid("query");
+			const userId = c.get("user").id;
+			const chats = await getChats(userId, { sort });
+			return c.json(chats);
+		},
+	)
 	.get("/:chatId", async (c) => {
 		const chatId = c.req.param("chatId");
 		const userId = c.get("user").id;
