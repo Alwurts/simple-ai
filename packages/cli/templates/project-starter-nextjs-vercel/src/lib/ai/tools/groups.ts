@@ -4,19 +4,19 @@ import type { aiToolId } from "./registry";
 
 export const toolIdsGroups: Record<string, aiToolId[]> = {
 	system: ["load-skill"],
-	products: [
+	productManagement: [
 		"list-products",
 		"get-product",
 		"create-product",
 		"update-product",
-		"create-movement",
 		"delete-product",
 	],
-	warehouses: [
+	warehouseManagement: [
 		"list-warehouses",
 		"get-warehouse",
 		"create-warehouse",
 		"update-warehouse",
 		"delete-warehouse",
 	],
+	stockMovements: ["create-movement", "list-products", "list-warehouses"],
 };
