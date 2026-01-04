@@ -8,6 +8,7 @@
 - `npm run lint` - Run Biome linter and auto-fix (only checks `src/`)
 - `npm run db:generate` - Generate migrations (NEVER run automatically, prompt user to run)
 - `npm run db:migrate` - Run migrations (NEVER run automatically, prompt user to run)
+- `npm run db:seed` - Seed database with test data (users, inventory, movements)
 - No test suite configured yet
 
 ## Code Style
@@ -40,3 +41,17 @@
 ## AI
 
 - **SDK**: Use Vercel AI SDK (`ai` package) for AI features
+
+## Database Seeding
+
+- **Seed Script**: `src/db/seed.ts` - Comprehensive seeding for development/testing
+- **Test Users**: Creates 2 users with email/password authentication
+  - `test@example.com` / `Test1234`
+  - `admin@example.com` / `Test1234`
+- **Inventory Data**: Seeds complete inventory system per user
+  - 3 warehouses (Main Warehouse, Storage Facility, East Coast Distribution)
+  - 12 products across electronics, office, home, and kitchen categories
+  - Stock levels with some below minimum thresholds for testing alerts
+  - 20 inventory movements (IN, OUT, TRANSFER, ADJUSTMENT types)
+- **Reset**: Automatically resets database before seeding
+- **Dependencies**: Uses `drizzle-seed` for additional data generation capabilities
