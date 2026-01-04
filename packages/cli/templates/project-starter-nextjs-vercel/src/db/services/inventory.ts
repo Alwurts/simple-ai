@@ -1,10 +1,9 @@
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, gte, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { movements, products, stockLevels } from "@/db/schema/inventory";
 
 // --- Products ---
 export const getProducts = async (userId: string) => {
-	// Join with stockLevels to get total quantity
 	return await db
 		.select({
 			id: products.id,
@@ -26,11 +25,84 @@ export const getProducts = async (userId: string) => {
 		.groupBy(products.id);
 };
 
+export const getProduct = async (id: string, userId: string) => {
+	const [product] = await db
+		.select({
+			id: products.id,
+			userId: products.userId,
+			sku: products.sku,
+			name: products.name,
+			description: products.description,
+			price: products.price,
+			cost: products.cost,
+			minStockLevel: products.minStockLevel,
+			imageUrl: products.imageUrl,
+			createdAt: products.createdAt,
+			updatedAt: products.updatedAt,
+			totalStock: sql<number>`coalesce(sum(${stockLevels.quantity}), 0)`.mapWith(Number),
+		})
+		.from(products)
+		.leftJoin(stockLevels, eq(products.id, stockLevels.productId))
+		.where(and(eq(products.id, id), eq(products.userId, userId)))
+		.groupBy(products.id);
+
+	return product;
+};
+
 export const createProduct = async (data: typeof products.$inferInsert) => {
 	return await db.insert(products).values(data).returning();
 };
 
+export const updateProduct = async (
+	id: string,
+	userId: string,
+	data: Partial<typeof products.$inferInsert>,
+) => {
+	const [updated] = await db
+		.update(products)
+		.set({ ...data, updatedAt: new Date().toISOString() })
+		.where(and(eq(products.id, id), eq(products.userId, userId)))
+		.returning();
+	return updated;
+};
+
 // --- Operations ---
+
+export const getProductMovements = async (productId: string, userId: string) => {
+	return await db.query.movements.findMany({
+		where: and(eq(movements.productId, productId), eq(movements.userId, userId)),
+		orderBy: (movements, { desc }) => [desc(movements.createdAt)],
+	});
+};
+
+export const getDashboardMetrics = async (userId: string) => {
+	// 1. Get raw movements for the last 30 days
+	const thirtyDaysAgo = new Date();
+	thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+	const recentMovements = await db
+		.select({
+			date: sql<string>`DATE(${movements.createdAt})`,
+			type: movements.type,
+			quantity: movements.quantity,
+		})
+		.from(movements)
+		.where(
+			and(
+				eq(movements.userId, userId),
+				gte(movements.createdAt, thirtyDaysAgo.toISOString()),
+				sql`${movements.type} IN ('IN', 'OUT')`,
+			),
+		);
+
+	// 2. Get active products with stock
+	const activeProducts = await getProducts(userId);
+
+	return {
+		recentMovements,
+		activeProducts,
+	};
+};
 
 // This is the "Brain" of the operation - used by both UI and AI
 export const performStockMovement = async (data: {

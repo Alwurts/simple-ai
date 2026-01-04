@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { ChatSidePanel } from "@/components/chat/chat-side-panel";
 import { DashboardStats } from "@/components/dashboard/dashboard-stats";
+import { InventoryValueChart } from "@/components/dashboard/inventory-value-chart";
 import { LowStockAlerts } from "@/components/dashboard/low-stock-alerts";
+import { StockStatusChart } from "@/components/dashboard/stock-status-chart";
+import { StockTrendsChart } from "@/components/dashboard/stock-trends-chart";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
@@ -44,9 +47,26 @@ export default function DashboardPage() {
 						</AppLayoutHeaderActions>
 					</AppLayoutHeader>
 
-					<div className="space-y-6 p-6">
+					<div className="flex-1 overflow-y-auto p-6 space-y-6">
 						<DashboardStats />
-						<LowStockAlerts />
+
+						<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
+							<div className="col-span-4">
+								<StockTrendsChart />
+							</div>
+							<div className="col-span-3">
+								<StockStatusChart />
+							</div>
+						</div>
+
+						<div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
+							<div className="col-span-4">
+								<InventoryValueChart />
+							</div>
+							<div className="col-span-3">
+								<LowStockAlerts />
+							</div>
+						</div>
 					</div>
 				</AppLayoutResizablePanelPrimary>
 
@@ -55,7 +75,7 @@ export default function DashboardPage() {
 					order={2}
 					defaultSize={30}
 					minSize={25}
-					defaultOpen={true}
+					defaultOpen={false}
 				>
 					<ChatSidePanel />
 				</AppLayoutResizablePanelSecondary>
