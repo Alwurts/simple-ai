@@ -45,8 +45,8 @@ const productsRoutes = new Hono<HonoContextWithAuth>()
 		const result = await createProduct({
 			...body,
 			userId,
-			price: body.price?.toString(),
 		});
+
 		return c.json(result[0]);
 	})
 
@@ -55,10 +55,8 @@ const productsRoutes = new Hono<HonoContextWithAuth>()
 		const userId = c.get("user").id;
 		const productId = c.req.param("id");
 		const body = c.req.valid("json");
-		const result = await updateProduct(productId, userId, {
-			...body,
-			price: body.price?.toString(),
-		});
+		const result = await updateProduct(productId, userId, body);
+
 		return c.json(result);
 	})
 

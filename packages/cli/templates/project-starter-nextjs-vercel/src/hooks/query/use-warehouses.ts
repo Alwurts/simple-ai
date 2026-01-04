@@ -1,7 +1,9 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { z } from "zod";
 import { apiClient } from "@/lib/api-client";
+import type { createWarehouseSchema, updateWarehouseSchema } from "@/types/warehouses";
 
 export const getWarehousesKey = () => ["warehouses"];
 export const getWarehouseKey = (id: string) => ["warehouses", id];
@@ -35,13 +37,9 @@ export const useWarehouse = (id: string) => {
 export const useCreateWarehouse = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: async (data: { name: string; location?: string; isDefault?: boolean }) => {
+		mutationFn: async (data: z.infer<typeof createWarehouseSchema>) => {
 			const res = await apiClient.api.inventory.warehouses.$post({
-				json: {
-					name: data.name,
-					location: data.location ?? "",
-					isDefault: data.isDefault ?? false,
-				},
+				json: data,
 			});
 			return res.json();
 		},
@@ -54,14 +52,7 @@ export const useCreateWarehouse = () => {
 export const useUpdateWarehouse = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: async (params: {
-			id: string;
-			data: {
-				name?: string;
-				location?: string;
-				isDefault?: boolean;
-			};
-		}) => {
+		mutationFn: async (params: { id: string; data: z.infer<typeof updateWarehouseSchema> }) => {
 			const res = await apiClient.api.inventory.warehouses[":id"].$put({
 				param: { id: params.id },
 				json: params.data,

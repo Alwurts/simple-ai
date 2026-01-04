@@ -91,8 +91,8 @@ export default function ProductPage() {
 			productId,
 			type: data.type,
 			quantity: data.quantity,
-			toWarehouseId: data.type === "IN" ? data.warehouseId : undefined,
-			fromWarehouseId: data.type === "OUT" ? data.warehouseId : undefined,
+			toWarehouseId: data.toWarehouseId ?? null,
+			fromWarehouseId: data.fromWarehouseId ?? null,
 			notes: data.notes || `Manual ${data.type} via Details`,
 		});
 		setActiveMovementType(null);

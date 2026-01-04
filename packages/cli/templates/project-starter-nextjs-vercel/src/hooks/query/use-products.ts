@@ -1,7 +1,13 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { z } from "zod";
 import { apiClient } from "@/lib/api-client";
+import type {
+	createMovementSchema,
+	createProductSchema,
+	updateProductSchema,
+} from "@/types/products";
 
 export const getProductsKey = () => ["products"];
 export const getProductKey = (id: string) => ["products", id];
@@ -66,13 +72,7 @@ export const useProductMovements = (productId: string | null) => {
 export const useCreateProduct = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: async (data: {
-			name: string;
-			sku: string;
-			price?: number;
-			description?: string;
-			minStockLevel?: number;
-		}) => {
+		mutationFn: async (data: z.infer<typeof createProductSchema>) => {
 			const res = await apiClient.api.inventory.products.$post({ json: data });
 			return res.json();
 		},
@@ -86,16 +86,7 @@ export const useCreateProduct = () => {
 export const useUpdateProduct = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: async (params: {
-			id: string;
-			data: {
-				name?: string;
-				sku?: string;
-				price?: number;
-				description?: string;
-				minStockLevel?: number;
-			};
-		}) => {
+		mutationFn: async (params: { id: string; data: z.infer<typeof updateProductSchema> }) => {
 			const res = await apiClient.api.inventory.products[":id"].$put({
 				param: { id: params.id },
 				json: params.data,
@@ -135,14 +126,7 @@ export const useDeleteProduct = () => {
 export const useCreateMovement = () => {
 	const queryClient = useQueryClient();
 	return useMutation({
-		mutationFn: async (data: {
-			productId: string;
-			type: "IN" | "OUT" | "TRANSFER" | "ADJUSTMENT";
-			quantity: number;
-			fromWarehouseId?: string;
-			toWarehouseId?: string;
-			notes?: string;
-		}) => {
+		mutationFn: async (data: z.infer<typeof createMovementSchema>) => {
 			const res = await apiClient.api.inventory.movements.$post({ json: data });
 			return res.json();
 		},

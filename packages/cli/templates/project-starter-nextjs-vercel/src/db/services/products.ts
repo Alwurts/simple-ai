@@ -1,6 +1,12 @@
 import { and, eq, gte, sql } from "drizzle-orm";
+import type { z } from "zod";
 import { db } from "@/db";
 import { movements, products, stockLevels } from "@/db/schema/products";
+import type {
+	createMovementSchema,
+	createProductSchema,
+	updateProductSchema,
+} from "@/types/products";
 
 // --- Products ---
 export const getProducts = async (userId: string) => {
@@ -49,20 +55,33 @@ export const getProduct = async (id: string, userId: string) => {
 	return product;
 };
 
-export const createProduct = async (data: typeof products.$inferInsert) => {
-	return await db.insert(products).values(data).returning();
+export const createProduct = async (
+	data: z.infer<typeof createProductSchema> & { userId: string },
+) => {
+	const formattedData = {
+		...data,
+		price: data.price ? data.price.toString() : undefined,
+	};
+	return await db.insert(products).values(formattedData).returning();
 };
 
 export const updateProduct = async (
 	id: string,
 	userId: string,
-	data: Partial<typeof products.$inferInsert>,
+	data: z.infer<typeof updateProductSchema>,
 ) => {
+	const formattedData = {
+		...data,
+		price: data.price ? data.price.toString() : undefined,
+		updatedAt: new Date().toISOString(),
+	};
+
 	const [updated] = await db
 		.update(products)
-		.set({ ...data, updatedAt: new Date().toISOString() })
+		.set(formattedData)
 		.where(and(eq(products.id, id), eq(products.userId, userId)))
 		.returning();
+
 	return updated;
 };
 
@@ -113,15 +132,9 @@ export const getDashboardMetrics = async (userId: string) => {
 };
 
 // This is the "Brain" of the operation - used by both UI and AI
-export const performStockMovement = async (data: {
-	userId: string;
-	productId: string;
-	type: "IN" | "OUT" | "TRANSFER" | "ADJUSTMENT";
-	quantity: number;
-	fromWarehouseId?: string;
-	toWarehouseId?: string;
-	notes?: string;
-}) => {
+export const performStockMovement = async (
+	data: z.infer<typeof createMovementSchema> & { userId: string },
+) => {
 	return await db.transaction(async (tx) => {
 		// 1. Log the movement
 		const [movement] = await tx

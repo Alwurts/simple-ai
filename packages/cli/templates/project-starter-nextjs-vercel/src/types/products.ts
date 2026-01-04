@@ -1,19 +1,26 @@
 import { z } from "zod";
+import { aiOptional } from "@/lib/zod";
 
 // Product input schemas
 export const createProductSchema = z.object({
 	name: z.string().min(2, "Name must be at least 2 characters"),
 	sku: z.string().min(2, "SKU must be at least 2 characters"),
 	price: z.coerce.number().min(0, "Price must be positive").optional(),
-	description: z.string().optional(),
+	description: z.string().nullable().optional(),
 	minStockLevel: z.coerce.number().min(0, "Minimum stock must be positive").optional().default(5),
+});
+
+export const productFormSchema = createProductSchema.extend({
+	price: z.number().min(0, "Price must be positive"),
+	minStockLevel: z.number().min(0, "Minimum stock must be positive"),
+	description: z.string().nullable(),
 });
 
 export const updateProductSchema = z.object({
 	name: z.string().min(2).optional(),
 	sku: z.string().min(2).optional(),
 	price: z.coerce.number().min(0).optional(),
-	description: z.string().optional(),
+	description: z.string().nullable().optional(),
 	minStockLevel: z.coerce.number().min(0).optional(),
 });
 
@@ -37,12 +44,24 @@ export const productsListSchema = z.array(productSchema);
 
 // Movement schemas
 export const createMovementSchema = z.object({
-	productId: z.string(),
-	type: z.enum(["IN", "OUT", "TRANSFER", "ADJUSTMENT"]),
-	quantity: z.coerce.number().min(1),
-	fromWarehouseId: z.string().optional(),
-	toWarehouseId: z.string().optional(),
-	notes: z.string().optional(),
+	productId: z.string().describe("The ID of the product being moved"),
+	type: z
+		.enum(["IN", "OUT", "TRANSFER", "ADJUSTMENT"])
+		.describe(
+			"The type of movement. IN (restock), OUT (sales/removal), TRANSFER (between warehouses), ADJUSTMENT (stock correction).",
+		),
+	quantity: z.coerce.number().min(1).describe("The quantity of items moved. Must be positive."),
+	fromWarehouseId: aiOptional(z.string()).describe(
+		"The source warehouse ID. Required for TRANSFER and OUT movements. Optional for ADJUSTMENT when decreasing stock.",
+	),
+	toWarehouseId: aiOptional(z.string()).describe(
+		"The destination warehouse ID. Required for TRANSFER and IN movements. Optional for ADJUSTMENT when increasing stock.",
+	),
+	notes: aiOptional(z.string()).describe("Optional notes details about the movement"),
+});
+
+export const movementFormSchema = createMovementSchema.omit({ productId: true }).extend({
+	quantity: z.number().min(1, "Quantity must be at least 1"),
 });
 
 export const movementSchema = z.object({

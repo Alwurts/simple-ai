@@ -2,7 +2,7 @@
 
 import { useForm } from "@tanstack/react-form";
 import { useEffect } from "react";
-import { z } from "zod";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -15,16 +15,10 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useWarehouses } from "@/hooks/query/use-warehouses";
+import { movementFormSchema } from "@/types/products";
 import type { Warehouse } from "@/types/warehouses";
 
-const movementSchema = z.object({
-	type: z.enum(["IN", "OUT", "TRANSFER", "ADJUSTMENT"]),
-	quantity: z.number().min(1, "Quantity must be at least 1"),
-	warehouseId: z.string().min(1, "Warehouse is required"),
-	notes: z.string(),
-});
-
-export type MovementFormValues = z.infer<typeof movementSchema>;
+export type MovementFormValues = z.infer<typeof movementFormSchema>;
 
 interface MovementFormProps {
 	onSubmit: (data: MovementFormValues) => void;
@@ -41,16 +35,20 @@ export function MovementForm({
 }: MovementFormProps) {
 	const { data: warehouses } = useWarehouses();
 
+	const initialValues: MovementFormValues = {
+		type: initialType,
+		quantity: 1,
+		fromWarehouseId: null,
+		toWarehouseId: null,
+		notes: null,
+	};
+
 	const form = useForm({
-		defaultValues: {
-			type: initialType,
-			quantity: 1,
-			warehouseId: "",
-			notes: "",
-		},
+		defaultValues: initialValues,
+
 		validators: {
-			onSubmit: movementSchema,
-			onChange: movementSchema,
+			onSubmit: movementFormSchema,
+			onChange: movementFormSchema,
 		},
 		onSubmit: async ({ value }) => {
 			onSubmit(value);
@@ -58,12 +56,19 @@ export function MovementForm({
 	});
 
 	// Set default warehouse if available
+
 	useEffect(() => {
-		if (warehouses && warehouses.length > 0 && !form.state.values.warehouseId) {
+		if (warehouses && warehouses.length > 0) {
 			const defaultWh = warehouses.find((w: Warehouse) => w.isDefault) || warehouses[0];
-			form.setFieldValue("warehouseId", defaultWh.id);
+			if (!form.getFieldValue("fromWarehouseId") && !form.getFieldValue("toWarehouseId")) {
+				if (initialType === "IN") {
+					form.setFieldValue("toWarehouseId", defaultWh.id);
+				} else {
+					form.setFieldValue("fromWarehouseId", defaultWh.id);
+				}
+			}
 		}
-	}, [warehouses, form]);
+	}, [warehouses, form, initialType]);
 
 	return (
 		<form
@@ -96,29 +101,79 @@ export function MovementForm({
 					)}
 				</form.Field>
 
-				<form.Field name="warehouseId">
-					{(field) => {
-						const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+				<form.Subscribe selector={(s) => s.values.type}>
+					{(type) => {
+						const showFromWarehouse =
+							type === "OUT" || type === "TRANSFER" || type === "ADJUSTMENT";
+						const showToWarehouse = type === "IN" || type === "TRANSFER" || type === "ADJUSTMENT";
+
 						return (
-							<Field data-invalid={isInvalid}>
-								<FieldLabel>Warehouse</FieldLabel>
-								<Select value={field.state.value} onValueChange={field.handleChange}>
-									<SelectTrigger>
-										<SelectValue placeholder="Select warehouse" />
-									</SelectTrigger>
-									<SelectContent>
-										{warehouses?.map((w: Warehouse) => (
-											<SelectItem key={w.id} value={w.id}>
-												{w.name} {w.isDefault ? "(Default)" : ""}
-											</SelectItem>
-										))}
-									</SelectContent>
-								</Select>
-								{isInvalid && <FieldError errors={field.state.meta.errors} />}
-							</Field>
+							<>
+								{showFromWarehouse && (
+									<form.Field name="fromWarehouseId">
+										{(field) => {
+											const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+											return (
+												<Field data-invalid={isInvalid}>
+													<FieldLabel>
+														{type === "TRANSFER" ? "Source Warehouse" : "Warehouse"}
+													</FieldLabel>
+													<Select
+														value={field.state.value || ""}
+														onValueChange={(val) => field.handleChange(val || null)}
+													>
+														<SelectTrigger>
+															<SelectValue placeholder="Select warehouse" />
+														</SelectTrigger>
+														<SelectContent>
+															{warehouses?.map((w: Warehouse) => (
+																<SelectItem key={w.id} value={w.id}>
+																	{w.name} {w.isDefault ? "(Default)" : ""}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+													{isInvalid && <FieldError errors={field.state.meta.errors} />}
+												</Field>
+											);
+										}}
+									</form.Field>
+								)}
+
+								{showToWarehouse && (
+									<form.Field name="toWarehouseId">
+										{(field) => {
+											const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
+											return (
+												<Field data-invalid={isInvalid}>
+													<FieldLabel>
+														{type === "TRANSFER" ? "Destination Warehouse" : "Warehouse"}
+													</FieldLabel>
+													<Select
+														value={field.state.value || ""}
+														onValueChange={(val) => field.handleChange(val || null)}
+													>
+														<SelectTrigger>
+															<SelectValue placeholder="Select warehouse" />
+														</SelectTrigger>
+														<SelectContent>
+															{warehouses?.map((w: Warehouse) => (
+																<SelectItem key={w.id} value={w.id}>
+																	{w.name} {w.isDefault ? "(Default)" : ""}
+																</SelectItem>
+															))}
+														</SelectContent>
+													</Select>
+													{isInvalid && <FieldError errors={field.state.meta.errors} />}
+												</Field>
+											);
+										}}
+									</form.Field>
+								)}
+							</>
 						);
 					}}
-				</form.Field>
+				</form.Subscribe>
 
 				<form.Field name="quantity">
 					{(field) => {
@@ -150,7 +205,7 @@ export function MovementForm({
 							<Textarea
 								id={field.name}
 								name={field.name}
-								value={field.state.value}
+								value={field.state.value || ""}
 								onBlur={field.handleBlur}
 								onChange={(e) => field.handleChange(e.target.value)}
 								placeholder="Optional notes..."

@@ -3,9 +3,11 @@ import { z } from "zod";
 // Warehouse schemas
 export const createWarehouseSchema = z.object({
 	name: z.string().min(2, "Name must be at least 2 characters"),
-	location: z.string(),
+	location: z.string().nullable(),
 	isDefault: z.boolean(),
 });
+
+export const warehouseFormSchema = createWarehouseSchema;
 
 export const updateWarehouseSchema = createWarehouseSchema.partial();
 

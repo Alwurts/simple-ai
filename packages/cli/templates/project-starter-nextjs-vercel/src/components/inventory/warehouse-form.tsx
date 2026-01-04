@@ -1,19 +1,14 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { z } from "zod";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { warehouseFormSchema } from "@/types/warehouses";
 
-const warehouseSchema = z.object({
-	name: z.string().min(2, "Name must be at least 2 characters"),
-	location: z.string().optional(),
-	isDefault: z.boolean().optional(),
-});
-
-export type WarehouseFormValues = z.infer<typeof warehouseSchema>;
+export type WarehouseFormValues = z.infer<typeof warehouseFormSchema>;
 
 interface WarehouseFormProps {
 	onSubmit: (data: WarehouseFormValues) => void;
@@ -29,15 +24,18 @@ export function WarehouseForm({
 	defaultValues,
 	submitLabel = "Save Warehouse",
 }: WarehouseFormProps) {
+	const initialValues: WarehouseFormValues = {
+		name: defaultValues?.name || "",
+		location: defaultValues?.location || "",
+		isDefault: defaultValues?.isDefault || false,
+	};
+
 	const form = useForm({
-		defaultValues: {
-			name: defaultValues?.name || "",
-			location: defaultValues?.location || "",
-			isDefault: defaultValues?.isDefault || false,
-		} as WarehouseFormValues,
+		defaultValues: initialValues,
+
 		validators: {
-			onSubmit: warehouseSchema,
-			onChange: warehouseSchema,
+			onSubmit: warehouseFormSchema,
+			onChange: warehouseFormSchema,
 		},
 		onSubmit: async ({ value }) => {
 			onSubmit(value);
@@ -81,7 +79,7 @@ export function WarehouseForm({
 							<Input
 								id={field.name}
 								name={field.name}
-								value={field.state.value}
+								value={field.state.value || ""}
 								onBlur={field.handleBlur}
 								onChange={(e) => field.handleChange(e.target.value)}
 								placeholder="Address or description..."

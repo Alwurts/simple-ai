@@ -15,7 +15,7 @@ export function DashboardStats() {
 		products?.reduce((sum, p) => sum + p.totalStock * parseFloat(p.price || "0"), 0) || 0;
 
 	return (
-		<div className="grid gap-4 @md:grid-cols-2 @lg:grid-cols-4">
+		<div className="grid gap-4 @md:grid-cols-2 @lg:grid-cols-3">
 			<Card className="border-primary/20 bg-primary/5">
 				<CardHeader className="pb-3">
 					<CardTitle className="text-sm font-medium text-primary">Quick Actions</CardTitle>

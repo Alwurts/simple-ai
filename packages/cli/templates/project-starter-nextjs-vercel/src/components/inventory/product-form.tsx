@@ -1,21 +1,14 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { z } from "zod";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { productFormSchema } from "@/types/products";
 
-const productSchema = z.object({
-	name: z.string().min(2, "Name must be at least 2 characters"),
-	sku: z.string().min(2, "SKU must be at least 2 characters"),
-	price: z.number().min(0, "Price must be positive"),
-	minStockLevel: z.number().min(0, "Minimum stock must be positive"),
-	description: z.string(),
-});
-
-export type ProductFormValues = z.infer<typeof productSchema>;
+export type ProductFormValues = z.infer<typeof productFormSchema>;
 
 interface ProductFormProps {
 	defaultValues?: Partial<ProductFormValues>;
@@ -30,17 +23,20 @@ export function ProductForm({
 	isLoading,
 	submitLabel = "Save Product",
 }: ProductFormProps) {
+	const initialValues: ProductFormValues = {
+		name: defaultValues?.name ?? "",
+		sku: defaultValues?.sku ?? "",
+		price: defaultValues?.price ?? 0,
+		minStockLevel: defaultValues?.minStockLevel ?? 5,
+		description: defaultValues?.description ?? null,
+	};
+
 	const form = useForm({
-		defaultValues: {
-			name: defaultValues?.name ?? "",
-			sku: defaultValues?.sku ?? "",
-			price: defaultValues?.price ?? 0,
-			minStockLevel: defaultValues?.minStockLevel ?? 5,
-			description: defaultValues?.description ?? "",
-		},
+		defaultValues: initialValues,
+
 		validators: {
-			onSubmit: productSchema,
-			onChange: productSchema,
+			onSubmit: productFormSchema,
+			onChange: productFormSchema,
 		},
 		onSubmit: async ({ value }) => {
 			onSubmit(value);
@@ -155,13 +151,14 @@ export function ProductForm({
 								<Textarea
 									id={field.name}
 									name={field.name}
-									value={field.state.value}
+									value={field.state.value || ""}
 									onBlur={field.handleBlur}
 									onChange={(e) => field.handleChange(e.target.value)}
 									placeholder="Product details..."
 									className="resize-none"
 									aria-invalid={isInvalid}
 								/>
+
 								{isInvalid && <FieldError errors={field.state.meta.errors} />}
 							</Field>
 						);

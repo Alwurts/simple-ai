@@ -43,7 +43,6 @@ export const createProductTools = (userId: string) => {
 				const result = await createProduct({
 					...input,
 					userId,
-					price: input.price?.toString(),
 				});
 				return result[0];
 			},
@@ -56,10 +55,7 @@ export const createProductTools = (userId: string) => {
 			}),
 			outputSchema: productSchema,
 			execute: async ({ id, data }) => {
-				const result = await updateProduct(id, userId, {
-					...data,
-					price: data.price?.toString(),
-				});
+				const result = await updateProduct(id, userId, data);
 				return result;
 			},
 		}),
