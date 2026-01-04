@@ -45,7 +45,7 @@ import {
 	useProductMovements,
 	useUpdateProduct,
 } from "@/hooks/query/use-inventory";
-import type { DBMovement } from "@/types/inventory";
+import type { Movement } from "@/types/inventory";
 
 export default function ProductPage() {
 	const [isEditing, setIsEditing] = useState(false);
@@ -281,7 +281,7 @@ export default function ProductPage() {
 											</TableRow>
 										</TableHeader>
 										<TableBody>
-											{movements?.map((movement: DBMovement) => (
+											{movements?.map((movement: Movement) => (
 												<TableRow key={movement.id}>
 													<TableCell className="whitespace-nowrap">
 														{format(new Date(movement.createdAt), "MMM d, yyyy")}

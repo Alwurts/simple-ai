@@ -2,21 +2,26 @@ import { convertToModelMessages, stepCountIs, streamText } from "ai";
 import { createId } from "@/lib/utils";
 import type { AIUIMessage } from "@/types/ai";
 import { generateSystemPrompt } from "../agents/prompt";
-import type { LoadSkillResult } from "../tools/load-skill-tool";
-import { type aiToolId, aiTools } from "../tools/registry";
+import type { LoadSkillResult } from "../tools/(registry)/load-skill";
+import { type aiToolId, getAiTools } from "../tools/registry";
 
 export async function agentRespond({
 	messages: initialMessages,
 	onUpsertMessage,
 	abortSignal,
+	userId,
 }: {
 	messages: AIUIMessage[];
 	onUpsertMessage: (message: AIUIMessage) => Promise<void>;
 	abortSignal: AbortSignal;
+	userId: string;
 }) {
 	const startTime = Date.now();
 
 	const finalSystemPrompt = await generateSystemPrompt();
+
+	// Create user-scoped tools
+	const tools = getAiTools(userId);
 
 	const activeTools: Set<aiToolId> = new Set(["load-skill"]);
 
@@ -40,7 +45,7 @@ export async function agentRespond({
 		system: finalSystemPrompt,
 		messages: await convertToModelMessages(initialMessages),
 		abortSignal,
-		tools: aiTools,
+		tools: tools,
 		stopWhen: stepCountIs(25),
 		activeTools: Array.from(activeTools),
 		prepareStep: ({ steps }) => {

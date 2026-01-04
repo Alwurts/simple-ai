@@ -75,6 +75,7 @@ const chatRoutes = new Hono<HonoContextWithAuth>()
 					});
 				},
 				abortSignal,
+				userId,
 			});
 		}
 
@@ -106,6 +107,7 @@ const chatRoutes = new Hono<HonoContextWithAuth>()
 				});
 			},
 			abortSignal,
+			userId,
 		});
 	});
 

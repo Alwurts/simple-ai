@@ -39,7 +39,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useCreateMovement, useProducts } from "@/hooks/query/use-inventory";
-import type { ProductWithStock } from "@/types/inventory";
+import type { Product } from "@/types/inventory";
 import { DataTable } from "../../../components/ui/data-table";
 
 export default function InventoryPage() {
@@ -47,7 +47,7 @@ export default function InventoryPage() {
 	const createMovement = useCreateMovement();
 
 	// Restock Dialog State
-	const [restockProduct, setRestockProduct] = useState<ProductWithStock | null>(null);
+	const [restockProduct, setRestockProduct] = useState<Product | null>(null);
 
 	const handleRestockSubmit = async (data: RestockFormValues) => {
 		if (restockProduct) {
@@ -61,7 +61,7 @@ export default function InventoryPage() {
 		}
 	};
 
-	const columns: ColumnDef<ProductWithStock>[] = [
+	const columns: ColumnDef<Product>[] = [
 		{
 			id: "select",
 			header: ({ table }) => (
