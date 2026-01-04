@@ -1,57 +1,86 @@
 # Agent Guidelines for simple-ai starter
 
+## Project Patterns & Best Practices
+
+This project follows a strict layered architecture to ensure consistency, type safety, and reusability across the UI and AI layers.
+
+### 1. Project Organization
+
+- `src/db/schema/`: Database table definitions (Drizzle).
+- `src/db/services/`: Centralized business logic (The "Brain").
+- `src/hono/routes/`: API endpoint definitions.
+- `src/types/`: Unified Zod schemas used for validation, types, and AI tools.
+- `src/hooks/query/`: Custom React Query hooks for client state.
+- `src/app/`: Next.js App Router (Pages and Layouts).
+- `src/lib/ai/tools/`: AI tool definitions.
+
+---
+
+### 2. Persistence Layer (Drizzle)
+
+- **Timestamps**: Always use `mode: "string"` for timestamps to ensure consistent ISO strings.
+  - `timestamp("created_at", { mode: "string" }).defaultNow().notNull()`
+- **Multi-tenancy**: Every user-owned table MUST have a `userId` field and all queries MUST filter by this `userId`.
+- **Relations**: Define explicit relations using the Drizzle `relations` API to enable type-safe relational queries.
+- **Migrations**: Use `npm run db:generate` to create migrations and `npm run db:migrate` to apply them. NEVER run these automatically.
+
+### 3. Service Layer (The "Brain")
+
+- **Location**: `src/db/services/`
+- **Purpose**: All data mutations and complex queries must live here.
+- **Shared Logic**: Services are the single source of truth and are shared between Hono API routes and AI Tools.
+- **Pattern**: Export granular, async functions. Always require `userId` as an argument for security.
+
+### 4. Unified Type System (Zod)
+
+- **Location**: `src/types/`
+- **Pattern**: Define Zod schemas for every entity (e.g., `productSchema`, `createProductSchema`).
+- **Reuse**:
+  - **API**: Use `zValidator("json", schema)` in Hono.
+  - **Types**: Infer TypeScript types using `z.infer<typeof schema>`.
+  - **AI**: Use the same schemas for AI tool `inputSchema` and `outputSchema`.
+
+### 5. API Layer (Hono)
+
+- **Structure**: Group routes by module (e.g., `src/hono/routes/protected/inventory/products.ts`).
+- **Context**: Use `HonoContextWithAuth` for protected routes to access the authenticated user via `c.get("user")`.
+- **RPC**: Export the router type as `AppType` to enable the type-safe `apiClient` on the frontend.
+
+### 6. Client State (React Query)
+
+- **Location**: `src/hooks/query/`
+- **Pattern**: Wrap all `apiClient` calls in custom hooks.
+- **Query Keys**: Centralize query key generation functions (e.g., `getProductsKey()`) within the hook file.
+- **Invalidation**: Always implement `onSuccess` in mutations to invalidate relevant query keys and keep the UI in sync.
+
+### 7. Frontend & UI Patterns
+
+- **Layouts**: Use the standard layout components for consistency:
+  - `AppLayoutPage`: Main page container.
+  - `AppLayoutHeader`: Standard header with breadcrumb support.
+  - `AppLayoutHeaderActions`: Container for header buttons.
+- **Breadcrumbs**: Every page should use `AppBreadcrumbs` for navigation consistency.
+- **Components**: Use `shadcn/ui` components. If a component is missing, add it via `npx shadcn@latest add <name>`.
+- **Client/Server**: Default to Server Components; use `"use client"` only for interactive elements or when using hooks.
+
+### 8. AI Integration
+
+- **Tools**: Located in `src/lib/ai/tools/(registry)/`.
+- **Implementation**: Tools should be thin wrappers around the Service Layer.
+- **Skills**: Use the `load-skill` tool to dynamically provide the agent with new capabilities and instructions defined in `SKILL.md` files.
+
+---
+
 ## Build/Lint/Test Commands
 
 - `npm run dev` - Start dev server with Turbopack
 - `npm run build` - Build production bundle
 - `npm run typecheck` - Type check without emitting files
-- `npm run lint` - Run Biome linter and auto-fix (only checks `src/`)
-- `npm run db:generate` - Generate migrations (NEVER run automatically, prompt user to run)
-- `npm run db:migrate` - Run migrations (NEVER run automatically, prompt user to run)
-- `npm run db:seed` - Seed database with test data (users, inventory, movements)
-- No test suite configured yet
+- `npm run lint` - Run Biome linter and auto-fix
+- `npm run db:seed` - Seed database with test data
 
 ## Code Style
 
-- **Formatting**: Biome with tabs (width 2), double quotes, trailing commas, semicolons, 100 line width
-- **Files**: kebab-case naming (enforced by linter)
-- **Imports**: Use `@/` path alias, organize imports automatically, no unused imports
-- **Types**: TypeScript strict mode, use `type` for object shapes, `interface` for extensible types
-- **Naming**: camelCase variables/functions, PascalCase components/types, SCREAMING_SNAKE_CASE constants
-- **Error Handling**: Try-catch in async functions, return appropriate HTTP status codes (404, 500)
-
-## Client
-
-- **React**: Use "use client" directive when needed, functional components, hooks at top level
-- **RPC Client**: `apiClient` from `hono/client` typed with `AppType`, enables type-safe API calls
-- **React Query**: Custom hooks in `src/hooks/query/` use `apiClient` for type-safe mutations/queries
-- **State Management**: Use React Query for server state whenever possible, create custom hooks in `src/hooks/query/`
-- **UI Components**: Use shadcn/ui components with Tailwind, keep default shadcn variables/styles unless instructed otherwise. If a component is not installed, run `npx shadcn@latest add <component-name>`
-
-## Server
-
-- **Hono API**: Routes in `src/hono/routes/{public,protected}`, exported as `AppType` for RPC client
-- **API Routes**: Hono router, separate public/protected routes, type-safe context with `HonoContextWithAuth`
-- **Validation**: Zod schemas for API validation with `zValidator`, infer types with `z.infer<typeof schema>`
-- **Database**: Drizzle schemas in `src/db/schema/`, services in `src/db/services/` with CRUD operations
-- **Database**: Drizzle ORM, use prepared statements, always filter by userId for multi-tenant data
-- **Auth**: better-auth, protected routes use `honoAuthMiddleware` and `HonoContextWithAuth` type
-- **Environment**: Type-safe env vars with `@t3-oss/env-nextjs` in `src/env.ts`, import from `@/env`
-
-## AI
-
-- **SDK**: Use Vercel AI SDK (`ai` package) for AI features
-
-## Database Seeding
-
-- **Seed Script**: `src/db/seed.ts` - Comprehensive seeding for development/testing
-- **Test Users**: Creates 2 users with email/password authentication
-  - `test@example.com` / `Test1234`
-  - `admin@example.com` / `Test1234`
-- **Inventory Data**: Seeds complete inventory system per user
-  - 3 warehouses (Main Warehouse, Storage Facility, East Coast Distribution)
-  - 12 products across electronics, office, home, and kitchen categories
-  - Stock levels with some below minimum thresholds for testing alerts
-  - 20 inventory movements (IN, OUT, TRANSFER, ADJUSTMENT types)
-- **Reset**: Automatically resets database before seeding
-- **Dependencies**: Uses `drizzle-seed` for additional data generation capabilities
+- **Formatting**: Biome (tabs, width 2, double quotes, semicolons).
+- **Naming**: `kebab-case` files, `camelCase` variables/functions, `PascalCase` components/types.
+- **Error Handling**: Use try-catch in Hono routes and throw descriptive errors in services.
