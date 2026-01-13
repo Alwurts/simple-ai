@@ -12,7 +12,7 @@ interface DesignSystemLayoutProps {
 	children: React.ReactNode;
 }
 
-export default function DesignSystemLayoutWrapper({ children }: DesignSystemLayoutProps) {
+export default async function DesignSystemLayoutWrapper({ children }: DesignSystemLayoutProps) {
 	// Check if design system is enabled
 	if (env.NEXT_PUBLIC_DESIGN_SYSTEM_ENABLED !== "true") {
 		notFound();

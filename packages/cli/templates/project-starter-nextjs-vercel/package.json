@@ -4,10 +4,11 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev --turbopack",
-		"build": "next build --turbopack",
+		"build": "npm run registry:build && next build --turbopack",
 		"start": "next start",
 		"typecheck": "tsc --noEmit",
 		"lint": "biome check --write src",
+		"registry:build": "tsx ./src/ui-registry/scripts/build-registry.mts",
 		"db:up": "docker-compose up -d",
 		"db:down": "docker-compose down",
 		"db:reset": "docker-compose down -v",
@@ -100,6 +101,7 @@
 		"@types/react-dom": "19.2.3",
 		"drizzle-kit": "^0.31.4",
 		"tailwindcss": "^4",
+		"ts-morph": "^27.0.0",
 		"tsx": "^4.21.0",
 		"tw-animate-css": "^1.3.8",
 		"typescript": "^5"

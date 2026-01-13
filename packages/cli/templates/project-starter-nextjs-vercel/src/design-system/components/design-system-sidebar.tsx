@@ -2,6 +2,7 @@
 
 import { Palette } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
 	Sidebar,
 	SidebarContent,
@@ -14,28 +15,20 @@ import {
 	SidebarMenuItem,
 	SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { designSystemConfig } from "@/design-system/config/design-system";
+import { cn } from "@/lib/utils";
 
-type NavigationItem = {
-	title: string;
-	url: string;
-	activeMatcher: RegExp;
+type RegistryItemSummary = {
+	name: string;
+	title?: string;
+	description?: string;
 };
 
-const designSystemNavigationItems: NavigationItem[] = [
-	{
-		title: "Introduction",
-		url: "/design-system",
-		activeMatcher: /^\/design-system$/,
-	},
-	...designSystemConfig.map((component) => ({
-		title: component.title,
-		url: `/design-system/components/${component.slug}`,
-		activeMatcher: new RegExp(`/design-system/components/${component.slug}`),
-	})),
-];
+type DesignSystemSidebarProps = {
+	components: RegistryItemSummary[];
+	blocks: RegistryItemSummary[];
+};
 
-export function DesignSystemSidebar() {
+export function DesignSystemSidebar({ components, blocks }: DesignSystemSidebarProps) {
 	return (
 		<Sidebar variant="inset" collapsible="icon">
 			<SidebarHeader>
@@ -69,7 +62,7 @@ export function DesignSystemSidebar() {
 				</SidebarMenu>
 			</SidebarHeader>
 			<SidebarContent className="overflow-x-hidden">
-				<DesignSystemSidebarNavigation />
+				<DesignSystemSidebarNavigation components={components} blocks={blocks} />
 			</SidebarContent>
 			<SidebarFooter>
 				{/* Could add user nav or other footer content here if needed */}
@@ -78,21 +71,112 @@ export function DesignSystemSidebar() {
 	);
 }
 
-export function DesignSystemSidebarNavigation() {
+type DesignSystemSidebarNavigationProps = {
+	components: RegistryItemSummary[];
+	blocks: RegistryItemSummary[];
+};
+
+export function DesignSystemSidebarNavigation({
+	components,
+	blocks,
+}: DesignSystemSidebarNavigationProps) {
+	const pathname = usePathname();
+
+	const isActive = (url: string) => {
+		return pathname === url || pathname.startsWith(`${url}/`);
+	};
+
 	return (
-		<SidebarGroup>
-			<SidebarGroupLabel>Components</SidebarGroupLabel>
-			<SidebarMenu>
-				{designSystemNavigationItems.map((item) => (
-					<SidebarMenuItem key={`${item.title}-${item.url}`}>
-						<SidebarMenuButton tooltip={item.title} asChild>
-							<Link href={item.url}>
-								<span>{item.title}</span>
-							</Link>
-						</SidebarMenuButton>
-					</SidebarMenuItem>
-				))}
-			</SidebarMenu>
-		</SidebarGroup>
+		<>
+			<SidebarGroup>
+				<SidebarGroupLabel>
+					<Link
+						href="/design-system"
+						className={cn(
+							"hover:underline",
+							pathname === "/design-system" && "font-semibold",
+						)}
+					>
+						Introduction
+					</Link>
+				</SidebarGroupLabel>
+			</SidebarGroup>
+
+			<SidebarGroup>
+				<SidebarGroupLabel>
+					<Link
+						href="/design-system/components"
+						className={cn(
+							"hover:underline",
+							pathname.startsWith("/design-system/components") && "font-semibold",
+						)}
+					>
+						Components
+					</Link>
+				</SidebarGroupLabel>
+				<SidebarMenu>
+					{components.length === 0 ? (
+						<SidebarMenuItem>
+							<SidebarMenuButton disabled>No components</SidebarMenuButton>
+						</SidebarMenuItem>
+					) : (
+						components.map((component) => {
+							const url = `/design-system/components/${component.name}`;
+							return (
+								<SidebarMenuItem key={component.name}>
+									<SidebarMenuButton
+										tooltip={component.title || component.name}
+										asChild
+										isActive={isActive(url)}
+									>
+										<Link href={url}>
+											<span>{component.title || component.name}</span>
+										</Link>
+									</SidebarMenuButton>
+								</SidebarMenuItem>
+							);
+						})
+					)}
+				</SidebarMenu>
+			</SidebarGroup>
+
+			<SidebarGroup>
+				<SidebarGroupLabel>
+					<Link
+						href="/design-system/blocks"
+						className={cn(
+							"hover:underline",
+							pathname.startsWith("/design-system/blocks") && "font-semibold",
+						)}
+					>
+						Blocks
+					</Link>
+				</SidebarGroupLabel>
+				<SidebarMenu>
+					{blocks.length === 0 ? (
+						<SidebarMenuItem>
+							<SidebarMenuButton disabled>No blocks</SidebarMenuButton>
+						</SidebarMenuItem>
+					) : (
+						blocks.map((block) => {
+							const url = `/design-system/blocks/${block.name}`;
+							return (
+								<SidebarMenuItem key={block.name}>
+									<SidebarMenuButton
+										tooltip={block.title || block.name}
+										asChild
+										isActive={isActive(url)}
+									>
+										<Link href={url}>
+											<span>{block.title || block.name}</span>
+										</Link>
+									</SidebarMenuButton>
+								</SidebarMenuItem>
+							);
+						})
+					)}
+				</SidebarMenu>
+			</SidebarGroup>
+		</>
 	);
 }

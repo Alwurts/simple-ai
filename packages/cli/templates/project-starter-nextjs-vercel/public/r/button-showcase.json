@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-showcase",
+  "type": "registry:block",
+  "title": "Button Showcase",
+  "description": "A comprehensive showcase of button variants, sizes, and states.",
+  "registryDependencies": [
+    "@/components/ui/button"
+  ],
+  "files": [
+    {
+      "path": "./src/ui-registry/registry/blocks/button-showcase.tsx",
+      "content": "import { Button } from \"@/components/ui/button\";\n\nexport default function ButtonShowcase() {\n\treturn (\n\t\t<div className=\"space-y-8 p-8\">\n\t\t\t<div className=\"space-y-4\">\n\t\t\t\t<h2 className=\"text-2xl font-bold\">Button Variants</h2>\n\t\t\t\t<div className=\"flex flex-wrap gap-2\">\n\t\t\t\t\t<Button variant=\"default\">Default</Button>\n\t\t\t\t\t<Button variant=\"secondary\">Secondary</Button>\n\t\t\t\t\t<Button variant=\"outline\">Outline</Button>\n\t\t\t\t\t<Button variant=\"ghost\">Ghost</Button>\n\t\t\t\t\t<Button variant=\"destructive\">Destructive</Button>\n\t\t\t\t\t<Button variant=\"link\">Link</Button>\n\t\t\t\t</div>\n\t\t\t</div>\n\n\t\t\t<div className=\"space-y-4\">\n\t\t\t\t<h2 className=\"text-2xl font-bold\">Button Sizes</h2>\n\t\t\t\t<div className=\"flex flex-wrap items-center gap-2\">\n\t\t\t\t\t<Button size=\"sm\">Small</Button>\n\t\t\t\t\t<Button size=\"default\">Default</Button>\n\t\t\t\t\t<Button size=\"lg\">Large</Button>\n\t\t\t\t\t<Button size=\"icon\" variant=\"outline\">\n\t\t\t\t\t\t⚙️\n\t\t\t\t\t</Button>\n\t\t\t\t</div>\n\t\t\t</div>\n\n\t\t\t<div className=\"space-y-4\">\n\t\t\t\t<h2 className=\"text-2xl font-bold\">Button States</h2>\n\t\t\t\t<div className=\"flex flex-wrap gap-2\">\n\t\t\t\t\t<Button>Enabled</Button>\n\t\t\t\t\t<Button disabled>Disabled</Button>\n\t\t\t\t\t<Button variant=\"outline\">Outline</Button>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:block"
+    }
+  ],
+  "meta": {
+    "container": "p-8"
+  }
+}

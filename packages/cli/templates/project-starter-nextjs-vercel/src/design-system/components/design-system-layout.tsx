@@ -1,27 +1,37 @@
-"use client";
-
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import { DesignSystemSidebar } from "./design-system-sidebar";
+import { getAllRegistryItems } from "@/ui-registry/lib/registry";
+import { DesignSystemLayoutClient } from "./design-system-layout-client";
 
 // --- 1. Global Shell (Layout Wrapper) ---
 
-export function DesignSystemLayout({
+export async function DesignSystemLayout({
 	children,
 	defaultOpen = true,
 }: {
 	children: React.ReactNode;
 	defaultOpen?: boolean;
 }) {
+	const [components, blocks] = await Promise.all([
+		getAllRegistryItems(["registry:ui"]),
+		getAllRegistryItems(["registry:block"]),
+	]);
+
 	return (
-		<SidebarProvider defaultOpen={defaultOpen}>
-			<DesignSystemSidebar />
-			<div className="h-svh relative flex w-full flex-1 flex-col md:peer-data-[variant=inset]:p-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:pl-0 md:peer-data-[variant=inset]:pl-0">
-				<SidebarInset className="overflow-hidden rounded-xl shadow bg-background">
-					{children}
-				</SidebarInset>
-			</div>
-		</SidebarProvider>
+		<DesignSystemLayoutClient
+			defaultOpen={defaultOpen}
+			components={components.map((item) => ({
+				name: item.name,
+				title: item.title,
+				description: item.description,
+			}))}
+			blocks={blocks.map((item) => ({
+				name: item.name,
+				title: item.title,
+				description: item.description,
+			}))}
+		>
+			{children}
+		</DesignSystemLayoutClient>
 	);
 }
 
