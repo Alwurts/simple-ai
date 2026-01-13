@@ -12,6 +12,7 @@ import {
 	ChatInputSubmitButton,
 	useChatInput,
 } from "@/components/ai-elements/chat-input";
+import { useChatContext } from "@/components/chat/parts/chat-layout";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { AIUIMessage } from "@/types/ai";
@@ -19,16 +20,24 @@ import type { AIUIMessage } from "@/types/ai";
 export function ChatInputArea() {
 	const { stop, sendMessage } = useChatActions<AIUIMessage>();
 	const status = useChatStatus();
+	const chatContext = useChatContext();
 
 	const isLoading = status === "streaming" || status === "submitted";
 
 	const handleSendMessage = useCallback(
 		async (content: string) => {
 			try {
-				return await sendMessage({
-					role: "user",
-					parts: [{ type: "text", text: content }],
-				});
+				return await sendMessage(
+					{
+						role: "user",
+						parts: [{ type: "text", text: content }],
+					},
+					{
+						body: {
+							state: chatContext.state,
+						},
+					},
+				);
 			} catch (error) {
 				console.error("Failed to send message:", error);
 
@@ -49,7 +58,7 @@ export function ChatInputArea() {
 				throw error;
 			}
 		},
-		[sendMessage],
+		[sendMessage, chatContext.state],
 	);
 
 	return (

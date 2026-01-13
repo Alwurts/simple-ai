@@ -79,11 +79,11 @@ export function SearchCommand({ open, setOpen }: SearchCommandProps) {
 			// Type-Safe Routing based on Discriminator
 			switch (meta.type) {
 				case "product":
-					router.push(`/inventory/products/${meta.id}`);
+					router.push(`/inventory/${meta.id}`);
 					break;
 
 				case "warehouse":
-					router.push(`/inventory/warehouses`);
+					router.push(`/inventory/warehouses/${meta.id}`);
 					break;
 			}
 		},

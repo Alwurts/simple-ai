@@ -4,9 +4,30 @@ import { Provider, useChat } from "@ai-sdk-tools/store";
 import { useQueryClient } from "@tanstack/react-query";
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithApprovalResponses } from "ai";
 import type { ComponentProps } from "react";
+import { createContext, useContext, useState } from "react";
 import { getAllChatsKey } from "@/hooks/query/use-chat";
 import { cn, createId } from "@/lib/utils";
 import type { AIUIMessage } from "@/types/ai";
+
+interface ChatContextValue {
+	state: string;
+	setState: (state: string) => void;
+}
+
+const ChatContext = createContext<ChatContextValue | null>(null);
+
+export function useChatContext() {
+	const ctx = useContext(ChatContext);
+	if (!ctx) {
+		throw new Error("useChatContext must be used within ChatContextProvider");
+	}
+	return ctx;
+}
+
+function ChatContextProvider({ children }: { children: React.ReactNode }) {
+	const [state, setState] = useState("");
+	return <ChatContext.Provider value={{ state, setState }}>{children}</ChatContext.Provider>;
+}
 
 interface ChatProps extends ComponentProps<"div"> {
 	id: string;
@@ -17,7 +38,9 @@ interface ChatProps extends ComponentProps<"div"> {
 export function Chat({ id, initialMessages = [], ...props }: ChatProps) {
 	return (
 		<Provider key={id} initialMessages={initialMessages}>
-			<ChatInner id={id} initialMessages={initialMessages} {...props} />
+			<ChatContextProvider>
+				<ChatInner id={id} initialMessages={initialMessages} {...props} />
+			</ChatContextProvider>
 		</Provider>
 	);
 }
