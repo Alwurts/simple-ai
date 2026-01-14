@@ -1,12 +1,8 @@
 import { notFound } from "next/navigation";
-import {
-	DesignSystemLayout,
-	DesignSystemLayoutContent,
-	DesignSystemLayoutHeader,
-	DesignSystemLayoutHeaderTitle,
-	DesignSystemLayoutPage,
-} from "@/design-system/components/design-system-layout";
 import { env } from "@/env";
+import { DesignSystemLayout } from "@/ui-registry/components/design-system-layout";
+import { DesignSystemSidebar } from "@/ui-registry/components/design-system-sidebar";
+import { getAllRegistryItems } from "@/ui-registry/lib/registry";
 
 interface DesignSystemLayoutProps {
 	children: React.ReactNode;
@@ -18,16 +14,17 @@ export default async function DesignSystemLayoutWrapper({ children }: DesignSyst
 		notFound();
 	}
 
+	const [components, blocks] = await Promise.all([
+		getAllRegistryItems(["registry:ui"]),
+		getAllRegistryItems(["registry:block"]),
+	]);
+
 	return (
-		<DesignSystemLayout>
-			<DesignSystemLayoutPage>
-				<DesignSystemLayoutHeader>
-					<DesignSystemLayoutHeaderTitle>Design System</DesignSystemLayoutHeaderTitle>
-				</DesignSystemLayoutHeader>
-				<DesignSystemLayoutContent>
-					<div className="container max-w-4xl p-6 md:p-10 min-h-full">{children}</div>
-				</DesignSystemLayoutContent>
-			</DesignSystemLayoutPage>
+		<DesignSystemLayout
+			sidebar={<DesignSystemSidebar components={components} blocks={blocks} />}
+			defaultOpen={true}
+		>
+			{children}
 		</DesignSystemLayout>
 	);
 }

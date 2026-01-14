@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { z } from "zod";
-import { BlockDisplay } from "@/ui-registry/components/block-display";
+import { ComponentPreview } from "@/ui-registry/components/component-display";
 import { getAllRegistryItemIds, getRegistryItem } from "@/ui-registry/lib/registry";
-import { registryItemSchema } from "@/ui-registry/registry/schema";
 
 export const revalidate = false;
 export const dynamic = "force-dynamic";
@@ -61,15 +59,11 @@ export default async function ComponentPage({
 	return (
 		<div className="space-y-8">
 			<div className="space-y-4">
-				<h1 className="scroll-m-20 text-4xl font-bold tracking-tight">
-					{item.title || item.name}
-				</h1>
-				{item.description && (
-					<p className="text-lg text-muted-foreground">{item.description}</p>
-				)}
+				<h1 className="scroll-m-20 text-4xl font-bold tracking-tight">{item.title || item.name}</h1>
+				{item.description && <p className="text-lg text-muted-foreground">{item.description}</p>}
 			</div>
 
-			<BlockDisplay name={name} />
+			<ComponentPreview name={name} />
 		</div>
 	);
 }

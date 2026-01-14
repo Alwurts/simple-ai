@@ -5,6 +5,7 @@ import {
 	ChevronRight,
 	Clipboard,
 	File,
+	FileCode,
 	Folder,
 	Fullscreen,
 	Monitor,
@@ -36,7 +37,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
 import { useCopyToClipboard } from "@/ui-registry/hooks/use-copy-to-clipboard";
-import { getIconForLanguageExtension } from "@/ui-registry/lib/get-icon-for-language";
 import type { createFileTreeForRegistryItemFiles, FileTree } from "@/ui-registry/lib/registry";
 import type { registryItemFileSchema, registryItemSchema } from "@/ui-registry/registry/schema";
 
@@ -255,8 +255,6 @@ function BlockViewerCode() {
 		return null;
 	}
 
-	const language = file.path.split(".").pop() ?? "tsx";
-
 	return (
 		<div className="bg-code text-code-foreground mr-[14px] flex overflow-hidden rounded-xl border group-data-[view=preview]/block-view-wrapper:hidden md:h-[--height]">
 			<div className="w-72">
@@ -264,7 +262,7 @@ function BlockViewerCode() {
 			</div>
 			<figure className="mx-0 mt-0 flex min-w-0 flex-1 flex-col rounded-xl border-none">
 				<figcaption className="text-code-foreground flex h-12 shrink-0 items-center gap-2 border-b px-4 py-2 [&_svg]:size-4 [&_svg]:opacity-70">
-					{getIconForLanguageExtension(language)}
+					<FileCode className="size-4" />
 					{file.target}
 					<div className="ml-auto flex items-center gap-2">
 						<BlockCopyCodeButton />

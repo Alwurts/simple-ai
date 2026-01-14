@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-link",
+  "type": "registry:example",
+  "title": "Link Button",
+  "description": "A button styled to look like a text link.",
+  "registryDependencies": [
+    "@/components/ui/button"
+  ],
+  "files": [
+    {
+      "path": "./src/ui-registry/registry/examples/button-link.tsx",
+      "content": "import { Button } from \"@/components/ui/button\";\n\nexport default function ButtonLinkExample() {\n\treturn <Button variant=\"link\">Link Button</Button>;\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ],
+  "meta": {},
+  "categories": [
+    "button"
+  ]
+}

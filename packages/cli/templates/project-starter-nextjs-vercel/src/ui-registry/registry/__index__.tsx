@@ -5,24 +5,6 @@
 import * as React from "react"
 
 export const Index: Record<string, any> = {
-  "button": {
-    name: "button",
-    description: "Displays a button or a component that looks like a button.",
-    type: "registry:ui",
-    registryDependencies: ["@/components/ui/button"],
-    files: [{
-      path: "./src/ui-registry/registry/ui/button.tsx",
-      type: "registry:ui",
-      target: ""
-    }],
-    component: React.lazy(async () => {
-      const mod = await import("@/ui-registry/registry/ui/button.tsx")
-      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || "button"
-      return { default: mod.default || mod[exportName] }
-    }),
-    categories: [],
-    meta: {},
-  },
   "button-showcase": {
     name: "button-showcase",
     description: "A comprehensive showcase of button variants, sizes, and states.",
@@ -40,5 +22,113 @@ export const Index: Record<string, any> = {
     }),
     categories: [],
     meta: {"container":"p-8"},
+  },
+  "button-default": {
+    name: "button-default",
+    description: "A standard button with the default styling.",
+    type: "registry:example",
+    registryDependencies: ["@/components/ui/button"],
+    files: [{
+      path: "./src/ui-registry/registry/examples/button-default.tsx",
+      type: "registry:ui",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/ui-registry/registry/examples/button-default.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || "button-default"
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: ["button"],
+    meta: {},
+  },
+  "button-secondary": {
+    name: "button-secondary",
+    description: "A secondary button with muted styling.",
+    type: "registry:example",
+    registryDependencies: ["@/components/ui/button"],
+    files: [{
+      path: "./src/ui-registry/registry/examples/button-secondary.tsx",
+      type: "registry:ui",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/ui-registry/registry/examples/button-secondary.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || "button-secondary"
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: ["button"],
+    meta: {},
+  },
+  "button-outline": {
+    name: "button-outline",
+    description: "A button with an outline border and transparent background.",
+    type: "registry:example",
+    registryDependencies: ["@/components/ui/button"],
+    files: [{
+      path: "./src/ui-registry/registry/examples/button-outline.tsx",
+      type: "registry:ui",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/ui-registry/registry/examples/button-outline.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || "button-outline"
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: ["button"],
+    meta: {},
+  },
+  "button-ghost": {
+    name: "button-ghost",
+    description: "A subtle button with minimal styling.",
+    type: "registry:example",
+    registryDependencies: ["@/components/ui/button"],
+    files: [{
+      path: "./src/ui-registry/registry/examples/button-ghost.tsx",
+      type: "registry:ui",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/ui-registry/registry/examples/button-ghost.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || "button-ghost"
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: ["button"],
+    meta: {},
+  },
+  "button-destructive": {
+    name: "button-destructive",
+    description: "A button for destructive actions, typically red.",
+    type: "registry:example",
+    registryDependencies: ["@/components/ui/button"],
+    files: [{
+      path: "./src/ui-registry/registry/examples/button-destructive.tsx",
+      type: "registry:ui",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/ui-registry/registry/examples/button-destructive.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || "button-destructive"
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: ["button"],
+    meta: {},
+  },
+  "button-link": {
+    name: "button-link",
+    description: "A button styled to look like a text link.",
+    type: "registry:example",
+    registryDependencies: ["@/components/ui/button"],
+    files: [{
+      path: "./src/ui-registry/registry/examples/button-link.tsx",
+      type: "registry:ui",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/ui-registry/registry/examples/button-link.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || "button-link"
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: ["button"],
+    meta: {},
   },
 }

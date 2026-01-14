@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-ghost",
+  "type": "registry:example",
+  "title": "Ghost Button",
+  "description": "A subtle button with minimal styling.",
+  "registryDependencies": [
+    "@/components/ui/button"
+  ],
+  "files": [
+    {
+      "path": "./src/ui-registry/registry/examples/button-ghost.tsx",
+      "content": "import { Button } from \"@/components/ui/button\";\n\nexport default function ButtonGhostExample() {\n\treturn <Button variant=\"ghost\">Ghost Button</Button>;\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ],
+  "meta": {},
+  "categories": [
+    "button"
+  ]
+}

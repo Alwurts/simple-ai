@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-outline",
+  "type": "registry:example",
+  "title": "Outline Button",
+  "description": "A button with an outline border and transparent background.",
+  "registryDependencies": [
+    "@/components/ui/button"
+  ],
+  "files": [
+    {
+      "path": "./src/ui-registry/registry/examples/button-outline.tsx",
+      "content": "import { Button } from \"@/components/ui/button\";\n\nexport default function ButtonOutlineExample() {\n\treturn <Button variant=\"outline\">Outline Button</Button>;\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ],
+  "meta": {},
+  "categories": [
+    "button"
+  ]
+}

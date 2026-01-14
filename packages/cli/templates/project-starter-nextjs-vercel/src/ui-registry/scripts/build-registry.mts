@@ -29,7 +29,10 @@ import * as React from "react"
 
 export const Index: Record<string, any> = {`;
 
-	for (const item of registry.items) {
+	// Use registry items (examples are already included)
+	const allItems = registry.items;
+
+	for (const item of allItems) {
 		const resolveFiles = item.files?.map((file) => `registry/${file.path}`);
 		if (!resolveFiles || item.files?.length === 0) {
 			continue;
@@ -72,7 +75,7 @@ export const Index: Record<string, any> = {`;
 	index += `
 }`;
 
-	console.log(`#️⃣  ${registry.items.length} items found`);
+	console.log(`#️⃣  ${allItems.length} items found`);
 
 	const indexPath = path.join(REGISTRY_ROOT, "registry/__index__.tsx");
 	await rimraf(indexPath);

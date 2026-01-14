@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "button-secondary",
+  "type": "registry:example",
+  "title": "Secondary Button",
+  "description": "A secondary button with muted styling.",
+  "registryDependencies": [
+    "@/components/ui/button"
+  ],
+  "files": [
+    {
+      "path": "./src/ui-registry/registry/examples/button-secondary.tsx",
+      "content": "import { Button } from \"@/components/ui/button\";\n\nexport default function ButtonSecondaryExample() {\n\treturn <Button variant=\"secondary\">Secondary Button</Button>;\n}\n",
+      "type": "registry:ui",
+      "target": ""
+    }
+  ],
+  "meta": {},
+  "categories": [
+    "button"
+  ]
+}
