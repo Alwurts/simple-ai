@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { AppBlockPage } from "@/ui-registry/components/pages/app-blocks-page";
+import { DesignSystemBlockPage } from "@/ui-registry/components/pages/design-system-blocks-page";
 import { getAllRegistryItemIds, getRegistryItem } from "@/ui-registry/lib/registry";
 
 export const revalidate = false;
@@ -57,6 +57,10 @@ export default async function BlockPage({
 	}
 
 	return (
-		<AppBlockPage name={name} title={item.title || item.name} description={item.description} />
+		<DesignSystemBlockPage
+			name={name}
+			title={item.title || item.name}
+			description={item.description}
+		/>
 	);
 }

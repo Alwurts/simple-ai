@@ -194,7 +194,7 @@ function BlockViewerIframe({ className }: { className?: string }) {
 		<iframe
 			title="Block Preview"
 			key={iframeKey}
-			src={`/view/${item.name}`}
+			src={`/design-system/view/${item.name}`}
 			height={item.meta?.iframeHeight ?? 930}
 			loading="lazy"
 			className={cn("bg-background no-scrollbar relative z-20 w-full", className)}

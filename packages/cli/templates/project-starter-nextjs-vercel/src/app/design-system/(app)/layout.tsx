@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 import { env } from "@/env";
-import { DesignSystemLayout } from "@/ui-registry/components/design-system-layout";
-import { DesignSystemSidebar } from "@/ui-registry/components/design-system-sidebar";
+import { DesignSystemLayoutPage } from "@/ui-registry/components/pages/design-system-layout";
 import { getAllRegistryItems } from "@/ui-registry/lib/registry";
 
 interface DesignSystemLayoutProps {
@@ -19,15 +18,9 @@ export default async function DesignSystemLayoutWrapper({ children }: DesignSyst
 		getAllRegistryItems(["registry:block"]),
 	]);
 
-	console.log("components", components);
-	console.log("blocks", blocks);
-
 	return (
-		<DesignSystemLayout
-			sidebar={<DesignSystemSidebar components={components} blocks={blocks} />}
-			defaultOpen={true}
-		>
+		<DesignSystemLayoutPage components={components} blocks={blocks}>
 			{children}
-		</DesignSystemLayout>
+		</DesignSystemLayoutPage>
 	);
 }

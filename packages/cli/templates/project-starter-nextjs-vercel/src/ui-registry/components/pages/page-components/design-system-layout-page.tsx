@@ -1,7 +1,10 @@
 import { BlockDisplay } from "@/ui-registry/components/block-display";
-import { DesignSystemLayoutContent, DesignSystemLayoutPage } from "../design-system-layout";
+import {
+	DesignSystemLayoutContent,
+	DesignSystemLayoutPage,
+} from "@/ui-registry/components/design-system-layout";
 
-export function AppLayoutExamples() {
+export function DesignSystemLayoutExamples() {
 	return (
 		<DesignSystemLayoutPage>
 			<DesignSystemLayoutContent>

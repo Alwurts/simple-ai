@@ -1,7 +1,7 @@
 import { BlockDisplay } from "../block-display";
 import { DesignSystemLayoutContent, DesignSystemLayoutPage } from "../design-system-layout";
 
-export function AppBlockPage({
+export function DesignSystemBlockPage({
 	name,
 	title,
 	description,
