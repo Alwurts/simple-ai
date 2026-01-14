@@ -6,12 +6,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { CreateProductDialog } from "@/components/inventory/create-product-dialog";
 import { MovementForm, type MovementFormValues } from "@/components/inventory/movement-form";
-import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
-import {
-	AppLayoutHeader,
-	AppLayoutHeaderActions,
-	AppLayoutPage,
-} from "@/components/layout/app-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -30,9 +24,14 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import { useCreateMovement, useProducts } from "@/hooks/query/use-products";
 import type { Product } from "@/types/products";
+import { AppBreadcrumbs } from "@/ui-registry/registry/ui/app-breadcrumbs";
+import {
+	AppLayoutHeader,
+	AppLayoutHeaderActions,
+	AppLayoutPage,
+} from "@/ui-registry/registry/ui/app-layout";
 import { DataTable } from "../../../components/ui/data-table";
 
 export default function InventoryPage() {

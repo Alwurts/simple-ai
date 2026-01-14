@@ -1,6 +1,6 @@
 [
 	{
-		"name": "button-showcase",
-		"description": "A comprehensive showcase of button variants, sizes, and states."
+		"name": "app-01",
+		"description": "An example app layout with a sidebar and a main content area."
 	}
 ]

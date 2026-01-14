@@ -3,20 +3,47 @@
 	"homepage": "https://your-project.dev",
 	"items": [
 		{
-			"name": "button-showcase",
-			"type": "registry:block",
-			"title": "Button Showcase",
-			"description": "A comprehensive showcase of button variants, sizes, and states.",
-			"registryDependencies": ["@/components/ui/button"],
+			"name": "app-layout",
+			"type": "registry:ui",
+			"title": "App Layout",
+			"description": "A comprehensive layout system with sidebar navigation, resizable panels, and organized content areas.",
+			"registryDependencies": ["button", "resizable", "separator", "sidebar"],
 			"files": [
 				{
-					"path": "./src/ui-registry/registry/blocks/button-showcase.tsx",
+					"path": "./src/ui-registry/registry/ui/app-layout.tsx",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "app-breadcrumbs",
+			"type": "registry:ui",
+			"title": "App Breadcrumbs",
+			"description": "A breadcrumb component for the application.",
+			"registryDependencies": ["breadcrumb"],
+			"files": [
+				{
+					"path": "./src/ui-registry/registry/ui/app-breadcrumbs.tsx",
+					"type": "registry:ui"
+				}
+			]
+		},
+		{
+			"name": "app-01",
+			"type": "registry:block",
+			"title": "App 01",
+			"description": "An example app layout with a sidebar and a main content area.",
+			"registryDependencies": ["button"],
+			"files": [
+				{
+					"path": "./src/ui-registry/registry/blocks/app-01/page.tsx",
+					"type": "registry:block"
+				},
+				{
+					"path": "./src/ui-registry/registry/blocks/app-01/components/app-sidebar.tsx",
 					"type": "registry:block"
 				}
-			],
-			"meta": {
-				"container": "p-8"
-			}
+			]
 		},
 		{
 			"name": "button-default",

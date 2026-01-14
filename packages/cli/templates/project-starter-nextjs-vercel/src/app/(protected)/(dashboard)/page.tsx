@@ -4,7 +4,7 @@ import { InventoryValueChart } from "@/components/dashboard/inventory-value-char
 import { LowStockAlerts } from "@/components/dashboard/low-stock-alerts";
 import { StockStatusChart } from "@/components/dashboard/stock-status-chart";
 import { StockTrendsChart } from "@/components/dashboard/stock-trends-chart";
-import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
+import { AppBreadcrumbs } from "@/ui-registry/registry/ui/app-breadcrumbs";
 import {
 	AppLayoutHeader,
 	AppLayoutHeaderActions,
@@ -13,7 +13,7 @@ import {
 	AppLayoutResizablePanelPrimary,
 	AppLayoutResizablePanelSecondary,
 	AppLayoutResizablePanelTrigger,
-} from "@/components/layout/app-layout";
+} from "@/ui-registry/registry/ui/app-layout";
 
 export default function DashboardPage() {
 	return (

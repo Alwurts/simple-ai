@@ -1,7 +1,8 @@
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { AppLayout } from "@/components/layout/app-layout";
+import { AppSidebar } from "@/components/layout/app-sidebar";
 import { auth } from "@/lib/auth";
+import { AppLayout } from "@/ui-registry/registry/ui/app-layout";
 
 export default async function ProtectedLayout({
 	children,
@@ -20,5 +21,9 @@ export default async function ProtectedLayout({
 		redirect("/login");
 	}
 
-	return <AppLayout defaultOpen={defaultOpen}>{children}</AppLayout>;
+	return (
+		<AppLayout defaultOpen={defaultOpen} sidebar={<AppSidebar />}>
+			{children}
+		</AppLayout>
+	);
 }

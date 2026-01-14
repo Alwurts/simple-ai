@@ -7,12 +7,6 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { MovementForm, type MovementFormValues } from "@/components/inventory/movement-form";
 import { ProductForm, type ProductFormValues } from "@/components/inventory/product-form";
-import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
-import {
-	AppLayoutHeader,
-	AppLayoutHeaderActions,
-	AppLayoutPage,
-} from "@/components/layout/app-layout";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -50,6 +44,12 @@ import {
 	useUpdateProduct,
 } from "@/hooks/query/use-products";
 import type { Movement } from "@/types/products";
+import { AppBreadcrumbs } from "@/ui-registry/registry/ui/app-breadcrumbs";
+import {
+	AppLayoutHeader,
+	AppLayoutHeaderActions,
+	AppLayoutPage,
+} from "@/ui-registry/registry/ui/app-layout";
 
 export default function ProductPage() {
 	const [isEditing, setIsEditing] = useState(false);

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "app-breadcrumbs",
+  "type": "registry:ui",
+  "title": "App Breadcrumbs",
+  "description": "A breadcrumb component for the application.",
+  "registryDependencies": [
+    "breadcrumb"
+  ],
+  "files": [
+    {
+      "path": "./src/ui-registry/registry/ui/app-breadcrumbs.tsx",
+      "content": "\"use client\";\n\nimport Link from \"next/link\";\nimport { Fragment } from \"react\";\nimport {\n\tBreadcrumb,\n\tBreadcrumbItem,\n\tBreadcrumbLink,\n\tBreadcrumbList,\n\tBreadcrumbPage,\n\tBreadcrumbSeparator,\n} from \"@/components/ui/breadcrumb\";\n\nexport type AppBreadcrumbItem = {\n\ttitle: string;\n\thref?: string;\n};\n\ninterface AppBreadcrumbsProps {\n\titems?: AppBreadcrumbItem[];\n\tshowHome?: boolean;\n}\n\n/**\n * A standard breadcrumb component for the application.\n * Automatically handles separators and distinguishes between links and current page.\n *\n * @param items - Array of breadcrumb items. Each item has a title and optional href.\n * @param showHome - Whether to show the \"Home\" root item. Defaults to true.\n */\nexport function AppBreadcrumbs({ items = [], showHome = true }: AppBreadcrumbsProps) {\n\treturn (\n\t\t<Breadcrumb>\n\t\t\t<BreadcrumbList>\n\t\t\t\t{showHome && (\n\t\t\t\t\t<BreadcrumbItem>\n\t\t\t\t\t\t<BreadcrumbLink asChild>\n\t\t\t\t\t\t\t<Link href=\"/\">Home</Link>\n\t\t\t\t\t\t</BreadcrumbLink>\n\t\t\t\t\t</BreadcrumbItem>\n\t\t\t\t)}\n\n\t\t\t\t{items.map((item, index) => {\n\t\t\t\t\tconst isLast = index === items.length - 1;\n\n\t\t\t\t\treturn (\n\t\t\t\t\t\t<Fragment key={`${item.title}-${index}`}>\n\t\t\t\t\t\t\t{(showHome || index > 0) && <BreadcrumbSeparator />}\n\t\t\t\t\t\t\t<BreadcrumbItem>\n\t\t\t\t\t\t\t\t{item.href && !isLast ? (\n\t\t\t\t\t\t\t\t\t<BreadcrumbLink asChild>\n\t\t\t\t\t\t\t\t\t\t<Link href={item.href}>{item.title}</Link>\n\t\t\t\t\t\t\t\t\t</BreadcrumbLink>\n\t\t\t\t\t\t\t\t) : (\n\t\t\t\t\t\t\t\t\t<BreadcrumbPage>{item.title}</BreadcrumbPage>\n\t\t\t\t\t\t\t\t)}\n\t\t\t\t\t\t\t</BreadcrumbItem>\n\t\t\t\t\t\t</Fragment>\n\t\t\t\t\t);\n\t\t\t\t})}\n\t\t\t</BreadcrumbList>\n\t\t</Breadcrumb>\n\t);\n}\n",
+      "type": "registry:ui"
+    }
+  ]
+}

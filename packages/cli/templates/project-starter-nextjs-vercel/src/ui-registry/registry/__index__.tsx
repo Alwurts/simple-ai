@@ -5,23 +5,63 @@
 import * as React from "react"
 
 export const Index: Record<string, any> = {
-  "button-showcase": {
-    name: "button-showcase",
-    description: "A comprehensive showcase of button variants, sizes, and states.",
-    type: "registry:block",
-    registryDependencies: ["@/components/ui/button"],
+  "app-layout": {
+    name: "app-layout",
+    description: "A comprehensive layout system with sidebar navigation, resizable panels, and organized content areas.",
+    type: "registry:ui",
+    registryDependencies: ["button","resizable","separator","sidebar"],
     files: [{
-      path: "./src/ui-registry/registry/blocks/button-showcase.tsx",
+      path: "./src/ui-registry/registry/ui/app-layout.tsx",
+      type: "registry:ui",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/ui-registry/registry/ui/app-layout.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || "app-layout"
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: [],
+    meta: {},
+  },
+  "app-breadcrumbs": {
+    name: "app-breadcrumbs",
+    description: "A breadcrumb component for the application.",
+    type: "registry:ui",
+    registryDependencies: ["breadcrumb"],
+    files: [{
+      path: "./src/ui-registry/registry/ui/app-breadcrumbs.tsx",
+      type: "registry:ui",
+      target: ""
+    }],
+    component: React.lazy(async () => {
+      const mod = await import("@/ui-registry/registry/ui/app-breadcrumbs.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || "app-breadcrumbs"
+      return { default: mod.default || mod[exportName] }
+    }),
+    categories: [],
+    meta: {},
+  },
+  "app-01": {
+    name: "app-01",
+    description: "An example app layout with a sidebar and a main content area.",
+    type: "registry:block",
+    registryDependencies: ["button"],
+    files: [{
+      path: "./src/ui-registry/registry/blocks/app-01/page.tsx",
+      type: "registry:block",
+      target: ""
+    },{
+      path: "./src/ui-registry/registry/blocks/app-01/components/app-sidebar.tsx",
       type: "registry:block",
       target: ""
     }],
     component: React.lazy(async () => {
-      const mod = await import("@/ui-registry/registry/blocks/button-showcase.tsx")
-      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || "button-showcase"
+      const mod = await import("@/ui-registry/registry/blocks/app-01/page.tsx")
+      const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || "app-01"
       return { default: mod.default || mod[exportName] }
     }),
     categories: [],
-    meta: {"container":"p-8"},
+    meta: {},
   },
   "button-default": {
     name: "button-default",

@@ -19,6 +19,9 @@ export default async function DesignSystemLayoutWrapper({ children }: DesignSyst
 		getAllRegistryItems(["registry:block"]),
 	]);
 
+	console.log("components", components);
+	console.log("blocks", blocks);
+
 	return (
 		<DesignSystemLayout
 			sidebar={<DesignSystemSidebar components={components} blocks={blocks} />}

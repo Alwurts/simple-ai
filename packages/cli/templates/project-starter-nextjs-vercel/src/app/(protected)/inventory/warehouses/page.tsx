@@ -4,12 +4,6 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MapPin, MoreHorizontal, Star } from "lucide-react";
 import Link from "next/link";
 import { CreateWarehouseDialog } from "@/components/inventory/create-warehouse-dialog";
-import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
-import {
-	AppLayoutHeader,
-	AppLayoutHeaderActions,
-	AppLayoutPage,
-} from "@/components/layout/app-layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DataTable } from "@/components/ui/data-table";
@@ -23,6 +17,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useWarehouses } from "@/hooks/query/use-warehouses";
 import type { Warehouse } from "@/types/warehouses";
+import { AppBreadcrumbs } from "@/ui-registry/registry/ui/app-breadcrumbs";
+import {
+	AppLayoutHeader,
+	AppLayoutHeaderActions,
+	AppLayoutPage,
+} from "@/ui-registry/registry/ui/app-layout";
 
 export default function WarehousesPage() {
 	const { data: warehouses, isLoading } = useWarehouses();

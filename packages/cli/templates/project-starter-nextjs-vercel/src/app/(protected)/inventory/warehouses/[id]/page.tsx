@@ -5,12 +5,6 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { WarehouseForm, type WarehouseFormValues } from "@/components/inventory/warehouse-form";
-import { AppBreadcrumbs } from "@/components/layout/app-breadcrumbs";
-import {
-	AppLayoutHeader,
-	AppLayoutHeaderActions,
-	AppLayoutPage,
-} from "@/components/layout/app-layout";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -25,6 +19,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDeleteWarehouse, useUpdateWarehouse, useWarehouse } from "@/hooks/query/use-warehouses";
+import { AppBreadcrumbs } from "@/ui-registry/registry/ui/app-breadcrumbs";
+import {
+	AppLayoutHeader,
+	AppLayoutHeaderActions,
+	AppLayoutPage,
+} from "@/ui-registry/registry/ui/app-layout";
 
 export default function WarehouseDetailPage() {
 	const [isEditing, setIsEditing] = useState(false);

@@ -7,20 +7,21 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import { AppSidebar } from "./app-sidebar";
 
 // --- 1. Global Shell (Layout Wrapper) ---
 
 export function AppLayout({
 	children,
+	sidebar,
 	defaultOpen = true,
 }: {
 	children: React.ReactNode;
+	sidebar: React.ReactNode;
 	defaultOpen?: boolean;
 }) {
 	return (
 		<SidebarProvider defaultOpen={defaultOpen}>
-			<AppSidebar />
+			{sidebar}
 			<div className="h-svh relative flex w-full flex-1 flex-col md:peer-data-[variant=inset]:p-2 md:peer-data-[state=collapsed]:peer-data-[variant=inset]:pl-0 md:peer-data-[variant=inset]:pl-0">
 				<SidebarInset className="overflow-hidden rounded-xl shadow bg-background">
 					{children}

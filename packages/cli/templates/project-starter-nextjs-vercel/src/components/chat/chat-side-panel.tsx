@@ -3,10 +3,9 @@
 import { Plus } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
-
-import { AppLayoutHeader } from "@/components/layout/app-layout";
 import { Button } from "@/components/ui/button";
 import { useChatClientLogic } from "@/hooks/use-chat-client-logic";
+import { AppLayoutHeader } from "@/ui-registry/registry/ui/app-layout";
 import { ChatInterface } from "./chat-interface";
 import { ChatHistory } from "./parts/chat-history";
 

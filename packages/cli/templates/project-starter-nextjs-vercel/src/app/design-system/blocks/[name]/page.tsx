@@ -57,7 +57,7 @@ export default async function BlockPage({
 	}
 
 	return (
-		<div className="space-y-8">
+		<div className="space-y-8 p-8">
 			<div className="space-y-4">
 				<h1 className="scroll-m-20 text-4xl font-bold tracking-tight">{item.title || item.name}</h1>
 				{item.description && <p className="text-lg text-muted-foreground">{item.description}</p>}
