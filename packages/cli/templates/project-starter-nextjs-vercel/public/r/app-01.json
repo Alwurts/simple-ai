@@ -10,7 +10,7 @@
   "files": [
     {
       "path": "./src/ui-registry/registry/blocks/app-01/page.tsx",
-      "content": "import { Plus } from \"lucide-react\";\nimport { Button } from \"@/components/ui/button\";\nimport {\n\tAppLayout,\n\tAppLayoutContent,\n\tAppLayoutHeader,\n\tAppLayoutHeaderActions,\n\tAppLayoutHeaderTitle,\n\tAppLayoutPage,\n} from \"@/ui-registry/registry/ui/app-layout\";\n\nexport default function Page() {\n\treturn (\n\t\t<AppLayout sidebar={<div>Sidebar</div>}>\n\t\t\t<AppLayoutPage>\n\t\t\t\t<AppLayoutHeader>\n\t\t\t\t\t<AppLayoutHeaderTitle>App 01</AppLayoutHeaderTitle>\n\t\t\t\t\t<AppLayoutHeaderActions>\n\t\t\t\t\t\t<Button variant=\"outline\" size=\"icon\">\n\t\t\t\t\t\t\t<Plus />\n\t\t\t\t\t\t</Button>\n\t\t\t\t\t</AppLayoutHeaderActions>\n\t\t\t\t</AppLayoutHeader>\n\t\t\t\t<AppLayoutContent>\n\t\t\t\t\t<div>Hey</div>\n\t\t\t\t</AppLayoutContent>\n\t\t\t</AppLayoutPage>\n\t\t</AppLayout>\n\t);\n}\n",
+      "content": "import { AppSidebar } from \"@/ui-registry/registry/blocks/app-01/components/app-sidebar\";\nimport {\n\tAppLayout,\n\tAppLayoutContent,\n\tAppLayoutHeader,\n\tAppLayoutPage,\n} from \"@/ui-registry/registry/ui/app-layout\";\nimport { AppBreadcrumbs } from \"../../ui/app-breadcrumbs\";\n\nexport default function Page() {\n\treturn (\n\t\t<AppLayout sidebar={<AppSidebar />}>\n\t\t\t<AppLayoutPage>\n\t\t\t\t<AppLayoutHeader>\n\t\t\t\t\t<AppBreadcrumbs />\n\t\t\t\t</AppLayoutHeader>\n\t\t\t\t<AppLayoutContent>\n\t\t\t\t\t<div>Hey</div>\n\t\t\t\t</AppLayoutContent>\n\t\t\t</AppLayoutPage>\n\t\t</AppLayout>\n\t);\n}\n",
       "type": "registry:block"
     },
     {

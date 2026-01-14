@@ -1,25 +1,18 @@
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { AppSidebar } from "@/ui-registry/registry/blocks/app-01/components/app-sidebar";
 import {
 	AppLayout,
 	AppLayoutContent,
 	AppLayoutHeader,
-	AppLayoutHeaderActions,
-	AppLayoutHeaderTitle,
 	AppLayoutPage,
 } from "@/ui-registry/registry/ui/app-layout";
+import { AppBreadcrumbs } from "../../ui/app-breadcrumbs";
 
 export default function Page() {
 	return (
-		<AppLayout sidebar={<div>Sidebar</div>}>
+		<AppLayout sidebar={<AppSidebar />}>
 			<AppLayoutPage>
 				<AppLayoutHeader>
-					<AppLayoutHeaderTitle>App 01</AppLayoutHeaderTitle>
-					<AppLayoutHeaderActions>
-						<Button variant="outline" size="icon">
-							<Plus />
-						</Button>
-					</AppLayoutHeaderActions>
+					<AppBreadcrumbs />
 				</AppLayoutHeader>
 				<AppLayoutContent>
 					<div>Hey</div>

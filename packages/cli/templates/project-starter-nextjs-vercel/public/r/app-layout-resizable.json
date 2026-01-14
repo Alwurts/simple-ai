@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "app-layout-resizable",
+  "type": "registry:example",
+  "title": "Resizable Panels",
+  "description": "Layout with resizable primary and secondary panels",
+  "files": [
+    {
+      "path": "./src/ui-registry/registry/examples/app-layout-resizable.tsx",
+      "content": "\"use client\";\n\nimport { AppSidebar } from \"@/components/layout/app-sidebar\";\nimport {\n\tAppLayout,\n\tAppLayoutContent,\n\tAppLayoutHeader,\n\tAppLayoutHeaderTitle,\n\tAppLayoutPage,\n\tAppLayoutResizable,\n\tAppLayoutResizablePanelPrimary,\n\tAppLayoutResizablePanelSecondary,\n} from \"@/ui-registry/registry/ui/app-layout\";\n\nexport function AppLayoutResizableExample() {\n\treturn (\n\t\t<AppLayout sidebar={<AppSidebar />}>\n\t\t\t<AppLayoutPage>\n\t\t\t\t<AppLayoutHeader>\n\t\t\t\t\t<AppLayoutHeaderTitle>Resizable Layout</AppLayoutHeaderTitle>\n\t\t\t\t</AppLayoutHeader>\n\t\t\t\t<AppLayoutContent>\n\t\t\t\t\t<AppLayoutResizable>\n\t\t\t\t\t\t<AppLayoutResizablePanelPrimary>\n\t\t\t\t\t\t\t<div className=\"p-6\">\n\t\t\t\t\t\t\t\t<h3 className=\"text-lg font-medium\">Main Content</h3>\n\t\t\t\t\t\t\t\t<p>This is the primary resizable panel.</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</AppLayoutResizablePanelPrimary>\n\t\t\t\t\t\t<AppLayoutResizablePanelSecondary id=\"secondary-panel\">\n\t\t\t\t\t\t\t<div className=\"p-6\">\n\t\t\t\t\t\t\t\t<h3 className=\"text-lg font-medium\">Secondary Panel</h3>\n\t\t\t\t\t\t\t\t<p>This panel can be resized and toggled.</p>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</AppLayoutResizablePanelSecondary>\n\t\t\t\t\t</AppLayoutResizable>\n\t\t\t\t</AppLayoutContent>\n\t\t\t</AppLayoutPage>\n\t\t</AppLayout>\n\t);\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { BlockDisplay } from "@/ui-registry/components/block-display";
+import { AppBlockPage } from "@/ui-registry/components/pages/app-blocks-page";
 import { getAllRegistryItemIds, getRegistryItem } from "@/ui-registry/lib/registry";
 
 export const revalidate = false;
@@ -57,13 +57,6 @@ export default async function BlockPage({
 	}
 
 	return (
-		<div className="space-y-8 p-8">
-			<div className="space-y-4">
-				<h1 className="scroll-m-20 text-4xl font-bold tracking-tight">{item.title || item.name}</h1>
-				{item.description && <p className="text-lg text-muted-foreground">{item.description}</p>}
-			</div>
-
-			<BlockDisplay name={name} />
-		</div>
+		<AppBlockPage name={name} title={item.title || item.name} description={item.description} />
 	);
 }

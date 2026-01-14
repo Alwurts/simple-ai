@@ -12,7 +12,6 @@ import {
 	RotateCw,
 	Smartphone,
 	Tablet,
-	Terminal,
 } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
@@ -115,7 +114,6 @@ function BlockViewerProvider({
 
 function BlockViewerToolbar() {
 	const { setView, view, item, resizablePanelRef, setIframeKey } = useBlockViewer();
-	const { copyToClipboard, isCopied } = useCopyToClipboard();
 
 	return (
 		<div className="hidden w-full items-center gap-2 pl-2 md:pr-6 lg:flex">
@@ -184,18 +182,6 @@ function BlockViewerToolbar() {
 						</Button>
 					</ToggleGroup>
 				</div>
-				<Separator orientation="vertical" className="mx-1 h-4" />
-				<Button
-					variant="outline"
-					className="w-fit gap-1 px-2 shadow-none"
-					size="sm"
-					onClick={() => {
-						copyToClipboard(`npx shadcn@latest add @project-starter/${item.name}`);
-					}}
-				>
-					{isCopied ? <Check /> : <Terminal />}
-					<span>npx shadcn add @project-starter/{item.name}</span>
-				</Button>
 			</div>
 		</div>
 	);

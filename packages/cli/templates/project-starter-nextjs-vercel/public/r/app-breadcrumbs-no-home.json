@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "app-breadcrumbs-no-home",
+  "type": "registry:example",
+  "title": "Without Home Link",
+  "description": "Breadcrumbs without the default Home link using showHome=false",
+  "files": [
+    {
+      "path": "./src/ui-registry/registry/examples/app-breadcrumbs-no-home.tsx",
+      "content": "\"use client\";\n\nimport { AppBreadcrumbs } from \"@/ui-registry/registry/ui/app-breadcrumbs\";\n\nexport function AppBreadcrumbsNoHome() {\n\treturn (\n\t\t<div className=\"p-4\">\n\t\t\t<AppBreadcrumbs\n\t\t\t\titems={[{ title: \"Settings\", href: \"/settings\" }, { title: \"Profile\" }]}\n\t\t\t\tshowHome={false}\n\t\t\t/>\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "app-breadcrumbs-home",
+  "type": "registry:example",
+  "title": "With Home Link",
+  "description": "Basic breadcrumbs showing Home link (default behavior)",
+  "files": [
+    {
+      "path": "./src/ui-registry/registry/examples/app-breadcrumbs-home.tsx",
+      "content": "\"use client\";\n\nimport { AppBreadcrumbs } from \"@/ui-registry/registry/ui/app-breadcrumbs\";\n\nexport function AppBreadcrumbsHome() {\n\treturn (\n\t\t<div className=\"p-4\">\n\t\t\t<AppBreadcrumbs items={[{ title: \"Dashboard\" }]} />\n\t\t</div>\n\t);\n}\n",
+      "type": "registry:example"
+    }
+  ]
+}
