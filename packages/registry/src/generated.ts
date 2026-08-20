@@ -25,8 +25,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     name: "chat-page",
     type: "registry:block",
     title: "Chat page",
-    description:
-      "Full-screen assistant chat inside the app shell — transcript, tools, files, mentions, and the simple-ai input.",
+    description: "Full screen chat with tools, files, and mentions.",
     meta: { iframeHeight: 900 },
     component: lazy(() => import("../registry/blocks/chat-page/page")),
   },

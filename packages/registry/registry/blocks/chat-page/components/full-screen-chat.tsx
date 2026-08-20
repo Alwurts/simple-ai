@@ -65,8 +65,7 @@ function EmptyConversation() {
         </EmptyMedia>
         <EmptyTitle>How can I help?</EmptyTitle>
         <EmptyDescription>
-          Ask a question — this block shows a full chat with tools, files, and
-          the simple-ai input.
+          Ask a question to see tools, files, and mentions.
         </EmptyDescription>
       </EmptyHeader>
     </Empty>

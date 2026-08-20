@@ -6,7 +6,7 @@ const def: RegistryItemDef = {
     type: "registry:block",
     title: "Chat page",
     description:
-      "Full-screen assistant chat inside the app shell — transcript, tools, files, mentions, and the simple-ai input.",
+      "Full screen chat with tools, files, and mentions.",
     registryDependencies: [
       "bubble",
       "button",

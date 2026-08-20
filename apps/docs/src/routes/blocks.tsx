@@ -37,21 +37,17 @@ function BlocksPage() {
           </PageHeaderSecondaryButton>
         </PageActions>
       </PageHeader>
-      <div
-        className="container-wrapper section-soft flex-1 md:py-6"
-        id="blocks"
-      >
-        <div className="container">
+      <div className="section-soft flex-1 px-4 md:px-6 md:py-6" id="blocks">
+        <div className="mx-auto w-full max-w-6xl">
           <BlocksGallery />
           <div className="mx-auto mt-16 max-w-2xl pb-16">
             <h2 className="font-medium text-xl tracking-tight">Installation</h2>
             <p className="mt-2 text-muted-foreground text-sm">
-              Copy a block into your app with the shadcn CLI. The chat page
-              pulls in the shell; the app shell is the layout on its own.
+              Copy the full chat page into your app with the shadcn CLI. The
+              CLI also pulls in the shell and chat input.
             </p>
             <pre className="mt-4 overflow-x-auto rounded-lg bg-code p-4 font-mono text-sm">
-              {`npx shadcn@latest add @simple-ai/app-shell
-npx shadcn@latest add @simple-ai/chat-page`}
+              npx shadcn@latest add @simple-ai/chat-page
             </pre>
           </div>
         </div>
