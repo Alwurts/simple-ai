@@ -1,0 +1,42 @@
+---
+title: Introduction
+description: Get started building beautiful, accessible, and performant chat interfaces with simple-ai components.
+---
+
+simple-ai is a shadcn registry: copy the source into your app and own it. v2 is a tight catalog — one chat input, one full-page chat block.
+
+## What's included
+
+- **Chat input** — TipTap composer with typed mentions, streaming status, and an imperative handle.
+- **Chat page** — the full assistant: transcript, tools, files, attachments, and that input.
+
+Everything else from earlier simple-ai (flow diagrams, agents, extra chat primitives) is retired. Use current shadcn and AI Elements for messages, markdown, and tools.
+
+## Install
+
+```bash
+npx shadcn@latest add @simple-ai/chat-input
+npx shadcn@latest add @simple-ai/chat-page
+```
+
+Until `@simple-ai` is back in the official directory, point `components.json` at the hosted registry:
+
+```json
+{
+  "registries": {
+    "@simple-ai": "https://www.simple-ai.dev/r/{name}.json"
+  }
+}
+```
+
+Or install by URL:
+
+```bash
+npx shadcn@latest add https://www.simple-ai.dev/r/chat-input.json
+```
+
+GitHub works too, once this repo's root `registry.json` is on `main`:
+
+```bash
+npx shadcn@latest add Alwurts/simple-ai/chat-input
+```

@@ -1,0 +1,48 @@
+---
+title: Shell
+description: App shell compound layout — sidebar frame, page header row, and main content slot.
+---
+
+<ComponentPreview name="shell" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/shell
+```
+
+The CLI also installs shadcn `sidebar` and `button`. For a full layout page with a sample sidebar, add the [app shell block](/blocks#app-shell).
+
+## Usage
+
+```tsx
+import {
+  Shell,
+  ShellContent,
+  ShellHeader,
+  ShellHeaderActions,
+  ShellHeaderSidebarTrigger,
+  ShellHeaderTitle,
+  ShellInset,
+  ShellPage,
+} from "@/components/ui/shell"
+
+export function Dashboard({ sidebar }: { sidebar: React.ReactNode }) {
+  return (
+    <Shell sidebar={sidebar}>
+      <ShellInset>
+        <ShellPage>
+          <ShellHeader>
+            <ShellHeaderSidebarTrigger className="-ml-1" />
+            <ShellHeaderTitle>Home</ShellHeaderTitle>
+            <ShellHeaderActions>{/* actions */}</ShellHeaderActions>
+          </ShellHeader>
+          <ShellContent>{/* page body */}</ShellContent>
+        </ShellPage>
+      </ShellInset>
+    </Shell>
+  )
+}
+```
+
+`Shell` wraps shadcn `SidebarProvider`. Pass any sidebar as `sidebar` — typically shadcn `Sidebar` with `variant="inset"` and `collapsible="icon"`. Page bodies go in `ShellContent`; chat and split views compose inside `ShellInset` with `ResizablePanelGroup`.

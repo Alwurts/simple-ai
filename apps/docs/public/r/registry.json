@@ -1,0 +1,213 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "simple-ai",
+  "homepage": "https://simple-ai.dev",
+  "items": [
+    {
+      "name": "app-shell",
+      "type": "registry:block",
+      "title": "App shell",
+      "description": "Product layout with a collapsible sidebar, page header, and main content slot.",
+      "registryDependencies": [
+        "button",
+        "empty",
+        "sidebar",
+        "@simple-ai/shell"
+      ],
+      "meta": {
+        "iframeHeight": 720
+      },
+      "files": [
+        {
+          "path": "packages/registry/registry/blocks/app-shell/page.tsx",
+          "type": "registry:page",
+          "target": "src/routes/dashboard.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/app-shell/components/app-sidebar.tsx",
+          "type": "registry:component",
+          "target": "src/features/app-shell/components/app-sidebar.tsx"
+        }
+      ]
+    },
+    {
+      "name": "chat-input",
+      "type": "registry:ui",
+      "title": "Chat Input",
+      "description": "A TipTap chat input with typed mentions, streaming status, and an imperative handle.",
+      "dependencies": [
+        "@tiptap/core",
+        "@tiptap/react",
+        "@tiptap/starter-kit",
+        "@tiptap/extension-mention",
+        "@tiptap/extension-placeholder",
+        "@tiptap/suggestion",
+        "ai"
+      ],
+      "registryDependencies": ["input-group"],
+      "files": [
+        {
+          "path": "packages/registry/registry/components/chat-input/chat-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chat-page",
+      "type": "registry:block",
+      "title": "Chat page",
+      "description": "Full-screen assistant chat inside the app shell — transcript, tools, files, mentions, and the simple-ai input.",
+      "registryDependencies": [
+        "bubble",
+        "button",
+        "chat-token",
+        "collapsible",
+        "dropdown-menu",
+        "empty",
+        "input-group",
+        "message",
+        "message-scroller",
+        "resizable",
+        "sidebar",
+        "@simple-ai/chat-input",
+        "@simple-ai/chat-voice-button",
+        "@simple-ai/reasoning",
+        "@simple-ai/shell",
+        "@simple-ai/tool"
+      ],
+      "dependencies": ["@ai-sdk/react", "@shadcn/helpers", "ai", "streamdown"],
+      "meta": {
+        "iframeHeight": 900
+      },
+      "files": [
+        {
+          "path": "packages/registry/registry/blocks/chat-page/page.tsx",
+          "type": "registry:page",
+          "target": "src/routes/assistant.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/lib/mock-chat-messages.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/mock-chat-messages.ts"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/app-sidebar.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/app-sidebar.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/full-screen-chat.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/full-screen-chat.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/chat-input.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/chat-input.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/chat-message-parts.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/chat-message-parts.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/chat-side-panel.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/chat-side-panel.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/file-explorer-tree.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/file-explorer-tree.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/hooks/use-chat-side-panel.ts",
+          "type": "registry:hook",
+          "target": "src/features/assistant/hooks/use-chat-side-panel.ts"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/lib/mock-workspace-tree.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/mock-workspace-tree.ts"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/lib/mock-members.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/mock-members.ts"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/lib/ai-types.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/ai-types.ts"
+        }
+      ]
+    },
+    {
+      "name": "chat-voice-button",
+      "type": "registry:ui",
+      "title": "Chat Voice Button",
+      "description": "Microphone button for chat composers — records audio and transcribes it.",
+      "dependencies": ["sonner"],
+      "registryDependencies": ["input-group", "sonner"],
+      "files": [
+        {
+          "path": "packages/registry/registry/components/chat-voice-button/chat-voice-button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "reasoning",
+      "type": "registry:ui",
+      "title": "Reasoning",
+      "description": "Collapsible model-thinking block with streaming duration and markdown.",
+      "dependencies": ["motion", "streamdown"],
+      "registryDependencies": ["collapsible"],
+      "files": [
+        {
+          "path": "packages/registry/registry/components/reasoning/reasoning.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/registry/registry/components/reasoning/shimmer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "shell",
+      "type": "registry:ui",
+      "title": "Shell",
+      "description": "App shell compound layout — sidebar frame, page header row, and main content slot.",
+      "registryDependencies": ["button", "sidebar"],
+      "meta": {
+        "fullBleed": true,
+        "iframeHeight": 720
+      },
+      "files": [
+        {
+          "path": "packages/registry/registry/components/shell/shell.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tool",
+      "type": "registry:ui",
+      "title": "Tool",
+      "description": "Collapsible tool-call card — status, parameters, and JSON output.",
+      "dependencies": ["ai", "shiki"],
+      "registryDependencies": ["badge", "button", "collapsible"],
+      "files": [
+        {
+          "path": "packages/registry/registry/components/tool/tool.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "packages/registry/registry/components/tool/code-block.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

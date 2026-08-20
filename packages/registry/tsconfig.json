@@ -1,0 +1,29 @@
+{
+  "extends": "@workspace/tsconfig/react-library-bundler.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "paths": {
+      "@workspace/registry/*": ["./src/*"],
+      "@/components/ui/chat-input": [
+        "./registry/components/chat-input/chat-input.tsx"
+      ],
+      "@/components/ui/shell": ["./registry/components/shell/shell.tsx"],
+      "@/components/ui/reasoning": [
+        "./registry/components/reasoning/reasoning.tsx"
+      ],
+      "@/components/ui/tool": ["./registry/components/tool/tool.tsx"],
+      "@/components/ui/chat-voice-button": [
+        "./registry/components/chat-voice-button/chat-voice-button.tsx"
+      ],
+      "@/components/ui/*": ["../ui/src/components/shadcn/*"],
+      "@/lib/utils": ["../ui/src/lib/utils.ts"]
+    }
+  },
+  "include": [
+    "src",
+    "registry",
+    "scripts",
+    "../tsconfig/css-modules.d.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

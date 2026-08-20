@@ -1,0 +1,22 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.env
+.nitro
+.tanstack
+*.gen.ts
+!routeTree.gen.ts
+.wrangler
+.output
+.vinxi
+__unconfig*
+todos.json
+
+.dev.vars*
+!.dev.vars.example
+!.env.example
+
+# fumadocs-mdx generated collections (regenerated on install/dev/build)
+.source/

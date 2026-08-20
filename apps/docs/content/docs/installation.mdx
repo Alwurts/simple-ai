@@ -1,0 +1,34 @@
+---
+title: Installation
+description: How to install dependencies and structure your app.
+---
+
+## Prerequisites
+
+simple-ai is built on top of [shadcn/ui](https://ui.shadcn.com) with the Base UI style. Start adding simple-ai components to your project after that is set up. The source code is yours.
+
+## CLI
+
+```bash
+npx shadcn@latest add @simple-ai/chat-input
+npx shadcn@latest add @simple-ai/reasoning
+npx shadcn@latest add @simple-ai/tool
+npx shadcn@latest add @simple-ai/chat-voice-button
+npx shadcn@latest add @simple-ai/shell
+npx shadcn@latest add @simple-ai/app-shell
+npx shadcn@latest add @simple-ai/chat-page
+```
+
+`chat-page` depends on `shell`, `chat-input`, `reasoning`, `tool`, and `chat-voice-button`. `app-shell` depends on `shell`. The CLI pulls those in, plus shadcn `sidebar`, `message`, `bubble`, and `message-scroller`.
+
+## Hosted registry
+
+If `@simple-ai` is not in the public directory yet, add this to `components.json`:
+
+```json
+{
+  "registries": {
+    "@simple-ai": "https://www.simple-ai.dev/r/{name}.json"
+  }
+}
+```

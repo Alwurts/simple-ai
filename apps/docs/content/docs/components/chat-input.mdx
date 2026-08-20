@@ -1,0 +1,50 @@
+---
+title: Chat Input
+description: A TipTap chat input with typed mentions, streaming status, and an imperative handle.
+---
+
+<ComponentPreview name="chat-input" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/chat-input
+```
+
+## Usage
+
+```tsx
+import {
+  ChatInput,
+  ChatInputEditor,
+  ChatInputMentionButton,
+  ChatInputSubmitButton,
+} from "@/components/ui/chat-input"
+import { InputGroupAddon } from "@/components/ui/input-group"
+
+export function Composer() {
+  return (
+    <ChatInput
+      mentions={{
+        member: { trigger: "@", items: [{ id: "1", name: "Alice" }] },
+      }}
+      onSubmit={(parsed, { clear, focus }) => {
+        console.log(parsed.text, parsed.member)
+        clear()
+        focus()
+      }}
+      status="ready"
+    >
+      <ChatInputEditor placeholder="Type a message..." />
+      <InputGroupAddon align="block-end">
+        <ChatInputMentionButton />
+        <div className="ml-auto">
+          <ChatInputSubmitButton />
+        </div>
+      </InputGroupAddon>
+    </ChatInput>
+  )
+}
+```
+
+Press Enter to submit, Shift+Enter for a new line. `parsed.text` is the plain string; mention buckets (`parsed.member`, …) are typed from the `mentions` map. Pass `status` from the AI SDK (`ready` / `submitted` / `streaming` / `error`) so the send button becomes stop/spinner.

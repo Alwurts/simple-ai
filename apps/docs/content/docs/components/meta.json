@@ -1,0 +1,4 @@
+{
+  "title": "Components",
+  "pages": ["chat-input", "chat-voice-button", "reasoning", "shell", "tool"]
+}

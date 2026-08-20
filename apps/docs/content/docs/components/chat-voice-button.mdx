@@ -1,0 +1,41 @@
+---
+title: Chat Voice Button
+description: Microphone button for chat composers — records audio and transcribes it.
+---
+
+<ComponentPreview name="chat-voice-button" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/chat-voice-button
+```
+
+The CLI also installs shadcn `input-group` and `sonner`. Mount a `Toaster` in your app for error toasts.
+
+## Usage
+
+```tsx
+import { ChatVoiceButton } from "@/components/ui/chat-voice-button"
+import { InputGroup } from "@/components/ui/input-group"
+
+export function Voice({
+  controller,
+}: {
+  controller: {
+    textInput: {
+      value: string
+      setInput: (value: string) => void
+      clear: () => void
+    }
+  }
+}) {
+  return (
+    <InputGroup>
+      <ChatVoiceButton controller={controller} />
+    </InputGroup>
+  )
+}
+```
+
+By default it `POST`s the recording to `/api/transcribe`. Pass `transcribe={(blob) => ...}` to use your own pipeline, or `transcribeEndpoint` to change the URL.

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "app-shell",
+  "title": "App shell",
+  "description": "Product layout with a collapsible sidebar, page header, and main content slot.",
+  "registryDependencies": [
+    "button",
+    "empty",
+    "sidebar",
+    "@simple-ai/shell"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/registry/blocks/app-shell/page.tsx",
+      "content": "\"use client\";\n\nimport { LayoutDashboardIcon } from \"lucide-react\";\nimport { Button } from \"@/components/ui/button\";\nimport {\n  Empty,\n  EmptyDescription,\n  EmptyHeader,\n  EmptyMedia,\n  EmptyTitle,\n} from \"@/components/ui/empty\";\nimport {\n  Shell,\n  ShellContent,\n  ShellHeader,\n  ShellHeaderActions,\n  ShellHeaderSidebarTrigger,\n  ShellHeaderTitle,\n  ShellInset,\n  ShellPage,\n} from \"@/components/ui/shell\";\nimport { AppSidebar } from \"./components/app-sidebar\";\n\nexport default function AppShellPage() {\n  return (\n    <Shell sidebar={<AppSidebar activeId=\"home\" />}>\n      <ShellInset>\n        <ShellPage>\n          <ShellHeader>\n            <ShellHeaderSidebarTrigger className=\"-ml-1\" />\n            <ShellHeaderTitle>Home</ShellHeaderTitle>\n            <ShellHeaderActions>\n              <Button size=\"sm\" type=\"button\">\n                New\n              </Button>\n            </ShellHeaderActions>\n          </ShellHeader>\n          <ShellContent>\n            <Empty className=\"h-full border-0\">\n              <EmptyHeader>\n                <EmptyMedia variant=\"icon\">\n                  <LayoutDashboardIcon />\n                </EmptyMedia>\n                <EmptyTitle>Page content</EmptyTitle>\n                <EmptyDescription>\n                  Tables, forms, and chat compose inside ShellContent.\n                </EmptyDescription>\n              </EmptyHeader>\n            </Empty>\n          </ShellContent>\n        </ShellPage>\n      </ShellInset>\n    </Shell>\n  );\n}\n",
+      "type": "registry:page",
+      "target": "src/routes/dashboard.tsx"
+    },
+    {
+      "path": "packages/registry/registry/blocks/app-shell/components/app-sidebar.tsx",
+      "content": "\"use client\";\n\nimport { BotIcon, HomeIcon, SettingsIcon, SparklesIcon } from \"lucide-react\";\nimport {\n  Sidebar,\n  SidebarContent,\n  SidebarGroup,\n  SidebarGroupLabel,\n  SidebarHeader,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarTrigger,\n} from \"@/components/ui/sidebar\";\n\nconst ITEMS = [\n  { id: \"home\", label: \"Home\", icon: HomeIcon },\n  { id: \"chat\", label: \"Chat\", icon: BotIcon },\n  { id: \"settings\", label: \"Settings\", icon: SettingsIcon },\n] as const;\n\nexport function AppSidebar({\n  activeId = \"home\",\n}: {\n  activeId?: (typeof ITEMS)[number][\"id\"];\n}) {\n  return (\n    <Sidebar collapsible=\"icon\" variant=\"inset\">\n      <SidebarHeader>\n        <SidebarMenu>\n          <SidebarMenuItem className=\"flex items-center gap-2\">\n            <div className=\"flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground\">\n              <SparklesIcon />\n            </div>\n            <div className=\"min-w-0 flex-1 group-data-[collapsible=icon]:hidden\">\n              <span className=\"block truncate font-semibold\">Acme</span>\n              <span className=\"block truncate text-muted-foreground text-xs\">\n                Workspace\n              </span>\n            </div>\n            <SidebarTrigger className=\"hidden size-8 group-data-[collapsible=icon]:hidden md:flex\" />\n          </SidebarMenuItem>\n        </SidebarMenu>\n        <SidebarMenu className=\"hidden group-data-[collapsible=icon]:flex\">\n          <SidebarMenuItem>\n            <SidebarTrigger className=\"size-8\" />\n          </SidebarMenuItem>\n        </SidebarMenu>\n      </SidebarHeader>\n      <SidebarContent>\n        <SidebarGroup>\n          <SidebarGroupLabel>Workspace</SidebarGroupLabel>\n          <SidebarMenu>\n            {ITEMS.map((item) => (\n              <SidebarMenuItem key={item.id}>\n                <SidebarMenuButton\n                  isActive={item.id === activeId}\n                  tooltip={item.label}\n                >\n                  <item.icon />\n                  <span>{item.label}</span>\n                </SidebarMenuButton>\n              </SidebarMenuItem>\n            ))}\n          </SidebarMenu>\n        </SidebarGroup>\n      </SidebarContent>\n    </Sidebar>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "src/features/app-shell/components/app-sidebar.tsx"
+    }
+  ],
+  "meta": {
+    "iframeHeight": 720
+  },
+  "type": "registry:block"
+}

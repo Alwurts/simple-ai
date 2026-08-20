@@ -1,0 +1,63 @@
+@import "@workspace/ui/globals.css";
+
+@source "../content/docs/**/*.{md,mdx}";
+
+:root {
+  --header-height: 3.5rem;
+  --header-offset: 1rem;
+  --header-total-height: calc(var(--header-height) + var(--header-offset));
+  --footer-height: calc(var(--spacing) * 14);
+}
+
+@utility container-wrapper {
+  @apply mx-auto w-full px-2;
+}
+
+@utility container {
+  @apply mx-auto max-w-[1400px] px-4 lg:px-8;
+}
+
+@utility section-soft {
+  @apply bg-gradient-to-b from-background to-surface/40 dark:bg-background;
+}
+
+@utility border-grid {
+  @apply border-border/50 dark:border-border;
+}
+
+html:has([data-slot="view-page"]) [data-slot="site-chrome"] {
+  display: none;
+}
+
+html:has([data-slot="view-page"]) [data-slot="site-shell"] {
+  display: contents;
+  min-height: 0;
+  padding: 0;
+}
+
+[data-slot="docs"] :is(h1, h2, h3, h4, h5, h6) a {
+  text-decoration: none;
+}
+
+[data-slot="docs"] :not(pre) > code {
+  border-radius: calc(var(--radius) - 4px);
+  background-color: var(--muted);
+  padding: 0.15rem 0.35rem;
+  font-size: 0.9em;
+}
+
+[data-slot="docs"] pre code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Fumadocs rehype-code / Shiki — dual-theme tokens on each token span */
+[data-slot="docs"] .line span {
+  color: var(--shiki-light);
+}
+
+.dark [data-slot="docs"] .line span {
+  color: var(--shiki-dark);
+}

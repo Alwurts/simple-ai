@@ -1,22 +1,25 @@
 {
-	"name": "simple-ai-monorepo",
-	"version": "0.0.0",
-	"private": true,
-	"workspaces": [
-		"packages/*"
-	],
-	"scripts": {
-		"dev": "npm run dev --workspace=@simple-ai/docs",
-		"build": "npm run build --workspaces --if-present",
-		"test": "npm run test -w create-simple-ai",
-		"test:run": "npm run test:run -w create-simple-ai",
-
-		"changeset": "changeset",
-		"version": "changeset version",
-		"release": "npm run build -w create-simple-ai && changeset publish",
-		"check:release": "npm run check:release -w create-simple-ai"
-	},
-	"devDependencies": {
-		"@changesets/cli": "^2.29.7"
-	}
+  "name": "simple-ai",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint:check": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "turbo typecheck",
+    "registry:generate": "pnpm --filter @workspace/registry generate"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.2",
+    "@workspace/biome-config": "workspace:*",
+    "@workspace/tsconfig": "workspace:*",
+    "turbo": "^2.10.4",
+    "typescript": "7.0.2"
+  },
+  "packageManager": "pnpm@10.24.0",
+  "engines": {
+    "node": ">=20"
+  }
 }

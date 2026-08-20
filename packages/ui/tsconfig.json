@@ -1,0 +1,10 @@
+{
+  "extends": "@workspace/tsconfig/react-library-bundler.json",
+  "compilerOptions": {
+    "paths": {
+      "@workspace/ui/*": ["./src/*"]
+    }
+  },
+  "include": [".", "../tsconfig/css-modules.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}

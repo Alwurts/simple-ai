@@ -1,0 +1,44 @@
+---
+title: Tool
+description: Collapsible tool-call card — status, parameters, and JSON output.
+---
+
+<ComponentPreview name="tool" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/tool
+```
+
+The CLI also installs shadcn `badge`, `button`, and `collapsible`, plus `ai` and `shiki`.
+
+## Usage
+
+```tsx
+import {
+  Tool,
+  ToolContent,
+  ToolHeader,
+  ToolInput,
+  ToolOutput,
+} from "@/components/ui/tool"
+
+export function ToolCall({ part }: { part: { toolName: string; state: "output-available"; input: unknown; output: unknown; errorText?: string } }) {
+  return (
+    <Tool>
+      <ToolHeader
+        state={part.state}
+        title={part.toolName}
+        type={`tool-${part.toolName}`}
+      />
+      <ToolContent>
+        <ToolInput input={part.input} />
+        <ToolOutput errorText={part.errorText} output={part.output} />
+      </ToolContent>
+    </Tool>
+  )
+}
+```
+
+`ToolHeader` maps AI SDK tool part `state` to a status badge. Output objects render as JSON via the bundled code block.
