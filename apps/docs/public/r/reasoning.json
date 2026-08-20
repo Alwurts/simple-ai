@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "reasoning",
   "title": "Reasoning",
-  "description": "Collapsible model-thinking block with streaming duration and markdown.",
+  "description": "Collapsible thinking with duration and markdown.",
   "dependencies": [
     "motion",
     "streamdown"

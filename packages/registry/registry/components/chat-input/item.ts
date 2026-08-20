@@ -6,7 +6,7 @@ const def: RegistryItemDef = {
     type: "registry:ui",
     title: "Chat Input",
     description:
-      "A TipTap chat input with typed mentions, streaming status, and an imperative handle.",
+      "Chat composer with mentions and streaming status.",
     dependencies: [
       "@tiptap/core",
       "@tiptap/react",

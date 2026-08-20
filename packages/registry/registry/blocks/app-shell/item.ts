@@ -6,7 +6,7 @@ const def: RegistryItemDef = {
     type: "registry:block",
     title: "App shell",
     description:
-      "Product layout with a collapsible sidebar, page header, and main content slot.",
+      "Sample layout using the shell.",
     registryDependencies: ["button", "empty", "sidebar", "@simple-ai/shell"],
     meta: { iframeHeight: 720 },
     files: [

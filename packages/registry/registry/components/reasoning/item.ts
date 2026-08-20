@@ -6,7 +6,7 @@ const def: RegistryItemDef = {
     type: "registry:ui",
     title: "Reasoning",
     description:
-      "Collapsible model-thinking block with streaming duration and markdown.",
+      "Collapsible thinking with duration and markdown.",
     dependencies: ["motion", "streamdown"],
     registryDependencies: ["collapsible"],
     files: [

@@ -6,7 +6,7 @@ const def: RegistryItemDef = {
     type: "registry:ui",
     title: "Chat Voice Button",
     description:
-      "Microphone button for chat composers — records audio and transcribes it.",
+      "Record and transcribe into the chat input.",
     dependencies: ["sonner"],
     registryDependencies: ["input-group", "sonner"],
     files: [{ path: "chat-voice-button.tsx", type: "registry:ui" }],

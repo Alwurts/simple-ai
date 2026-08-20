@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "shell",
   "title": "Shell",
-  "description": "App shell compound layout — sidebar frame, page header row, and main content slot.",
+  "description": "Sidebar, header, and main content.",
   "registryDependencies": [
     "button",
     "sidebar"

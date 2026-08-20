@@ -2,8 +2,7 @@ export const siteConfig = {
   name: "simple-ai",
   url: "https://simple-ai.dev",
   ogImage: "https://simple-ai.dev/og.jpg",
-  description:
-    "AI Building Blocks that you can copy and paste into your apps. Customizable. Open Source.",
+  description: "Chat UI for shadcn. Copy it into your app.",
   links: {
     twitter: "https://x.com/alwurts",
     github: "https://github.com/Alwurts/simple-ai",

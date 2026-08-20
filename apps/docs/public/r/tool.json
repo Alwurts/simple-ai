@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "tool",
   "title": "Tool",
-  "description": "Collapsible tool-call card — status, parameters, and JSON output.",
+  "description": "Tool call with status, params, and output.",
   "dependencies": [
     "ai",
     "shiki"

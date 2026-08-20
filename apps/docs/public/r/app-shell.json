@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "app-shell",
   "title": "App shell",
-  "description": "Product layout with a collapsible sidebar, page header, and main content slot.",
+  "description": "Sample layout using the shell.",
   "registryDependencies": [
     "button",
     "empty",

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "chat-voice-button",
   "title": "Chat Voice Button",
-  "description": "Microphone button for chat composers — records audio and transcribes it.",
+  "description": "Record and transcribe into the chat input.",
   "dependencies": [
     "sonner"
   ],

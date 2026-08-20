@@ -1,6 +1,6 @@
 # simple-ai
 
-Copy-paste AI chat UI. A TipTap chat input and a full-page chat block.
+Chat UI for shadcn. Copy it into your app.
 
 [simple-ai.dev](https://simple-ai.dev)
 

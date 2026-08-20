@@ -1,9 +1,8 @@
 "use client";
 
 import { Button } from "@workspace/ui/components/shadcn/button";
-import { ArrowRight, Terminal } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useState } from "react";
-import { Announcement } from "@/components/general/announcement";
 import { HeroChatPreview } from "@/components/landing/hero-chat-preview";
 
 export function LandingHero() {
@@ -31,13 +30,11 @@ export function LandingHero() {
 
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center px-4 pt-6 pb-10 md:px-6 md:pt-8 md:pb-16">
         <div className="flex flex-col items-center gap-3 text-center md:gap-4">
-          <Announcement />
           <h1 className="max-w-2xl text-balance font-semibold text-2xl tracking-tight md:text-4xl">
-            Build AI Chat{" "}
-            <span className="text-muted-foreground">with shadcn</span>
+            Chat UI <span className="text-muted-foreground">for shadcn</span>
           </h1>
           <p className="max-w-md text-muted-foreground text-sm md:text-base">
-            Open-source UI components and app blocks for AI chat.
+            Copy a chat page into your app. Own the source.
           </p>
           <div className="flex items-center justify-center gap-2">
             <Button
@@ -45,17 +42,17 @@ export function LandingHero() {
               render={<a href="/docs/installation" />}
               size="sm"
             >
-              Get Started
+              Get started
               <ArrowRight className="size-3.5" />
             </Button>
             <Button
               className="rounded-full"
-              render={<a href="/blocks" />}
+              render={<a href="/view/chat-page" />}
               size="sm"
               variant="outline"
             >
-              <Terminal className="size-3.5" />
-              Browse Blocks
+              Open preview
+              <ArrowUpRight className="size-3.5" />
             </Button>
           </div>
         </div>

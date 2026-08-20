@@ -6,7 +6,7 @@ const def: RegistryItemDef = {
     type: "registry:ui",
     title: "Tool",
     description:
-      "Collapsible tool-call card — status, parameters, and JSON output.",
+      "Tool call with status, params, and output.",
     dependencies: ["ai", "shiki"],
     registryDependencies: ["badge", "button", "collapsible"],
     files: [

@@ -7,8 +7,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     name: "app-shell",
     type: "registry:block",
     title: "App shell",
-    description:
-      "Product layout with a collapsible sidebar, page header, and main content slot.",
+    description: "Sample layout using the shell.",
     meta: { iframeHeight: 720 },
     component: lazy(() => import("../registry/blocks/app-shell/page")),
   },
@@ -16,8 +15,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     name: "chat-input",
     type: "registry:ui",
     title: "Chat Input",
-    description:
-      "A TipTap chat input with typed mentions, streaming status, and an imperative handle.",
+    description: "Chat composer with mentions and streaming status.",
     meta: {},
     component: lazy(() => import("../registry/components/chat-input/preview")),
   },
@@ -33,8 +31,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     name: "chat-voice-button",
     type: "registry:ui",
     title: "Chat Voice Button",
-    description:
-      "Microphone button for chat composers — records audio and transcribes it.",
+    description: "Record and transcribe into the chat input.",
     meta: {},
     component: lazy(
       () => import("../registry/components/chat-voice-button/preview")
@@ -44,8 +41,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     name: "reasoning",
     type: "registry:ui",
     title: "Reasoning",
-    description:
-      "Collapsible model-thinking block with streaming duration and markdown.",
+    description: "Collapsible thinking with duration and markdown.",
     meta: {},
     component: lazy(() => import("../registry/components/reasoning/preview")),
   },
@@ -53,8 +49,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     name: "shell",
     type: "registry:ui",
     title: "Shell",
-    description:
-      "App shell compound layout — sidebar frame, page header row, and main content slot.",
+    description: "Sidebar, header, and main content.",
     meta: { fullBleed: true, iframeHeight: 720 },
     component: lazy(() => import("../registry/components/shell/preview")),
   },
@@ -62,8 +57,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     name: "tool",
     type: "registry:ui",
     title: "Tool",
-    description:
-      "Collapsible tool-call card — status, parameters, and JSON output.",
+    description: "Tool call with status, params, and output.",
     meta: {},
     component: lazy(() => import("../registry/components/tool/preview")),
   },
