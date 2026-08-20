@@ -4,13 +4,14 @@ import { Button } from "@workspace/ui/components/shadcn/button";
 import { ArrowRight, Terminal } from "lucide-react";
 import { useState } from "react";
 import { Announcement } from "@/components/general/announcement";
+import { HeroChatPreview } from "@/components/landing/hero-chat-preview";
 
 export function LandingHero() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   return (
     <div
-      className="relative flex min-h-[65vh] flex-col items-center justify-center overflow-hidden border-b bg-background md:min-h-[80vh]"
+      className="relative overflow-x-hidden bg-background"
       onMouseMove={(event) => {
         const rect = event.currentTarget.getBoundingClientRect();
         setPosition({
@@ -24,43 +25,43 @@ export function LandingHero() {
         className="pointer-events-none absolute -inset-px"
         style={{
           background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, var(--brand), transparent 40%)`,
-          opacity: 0.15,
+          opacity: 0.12,
         }}
       />
 
-      <div className="container relative z-10 px-4 md:px-6">
-        <div className="flex flex-col items-center space-y-8 text-center">
-          <Announcement size="lg" />
-          <h1 className="max-w-4xl text-balance font-bold text-4xl tracking-tighter sm:text-6xl md:text-7xl lg:text-8xl">
-            Build AI Chat <br className="hidden md:block" />
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center px-4 pt-6 pb-10 md:px-6 md:pt-8 md:pb-16">
+        <div className="flex flex-col items-center gap-3 text-center md:gap-4">
+          <Announcement />
+          <h1 className="max-w-2xl text-balance font-semibold text-2xl tracking-tight md:text-4xl">
+            Build AI Chat{" "}
             <span className="text-muted-foreground">with shadcn</span>
           </h1>
-
-          <p className="mx-auto max-w-[700px] text-lg text-muted-foreground sm:text-xl">
-            An open-source library of AI-focused UI components and app blocks
-            designed to accelerate development. Built with shadcn/ui and the AI
-            SDK.
+          <p className="max-w-md text-muted-foreground text-sm md:text-base">
+            Open-source UI components and app blocks for AI chat.
           </p>
-
-          <div className="flex w-full flex-col justify-center gap-4 px-4 sm:flex-row sm:px-0">
+          <div className="flex items-center justify-center gap-2">
             <Button
-              className="rounded-full border-0 bg-brand text-base text-brand-foreground hover:bg-brand/90"
+              className="rounded-full border-0 bg-brand text-brand-foreground hover:bg-brand/90"
               render={<a href="/docs/installation" />}
-              size="lg"
+              size="sm"
             >
               Get Started
-              <ArrowRight className="ml-2 size-4" />
+              <ArrowRight className="size-3.5" />
             </Button>
             <Button
-              className="rounded-full text-base"
+              className="rounded-full"
               render={<a href="/blocks" />}
-              size="lg"
+              size="sm"
               variant="outline"
             >
-              <Terminal className="mr-2 size-4" />
-              Browse Components
+              <Terminal className="size-3.5" />
+              Browse Blocks
             </Button>
           </div>
+        </div>
+
+        <div className="mt-6 w-full md:mt-8">
+          <HeroChatPreview />
         </div>
       </div>
     </div>
