@@ -38,35 +38,37 @@ export const Route = createFileRoute("/assistant")({
 });
 ```
 
-`chat-page` ships a mocked transport, so the gallery and a fresh install work without a model. Add one API block with the page, then point the transport at `/api/chat`.
+`chat-page` ships a mocked transport, so the gallery and a fresh install work without a model. Add an agent and an API, then point the transport at `/api/chat`. The CLI prints these steps after `shadcn add`.
 
 ### Next.js
 
 ```bash
 npx shadcn@latest add @simple-ai/chat-page
+npx shadcn@latest add @simple-ai/weather-agent
 npx shadcn@latest add @simple-ai/chat-api-next
 ```
 
-That writes `src/app/api/chat/route.ts` and the shared handler.
+That writes `src/app/api/chat/route.ts`, `handleAgent`, and the weather `ToolLoopAgent`.
 
 ### TanStack Start
 
 ```bash
 npx shadcn@latest add @simple-ai/chat-page
-npx shadcn@latest add @simple-ai/chat-handler
+npx shadcn@latest add @simple-ai/weather-agent
+npx shadcn@latest add @simple-ai/agent-handle
 ```
 
-Add a server route that calls the handler:
+Add a server route that calls the handle:
 
 ```tsx
 // src/routes/api/chat.ts
 import { createFileRoute } from "@tanstack/react-router";
-import { handleChat } from "@/features/assistant/lib/chat-handler";
+import { handleAgent } from "@/features/assistant/lib/handle-agent";
 
 export const Route = createFileRoute("/api/chat")({
   server: {
     handlers: {
-      POST: ({ request }) => handleChat(request),
+      POST: ({ request }) => handleAgent(request),
     },
   },
 });
@@ -78,6 +80,7 @@ Or add `@simple-ai/chat-api-hono` and fetch the Hono app from that route instead
 
 ```bash
 npx shadcn@latest add @simple-ai/chat-page
+npx shadcn@latest add @simple-ai/weather-agent
 npx shadcn@latest add @simple-ai/chat-api-hono
 ```
 
@@ -101,6 +104,8 @@ export const initialChatMessages = undefined;
 ```
 
 Set `AI_GATEWAY_API_KEY` and optionally `AI_MODEL` (defaults to `openai/gpt-4.1-mini`).
+
+More agents are on the [Agents](/agents) page. Each one aliases `assistant` in `src/features/assistant/lib/agent.ts`.
 
 ## Hosted registry
 

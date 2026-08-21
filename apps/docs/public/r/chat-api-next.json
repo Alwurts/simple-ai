@@ -2,17 +2,22 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "chat-api-next",
   "title": "Chat API (Next.js)",
-  "description": "App Router POST /api/chat. Add with @simple-ai/chat-page, then switch the chat transport.",
+  "description": "App Router POST /api/chat. Add with @simple-ai/chat-page and an agent, then switch the chat transport.",
   "registryDependencies": [
-    "@simple-ai/chat-handler"
+    "@simple-ai/agent-handle"
   ],
   "files": [
     {
       "path": "packages/registry/registry/blocks/chat-api-next/route.ts",
-      "content": "import { handleChat } from \"@/features/assistant/lib/chat-handler\";\n\nexport const maxDuration = 60;\n\nexport function POST(request: Request) {\n  return handleChat(request);\n}\n",
+      "content": "import { handleAgent } from \"@/features/assistant/lib/handle-agent\";\n\nexport const maxDuration = 60;\n\nexport function POST(request: Request) {\n  return handleAgent(request);\n}\n",
       "type": "registry:file",
       "target": "src/app/api/chat/route.ts"
     }
   ],
+  "envVars": {
+    "AI_GATEWAY_API_KEY": "",
+    "AI_MODEL": "openai/gpt-4.1-mini"
+  },
+  "docs": "Writes src/app/api/chat/route.ts. Also pulls the weather agent and handleAgent.\n\nThen in src/features/assistant/lib/chat-transport.ts:\n\n  import { DefaultChatTransport } from \"ai\";\n  export const chatTransport = new DefaultChatTransport({ api: \"/api/chat\" });\n  export const initialChatMessages = undefined;\n\nSet AI_GATEWAY_API_KEY and optionally AI_MODEL.",
   "type": "registry:block"
 }

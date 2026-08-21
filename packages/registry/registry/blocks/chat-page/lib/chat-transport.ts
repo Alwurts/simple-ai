@@ -1,6 +1,6 @@
 /**
  * Default install uses a mocked transport (no model).
- * After adding @simple-ai/chat-api-next or @simple-ai/chat-api-hono:
+ * After adding an agent and @simple-ai/chat-api-next or @simple-ai/chat-api-hono:
  *
  *   import { DefaultChatTransport } from "ai";
  *   export const chatTransport = new DefaultChatTransport({ api: "/api/chat" });

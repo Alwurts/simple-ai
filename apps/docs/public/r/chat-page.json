@@ -43,7 +43,7 @@
     },
     {
       "path": "packages/registry/registry/blocks/chat-page/lib/chat-transport.ts",
-      "content": "/**\n * Default install uses a mocked transport (no model).\n * After adding @simple-ai/chat-api-next or @simple-ai/chat-api-hono:\n *\n *   import { DefaultChatTransport } from \"ai\";\n *   export const chatTransport = new DefaultChatTransport({ api: \"/api/chat\" });\n *   export const initialChatMessages = undefined;\n */\nexport {\n  type GalleryChatMessage,\n  galleryChatTransport as chatTransport,\n  initialGalleryMessages as initialChatMessages,\n} from \"./mock-chat-messages\";\n",
+      "content": "/**\n * Default install uses a mocked transport (no model).\n * After adding an agent and @simple-ai/chat-api-next or @simple-ai/chat-api-hono:\n *\n *   import { DefaultChatTransport } from \"ai\";\n *   export const chatTransport = new DefaultChatTransport({ api: \"/api/chat\" });\n *   export const initialChatMessages = undefined;\n */\nexport {\n  type GalleryChatMessage,\n  galleryChatTransport as chatTransport,\n  initialGalleryMessages as initialChatMessages,\n} from \"./mock-chat-messages\";\n",
       "type": "registry:lib",
       "target": "src/features/assistant/lib/chat-transport.ts"
     },
@@ -111,5 +111,6 @@
   "meta": {
     "iframeHeight": 900
   },
+  "docs": "This page ships a mocked transport.\n\nFor a live model, also add an agent and an API:\n\n  npx shadcn@latest add @simple-ai/weather-agent\n  npx shadcn@latest add @simple-ai/chat-api-next\n\nUse @simple-ai/chat-api-hono instead of chat-api-next for Hono. On TanStack Start, add @simple-ai/agent-handle and call handleAgent from a server route.\n\nThen in src/features/assistant/lib/chat-transport.ts:\n\n  import { DefaultChatTransport } from \"ai\";\n  export const chatTransport = new DefaultChatTransport({ api: \"/api/chat\" });\n  export const initialChatMessages = undefined;\n\nSet AI_GATEWAY_API_KEY and optionally AI_MODEL.",
   "type": "registry:block"
 }

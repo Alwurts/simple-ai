@@ -11,5 +11,6 @@ export const siteConfig = {
     { href: "/docs", label: "Documentation" },
     { href: "/docs/components/chat-input", label: "Components" },
     { href: "/blocks", label: "Blocks" },
+    { href: "/agents", label: "Agents" },
   ],
 };

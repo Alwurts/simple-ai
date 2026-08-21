@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "agent-handle",
+  "title": "Agent handle",
+  "description": "Request/Response entry for the assistant agent. Use with chat-api-next or chat-api-hono.",
+  "dependencies": [
+    "ai"
+  ],
+  "registryDependencies": [
+    "@simple-ai/weather-agent"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/registry/blocks/agent-handle/handle-agent.ts",
+      "content": "import { createAgentUIStreamResponse } from \"ai\";\nimport { assistant } from \"@/features/assistant/lib/agent\";\n\nexport async function handleAgent(request: Request): Promise<Response> {\n  const { messages } = await request.json();\n  return createAgentUIStreamResponse({\n    abortSignal: request.signal,\n    agent: assistant,\n    uiMessages: messages,\n  });\n}\n",
+      "type": "registry:lib",
+      "target": "src/features/assistant/lib/handle-agent.ts"
+    }
+  ],
+  "envVars": {
+    "AI_GATEWAY_API_KEY": "",
+    "AI_MODEL": "openai/gpt-4.1-mini"
+  },
+  "docs": "Calls handleAgent(request) with the aliased assistant.\n\nNext.js: also add @simple-ai/chat-api-next.\nHono: also add @simple-ai/chat-api-hono.\nTanStack Start: add a server route that calls handleAgent.\n\nThen switch src/features/assistant/lib/chat-transport.ts to DefaultChatTransport({ api: \"/api/chat\" }).\nSet AI_GATEWAY_API_KEY and optionally AI_MODEL.",
+  "type": "registry:block"
+}

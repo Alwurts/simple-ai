@@ -27,8 +27,7 @@ const LIVE_COMPONENT_DOCS = new Set([
 ]);
 
 const RETIRED_APP_PATHS: Record<string, string> = {
-  agents: "/docs",
-  "ai-agents": "/docs",
+  "ai-agents": "/agents",
   "ai-workflows": "/docs",
   playground: "/docs",
   canvas: "/docs",
@@ -43,11 +42,10 @@ export function legacyDocsHref(path: string): string | undefined {
   if (path === "blocks" || startsWithPath(path, "blocks")) {
     return "/blocks";
   }
-  if (
-    startsWithPath(path, "workflows") ||
-    startsWithPath(path, "react-flow") ||
-    startsWithPath(path, "agents")
-  ) {
+  if (startsWithPath(path, "agents")) {
+    return "/agents";
+  }
+  if (startsWithPath(path, "workflows") || startsWithPath(path, "react-flow")) {
     return "/docs";
   }
   if (startsWithPath(path, "components")) {
@@ -68,7 +66,7 @@ export function legacyViewHref(name: string): string | undefined {
   }
 }
 
-/** Top-level app pages that no longer exist (`/agents`, `/blocks/chat`, …). */
+/** Top-level app pages that no longer exist (`/ai-agents`, `/blocks/chat`, …). */
 export function legacyAppHref(path: string): string | undefined {
   const trimmed = path.replace(/^\/+|\/+$/g, "");
   if (!trimmed) {

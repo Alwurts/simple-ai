@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "weather-agent",
+  "title": "Weather agent",
+  "description": "ToolLoopAgent that looks up weather.",
+  "dependencies": [
+    "ai",
+    "zod"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/registry/agents/weather-agent/agent.ts",
+      "content": "export { weatherAgent as assistant } from \"./agents/weather-agent\";\n",
+      "type": "registry:lib",
+      "target": "src/features/assistant/lib/agent.ts"
+    },
+    {
+      "path": "packages/registry/registry/agents/weather-agent/agents/weather-agent.ts",
+      "content": "import { ToolLoopAgent, tool } from \"ai\";\nimport { z } from \"zod\";\n\nexport const getWeather = tool({\n  description: \"Get the weather in a location\",\n  inputSchema: z.object({\n    location: z.string().describe(\"City name\"),\n  }),\n  execute: async ({ location }) => ({\n    location,\n    temperatureF: 72,\n    conditions: \"clear\",\n  }),\n});\n\nexport const weatherAgent = new ToolLoopAgent({\n  model: process.env.AI_MODEL ?? \"openai/gpt-4.1-mini\",\n  instructions:\n    \"You are a weather assistant. Use getWeather to answer weather questions.\",\n  tools: { getWeather },\n});\n",
+      "type": "registry:lib",
+      "target": "src/features/assistant/lib/agents/weather-agent.ts"
+    }
+  ],
+  "envVars": {
+    "AI_GATEWAY_API_KEY": "",
+    "AI_MODEL": "openai/gpt-4.1-mini"
+  },
+  "meta": {
+    "iframeHeight": 280
+  },
+  "docs": "Adds a ToolLoopAgent and aliases it as assistant.\n\nAlso add a chat API, then switch the transport:\n\n  npx shadcn@latest add @simple-ai/chat-api-next\n\nOr @simple-ai/chat-api-hono. On TanStack Start, add @simple-ai/agent-handle and call handleAgent from a server route.\n\nIn src/features/assistant/lib/chat-transport.ts:\n\n  import { DefaultChatTransport } from \"ai\";\n  export const chatTransport = new DefaultChatTransport({ api: \"/api/chat\" });\n  export const initialChatMessages = undefined;\n\nSet AI_GATEWAY_API_KEY and optionally AI_MODEL.",
+  "categories": [
+    "agent"
+  ],
+  "type": "registry:lib"
+}

@@ -32,7 +32,7 @@ export interface RegistryItemDef {
  */
 export type RegistryEntry = Pick<
   SimpleAiRegistryItem,
-  "name" | "type" | "title" | "description"
+  "name" | "type" | "title" | "description" | "categories"
 > & {
   meta: RegistryMeta;
   component: LazyExoticComponent<() => React.JSX.Element>;

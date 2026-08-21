@@ -5,7 +5,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import type { RegistryItemDef } from "../src/types";
 
 /**
- * Generates the two derived artifacts from the `registry/{blocks,components}/<name>/`
+ * Generates the two derived artifacts from the `registry/{blocks,components,agents}/<name>/`
  * source trees (ADR-0017 amendment, RD-7):
  *
  *   1. the repo-root `registry.json` (the shadcn GitHub-registry manifest), and
@@ -28,7 +28,13 @@ const HOMEPAGE = "https://simple-ai.dev";
 const REGISTRY_JSON = join(REPO_ROOT, "registry.json");
 const GENERATED_TS = join(PKG_ROOT, "src", "generated.ts");
 
-const KIND_DIRS = ["blocks", "components"] as const;
+const KIND_DIRS = ["blocks", "components", "agents"] as const;
+
+const KIND_TYPE = {
+  blocks: "registry:block",
+  components: "registry:ui",
+  agents: "registry:lib",
+} as const;
 
 interface LoadedDef {
   name: string;
@@ -45,7 +51,7 @@ async function loadKindDefs(
     return [];
   }
 
-  const expectedType = kind === "blocks" ? "registry:block" : "registry:ui";
+  const expectedType = KIND_TYPE[kind];
   const names = readdirSync(kindDir, { withFileTypes: true })
     .filter(
       (d) => d.isDirectory() && existsSync(join(kindDir, d.name, "item.ts"))
@@ -129,6 +135,9 @@ function buildGeneratedTs(defs: LoadedDef[]): string {
     }
     if (item.description !== undefined) {
       lines.push(`    description: ${JSON.stringify(item.description)},`);
+    }
+    if (item.categories !== undefined) {
+      lines.push(`    categories: ${JSON.stringify(item.categories)},`);
     }
     lines.push(`    meta: ${JSON.stringify(item.meta ?? {})},`);
     lines.push(

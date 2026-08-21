@@ -6,6 +6,22 @@ const def: RegistryItemDef = {
     type: "registry:block",
     title: "Chat page",
     description: "Full screen chat with tools, files, and mentions.",
+    docs: `This page ships a mocked transport.
+
+For a live model, also add an agent and an API:
+
+  npx shadcn@latest add @simple-ai/weather-agent
+  npx shadcn@latest add @simple-ai/chat-api-next
+
+Use @simple-ai/chat-api-hono instead of chat-api-next for Hono. On TanStack Start, add @simple-ai/agent-handle and call handleAgent from a server route.
+
+Then in src/features/assistant/lib/chat-transport.ts:
+
+  import { DefaultChatTransport } from "ai";
+  export const chatTransport = new DefaultChatTransport({ api: "/api/chat" });
+  export const initialChatMessages = undefined;
+
+Set AI_GATEWAY_API_KEY and optionally AI_MODEL.`,
     registryDependencies: [
       "attachment",
       "bubble",

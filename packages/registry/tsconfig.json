@@ -1,6 +1,8 @@
 {
   "extends": "@workspace/tsconfig/react-library-bundler.json",
   "compilerOptions": {
+    "declaration": false,
+    "declarationMap": false,
     "types": ["node"],
     "paths": {
       "@workspace/registry/*": ["./src/*"],
@@ -17,8 +19,11 @@
       ],
       "@/components/ui/*": ["../ui/src/components/shadcn/*"],
       "@/lib/utils": ["../ui/src/lib/utils.ts"],
-      "@/features/assistant/lib/chat-handler": [
-        "./registry/blocks/chat-handler/chat-handler.ts"
+      "@/features/assistant/lib/agent": [
+        "./registry/agents/weather-agent/agent.ts"
+      ],
+      "@/features/assistant/lib/handle-agent": [
+        "./registry/blocks/agent-handle/handle-agent.ts"
       ]
     }
   },

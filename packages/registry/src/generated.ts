@@ -3,6 +3,15 @@ import { lazy } from "react";
 import type { RegistryEntry } from "./types";
 
 export const REGISTRY: Record<string, RegistryEntry> = {
+  "agent-handle": {
+    name: "agent-handle",
+    type: "registry:block",
+    title: "Agent handle",
+    description:
+      "Request/Response entry for the assistant agent. Use with chat-api-next or chat-api-hono.",
+    meta: {},
+    component: lazy(() => import("../registry/blocks/agent-handle/preview")),
+  },
   "app-shell": {
     name: "app-shell",
     type: "registry:block",
@@ -16,7 +25,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     type: "registry:block",
     title: "Chat API (Hono)",
     description:
-      "Hono POST /api/chat. Add with @simple-ai/chat-page, then switch the chat transport.",
+      "Hono POST /api/chat. Add with @simple-ai/chat-page and an agent, then switch the chat transport.",
     meta: {},
     component: lazy(() => import("../registry/blocks/chat-api-hono/preview")),
   },
@@ -25,18 +34,9 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     type: "registry:block",
     title: "Chat API (Next.js)",
     description:
-      "App Router POST /api/chat. Add with @simple-ai/chat-page, then switch the chat transport.",
+      "App Router POST /api/chat. Add with @simple-ai/chat-page and an agent, then switch the chat transport.",
     meta: {},
     component: lazy(() => import("../registry/blocks/chat-api-next/preview")),
-  },
-  "chat-handler": {
-    name: "chat-handler",
-    type: "registry:block",
-    title: "Chat handler",
-    description:
-      "Shared Request/Response chat handler. Use with chat-api-next or chat-api-hono.",
-    meta: {},
-    component: lazy(() => import("../registry/blocks/chat-handler/preview")),
   },
   "chat-input": {
     name: "chat-input",
@@ -87,5 +87,14 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     description: "Tool call with status, params, and output.",
     meta: {},
     component: lazy(() => import("../registry/components/tool/preview")),
+  },
+  "weather-agent": {
+    name: "weather-agent",
+    type: "registry:lib",
+    title: "Weather agent",
+    description: "ToolLoopAgent that looks up weather.",
+    categories: ["agent"],
+    meta: { iframeHeight: 280 },
+    component: lazy(() => import("../registry/agents/weather-agent/preview")),
   },
 };

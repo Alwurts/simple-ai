@@ -5,9 +5,7 @@ description: Chat UI for shadcn. Copy it into your app.
 
 simple-ai is a shadcn registry of chat UI. Copy the source into your app and own it.
 
-The catalog is a chat input, a few pieces used in a real transcript (reasoning, tools, voice, shell), and one full chat page.
-
-Flows, agents, and extra primitives from earlier simple-ai are gone. Use [shadcn](https://ui.shadcn.com) for messages and markdown.
+The catalog is chat UI, one chat page, and agents you can wire to it. Use [shadcn](https://ui.shadcn.com) for messages and markdown.
 
 ## Install
 
@@ -16,7 +14,7 @@ npx shadcn@latest add @simple-ai/chat-input
 npx shadcn@latest add @simple-ai/chat-page
 ```
 
-`chat-page` is mocked until you add `@simple-ai/chat-api-next` or `@simple-ai/chat-api-hono`. See [Installation](/docs/installation).
+`chat-page` is mocked until you add an [agent](/agents) and `@simple-ai/chat-api-next` or `@simple-ai/chat-api-hono`. See [Installation](/docs/installation).
 
 Until `@simple-ai` is back in the official directory, point `components.json` at the hosted registry:
 

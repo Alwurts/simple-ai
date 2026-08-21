@@ -1,7 +1,7 @@
-import { handleChat } from "@/features/assistant/lib/chat-handler";
+import { handleAgent } from "@/features/assistant/lib/handle-agent";
 
 export const maxDuration = 60;
 
 export function POST(request: Request) {
-  return handleChat(request);
+  return handleAgent(request);
 }

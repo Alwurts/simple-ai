@@ -9,7 +9,7 @@ const BLOCK_ORDER = ["chat-page"];
 /** Installed in the registry, omitted from the /blocks gallery. */
 const HIDDEN_BLOCKS = new Set([
   "app-shell",
-  "chat-handler",
+  "agent-handle",
   "chat-api-next",
   "chat-api-hono",
 ]);

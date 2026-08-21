@@ -182,6 +182,9 @@ importers:
       streamdown:
         specifier: ^2.5.0
         version: 2.5.0(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      zod:
+        specifier: ^4.1.8
+        version: 4.4.3
     devDependencies:
       '@types/node':
         specifier: ^22.20.0
