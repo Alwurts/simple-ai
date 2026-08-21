@@ -9,7 +9,7 @@
   "dependencies": {
     "@base-ui/react": "^1.6.0",
     "@shadcn/react": "^0.2.0",
-    "ai": "^6.0.221",
+    "ai": "^7.0.71",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.475.0",

@@ -8,9 +8,9 @@ const def: RegistryItemDef = {
     description:
       "Full screen chat with tools, files, and mentions.",
     registryDependencies: [
+      "attachment",
       "bubble",
       "button",
-      "chat-token",
       "collapsible",
       "dropdown-menu",
       "empty",

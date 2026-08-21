@@ -75,7 +75,7 @@ function EmptyConversation() {
 export function FullScreenChat() {
   const { messages, sendMessage, setMessages, status, stop } =
     useChat<GalleryChatMessage>({
-      experimental_throttle: 50,
+      throttle: 50,
       messages: initialGalleryMessages,
       transport: galleryChatTransport,
     });

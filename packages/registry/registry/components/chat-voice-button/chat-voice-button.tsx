@@ -3,7 +3,7 @@
 import { Loader2, MicIcon, Square } from "lucide-react";
 import { useCallback, useRef, useState, useSyncExternalStore } from "react";
 import { InputGroupButton } from "@/components/ui/input-group";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 export interface ChatVoiceButtonLabels {

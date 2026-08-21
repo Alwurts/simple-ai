@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/react": "3.0.221",
+    "@ai-sdk/react": "^4.0.74",
     "@shadcn/helpers": "0.2.0",
     "@tiptap/core": "^3.27.3",
     "@tiptap/extension-mention": "^3.27.3",
@@ -22,7 +22,7 @@
     "@tiptap/starter-kit": "^3.27.3",
     "@tiptap/suggestion": "^3.27.3",
     "@workspace/ui": "workspace:*",
-    "ai": "^6.0.221",
+    "ai": "^7.0.71",
     "lucide-react": "^0.475.0",
     "motion": "^12.43.0",
     "react": "^19.2.7",

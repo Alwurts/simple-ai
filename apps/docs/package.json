@@ -16,13 +16,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/react": "3.0.221",
+    "@ai-sdk/react": "^4.0.74",
     "@shadcn/helpers": "0.2.0",
     "@tanstack/react-router": "^1.170.17",
     "@tanstack/react-start": "^1.168.27",
     "@workspace/registry": "workspace:*",
     "@workspace/ui": "workspace:*",
-    "ai": "^6.0.260",
+    "ai": "^7.0.71",
     "class-variance-authority": "^0.7.1",
     "fumadocs-core": "16.10.4",
     "fumadocs-ui": "16.10.4",

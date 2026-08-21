@@ -1,8 +1,17 @@
 "use client";
 
 import type { ChatStatus, FileUIPart } from "ai";
-import { FileIcon, PaperclipIcon } from "lucide-react";
+import { FileIcon, PaperclipIcon, XIcon } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
+import {
+  Attachment,
+  AttachmentAction,
+  AttachmentActions,
+  AttachmentContent,
+  AttachmentGroup,
+  AttachmentMedia,
+  AttachmentTitle,
+} from "@/components/ui/attachment";
 import {
   ChatInput,
   ChatInputEditor,
@@ -10,13 +19,6 @@ import {
   ChatInputMentionButton,
   ChatInputSubmitButton,
 } from "@/components/ui/chat-input";
-import {
-  ChatToken,
-  ChatTokenGroup,
-  ChatTokenIcon,
-  ChatTokenLabel,
-  ChatTokenRemove,
-} from "@/components/ui/chat-token";
 import { ChatVoiceButton } from "@/components/ui/chat-voice-button";
 import { InputGroupAddon, InputGroupButton } from "@/components/ui/input-group";
 import { MOCK_MEMBERS, type MockMember } from "../lib/mock-members";
@@ -137,26 +139,37 @@ function ChatInputInner({
       >
         {files.length > 0 ? (
           <InputGroupAddon align="block-start" className="pb-0">
-            <ChatTokenGroup>
-              {files.map((file) => (
-                <ChatToken key={file.id}>
-                  <ChatTokenIcon>
-                    {file.mediaType?.startsWith("image/") && file.url ? (
-                      <img alt="" height={14} src={file.url} width={14} />
-                    ) : (
-                      <FileIcon />
-                    )}
-                  </ChatTokenIcon>
-                  <ChatTokenLabel>
-                    {file.filename ?? "Attachment"}
-                  </ChatTokenLabel>
-                  <ChatTokenRemove
-                    label={`Remove ${file.filename ?? "attachment"}`}
-                    onClick={() => removeFile(file.id)}
-                  />
-                </ChatToken>
-              ))}
-            </ChatTokenGroup>
+            <AttachmentGroup>
+              {files.map((file) => {
+                const isImage = Boolean(
+                  file.mediaType?.startsWith("image/") && file.url
+                );
+                return (
+                  <Attachment key={file.id} size="xs" state="done">
+                    <AttachmentMedia variant={isImage ? "image" : "icon"}>
+                      {isImage ? (
+                        <img alt={file.filename ?? ""} src={file.url} />
+                      ) : (
+                        <FileIcon />
+                      )}
+                    </AttachmentMedia>
+                    <AttachmentContent>
+                      <AttachmentTitle>
+                        {file.filename ?? "Attachment"}
+                      </AttachmentTitle>
+                    </AttachmentContent>
+                    <AttachmentActions>
+                      <AttachmentAction
+                        aria-label={`Remove ${file.filename ?? "attachment"}`}
+                        onClick={() => removeFile(file.id)}
+                      >
+                        <XIcon />
+                      </AttachmentAction>
+                    </AttachmentActions>
+                  </Attachment>
+                );
+              })}
+            </AttachmentGroup>
           </InputGroupAddon>
         ) : null}
         <ChatInputEditor placeholder={placeholder} />
