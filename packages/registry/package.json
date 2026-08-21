@@ -23,6 +23,7 @@
     "@tiptap/suggestion": "^3.27.3",
     "@workspace/ui": "workspace:*",
     "ai": "^7.0.71",
+    "hono": "^4.13.3",
     "lucide-react": "^0.475.0",
     "motion": "^12.43.0",
     "react": "^19.2.7",

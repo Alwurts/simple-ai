@@ -16,14 +16,12 @@
         "./registry/components/chat-voice-button/chat-voice-button.tsx"
       ],
       "@/components/ui/*": ["../ui/src/components/shadcn/*"],
-      "@/lib/utils": ["../ui/src/lib/utils.ts"]
+      "@/lib/utils": ["../ui/src/lib/utils.ts"],
+      "@/features/assistant/lib/chat-handler": [
+        "./registry/blocks/chat-handler/chat-handler.ts"
+      ]
     }
   },
-  "include": [
-    "src",
-    "registry",
-    "scripts",
-    "../tsconfig/css-modules.d.ts"
-  ],
+  "include": ["src", "registry", "scripts", "../tsconfig/css-modules.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

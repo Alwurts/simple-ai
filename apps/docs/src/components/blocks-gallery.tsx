@@ -7,7 +7,12 @@ import { BlockViewer } from "./block-viewer";
 const BLOCK_ORDER = ["chat-page"];
 
 /** Installed in the registry, omitted from the /blocks gallery. */
-const HIDDEN_BLOCKS = new Set(["app-shell"]);
+const HIDDEN_BLOCKS = new Set([
+  "app-shell",
+  "chat-handler",
+  "chat-api-next",
+  "chat-api-hono",
+]);
 
 function orderedBlocks() {
   const visible = blocks.filter((block) => !HIDDEN_BLOCKS.has(block.name));

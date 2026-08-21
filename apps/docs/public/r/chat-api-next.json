@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-api-next",
+  "title": "Chat API (Next.js)",
+  "description": "App Router POST /api/chat. Add with @simple-ai/chat-page, then switch the chat transport.",
+  "registryDependencies": [
+    "@simple-ai/chat-handler"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/registry/blocks/chat-api-next/route.ts",
+      "content": "import { handleChat } from \"@/features/assistant/lib/chat-handler\";\n\nexport const maxDuration = 60;\n\nexport function POST(request: Request) {\n  return handleChat(request);\n}\n",
+      "type": "registry:file",
+      "target": "src/app/api/chat/route.ts"
+    }
+  ],
+  "type": "registry:block"
+}

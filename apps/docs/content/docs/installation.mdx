@@ -38,6 +38,70 @@ export const Route = createFileRoute("/assistant")({
 });
 ```
 
+`chat-page` ships a mocked transport, so the gallery and a fresh install work without a model. Add one API block with the page, then point the transport at `/api/chat`.
+
+### Next.js
+
+```bash
+npx shadcn@latest add @simple-ai/chat-page
+npx shadcn@latest add @simple-ai/chat-api-next
+```
+
+That writes `src/app/api/chat/route.ts` and the shared handler.
+
+### TanStack Start
+
+```bash
+npx shadcn@latest add @simple-ai/chat-page
+npx shadcn@latest add @simple-ai/chat-handler
+```
+
+Add a server route that calls the handler:
+
+```tsx
+// src/routes/api/chat.ts
+import { createFileRoute } from "@tanstack/react-router";
+import { handleChat } from "@/features/assistant/lib/chat-handler";
+
+export const Route = createFileRoute("/api/chat")({
+  server: {
+    handlers: {
+      POST: ({ request }) => handleChat(request),
+    },
+  },
+});
+```
+
+Or add `@simple-ai/chat-api-hono` and fetch the Hono app from that route instead.
+
+### Hono
+
+```bash
+npx shadcn@latest add @simple-ai/chat-page
+npx shadcn@latest add @simple-ai/chat-api-hono
+```
+
+Mount the app (Cloudflare Workers can export it as the default):
+
+```ts
+import { chatApp } from "@/features/assistant/lib/chat-hono";
+
+app.route("/", chatApp);
+```
+
+### Switch the transport
+
+In `src/features/assistant/lib/chat-transport.ts`:
+
+```ts
+import { DefaultChatTransport } from "ai";
+
+export const chatTransport = new DefaultChatTransport({ api: "/api/chat" });
+export const initialChatMessages = undefined;
+```
+
+Set `AI_GATEWAY_API_KEY` and optionally `AI_MODEL` (defaults to `openai/gpt-4.1-mini`).
+
 ## Hosted registry
 
 If `@simple-ai` is not in the public directory yet, add this to `components.json`:

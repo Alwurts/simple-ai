@@ -5,8 +5,7 @@ const def: RegistryItemDef = {
     name: "chat-page",
     type: "registry:block",
     title: "Chat page",
-    description:
-      "Full screen chat with tools, files, and mentions.",
+    description: "Full screen chat with tools, files, and mentions.",
     registryDependencies: [
       "attachment",
       "bubble",
@@ -38,6 +37,11 @@ const def: RegistryItemDef = {
         path: "lib/mock-chat-messages.ts",
         type: "registry:lib",
         target: "src/features/assistant/lib/mock-chat-messages.ts",
+      },
+      {
+        path: "lib/chat-transport.ts",
+        type: "registry:lib",
+        target: "src/features/assistant/lib/chat-transport.ts",
       },
       {
         path: "components/app-sidebar.tsx",

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-handler",
+  "title": "Chat handler",
+  "description": "Shared Request/Response chat handler. Use with chat-api-next or chat-api-hono.",
+  "dependencies": [
+    "ai"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/registry/blocks/chat-handler/chat-handler.ts",
+      "content": "import {\n  convertToModelMessages,\n  createUIMessageStreamResponse,\n  streamText,\n  toUIMessageStream,\n  type UIMessage,\n} from \"ai\";\n\n/**\n * Shared UI-message chat handler. Adapters (Next, Hono, Start) pass the Request in.\n * Set `AI_MODEL` (AI Gateway id, e.g. `openai/gpt-4.1-mini`) and a provider or\n * `AI_GATEWAY_API_KEY`.\n */\nexport async function handleChat(request: Request): Promise<Response> {\n  const { messages }: { messages: UIMessage[] } = await request.json();\n\n  const result = streamText({\n    model: process.env.AI_MODEL ?? \"openai/gpt-4.1-mini\",\n    instructions: \"You are a helpful assistant.\",\n    messages: await convertToModelMessages(messages, {\n      ignoreIncompleteToolCalls: true,\n    }),\n  });\n\n  return createUIMessageStreamResponse({\n    stream: toUIMessageStream({ stream: result.stream }),\n  });\n}\n",
+      "type": "registry:lib",
+      "target": "src/features/assistant/lib/chat-handler.ts"
+    }
+  ],
+  "type": "registry:block"
+}

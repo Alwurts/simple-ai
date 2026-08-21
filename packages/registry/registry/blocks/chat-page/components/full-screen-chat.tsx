@@ -48,10 +48,10 @@ import {
 } from "@/components/ui/shell";
 import { useChatSidePanel } from "../hooks/use-chat-side-panel";
 import {
+  chatTransport,
   type GalleryChatMessage,
-  galleryChatTransport,
-  initialGalleryMessages,
-} from "../lib/mock-chat-messages";
+  initialChatMessages,
+} from "../lib/chat-transport";
 import { GalleryChatInput, type GalleryPromptMessage } from "./chat-input";
 import { ChatMessageRow } from "./chat-message-parts";
 import { ChatSidePanel } from "./chat-side-panel";
@@ -76,8 +76,8 @@ export function FullScreenChat() {
   const { messages, sendMessage, setMessages, status, stop } =
     useChat<GalleryChatMessage>({
       throttle: 50,
-      messages: initialGalleryMessages,
-      transport: galleryChatTransport,
+      messages: initialChatMessages,
+      transport: chatTransport,
     });
   const streamingMessageId =
     status === "streaming" && messages.at(-1)?.role === "assistant"

@@ -31,6 +31,49 @@
       ]
     },
     {
+      "name": "chat-api-hono",
+      "type": "registry:block",
+      "title": "Chat API (Hono)",
+      "description": "Hono POST /api/chat. Add with @simple-ai/chat-page, then switch the chat transport.",
+      "dependencies": ["hono"],
+      "registryDependencies": ["@simple-ai/chat-handler"],
+      "files": [
+        {
+          "path": "packages/registry/registry/blocks/chat-api-hono/chat-hono.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/chat-hono.ts"
+        }
+      ]
+    },
+    {
+      "name": "chat-api-next",
+      "type": "registry:block",
+      "title": "Chat API (Next.js)",
+      "description": "App Router POST /api/chat. Add with @simple-ai/chat-page, then switch the chat transport.",
+      "registryDependencies": ["@simple-ai/chat-handler"],
+      "files": [
+        {
+          "path": "packages/registry/registry/blocks/chat-api-next/route.ts",
+          "type": "registry:file",
+          "target": "src/app/api/chat/route.ts"
+        }
+      ]
+    },
+    {
+      "name": "chat-handler",
+      "type": "registry:block",
+      "title": "Chat handler",
+      "description": "Shared Request/Response chat handler. Use with chat-api-next or chat-api-hono.",
+      "dependencies": ["ai"],
+      "files": [
+        {
+          "path": "packages/registry/registry/blocks/chat-handler/chat-handler.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/chat-handler.ts"
+        }
+      ]
+    },
+    {
       "name": "chat-input",
       "type": "registry:ui",
       "title": "Chat Input",
@@ -90,6 +133,11 @@
           "path": "packages/registry/registry/blocks/chat-page/lib/mock-chat-messages.ts",
           "type": "registry:lib",
           "target": "src/features/assistant/lib/mock-chat-messages.ts"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/lib/chat-transport.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/chat-transport.ts"
         },
         {
           "path": "packages/registry/registry/blocks/chat-page/components/app-sidebar.tsx",

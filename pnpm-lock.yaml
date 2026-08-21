@@ -158,6 +158,9 @@ importers:
       ai:
         specifier: ^7.0.71
         version: 7.0.71(zod@4.4.3)
+      hono:
+        specifier: ^4.13.3
+        version: 4.13.3
       lucide-react:
         specifier: ^0.475.0
         version: 0.475.0(react@19.2.8)

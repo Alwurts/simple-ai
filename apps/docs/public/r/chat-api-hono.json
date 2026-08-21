@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-api-hono",
+  "title": "Chat API (Hono)",
+  "description": "Hono POST /api/chat. Add with @simple-ai/chat-page, then switch the chat transport.",
+  "dependencies": [
+    "hono"
+  ],
+  "registryDependencies": [
+    "@simple-ai/chat-handler"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/registry/blocks/chat-api-hono/chat-hono.ts",
+      "content": "import { Hono } from \"hono\";\nimport { handleChat } from \"@/features/assistant/lib/chat-handler\";\n\n/** POST /api/chat. Mount with `app.route(\"/\", chatApp)` or `chatApp.fetch(request)`. */\nexport const chatApp = new Hono().post(\"/api/chat\", (c) =>\n  handleChat(c.req.raw)\n);\n",
+      "type": "registry:lib",
+      "target": "src/features/assistant/lib/chat-hono.ts"
+    }
+  ],
+  "type": "registry:block"
+}

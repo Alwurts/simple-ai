@@ -11,6 +11,33 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     meta: { iframeHeight: 720 },
     component: lazy(() => import("../registry/blocks/app-shell/page")),
   },
+  "chat-api-hono": {
+    name: "chat-api-hono",
+    type: "registry:block",
+    title: "Chat API (Hono)",
+    description:
+      "Hono POST /api/chat. Add with @simple-ai/chat-page, then switch the chat transport.",
+    meta: {},
+    component: lazy(() => import("../registry/blocks/chat-api-hono/preview")),
+  },
+  "chat-api-next": {
+    name: "chat-api-next",
+    type: "registry:block",
+    title: "Chat API (Next.js)",
+    description:
+      "App Router POST /api/chat. Add with @simple-ai/chat-page, then switch the chat transport.",
+    meta: {},
+    component: lazy(() => import("../registry/blocks/chat-api-next/preview")),
+  },
+  "chat-handler": {
+    name: "chat-handler",
+    type: "registry:block",
+    title: "Chat handler",
+    description:
+      "Shared Request/Response chat handler. Use with chat-api-next or chat-api-hono.",
+    meta: {},
+    component: lazy(() => import("../registry/blocks/chat-handler/preview")),
+  },
   "chat-input": {
     name: "chat-input",
     type: "registry:ui",
