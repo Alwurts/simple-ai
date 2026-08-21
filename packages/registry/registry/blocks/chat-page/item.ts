@@ -15,6 +15,7 @@ const def: RegistryItemDef = {
       "dropdown-menu",
       "empty",
       "input-group",
+      "marker",
       "message",
       "message-scroller",
       "resizable",
@@ -30,8 +31,8 @@ const def: RegistryItemDef = {
     files: [
       {
         path: "page.tsx",
-        type: "registry:page",
-        target: "src/routes/assistant.tsx",
+        type: "registry:component",
+        target: "src/features/assistant/page.tsx",
       },
       {
         path: "lib/mock-chat-messages.ts",

@@ -19,7 +19,24 @@ npx shadcn@latest add @simple-ai/app-shell
 npx shadcn@latest add @simple-ai/chat-page
 ```
 
-`chat-page` depends on `shell`, `chat-input`, `reasoning`, `tool`, and `chat-voice-button`. `app-shell` depends on `shell`. The CLI pulls those in, plus shadcn `sidebar`, `message`, `bubble`, and `message-scroller`.
+`chat-page` depends on `shell`, `chat-input`, `reasoning`, `tool`, and `chat-voice-button`. `app-shell` depends on `shell`. The CLI pulls those in, plus shadcn `sidebar`, `message`, `bubble`, `attachment`, and `message-scroller`.
+
+The page UI lands at `src/features/assistant/page.tsx` (or `features/assistant/page.tsx` if the app has no `src`). Wire a route to it:
+
+```tsx
+// Next.js App Router — app/assistant/page.tsx
+export { default } from "@/features/assistant/page";
+```
+
+```tsx
+// TanStack Start — src/routes/assistant.tsx
+import { createFileRoute } from "@tanstack/react-router";
+import ChatPage from "@/features/assistant/page";
+
+export const Route = createFileRoute("/assistant")({
+  component: ChatPage,
+});
+```
 
 ## Hosted registry
 

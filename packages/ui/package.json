@@ -37,7 +37,6 @@
     "./lib/*": "./src/lib/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./components/shadcn/*": "./src/components/shadcn/*.tsx",
-    "./components/ai-elements/*": "./src/components/ai-elements/*.tsx",
     "./hooks/*": "./src/hooks/*.ts"
   }
 }

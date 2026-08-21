@@ -12,6 +12,7 @@ import { CheckIcon, CircleIcon, CopyIcon } from "lucide-react";
 import { Streamdown } from "streamdown";
 import { Bubble, BubbleContent } from "@/components/ui/bubble";
 import { Button } from "@/components/ui/button";
+import { Marker, MarkerContent, MarkerIcon } from "@/components/ui/marker";
 import {
   Message,
   MessageContent,
@@ -67,26 +68,21 @@ function PlanPart({
 
   return (
     <div
-      className="my-2 flex flex-col gap-1 rounded-md border bg-muted/30 px-3 py-2"
+      className="my-2 flex flex-col gap-1"
       key={`${messageId}-plan-${partIndex}`}
     >
       {entries.map((entry, index) => {
         const done = entry.status === "completed";
         return (
-          <div
-            className="flex items-start gap-2 text-sm"
+          <Marker
             // biome-ignore lint/suspicious/noArrayIndexKey: plan entries have no stable id
             key={`${messageId}-plan-${partIndex}-${index}`}
           >
-            {done ? (
-              <CheckIcon className="mt-0.5 size-3.5 shrink-0 text-muted-foreground" />
-            ) : (
-              <CircleIcon className="mt-0.5 size-3.5 shrink-0 text-muted-foreground" />
-            )}
-            <span className={cn(done && "text-muted-foreground line-through")}>
+            <MarkerIcon>{done ? <CheckIcon /> : <CircleIcon />}</MarkerIcon>
+            <MarkerContent className={cn(done && "line-through")}>
               {entry.content}
-            </span>
-          </div>
+            </MarkerContent>
+          </Marker>
         );
       })}
     </div>

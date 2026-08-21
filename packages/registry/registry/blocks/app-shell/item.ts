@@ -12,8 +12,8 @@ const def: RegistryItemDef = {
     files: [
       {
         path: "page.tsx",
-        type: "registry:page",
-        target: "src/routes/dashboard.tsx",
+        type: "registry:component",
+        target: "src/features/app-shell/page.tsx",
       },
       {
         path: "components/app-sidebar.tsx",

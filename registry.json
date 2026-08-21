@@ -20,8 +20,8 @@
       "files": [
         {
           "path": "packages/registry/registry/blocks/app-shell/page.tsx",
-          "type": "registry:page",
-          "target": "src/routes/dashboard.tsx"
+          "type": "registry:component",
+          "target": "src/features/app-shell/page.tsx"
         },
         {
           "path": "packages/registry/registry/blocks/app-shell/components/app-sidebar.tsx",
@@ -65,6 +65,7 @@
         "dropdown-menu",
         "empty",
         "input-group",
+        "marker",
         "message",
         "message-scroller",
         "resizable",
@@ -82,8 +83,8 @@
       "files": [
         {
           "path": "packages/registry/registry/blocks/chat-page/page.tsx",
-          "type": "registry:page",
-          "target": "src/routes/assistant.tsx"
+          "type": "registry:component",
+          "target": "src/features/assistant/page.tsx"
         },
         {
           "path": "packages/registry/registry/blocks/chat-page/lib/mock-chat-messages.ts",

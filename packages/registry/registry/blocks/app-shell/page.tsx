@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/shell";
 import { AppSidebar } from "./components/app-sidebar";
 
+/** UI for the app shell. Wire a Next or Start route to this file after install. */
 export default function AppShellPage() {
   return (
     <Shell sidebar={<AppSidebar activeId="home" />}>

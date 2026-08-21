@@ -57,13 +57,15 @@ const getStatusBadge = (
   const labels = { ...DEFAULT_STATUS_LABELS, ...statusLabels };
 
   const icons: Record<ToolUIPart["state"], ReactNode> = {
-    "input-streaming": <CircleIcon />,
-    "input-available": <ClockIcon className="animate-pulse" />,
-    "approval-requested": <ClockIcon className="text-yellow-600" />,
-    "approval-responded": <CheckCircleIcon className="text-blue-600" />,
-    "output-available": <CheckCircleIcon className="text-green-600" />,
-    "output-error": <XCircleIcon className="text-red-600" />,
-    "output-denied": <XCircleIcon className="text-orange-600" />,
+    "input-streaming": <CircleIcon className="text-muted-foreground" />,
+    "input-available": (
+      <ClockIcon className="animate-pulse text-muted-foreground" />
+    ),
+    "approval-requested": <ClockIcon className="text-muted-foreground" />,
+    "approval-responded": <CheckCircleIcon className="text-muted-foreground" />,
+    "output-available": <CheckCircleIcon className="text-muted-foreground" />,
+    "output-error": <XCircleIcon className="text-destructive" />,
+    "output-denied": <XCircleIcon className="text-destructive" />,
   };
 
   return (
