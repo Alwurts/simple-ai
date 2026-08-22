@@ -94,7 +94,17 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     title: "Weather agent",
     description: "ToolLoopAgent that looks up weather.",
     categories: ["agent"],
-    meta: { iframeHeight: 280 },
+    meta: {
+      tools: [
+        { name: "getWeather", description: "Get the weather in a location" },
+      ],
+      wireWith: [
+        "@simple-ai/chat-page",
+        "@simple-ai/chat-api-next",
+        "@simple-ai/chat-api-hono",
+        "@simple-ai/agent-handle",
+      ],
+    },
     component: lazy(() => import("../registry/agents/weather-agent/preview")),
   },
 };

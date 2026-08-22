@@ -27,7 +27,20 @@ In src/features/assistant/lib/chat-transport.ts:
   export const initialChatMessages = undefined;
 
 Set AI_GATEWAY_API_KEY and optionally AI_MODEL.`,
-    meta: { iframeHeight: 280 },
+    meta: {
+      tools: [
+        {
+          name: "getWeather",
+          description: "Get the weather in a location",
+        },
+      ],
+      wireWith: [
+        "@simple-ai/chat-page",
+        "@simple-ai/chat-api-next",
+        "@simple-ai/chat-api-hono",
+        "@simple-ai/agent-handle",
+      ],
+    },
     files: [
       {
         path: "agent.ts",
