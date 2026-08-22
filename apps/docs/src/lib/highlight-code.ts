@@ -1,7 +1,7 @@
 import { codeToHtml } from "shiki";
 
 export async function highlightCode(code: string, language = "tsx") {
-  return codeToHtml(code, {
+  return await codeToHtml(code, {
     lang: language,
     defaultColor: false,
     themes: {
@@ -22,7 +22,7 @@ export async function highlightCode(code: string, language = "tsx") {
 export function languageFromPath(path: string) {
   const extension = path.split(".").pop()?.toLowerCase();
   if (extension === "ts") {
-    return "ts";
+    return "typescript";
   }
   if (extension === "json") {
     return "json";

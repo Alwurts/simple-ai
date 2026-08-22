@@ -55,11 +55,11 @@ html:has([data-slot="view-page"]) [data-slot="site-shell"] {
 
 /* Fumadocs rehype-code / Shiki — dual-theme tokens on each token span */
 [data-slot="docs"] .line span,
-[data-slot="block-code"] .line span {
+[data-slot="highlighted-code"] .line span {
   color: var(--shiki-light);
 }
 
 .dark [data-slot="docs"] .line span,
-.dark [data-slot="block-code"] .line span {
+.dark [data-slot="highlighted-code"] .line span {
   color: var(--shiki-dark);
 }

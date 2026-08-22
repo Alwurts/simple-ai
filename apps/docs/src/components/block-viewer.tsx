@@ -21,6 +21,10 @@ import {
   Terminal,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import {
+  RegistryFileTree,
+  registryFileLabel,
+} from "@/components/registry-file-tree";
 import { trackEvent } from "@/lib/events";
 import { highlightCode, languageFromPath } from "@/lib/highlight-code";
 
@@ -45,11 +49,6 @@ function copyText(value: string, onCopied: () => void) {
     return;
   }
   navigator.clipboard.writeText(value).then(onCopied, console.error);
-}
-
-function fileLabel(file: RegistryFile) {
-  const path = file.target ?? file.path;
-  return path.replace(/^packages\/registry\/registry\/[^/]+\/[^/]+\//, "");
 }
 
 export function BlockViewer({ name }: { name: string }) {
@@ -301,35 +300,23 @@ export function BlockViewer({ name }: { name: string }) {
       ) : (
         <div
           className="flex min-h-(--block-height) overflow-hidden rounded-xl border bg-code text-code-foreground"
-          data-slot="block-code"
+          data-slot="highlighted-code"
         >
-          <nav className="hidden w-56 shrink-0 overflow-y-auto border-r md:block">
+          <nav className="hidden w-64 shrink-0 overflow-y-auto border-r md:block">
             <div className="flex h-12 items-center border-b px-4 font-medium text-sm">
               Files
             </div>
-            <ul className="flex flex-col p-1">
-              {(files ?? []).map((file) => (
-                <li key={file.path}>
-                  <button
-                    className={cn(
-                      "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm hover:bg-muted",
-                      activePath === file.path && "bg-muted"
-                    )}
-                    onClick={() => setActivePath(file.path)}
-                    type="button"
-                  >
-                    <FileIcon className="size-3.5 shrink-0 text-muted-foreground" />
-                    <span className="min-w-0 truncate">{fileLabel(file)}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <RegistryFileTree
+              activePath={activePath}
+              files={files ?? []}
+              onSelect={setActivePath}
+            />
           </nav>
           <div className="flex min-w-0 flex-1 flex-col">
             <div className="flex h-12 shrink-0 items-center gap-2 border-b px-4 text-sm">
               <FileIcon className="size-4 text-muted-foreground" />
               <span className="min-w-0 truncate">
-                {activeFile ? fileLabel(activeFile) : "Source"}
+                {activeFile ? registryFileLabel(activeFile) : "Source"}
               </span>
               {activeFile?.content ? (
                 <Button
@@ -367,7 +354,7 @@ export function BlockViewer({ name }: { name: string }) {
                 >
                   {(files ?? []).map((file) => (
                     <option key={file.path} value={file.path}>
-                      {fileLabel(file)}
+                      {registryFileLabel(file)}
                     </option>
                   ))}
                 </select>
