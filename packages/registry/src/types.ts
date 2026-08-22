@@ -1,9 +1,33 @@
 import type { LazyExoticComponent } from "react";
 import type { RegistryItem } from "shadcn/schema";
 
+export interface AgentToolInputMeta {
+  name: string;
+  type: string;
+  description?: string;
+}
+
 export interface AgentToolMeta {
   name: string;
   description: string;
+  inputs?: AgentToolInputMeta[];
+  exampleOutput?: unknown;
+}
+
+export interface AgentExampleTurn {
+  user: string;
+  tool?: {
+    name: string;
+    input: unknown;
+    output: unknown;
+  };
+  assistant: string;
+}
+
+export interface AgentWireApi {
+  stack: string;
+  item: string;
+  note?: string;
 }
 
 export type RegistryMeta = {
@@ -11,10 +35,18 @@ export type RegistryMeta = {
   iframeHeight?: number;
   /** Render the component docs preview in an iframe (full-page layouts). */
   fullBleed?: boolean;
-  /** Tools listed on the /agents overview card. */
+  /** Capability line on the /agents overview card. */
+  summary?: string;
+  instructions?: string;
+  model?: string;
+  env?: string[];
   tools?: AgentToolMeta[];
-  /** Registry items to add with this agent for a live chat. */
-  wireWith?: string[];
+  samplePrompts?: string[];
+  exampleTurn?: AgentExampleTurn;
+  wire?: {
+    ui: string;
+    apis: AgentWireApi[];
+  };
 } & Record<string, unknown>;
 
 export type SimpleAiRegistryItem = RegistryItem & { meta?: RegistryMeta };

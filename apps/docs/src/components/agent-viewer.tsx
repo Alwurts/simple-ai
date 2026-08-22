@@ -1,6 +1,5 @@
 "use client";
 
-import type { AgentToolMeta } from "@workspace/registry";
 import { getEntry } from "@workspace/registry";
 import { Button } from "@workspace/ui/components/shadcn/button";
 import {
@@ -10,6 +9,7 @@ import {
 } from "@workspace/ui/components/shadcn/tabs";
 import { Check, Clipboard, FileIcon, Terminal } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { AgentOverview } from "@/components/agent-overview";
 import {
   RegistryFileTree,
   registryFileLabel,
@@ -31,101 +31,6 @@ function copyText(value: string, onCopied: () => void) {
     return;
   }
   navigator.clipboard.writeText(value).then(onCopied, console.error);
-}
-
-function readTools(meta: Record<string, unknown>): AgentToolMeta[] {
-  const tools = meta.tools;
-  if (!Array.isArray(tools)) {
-    return [];
-  }
-  return tools.flatMap((tool) => {
-    if (
-      tool &&
-      typeof tool === "object" &&
-      "name" in tool &&
-      "description" in tool &&
-      typeof tool.name === "string" &&
-      typeof tool.description === "string"
-    ) {
-      return [{ name: tool.name, description: tool.description }];
-    }
-    return [];
-  });
-}
-
-function readWireWith(meta: Record<string, unknown>): string[] {
-  const wireWith = meta.wireWith;
-  if (!Array.isArray(wireWith)) {
-    return [];
-  }
-  return wireWith.filter((item): item is string => typeof item === "string");
-}
-
-function AgentOverview({
-  title,
-  description,
-  tools,
-  wireWith,
-}: {
-  title: string;
-  description?: string;
-  tools: AgentToolMeta[];
-  wireWith: string[];
-}) {
-  return (
-    <div className="rounded-xl border bg-background" data-slot="agent-overview">
-      <div className="flex flex-col gap-6 p-6">
-        <div className="flex flex-col gap-1">
-          <p className="font-medium">{title}</p>
-          {description ? (
-            <p className="text-muted-foreground text-sm">{description}</p>
-          ) : null}
-        </div>
-        {tools.length > 0 ? (
-          <div className="flex flex-col gap-2">
-            <h3 className="font-medium text-muted-foreground text-xs uppercase tracking-wider">
-              Tools
-            </h3>
-            <ul className="divide-y rounded-lg border">
-              {tools.map((tool) => (
-                <li
-                  className="flex flex-col gap-0.5 px-3 py-2 sm:flex-row sm:items-baseline sm:gap-4"
-                  key={tool.name}
-                >
-                  <code className="shrink-0 font-mono text-sm">
-                    {tool.name}
-                  </code>
-                  <span className="text-muted-foreground text-sm">
-                    {tool.description}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-        {wireWith.length > 0 ? (
-          <div className="flex flex-col gap-2">
-            <h3 className="font-medium text-muted-foreground text-xs uppercase tracking-wider">
-              Wire with
-            </h3>
-            <p className="text-muted-foreground text-sm">
-              Add a chat page and an API, then point{" "}
-              <code>chat-transport.ts</code> at <code>/api/chat</code>.
-            </p>
-            <ul className="flex flex-wrap gap-2">
-              {wireWith.map((item) => (
-                <li key={item}>
-                  <code className="rounded-md border bg-muted/40 px-2 py-1 font-mono text-xs">
-                    {item}
-                  </code>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-      </div>
-    </div>
-  );
 }
 
 function AgentSource({
@@ -311,8 +216,6 @@ export function AgentViewer({ name }: { name: string }) {
 
   const install = `npx shadcn@latest add @simple-ai/${name}`;
   const highlightedHtml = activeFile ? highlighted[activeFile.path] : undefined;
-  const tools = readTools(agent.meta);
-  const wireWith = readWireWith(agent.meta);
 
   return (
     <div
@@ -373,12 +276,7 @@ export function AgentViewer({ name }: { name: string }) {
       </div>
 
       {view === "overview" ? (
-        <AgentOverview
-          description={agent.description}
-          title={agent.title ?? name}
-          tools={tools}
-          wireWith={wireWith}
-        />
+        <AgentOverview meta={agent.meta} />
       ) : (
         <AgentSource
           activeFile={activeFile}

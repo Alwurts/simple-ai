@@ -5,7 +5,7 @@ const def: RegistryItemDef = {
     name: "weather-agent",
     type: "registry:lib",
     title: "Weather agent",
-    description: "ToolLoopAgent that looks up weather.",
+    description: "Answers weather questions for a city.",
     categories: ["agent"],
     dependencies: ["ai", "zod"],
     envVars: {
@@ -28,18 +28,55 @@ In src/features/assistant/lib/chat-transport.ts:
 
 Set AI_GATEWAY_API_KEY and optionally AI_MODEL.`,
     meta: {
+      summary: "Answers weather questions for a city.",
+      instructions:
+        "You are a weather assistant. Use getWeather to answer weather questions.",
+      model: "openai/gpt-4.1-mini",
+      env: ["AI_GATEWAY_API_KEY"],
       tools: [
         {
           name: "getWeather",
           description: "Get the weather in a location",
+          inputs: [
+            { name: "location", type: "string", description: "City name" },
+          ],
+          exampleOutput: {
+            location: "Tokyo",
+            temperatureF: 72,
+            conditions: "clear",
+          },
         },
       ],
-      wireWith: [
-        "@simple-ai/chat-page",
-        "@simple-ai/chat-api-next",
-        "@simple-ai/chat-api-hono",
-        "@simple-ai/agent-handle",
+      samplePrompts: [
+        "What's the weather in Tokyo?",
+        "Do I need a jacket in Chicago today?",
+        "Compare London and Lisbon this afternoon.",
       ],
+      exampleTurn: {
+        user: "What's the weather in Tokyo?",
+        tool: {
+          name: "getWeather",
+          input: { location: "Tokyo" },
+          output: {
+            location: "Tokyo",
+            temperatureF: 72,
+            conditions: "clear",
+          },
+        },
+        assistant: "72°F and clear in Tokyo.",
+      },
+      wire: {
+        ui: "@simple-ai/chat-page",
+        apis: [
+          { stack: "Next.js", item: "@simple-ai/chat-api-next" },
+          { stack: "Hono", item: "@simple-ai/chat-api-hono" },
+          {
+            stack: "TanStack Start",
+            item: "@simple-ai/agent-handle",
+            note: "Call handleAgent from a server route.",
+          },
+        ],
+      },
     },
     files: [
       {
