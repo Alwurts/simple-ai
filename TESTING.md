@@ -29,6 +29,4 @@ npx shadcn@latest registry add @simple-ai=http://127.0.0.1:4567/r/{name}.json
 npx shadcn@latest add @simple-ai/chat-page -y
 ```
 
-The page UI lands at `src/features/assistant/page.tsx`. Wire a Next or Start route as in [Installation](apps/docs/content/docs/installation.mdx).
-
-For a live model, also add `@simple-ai/weather-agent` and `@simple-ai/chat-api-next` (Next.js) or `@simple-ai/chat-api-hono` (Hono). Start can add `@simple-ai/agent-handle` and call `handleAgent` from a server route. Then switch `chat-transport.ts` to `DefaultChatTransport({ api: "/api/chat" })`. The gallery stays mocked. The CLI prints these steps from each item's `docs` field.
+The page UI lands at `src/features/assistant/page.tsx`. Wire a Next or Start route as in [Installation](apps/docs/content/docs/installation.mdx). The gallery stays mocked.

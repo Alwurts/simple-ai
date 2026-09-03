@@ -16,18 +16,14 @@ const RETIRED_BLOCK_VIEWS = new Set([
   "flow-parallelization",
   "flow-routing",
   "workflow-01",
+  "app-shell",
 ]);
 
-const LIVE_COMPONENT_DOCS = new Set([
-  "chat-input",
-  "chat-voice-button",
-  "reasoning",
-  "shell",
-  "tool",
-]);
+const LIVE_COMPONENT_DOCS = new Set(["composer", "reasoning", "shell", "tool"]);
 
 const RETIRED_APP_PATHS: Record<string, string> = {
-  "ai-agents": "/agents",
+  "ai-agents": "/blocks",
+  agents: "/blocks",
   "ai-workflows": "/docs",
   playground: "/docs",
   canvas: "/docs",
@@ -43,21 +39,30 @@ export function legacyDocsHref(path: string): string | undefined {
     return "/blocks";
   }
   if (startsWithPath(path, "agents")) {
-    return "/agents";
+    return "/blocks";
   }
   if (startsWithPath(path, "workflows") || startsWithPath(path, "react-flow")) {
     return "/docs";
   }
   if (startsWithPath(path, "components")) {
     const name = path.slice("components/".length);
+    if (name === "chat-input") {
+      return "/docs/components/composer";
+    }
+    if (name === "chat-voice-button") {
+      return "/docs/components";
+    }
     if (name && !LIVE_COMPONENT_DOCS.has(name)) {
-      return "/docs/components/chat-input";
+      return "/docs/components/composer";
     }
   }
 }
 
 /** `/view/:name` — old block previews. */
 export function legacyViewHref(name: string): string | undefined {
+  if (name === "chat-input") {
+    return "/view/composer";
+  }
   if (RETIRED_CHAT_VIEWS.has(name)) {
     return "/view/chat-page";
   }
@@ -77,6 +82,9 @@ export function legacyAppHref(path: string): string | undefined {
   }
   if (startsWithPath(trimmed, "playground")) {
     return "/docs";
+  }
+  if (startsWithPath(trimmed, "agents")) {
+    return "/blocks";
   }
   if (startsWithPath(trimmed, "blocks")) {
     return "/blocks";

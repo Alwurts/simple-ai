@@ -5,23 +5,10 @@ const def: RegistryItemDef = {
     name: "chat-page",
     type: "registry:block",
     title: "Chat page",
-    description: "Full screen chat with tools, files, and mentions.",
-    docs: `This page ships a mocked transport.
+    description: "Full-screen chat with tools, files, and mentions.",
+    docs: `This page ships a mocked transport so the gallery and a fresh install work without a model.
 
-For a live model, also add an agent and an API:
-
-  npx shadcn@latest add @simple-ai/weather-agent
-  npx shadcn@latest add @simple-ai/chat-api-next
-
-Use @simple-ai/chat-api-hono instead of chat-api-next for Hono. On TanStack Start, add @simple-ai/agent-handle and call handleAgent from a server route.
-
-Then in src/features/assistant/lib/chat-transport.ts:
-
-  import { DefaultChatTransport } from "ai";
-  export const chatTransport = new DefaultChatTransport({ api: "/api/chat" });
-  export const initialChatMessages = undefined;
-
-Set AI_GATEWAY_API_KEY and optionally AI_MODEL.`,
+Add a route to src/features/assistant/page.tsx. Point a live transport at your own API when you have one.`,
     registryDependencies: [
       "attachment",
       "bubble",
@@ -35,8 +22,7 @@ Set AI_GATEWAY_API_KEY and optionally AI_MODEL.`,
       "message-scroller",
       "resizable",
       "sidebar",
-      "@simple-ai/chat-input",
-      "@simple-ai/chat-voice-button",
+      "@simple-ai/composer",
       "@simple-ai/reasoning",
       "@simple-ai/shell",
       "@simple-ai/tool",
@@ -70,9 +56,9 @@ Set AI_GATEWAY_API_KEY and optionally AI_MODEL.`,
         target: "src/features/assistant/components/full-screen-chat.tsx",
       },
       {
-        path: "components/chat-input.tsx",
+        path: "components/composer.tsx",
         type: "registry:component",
-        target: "src/features/assistant/components/chat-input.tsx",
+        target: "src/features/assistant/components/composer.tsx",
       },
       {
         path: "components/chat-message-parts.tsx",

@@ -5,14 +5,10 @@ const def: RegistryItemDef = {
     name: "reasoning",
     type: "registry:ui",
     title: "Reasoning",
-    description:
-      "Collapsible thinking with duration and markdown.",
-    dependencies: ["motion", "streamdown"],
+    description: "Collapsible thinking with duration and markdown.",
+    dependencies: ["streamdown"],
     registryDependencies: ["collapsible"],
-    files: [
-      { path: "reasoning.tsx", type: "registry:ui" },
-      { path: "shimmer.tsx", type: "registry:ui" },
-    ],
+    files: [{ path: "reasoning.tsx", type: "registry:ui" }],
   },
   preview: "preview",
 };

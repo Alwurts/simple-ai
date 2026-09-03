@@ -5,8 +5,7 @@ const def: RegistryItemDef = {
     name: "shell",
     type: "registry:ui",
     title: "Shell",
-    description:
-      "Sidebar, header, and main content.",
+    description: "Sidebar, header, and main content.",
     registryDependencies: ["button", "sidebar"],
     meta: { fullBleed: true, iframeHeight: 720 },
     files: [{ path: "shell.tsx", type: "registry:ui" }],

@@ -4,8 +4,8 @@ export function DocsNotFound() {
       <p className="font-medium text-sm">Page not found</p>
       <p className="max-w-md text-muted-foreground text-sm">
         This docs page does not exist or was moved. Try{" "}
-        <a className="text-primary underline" href="/docs/components/chat-input">
-          chat input
+        <a className="text-primary underline" href="/docs/components/composer">
+          composer
         </a>{" "}
         or the{" "}
         <a className="text-primary underline" href="/blocks">
@@ -40,7 +40,7 @@ export function BlockNotFound() {
       </p>
       <a
         className="text-primary text-sm underline"
-        href="/docs/components/chat-input"
+        href="/docs/components/composer"
       >
         Browse components
       </a>

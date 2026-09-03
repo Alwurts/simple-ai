@@ -27,7 +27,9 @@ function titleFromUrl(url: string) {
   if (!slug || slug === "docs") {
     return "Introduction";
   }
-  return slug.replaceAll("-", " ").replace(/\b\w/g, (char) => char.toUpperCase());
+  return slug
+    .replaceAll("-", " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 function itemToPage(item: Item): DocsNavPage {

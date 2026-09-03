@@ -9,12 +9,15 @@ import {
 } from "@/components/layout/page-header";
 
 const title = "Blocks";
-const description = "Copy the chat page into your app.";
+const description = "Copy an example into your app. Change the source.";
 
 export const Route = createFileRoute("/blocks")({
   component: BlocksPage,
   head: () => ({
-    meta: [{ title }, { content: description, name: "description" }],
+    meta: [
+      { title: `simple-ai · ${title}` },
+      { content: description, name: "description" },
+    ],
   }),
 });
 
@@ -36,8 +39,8 @@ function BlocksPage() {
           <div className="mx-auto mt-16 max-w-2xl pb-16">
             <h2 className="font-medium text-xl tracking-tight">Installation</h2>
             <p className="mt-2 text-muted-foreground text-sm">
-              Copy the chat page into your app with the shadcn CLI. The CLI
-              also pulls in the shell and chat input.
+              Copy the chat page with the shadcn CLI. The CLI also pulls in the
+              composer, shell, reasoning, and tool.
             </p>
             <pre className="mt-4 overflow-x-auto rounded-lg bg-code p-4 font-mono text-sm">
               npx shadcn@latest add @simple-ai/chat-page

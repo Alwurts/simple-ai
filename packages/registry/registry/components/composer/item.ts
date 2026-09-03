@@ -2,11 +2,10 @@ import type { RegistryItemDef } from "../../../src/types";
 
 const def: RegistryItemDef = {
   item: {
-    name: "chat-input",
+    name: "composer",
     type: "registry:ui",
-    title: "Chat Input",
-    description:
-      "Chat composer with mentions and streaming status.",
+    title: "Composer",
+    description: "TipTap composer with mentions and streaming status.",
     dependencies: [
       "@tiptap/core",
       "@tiptap/react",
@@ -17,7 +16,7 @@ const def: RegistryItemDef = {
       "ai",
     ],
     registryDependencies: ["input-group"],
-    files: [{ path: "chat-input.tsx", type: "registry:ui" }],
+    files: [{ path: "composer.tsx", type: "registry:ui" }],
   },
   preview: "preview",
 };

@@ -18,18 +18,19 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
-import { CodeBlock } from "./code-block";
 
 export type ToolProps = ComponentProps<typeof Collapsible>;
 
-export const Tool = ({ className, ...props }: ToolProps) => (
-  <Collapsible
-    className={cn("not-prose mb-4 w-full rounded-md border", className)}
-    {...props}
-  />
-);
+export function Tool({ className, ...props }: ToolProps) {
+  return (
+    <Collapsible
+      className={cn("not-prose mb-4 w-full rounded-md border", className)}
+      data-slot="tool"
+      {...props}
+    />
+  );
+}
 
-/** Optional overrides for tool-part status badge copy. */
 export type ToolStatusLabels = Partial<Record<ToolUIPart["state"], string>>;
 
 const DEFAULT_STATUS_LABELS: Record<ToolUIPart["state"], string> = {
@@ -50,12 +51,14 @@ export interface ToolHeaderProps {
   statusLabels?: ToolStatusLabels;
 }
 
-const getStatusBadge = (
-  status: ToolUIPart["state"],
-  statusLabels?: ToolStatusLabels
-) => {
+function StatusBadge({
+  status,
+  statusLabels,
+}: {
+  status: ToolUIPart["state"];
+  statusLabels?: ToolStatusLabels;
+}) {
   const labels = { ...DEFAULT_STATUS_LABELS, ...statusLabels };
-
   const icons: Record<ToolUIPart["state"], ReactNode> = {
     "input-streaming": <CircleIcon className="text-muted-foreground" />,
     "input-available": (
@@ -74,68 +77,83 @@ const getStatusBadge = (
       {labels[status]}
     </Badge>
   );
-};
+}
 
-export const ToolHeader = ({
+export function ToolHeader({
   className,
   title,
   type,
   state,
   statusLabels,
   ...props
-}: ToolHeaderProps) => (
-  <CollapsibleTrigger
-    className={cn(
-      "flex w-full items-center justify-between gap-4 p-3",
-      className
-    )}
-    {...props}
-  >
-    <div className="flex items-center gap-2">
-      <WrenchIcon className="text-muted-foreground" />
-      <span className="font-medium text-sm">
-        {title ?? type.split("-").slice(1).join("-")}
-      </span>
-      {getStatusBadge(state, statusLabels)}
-    </div>
-    <ChevronDownIcon className="text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
-  </CollapsibleTrigger>
-);
+}: ToolHeaderProps) {
+  return (
+    <CollapsibleTrigger
+      className={cn(
+        "flex w-full items-center justify-between gap-4 p-3",
+        className
+      )}
+      data-slot="tool-header"
+      {...props}
+    >
+      <div className="flex items-center gap-2">
+        <WrenchIcon className="text-muted-foreground" />
+        <span className="font-medium text-sm">
+          {title ?? type.split("-").slice(1).join("-")}
+        </span>
+        <StatusBadge status={state} statusLabels={statusLabels} />
+      </div>
+      <ChevronDownIcon className="text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
+    </CollapsibleTrigger>
+  );
+}
 
 export type ToolContentProps = ComponentProps<typeof CollapsibleContent>;
 
-export const ToolContent = ({ className, ...props }: ToolContentProps) => (
-  <CollapsibleContent
-    className={cn(
-      "data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-2 data-[state=open]:slide-in-from-top-2 text-popover-foreground outline-none data-[state=closed]:animate-out data-[state=open]:animate-in",
-      className
-    )}
-    {...props}
-  />
-);
+export function ToolContent({ className, ...props }: ToolContentProps) {
+  return (
+    <CollapsibleContent
+      className={cn("text-popover-foreground outline-none", className)}
+      data-slot="tool-content"
+      {...props}
+    />
+  );
+}
+
+function JsonPre({ value }: { value: unknown }) {
+  const text =
+    typeof value === "string" ? value : JSON.stringify(value, null, 2);
+  return <pre className="overflow-x-auto p-3 font-mono text-xs">{text}</pre>;
+}
 
 export type ToolInputProps = ComponentProps<"div"> & {
   input: ToolUIPart["input"];
   parametersLabel?: string;
 };
 
-export const ToolInput = ({
+export function ToolInput({
   className,
   input,
   parametersLabel = "Parameters",
   ...props
-}: ToolInputProps) => (
-  <div className={cn("overflow-hidden p-4", className)} {...props}>
-    <div className="flex flex-col gap-2">
-      <h4 className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
-        {parametersLabel}
-      </h4>
-      <div className="rounded-md bg-muted/50">
-        <CodeBlock code={JSON.stringify(input, null, 2)} language="json" />
+}: ToolInputProps) {
+  return (
+    <div
+      className={cn("overflow-hidden p-4", className)}
+      data-slot="tool-input"
+      {...props}
+    >
+      <div className="flex flex-col gap-2">
+        <h4 className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
+          {parametersLabel}
+        </h4>
+        <div className="rounded-md bg-muted/50">
+          <JsonPre value={input} />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+}
 
 export type ToolOutputProps = ComponentProps<"div"> & {
   output: ToolUIPart["output"];
@@ -144,30 +162,27 @@ export type ToolOutputProps = ComponentProps<"div"> & {
   errorLabel?: string;
 };
 
-export const ToolOutput = ({
+export function ToolOutput({
   className,
   output,
   errorText,
   resultLabel = "Result",
   errorLabel = "Error",
   ...props
-}: ToolOutputProps) => {
+}: ToolOutputProps) {
   if (!(output || errorText)) {
     return null;
   }
 
-  let Output = <div>{output as ReactNode}</div>;
-
+  let body: ReactNode = output as ReactNode;
   if (typeof output === "object" && !isValidElement(output)) {
-    Output = (
-      <CodeBlock code={JSON.stringify(output, null, 2)} language="json" />
-    );
+    body = <JsonPre value={output} />;
   } else if (typeof output === "string") {
-    Output = <CodeBlock code={output} language="json" />;
+    body = <JsonPre value={output} />;
   }
 
   return (
-    <div className={cn("p-4", className)} {...props}>
+    <div className={cn("p-4", className)} data-slot="tool-output" {...props}>
       <div className="flex flex-col gap-2">
         <h4 className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
           {errorText ? errorLabel : resultLabel}
@@ -180,10 +195,9 @@ export const ToolOutput = ({
               : "bg-muted/50 text-foreground"
           )}
         >
-          {errorText && <div>{errorText}</div>}
-          {Output}
+          {errorText ? <div className="p-3">{errorText}</div> : body}
         </div>
       </div>
     </div>
   );
-};
+}

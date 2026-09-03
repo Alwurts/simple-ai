@@ -3,66 +3,21 @@ import { lazy } from "react";
 import type { RegistryEntry } from "./types";
 
 export const REGISTRY: Record<string, RegistryEntry> = {
-  "agent-handle": {
-    name: "agent-handle",
-    type: "registry:block",
-    title: "Agent handle",
-    description:
-      "Request/Response entry for the assistant agent. Use with chat-api-next or chat-api-hono.",
-    meta: {},
-    component: lazy(() => import("../registry/blocks/agent-handle/preview")),
-  },
-  "app-shell": {
-    name: "app-shell",
-    type: "registry:block",
-    title: "App shell",
-    description: "Sample layout using the shell.",
-    meta: { iframeHeight: 720 },
-    component: lazy(() => import("../registry/blocks/app-shell/page")),
-  },
-  "chat-api-hono": {
-    name: "chat-api-hono",
-    type: "registry:block",
-    title: "Chat API (Hono)",
-    description:
-      "Hono POST /api/chat. Add with @simple-ai/chat-page and an agent, then switch the chat transport.",
-    meta: {},
-    component: lazy(() => import("../registry/blocks/chat-api-hono/preview")),
-  },
-  "chat-api-next": {
-    name: "chat-api-next",
-    type: "registry:block",
-    title: "Chat API (Next.js)",
-    description:
-      "App Router POST /api/chat. Add with @simple-ai/chat-page and an agent, then switch the chat transport.",
-    meta: {},
-    component: lazy(() => import("../registry/blocks/chat-api-next/preview")),
-  },
-  "chat-input": {
-    name: "chat-input",
-    type: "registry:ui",
-    title: "Chat Input",
-    description: "Chat composer with mentions and streaming status.",
-    meta: {},
-    component: lazy(() => import("../registry/components/chat-input/preview")),
-  },
   "chat-page": {
     name: "chat-page",
     type: "registry:block",
     title: "Chat page",
-    description: "Full screen chat with tools, files, and mentions.",
+    description: "Full-screen chat with tools, files, and mentions.",
     meta: { iframeHeight: 900 },
     component: lazy(() => import("../registry/blocks/chat-page/page")),
   },
-  "chat-voice-button": {
-    name: "chat-voice-button",
+  composer: {
+    name: "composer",
     type: "registry:ui",
-    title: "Chat Voice Button",
-    description: "Record and transcribe into the chat input.",
+    title: "Composer",
+    description: "TipTap composer with mentions and streaming status.",
     meta: {},
-    component: lazy(
-      () => import("../registry/components/chat-voice-button/preview")
-    ),
+    component: lazy(() => import("../registry/components/composer/preview")),
   },
   reasoning: {
     name: "reasoning",
@@ -87,60 +42,5 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     description: "Tool call with status, params, and output.",
     meta: {},
     component: lazy(() => import("../registry/components/tool/preview")),
-  },
-  "weather-agent": {
-    name: "weather-agent",
-    type: "registry:lib",
-    title: "Weather agent",
-    description: "Answers weather questions for a city.",
-    categories: ["agent"],
-    meta: {
-      summary: "Answers weather questions for a city.",
-      instructions:
-        "You are a weather assistant. Use getWeather to answer weather questions.",
-      model: "openai/gpt-4.1-mini",
-      env: ["AI_GATEWAY_API_KEY"],
-      tools: [
-        {
-          name: "getWeather",
-          description: "Get the weather in a location",
-          inputs: [
-            { name: "location", type: "string", description: "City name" },
-          ],
-          exampleOutput: {
-            location: "Tokyo",
-            temperatureF: 72,
-            conditions: "clear",
-          },
-        },
-      ],
-      samplePrompts: [
-        "What's the weather in Tokyo?",
-        "Do I need a jacket in Chicago today?",
-        "Compare London and Lisbon this afternoon.",
-      ],
-      exampleTurn: {
-        user: "What's the weather in Tokyo?",
-        tool: {
-          name: "getWeather",
-          input: { location: "Tokyo" },
-          output: { location: "Tokyo", temperatureF: 72, conditions: "clear" },
-        },
-        assistant: "72°F and clear in Tokyo.",
-      },
-      wire: {
-        ui: "@simple-ai/chat-page",
-        apis: [
-          { stack: "Next.js", item: "@simple-ai/chat-api-next" },
-          { stack: "Hono", item: "@simple-ai/chat-api-hono" },
-          {
-            stack: "TanStack Start",
-            item: "@simple-ai/agent-handle",
-            note: "Call handleAgent from a server route.",
-          },
-        ],
-      },
-    },
-    component: lazy(() => import("../registry/agents/weather-agent/preview")),
   },
 };

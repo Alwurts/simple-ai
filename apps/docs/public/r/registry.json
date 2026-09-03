@@ -4,119 +4,11 @@
   "homepage": "https://simple-ai.dev",
   "items": [
     {
-      "name": "agent-handle",
-      "type": "registry:block",
-      "title": "Agent handle",
-      "description": "Request/Response entry for the assistant agent. Use with chat-api-next or chat-api-hono.",
-      "dependencies": ["ai"],
-      "registryDependencies": ["@simple-ai/weather-agent"],
-      "envVars": {
-        "AI_GATEWAY_API_KEY": "",
-        "AI_MODEL": "openai/gpt-4.1-mini"
-      },
-      "docs": "Calls handleAgent(request) with the aliased assistant.\n\nNext.js: also add @simple-ai/chat-api-next.\nHono: also add @simple-ai/chat-api-hono.\nTanStack Start: add a server route that calls handleAgent.\n\nThen switch src/features/assistant/lib/chat-transport.ts to DefaultChatTransport({ api: \"/api/chat\" }).\nSet AI_GATEWAY_API_KEY and optionally AI_MODEL.",
-      "files": [
-        {
-          "path": "packages/registry/registry/blocks/agent-handle/handle-agent.ts",
-          "type": "registry:lib",
-          "target": "src/features/assistant/lib/handle-agent.ts"
-        }
-      ]
-    },
-    {
-      "name": "app-shell",
-      "type": "registry:block",
-      "title": "App shell",
-      "description": "Sample layout using the shell.",
-      "registryDependencies": [
-        "button",
-        "empty",
-        "sidebar",
-        "@simple-ai/shell"
-      ],
-      "meta": {
-        "iframeHeight": 720
-      },
-      "files": [
-        {
-          "path": "packages/registry/registry/blocks/app-shell/page.tsx",
-          "type": "registry:component",
-          "target": "src/features/app-shell/page.tsx"
-        },
-        {
-          "path": "packages/registry/registry/blocks/app-shell/components/app-sidebar.tsx",
-          "type": "registry:component",
-          "target": "src/features/app-shell/components/app-sidebar.tsx"
-        }
-      ]
-    },
-    {
-      "name": "chat-api-hono",
-      "type": "registry:block",
-      "title": "Chat API (Hono)",
-      "description": "Hono POST /api/chat. Add with @simple-ai/chat-page and an agent, then switch the chat transport.",
-      "dependencies": ["hono"],
-      "registryDependencies": ["@simple-ai/agent-handle"],
-      "envVars": {
-        "AI_GATEWAY_API_KEY": "",
-        "AI_MODEL": "openai/gpt-4.1-mini"
-      },
-      "docs": "Writes a Hono app at src/features/assistant/lib/chat-hono.ts. Also pulls the weather agent and handleAgent.\n\nMount with app.route(\"/\", chatApp) or chatApp.fetch(request).\n\nThen in src/features/assistant/lib/chat-transport.ts:\n\n  import { DefaultChatTransport } from \"ai\";\n  export const chatTransport = new DefaultChatTransport({ api: \"/api/chat\" });\n  export const initialChatMessages = undefined;\n\nSet AI_GATEWAY_API_KEY and optionally AI_MODEL.",
-      "files": [
-        {
-          "path": "packages/registry/registry/blocks/chat-api-hono/chat-hono.ts",
-          "type": "registry:lib",
-          "target": "src/features/assistant/lib/chat-hono.ts"
-        }
-      ]
-    },
-    {
-      "name": "chat-api-next",
-      "type": "registry:block",
-      "title": "Chat API (Next.js)",
-      "description": "App Router POST /api/chat. Add with @simple-ai/chat-page and an agent, then switch the chat transport.",
-      "registryDependencies": ["@simple-ai/agent-handle"],
-      "envVars": {
-        "AI_GATEWAY_API_KEY": "",
-        "AI_MODEL": "openai/gpt-4.1-mini"
-      },
-      "docs": "Writes src/app/api/chat/route.ts. Also pulls the weather agent and handleAgent.\n\nThen in src/features/assistant/lib/chat-transport.ts:\n\n  import { DefaultChatTransport } from \"ai\";\n  export const chatTransport = new DefaultChatTransport({ api: \"/api/chat\" });\n  export const initialChatMessages = undefined;\n\nSet AI_GATEWAY_API_KEY and optionally AI_MODEL.",
-      "files": [
-        {
-          "path": "packages/registry/registry/blocks/chat-api-next/route.ts",
-          "type": "registry:file",
-          "target": "src/app/api/chat/route.ts"
-        }
-      ]
-    },
-    {
-      "name": "chat-input",
-      "type": "registry:ui",
-      "title": "Chat Input",
-      "description": "Chat composer with mentions and streaming status.",
-      "dependencies": [
-        "@tiptap/core",
-        "@tiptap/react",
-        "@tiptap/starter-kit",
-        "@tiptap/extension-mention",
-        "@tiptap/extension-placeholder",
-        "@tiptap/suggestion",
-        "ai"
-      ],
-      "registryDependencies": ["input-group"],
-      "files": [
-        {
-          "path": "packages/registry/registry/components/chat-input/chat-input.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
       "name": "chat-page",
       "type": "registry:block",
       "title": "Chat page",
-      "description": "Full screen chat with tools, files, and mentions.",
-      "docs": "This page ships a mocked transport.\n\nFor a live model, also add an agent and an API:\n\n  npx shadcn@latest add @simple-ai/weather-agent\n  npx shadcn@latest add @simple-ai/chat-api-next\n\nUse @simple-ai/chat-api-hono instead of chat-api-next for Hono. On TanStack Start, add @simple-ai/agent-handle and call handleAgent from a server route.\n\nThen in src/features/assistant/lib/chat-transport.ts:\n\n  import { DefaultChatTransport } from \"ai\";\n  export const chatTransport = new DefaultChatTransport({ api: \"/api/chat\" });\n  export const initialChatMessages = undefined;\n\nSet AI_GATEWAY_API_KEY and optionally AI_MODEL.",
+      "description": "Full-screen chat with tools, files, and mentions.",
+      "docs": "This page ships a mocked transport so the gallery and a fresh install work without a model.\n\nAdd a route to src/features/assistant/page.tsx. Point a live transport at your own API when you have one.",
       "registryDependencies": [
         "attachment",
         "bubble",
@@ -130,8 +22,7 @@
         "message-scroller",
         "resizable",
         "sidebar",
-        "@simple-ai/chat-input",
-        "@simple-ai/chat-voice-button",
+        "@simple-ai/composer",
         "@simple-ai/reasoning",
         "@simple-ai/shell",
         "@simple-ai/tool"
@@ -167,9 +58,9 @@
           "target": "src/features/assistant/components/full-screen-chat.tsx"
         },
         {
-          "path": "packages/registry/registry/blocks/chat-page/components/chat-input.tsx",
+          "path": "packages/registry/registry/blocks/chat-page/components/composer.tsx",
           "type": "registry:component",
-          "target": "src/features/assistant/components/chat-input.tsx"
+          "target": "src/features/assistant/components/composer.tsx"
         },
         {
           "path": "packages/registry/registry/blocks/chat-page/components/chat-message-parts.tsx",
@@ -209,15 +100,23 @@
       ]
     },
     {
-      "name": "chat-voice-button",
+      "name": "composer",
       "type": "registry:ui",
-      "title": "Chat Voice Button",
-      "description": "Record and transcribe into the chat input.",
-      "dependencies": ["sonner"],
-      "registryDependencies": ["input-group", "sonner"],
+      "title": "Composer",
+      "description": "TipTap composer with mentions and streaming status.",
+      "dependencies": [
+        "@tiptap/core",
+        "@tiptap/react",
+        "@tiptap/starter-kit",
+        "@tiptap/extension-mention",
+        "@tiptap/extension-placeholder",
+        "@tiptap/suggestion",
+        "ai"
+      ],
+      "registryDependencies": ["input-group"],
       "files": [
         {
-          "path": "packages/registry/registry/components/chat-voice-button/chat-voice-button.tsx",
+          "path": "packages/registry/registry/components/composer/composer.tsx",
           "type": "registry:ui"
         }
       ]
@@ -227,15 +126,11 @@
       "type": "registry:ui",
       "title": "Reasoning",
       "description": "Collapsible thinking with duration and markdown.",
-      "dependencies": ["motion", "streamdown"],
+      "dependencies": ["streamdown"],
       "registryDependencies": ["collapsible"],
       "files": [
         {
           "path": "packages/registry/registry/components/reasoning/reasoning.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "packages/registry/registry/components/reasoning/shimmer.tsx",
           "type": "registry:ui"
         }
       ]
@@ -262,103 +157,12 @@
       "type": "registry:ui",
       "title": "Tool",
       "description": "Tool call with status, params, and output.",
-      "dependencies": ["ai", "shiki"],
-      "registryDependencies": ["badge", "button", "collapsible"],
+      "dependencies": ["ai"],
+      "registryDependencies": ["badge", "collapsible"],
       "files": [
         {
           "path": "packages/registry/registry/components/tool/tool.tsx",
           "type": "registry:ui"
-        },
-        {
-          "path": "packages/registry/registry/components/tool/code-block.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "weather-agent",
-      "type": "registry:lib",
-      "title": "Weather agent",
-      "description": "Answers weather questions for a city.",
-      "categories": ["agent"],
-      "dependencies": ["ai", "zod"],
-      "envVars": {
-        "AI_GATEWAY_API_KEY": "",
-        "AI_MODEL": "openai/gpt-4.1-mini"
-      },
-      "docs": "Adds a ToolLoopAgent and aliases it as assistant.\n\nAlso add a chat API, then switch the transport:\n\n  npx shadcn@latest add @simple-ai/chat-api-next\n\nOr @simple-ai/chat-api-hono. On TanStack Start, add @simple-ai/agent-handle and call handleAgent from a server route.\n\nIn src/features/assistant/lib/chat-transport.ts:\n\n  import { DefaultChatTransport } from \"ai\";\n  export const chatTransport = new DefaultChatTransport({ api: \"/api/chat\" });\n  export const initialChatMessages = undefined;\n\nSet AI_GATEWAY_API_KEY and optionally AI_MODEL.",
-      "meta": {
-        "summary": "Answers weather questions for a city.",
-        "instructions": "You are a weather assistant. Use getWeather to answer weather questions.",
-        "model": "openai/gpt-4.1-mini",
-        "env": ["AI_GATEWAY_API_KEY"],
-        "tools": [
-          {
-            "name": "getWeather",
-            "description": "Get the weather in a location",
-            "inputs": [
-              {
-                "name": "location",
-                "type": "string",
-                "description": "City name"
-              }
-            ],
-            "exampleOutput": {
-              "location": "Tokyo",
-              "temperatureF": 72,
-              "conditions": "clear"
-            }
-          }
-        ],
-        "samplePrompts": [
-          "What's the weather in Tokyo?",
-          "Do I need a jacket in Chicago today?",
-          "Compare London and Lisbon this afternoon."
-        ],
-        "exampleTurn": {
-          "user": "What's the weather in Tokyo?",
-          "tool": {
-            "name": "getWeather",
-            "input": {
-              "location": "Tokyo"
-            },
-            "output": {
-              "location": "Tokyo",
-              "temperatureF": 72,
-              "conditions": "clear"
-            }
-          },
-          "assistant": "72°F and clear in Tokyo."
-        },
-        "wire": {
-          "ui": "@simple-ai/chat-page",
-          "apis": [
-            {
-              "stack": "Next.js",
-              "item": "@simple-ai/chat-api-next"
-            },
-            {
-              "stack": "Hono",
-              "item": "@simple-ai/chat-api-hono"
-            },
-            {
-              "stack": "TanStack Start",
-              "item": "@simple-ai/agent-handle",
-              "note": "Call handleAgent from a server route."
-            }
-          ]
-        }
-      },
-      "files": [
-        {
-          "path": "packages/registry/registry/agents/weather-agent/agent.ts",
-          "type": "registry:lib",
-          "target": "src/features/assistant/lib/agent.ts"
-        },
-        {
-          "path": "packages/registry/registry/agents/weather-agent/agents/weather-agent.ts",
-          "type": "registry:lib",
-          "target": "src/features/assistant/lib/agents/weather-agent.ts"
         }
       ]
     }

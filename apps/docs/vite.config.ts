@@ -10,9 +10,9 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const uiShadcn = resolve(root, "../../packages/ui/src/components/shadcn");
-const chatInput = resolve(
+const composer = resolve(
   root,
-  "../../packages/registry/registry/components/chat-input/chat-input.tsx"
+  "../../packages/registry/registry/components/composer/composer.tsx"
 );
 const shell = resolve(
   root,
@@ -26,24 +26,16 @@ const tool = resolve(
   root,
   "../../packages/registry/registry/components/tool/tool.tsx"
 );
-const chatVoiceButton = resolve(
-  root,
-  "../../packages/registry/registry/components/chat-voice-button/chat-voice-button.tsx"
-);
 const utils = resolve(root, "../../packages/ui/src/lib/utils.ts");
 
 const config = defineConfig(async () => ({
   resolve: {
     dedupe: ["react", "react-dom"],
     alias: [
-      { find: "@/components/ui/chat-input", replacement: chatInput },
+      { find: "@/components/ui/composer", replacement: composer },
       { find: "@/components/ui/shell", replacement: shell },
       { find: "@/components/ui/reasoning", replacement: reasoning },
       { find: "@/components/ui/tool", replacement: tool },
-      {
-        find: "@/components/ui/chat-voice-button",
-        replacement: chatVoiceButton,
-      },
       { find: "@/components/ui", replacement: uiShadcn },
       { find: "@/lib/utils", replacement: utils },
     ],

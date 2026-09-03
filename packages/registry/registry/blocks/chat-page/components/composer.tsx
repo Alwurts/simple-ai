@@ -13,13 +13,12 @@ import {
   AttachmentTitle,
 } from "@/components/ui/attachment";
 import {
-  ChatInput,
-  ChatInputEditor,
-  type ChatInputHandle,
-  ChatInputMentionButton,
-  ChatInputSubmitButton,
-} from "@/components/ui/chat-input";
-import { ChatVoiceButton } from "@/components/ui/chat-voice-button";
+  Composer,
+  ComposerEditor,
+  type ComposerHandle,
+  ComposerMentionButton,
+  ComposerSubmitButton,
+} from "@/components/ui/composer";
 import { InputGroupAddon, InputGroupButton } from "@/components/ui/input-group";
 import { MOCK_MEMBERS, type MockMember } from "../lib/mock-members";
 
@@ -55,20 +54,8 @@ function ChatInputInner({
   status: ChatStatus;
 }) {
   const [files, setFiles] = useState<ComposerFile[]>([]);
-  const inputRef = useRef<ChatInputHandle>(null);
+  const inputRef = useRef<ComposerHandle>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const textController = {
-    get value() {
-      return inputRef.current?.getText() ?? "";
-    },
-    setInput: (value: string) => {
-      inputRef.current?.setText(value);
-    },
-    clear: () => {
-      inputRef.current?.clear();
-    },
-  };
 
   const clearFiles = useCallback(() => {
     setFiles((prev) => {
@@ -109,7 +96,7 @@ function ChatInputInner({
         ref={fileInputRef}
         type="file"
       />
-      <ChatInput
+      <Composer
         className="rounded-2xl"
         disabled={disabled}
         onStop={onStop}
@@ -172,9 +159,9 @@ function ChatInputInner({
             </AttachmentGroup>
           </InputGroupAddon>
         ) : null}
-        <ChatInputEditor placeholder={placeholder} />
+        <ComposerEditor placeholder={placeholder} />
         <InputGroupAddon align="block-end" className="pt-1">
-          <ChatInputMentionButton />
+          <ComposerMentionButton />
           <InputGroupButton
             aria-label="Add files"
             onClick={() => fileInputRef.current?.click()}
@@ -185,11 +172,10 @@ function ChatInputInner({
             <PaperclipIcon />
           </InputGroupButton>
           <div className="ml-auto flex items-center gap-2">
-            <ChatVoiceButton controller={{ textInput: textController }} />
-            <ChatInputSubmitButton />
+            <ComposerSubmitButton />
           </div>
         </InputGroupAddon>
-      </ChatInput>
+      </Composer>
     </div>
   );
 }

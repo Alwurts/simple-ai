@@ -81,7 +81,7 @@ function Page() {
     <div className="container-wrapper flex flex-1 flex-col px-4 md:px-8">
       <div className="flex flex-1 items-start lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
         <DocsSidebar groups={data.nav} />
-        <div className="relative min-w-0 w-full">
+        <div className="relative w-full min-w-0">
           <Suspense fallback={<DocsPageLoading />}>
             {clientLoader.useContent(data.path)}
           </Suspense>

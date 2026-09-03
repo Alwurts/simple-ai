@@ -4,8 +4,8 @@ import { useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 
 /**
- * SPA pageviews after the first load. gtag + Plausible already record the
- * initial hit from their scripts in the document head.
+ * SPA pageviews after the first load. Plausible already records the
+ * initial hit from the script in the document head.
  */
 export function Analytics() {
   const href = useRouterState({ select: (s) => s.location.href });
@@ -16,8 +16,7 @@ export function Analytics() {
       isFirst.current = false;
       return;
     }
-    window.gtag?.("event", "page_view", { page_location: href });
-    window.plausible?.("pageview");
+    window.plausible?.("pageview", { props: { path: href } });
   }, [href]);
 
   return null;

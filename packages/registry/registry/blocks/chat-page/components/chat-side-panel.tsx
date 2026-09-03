@@ -1,5 +1,15 @@
 "use client";
 
+import {
+  FileIcon,
+  FolderTreeIcon,
+  GlobeIcon,
+  PanelRightCloseIcon,
+  PlusIcon,
+  TerminalIcon,
+  XIcon,
+} from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,16 +23,6 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { cn } from "@/lib/utils";
-import {
-  FileIcon,
-  FolderTreeIcon,
-  GlobeIcon,
-  PanelRightCloseIcon,
-  PlusIcon,
-  TerminalIcon,
-  XIcon,
-} from "lucide-react";
-import { useState } from "react";
 import type {
   ChatSidePanelTab,
   ChatSidePanelTool,

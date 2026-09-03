@@ -1,6 +1,6 @@
 # Docs app
 
-Fumadocs documentation site for the SFab starter template. Built with TanStack Start, Vite, and the Cloudflare Vite plugin; deploys as a Cloudflare Worker.
+Fumadocs documentation site for simple-ai. Built with TanStack Start, Vite, and the Cloudflare Vite plugin; deploys as a Cloudflare Worker.
 
 ## Commands
 

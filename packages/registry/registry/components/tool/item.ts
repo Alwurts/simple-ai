@@ -5,14 +5,10 @@ const def: RegistryItemDef = {
     name: "tool",
     type: "registry:ui",
     title: "Tool",
-    description:
-      "Tool call with status, params, and output.",
-    dependencies: ["ai", "shiki"],
-    registryDependencies: ["badge", "button", "collapsible"],
-    files: [
-      { path: "tool.tsx", type: "registry:ui" },
-      { path: "code-block.tsx", type: "registry:ui" },
-    ],
+    description: "Tool call with status, params, and output.",
+    dependencies: ["ai"],
+    registryDependencies: ["badge", "collapsible"],
+    files: [{ path: "tool.tsx", type: "registry:ui" }],
   },
   preview: "preview",
 };

@@ -10,11 +10,6 @@ import type {
   SuggestionKeyDownProps,
   SuggestionProps,
 } from "@tiptap/suggestion";
-import {
-  InputGroup,
-  InputGroupButton,
-} from "@/components/ui/input-group";
-import { cn } from "@/lib/utils";
 import type { ChatStatus } from "ai";
 import {
   ArrowUpIcon,
@@ -38,6 +33,8 @@ import {
   useRef,
   useState,
 } from "react";
+import { InputGroup, InputGroupButton } from "@/components/ui/input-group";
+import { cn } from "@/lib/utils";
 
 export interface BaseMentionItem {
   id: string;
@@ -57,11 +54,11 @@ export type MentionConfigs = Record<string, MentionConfig<BaseMentionItem>>;
 type SelectedMentionItems = Record<string, Map<string, BaseMentionItem>>;
 
 // Mapped + intersection shape — cannot be an interface.
-export type ChatInputParsed<Items extends Record<string, BaseMentionItem>> = {
+export type ComposerParsed<Items extends Record<string, BaseMentionItem>> = {
   text: string;
 } & { [K in keyof Items]?: Items[K][] };
 
-export interface ChatInputHandle {
+export interface ComposerHandle {
   clear: () => void;
   focus: () => void;
   getText: () => string;
@@ -69,12 +66,12 @@ export interface ChatInputHandle {
   insertText: (text: string) => void;
 }
 
-interface ChatInputHelpers {
+interface ComposerHelpers {
   clear: () => void;
   focus: () => void;
 }
 
-interface ChatInputContextValue {
+interface ComposerContextValue {
   editor: Editor | null;
   setEditor: (editor: Editor | null) => void;
   submit: () => void;
@@ -393,17 +390,17 @@ export function parseEditorContent(
   return { text: text.trim(), ...buckets };
 }
 
-const ChatInputContext = createContext<ChatInputContextValue | null>(null);
+const ComposerContext = createContext<ComposerContextValue | null>(null);
 
-function useChatInputContext() {
-  const ctx = useContext(ChatInputContext);
+function useComposerContext() {
+  const ctx = useContext(ComposerContext);
   if (!ctx) {
-    throw new Error("ChatInput components must be used within <ChatInput>");
+    throw new Error("Composer components must be used within <Composer>");
   }
   return ctx;
 }
 
-type SharedChatInputProps = {
+type SharedComposerProps = {
   status?: ChatStatus;
   onStop?: () => void;
   disabled?: boolean;
@@ -411,33 +408,30 @@ type SharedChatInputProps = {
   className?: string;
   children: ReactNode;
   /** Imperative handle (clear/focus/getText/setText/insertText), not the DOM node. */
-  ref?: Ref<ChatInputHandle>;
+  ref?: Ref<ComposerHandle>;
 } & Omit<
   ComponentProps<"div">,
   "children" | "onSubmit" | "defaultValue" | "ref"
 >;
 
-type ChatInputPropsWithMentions<Items extends Record<string, BaseMentionItem>> =
-  SharedChatInputProps & {
+type ComposerPropsWithMentions<Items extends Record<string, BaseMentionItem>> =
+  SharedComposerProps & {
     mentions: { [K in keyof Items]: MentionConfig<Items[K]> };
-    onSubmit: (
-      parsed: ChatInputParsed<Items>,
-      helpers: ChatInputHelpers
-    ) => void;
+    onSubmit: (parsed: ComposerParsed<Items>, helpers: ComposerHelpers) => void;
   };
 
-type ChatInputPropsWithoutMentions = SharedChatInputProps & {
+type ComposerPropsWithoutMentions = SharedComposerProps & {
   mentions?: undefined;
-  onSubmit: (parsed: { text: string }, helpers: ChatInputHelpers) => void;
+  onSubmit: (parsed: { text: string }, helpers: ComposerHelpers) => void;
 };
 
-export function ChatInput<Items extends Record<string, BaseMentionItem>>(
-  props: ChatInputPropsWithMentions<Items>
+export function Composer<Items extends Record<string, BaseMentionItem>>(
+  props: ComposerPropsWithMentions<Items>
 ): React.JSX.Element;
-export function ChatInput(
-  props: ChatInputPropsWithoutMentions
+export function Composer(
+  props: ComposerPropsWithoutMentions
 ): React.JSX.Element;
-export function ChatInput({
+export function Composer({
   mentions,
   onSubmit,
   status,
@@ -448,11 +442,11 @@ export function ChatInput({
   children,
   ref,
   ...props
-}: SharedChatInputProps & {
+}: SharedComposerProps & {
   mentions?: MentionConfigs;
   // Runtime parse is untyped; overloads restore Items at the call site.
   // biome-ignore lint/suspicious/noExplicitAny: overload boundary
-  onSubmit: (parsed: any, helpers: ChatInputHelpers) => void;
+  onSubmit: (parsed: any, helpers: ComposerHelpers) => void;
 }) {
   const [editor, setEditor] = useState<Editor | null>(null);
   const mentionsRef = useRef(mentions);
@@ -506,7 +500,7 @@ export function ChatInput({
     [clear, editor, focus, parse]
   );
 
-  const contextValue = useMemo<ChatInputContextValue>(
+  const contextValue = useMemo<ComposerContextValue>(
     () => ({
       editor,
       setEditor,
@@ -523,16 +517,20 @@ export function ChatInput({
   );
 
   return (
-    <ChatInputContext.Provider value={contextValue}>
-      <InputGroup className={cn("h-auto", className)} {...props}>
+    <ComposerContext.Provider value={contextValue}>
+      <InputGroup
+        className={cn("h-auto", className)}
+        data-slot="composer"
+        {...props}
+      >
         {children}
       </InputGroup>
-    </ChatInputContext.Provider>
+    </ComposerContext.Provider>
   );
 }
 
 const SubmitEnter = Extension.create({
-  name: "chatInputSubmitEnter",
+  name: "composerSubmitEnter",
   addOptions() {
     return {
       getOnEnter: (): (() => void) => () => undefined,
@@ -548,7 +546,7 @@ const SubmitEnter = Extension.create({
   },
 });
 
-export function ChatInputEditor({
+export function ComposerEditor({
   placeholder = "Type a message...",
   className,
   autoFocus,
@@ -565,7 +563,7 @@ export function ChatInputEditor({
     mentions,
     mentionsRef,
     selectedItemsRef,
-  } = useChatInputContext();
+  } = useComposerContext();
 
   const initialMentionsRef = useRef(mentions);
   const placeholderRef = useRef(placeholder);
@@ -617,7 +615,7 @@ export function ChatInputEditor({
     },
   });
 
-  // biome-ignore lint/plugin/no-use-layout-effect: publish TipTap instance into ChatInput context before paint
+  // biome-ignore lint/plugin/no-use-layout-effect: publish TipTap instance into Composer context before paint
   useLayoutEffect(() => {
     setEditor(editor);
     return () => setEditor(null);
@@ -647,7 +645,7 @@ export function ChatInputEditor({
   );
 }
 
-export function ChatInputSubmitButton({
+export function ComposerSubmitButton({
   className,
   disabled,
   children,
@@ -658,7 +656,7 @@ export function ChatInputSubmitButton({
     status,
     onStop,
     disabled: contextDisabled,
-  } = useChatInputContext();
+  } = useComposerContext();
 
   const isInFlight = status === "submitted" || status === "streaming";
   const actAsStop = isInFlight && onStop !== undefined;
@@ -696,13 +694,13 @@ export function ChatInputSubmitButton({
   );
 }
 
-export function ChatInputMentionButton({
+export function ComposerMentionButton({
   trigger,
   className,
   children,
   ...props
 }: ComponentProps<typeof InputGroupButton> & { trigger?: string }) {
-  const { editor, mentions } = useChatInputContext();
+  const { editor, mentions } = useComposerContext();
 
   const configs = mentions ? Object.values(mentions) : [];
   const resolvedTrigger = trigger ?? configs[0]?.trigger;

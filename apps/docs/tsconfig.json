@@ -1,10 +1,11 @@
 {
   "extends": "@workspace/tsconfig/tanstack-start.json",
   "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["vite.config.ts"],
   "compilerOptions": {
     "paths": {
-      "@/components/ui/chat-input": [
-        "../../packages/registry/registry/components/chat-input/chat-input.tsx"
+      "@/components/ui/composer": [
+        "../../packages/registry/registry/components/composer/composer.tsx"
       ],
       "@/components/ui/shell": [
         "../../packages/registry/registry/components/shell/shell.tsx"
@@ -14,9 +15,6 @@
       ],
       "@/components/ui/tool": [
         "../../packages/registry/registry/components/tool/tool.tsx"
-      ],
-      "@/components/ui/chat-voice-button": [
-        "../../packages/registry/registry/components/chat-voice-button/chat-voice-button.tsx"
       ],
       "@/components/ui/*": ["../../packages/ui/src/components/shadcn/*"],
       "@/lib/utils": ["../../packages/ui/src/lib/utils.ts"],

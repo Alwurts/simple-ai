@@ -1,6 +1,6 @@
 # simple-ai
 
-Chat UI for shadcn. Copy it into your app.
+Curated agent examples you can build upon. Copy them into your app. Change the source.
 
 [simple-ai.dev](https://simple-ai.dev)
 

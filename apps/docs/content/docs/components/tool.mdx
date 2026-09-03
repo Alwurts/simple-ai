@@ -11,7 +11,7 @@ description: Tool call with status, params, and output.
 npx shadcn@latest add @simple-ai/tool
 ```
 
-The CLI also installs shadcn `badge`, `button`, and `collapsible`, plus `ai` and `shiki`.
+The CLI also installs shadcn `badge` and `collapsible`, plus `ai`.
 
 ## Usage
 
@@ -41,4 +41,4 @@ export function ToolCall({ part }: { part: { toolName: string; state: "output-av
 }
 ```
 
-`ToolHeader` maps AI SDK tool part `state` to a status badge. Output objects render as JSON via the bundled code block.
+`ToolHeader` maps AI SDK tool part `state` to a status badge. Output objects render as JSON.

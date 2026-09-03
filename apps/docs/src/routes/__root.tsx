@@ -11,6 +11,7 @@ export const Route = createRootRoute({
       { href: appCss, rel: "stylesheet" },
       { href: "/favicon.ico", rel: "icon" },
       { href: "/favicon.svg", rel: "icon", type: "image/svg+xml" },
+      { href: siteConfig.url, rel: "canonical" },
       { href: "https://fonts.googleapis.com", rel: "preconnect" },
       {
         href: "https://fonts.gstatic.com",
@@ -28,21 +29,27 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1, viewport-fit=cover",
         name: "viewport",
       },
-      { title: siteConfig.name },
+      { title: `${siteConfig.name} · ${siteConfig.description}` },
       {
-        content: siteConfig.description,
+        content: siteConfig.tagline,
         name: "description",
       },
       { content: "#47B2E4", name: "theme-color" },
       { content: "website", property: "og:type" },
       { content: siteConfig.url, property: "og:url" },
-      { content: siteConfig.name, property: "og:title" },
-      { content: siteConfig.description, property: "og:description" },
+      {
+        content: `${siteConfig.name} · ${siteConfig.description}`,
+        property: "og:title",
+      },
+      { content: siteConfig.tagline, property: "og:description" },
       { content: siteConfig.name, property: "og:site_name" },
       { content: siteConfig.ogImage, property: "og:image" },
       { content: "summary_large_image", name: "twitter:card" },
-      { content: siteConfig.name, name: "twitter:title" },
-      { content: siteConfig.description, name: "twitter:description" },
+      {
+        content: `${siteConfig.name} · ${siteConfig.description}`,
+        name: "twitter:title",
+      },
+      { content: siteConfig.tagline, name: "twitter:description" },
       { content: siteConfig.ogImage, name: "twitter:image" },
       { content: "@alwurts", name: "twitter:creator" },
     ],
@@ -55,17 +62,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-SJSDG0H2W0"
-        />
-        <script
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: gtag bootstrap
-          dangerouslySetInnerHTML={{
-            __html:
-              "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SJSDG0H2W0');",
-          }}
-        />
         <script
           data-domain="simple-ai.dev"
           defer

@@ -5,9 +5,9 @@ export const Route = createFileRoute("/")({
   component: HomePage,
   head: () => ({
     meta: [
-      { title: "simple-ai · Chat UI for shadcn" },
+      { title: "simple-ai · Curated agent examples you can build upon" },
       {
-        content: "Chat UI for shadcn. Copy it into your app.",
+        content: "Copy them into your app. Change the source.",
         name: "description",
       },
     ],
@@ -20,7 +20,7 @@ function HomePage() {
       <LandingHero />
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-3 px-4 py-16 text-center md:px-6 md:py-24">
         <p className="text-muted-foreground text-sm">
-          Copy a chat page into your app.
+          Copy them into your app. Change the source.
         </p>
         <pre className="overflow-x-auto rounded-lg bg-code px-4 py-3 font-mono text-sm">
           npx shadcn@latest add @simple-ai/chat-page

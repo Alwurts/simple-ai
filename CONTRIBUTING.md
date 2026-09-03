@@ -1,6 +1,6 @@
 # Contributing
 
-simple-ai is a shadcn registry of chat UI. Copy source into your app with the shadcn CLI.
+simple-ai is a shadcn registry of curated agent examples. Copy source into your app with the shadcn CLI.
 
 ## Setup
 
@@ -17,7 +17,7 @@ Node 22+. pnpm 10.
 ## Layout
 
 - `apps/docs` — site and hosted registry (`/r/{name}.json`)
-- `packages/registry` — item source (`registry/components`, `registry/blocks`, `registry/agents`)
+- `packages/registry` — item source (`registry/components`, `registry/blocks`)
 - `packages/ui` — shadcn primitives used by the docs app
 - `registry.json` — GitHub registry manifest (generated)
 

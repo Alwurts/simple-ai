@@ -31,10 +31,11 @@ export function LandingHero() {
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center px-4 pt-6 pb-10 md:px-6 md:pt-8 md:pb-16">
         <div className="flex flex-col items-center gap-3 text-center md:gap-4">
           <h1 className="max-w-2xl text-balance font-semibold text-2xl tracking-tight md:text-4xl">
-            Chat UI <span className="text-muted-foreground">for shadcn</span>
+            Curated agent examples{" "}
+            <span className="text-muted-foreground">you can build upon</span>
           </h1>
           <p className="max-w-md text-muted-foreground text-sm md:text-base">
-            Copy a chat page into your app. Own the source.
+            Copy them into your app. Change the source.
           </p>
           <div className="flex items-center justify-center gap-2">
             <Button

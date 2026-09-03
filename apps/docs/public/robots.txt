@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://simple-ai.dev/llms.txt
+Sitemap: https://simple-ai.dev/sitemap.xml

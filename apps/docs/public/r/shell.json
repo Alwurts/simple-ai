@@ -3,10 +3,7 @@
   "name": "shell",
   "title": "Shell",
   "description": "Sidebar, header, and main content.",
-  "registryDependencies": [
-    "button",
-    "sidebar"
-  ],
+  "registryDependencies": ["button", "sidebar"],
   "files": [
     {
       "path": "packages/registry/registry/components/shell/shell.tsx",

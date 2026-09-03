@@ -11,7 +11,7 @@ description: Collapsible thinking with duration and markdown.
 npx shadcn@latest add @simple-ai/reasoning
 ```
 
-The CLI also installs shadcn `collapsible`, plus `motion` and `streamdown`.
+The CLI also installs shadcn `collapsible`, plus `streamdown`.
 
 ## Usage
 
@@ -32,4 +32,4 @@ export function Thoughts({ text, isStreaming }: { text: string; isStreaming: boo
 }
 ```
 
-Pass `isStreaming` from the last assistant message while `useChat` status is `streaming`. The trigger shows a shimmer while thinking, then “Thought for N seconds”.
+Pass `isStreaming` from the last assistant message while `useChat` status is `streaming`. The trigger shows “Thinking...” while the stream is open, then “Thought for N seconds”.

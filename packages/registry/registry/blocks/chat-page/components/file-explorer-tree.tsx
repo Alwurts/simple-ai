@@ -1,12 +1,12 @@
 "use client";
 
+import { ChevronRightIcon, FileIcon, FolderIcon } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
-import { ChevronRightIcon, FileIcon, FolderIcon } from "lucide-react";
 import type { WorkspaceFileNode } from "../lib/mock-workspace-tree";
 
 export function FileExplorerTree({

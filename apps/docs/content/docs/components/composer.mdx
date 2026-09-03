@@ -1,30 +1,30 @@
 ---
-title: Chat Input
-description: Chat composer with mentions and streaming status.
+title: Composer
+description: TipTap composer with mentions and streaming status.
 ---
 
-<ComponentPreview name="chat-input" />
+<ComponentPreview name="composer" />
 
 ## Installation
 
 ```bash
-npx shadcn@latest add @simple-ai/chat-input
+npx shadcn@latest add @simple-ai/composer
 ```
 
 ## Usage
 
 ```tsx
 import {
-  ChatInput,
-  ChatInputEditor,
-  ChatInputMentionButton,
-  ChatInputSubmitButton,
-} from "@/components/ui/chat-input"
+  Composer,
+  ComposerEditor,
+  ComposerMentionButton,
+  ComposerSubmitButton,
+} from "@/components/ui/composer"
 import { InputGroupAddon } from "@/components/ui/input-group"
 
-export function Composer() {
+export function Prompt() {
   return (
-    <ChatInput
+    <Composer
       mentions={{
         member: { trigger: "@", items: [{ id: "1", name: "Alice" }] },
       }}
@@ -35,14 +35,14 @@ export function Composer() {
       }}
       status="ready"
     >
-      <ChatInputEditor placeholder="Type a message..." />
+      <ComposerEditor placeholder="Type a message..." />
       <InputGroupAddon align="block-end">
-        <ChatInputMentionButton />
+        <ComposerMentionButton />
         <div className="ml-auto">
-          <ChatInputSubmitButton />
+          <ComposerSubmitButton />
         </div>
       </InputGroupAddon>
-    </ChatInput>
+    </Composer>
   )
 }
 ```
