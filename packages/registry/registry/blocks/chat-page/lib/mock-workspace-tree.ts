@@ -101,5 +101,5 @@ test("parseMinor round-trip 91400.00", () => {
   "/workspace/docs/readme.md":
     "# Assistant workspace\n\nMock files for the gallery file explorer.\n",
   "/workspace/data/open-invoices.csv":
-    "invoice_id,customer,balance\nINV-1042,Northside,125000\n",
+    "invoice_id,customer,balance_minor,due\nINV-1042,Northside Distributors,7500000,2026-06-24\nINV-1038,Bayview Supply,1240000,2026-06-26\n",
 };

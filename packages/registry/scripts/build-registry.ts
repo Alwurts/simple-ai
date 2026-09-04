@@ -17,12 +17,11 @@ const HOMEPAGE = "https://simple-ai.dev";
 const REGISTRY_JSON = join(REPO_ROOT, "registry.json");
 const GENERATED_TS = join(PKG_ROOT, "src", "generated.ts");
 
-const KIND_DIRS = ["blocks", "components", "agents"] as const;
+const KIND_DIRS = ["blocks", "components"] as const;
 
 const KIND_TYPE = {
   blocks: "registry:block",
   components: "registry:ui",
-  agents: "registry:lib",
 } as const;
 
 interface LoadedDef {
