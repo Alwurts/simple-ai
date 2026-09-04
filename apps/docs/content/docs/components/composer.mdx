@@ -28,11 +28,10 @@ export function Prompt() {
       mentions={{
         member: { trigger: "@", items: [{ id: "1", name: "Alice" }] },
       }}
-      onSubmit={(parsed, { clear, focus }) => {
+      onSubmit={(parsed, { clear }) => {
         console.log(parsed.text, parsed.member)
         clear()
-        focus()
-      }}
+      }}}
       status="ready"
     >
       <ComposerEditor placeholder="Type a message..." />
@@ -47,4 +46,4 @@ export function Prompt() {
 }
 ```
 
-Press Enter to submit, Shift+Enter for a new line. `parsed.text` is the plain string; mention buckets (`parsed.member`, …) are typed from the `mentions` map. Pass `status` from the AI SDK (`ready` / `submitted` / `streaming` / `error`) so the send button becomes stop/spinner.
+Press Enter to submit, Shift+Enter for a new line. `parsed.text` is the plain string; mention buckets (`parsed.member`, …) are typed from the `mentions` map. Pass `status` from the AI SDK (`ready` / `submitted` / `streaming` / `error`) so the send button becomes stop/spinner. Submit already blurs the editor so the mobile keyboard closes. Call `clear()` after send; do not call `focus()` or the keyboard opens again.

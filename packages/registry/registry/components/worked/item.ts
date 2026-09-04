@@ -5,7 +5,7 @@ const def: RegistryItemDef = {
     name: "worked",
     type: "registry:ui",
     title: "Worked",
-    description: "Settled-turn fold for work before the final assistant text.",
+    description: "Fold for work before the last assistant text.",
     registryDependencies: ["collapsible"],
     files: [{ path: "worked.tsx", type: "registry:ui" }],
   },

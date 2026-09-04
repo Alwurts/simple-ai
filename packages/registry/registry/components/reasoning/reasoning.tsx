@@ -2,7 +2,13 @@
 
 import { ChevronDownIcon } from "lucide-react";
 import type { ComponentProps } from "react";
-import { createContext, useCallback, useContext, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import { Streamdown } from "streamdown";
 import {
   Collapsible,
@@ -44,10 +50,14 @@ export function Reasoning({
   ...props
 }: ReasoningProps) {
   const [userOverride, setUserOverride] = useState<boolean | null>(null);
+  const hasStreamedRef = useRef(isStreaming);
+  if (isStreaming) {
+    hasStreamedRef.current = true;
+  }
   const isControlled = open !== undefined;
   const isOpen = isControlled
     ? open
-    : (userOverride ?? (isStreaming || defaultOpen));
+    : (userOverride ?? (isStreaming || hasStreamedRef.current || defaultOpen));
 
   const setIsOpen = useCallback(
     (next: boolean) => {
