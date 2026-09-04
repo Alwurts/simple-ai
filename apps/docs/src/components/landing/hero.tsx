@@ -2,23 +2,31 @@
 
 import { Button } from "@workspace/ui/components/shadcn/button";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HeroChatPreview } from "@/components/landing/hero-chat-preview";
 
 export function LandingHero() {
+  const rootRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) {
+      return;
+    }
+    const onMove = (event: MouseEvent) => {
+      const rect = root.getBoundingClientRect();
+      setPosition({
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top,
+      });
+    };
+    root.addEventListener("mousemove", onMove);
+    return () => root.removeEventListener("mousemove", onMove);
+  }, []);
+
   return (
-    <div
-      className="relative overflow-x-hidden bg-background"
-      onMouseMove={(event) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        setPosition({
-          x: event.clientX - rect.left,
-          y: event.clientY - rect.top,
-        });
-      }}
-    >
+    <div className="relative overflow-x-hidden bg-background" ref={rootRef}>
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
       <div
         className="pointer-events-none absolute -inset-px"

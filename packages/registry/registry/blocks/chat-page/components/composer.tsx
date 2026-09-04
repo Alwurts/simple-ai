@@ -134,7 +134,12 @@ function ChatInputInner({
                   <Attachment key={file.id} size="xs" state="done">
                     <AttachmentMedia variant={isImage ? "image" : "icon"}>
                       {isImage ? (
-                        <img alt={file.filename ?? ""} src={file.url} />
+                        <img
+                          alt={file.filename ?? ""}
+                          height={24}
+                          src={file.url}
+                          width={24}
+                        />
                       ) : (
                         <FileIcon />
                       )}

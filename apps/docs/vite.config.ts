@@ -31,6 +31,8 @@ const worked = resolve(
   "../../packages/registry/registry/components/worked/worked.tsx"
 );
 const utils = resolve(root, "../../packages/ui/src/lib/utils.ts");
+const MDX_TYPES = /^(mdx\/types|\*\.mdx)$/;
+const ANY_MODULE = /.*/;
 
 const config = defineConfig(async () => ({
   resolve: {
@@ -52,11 +54,11 @@ const config = defineConfig(async () => ({
         {
           name: "ignore-mdx-types",
           setup(build) {
-            build.onResolve({ filter: /^(mdx\/types|\*\.mdx)$/ }, () => ({
+            build.onResolve({ filter: MDX_TYPES }, () => ({
               path: "mdx-types-stub",
               namespace: "mdx-stub",
             }));
-            build.onLoad({ filter: /.*/, namespace: "mdx-stub" }, () => ({
+            build.onLoad({ filter: ANY_MODULE, namespace: "mdx-stub" }, () => ({
               contents: "export {}",
               loader: "js",
             }));

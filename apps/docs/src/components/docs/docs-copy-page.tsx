@@ -27,11 +27,12 @@ export function DocsCopyPage({ url }: { url: string }) {
       <Button
         className="rounded-r-none shadow-none"
         onClick={() => {
-          void navigator.clipboard.writeText(
-            `${siteConfig.url}${markdownUrl}`
-          );
-          setCopied(true);
-          window.setTimeout(() => setCopied(false), 2000);
+          navigator.clipboard
+            .writeText(`${siteConfig.url}${markdownUrl}`)
+            .then(() => {
+              setCopied(true);
+              window.setTimeout(() => setCopied(false), 2000);
+            }, console.error);
         }}
         size="sm"
         variant="secondary"
@@ -53,7 +54,9 @@ export function DocsCopyPage({ url }: { url: string }) {
           <span className="sr-only">More copy options</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem render={<a href={markdownUrl} target="_blank" />}>
+          <DropdownMenuItem
+            render={<a href={markdownUrl} rel="noreferrer" target="_blank" />}
+          >
             View as Markdown
           </DropdownMenuItem>
           <DropdownMenuItem

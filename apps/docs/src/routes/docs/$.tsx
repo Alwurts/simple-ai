@@ -26,7 +26,7 @@ export const Route = createFileRoute("/docs/$")({
 
 const serverLoader = createServerFn({ method: "GET" })
   .validator((slugs: string[]) => slugs)
-  .handler(async ({ data: slugs }) => {
+  .handler(({ data: slugs }) => {
     const path = slugs.join("/");
     const legacyHref = legacyDocsHref(path);
     if (legacyHref) {

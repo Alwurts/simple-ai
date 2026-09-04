@@ -7,16 +7,20 @@ import { useDocsSearch } from "fumadocs-core/search/client";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+const TAGS = /<[^>]+>/g;
+const MARK_SPLIT = /(<mark>[\s\S]*?<\/mark>)/gi;
+const MARK_EXACT = /^<mark>([\s\S]*?)<\/mark>$/i;
+
 function stripTags(value: string) {
-  return value.replace(/<[^>]+>/g, "");
+  return value.replace(TAGS, "");
 }
 
 function SearchSnippet({ content }: { content: string }) {
-  const parts = content.split(/(<mark>[\s\S]*?<\/mark>)/gi);
+  const parts = content.split(MARK_SPLIT);
   return (
     <>
       {parts.map((part, index) => {
-        const marked = part.match(/^<mark>([\s\S]*?)<\/mark>$/i);
+        const marked = part.match(MARK_EXACT);
         if (marked) {
           return (
             <mark

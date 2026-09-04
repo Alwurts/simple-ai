@@ -46,11 +46,14 @@ export function CodeBlock({
         {children}
       </pre>
       <Button
-        className="absolute top-2 right-2 size-7 opacity-0 transition-opacity group-hover/code:opacity-100 focus-visible:opacity-100"
+        className="absolute top-2 right-2 size-7 opacity-0 transition-opacity focus-visible:opacity-100 group-hover/code:opacity-100"
         onClick={() => {
-          void navigator.clipboard.writeText(textFromNode(children).trim());
-          setCopied(true);
-          window.setTimeout(() => setCopied(false), 2000);
+          navigator.clipboard
+            .writeText(textFromNode(children).trim())
+            .then(() => {
+              setCopied(true);
+              window.setTimeout(() => setCopied(false), 2000);
+            }, console.error);
         }}
         size="icon"
         variant="ghost"

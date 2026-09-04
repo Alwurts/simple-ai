@@ -616,13 +616,11 @@ export function ComposerEditor({
     },
   });
 
-  // biome-ignore lint/plugin/no-use-layout-effect: publish TipTap instance into Composer context before paint
   useLayoutEffect(() => {
     setEditor(editor);
     return () => setEditor(null);
   }, [editor, setEditor]);
 
-  // biome-ignore lint/plugin/no-use-effect: TipTap setEditable when disabled prop changes after mount
   useEffect(() => {
     if (editor) {
       editor.setEditable(!disabled);

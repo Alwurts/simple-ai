@@ -1,8 +1,8 @@
 "use client";
 
+import { useRouterState } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/shadcn/button";
 import { cn } from "@workspace/ui/lib/utils";
-import { useRouterState } from "@tanstack/react-router";
 import { siteConfig } from "@/lib/config";
 
 export function MainNav({ className, ...props }: React.ComponentProps<"nav">) {

@@ -17,13 +17,7 @@
     }
   },
   "files": {
-    "includes": [
-      "**",
-      "!**/node_modules/**",
-      "!**/.source/**",
-      "!**/.output/**",
-      "!**/dist/**"
-    ]
+    "includes": ["!**/.source", "!**/apps/docs/public/r"]
   },
   "linter": {
     "rules": {

@@ -1,3 +1,4 @@
+// biome-ignore-all lint/style/useConsistentTypeDefinitions: UIMessage data maps need type-alias index signatures
 import type { LanguageModelUsage } from "ai";
 
 export type AIMetadata = {

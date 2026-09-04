@@ -20,7 +20,10 @@ export function Shell({
   defaultOpen?: boolean;
 }) {
   return (
-    <SidebarProvider className="h-dvh overflow-hidden" defaultOpen={defaultOpen}>
+    <SidebarProvider
+      className="h-dvh overflow-hidden"
+      defaultOpen={defaultOpen}
+    >
       {sidebar}
       <div
         className={cn(
