@@ -63,11 +63,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
-        <script
-          data-domain="simple-ai.dev"
-          defer
-          src="https://plausible.alwurts.com/js/script.js"
-        />
       </head>
       <body className="font-sans antialiased">
         <ThemeProvider
