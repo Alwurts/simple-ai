@@ -1,17 +1,9 @@
 "use client";
 
 import type { ToolUIPart } from "ai";
-import {
-  CheckCircleIcon,
-  ChevronDownIcon,
-  CircleIcon,
-  ClockIcon,
-  WrenchIcon,
-  XCircleIcon,
-} from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 import type { ComponentProps, ReactNode } from "react";
 import { isValidElement } from "react";
-import { Badge } from "@/components/ui/badge";
 import {
   Collapsible,
   CollapsibleContent,
@@ -21,62 +13,76 @@ import { cn } from "@/lib/utils";
 
 export type ToolProps = ComponentProps<typeof Collapsible>;
 
-export function Tool({ className, ...props }: ToolProps) {
+export function Tool({ className, defaultOpen = false, ...props }: ToolProps) {
   return (
     <Collapsible
-      className={cn("not-prose mb-4 w-full rounded-md border", className)}
+      className={cn("not-prose my-1 w-full min-w-0", className)}
       data-slot="tool"
+      defaultOpen={defaultOpen}
       {...props}
     />
   );
 }
 
-export type ToolStatusLabels = Partial<Record<ToolUIPart["state"], string>>;
+function readableToolName(name: string) {
+  return name
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/[_-]+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
 
-const DEFAULT_STATUS_LABELS: Record<ToolUIPart["state"], string> = {
-  "input-streaming": "Pending",
-  "input-available": "Running",
-  "approval-requested": "Awaiting Approval",
-  "approval-responded": "Responded",
-  "output-available": "Completed",
-  "output-error": "Error",
-  "output-denied": "Denied",
-};
+function toolInputSummary(
+  toolName: string,
+  input: unknown
+): string | undefined {
+  if (!input || typeof input !== "object") {
+    return;
+  }
+  const record = input as Record<string, unknown>;
+  const name = toolName.toLowerCase();
+  if (
+    (name === "bash" || name === "shell") &&
+    typeof record.command === "string"
+  ) {
+    return record.command;
+  }
+  const path = record.file_path ?? record.path ?? record.filePath;
+  if (typeof path === "string") {
+    return path;
+  }
+  if (typeof record.pattern === "string") {
+    return record.pattern;
+  }
+  if (typeof record.query === "string") {
+    return record.query;
+  }
+}
+
+function truncateSummary(value: string, max = 72): string {
+  const trimmed = value.replace(/\s+/g, " ").trim();
+  if (trimmed.length <= max) {
+    return trimmed;
+  }
+  return `${trimmed.slice(0, max - 1)}…`;
+}
+
+export function toolTitle(toolName: string, input?: unknown): string {
+  const readable = readableToolName(toolName);
+  const summary =
+    input === undefined ? undefined : toolInputSummary(toolName, input);
+  if (!summary) {
+    return readable;
+  }
+  return `${readable} · ${truncateSummary(summary)}`;
+}
 
 export interface ToolHeaderProps {
   title?: string;
   type: ToolUIPart["type"];
   state: ToolUIPart["state"];
+  input?: unknown;
   className?: string;
-  statusLabels?: ToolStatusLabels;
-}
-
-function StatusBadge({
-  status,
-  statusLabels,
-}: {
-  status: ToolUIPart["state"];
-  statusLabels?: ToolStatusLabels;
-}) {
-  const labels = { ...DEFAULT_STATUS_LABELS, ...statusLabels };
-  const icons: Record<ToolUIPart["state"], ReactNode> = {
-    "input-streaming": <CircleIcon className="text-muted-foreground" />,
-    "input-available": (
-      <ClockIcon className="animate-pulse text-muted-foreground" />
-    ),
-    "approval-requested": <ClockIcon className="text-muted-foreground" />,
-    "approval-responded": <CheckCircleIcon className="text-muted-foreground" />,
-    "output-available": <CheckCircleIcon className="text-muted-foreground" />,
-    "output-error": <XCircleIcon className="text-destructive" />,
-    "output-denied": <XCircleIcon className="text-destructive" />,
-  };
-
-  return (
-    <Badge className="gap-1.5 rounded-full text-xs" variant="secondary">
-      {icons[status]}
-      {labels[status]}
-    </Badge>
-  );
 }
 
 export function ToolHeader({
@@ -84,26 +90,30 @@ export function ToolHeader({
   title,
   type,
   state,
-  statusLabels,
+  input,
   ...props
 }: ToolHeaderProps) {
+  const toolName = title ?? type.split("-").slice(1).join("-");
+  const label = toolTitle(toolName, input);
+  const isRunning = state === "input-available" || state === "input-streaming";
+  const isError = state === "output-error" || state === "output-denied";
+
   return (
     <CollapsibleTrigger
       className={cn(
-        "flex w-full items-center justify-between gap-4 p-3",
+        "group inline-flex max-w-full cursor-pointer items-center gap-1 text-muted-foreground text-sm transition-colors hover:text-foreground",
         className
       )}
       data-slot="tool-header"
       {...props}
     >
-      <div className="flex items-center gap-2">
-        <WrenchIcon className="text-muted-foreground" />
-        <span className="font-medium text-sm">
-          {title ?? type.split("-").slice(1).join("-")}
-        </span>
-        <StatusBadge status={state} statusLabels={statusLabels} />
-      </div>
-      <ChevronDownIcon className="text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
+      <span className={cn("truncate", isRunning && "animate-pulse")}>
+        {label}
+      </span>
+      {isError ? (
+        <span className="shrink-0 text-destructive text-xs">Error</span>
+      ) : null}
+      <ChevronDownIcon className="size-3.5 shrink-0 -rotate-90 transition-transform group-data-[panel-open]:rotate-0" />
     </CollapsibleTrigger>
   );
 }
@@ -113,7 +123,10 @@ export type ToolContentProps = ComponentProps<typeof CollapsibleContent>;
 export function ToolContent({ className, ...props }: ToolContentProps) {
   return (
     <CollapsibleContent
-      className={cn("text-popover-foreground outline-none", className)}
+      className={cn(
+        "flex flex-col gap-1 py-1 text-muted-foreground text-sm outline-none",
+        className
+      )}
       data-slot="tool-content"
       {...props}
     />
@@ -123,34 +136,32 @@ export function ToolContent({ className, ...props }: ToolContentProps) {
 function JsonPre({ value }: { value: unknown }) {
   const text =
     typeof value === "string" ? value : JSON.stringify(value, null, 2);
-  return <pre className="overflow-x-auto p-3 font-mono text-xs">{text}</pre>;
+  return <pre className="overflow-x-auto font-mono text-xs">{text}</pre>;
 }
 
 export type ToolInputProps = ComponentProps<"div"> & {
   input: ToolUIPart["input"];
-  parametersLabel?: string;
+  label?: string;
 };
 
 export function ToolInput({
   className,
   input,
-  parametersLabel = "Parameters",
+  label = "Input",
   ...props
 }: ToolInputProps) {
+  if (input == null) {
+    return null;
+  }
+
   return (
     <div
-      className={cn("overflow-hidden p-4", className)}
+      className={cn("flex flex-col gap-0.5 overflow-hidden", className)}
       data-slot="tool-input"
       {...props}
     >
-      <div className="flex flex-col gap-2">
-        <h4 className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
-          {parametersLabel}
-        </h4>
-        <div className="rounded-md bg-muted/50">
-          <JsonPre value={input} />
-        </div>
-      </div>
+      <p className="text-muted-foreground text-xs">{label}</p>
+      <JsonPre value={input} />
     </div>
   );
 }
@@ -158,7 +169,7 @@ export function ToolInput({
 export type ToolOutputProps = ComponentProps<"div"> & {
   output: ToolUIPart["output"];
   errorText: ToolUIPart["errorText"];
-  resultLabel?: string;
+  label?: string;
   errorLabel?: string;
 };
 
@@ -166,7 +177,7 @@ export function ToolOutput({
   className,
   output,
   errorText,
-  resultLabel = "Result",
+  label = "Output",
   errorLabel = "Error",
   ...props
 }: ToolOutputProps) {
@@ -182,22 +193,19 @@ export function ToolOutput({
   }
 
   return (
-    <div className={cn("p-4", className)} data-slot="tool-output" {...props}>
-      <div className="flex flex-col gap-2">
-        <h4 className="font-medium text-muted-foreground text-xs uppercase tracking-wide">
-          {errorText ? errorLabel : resultLabel}
-        </h4>
-        <div
-          className={cn(
-            "overflow-x-auto rounded-md text-xs [&_table]:w-full",
-            errorText
-              ? "bg-destructive/10 text-destructive"
-              : "bg-muted/50 text-foreground"
-          )}
-        >
-          {errorText ? <div className="p-3">{errorText}</div> : body}
-        </div>
-      </div>
+    <div
+      className={cn(
+        "flex flex-col gap-0.5 overflow-x-auto text-xs",
+        errorText ? "text-destructive" : "text-foreground",
+        className
+      )}
+      data-slot="tool-output"
+      {...props}
+    >
+      <p className="text-muted-foreground text-xs">
+        {errorText ? errorLabel : label}
+      </p>
+      {errorText ? errorText : body}
     </div>
   );
 }

@@ -19,7 +19,7 @@ const RETIRED_BLOCK_VIEWS = new Set([
   "app-shell",
 ]);
 
-const LIVE_COMPONENT_DOCS = new Set(["composer", "reasoning", "shell", "tool"]);
+const LIVE_COMPONENT_DOCS = new Set(["composer", "tool", "worked"]);
 
 const RETIRED_APP_PATHS: Record<string, string> = {
   "ai-agents": "/blocks",

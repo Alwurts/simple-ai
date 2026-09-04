@@ -9,7 +9,7 @@ import {
 export default function ReasoningPreview() {
   return (
     <div className="w-full max-w-md">
-      <Reasoning duration={2} open>
+      <Reasoning defaultOpen>
         <ReasoningTrigger />
         <ReasoningContent>
           The user asked about open invoices due this week. I will filter

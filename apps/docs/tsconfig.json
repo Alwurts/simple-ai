@@ -16,6 +16,9 @@
       "@/components/ui/tool": [
         "../../packages/registry/registry/components/tool/tool.tsx"
       ],
+      "@/components/ui/worked": [
+        "../../packages/registry/registry/components/worked/worked.tsx"
+      ],
       "@/components/ui/*": ["../../packages/ui/src/components/shadcn/*"],
       "@/lib/utils": ["../../packages/ui/src/lib/utils.ts"],
       "@/*": ["./src/*"],

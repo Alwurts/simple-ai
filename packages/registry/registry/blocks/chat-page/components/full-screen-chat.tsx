@@ -126,7 +126,7 @@ export function FullScreenChat() {
   }, [setMessages, stop]);
   return (
     <div
-      className="@container flex h-full min-h-0 flex-col overflow-hidden bg-background"
+      className="@container flex h-full min-h-0 flex-col overflow-hidden overscroll-none bg-background"
       data-slot="full-screen-chat"
     >
       <ResizablePanelGroup

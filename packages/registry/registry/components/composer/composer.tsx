@@ -473,7 +473,7 @@ export function Composer({
   }, [editor]);
 
   const focus = useCallback(() => {
-    editor?.commands.focus("end");
+    editor?.commands.focus("end", { scrollIntoView: false });
   }, [editor]);
 
   const submit = useCallback(() => {

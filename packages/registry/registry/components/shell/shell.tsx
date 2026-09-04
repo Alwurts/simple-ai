@@ -1,6 +1,11 @@
 "use client";
 
-import type { ComponentProps, ReactNode } from "react";
+import {
+  type ComponentProps,
+  type ReactNode,
+  useLayoutEffect,
+  useRef,
+} from "react";
 import {
   SidebarInset,
   SidebarProvider,
@@ -8,6 +13,74 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+
+function useMobileVisualViewportFrame(ref: { current: HTMLElement | null }) {
+  useLayoutEffect(() => {
+    const node = ref.current;
+    if (!node) {
+      return;
+    }
+
+    const vv = window.visualViewport;
+    const mq = window.matchMedia("(max-width: 767px)");
+    const html = document.documentElement;
+    const body = document.body;
+    const prevHtmlOverflow = html.style.overflow;
+    const prevBodyOverflow = body.style.overflow;
+    const prevHtmlOverscroll = html.style.overscrollBehavior;
+    const prevBodyOverscroll = body.style.overscrollBehavior;
+
+    const clearFrame = () => {
+      node.style.position = "";
+      node.style.left = "";
+      node.style.right = "";
+      node.style.width = "";
+      node.style.top = "";
+      node.style.height = "";
+      node.style.maxHeight = "";
+      html.style.overflow = prevHtmlOverflow;
+      body.style.overflow = prevBodyOverflow;
+      html.style.overscrollBehavior = prevHtmlOverscroll;
+      body.style.overscrollBehavior = prevBodyOverscroll;
+    };
+
+    const apply = () => {
+      if (!mq.matches) {
+        clearFrame();
+        return;
+      }
+      const height = Math.round(vv?.height ?? window.innerHeight);
+      const top = Math.round(vv?.offsetTop ?? 0);
+      node.style.position = "fixed";
+      node.style.left = "0px";
+      node.style.right = "0px";
+      node.style.width = "100%";
+      node.style.top = `${top}px`;
+      node.style.height = `${height}px`;
+      node.style.maxHeight = `${height}px`;
+      html.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+      html.style.overscrollBehavior = "none";
+      body.style.overscrollBehavior = "none";
+      if (window.scrollY !== 0 || window.scrollX !== 0) {
+        window.scrollTo(0, 0);
+      }
+    };
+
+    apply();
+    vv?.addEventListener("resize", apply);
+    vv?.addEventListener("scroll", apply);
+    mq.addEventListener("change", apply);
+    window.addEventListener("scroll", apply, { passive: true });
+    return () => {
+      vv?.removeEventListener("resize", apply);
+      vv?.removeEventListener("scroll", apply);
+      mq.removeEventListener("change", apply);
+      window.removeEventListener("scroll", apply);
+      clearFrame();
+    };
+  }, [ref]);
+}
 
 /**
  * App shell compound layout. Split views (main + side panel) compose with shadcn
@@ -22,17 +95,24 @@ export function Shell({
   sidebar: ReactNode;
   defaultOpen?: boolean;
 }) {
+  const frameRef = useRef<HTMLDivElement>(null);
+  useMobileVisualViewportFrame(frameRef);
+
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
+    <SidebarProvider
+      className="h-dvh max-h-dvh min-h-0 overflow-hidden"
+      defaultOpen={defaultOpen}
+    >
       {sidebar}
       <div
         className={cn(
-          "relative flex h-svh w-full min-w-0 flex-1 flex-col",
+          "relative flex h-dvh max-h-dvh w-full min-w-0 flex-1 flex-col overflow-hidden overscroll-none",
           "md:peer-data-[variant=inset]:pt-2 md:peer-data-[variant=inset]:pr-2",
           "md:peer-data-[variant=inset]:pb-2",
           "has-[>[data-slot=shell-footer]]:md:peer-data-[variant=inset]:pb-0"
         )}
         data-slot="shell"
+        ref={frameRef}
       >
         {children}
       </div>

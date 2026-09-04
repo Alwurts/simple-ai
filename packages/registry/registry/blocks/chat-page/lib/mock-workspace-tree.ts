@@ -20,6 +20,10 @@ export const MOCK_WORKSPACE_TREE: WorkspaceFileNode[] = [
             path: "/workspace/src/lib",
             children: [
               { name: "money.ts", path: "/workspace/src/lib/money.ts" },
+              {
+                name: "money.test.ts",
+                path: "/workspace/src/lib/money.test.ts",
+              },
               { name: "utils.ts", path: "/workspace/src/lib/utils.ts" },
             ],
           },
@@ -60,9 +64,37 @@ export const MOCK_WORKSPACE_TREE: WorkspaceFileNode[] = [
 
 export const MOCK_WORKSPACE_FILE_CONTENT: Record<string, string> = {
   "/workspace/src/index.ts":
-    "export { startAssistant } from './routes/assistant';\n",
-  "/workspace/src/lib/money.ts":
-    "export function formatMinor(amount: number) {\n  return (amount / 100).toFixed(2);\n}\n",
+    "export { formatMinor, parseMinor } from './lib/money';\nexport { startAssistant } from './routes/assistant';\n",
+  "/workspace/src/lib/money.ts": `export function formatMinor(amountMinor: number) {
+  const sign = amountMinor < 0 ? "-" : "";
+  const abs = Math.abs(Math.trunc(amountMinor));
+  const dollars = Math.floor(abs / 100);
+  const cents = abs % 100;
+  return \`\${sign}\${dollars}.\${cents.toString().padStart(2, "0")}\`;
+}
+
+export function parseMinor(value: string): number {
+  const trimmed = value.trim();
+  const match = /^(-?)(\\d+)(?:\\.(\\d{1,2}))?$/.exec(trimmed);
+  if (!match) {
+    throw new Error(\`Invalid money: \${value}\`);
+  }
+  const sign = match[1] === "-" ? -1 : 1;
+  const dollars = Number(match[2]);
+  const cents = Number((match[3] ?? "0").padEnd(2, "0"));
+  return sign * (dollars * 100 + cents);
+}
+`,
+  "/workspace/src/lib/money.test.ts": `import { formatMinor, parseMinor } from "./money";
+
+test("formatMinor keeps cents on 9_140_000", () => {
+  expect(formatMinor(9_140_000)).toBe("91400.00");
+});
+
+test("parseMinor round-trip 91400.00", () => {
+  expect(parseMinor("91400.00")).toBe(9_140_000);
+});
+`,
   "/workspace/src/lib/utils.ts":
     "export function cn(...parts: string[]) {\n  return parts.filter(Boolean).join(' ');\n}\n",
   "/workspace/src/routes/assistant.tsx":

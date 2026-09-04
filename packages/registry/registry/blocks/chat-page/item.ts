@@ -26,6 +26,7 @@ Add a route to src/features/assistant/page.tsx. Point a live transport at your o
       "@simple-ai/reasoning",
       "@simple-ai/shell",
       "@simple-ai/tool",
+      "@simple-ai/worked",
     ],
     dependencies: ["@ai-sdk/react", "@shadcn/helpers", "ai", "streamdown"],
     meta: { iframeHeight: 900 },

@@ -2,13 +2,12 @@ import type { RegistryItemDef } from "../../../src/types";
 
 const def: RegistryItemDef = {
   item: {
-    name: "tool",
+    name: "worked",
     type: "registry:ui",
-    title: "Tool",
-    description: "Quiet collapsible tool call with input and output.",
-    dependencies: ["ai"],
+    title: "Worked",
+    description: "Settled-turn fold for work before the final assistant text.",
     registryDependencies: ["collapsible"],
-    files: [{ path: "tool.tsx", type: "registry:ui" }],
+    files: [{ path: "worked.tsx", type: "registry:ui" }],
   },
   preview: "preview",
 };

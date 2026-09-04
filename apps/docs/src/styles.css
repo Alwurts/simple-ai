@@ -35,6 +35,13 @@ html:has([data-slot="view-page"]) [data-slot="site-shell"] {
   padding: 0;
 }
 
+html:has([data-slot="view-page"]),
+html:has([data-slot="view-page"]) body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 [data-slot="docs"] :is(h1, h2, h3, h4, h5, h6) a {
   text-decoration: none;
 }

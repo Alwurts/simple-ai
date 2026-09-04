@@ -26,6 +26,10 @@ const tool = resolve(
   root,
   "../../packages/registry/registry/components/tool/tool.tsx"
 );
+const worked = resolve(
+  root,
+  "../../packages/registry/registry/components/worked/worked.tsx"
+);
 const utils = resolve(root, "../../packages/ui/src/lib/utils.ts");
 
 const config = defineConfig(async () => ({
@@ -36,6 +40,7 @@ const config = defineConfig(async () => ({
       { find: "@/components/ui/shell", replacement: shell },
       { find: "@/components/ui/reasoning", replacement: reasoning },
       { find: "@/components/ui/tool", replacement: tool },
+      { find: "@/components/ui/worked", replacement: worked },
       { find: "@/components/ui", replacement: uiShadcn },
       { find: "@/lib/utils", replacement: utils },
     ],

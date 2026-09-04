@@ -11,13 +11,12 @@ Start from a [shadcn/ui](https://ui.shadcn.com) project with the Base UI style. 
 
 ```bash
 npx shadcn@latest add @simple-ai/composer
-npx shadcn@latest add @simple-ai/reasoning
 npx shadcn@latest add @simple-ai/tool
-npx shadcn@latest add @simple-ai/shell
+npx shadcn@latest add @simple-ai/worked
 npx shadcn@latest add @simple-ai/chat-page
 ```
 
-`chat-page` depends on `shell`, `composer`, `reasoning`, and `tool`. The CLI pulls those in, plus shadcn `sidebar`, `message`, `bubble`, `attachment`, and `message-scroller`.
+`chat-page` pulls in composer, tool, and worked, plus the layout the page uses. The CLI also installs shadcn `sidebar`, `message`, `bubble`, `attachment`, and `message-scroller`.
 
 The page UI lands at `src/features/assistant/page.tsx` (or `features/assistant/page.tsx` if the app has no `src`). Wire a route to it:
 

@@ -102,9 +102,8 @@ export function MobileNav({ className }: { className?: string }) {
               { href: "/docs", label: "Introduction" },
               { href: "/docs/installation", label: "Installation" },
               { href: "/docs/components/composer", label: "Composer" },
-              { href: "/docs/components/reasoning", label: "Reasoning" },
-              { href: "/docs/components/shell", label: "Shell" },
               { href: "/docs/components/tool", label: "Tool" },
+              { href: "/docs/components/worked", label: "Worked" },
             ].map((item) => {
               const active = pathname === item.href;
               return (

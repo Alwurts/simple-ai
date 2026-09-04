@@ -1,6 +1,6 @@
 ---
 title: Tool
-description: Tool call with status, params, and output.
+description: Quiet collapsible tool call with input and output.
 ---
 
 <ComponentPreview name="tool" />
@@ -11,7 +11,7 @@ description: Tool call with status, params, and output.
 npx shadcn@latest add @simple-ai/tool
 ```
 
-The CLI also installs shadcn `badge` and `collapsible`, plus `ai`.
+The CLI also installs shadcn `collapsible`, plus `ai`.
 
 ## Usage
 
@@ -28,6 +28,7 @@ export function ToolCall({ part }: { part: { toolName: string; state: "output-av
   return (
     <Tool>
       <ToolHeader
+        input={part.input}
         state={part.state}
         title={part.toolName}
         type={`tool-${part.toolName}`}
@@ -41,4 +42,4 @@ export function ToolCall({ part }: { part: { toolName: string; state: "output-av
 }
 ```
 
-`ToolHeader` maps AI SDK tool part `state` to a status badge. Output objects render as JSON.
+Tools start collapsed. The header is the readable tool name, plus a short input summary when the call has a path, command, query, or pattern. Expand to see JSON under Input and Output.

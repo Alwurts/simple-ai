@@ -30,6 +30,12 @@ import {
   ToolInput,
   ToolOutput,
 } from "@/components/ui/tool";
+import {
+  splitWorkedParts,
+  Worked,
+  WorkedContent,
+  WorkedTrigger,
+} from "@/components/ui/worked";
 import { cn } from "@/lib/utils";
 import type { AIDataPart } from "../lib/ai-types";
 import type { GalleryChatMessage } from "../lib/mock-chat-messages";
@@ -106,8 +112,9 @@ function DefaultToolPart({
   return (
     <Tool defaultOpen={false} key={`${messageId}-tool-${partIndex}`}>
       <ToolHeader
+        input={part.input}
         state={part.state}
-        title={toolName.replace(/_/g, " ")}
+        title={toolName}
         type={`tool-${toolName}` as ToolUIPart["type"]}
       />
       <ToolContent>
@@ -157,7 +164,6 @@ function GalleryMessagePart({
     return (
       <Reasoning
         className="my-2"
-        defaultOpen={true}
         isStreaming={isStreaming && isLastPart}
         key={`${messageId}-reasoning-${partIndex}`}
       >
@@ -192,6 +198,16 @@ function GalleryMessagePart({
   return null;
 }
 
+function workedDurationSeconds(
+  message: GalleryChatMessage
+): number | undefined {
+  const responseTime = message.metadata?.responseTime;
+  if (typeof responseTime !== "number" || responseTime <= 0) {
+    return;
+  }
+  return Math.max(1, Math.round(responseTime / 1000));
+}
+
 export function ChatMessageRow({
   message,
   isStreaming = false,
@@ -204,22 +220,49 @@ export function ChatMessageRow({
     .map((part) => part.text)
     .join("\n\n");
   const align = message.role === "user" ? "end" : "start";
+  const lastPartIndex = message.parts.length - 1;
+  const duration = workedDurationSeconds(message);
+
+  const partRow = (
+    part: GalleryChatMessage["parts"][number],
+    partIndex: number
+  ) => (
+    <GalleryMessagePart
+      isLastPart={partIndex === lastPartIndex}
+      isStreaming={isStreaming}
+      key={`${message.id}-part-${partIndex}`}
+      messageId={message.id}
+      part={part}
+      partIndex={partIndex}
+      role={message.role}
+    />
+  );
 
   return (
     <Message align={align}>
       <MessageContent>
-        {message.parts.map((part, partIndex) => (
-          <GalleryMessagePart
-            isLastPart={partIndex === message.parts.length - 1}
-            isStreaming={isStreaming}
-            // biome-ignore lint/suspicious/noArrayIndexKey: part order within a message is stable
-            key={`${message.id}-part-${partIndex}`}
-            messageId={message.id}
-            part={part}
-            partIndex={partIndex}
-            role={message.role}
-          />
-        ))}
+        {message.role === "assistant"
+          ? splitWorkedParts(message.parts).map((segment) => {
+              if (segment.kind === "worked") {
+                const start = segment.items[0]?.index ?? 0;
+                return (
+                  <Worked
+                    duration={duration}
+                    isStreaming={isStreaming}
+                    key={`${message.id}-worked-${start}`}
+                  >
+                    <WorkedTrigger />
+                    <WorkedContent>
+                      {segment.items.map((item) =>
+                        partRow(item.part, item.index)
+                      )}
+                    </WorkedContent>
+                  </Worked>
+                );
+              }
+              return partRow(segment.item.part, segment.item.index);
+            })
+          : message.parts.map((part, partIndex) => partRow(part, partIndex))}
         {message.role === "assistant" && textForCopy ? (
           <MessageFooter>
             <Button

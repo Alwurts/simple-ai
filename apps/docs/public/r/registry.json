@@ -25,7 +25,8 @@
         "@simple-ai/composer",
         "@simple-ai/reasoning",
         "@simple-ai/shell",
-        "@simple-ai/tool"
+        "@simple-ai/tool",
+        "@simple-ai/worked"
       ],
       "dependencies": ["@ai-sdk/react", "@shadcn/helpers", "ai", "streamdown"],
       "meta": {
@@ -125,7 +126,7 @@
       "name": "reasoning",
       "type": "registry:ui",
       "title": "Reasoning",
-      "description": "Collapsible thinking with duration and markdown.",
+      "description": "Quiet thinking row with markdown.",
       "dependencies": ["streamdown"],
       "registryDependencies": ["collapsible"],
       "files": [
@@ -156,12 +157,25 @@
       "name": "tool",
       "type": "registry:ui",
       "title": "Tool",
-      "description": "Tool call with status, params, and output.",
+      "description": "Quiet collapsible tool call with input and output.",
       "dependencies": ["ai"],
-      "registryDependencies": ["badge", "collapsible"],
+      "registryDependencies": ["collapsible"],
       "files": [
         {
           "path": "packages/registry/registry/components/tool/tool.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "worked",
+      "type": "registry:ui",
+      "title": "Worked",
+      "description": "Settled-turn fold for work before the final assistant text.",
+      "registryDependencies": ["collapsible"],
+      "files": [
+        {
+          "path": "packages/registry/registry/components/worked/worked.tsx",
           "type": "registry:ui"
         }
       ]
