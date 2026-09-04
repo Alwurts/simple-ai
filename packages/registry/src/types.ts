@@ -9,25 +9,14 @@ export type RegistryMeta = {
 export type SimpleAiRegistryItem = RegistryItem & { meta?: RegistryMeta };
 
 /**
- * What each `registry/{blocks,components}/<name>/item.ts` default-exports — the
- * source for one item.
- *
- * - `item` is the shadcn `RegistryItem` that lands in the generated root
- *   `registry.json`. Authors write `files[].path` RELATIVE to the item directory;
- *   the build rewrites them repo-root-relative (the GitHub-registry requirement).
- * - `preview` names the file under the item directory (no extension) to lazy-load
- *   for the gallery preview.
+ * `item.files[].path` is relative to the item directory; generate rewrites it
+ * repo-root-relative. `preview` is the extensionless file to lazy-load.
  */
 export interface RegistryItemDef {
   item: SimpleAiRegistryItem;
   preview: string;
 }
 
-/**
- * A gallery-ready entry: the display subset of the manifest plus the lazily
- * loaded preview component. The generate script emits a map of these into
- * `src/generated.ts`.
- */
 export type RegistryEntry = Pick<
   SimpleAiRegistryItem,
   "name" | "type" | "title" | "description" | "categories"

@@ -5,10 +5,6 @@ import { Suspense } from "react";
 import { BlockNotFound } from "@/components/not-found";
 import { legacyViewHref } from "@/lib/legacy-redirects";
 
-/**
- * Chromeless full-screen registry preview — no docs layout. Embedded by
- * `BlockViewer` and linked from component previews for "open full screen".
- */
 export const Route = createFileRoute("/view/$name")({
   beforeLoad: ({ params }) => {
     const href = legacyViewHref(params.name);

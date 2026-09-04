@@ -4,12 +4,6 @@ import { TooltipProvider } from "@workspace/ui/components/shadcn/tooltip";
 import { Fullscreen } from "lucide-react";
 import { Suspense } from "react";
 
-/**
- * ComponentPreview — renders a `registry:ui` demo inline (direct render, no
- * iframe) in a centered, bordered surface. The lightweight counterpart to
- * `BlockViewer`: components are small and self-contained, so they live in the
- * docs page; only full-page layouts (`meta.fullBleed`) are iframed.
- */
 export function ComponentPreview({ name }: { name?: string }) {
   if (!name) {
     return null;

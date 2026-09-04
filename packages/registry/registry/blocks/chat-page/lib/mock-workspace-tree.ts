@@ -4,7 +4,6 @@ export interface WorkspaceFileNode {
   children?: WorkspaceFileNode[];
 }
 
-/** Gallery workspace tree for the assistant sandbox container. */
 export const MOCK_WORKSPACE_TREE: WorkspaceFileNode[] = [
   {
     name: "workspace",

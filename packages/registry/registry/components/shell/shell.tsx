@@ -9,10 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
-/**
- * App shell compound layout. Split views (main + side panel) compose with shadcn
- * `ResizablePanelGroup` / `ResizablePanel` at the route — not wrapped here.
- */
+/** Split views compose with `ResizablePanelGroup` at the route — not wrapped here. */
 export function Shell({
   children,
   sidebar,
@@ -40,7 +37,6 @@ export function Shell({
   );
 }
 
-/** Rounded inset main panel (sidebar peer). */
 export function ShellInset({
   className,
   children,
@@ -60,7 +56,6 @@ export function ShellInset({
   );
 }
 
-/** Optional chrome below the inset (e.g. chat dock). */
 export function ShellFooter({
   className,
   children,
@@ -183,7 +178,6 @@ export function ShellHeaderActions({
   );
 }
 
-/** Main content slot below the header — page bodies compose here. */
 export function ShellContent({
   className,
   children,

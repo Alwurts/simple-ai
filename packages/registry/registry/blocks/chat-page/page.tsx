@@ -4,7 +4,7 @@ import { Shell, ShellInset } from "@/components/ui/shell";
 import { AppSidebar } from "./components/app-sidebar";
 import { FullScreenChat } from "./components/full-screen-chat";
 
-/** UI for the chat page. Wire a Next or Start route to this file after install. */
+/** Wire a Next or Start route to this file after install. */
 export default function ChatPage() {
   return (
     <Shell sidebar={<AppSidebar activeId="chat" />}>

@@ -58,7 +58,6 @@ export function legacyDocsHref(path: string): string | undefined {
   }
 }
 
-/** `/view/:name` — old block previews. */
 export function legacyViewHref(name: string): string | undefined {
   if (name === "chat-input") {
     return "/view/composer";
@@ -71,7 +70,6 @@ export function legacyViewHref(name: string): string | undefined {
   }
 }
 
-/** Top-level app pages that no longer exist (`/ai-agents`, `/blocks/chat`, …). */
 export function legacyAppHref(path: string): string | undefined {
   const trimmed = path.replace(/^\/+|\/+$/g, "");
   if (!trimmed) {

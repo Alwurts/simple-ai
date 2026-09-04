@@ -4,24 +4,13 @@ import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import type { RegistryItemDef } from "../src/types";
 
-/**
- * Generates the two derived artifacts from the `registry/{blocks,components,agents}/<name>/`
- * source trees (ADR-0017 amendment, RD-7):
- *
- *   1. the repo-root `registry.json` (the shadcn GitHub-registry manifest), and
- *   2. `src/generated.ts` (the gallery's `name -> { ...meta, lazy component }` map).
- *
- * Each item directory contributes one `item.ts` (its shadcn `RegistryItem` +
- * `preview` entrypoint, authored with item-relative file paths). Run with
- * `--check` to fail (non-zero) if either artifact is stale — the CI drift gate.
- */
+/** `--check` exits non-zero when `registry.json` or `src/generated.ts` is stale. */
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = join(HERE, "..");
 const REPO_ROOT = join(PKG_ROOT, "..", "..");
 const ITEMS_DIR = join(PKG_ROOT, "registry");
 
-/** Where the package's item trees live, relative to the repo root. */
 const REPO_PREFIX = "packages/registry/registry";
 const HOMEPAGE = "https://simple-ai.dev";
 
@@ -38,7 +27,6 @@ const KIND_TYPE = {
 
 interface LoadedDef {
   name: string;
-  /** e.g. `blocks/chat-page` — path under `registry/` */
   relPath: string;
   def: RegistryItemDef;
 }
@@ -149,11 +137,7 @@ function buildGeneratedTs(defs: LoadedDef[]): string {
   return lines.join("\n");
 }
 
-/**
- * Run the raw output through the repo's biome (the same `check --write` that
- * formats every other file) so the committed artifact and a fresh generation are
- * byte-identical — the drift check then never trips on a pure reformat.
- */
+/** Format through biome so generate and generate:check compare byte-identical output. */
 function format(path: string, content: string): string {
   return execFileSync(
     "pnpm",
