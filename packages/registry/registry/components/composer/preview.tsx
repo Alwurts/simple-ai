@@ -25,10 +25,9 @@ export default function ComposerPreview() {
             items: MEMBERS,
           },
         }}
-        onSubmit={(parsed, { clear, focus }) => {
+        onSubmit={(parsed, { clear }) => {
           console.log(parsed);
           clear();
-          focus();
         }}
         status="ready"
       >

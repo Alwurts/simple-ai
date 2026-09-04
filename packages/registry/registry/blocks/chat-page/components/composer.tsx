@@ -106,7 +106,7 @@ function ChatInputInner({
             items: MOCK_MEMBERS,
           },
         }}
-        onSubmit={(parsed, { clear, focus }) => {
+        onSubmit={(parsed, { clear }) => {
           const trimmed = parsed.text.trim();
           if (!(trimmed || files.length > 0)) {
             return;
@@ -118,7 +118,6 @@ function ChatInputInner({
           };
           clearFiles();
           clear();
-          focus();
           Promise.resolve(onSubmit(payload)).catch(() => undefined);
         }}
         ref={inputRef}

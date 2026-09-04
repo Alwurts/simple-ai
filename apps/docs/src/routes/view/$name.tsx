@@ -35,7 +35,7 @@ function ViewBlock() {
   }
   const Preview = entry.component;
   return (
-    <div className="h-dvh max-h-dvh overflow-hidden" data-slot="view-page">
+    <div className="h-dvh overflow-hidden" data-slot="view-page">
       <TooltipProvider delay={0}>
         <Suspense fallback={null}>
           <Preview />

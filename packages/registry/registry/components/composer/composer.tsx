@@ -473,7 +473,7 @@ export function Composer({
   }, [editor]);
 
   const focus = useCallback(() => {
-    editor?.commands.focus("end", { scrollIntoView: false });
+    editor?.commands.focus("end");
   }, [editor]);
 
   const submit = useCallback(() => {
@@ -481,8 +481,9 @@ export function Composer({
       return;
     }
     const parsed = parse();
+    editor?.commands.blur();
     onSubmitRef.current(parsed, { clear, focus });
-  }, [clear, disabled, focus, parse]);
+  }, [clear, disabled, editor, focus, parse]);
 
   useImperativeHandle(
     ref,
