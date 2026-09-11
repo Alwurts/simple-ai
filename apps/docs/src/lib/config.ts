@@ -1,7 +1,10 @@
+export const APEX_HOST = "simple-ai.dev";
+export const PUBLIC_HOST = "www.simple-ai.dev";
+
 export const siteConfig = {
   name: "simple-ai",
-  url: "https://simple-ai.dev",
-  ogImage: "https://simple-ai.dev/og.jpg",
+  url: `https://${PUBLIC_HOST}`,
+  ogImage: `https://${PUBLIC_HOST}/og.jpg`,
   description: "Curated agent examples you can build upon",
   tagline: "Copy them into your app. Change the source.",
   links: {

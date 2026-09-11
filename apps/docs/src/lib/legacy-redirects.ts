@@ -21,6 +21,14 @@ const RETIRED_BLOCK_VIEWS = new Set([
 
 const LIVE_COMPONENT_DOCS = new Set(["composer", "tool", "worked"]);
 
+const REGISTRY_ALIASES: Record<string, string> = {
+  "chat-input": "composer",
+  "chat-01": "chat-page",
+  "chat-02": "chat-page",
+  "chat-03": "chat-page",
+  "chat-04": "chat-page",
+};
+
 const RETIRED_APP_PATHS: Record<string, string> = {
   "ai-agents": "/blocks",
   agents: "/blocks",
@@ -68,6 +76,10 @@ export function legacyViewHref(name: string): string | undefined {
   if (RETIRED_BLOCK_VIEWS.has(name)) {
     return "/blocks";
   }
+}
+
+export function legacyRegistryName(name: string): string | undefined {
+  return REGISTRY_ALIASES[name];
 }
 
 export function legacyAppHref(path: string): string | undefined {

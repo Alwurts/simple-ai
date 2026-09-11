@@ -3,7 +3,9 @@ import { getEntry } from "@workspace/registry";
 import { TooltipProvider } from "@workspace/ui/components/shadcn/tooltip";
 import { Suspense } from "react";
 import { BlockNotFound } from "@/components/not-found";
+import { siteConfig } from "@/lib/config";
 import { legacyViewHref } from "@/lib/legacy-redirects";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/view/$name")({
   beforeLoad: ({ params }) => {
@@ -20,6 +22,13 @@ export const Route = createFileRoute("/view/$name")({
       name: params.name,
     };
   },
+  head: ({ params }) =>
+    seo({
+      description: siteConfig.tagline,
+      noindex: true,
+      pathname: `/view/${params.name}`,
+      title: `simple-ai · ${params.name}`,
+    }),
   component: ViewBlock,
   notFoundComponent: BlockNotFound,
 });

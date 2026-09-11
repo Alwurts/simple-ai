@@ -12,7 +12,7 @@ const REPO_ROOT = join(PKG_ROOT, "..", "..");
 const ITEMS_DIR = join(PKG_ROOT, "registry");
 
 const REPO_PREFIX = "packages/registry/registry";
-const HOMEPAGE = "https://simple-ai.dev";
+const HOMEPAGE = "https://www.simple-ai.dev";
 
 const REGISTRY_JSON = join(REPO_ROOT, "registry.json");
 const GENERATED_TS = join(PKG_ROOT, "src", "generated.ts");

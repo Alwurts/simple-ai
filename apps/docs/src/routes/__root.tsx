@@ -11,7 +11,6 @@ export const Route = createRootRoute({
       { href: appCss, rel: "stylesheet" },
       { href: "/favicon.ico", rel: "icon" },
       { href: "/favicon.svg", rel: "icon", type: "image/svg+xml" },
-      { href: siteConfig.url, rel: "canonical" },
       { href: "https://fonts.googleapis.com", rel: "preconnect" },
       {
         href: "https://fonts.gstatic.com",
@@ -37,7 +36,6 @@ export const Route = createRootRoute({
       },
       { content: "#47B2E4", name: "theme-color" },
       { content: "website", property: "og:type" },
-      { content: siteConfig.url, property: "og:url" },
       {
         content: `${siteConfig.name} · ${siteConfig.description}`,
         property: "og:title",

@@ -7,18 +7,19 @@ import {
   PageHeaderHeading,
   PageHeaderSecondaryButton,
 } from "@/components/layout/page-header";
+import { seo } from "@/lib/seo";
 
 const title = "Blocks";
 const description = "Copy an example into your app. Change the source.";
 
 export const Route = createFileRoute("/blocks")({
   component: BlocksPage,
-  head: () => ({
-    meta: [
-      { title: `simple-ai · ${title}` },
-      { content: description, name: "description" },
-    ],
-  }),
+  head: () =>
+    seo({
+      description,
+      pathname: "/blocks",
+      title: `simple-ai · ${title}`,
+    }),
 });
 
 function BlocksPage() {

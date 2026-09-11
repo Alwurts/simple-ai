@@ -1,17 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LandingHero } from "@/components/landing/hero";
+import { siteConfig } from "@/lib/config";
+import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
   component: HomePage,
-  head: () => ({
-    meta: [
-      { title: "simple-ai · Curated agent examples you can build upon" },
-      {
-        content: "Copy them into your app. Change the source.",
-        name: "description",
-      },
-    ],
-  }),
+  head: () =>
+    seo({
+      description: siteConfig.tagline,
+      pathname: "/",
+      title: `${siteConfig.name} · ${siteConfig.description}`,
+    }),
 });
 
 function HomePage() {

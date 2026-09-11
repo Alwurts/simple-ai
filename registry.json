@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "simple-ai",
-  "homepage": "https://simple-ai.dev",
+  "homepage": "https://www.simple-ai.dev",
   "items": [
     {
       "name": "chat-page",

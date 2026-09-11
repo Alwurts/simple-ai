@@ -7,8 +7,10 @@ import { DocsPage } from "@/components/docs/docs-page";
 import { DocsSidebar } from "@/components/docs/docs-sidebar";
 import { getMDXComponents } from "@/components/mdx";
 import { DocsNotFound } from "@/components/not-found";
+import { siteConfig } from "@/lib/config";
 import { docsNavFromTree, docsNeighbours } from "@/lib/docs-nav";
 import { legacyDocsHref } from "@/lib/legacy-redirects";
+import { seo } from "@/lib/seo";
 import { source } from "@/lib/source";
 
 export const Route = createFileRoute("/docs/$")({
@@ -20,6 +22,16 @@ export const Route = createFileRoute("/docs/$")({
       await clientLoader.preload(data.path);
     }
     return data;
+  },
+  head: ({ loaderData }) => {
+    if (!loaderData) {
+      return {};
+    }
+    return seo({
+      description: loaderData.description || siteConfig.tagline,
+      pathname: loaderData.url,
+      title: `simple-ai · ${loaderData.title}`,
+    });
   },
   notFoundComponent: DocsNotFound,
 });
@@ -44,6 +56,9 @@ const serverLoader = createServerFn({ method: "GET" })
     return {
       path: page.path,
       url: page.url,
+      title: String(page.data.title ?? "Docs"),
+      description:
+        typeof page.data.description === "string" ? page.data.description : "",
       nav: docsNavFromTree(tree),
       previous: neighbours.previous,
       next: neighbours.next,

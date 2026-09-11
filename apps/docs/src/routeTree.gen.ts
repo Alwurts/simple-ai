@@ -18,6 +18,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ApiSearchRouteImport } from './routes/api/search'
 import { Route as DocsSplatRouteImport } from './routes/docs/$'
 import { Route as DocsChar123Char125DotmdRouteImport } from './routes/docs/{$}[.]md'
+import { Route as RSplatRouteImport } from './routes/r/$'
 import { Route as ViewNameRouteImport } from './routes/view/$name'
 
 const IndexRoute = IndexRouteImport.update({
@@ -65,6 +66,11 @@ const DocsChar123Char125DotmdRoute = DocsChar123Char125DotmdRouteImport.update({
   path: '/docs/{$}.md',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RSplatRoute = RSplatRouteImport.update({
+  id: '/r/$',
+  path: '/r/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ViewNameRoute = ViewNameRouteImport.update({
   id: '/view/$name',
   path: '/view/$name',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/api/search': typeof ApiSearchRoute
   '/docs/$': typeof DocsSplatRoute
   '/docs/{$}.md': typeof DocsChar123Char125DotmdRoute
+  '/r/$': typeof RSplatRoute
   '/view/$name': typeof ViewNameRoute
 }
 export interface FileRoutesByTo {
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/api/search': typeof ApiSearchRoute
   '/docs/$': typeof DocsSplatRoute
   '/docs/{$}.md': typeof DocsChar123Char125DotmdRoute
+  '/r/$': typeof RSplatRoute
   '/view/$name': typeof ViewNameRoute
 }
 export interface FileRoutesById {
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/api/search': typeof ApiSearchRoute
   '/docs/$': typeof DocsSplatRoute
   '/docs/{$}.md': typeof DocsChar123Char125DotmdRoute
+  '/r/$': typeof RSplatRoute
   '/view/$name': typeof ViewNameRoute
 }
 export interface FileRouteTypes {
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/api/search'
     | '/docs/$'
     | '/docs/{$}.md'
+    | '/r/$'
     | '/view/$name'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/api/search'
     | '/docs/$'
     | '/docs/{$}.md'
+    | '/r/$'
     | '/view/$name'
   id:
     | '__root__'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/api/search'
     | '/docs/$'
     | '/docs/{$}.md'
+    | '/r/$'
     | '/view/$name'
   fileRoutesById: FileRoutesById
 }
@@ -157,6 +169,7 @@ export interface RootRouteChildren {
   ApiSearchRoute: typeof ApiSearchRoute
   DocsSplatRoute: typeof DocsSplatRoute
   DocsChar123Char125DotmdRoute: typeof DocsChar123Char125DotmdRoute
+  RSplatRoute: typeof RSplatRoute
   ViewNameRoute: typeof ViewNameRoute
 }
 
@@ -225,6 +238,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsChar123Char125DotmdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/r/$': {
+      id: '/r/$'
+      path: '/r/$'
+      fullPath: '/r/$'
+      preLoaderRoute: typeof RSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/view/$name': {
       id: '/view/$name'
       path: '/view/$name'
@@ -245,6 +265,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiSearchRoute: ApiSearchRoute,
   DocsSplatRoute: DocsSplatRoute,
   DocsChar123Char125DotmdRoute: DocsChar123Char125DotmdRoute,
+  RSplatRoute: RSplatRoute,
   ViewNameRoute: ViewNameRoute,
 }
 export const routeTree = rootRouteImport
@@ -252,10 +273,11 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }
