@@ -3,10 +3,8 @@ export function HeroChatPreview() {
     <div className="relative mx-auto w-full" data-slot="hero-chat-preview">
       <div className="relative overflow-hidden rounded-xl border bg-background shadow-lg md:shadow-xl">
         <iframe
-          aria-hidden
-          className="pointer-events-none block h-[32rem] w-full bg-background md:h-[34rem] lg:h-[40rem]"
+          className="block h-[32rem] w-full bg-background md:h-[34rem] lg:h-[40rem]"
           src="/view/chat-page?embed=1"
-          tabIndex={-1}
           title="Chat page preview"
         />
       </div>
