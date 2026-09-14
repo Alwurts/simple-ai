@@ -10,13 +10,10 @@ Start from a [shadcn/ui](https://ui.shadcn.com) project with the Base UI style. 
 ## CLI
 
 ```bash
-npx shadcn@latest add @simple-ai/chat-input
-npx shadcn@latest add @simple-ai/tool
-npx shadcn@latest add @simple-ai/worked
 npx shadcn@latest add @simple-ai/chat-page
 ```
 
-`chat-page` pulls in chat-input, tool, and worked, plus the page layout and thinking row. The CLI also installs shadcn `sidebar`, `message`, `bubble`, `attachment`, and `message-scroller`.
+`chat-page` is the complete chat. The CLI also pulls in the chat input, tool rows, thinking, and the work fold, plus the page layout. It also installs shadcn `sidebar`, `message`, `bubble`, `attachment`, and `message-scroller`.
 
 The page UI lands at `src/features/assistant/page.tsx` (or `features/assistant/page.tsx` if the app has no `src`). Wire a route to it:
 
@@ -36,6 +33,16 @@ export const Route = createFileRoute("/assistant")({
 ```
 
 `chat-page` ships a mocked transport, so the gallery and a fresh install work without a model. Point a live transport at your own API when you have one.
+
+## Pieces
+
+If you only want a piece:
+
+```bash
+npx shadcn@latest add @simple-ai/chat-input
+npx shadcn@latest add @simple-ai/tool
+npx shadcn@latest add @simple-ai/worked
+```
 
 ## Hosted registry
 

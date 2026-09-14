@@ -47,7 +47,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     name: "worked",
     type: "registry:ui",
     title: "Worked",
-    description: "Fold for work before the last assistant text.",
+    description: "Fold the agent's work. Keep the answer.",
     meta: {},
     component: lazy(() => import("../registry/components/worked/preview")),
   },

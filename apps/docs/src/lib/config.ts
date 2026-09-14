@@ -14,6 +14,6 @@ export const siteConfig = {
   navItems: [
     { href: "/docs", label: "Documentation" },
     { href: "/docs/components/chat-input", label: "Components" },
-    { href: "/blocks", label: "Blocks" },
+    { href: "/blocks", label: "Examples" },
   ],
 };

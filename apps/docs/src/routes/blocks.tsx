@@ -9,8 +9,9 @@ import {
 } from "@/components/layout/page-header";
 import { seo } from "@/lib/seo";
 
-const title = "Blocks";
-const description = "Copy an example into your app. Change the source.";
+const title = "Examples";
+const description =
+  "Copy a complete chat page into your app. Change the source.";
 
 export const Route = createFileRoute("/blocks")({
   component: BlocksPage,
@@ -40,8 +41,7 @@ function BlocksPage() {
           <div className="mx-auto mt-16 max-w-2xl pb-16">
             <h2 className="font-medium text-xl tracking-tight">Installation</h2>
             <p className="mt-2 text-muted-foreground text-sm">
-              Copy the chat page with the shadcn CLI. The CLI also pulls in
-              chat-input, tool, and worked.
+              Copy the chat page with the shadcn CLI.
             </p>
             <pre className="mt-4 overflow-x-auto rounded-lg bg-code p-4 font-mono text-sm">
               npx shadcn@latest add @simple-ai/chat-page

@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "worked",
   "title": "Worked",
-  "description": "Fold for work before the last assistant text.",
+  "description": "Fold the agent's work. Keep the answer.",
   "registryDependencies": [
     "collapsible"
   ],
