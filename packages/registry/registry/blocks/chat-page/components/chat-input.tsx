@@ -13,12 +13,12 @@ import {
   AttachmentTitle,
 } from "@/components/ui/attachment";
 import {
-  Composer,
-  ComposerEditor,
-  type ComposerHandle,
-  ComposerMentionButton,
-  ComposerSubmitButton,
-} from "@/components/ui/composer";
+  ChatInput,
+  ChatInputEditor,
+  type ChatInputHandle,
+  ChatInputMentionButton,
+  ChatInputSubmitButton,
+} from "@/components/ui/chat-input";
 import { InputGroupAddon, InputGroupButton } from "@/components/ui/input-group";
 import { MOCK_MEMBERS, type MockMember } from "../lib/mock-members";
 
@@ -28,9 +28,9 @@ export interface GalleryPromptMessage {
   members?: MockMember[];
 }
 
-type ComposerFile = FileUIPart & { id: string };
+type ChatInputFile = FileUIPart & { id: string };
 
-function filePartsFromList(fileList: FileList | File[]): ComposerFile[] {
+function filePartsFromList(fileList: FileList | File[]): ChatInputFile[] {
   return Array.from(fileList).map((file) => ({
     id: crypto.randomUUID(),
     type: "file" as const,
@@ -53,8 +53,8 @@ function ChatInputInner({
   placeholder: string;
   status: ChatStatus;
 }) {
-  const [files, setFiles] = useState<ComposerFile[]>([]);
-  const inputRef = useRef<ComposerHandle>(null);
+  const [files, setFiles] = useState<ChatInputFile[]>([]);
+  const inputRef = useRef<ChatInputHandle>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const clearFiles = useCallback(() => {
@@ -96,7 +96,7 @@ function ChatInputInner({
         ref={fileInputRef}
         type="file"
       />
-      <Composer
+      <ChatInput
         className="rounded-2xl"
         disabled={disabled}
         onStop={onStop}
@@ -163,9 +163,9 @@ function ChatInputInner({
             </AttachmentGroup>
           </InputGroupAddon>
         ) : null}
-        <ComposerEditor placeholder={placeholder} />
+        <ChatInputEditor placeholder={placeholder} />
         <InputGroupAddon align="block-end" className="pt-1">
-          <ComposerMentionButton />
+          <ChatInputMentionButton />
           <InputGroupButton
             aria-label="Add files"
             onClick={() => fileInputRef.current?.click()}
@@ -176,10 +176,10 @@ function ChatInputInner({
             <PaperclipIcon />
           </InputGroupButton>
           <div className="ml-auto flex items-center gap-2">
-            <ComposerSubmitButton />
+            <ChatInputSubmitButton />
           </div>
         </InputGroupAddon>
-      </Composer>
+      </ChatInput>
     </div>
   );
 }

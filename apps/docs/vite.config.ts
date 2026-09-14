@@ -10,9 +10,9 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const uiShadcn = resolve(root, "../../packages/ui/src/components/shadcn");
-const composer = resolve(
+const chatInput = resolve(
   root,
-  "../../packages/registry/registry/components/chat-input/composer.tsx"
+  "../../packages/registry/registry/components/chat-input/chat-input.tsx"
 );
 const shell = resolve(
   root,
@@ -38,7 +38,7 @@ const config = defineConfig(async () => ({
   resolve: {
     dedupe: ["react", "react-dom"],
     alias: [
-      { find: "@/components/ui/composer", replacement: composer },
+      { find: "@/components/ui/chat-input", replacement: chatInput },
       { find: "@/components/ui/shell", replacement: shell },
       { find: "@/components/ui/reasoning", replacement: reasoning },
       { find: "@/components/ui/tool", replacement: tool },

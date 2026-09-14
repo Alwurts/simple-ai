@@ -15,16 +15,16 @@ npx shadcn@latest add @simple-ai/chat-input
 
 ```tsx
 import {
-  Composer,
-  ComposerEditor,
-  ComposerMentionButton,
-  ComposerSubmitButton,
-} from "@/components/ui/composer"
+  ChatInput,
+  ChatInputEditor,
+  ChatInputMentionButton,
+  ChatInputSubmitButton,
+} from "@/components/ui/chat-input"
 import { InputGroupAddon } from "@/components/ui/input-group"
 
 export function Prompt() {
   return (
-    <Composer
+    <ChatInput
       mentions={{
         member: { trigger: "@", items: [{ id: "1", name: "Alice" }] },
       }}
@@ -34,14 +34,14 @@ export function Prompt() {
       }}
       status="ready"
     >
-      <ComposerEditor placeholder="Type a message..." />
+      <ChatInputEditor placeholder="Type a message..." />
       <InputGroupAddon align="block-end">
-        <ComposerMentionButton />
+        <ChatInputMentionButton />
         <div className="ml-auto">
-          <ComposerSubmitButton />
+          <ChatInputSubmitButton />
         </div>
       </InputGroupAddon>
-    </Composer>
+    </ChatInput>
   )
 }
 ```

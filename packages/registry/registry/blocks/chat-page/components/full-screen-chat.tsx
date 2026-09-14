@@ -55,9 +55,9 @@ import {
   type GalleryChatMessage,
   initialChatMessages,
 } from "../lib/chat-transport";
+import { GalleryChatInput, type GalleryPromptMessage } from "./chat-input";
 import { ChatMessageRow } from "./chat-message-parts";
 import { ChatSidePanel } from "./chat-side-panel";
-import { GalleryChatInput, type GalleryPromptMessage } from "./composer";
 
 function EmptyConversation() {
   return (

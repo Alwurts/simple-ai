@@ -20,7 +20,7 @@
       "registryDependencies": ["input-group"],
       "files": [
         {
-          "path": "packages/registry/registry/components/chat-input/composer.tsx",
+          "path": "packages/registry/registry/components/chat-input/chat-input.tsx",
           "type": "registry:ui"
         }
       ]
@@ -81,9 +81,9 @@
           "target": "src/features/assistant/components/full-screen-chat.tsx"
         },
         {
-          "path": "packages/registry/registry/blocks/chat-page/components/composer.tsx",
+          "path": "packages/registry/registry/blocks/chat-page/components/chat-input.tsx",
           "type": "registry:component",
-          "target": "src/features/assistant/components/composer.tsx"
+          "target": "src/features/assistant/components/chat-input.tsx"
         },
         {
           "path": "packages/registry/registry/blocks/chat-page/components/chat-message-parts.tsx",

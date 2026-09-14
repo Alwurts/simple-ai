@@ -1,11 +1,11 @@
 "use client";
 
 import {
-  Composer,
-  ComposerEditor,
-  ComposerMentionButton,
-  ComposerSubmitButton,
-} from "@/components/ui/composer";
+  ChatInput,
+  ChatInputEditor,
+  ChatInputMentionButton,
+  ChatInputSubmitButton,
+} from "@/components/ui/chat-input";
 import { InputGroupAddon } from "@/components/ui/input-group";
 
 const MEMBERS = [
@@ -14,10 +14,10 @@ const MEMBERS = [
   { id: "3", name: "Charlie" },
 ];
 
-export default function ComposerPreview() {
+export default function ChatInputPreview() {
   return (
     <div className="w-full max-w-md">
-      <Composer
+      <ChatInput
         className="rounded-2xl"
         mentions={{
           member: {
@@ -31,14 +31,14 @@ export default function ComposerPreview() {
         }}
         status="ready"
       >
-        <ComposerEditor placeholder="Type @ to mention..." />
+        <ChatInputEditor placeholder="Type @ to mention..." />
         <InputGroupAddon align="block-end" className="pt-1">
-          <ComposerMentionButton />
+          <ChatInputMentionButton />
           <div className="ml-auto">
-            <ComposerSubmitButton />
+            <ChatInputSubmitButton />
           </div>
         </InputGroupAddon>
-      </Composer>
+      </ChatInput>
     </div>
   );
 }

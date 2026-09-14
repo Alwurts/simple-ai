@@ -57,9 +57,9 @@ Add a route to src/features/assistant/page.tsx. Point a live transport at your o
         target: "src/features/assistant/components/full-screen-chat.tsx",
       },
       {
-        path: "components/composer.tsx",
+        path: "components/chat-input.tsx",
         type: "registry:component",
-        target: "src/features/assistant/components/composer.tsx",
+        target: "src/features/assistant/components/chat-input.tsx",
       },
       {
         path: "components/chat-message-parts.tsx",

@@ -54,11 +54,11 @@ export type MentionConfigs = Record<string, MentionConfig<BaseMentionItem>>;
 type SelectedMentionItems = Record<string, Map<string, BaseMentionItem>>;
 
 // Mapped + intersection shape — cannot be an interface.
-export type ComposerParsed<Items extends Record<string, BaseMentionItem>> = {
+export type ChatInputParsed<Items extends Record<string, BaseMentionItem>> = {
   text: string;
 } & { [K in keyof Items]?: Items[K][] };
 
-export interface ComposerHandle {
+export interface ChatInputHandle {
   clear: () => void;
   focus: () => void;
   getText: () => string;
@@ -66,12 +66,12 @@ export interface ComposerHandle {
   insertText: (text: string) => void;
 }
 
-interface ComposerHelpers {
+interface ChatInputHelpers {
   clear: () => void;
   focus: () => void;
 }
 
-interface ComposerContextValue {
+interface ChatInputContextValue {
   editor: Editor | null;
   setEditor: (editor: Editor | null) => void;
   submit: () => void;
@@ -390,17 +390,17 @@ export function parseEditorContent(
   return { text: text.trim(), ...buckets };
 }
 
-const ComposerContext = createContext<ComposerContextValue | null>(null);
+const ChatInputContext = createContext<ChatInputContextValue | null>(null);
 
-function useComposerContext() {
-  const ctx = useContext(ComposerContext);
+function useChatInputContext() {
+  const ctx = useContext(ChatInputContext);
   if (!ctx) {
-    throw new Error("Composer components must be used within <Composer>");
+    throw new Error("ChatInput components must be used within <ChatInput>");
   }
   return ctx;
 }
 
-type SharedComposerProps = {
+type SharedChatInputProps = {
   status?: ChatStatus;
   onStop?: () => void;
   disabled?: boolean;
@@ -408,30 +408,33 @@ type SharedComposerProps = {
   className?: string;
   children: ReactNode;
   /** Imperative handle (clear/focus/getText/setText/insertText), not the DOM node. */
-  ref?: Ref<ComposerHandle>;
+  ref?: Ref<ChatInputHandle>;
 } & Omit<
   ComponentProps<"div">,
   "children" | "onSubmit" | "defaultValue" | "ref"
 >;
 
-type ComposerPropsWithMentions<Items extends Record<string, BaseMentionItem>> =
-  SharedComposerProps & {
+type ChatInputPropsWithMentions<Items extends Record<string, BaseMentionItem>> =
+  SharedChatInputProps & {
     mentions: { [K in keyof Items]: MentionConfig<Items[K]> };
-    onSubmit: (parsed: ComposerParsed<Items>, helpers: ComposerHelpers) => void;
+    onSubmit: (
+      parsed: ChatInputParsed<Items>,
+      helpers: ChatInputHelpers
+    ) => void;
   };
 
-type ComposerPropsWithoutMentions = SharedComposerProps & {
+type ChatInputPropsWithoutMentions = SharedChatInputProps & {
   mentions?: undefined;
-  onSubmit: (parsed: { text: string }, helpers: ComposerHelpers) => void;
+  onSubmit: (parsed: { text: string }, helpers: ChatInputHelpers) => void;
 };
 
-export function Composer<Items extends Record<string, BaseMentionItem>>(
-  props: ComposerPropsWithMentions<Items>
+export function ChatInput<Items extends Record<string, BaseMentionItem>>(
+  props: ChatInputPropsWithMentions<Items>
 ): React.JSX.Element;
-export function Composer(
-  props: ComposerPropsWithoutMentions
+export function ChatInput(
+  props: ChatInputPropsWithoutMentions
 ): React.JSX.Element;
-export function Composer({
+export function ChatInput({
   mentions,
   onSubmit,
   status,
@@ -442,11 +445,11 @@ export function Composer({
   children,
   ref,
   ...props
-}: SharedComposerProps & {
+}: SharedChatInputProps & {
   mentions?: MentionConfigs;
   // Runtime parse is untyped; overloads restore Items at the call site.
   // biome-ignore lint/suspicious/noExplicitAny: overload boundary
-  onSubmit: (parsed: any, helpers: ComposerHelpers) => void;
+  onSubmit: (parsed: any, helpers: ChatInputHelpers) => void;
 }) {
   const [editor, setEditor] = useState<Editor | null>(null);
   const mentionsRef = useRef(mentions);
@@ -501,7 +504,7 @@ export function Composer({
     [clear, editor, focus, parse]
   );
 
-  const contextValue = useMemo<ComposerContextValue>(
+  const contextValue = useMemo<ChatInputContextValue>(
     () => ({
       editor,
       setEditor,
@@ -518,20 +521,20 @@ export function Composer({
   );
 
   return (
-    <ComposerContext.Provider value={contextValue}>
+    <ChatInputContext.Provider value={contextValue}>
       <InputGroup
         className={cn("h-auto", className)}
-        data-slot="composer"
+        data-slot="chat-input"
         {...props}
       >
         {children}
       </InputGroup>
-    </ComposerContext.Provider>
+    </ChatInputContext.Provider>
   );
 }
 
 const SubmitEnter = Extension.create({
-  name: "composerSubmitEnter",
+  name: "chatInputSubmitEnter",
   addOptions() {
     return {
       getOnEnter: (): (() => void) => () => undefined,
@@ -547,7 +550,7 @@ const SubmitEnter = Extension.create({
   },
 });
 
-export function ComposerEditor({
+export function ChatInputEditor({
   placeholder = "Type a message...",
   className,
   autoFocus,
@@ -564,7 +567,7 @@ export function ComposerEditor({
     mentions,
     mentionsRef,
     selectedItemsRef,
-  } = useComposerContext();
+  } = useChatInputContext();
 
   const initialMentionsRef = useRef(mentions);
   const placeholderRef = useRef(placeholder);
@@ -644,7 +647,7 @@ export function ComposerEditor({
   );
 }
 
-export function ComposerSubmitButton({
+export function ChatInputSubmitButton({
   className,
   disabled,
   children,
@@ -655,7 +658,7 @@ export function ComposerSubmitButton({
     status,
     onStop,
     disabled: contextDisabled,
-  } = useComposerContext();
+  } = useChatInputContext();
 
   const isInFlight = status === "submitted" || status === "streaming";
   const actAsStop = isInFlight && onStop !== undefined;
@@ -693,13 +696,13 @@ export function ComposerSubmitButton({
   );
 }
 
-export function ComposerMentionButton({
+export function ChatInputMentionButton({
   trigger,
   className,
   children,
   ...props
 }: ComponentProps<typeof InputGroupButton> & { trigger?: string }) {
-  const { editor, mentions } = useComposerContext();
+  const { editor, mentions } = useChatInputContext();
 
   const configs = mentions ? Object.values(mentions) : [];
   const resolvedTrigger = trigger ?? configs[0]?.trigger;

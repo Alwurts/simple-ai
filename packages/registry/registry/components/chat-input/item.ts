@@ -16,7 +16,7 @@ const def: RegistryItemDef = {
       "ai",
     ],
     registryDependencies: ["input-group"],
-    files: [{ path: "composer.tsx", type: "registry:ui" }],
+    files: [{ path: "chat-input.tsx", type: "registry:ui" }],
   },
   preview: "preview",
 };
