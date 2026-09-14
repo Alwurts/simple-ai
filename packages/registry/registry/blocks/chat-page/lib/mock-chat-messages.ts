@@ -39,6 +39,7 @@ const galleryChat = createChat<GalleryChatMessage>()
     "formatMinor is dropping cents on large invoice totals. Find and fix it."
   )
   .assistant(({ writer }) => {
+    writer.stepStart();
     writer.reasoning(
       `The report is lost cents on large invoice totals, which usually means we are formatting minor units with floating point.
 
@@ -92,6 +93,7 @@ I will search for formatMinor, read the helper and every call site, then run the
         path: "/workspace/src/index.ts",
         content: "export { formatMinor } from './lib/money';\n",
       });
+    writer.stepStart();
     writer.reasoning(
       `The implementation is a one-liner: \`(amount / 100).toFixed(2)\`. That looks harmless and is the classic IEEE-754 trap.
 
@@ -114,6 +116,7 @@ Test Files  1 failed (1)
       1 failed
 `
       );
+    writer.stepStart();
     writer.reasoning(
       `The failing case is exactly the total from the bug report: expected \`91400.00\`, received \`91399.99\`.
 
@@ -146,6 +149,7 @@ Test Files  1 passed (1)
       2 passed
 `
       );
+    writer.stepStart();
     writer.reasoning(
       "Tests are green, including the negative-balance case. I will summarize the integer split, show the new helper, and leave invoice CSV formatting alone unless they ask. No other call site in src/ was doing its own toFixed."
     );
@@ -178,6 +182,7 @@ Call sites in \`src/index.ts\` still re-export \`formatMinor\`. I did not touch 
     "Add parseMinor and export it from the package entry. Cover round-trips in tests."
   )
   .assistant(({ writer }) => {
+    writer.stepStart();
     writer.data({
       type: "data-plan",
       data: {
@@ -237,6 +242,7 @@ test("formatMinor keeps cents on 9_140_000", () => {
 });
 `,
       });
+    writer.stepStart();
     writer.reasoning(
       `The helper is still format-only and the test file only covers formatMinor. I will append parseMinor in money.ts, switch the index re-export to named \`formatMinor, parseMinor\`, and extend the test import.
 
@@ -275,6 +281,7 @@ Round-trip on \`"91400.00"\` is the case that failed last turn. I will also reje
       })
       .sleep(1200)
       .output({ path: "/workspace/src/lib/money.test.ts", ok: true });
+    writer.stepStart();
     writer.reasoning(
       "Edits are in. Next is `pnpm test -- src/lib/money.test.ts`. If the round-trip fails it will be padding or the sign on negative values, not the formatter — that already passed. I will not start a CSV helper in this turn."
     );
@@ -295,6 +302,7 @@ Test Files  1 passed (1)
       4 passed
 `
       );
+    writer.stepStart();
     writer.text(
       `\`parseMinor\` now lives next to \`formatMinor\` and the package entry re-exports both.
 
@@ -353,6 +361,7 @@ export const galleryChatTransport = galleryChat.transport({
     ).length;
     const variants = [
       () => {
+        writer.stepStart();
         writer.reasoning(
           "They want a reminder draft, not another formatter change. I should pull the open-invoices file so the copy uses a real customer, amount, and due date, then format the minor units with the helper we just patched so the dollars match 7_500_000."
         );
@@ -385,6 +394,7 @@ export const galleryChatTransport = galleryChat.transport({
             content:
               "invoice_id,customer,balance_minor,due\nINV-1042,Northside Distributors,7500000,2026-06-24\nINV-1038,Bayview Supply,1240000,2026-06-26\n",
           });
+        writer.stepStart();
         writer.reasoning(
           "INV-1042 is Northside Distributors, 7_500_000 minor, due 24 Jun. That is the $75,000 note. I will run formatMinor once so the draft does not hard-code a string that can drift from the helper, then write the email."
         );
@@ -398,6 +408,7 @@ export const galleryChatTransport = galleryChat.transport({
           })
           .sleep(1600)
           .output("75000.00\n");
+        writer.stepStart();
         writer.text(
           `Here is a collection note you can send as-is:
 
@@ -412,6 +423,7 @@ I used \`formatMinor(7_500_000)\` so the amount matches the helper we just patch
         );
       },
       () => {
+        writer.stepStart();
         writer.data({
           type: "data-plan",
           data: {
@@ -465,6 +477,7 @@ I used \`formatMinor(7_500_000)\` so the amount matches the helper we just patch
             content:
               "export function cn(...parts: string[]) {\n  return parts.filter(Boolean).join(' ');\n}\n",
           });
+        writer.stepStart();
         writer.reasoning(
           "utils.ts is class-name joining. Money formatting should stay next to formatMinor. Tests are the next check so I do not propose a csvBalance helper on top of a red suite. If they want the helper I can add it in a follow-up with a fixture against open-invoices.csv."
         );
@@ -479,6 +492,7 @@ I used \`formatMinor(7_500_000)\` so the amount matches the helper we just patch
   ✓ 4 passed
 `
           );
+        writer.stepStart();
         writer.text(
           `Nothing else in \`src/\` formats money yet — only the helper and the re-export. A CSV row can go through the same functions:
 
@@ -494,6 +508,7 @@ I would keep that next to \`formatMinor\` rather than in \`utils.ts\` (\`cn\` is
         );
       },
       () => {
+        writer.stepStart();
         writer.reasoning(
           "This looks like a restock question, not more money-helper work. I will glob and grep for inventory, stock, SKU, and reorder before I invent a module. If the workspace has none of that, I should say so and offer a small inventory.ts rather than pretending the data lives in money.ts."
         );
@@ -517,6 +532,7 @@ I would keep that next to \`formatMinor\` rather than in \`utils.ts\` (\`cn\` is
           })
           .sleep(1300)
           .output({ matches: [] });
+        writer.stepStart();
         writer.reasoning(
           "No inventory files and no reorder/SKU hits. I will list src/lib to confirm what is actually there, then stop. Offering inventory.ts with a CL-1180 fixture is fine; wiring it into money.ts is not."
         );
@@ -527,6 +543,7 @@ I would keep that next to \`formatMinor\` rather than in \`utils.ts\` (\`cn\` is
           })
           .sleep(900)
           .output("money.ts\nmoney.test.ts\nutils.ts\n");
+        writer.stepStart();
         writer.text(
           `There is no inventory module in this workspace — \`src/lib\` is \`money.ts\`, its test, and \`utils.ts\`.
 

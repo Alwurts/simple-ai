@@ -24,12 +24,7 @@ export type WorkedSegment<T extends WorkedPart> =
   | { kind: "visible"; item: IndexedWorkedPart<T> };
 
 export function isWorkedPart(part: WorkedPart): boolean {
-  return (
-    part.type === "reasoning" ||
-    part.type === "dynamic-tool" ||
-    part.type === "data-plan" ||
-    part.type.startsWith("tool-")
-  );
+  return part.type !== "text";
 }
 
 export function splitWorkedParts<T extends WorkedPart>(
@@ -56,7 +51,7 @@ export function splitWorkedParts<T extends WorkedPart>(
 
   for (let index = 0; index < parts.length; index++) {
     const part = parts[index];
-    if (!part) {
+    if (!part || part.type === "step-start") {
       continue;
     }
     const beforeTerminal = lastTextIndex === -1 || index < lastTextIndex;
