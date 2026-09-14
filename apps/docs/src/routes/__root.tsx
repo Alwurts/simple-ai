@@ -29,7 +29,7 @@ export const Route = createRootRoute({
           "width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content",
         name: "viewport",
       },
-      { title: `${siteConfig.name} · ${siteConfig.description}` },
+      { title: siteConfig.name },
       {
         content: siteConfig.tagline,
         name: "description",
@@ -37,7 +37,7 @@ export const Route = createRootRoute({
       { content: "#47B2E4", name: "theme-color" },
       { content: "website", property: "og:type" },
       {
-        content: `${siteConfig.name} · ${siteConfig.description}`,
+        content: siteConfig.name,
         property: "og:title",
       },
       { content: siteConfig.tagline, property: "og:description" },
@@ -45,7 +45,7 @@ export const Route = createRootRoute({
       { content: siteConfig.ogImage, property: "og:image" },
       { content: "summary_large_image", name: "twitter:card" },
       {
-        content: `${siteConfig.name} · ${siteConfig.description}`,
+        content: siteConfig.name,
         name: "twitter:title",
       },
       { content: siteConfig.tagline, name: "twitter:description" },

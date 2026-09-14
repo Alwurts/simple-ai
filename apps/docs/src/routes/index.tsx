@@ -9,7 +9,7 @@ export const Route = createFileRoute("/")({
     seo({
       description: siteConfig.tagline,
       pathname: "/",
-      title: `${siteConfig.name} · ${siteConfig.description}`,
+      title: siteConfig.name,
     }),
 });
 
