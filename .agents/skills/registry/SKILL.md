@@ -1,6 +1,6 @@
 ---
 name: registry
-description: Add or change simple-ai registry items. Dual generate (GitHub + hosted /r), generate:check, mocked gallery and chat-page, item.ts defs, documented vs internal items. Load before editing packages/registry or apps/docs/public/r.
+description: Add or change simple-ai registry items. Dual generate (GitHub + hosted /r), generate:check, mocked gallery and chat-page, ui/_registry.ts + examples, block folders. Load before editing packages/registry or apps/docs/public/r.
 ---
 
 # Registry
@@ -19,12 +19,14 @@ Commit all of: `registry.json`, `packages/registry/src/generated.ts`,
 
 ## Item source
 
-Each item is a directory with `item.ts` (`RegistryItemDef`) and its files.
-`item.files[].path` is relative to that directory. `preview` is the
-extensionless file generate lazy-loads.
-
-- Components: `packages/registry/registry/components/<name>/`
-- Blocks: `packages/registry/registry/blocks/<name>/`
+- **UI** — one file in `packages/registry/registry/ui/<name>.tsx` and a row in
+  `ui/_registry.ts`. `item.files[].path` is relative to `ui/`.
+- **Demos** — `packages/registry/registry/examples/<name>-demo.tsx`. Docs
+  only. Point at them with `preview` (extensionless path under `registry/`).
+  Do not add demos to `registry.json`.
+- **Blocks** — `packages/registry/registry/blocks/<name>/` with `item.ts`.
+  `item.files[].path` is relative to that directory. `preview` is the
+  extensionless file inside the block folder.
 
 If the item has `docs` or `envVars`, keep them aligned with
 `apps/docs/content/docs/installation.mdx`.

@@ -5,19 +5,17 @@
   "compilerOptions": {
     "paths": {
       "@/components/ui/chat-input": [
-        "../../packages/registry/registry/components/chat-input/chat-input.tsx"
+        "../../packages/registry/registry/ui/chat-input.tsx"
       ],
       "@/components/ui/shell": [
-        "../../packages/registry/registry/components/shell/shell.tsx"
+        "../../packages/registry/registry/ui/shell.tsx"
       ],
       "@/components/ui/reasoning": [
-        "../../packages/registry/registry/components/reasoning/reasoning.tsx"
+        "../../packages/registry/registry/ui/reasoning.tsx"
       ],
-      "@/components/ui/tool": [
-        "../../packages/registry/registry/components/tool/tool.tsx"
-      ],
+      "@/components/ui/tool": ["../../packages/registry/registry/ui/tool.tsx"],
       "@/components/ui/worked": [
-        "../../packages/registry/registry/components/worked/worked.tsx"
+        "../../packages/registry/registry/ui/worked.tsx"
       ],
       "@/components/ui/*": ["../../packages/ui/src/components/shadcn/*"],
       "@/lib/utils": ["../../packages/ui/src/lib/utils.ts"],

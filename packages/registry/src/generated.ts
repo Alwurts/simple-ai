@@ -9,7 +9,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     title: "Chat input",
     description: "Chat input with mentions and streaming status.",
     meta: {},
-    component: lazy(() => import("../registry/components/chat-input/preview")),
+    component: lazy(() => import("../registry/examples/chat-input-demo")),
   },
   "chat-page": {
     name: "chat-page",
@@ -25,7 +25,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     title: "Reasoning",
     description: "Quiet thinking row with markdown.",
     meta: {},
-    component: lazy(() => import("../registry/components/reasoning/preview")),
+    component: lazy(() => import("../registry/examples/reasoning-demo")),
   },
   shell: {
     name: "shell",
@@ -33,7 +33,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     title: "Shell",
     description: "Sidebar, header, and main content.",
     meta: { fullBleed: true, iframeHeight: 720 },
-    component: lazy(() => import("../registry/components/shell/preview")),
+    component: lazy(() => import("../registry/examples/shell-demo")),
   },
   tool: {
     name: "tool",
@@ -41,7 +41,7 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     title: "Tool",
     description: "Quiet collapsible tool call with input and output.",
     meta: {},
-    component: lazy(() => import("../registry/components/tool/preview")),
+    component: lazy(() => import("../registry/examples/tool-demo")),
   },
   worked: {
     name: "worked",
@@ -49,6 +49,6 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     title: "Worked",
     description: "Fold the agent's work. Keep the answer.",
     meta: {},
-    component: lazy(() => import("../registry/components/worked/preview")),
+    component: lazy(() => import("../registry/examples/worked-demo")),
   },
 };

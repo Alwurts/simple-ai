@@ -12,24 +12,15 @@ const root = dirname(fileURLToPath(import.meta.url));
 const uiShadcn = resolve(root, "../../packages/ui/src/components/shadcn");
 const chatInput = resolve(
   root,
-  "../../packages/registry/registry/components/chat-input/chat-input.tsx"
+  "../../packages/registry/registry/ui/chat-input.tsx"
 );
-const shell = resolve(
-  root,
-  "../../packages/registry/registry/components/shell/shell.tsx"
-);
+const shell = resolve(root, "../../packages/registry/registry/ui/shell.tsx");
 const reasoning = resolve(
   root,
-  "../../packages/registry/registry/components/reasoning/reasoning.tsx"
+  "../../packages/registry/registry/ui/reasoning.tsx"
 );
-const tool = resolve(
-  root,
-  "../../packages/registry/registry/components/tool/tool.tsx"
-);
-const worked = resolve(
-  root,
-  "../../packages/registry/registry/components/worked/worked.tsx"
-);
+const tool = resolve(root, "../../packages/registry/registry/ui/tool.tsx");
+const worked = resolve(root, "../../packages/registry/registry/ui/worked.tsx");
 const utils = resolve(root, "../../packages/ui/src/lib/utils.ts");
 const MDX_TYPES = /^(mdx\/types|\*\.mdx)$/;
 const ANY_MODULE = /.*/;

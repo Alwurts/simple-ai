@@ -6,15 +6,11 @@
     "types": ["node"],
     "paths": {
       "@workspace/registry/*": ["./src/*"],
-      "@/components/ui/chat-input": [
-        "./registry/components/chat-input/chat-input.tsx"
-      ],
-      "@/components/ui/shell": ["./registry/components/shell/shell.tsx"],
-      "@/components/ui/reasoning": [
-        "./registry/components/reasoning/reasoning.tsx"
-      ],
-      "@/components/ui/tool": ["./registry/components/tool/tool.tsx"],
-      "@/components/ui/worked": ["./registry/components/worked/worked.tsx"],
+      "@/components/ui/chat-input": ["./registry/ui/chat-input.tsx"],
+      "@/components/ui/shell": ["./registry/ui/shell.tsx"],
+      "@/components/ui/reasoning": ["./registry/ui/reasoning.tsx"],
+      "@/components/ui/tool": ["./registry/ui/tool.tsx"],
+      "@/components/ui/worked": ["./registry/ui/worked.tsx"],
       "@/components/ui/*": ["../ui/src/components/shadcn/*"],
       "@/lib/utils": ["../ui/src/lib/utils.ts"]
     }

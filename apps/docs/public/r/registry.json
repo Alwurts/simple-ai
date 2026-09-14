@@ -20,7 +20,7 @@
       "registryDependencies": ["input-group"],
       "files": [
         {
-          "path": "packages/registry/registry/components/chat-input/chat-input.tsx",
+          "path": "packages/registry/registry/ui/chat-input.tsx",
           "type": "registry:ui"
         }
       ]
@@ -131,7 +131,7 @@
       "registryDependencies": ["collapsible"],
       "files": [
         {
-          "path": "packages/registry/registry/components/reasoning/reasoning.tsx",
+          "path": "packages/registry/registry/ui/reasoning.tsx",
           "type": "registry:ui"
         }
       ]
@@ -148,7 +148,7 @@
       },
       "files": [
         {
-          "path": "packages/registry/registry/components/shell/shell.tsx",
+          "path": "packages/registry/registry/ui/shell.tsx",
           "type": "registry:ui"
         }
       ]
@@ -162,7 +162,7 @@
       "registryDependencies": ["collapsible"],
       "files": [
         {
-          "path": "packages/registry/registry/components/tool/tool.tsx",
+          "path": "packages/registry/registry/ui/tool.tsx",
           "type": "registry:ui"
         }
       ]
@@ -175,7 +175,7 @@
       "registryDependencies": ["collapsible"],
       "files": [
         {
-          "path": "packages/registry/registry/components/worked/worked.tsx",
+          "path": "packages/registry/registry/ui/worked.tsx",
           "type": "registry:ui"
         }
       ]

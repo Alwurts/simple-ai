@@ -17,28 +17,76 @@ const HOMEPAGE = "https://www.simple-ai.dev";
 const REGISTRY_JSON = join(REPO_ROOT, "registry.json");
 const GENERATED_TS = join(PKG_ROOT, "src", "generated.ts");
 
-const KIND_DIRS = ["blocks", "components"] as const;
-
-const KIND_TYPE = {
-  blocks: "registry:block",
-  components: "registry:ui",
-} as const;
-
 interface LoadedDef {
   name: string;
-  relPath: string;
+  fileRoot: string;
+  filePrefix: string;
+  preview: string;
   def: RegistryItemDef;
 }
 
-async function loadKindDefs(
-  kind: (typeof KIND_DIRS)[number]
-): Promise<LoadedDef[]> {
-  const kindDir = join(ITEMS_DIR, kind);
+function previewExists(preview: string): boolean {
+  return (
+    existsSync(join(ITEMS_DIR, `${preview}.tsx`)) ||
+    existsSync(join(ITEMS_DIR, `${preview}.ts`))
+  );
+}
+
+function assertFiles(def: LoadedDef): void {
+  if (def.def.item.name !== def.name) {
+    throw new Error(
+      `${def.filePrefix}: item.name "${def.def.item.name}" must match "${def.name}"`
+    );
+  }
+
+  for (const file of def.def.item.files ?? []) {
+    const abs = join(def.fileRoot, file.path);
+    if (!existsSync(abs)) {
+      throw new Error(
+        `${def.filePrefix}: file not found on disk: ${file.path}`
+      );
+    }
+  }
+
+  if (!previewExists(def.preview)) {
+    throw new Error(
+      `${def.name}: preview not found: ${def.preview}.tsx (or .ts)`
+    );
+  }
+}
+
+async function loadUiDefs(): Promise<LoadedDef[]> {
+  const fileRoot = join(ITEMS_DIR, "ui");
+  const href = pathToFileURL(join(fileRoot, "_registry.ts")).href;
+  const mod = (await import(href)) as { ui: RegistryItemDef[] };
+  const defs: LoadedDef[] = [];
+
+  for (const def of mod.ui) {
+    const loaded: LoadedDef = {
+      name: def.item.name,
+      fileRoot,
+      filePrefix: `${REPO_PREFIX}/ui`,
+      preview: def.preview,
+      def,
+    };
+    if (def.item.type !== "registry:ui") {
+      throw new Error(
+        `ui/${def.item.name}: type "${def.item.type}" must be "registry:ui"`
+      );
+    }
+    assertFiles(loaded);
+    defs.push(loaded);
+  }
+
+  return defs;
+}
+
+async function loadBlockDefs(): Promise<LoadedDef[]> {
+  const kindDir = join(ITEMS_DIR, "blocks");
   if (!existsSync(kindDir)) {
     return [];
   }
 
-  const expectedType = KIND_TYPE[kind];
   const names = readdirSync(kindDir, { withFileTypes: true })
     .filter(
       (d) => d.isDirectory() && existsSync(join(kindDir, d.name, "item.ts"))
@@ -48,50 +96,49 @@ async function loadKindDefs(
 
   const defs: LoadedDef[] = [];
   for (const name of names) {
-    const relPath = `${kind}/${name}`;
+    const relPath = `blocks/${name}`;
     const itemDir = join(ITEMS_DIR, relPath);
     const href = pathToFileURL(join(itemDir, "item.ts")).href;
     const mod = (await import(href)) as { default: RegistryItemDef };
     const def = mod.default;
 
-    if (def.item.name !== name) {
+    if (def.item.type !== "registry:block") {
       throw new Error(
-        `${relPath}: item.name "${def.item.name}" must match directory "${name}"`
+        `${relPath}: type "${def.item.type}" must be "registry:block"`
       );
     }
 
-    if (def.item.type !== expectedType) {
-      throw new Error(
-        `${relPath}: type "${def.item.type}" must be "${expectedType}" for registry/${kind}/`
-      );
-    }
-
-    for (const file of def.item.files ?? []) {
-      const abs = join(itemDir, file.path);
-      if (!existsSync(abs)) {
-        throw new Error(`${relPath}: file not found on disk: ${file.path}`);
-      }
-    }
-
-    defs.push({ name, relPath, def });
+    const loaded: LoadedDef = {
+      name,
+      fileRoot: itemDir,
+      filePrefix: `${REPO_PREFIX}/${relPath}`,
+      preview: `${relPath}/${def.preview}`,
+      def,
+    };
+    assertFiles(loaded);
+    defs.push(loaded);
   }
   return defs;
 }
 
 async function loadDefs(): Promise<LoadedDef[]> {
-  const defs: LoadedDef[] = [];
-  for (const kind of KIND_DIRS) {
-    defs.push(...(await loadKindDefs(kind)));
+  const defs = [...(await loadUiDefs()), ...(await loadBlockDefs())];
+  const seen = new Set<string>();
+  for (const def of defs) {
+    if (seen.has(def.name)) {
+      throw new Error(`duplicate registry item name: ${def.name}`);
+    }
+    seen.add(def.name);
   }
   return defs.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 function buildRegistryJson(defs: LoadedDef[]): string {
-  const items = defs.map(({ relPath, def }) => ({
+  const items = defs.map(({ filePrefix, def }) => ({
     ...def.item,
     files: (def.item.files ?? []).map((f) => ({
       ...f,
-      path: `${REPO_PREFIX}/${relPath}/${f.path}`,
+      path: `${filePrefix}/${f.path}`,
     })),
   }));
   const manifest = {
@@ -111,9 +158,9 @@ function buildGeneratedTs(defs: LoadedDef[]): string {
     "",
     "export const REGISTRY: Record<string, RegistryEntry> = {",
   ];
-  for (const { relPath, def } of defs) {
-    const { item, preview } = def;
-    const importPath = `../registry/${relPath}/${preview}`;
+  for (const { def, preview } of defs) {
+    const { item } = def;
+    const importPath = `../registry/${preview}`;
     lines.push(`  ${JSON.stringify(item.name)}: {`);
     lines.push(`    name: ${JSON.stringify(item.name)},`);
     lines.push(`    type: ${JSON.stringify(item.type)},`);

@@ -17,7 +17,7 @@ Node 22+. pnpm 10.
 ## Layout
 
 - `apps/docs` — site and hosted registry (`/r/{name}.json`)
-- `packages/registry` — item source (`registry/components`, `registry/blocks`)
+- `packages/registry` — item source (`registry/ui`, `registry/examples`, `registry/blocks`)
 - `packages/ui` — shadcn primitives used by the docs app
 - `registry.json` — GitHub registry manifest (generated)
 

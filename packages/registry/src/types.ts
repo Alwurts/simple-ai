@@ -9,8 +9,10 @@ export type RegistryMeta = {
 export type SimpleAiRegistryItem = RegistryItem & { meta?: RegistryMeta };
 
 /**
- * `item.files[].path` is relative to the item directory; generate rewrites it
- * repo-root-relative. `preview` is the extensionless file to lazy-load.
+ * `item.files[].path` is relative to the item's file root (`ui/` or
+ * `blocks/<name>/`); generate rewrites it repo-root-relative. `preview` is the
+ * extensionless path under `registry/` that docs lazy-load. Examples are not
+ * installable catalog items.
  */
 export interface RegistryItemDef {
   item: SimpleAiRegistryItem;

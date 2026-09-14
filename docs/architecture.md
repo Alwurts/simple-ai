@@ -10,8 +10,9 @@ The public site is not the source of item code. Item source lives in
 
 | Path | Role |
 | --- | --- |
-| `packages/registry/registry/components/` | UI items (`item.ts` + files) |
-| `packages/registry/registry/blocks/` | Blocks (`chat-page`) |
+| `packages/registry/registry/ui/` | UI items (one file each; catalog in `_registry.ts`) |
+| `packages/registry/registry/examples/` | Docs previews (not installed) |
+| `packages/registry/registry/blocks/` | Blocks (`chat-page` folder) |
 | `packages/registry/scripts/build-registry.ts` | Generate both registries |
 | `registry.json` | GitHub registry (`npx shadcn add Alwurts/simple-ai/<name>`) |
 | `apps/docs/public/r/` | Hosted registry JSON |
