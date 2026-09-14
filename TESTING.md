@@ -2,7 +2,8 @@
 
 ## Registry drift
 
-Generated files must match item source:
+Generated files (`registry.json`, `packages/registry/src/generated.ts`, and
+`apps/docs/public/r`) must match item source:
 
 ```bash
 pnpm --filter @workspace/registry generate:check

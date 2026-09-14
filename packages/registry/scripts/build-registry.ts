@@ -1,10 +1,19 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdtempSync,
+  readdirSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { registryItemSchema, registrySchema } from "shadcn/schema";
 import type { RegistryItemDef } from "../src/types";
 
-/** `--check` exits non-zero when `registry.json` or `src/generated.ts` is stale. */
+/** `--check` exits non-zero when `registry.json`, `src/generated.ts`, or hosted `/r` is stale. */
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PKG_ROOT = join(HERE, "..");
@@ -16,6 +25,8 @@ const HOMEPAGE = "https://www.simple-ai.dev";
 
 const REGISTRY_JSON = join(REPO_ROOT, "registry.json");
 const GENERATED_TS = join(PKG_ROOT, "src", "generated.ts");
+const HOSTED_DIR = join(REPO_ROOT, "apps/docs/public/r");
+const SHADCN_BIN = join(PKG_ROOT, "node_modules", ".bin", "shadcn");
 
 interface LoadedDef {
   name: string;
@@ -133,20 +144,35 @@ async function loadDefs(): Promise<LoadedDef[]> {
   return defs.sort((a, b) => a.name.localeCompare(b.name));
 }
 
+function catalogItems(defs: LoadedDef[]) {
+  return defs.map(({ name, filePrefix, def }) => {
+    const item = {
+      ...def.item,
+      files: (def.item.files ?? []).map((f) => ({
+        ...f,
+        path: `${filePrefix}/${f.path}`,
+      })),
+    };
+    const parsed = registryItemSchema.safeParse(item);
+    if (!parsed.success) {
+      throw new Error(`${name}: ${parsed.error.message}`);
+    }
+    return item;
+  });
+}
+
 function buildRegistryJson(defs: LoadedDef[]): string {
-  const items = defs.map(({ filePrefix, def }) => ({
-    ...def.item,
-    files: (def.item.files ?? []).map((f) => ({
-      ...f,
-      path: `${filePrefix}/${f.path}`,
-    })),
-  }));
+  const items = catalogItems(defs);
   const manifest = {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "simple-ai",
     homepage: HOMEPAGE,
     items,
   };
+  const parsed = registrySchema.safeParse(manifest);
+  if (!parsed.success) {
+    throw new Error(`registry.json: ${parsed.error.message}`);
+  }
   return `${JSON.stringify(manifest, null, 2)}\n`;
 }
 
@@ -183,13 +209,72 @@ function buildGeneratedTs(defs: LoadedDef[]): string {
   return lines.join("\n");
 }
 
-/** Format through biome so generate and generate:check compare byte-identical output. */
 function format(path: string, content: string): string {
   return execFileSync(
     "pnpm",
     ["exec", "biome", "check", "--write", `--stdin-file-path=${path}`],
     { input: content, encoding: "utf8", cwd: REPO_ROOT }
   );
+}
+
+function buildHosted(outDir: string): void {
+  execFileSync(SHADCN_BIN, ["build", REGISTRY_JSON, "--output", outDir], {
+    cwd: REPO_ROOT,
+    stdio: "inherit",
+  });
+}
+
+function jsonNames(dir: string): string[] {
+  if (!existsSync(dir)) {
+    return [];
+  }
+  return readdirSync(dir)
+    .filter((name) => name.endsWith(".json"))
+    .sort();
+}
+
+function hostedMismatches(freshDir: string, committedDir: string): string[] {
+  const fresh = jsonNames(freshDir);
+  const committed = jsonNames(committedDir);
+  const stale: string[] = [];
+  for (const name of fresh) {
+    const committedPath = join(committedDir, name);
+    if (!existsSync(committedPath)) {
+      stale.push(`missing: ${join(committedDir, name)}`);
+      continue;
+    }
+    if (
+      readFileSync(join(freshDir, name), "utf8") !==
+      readFileSync(committedPath, "utf8")
+    ) {
+      stale.push(committedPath);
+    }
+  }
+  for (const name of committed) {
+    if (!fresh.includes(name)) {
+      stale.push(`extra: ${join(committedDir, name)}`);
+    }
+  }
+  return stale;
+}
+
+function assertHostedUpToDate(): void {
+  const tmp = mkdtempSync(join(tmpdir(), "simple-ai-r-"));
+  try {
+    buildHosted(tmp);
+    const stale = hostedMismatches(tmp, HOSTED_DIR);
+    if (stale.length > 0) {
+      for (const path of stale) {
+        process.stderr.write(`stale: ${path}\n`);
+      }
+      process.stderr.write(
+        "Registry artifacts are out of date. Run `pnpm --filter @workspace/registry generate`.\n"
+      );
+      process.exit(1);
+    }
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
 }
 
 async function main(): Promise<void> {
@@ -220,6 +305,7 @@ async function main(): Promise<void> {
       );
       process.exit(1);
     }
+    assertHostedUpToDate();
     process.stdout.write(`Registry up to date (${defs.length} items).\n`);
     return;
   }
@@ -228,12 +314,7 @@ async function main(): Promise<void> {
     writeFileSync(a.path, a.content);
   }
 
-  const hostedDir = join(REPO_ROOT, "apps/docs/public/r");
-  const shadcnBin = join(PKG_ROOT, "node_modules", ".bin", "shadcn");
-  execFileSync(shadcnBin, ["build", REGISTRY_JSON, "--output", hostedDir], {
-    cwd: REPO_ROOT,
-    stdio: "inherit",
-  });
+  buildHosted(HOSTED_DIR);
 
   process.stdout.write(
     `Wrote registry.json + src/generated.ts + hosted /r (${defs.length} items).\n`

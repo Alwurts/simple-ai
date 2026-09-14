@@ -15,7 +15,8 @@ pnpm --filter @workspace/registry generate:check
 ```
 
 Commit all of: `registry.json`, `packages/registry/src/generated.ts`,
-`apps/docs/public/r`. Do not hand-edit those outputs.
+`apps/docs/public/r`. Do not hand-edit those outputs. `generate:check` diffs
+all three and parses items with `registryItemSchema` from `shadcn/schema`.
 
 ## Item source
 

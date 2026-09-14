@@ -33,7 +33,9 @@ The public site is not the source of item code. Item source lives in
 1. GitHub: root `registry.json` and `packages/registry/src/generated.ts`
 2. Hosted: `apps/docs/public/r/{name}.json`
 
-`generate:check` fails if those files drifted from item source.
+`generate:check` fails if `registry.json`, `generated.ts`, or hosted
+`apps/docs/public/r` drifted from item source. It also parses catalog rows
+with `registryItemSchema` from `shadcn/schema`.
 
 ## Docs app
 

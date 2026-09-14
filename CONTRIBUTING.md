@@ -31,7 +31,9 @@ pnpm typecheck
 pnpm lint:check
 ```
 
-After changing a registry item, run `generate` so `registry.json` and `apps/docs/public/r` stay in sync.
+After changing a registry item, run `generate` so `registry.json` and
+`apps/docs/public/r` stay in sync. `generate:check` covers both plus
+`packages/registry/src/generated.ts`.
 
 ## Pull requests
 
