@@ -1,0 +1,43 @@
+# Architecture
+
+simple-ai is a **shadcn registry** plus a docs site that hosts it. Copy an
+example into your app. Change the source.
+
+The public site is not the source of item code. Item source lives in
+`packages/registry`. The docs app shows it and serves `/r/{name}.json`.
+
+## Layout
+
+| Path | Role |
+| --- | --- |
+| `packages/registry/registry/components/` | UI items (`item.ts` + files) |
+| `packages/registry/registry/blocks/` | Blocks (`chat-page`) |
+| `packages/registry/scripts/build-registry.ts` | Generate both registries |
+| `registry.json` | GitHub registry (`npx shadcn add Alwurts/simple-ai/<name>`) |
+| `apps/docs/public/r/` | Hosted registry JSON |
+| `apps/docs` | TanStack Start + Fumadocs site (Cloudflare Worker) |
+| `packages/ui` | shadcn primitives used by the docs app |
+
+## Catalog
+
+- Block: `chat-page` (gallery mocked).
+- Documented UI: whatever `apps/docs/content/docs/components/meta.json` lists.
+- `shell` and `reasoning` stay registry items that `chat-page` depends on, with
+  no docs pages of their own.
+
+## Dual registry
+
+`pnpm --filter @workspace/registry generate` writes:
+
+1. GitHub: root `registry.json` and `packages/registry/src/generated.ts`
+2. Hosted: `apps/docs/public/r/{name}.json`
+
+`generate:check` fails if those files drifted from item source.
+
+## Docs app
+
+`pnpm --filter docs dev` → http://localhost:4567 (`--host`). The same origin
+serves the hosted registry for local `shadcn add` (see `TESTING.md`).
+
+Deploy is `pnpm --filter docs deploy` (`wrangler deploy`). Merge and deploy are
+separate.

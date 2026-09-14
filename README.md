@@ -17,3 +17,5 @@ pnpm --filter docs dev
 ```
 
 Docs: http://localhost:4567
+
+Working in this repo: [AGENTS.md](AGENTS.md).
