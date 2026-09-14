@@ -1,6 +1,6 @@
 import { components } from "@workspace/registry";
 
-const DOCUMENTED = new Set(["composer", "tool", "worked"]);
+const DOCUMENTED = new Set(["chat-input", "tool", "worked"]);
 
 export function ComponentsList() {
   return (

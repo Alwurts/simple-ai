@@ -4,6 +4,28 @@
   "homepage": "https://www.simple-ai.dev",
   "items": [
     {
+      "name": "chat-input",
+      "type": "registry:ui",
+      "title": "Chat input",
+      "description": "Chat input with mentions and streaming status.",
+      "dependencies": [
+        "@tiptap/core",
+        "@tiptap/react",
+        "@tiptap/starter-kit",
+        "@tiptap/extension-mention",
+        "@tiptap/extension-placeholder",
+        "@tiptap/suggestion",
+        "ai"
+      ],
+      "registryDependencies": ["input-group"],
+      "files": [
+        {
+          "path": "packages/registry/registry/components/chat-input/composer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "chat-page",
       "type": "registry:block",
       "title": "Chat page",
@@ -22,7 +44,7 @@
         "message-scroller",
         "resizable",
         "sidebar",
-        "@simple-ai/composer",
+        "@simple-ai/chat-input",
         "@simple-ai/reasoning",
         "@simple-ai/shell",
         "@simple-ai/tool",
@@ -97,28 +119,6 @@
           "path": "packages/registry/registry/blocks/chat-page/lib/ai-types.ts",
           "type": "registry:lib",
           "target": "src/features/assistant/lib/ai-types.ts"
-        }
-      ]
-    },
-    {
-      "name": "composer",
-      "type": "registry:ui",
-      "title": "Composer",
-      "description": "TipTap composer with mentions and streaming status.",
-      "dependencies": [
-        "@tiptap/core",
-        "@tiptap/react",
-        "@tiptap/starter-kit",
-        "@tiptap/extension-mention",
-        "@tiptap/extension-placeholder",
-        "@tiptap/suggestion",
-        "ai"
-      ],
-      "registryDependencies": ["input-group"],
-      "files": [
-        {
-          "path": "packages/registry/registry/components/composer/composer.tsx",
-          "type": "registry:ui"
         }
       ]
     },

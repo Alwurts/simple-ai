@@ -22,7 +22,7 @@
     "message-scroller",
     "resizable",
     "sidebar",
-    "@simple-ai/composer",
+    "@simple-ai/chat-input",
     "@simple-ai/reasoning",
     "@simple-ai/shell",
     "@simple-ai/tool",

@@ -22,7 +22,7 @@ Add a route to src/features/assistant/page.tsx. Point a live transport at your o
       "message-scroller",
       "resizable",
       "sidebar",
-      "@simple-ai/composer",
+      "@simple-ai/chat-input",
       "@simple-ai/reasoning",
       "@simple-ai/shell",
       "@simple-ai/tool",

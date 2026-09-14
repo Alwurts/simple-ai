@@ -3,6 +3,14 @@ import { lazy } from "react";
 import type { RegistryEntry } from "./types";
 
 export const REGISTRY: Record<string, RegistryEntry> = {
+  "chat-input": {
+    name: "chat-input",
+    type: "registry:ui",
+    title: "Chat input",
+    description: "Chat input with mentions and streaming status.",
+    meta: {},
+    component: lazy(() => import("../registry/components/chat-input/preview")),
+  },
   "chat-page": {
     name: "chat-page",
     type: "registry:block",
@@ -10,14 +18,6 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     description: "Full-screen chat with tools, files, and mentions.",
     meta: { iframeHeight: 900 },
     component: lazy(() => import("../registry/blocks/chat-page/page")),
-  },
-  composer: {
-    name: "composer",
-    type: "registry:ui",
-    title: "Composer",
-    description: "TipTap composer with mentions and streaming status.",
-    meta: {},
-    component: lazy(() => import("../registry/components/composer/preview")),
   },
   reasoning: {
     name: "reasoning",

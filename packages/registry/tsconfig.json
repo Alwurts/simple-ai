@@ -7,7 +7,7 @@
     "paths": {
       "@workspace/registry/*": ["./src/*"],
       "@/components/ui/composer": [
-        "./registry/components/composer/composer.tsx"
+        "./registry/components/chat-input/composer.tsx"
       ],
       "@/components/ui/shell": ["./registry/components/shell/shell.tsx"],
       "@/components/ui/reasoning": [

@@ -41,7 +41,7 @@ function BlocksPage() {
             <h2 className="font-medium text-xl tracking-tight">Installation</h2>
             <p className="mt-2 text-muted-foreground text-sm">
               Copy the chat page with the shadcn CLI. The CLI also pulls in
-              composer, tool, and worked.
+              chat-input, tool, and worked.
             </p>
             <pre className="mt-4 overflow-x-auto rounded-lg bg-code p-4 font-mono text-sm">
               npx shadcn@latest add @simple-ai/chat-page

@@ -101,7 +101,7 @@ export function MobileNav({ className }: { className?: string }) {
             {[
               { href: "/docs", label: "Introduction" },
               { href: "/docs/installation", label: "Installation" },
-              { href: "/docs/components/composer", label: "Composer" },
+              { href: "/docs/components/chat-input", label: "Chat input" },
               { href: "/docs/components/tool", label: "Tool" },
               { href: "/docs/components/worked", label: "Worked" },
             ].map((item) => {

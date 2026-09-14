@@ -2,10 +2,10 @@ import type { RegistryItemDef } from "../../../src/types";
 
 const def: RegistryItemDef = {
   item: {
-    name: "composer",
+    name: "chat-input",
     type: "registry:ui",
-    title: "Composer",
-    description: "TipTap composer with mentions and streaming status.",
+    title: "Chat input",
+    description: "Chat input with mentions and streaming status.",
     dependencies: [
       "@tiptap/core",
       "@tiptap/react",

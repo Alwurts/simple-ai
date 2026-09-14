@@ -13,7 +13,7 @@ export const siteConfig = {
   },
   navItems: [
     { href: "/docs", label: "Documentation" },
-    { href: "/docs/components/composer", label: "Components" },
+    { href: "/docs/components/chat-input", label: "Components" },
     { href: "/blocks", label: "Blocks" },
   ],
 };

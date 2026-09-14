@@ -19,10 +19,10 @@ const RETIRED_BLOCK_VIEWS = new Set([
   "app-shell",
 ]);
 
-const LIVE_COMPONENT_DOCS = new Set(["composer", "tool", "worked"]);
+const LIVE_COMPONENT_DOCS = new Set(["chat-input", "tool", "worked"]);
 
 const REGISTRY_ALIASES: Record<string, string> = {
-  "chat-input": "composer",
+  composer: "chat-input",
   "chat-01": "chat-page",
   "chat-02": "chat-page",
   "chat-03": "chat-page",
@@ -54,21 +54,21 @@ export function legacyDocsHref(path: string): string | undefined {
   }
   if (startsWithPath(path, "components")) {
     const name = path.slice("components/".length);
-    if (name === "chat-input") {
-      return "/docs/components/composer";
+    if (name === "composer") {
+      return "/docs/components/chat-input";
     }
     if (name === "chat-voice-button") {
       return "/docs/components";
     }
     if (name && !LIVE_COMPONENT_DOCS.has(name)) {
-      return "/docs/components/composer";
+      return "/docs/components/chat-input";
     }
   }
 }
 
 export function legacyViewHref(name: string): string | undefined {
-  if (name === "chat-input") {
-    return "/view/composer";
+  if (name === "composer") {
+    return "/view/chat-input";
   }
   if (RETIRED_CHAT_VIEWS.has(name)) {
     return "/view/chat-page";

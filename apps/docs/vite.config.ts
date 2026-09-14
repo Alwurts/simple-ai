@@ -12,7 +12,7 @@ const root = dirname(fileURLToPath(import.meta.url));
 const uiShadcn = resolve(root, "../../packages/ui/src/components/shadcn");
 const composer = resolve(
   root,
-  "../../packages/registry/registry/components/composer/composer.tsx"
+  "../../packages/registry/registry/components/chat-input/composer.tsx"
 );
 const shell = resolve(
   root,

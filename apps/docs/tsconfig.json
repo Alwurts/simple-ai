@@ -5,7 +5,7 @@
   "compilerOptions": {
     "paths": {
       "@/components/ui/composer": [
-        "../../packages/registry/registry/components/composer/composer.tsx"
+        "../../packages/registry/registry/components/chat-input/composer.tsx"
       ],
       "@/components/ui/shell": [
         "../../packages/registry/registry/components/shell/shell.tsx"
