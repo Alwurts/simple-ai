@@ -99,18 +99,27 @@ function DefaultToolPart({
   part,
   messageId,
   partIndex,
+  onToolApproval,
 }: {
   part: DynamicToolUIPart | ToolUIPart;
   messageId: string;
   partIndex: number;
+  onToolApproval?: (id: string, approved: boolean) => void;
 }) {
   const toolName =
     "toolName" in part && typeof part.toolName === "string"
       ? part.toolName
       : part.type.slice(5);
+  const approvalId =
+    part.state === "approval-requested" ? part.approval?.id : undefined;
+  const deniedReason =
+    part.state === "output-denied" ? part.approval?.reason : undefined;
 
   return (
-    <Tool defaultOpen={false} key={`${messageId}-tool-${partIndex}`}>
+    <Tool
+      defaultOpen={part.state === "approval-requested"}
+      key={`${messageId}-tool-${partIndex}`}
+    >
       <ToolHeader
         input={part.input}
         state={part.state}
@@ -119,7 +128,32 @@ function DefaultToolPart({
       />
       <ToolContent>
         <ToolInput input={part.input} />
-        <ToolOutput errorText={part.errorText} output={part.output} />
+        {part.state === "output-denied" ? (
+          <p className="text-destructive text-xs">
+            {deniedReason ? `Denied: ${deniedReason}` : "Denied"}
+          </p>
+        ) : (
+          <ToolOutput errorText={part.errorText} output={part.output} />
+        )}
+        {approvalId && onToolApproval ? (
+          <div className="flex gap-2 py-1">
+            <Button
+              onClick={() => onToolApproval(approvalId, true)}
+              size="xs"
+              type="button"
+            >
+              Approve
+            </Button>
+            <Button
+              onClick={() => onToolApproval(approvalId, false)}
+              size="xs"
+              type="button"
+              variant="outline"
+            >
+              Deny
+            </Button>
+          </div>
+        ) : null}
       </ToolContent>
     </Tool>
   );
@@ -132,6 +166,7 @@ function GalleryMessagePart({
   isLastPart,
   isStreaming,
   role,
+  onToolApproval,
 }: {
   part: UIMessagePart<AIDataPart, UITools>;
   messageId: string;
@@ -139,6 +174,7 @@ function GalleryMessagePart({
   isLastPart: boolean;
   isStreaming: boolean;
   role: GalleryChatMessage["role"];
+  onToolApproval?: (id: string, approved: boolean) => void;
 }) {
   if (part.type === "text") {
     if (role === "user") {
@@ -178,6 +214,7 @@ function GalleryMessagePart({
       <DefaultToolPart
         key={`${messageId}-tool-${partIndex}`}
         messageId={messageId}
+        onToolApproval={onToolApproval}
         part={part as DynamicToolUIPart | ToolUIPart}
         partIndex={partIndex}
       />
@@ -211,9 +248,11 @@ function workedDurationSeconds(
 export function ChatMessageRow({
   message,
   isStreaming = false,
+  onToolApproval,
 }: {
   message: GalleryChatMessage;
   isStreaming?: boolean;
+  onToolApproval?: (id: string, approved: boolean) => void;
 }) {
   const textForCopy = message.parts
     .filter(isTextUIPart)
@@ -232,6 +271,7 @@ export function ChatMessageRow({
       isStreaming={isStreaming}
       key={`${message.id}-part-${partIndex}`}
       messageId={message.id}
+      onToolApproval={onToolApproval}
       part={part}
       partIndex={partIndex}
       role={message.role}

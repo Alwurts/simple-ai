@@ -1,7 +1,10 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { isTextUIPart } from "ai";
+import {
+  isTextUIPart,
+  lastAssistantMessageIsCompleteWithApprovalResponses,
+} from "ai";
 import {
   BotIcon,
   ClipboardCopyIcon,
@@ -73,12 +76,24 @@ function EmptyConversation() {
 }
 
 export function FullScreenChat() {
-  const { messages, sendMessage, setMessages, status, stop } =
-    useChat<GalleryChatMessage>({
-      throttle: 50,
-      messages: initialChatMessages,
-      transport: chatTransport,
-    });
+  const {
+    messages,
+    sendMessage,
+    setMessages,
+    status,
+    stop,
+    addToolApprovalResponse,
+  } = useChat<GalleryChatMessage>({
+    throttle: 50,
+    messages: initialChatMessages,
+    transport: chatTransport,
+    sendAutomaticallyWhen: lastAssistantMessageIsCompleteWithApprovalResponses,
+  });
+  const handleToolApproval = useCallback(
+    (id: string, approved: boolean) =>
+      addToolApprovalResponse({ id, approved }),
+    [addToolApprovalResponse]
+  );
   const streamingMessageId =
     status === "streaming" && messages.at(-1)?.role === "assistant"
       ? (messages.at(-1)?.id ?? null)
@@ -208,6 +223,7 @@ export function FullScreenChat() {
                         <ChatMessageRow
                           isStreaming={streamingMessageId === message.id}
                           message={message}
+                          onToolApproval={handleToolApproval}
                         />
                       </MessageScrollerItem>
                     ))

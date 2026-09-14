@@ -95,8 +95,13 @@ export function ToolHeader({
 }: ToolHeaderProps) {
   const toolName = title ?? type.split("-").slice(1).join("-");
   const label = toolTitle(toolName, input);
-  const isRunning = state === "input-available" || state === "input-streaming";
-  const isError = state === "output-error" || state === "output-denied";
+  const isRunning =
+    state === "input-available" ||
+    state === "input-streaming" ||
+    state === "approval-responded";
+  const needsApproval = state === "approval-requested";
+  const isDenied = state === "output-denied";
+  const isError = state === "output-error";
 
   return (
     <CollapsibleTrigger
@@ -107,9 +112,20 @@ export function ToolHeader({
       data-slot="tool-header"
       {...props}
     >
-      <span className={cn("truncate", isRunning && "animate-pulse")}>
+      <span
+        className={cn(
+          "truncate",
+          (isRunning || needsApproval) && "animate-pulse"
+        )}
+      >
         {label}
       </span>
+      {needsApproval ? (
+        <span className="shrink-0 text-xs">Needs approval</span>
+      ) : null}
+      {isDenied ? (
+        <span className="shrink-0 text-destructive text-xs">Denied</span>
+      ) : null}
       {isError ? (
         <span className="shrink-0 text-destructive text-xs">Error</span>
       ) : null}

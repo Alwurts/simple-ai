@@ -193,10 +193,10 @@ Call sites in \`src/index.ts\` still re-export \`formatMinor\`. I did not touch 
           },
           {
             content: "Add parseMinor next to formatMinor",
-            status: "completed",
+            status: "pending",
           },
-          { content: "Re-export from src/index.ts", status: "completed" },
-          { content: "Add round-trip tests and run them", status: "completed" },
+          { content: "Re-export from src/index.ts", status: "pending" },
+          { content: "Add round-trip tests and run them", status: "pending" },
         ],
       },
     });
@@ -248,17 +248,31 @@ test("formatMinor keeps cents on 9_140_000", () => {
 
 Round-trip on \`"91400.00"\` is the case that failed last turn. I will also reject strings that are not \`(-?)digits(.digits{1,2})?\` so we do not silently drop extra fractional digits.`
     );
-    writer
-      .tool("edit", {
-        dynamic: true,
-        input: {
-          path: "/workspace/src/lib/money.ts",
-          old_string: FORMAT_MINOR_INT.trim(),
-          new_string: FORMAT_MINOR_FIXED.trim(),
-        },
-      })
-      .sleep(1600)
-      .output({ path: "/workspace/src/lib/money.ts", ok: true });
+    writer.text(
+      `I'll add \`parseMinor\` next to the integer formatter, re-export it from \`src/index.ts\`, and cover a round-trip on \`91400.00\`. That writes three files — approve the patch to apply it.`
+    );
+    writer.tool("edit", {
+      dynamic: true,
+      needsApproval: true,
+      input: {
+        path: "/workspace/src/lib/money.ts",
+        old_string: FORMAT_MINOR_INT.trim(),
+        new_string: FORMAT_MINOR_FIXED.trim(),
+      },
+      output: { path: "/workspace/src/lib/money.ts", ok: true },
+    });
+  })
+  .assistant(({ writer, toolCall }) => {
+    writer.stepStart();
+    if (!toolCall?.approved) {
+      writer.text(
+        "Left `money.ts` unchanged. Say if you want a different patch."
+      );
+      return;
+    }
+    writer.reasoning(
+      "Patch is approved. I will re-export parseMinor, extend the test import, and run the file."
+    );
     writer
       .tool("edit", {
         dynamic: true,
@@ -281,10 +295,6 @@ Round-trip on \`"91400.00"\` is the case that failed last turn. I will also reje
       })
       .sleep(1200)
       .output({ path: "/workspace/src/lib/money.test.ts", ok: true });
-    writer.stepStart();
-    writer.reasoning(
-      "Edits are in. Next is `pnpm test -- src/lib/money.test.ts`. If the round-trip fails it will be padding or the sign on negative values, not the formatter — that already passed. I will not start a CSV helper in this turn."
-    );
     writer
       .tool("bash", {
         dynamic: true,
@@ -330,7 +340,7 @@ export function parseMinor(value: string): number {
     );
   });
 
-const ASSISTANT_RESPONSE_MS = [26_800, 31_200];
+const ASSISTANT_RESPONSE_MS = [26_800];
 
 let assistantIndex = -1;
 
@@ -346,9 +356,7 @@ export const initialGalleryMessages = galleryChat.get().map((message) => {
       status: message.metadata?.status ?? "success",
       ...message.metadata,
       responseTime:
-        message.metadata?.responseTime ??
-        ASSISTANT_RESPONSE_MS[assistantIndex] ??
-        12_000,
+        message.metadata?.responseTime ?? ASSISTANT_RESPONSE_MS[assistantIndex],
     },
   };
 });
