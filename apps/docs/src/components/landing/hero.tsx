@@ -26,10 +26,10 @@ export function LandingHero() {
   }, []);
 
   return (
-    <div className="relative overflow-x-hidden bg-background" ref={rootRef}>
+    <div className="relative overflow-x-clip bg-background" ref={rootRef}>
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-size-[24px_24px]" />
       <div
-        className="pointer-events-none absolute -inset-px"
+        className="pointer-events-none absolute inset-0"
         style={{
           background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, var(--brand), transparent 40%)`,
           opacity: 0.12,

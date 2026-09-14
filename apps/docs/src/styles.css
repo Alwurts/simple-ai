@@ -41,6 +41,15 @@ html:has([data-slot="view-page"]) body {
   overflow: hidden;
 }
 
+[data-slot="view-page"][data-embed] * {
+  scrollbar-width: none;
+  scrollbar-gutter: auto;
+}
+
+[data-slot="view-page"][data-embed] *::-webkit-scrollbar {
+  display: none;
+}
+
 [data-slot="docs"] :is(h1, h2, h3, h4, h5, h6) a {
   text-decoration: none;
 }

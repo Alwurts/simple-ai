@@ -5,7 +5,7 @@ export function HeroChatPreview() {
         <iframe
           aria-hidden
           className="pointer-events-none block h-[32rem] w-full bg-background md:h-[34rem] lg:h-[40rem]"
-          src="/view/chat-page"
+          src="/view/chat-page?embed=1"
           tabIndex={-1}
           title="Chat page preview"
         />

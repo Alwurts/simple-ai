@@ -8,6 +8,12 @@ import { legacyViewHref } from "@/lib/legacy-redirects";
 import { seo } from "@/lib/seo";
 
 export const Route = createFileRoute("/view/$name")({
+  validateSearch: (search: Record<string, unknown>): { embed?: true } => {
+    const value = search.embed;
+    const embed =
+      value === true || value === 1 || value === "1" || value === "true";
+    return embed ? { embed: true } : {};
+  },
   beforeLoad: ({ params }) => {
     const href = legacyViewHref(params.name);
     if (href) {
@@ -34,13 +40,18 @@ export const Route = createFileRoute("/view/$name")({
 });
 function ViewBlock() {
   const { name } = Route.useLoaderData();
+  const { embed } = Route.useSearch();
   const entry = getEntry(name);
   if (!entry) {
     return <BlockNotFound />;
   }
   const Preview = entry.component;
   return (
-    <div className="h-dvh overflow-hidden" data-slot="view-page">
+    <div
+      className="h-dvh overflow-hidden"
+      data-embed={embed ? "" : undefined}
+      data-slot="view-page"
+    >
       <TooltipProvider delay={0}>
         <Suspense fallback={null}>
           <Preview />
