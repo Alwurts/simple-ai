@@ -1,0 +1,27 @@
+{
+  "extends": "@workspace/tsconfig/tanstack-start.json",
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["vite.config.ts"],
+  "compilerOptions": {
+    "paths": {
+      "@/components/ui/chat-input": [
+        "../../packages/registry/registry/ui/chat-input.tsx"
+      ],
+      "@/components/ui/shell": [
+        "../../packages/registry/registry/ui/shell.tsx"
+      ],
+      "@/components/ui/reasoning": [
+        "../../packages/registry/registry/ui/reasoning.tsx"
+      ],
+      "@/components/ui/tool": ["../../packages/registry/registry/ui/tool.tsx"],
+      "@/components/ui/worked": [
+        "../../packages/registry/registry/ui/worked.tsx"
+      ],
+      "@/components/ui/*": ["../../packages/ui/src/components/shadcn/*"],
+      "@/lib/utils": ["../../packages/ui/src/lib/utils.ts"],
+      "@/*": ["./src/*"],
+      "collections/*": ["./.source/*"]
+    },
+    "types": ["./worker-configuration.d.ts", "node", "vite/client"]
+  }
+}

@@ -1,0 +1,38 @@
+---
+title: Introduction
+description: Curated agent examples you can build upon.
+---
+
+simple-ai is a registry of agent examples. Copy them into your app. Change the source.
+
+A complete chat page you can copy. A modern agent chat: the thread, the prompt, tools, thinking, and the work folded away so the answer stays readable. shadcn is how you add it.
+
+## Install
+
+```bash
+npx shadcn@latest add @simple-ai/chat-page
+```
+
+See [Installation](/docs/installation).
+
+Until `@simple-ai` is in the official directory, point `components.json` at the hosted registry:
+
+```json
+{
+  "registries": {
+    "@simple-ai": "https://www.simple-ai.dev/r/{name}.json"
+  }
+}
+```
+
+Or install by URL:
+
+```bash
+npx shadcn@latest add https://www.simple-ai.dev/r/chat-page.json
+```
+
+GitHub works too, once this repo's root `registry.json` is on `main`:
+
+```bash
+npx shadcn@latest add Alwurts/simple-ai/chat-page
+```

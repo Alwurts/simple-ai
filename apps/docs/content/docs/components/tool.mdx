@@ -1,0 +1,45 @@
+---
+title: Tool
+description: Quiet collapsible tool call with input and output.
+---
+
+<ComponentPreview name="tool" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/tool
+```
+
+The CLI also installs shadcn `collapsible`, plus `ai`.
+
+## Usage
+
+```tsx
+import {
+  Tool,
+  ToolContent,
+  ToolHeader,
+  ToolInput,
+  ToolOutput,
+} from "@/components/ui/tool"
+
+export function ToolCall({ part }: { part: { toolName: string; state: "output-available"; input: unknown; output: unknown; errorText?: string } }) {
+  return (
+    <Tool>
+      <ToolHeader
+        input={part.input}
+        state={part.state}
+        title={part.toolName}
+        type={`tool-${part.toolName}`}
+      />
+      <ToolContent>
+        <ToolInput input={part.input} />
+        <ToolOutput errorText={part.errorText} output={part.output} />
+      </ToolContent>
+    </Tool>
+  )
+}
+```
+
+Tools start collapsed. The header is the readable tool name, plus a short input summary when the call has a path, command, query, or pattern. Expand to see JSON under Input and Output. `approval-requested` reads “Needs approval”; `output-denied` reads “Denied”.

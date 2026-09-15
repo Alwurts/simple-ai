@@ -1,0 +1,15 @@
+{
+  "root": false,
+  "overrides": [
+    {
+      "includes": ["**/routes/**/*.{tsx,ts}", "**/app/routes/**/*.{tsx,ts}"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": "off"
+          }
+        }
+      }
+    }
+  ]
+}

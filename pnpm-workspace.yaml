@@ -1,0 +1,11 @@
+packages:
+  - "apps/*"
+  - "packages/ui"
+  - "packages/registry"
+  - "packages/biome-config"
+  - "packages/tsconfig"
+
+allowBuilds:
+  esbuild: true
+  workerd: true
+  sharp: false

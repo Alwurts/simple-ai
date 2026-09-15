@@ -1,0 +1,19 @@
+{
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/styles.css",
+    "baseColor": "slate",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "~components",
+    "utils": "~lib/utils",
+    "ui": "~components/ui",
+    "lib": "~lib",
+    "hooks": "~hooks"
+  },
+  "include": ["src/**/*.{ts,tsx}"],
+  "exclude": ["node_modules"]
+}

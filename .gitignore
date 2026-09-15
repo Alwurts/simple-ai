@@ -1,6 +1,7 @@
 # Dependencies
 node_modules
 npm-debug.log*
+package-lock.json
 
 # Build outputs
 dist
@@ -32,3 +33,8 @@ coverage
 # Misc
 *.log
 .source
+.turbo
+apps/docs/.source
+apps/docs/.output
+apps/docs/.wrangler
+.changeset

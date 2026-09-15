@@ -1,0 +1,56 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": [
+    "@workspace/biome-config/core",
+    "@workspace/biome-config/react",
+    "@workspace/biome-config/tanstack"
+  ],
+  "assist": {
+    "actions": {
+      "source": {
+        "useSortedKeys": "off",
+        "useSortedAttributes": "off",
+        "useSortedInterfaceMembers": "off",
+        "useSortedProperties": "off",
+        "useSortedTypeFields": "off"
+      }
+    }
+  },
+  "files": {
+    "includes": ["!**/.source", "!**/apps/docs/public/r"]
+  },
+  "linter": {
+    "rules": {
+      "performance": {
+        "noBarrelFile": "off",
+        "noImgElement": "off",
+        "noJsxPropsBind": "off",
+        "noAwaitInLoops": "off"
+      },
+      "suspicious": {
+        "noLeakedRender": "off",
+        "noEqualsToNull": "off",
+        "noShadow": "off",
+        "noUnusedExpressions": "off",
+        "noUnnecessaryConditions": "off",
+        "noConsole": "off"
+      },
+      "style": {
+        "useDestructuring": "off",
+        "noIncrementDecrement": "off"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["apps/*/src/routes/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": "off"
+          }
+        }
+      }
+    }
+  ]
+}

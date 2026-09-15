@@ -1,95 +1,45 @@
-# Contributing to create-simple-ai
+# Contributing
 
-Thank you for your interest in contributing to `create-simple-ai`! This document provides guidelines and information for contributors.
+simple-ai is a shadcn registry of curated agent examples. Copy source into your app with the shadcn CLI.
 
-## Development Setup
-
-```bash
-# Install dependencies
-npm install
-
-# Build the project
-npm run build
-
-# Run tests
-npm test
-
-# Lint code
-npm run lint
-
-# Type check
-npm run typecheck
-```
-
-## Project Structure
-
-This is a monorepo using npm workspaces:
-
-- `packages/cli/` - The main CLI package (`create-simple-ai`) that gets published to npm
-  - `packages/cli/templates/` - Project templates that get bundled with the CLI
-- `packages/docs/` - Documentation and component registry site (`@simple-ai/docs`, private)
-- `scripts/` - Build and utility scripts
-
-## Monorepo Commands
-
-From the root directory:
+## Setup
 
 ```bash
-# CLI development
-npm run cli:dev      # Watch CLI changes
-npm run cli:build    # Build CLI
-npm run cli:test     # Run CLI tests
-
-# Docs development
-npm run docs:dev     # Start docs dev server
-npm run docs:build   # Build docs
-
-# All packages
-npm run build        # Build everything
-npm run test         # Run all tests
-npm run lint         # Format all code
-npm run typecheck    # Type check all packages
+pnpm install
+pnpm --filter @workspace/registry generate
+pnpm --filter docs dev
 ```
 
-## Testing
+Docs: http://localhost:4567
 
-See [TESTING.md](./TESTING.md) for detailed testing instructions.
+Node 22+. pnpm 10.
 
-## Contributing Workflow
+## Layout
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Add a changeset: `npm run changeset`
-4. Make your changes
-5. Run tests: `npm test`
-6. Submit a pull request
+- `apps/docs` — site and hosted registry (`/r/{name}.json`)
+- `packages/registry` — item source (`registry/ui`, `registry/examples`, `registry/blocks`)
+- `packages/ui` — shadcn primitives used by the docs app
+- `registry.json` — GitHub registry manifest (generated)
 
-## Changesets
-
-We use [Changesets](https://github.com/changesets/changesets) for version management and changelogs. When making changes that affect the published package:
+## Common commands
 
 ```bash
-npm run changeset
+pnpm --filter @workspace/registry generate
+pnpm --filter @workspace/registry generate:check
+pnpm --filter docs dev
+pnpm typecheck
+pnpm lint:check
 ```
 
-Follow the prompts to describe your changes. This will create a changeset file that will be used when releasing new versions.
+After changing a registry item, run `generate` so `registry.json` and
+`apps/docs/public/r` stay in sync. `generate:check` covers both plus
+`packages/registry/src/generated.ts`.
 
-## Release Process
+## Pull requests
 
-See [RELEASING.md](./RELEASING.md) for detailed release instructions.
+1. Branch from `main` (or the current working branch).
+2. Make the change. If you edited registry source, run generate.
+3. `pnpm typecheck` and `pnpm lint:check`.
+4. Open a PR against `main`.
 
-## Code Style
-
-- We use [Biome](https://biomejs.dev/) for linting and formatting
-- TypeScript is required for all code
-- Follow existing patterns and conventions
-
-## Need Help?
-
-- Check existing issues and pull requests
-- Join our discussions
-- Reach out to maintainers
-
-## License
-
-By contributing, you agree that your contributions will be licensed under the same license as the project.
+`create-simple-ai` is deprecated. Do not add a project template here. Use `shadcn init`, then `npx shadcn@latest add @simple-ai/chat-page`.

@@ -1,0 +1,59 @@
+---
+title: Worked
+description: Fold the agent's work. Keep the answer.
+---
+
+<ComponentPreview name="worked" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/worked
+```
+
+The CLI also installs shadcn `collapsible`.
+
+## Usage
+
+Fold the agent's work before the last assistant text. The answer stays visible. Live turns stay open.
+
+```tsx
+import {
+  splitWorkedParts,
+  Worked,
+  WorkedContent,
+  WorkedTrigger,
+} from "@/components/ui/worked"
+
+export function AssistantParts({
+  parts,
+  isStreaming,
+  duration,
+  renderPart,
+}: {
+  parts: Array<{ type: string }>
+  isStreaming: boolean
+  duration?: number
+  renderPart: (part: { type: string }, index: number) => React.ReactNode
+}) {
+  return splitWorkedParts(parts).map((segment) => {
+    if (segment.kind === "worked") {
+      return (
+        <Worked
+          duration={duration}
+          isStreaming={isStreaming}
+          key={segment.items[0]?.index}
+        >
+          <WorkedTrigger />
+          <WorkedContent>
+            {segment.items.map((item) => renderPart(item.part, item.index))}
+          </WorkedContent>
+        </Worked>
+      )
+    }
+    return renderPart(segment.item.part, segment.item.index)
+  })
+}
+```
+
+`splitWorkedParts` groups work before the last `text` part. Trailing tools after that text stay outside the fold. Text never folds. While `isStreaming` is true the row reads “Working” and stays open; when the turn settles it reads “Worked” or “Worked for 12s”.

@@ -1,0 +1,3 @@
+`useLayoutEffect($args)` as $call where {
+  register_diagnostic(span=$call, message="Avoid useEffect/useLayoutEffect except for external sync (subscriptions, DOM, timers, 3rd-party). Prefer derive during render, RHF `values`, or event handlers. Justify with biome-ignore — see docs/engineering/code-smells.md", severity="error")
+}

@@ -1,21 +1,21 @@
-# Simple AI Monorepo
+# simple-ai
 
-## Packages
-- **[create-simple-ai](./packages/cli/)** - CLI for scaffolding Simple AI projects
-- **[@simple-ai/docs](./packages/docs/)** - Documentation and component registry site
+Curated agent examples you can build upon. Copy them into your app. Change the source.
 
-## Development
+[simple-ai.dev](https://simple-ai.dev)
+
+## Stack
+
+TanStack Start, Fumadocs, Cloudflare Workers, shadcn Base UI. Hosted registry at `/r/{name}.json`, GitHub registry via root `registry.json`.
+
+## Develop
+
 ```bash
-npm run dev          # Start docs dev server
-npm run cli:dev      # Watch CLI changes
-npm run build        # Build everything
-npm run test         # Run all tests
+pnpm install
+pnpm --filter @workspace/registry generate
+pnpm --filter docs dev
 ```
 
-## Release
-```bash
-npm run changeset    # Add changeset
-npm run release      # Publish CLI
-```
+Docs: http://localhost:4567
 
-See [RELEASING.md](./RELEASING.md) for details.
+Working in this repo: [AGENTS.md](AGENTS.md).

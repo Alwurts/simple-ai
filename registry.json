@@ -1,0 +1,184 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "simple-ai",
+  "homepage": "https://www.simple-ai.dev",
+  "items": [
+    {
+      "name": "chat-input",
+      "type": "registry:ui",
+      "title": "Chat input",
+      "description": "Chat input with mentions and streaming status.",
+      "dependencies": [
+        "@tiptap/core",
+        "@tiptap/react",
+        "@tiptap/starter-kit",
+        "@tiptap/extension-mention",
+        "@tiptap/extension-placeholder",
+        "@tiptap/suggestion",
+        "ai"
+      ],
+      "registryDependencies": ["input-group"],
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/chat-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chat-page",
+      "type": "registry:block",
+      "title": "Chat page",
+      "description": "Full-screen chat with tools, files, and mentions.",
+      "docs": "This page ships a mocked transport so the gallery and a fresh install work without a model.\n\nAdd a route to src/features/assistant/page.tsx. Point a live transport at your own API when you have one.",
+      "registryDependencies": [
+        "attachment",
+        "bubble",
+        "button",
+        "collapsible",
+        "dropdown-menu",
+        "empty",
+        "input-group",
+        "marker",
+        "message",
+        "message-scroller",
+        "resizable",
+        "sidebar",
+        "@simple-ai/chat-input",
+        "@simple-ai/reasoning",
+        "@simple-ai/shell",
+        "@simple-ai/tool",
+        "@simple-ai/worked"
+      ],
+      "dependencies": ["@ai-sdk/react", "@shadcn/helpers", "ai", "streamdown"],
+      "meta": {
+        "iframeHeight": 900
+      },
+      "files": [
+        {
+          "path": "packages/registry/registry/blocks/chat-page/page.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/page.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/lib/mock-chat-messages.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/mock-chat-messages.ts"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/lib/chat-transport.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/chat-transport.ts"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/app-sidebar.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/app-sidebar.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/full-screen-chat.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/full-screen-chat.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/chat-input.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/chat-input.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/chat-message-parts.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/chat-message-parts.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/chat-side-panel.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/chat-side-panel.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/components/file-explorer-tree.tsx",
+          "type": "registry:component",
+          "target": "src/features/assistant/components/file-explorer-tree.tsx"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/hooks/use-chat-side-panel.ts",
+          "type": "registry:hook",
+          "target": "src/features/assistant/hooks/use-chat-side-panel.ts"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/lib/mock-workspace-tree.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/mock-workspace-tree.ts"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/lib/mock-members.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/mock-members.ts"
+        },
+        {
+          "path": "packages/registry/registry/blocks/chat-page/lib/ai-types.ts",
+          "type": "registry:lib",
+          "target": "src/features/assistant/lib/ai-types.ts"
+        }
+      ]
+    },
+    {
+      "name": "reasoning",
+      "type": "registry:ui",
+      "title": "Reasoning",
+      "description": "Quiet thinking row with markdown.",
+      "dependencies": ["streamdown"],
+      "registryDependencies": ["collapsible"],
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/reasoning.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "shell",
+      "type": "registry:ui",
+      "title": "Shell",
+      "description": "Sidebar, header, and main content.",
+      "registryDependencies": ["button", "sidebar"],
+      "meta": {
+        "fullBleed": true,
+        "iframeHeight": 720
+      },
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/shell.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tool",
+      "type": "registry:ui",
+      "title": "Tool",
+      "description": "Quiet collapsible tool call with input and output.",
+      "dependencies": ["ai"],
+      "registryDependencies": ["collapsible"],
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/tool.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "worked",
+      "type": "registry:ui",
+      "title": "Worked",
+      "description": "Fold the agent's work. Keep the answer.",
+      "registryDependencies": ["collapsible"],
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/worked.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

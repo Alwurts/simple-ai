@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /view/
+
+Sitemap: https://www.simple-ai.dev/sitemap.xml
+
