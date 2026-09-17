@@ -43,16 +43,6 @@ const config = defineConfig(async () => ({
       { find: "@/lib/utils", replacement: utils },
     ],
   },
-  ssr: {
-    external: [
-      "three",
-      "@react-three/fiber",
-      "@react-three/drei",
-      "@react-three/xr",
-      "@react-three/uikit",
-      "@react-three/uikit-lucide",
-    ],
-  },
   optimizeDeps: {
     exclude: ["@types/mdx"],
     esbuildOptions: {
