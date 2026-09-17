@@ -13,6 +13,7 @@
         "@simple-ai/world-card",
         "@simple-ai/vr-button",
         "@simple-ai/vr-chat-input",
+        "@simple-ai/vr-message-scroller",
         "@simple-ai/vr-tool",
         "@simple-ai/vr-worked",
         "@simple-ai/vr-reasoning",
@@ -286,6 +287,24 @@
       "files": [
         {
           "path": "packages/registry/registry/ui/vr-markdown.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "vr-message-scroller",
+      "type": "registry:ui",
+      "title": "VR message scroller",
+      "description": "Follow the live edge of a VR chat list.",
+      "dependencies": [
+        "@react-three/fiber",
+        "@react-three/uikit",
+        "@react-three/uikit-lucide"
+      ],
+      "registryDependencies": ["@simple-ai/world-card", "@simple-ai/vr-button"],
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/vr-message-scroller.tsx",
           "type": "registry:ui"
         }
       ]

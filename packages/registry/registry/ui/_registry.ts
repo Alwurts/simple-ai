@@ -108,6 +108,22 @@ export const ui: RegistryItemDef[] = [
   },
   {
     item: {
+      name: "vr-message-scroller",
+      type: "registry:ui",
+      title: "VR message scroller",
+      description: "Follow the live edge of a VR chat list.",
+      dependencies: [
+        "@react-three/fiber",
+        "@react-three/uikit",
+        "@react-three/uikit-lucide",
+      ],
+      registryDependencies: ["@simple-ai/world-card", "@simple-ai/vr-button"],
+      files: [{ path: "vr-message-scroller.tsx", type: "registry:ui" }],
+    },
+    preview: "examples/vr-message-scroller-demo",
+  },
+  {
+    item: {
       name: "vr-tool",
       type: "registry:ui",
       title: "VR tool",

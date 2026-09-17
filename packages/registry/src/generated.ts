@@ -75,6 +75,16 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     meta: {},
     component: lazy(() => import("../registry/examples/vr-markdown-demo")),
   },
+  "vr-message-scroller": {
+    name: "vr-message-scroller",
+    type: "registry:ui",
+    title: "VR message scroller",
+    description: "Follow the live edge of a VR chat list.",
+    meta: {},
+    component: lazy(
+      () => import("../registry/examples/vr-message-scroller-demo")
+    ),
+  },
   "vr-reasoning": {
     name: "vr-reasoning",
     type: "registry:ui",

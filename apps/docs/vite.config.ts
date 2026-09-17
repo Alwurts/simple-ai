@@ -33,6 +33,10 @@ const vrChatInput = resolve(
   root,
   "../../packages/registry/registry/ui/vr-chat-input.tsx"
 );
+const vrMessageScroller = resolve(
+  root,
+  "../../packages/registry/registry/ui/vr-message-scroller.tsx"
+);
 const vrTool = resolve(root, "../../packages/registry/registry/ui/vr-tool.tsx");
 const vrWorked = resolve(
   root,
@@ -62,6 +66,10 @@ const config = defineConfig(async () => ({
       { find: "@/components/ui/world-card", replacement: worldCard },
       { find: "@/components/ui/vr-button", replacement: vrButton },
       { find: "@/components/ui/vr-chat-input", replacement: vrChatInput },
+      {
+        find: "@/components/ui/vr-message-scroller",
+        replacement: vrMessageScroller,
+      },
       { find: "@/components/ui/vr-tool", replacement: vrTool },
       { find: "@/components/ui/vr-worked", replacement: vrWorked },
       { find: "@/components/ui/vr-reasoning", replacement: vrReasoning },

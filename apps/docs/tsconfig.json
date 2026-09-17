@@ -26,6 +26,9 @@
       "@/components/ui/vr-chat-input": [
         "../../packages/registry/registry/ui/vr-chat-input.tsx"
       ],
+      "@/components/ui/vr-message-scroller": [
+        "../../packages/registry/registry/ui/vr-message-scroller.tsx"
+      ],
       "@/components/ui/vr-tool": [
         "../../packages/registry/registry/ui/vr-tool.tsx"
       ],

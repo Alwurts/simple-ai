@@ -4,6 +4,7 @@ const DOCUMENTED = ["chat-input", "tool", "worked"] as const;
 const VR = [
   "world-card",
   "vr-chat-input",
+  "vr-message-scroller",
   "vr-tool",
   "vr-worked",
   "vr-reasoning",

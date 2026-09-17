@@ -6,6 +6,7 @@ import { isTextUIPart, isToolUIPart } from "ai";
 import { createContext, type ReactNode, useContext, useMemo } from "react";
 import { VrChatInput } from "@/components/ui/vr-chat-input";
 import { asciiSafe, VrMarkdown } from "@/components/ui/vr-markdown";
+import { VrMessageScroller } from "@/components/ui/vr-message-scroller";
 import { VrReasoning } from "@/components/ui/vr-reasoning";
 import { VrTool } from "@/components/ui/vr-tool";
 import { VrWorked } from "@/components/ui/vr-worked";
@@ -241,14 +242,7 @@ export function ChatCardBody({
         height={1}
         width="100%"
       />
-      <Container
-        flexDirection="column"
-        flexGrow={1}
-        gap={6}
-        minHeight={0}
-        overflow="scroll"
-        width="100%"
-      >
+      <VrMessageScroller autoScroll followKey={messages.at(-1)?.id}>
         {messages.map((message) => (
           <MessageRow
             isStreaming={streamingId === message.id}
@@ -256,7 +250,7 @@ export function ChatCardBody({
             message={message}
           />
         ))}
-      </Container>
+      </VrMessageScroller>
       <Container
         backgroundColor={theme.border}
         flexShrink={0}
