@@ -61,7 +61,7 @@ export function ExperienceHud() {
   const xrReady = support.ready && (support.ar || support.vr);
 
   return (
-    <div className="pointer-events-auto absolute right-4 bottom-4 z-10 flex max-w-[min(100%-2rem,28rem)] flex-col items-end gap-2">
+    <div className="pointer-events-auto absolute top-4 right-4 z-10 flex max-w-[min(100%-2rem,28rem)] flex-col items-end gap-2">
       <p className="rounded-lg border border-border bg-card/95 px-3 py-2 text-muted-foreground text-xs shadow-lg">
         Drag the handle to move. Corners and edges resize.
         {support.ready && !xrReady

@@ -25,7 +25,7 @@ const CHAT_CARD = {
   maxH: 720,
 };
 const ORB_LIFT = 0.08;
-const DESKTOP_POS: [number, number, number] = [0, 1.42, -0.35];
+const DESKTOP_POS: [number, number, number] = [0, 1.52, -0.35];
 
 function appearanceFromDom(): "light" | "dark" {
   if (typeof document === "undefined") {
