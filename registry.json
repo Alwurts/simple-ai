@@ -253,6 +253,10 @@
         {
           "path": "packages/registry/registry/ui/world-card.tsx",
           "type": "registry:ui"
+        },
+        {
+          "path": "packages/registry/registry/ui/world-card-chrome.ts",
+          "type": "registry:lib"
         }
       ]
     }

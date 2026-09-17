@@ -75,7 +75,10 @@ export const ui: RegistryItemDef[] = [
       title: "World card",
       description: "Spatial chrome for in-world cards in React Three Fiber.",
       dependencies: ["three", "@react-three/fiber", "@types/three"],
-      files: [{ path: "world-card.tsx", type: "registry:ui" }],
+      files: [
+        { path: "world-card.tsx", type: "registry:ui" },
+        { path: "world-card-chrome.ts", type: "registry:lib" },
+      ],
     },
     preview: "examples/world-card-demo",
   },

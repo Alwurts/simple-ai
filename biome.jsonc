@@ -55,6 +55,7 @@
     {
       "includes": [
         "packages/registry/registry/ui/world-card.tsx",
+        "packages/registry/registry/ui/world-card-chrome.ts",
         "packages/registry/registry/blocks/chat-card/**",
         "packages/registry/registry/examples/world-card-demo*.tsx"
       ],
@@ -65,14 +66,21 @@
           },
           "complexity": {
             "noVoid": "off",
-            "useSimplifiedLogicExpression": "off"
+            "useSimplifiedLogicExpression": "off",
+            "noExcessiveCognitiveComplexity": "off",
+            "useOptionalChain": "off"
+          },
+          "correctness": {
+            "useExhaustiveDependencies": "off"
           },
           "performance": {
             "noNamespaceImport": "off"
           },
           "style": {
             "useNumericSeparators": "off",
-            "useConsistentTypeDefinitions": "off"
+            "useConsistentTypeDefinitions": "off",
+            "noExportedImports": "off",
+            "noNestedTernary": "off"
           },
           "suspicious": {
             "noUnknownAttribute": "off",

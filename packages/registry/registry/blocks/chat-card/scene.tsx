@@ -123,6 +123,7 @@ function ChatDock() {
       onDragStart={() => {
         dragging.current = true;
       }}
+      handle={open}
       onSizeChange={setSize}
       radius={ORB_RADIUS}
       resizable={open}
