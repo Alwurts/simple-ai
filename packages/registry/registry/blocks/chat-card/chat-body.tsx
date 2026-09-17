@@ -91,7 +91,15 @@ function VrPart({
     return <VrMarkdown markdown={part.text} />;
   }
   if (part.type === "reasoning" && "text" in part && part.text) {
-    return <VrReasoning text={part.text} />;
+    return (
+      <VrReasoning
+        isStreaming={
+          Boolean(isStreaming) ||
+          ("state" in part && part.state === "streaming")
+        }
+        text={part.text}
+      />
+    );
   }
   if (part.type === "dynamic-tool" || isToolUIPart(part)) {
     return (
@@ -138,21 +146,11 @@ function VrAssistantParts({
             </VrWorked>
           );
         }
-        const part = segment.item.part;
-        if (part.type === "reasoning" && "text" in part && part.text) {
-          return (
-            <VrReasoning
-              isStreaming={isStreaming}
-              key={segment.item.index}
-              text={part.text}
-            />
-          );
-        }
         return (
           <VrPart
             isStreaming={isStreaming}
             key={segment.item.index}
-            part={part}
+            part={segment.item.part}
           />
         );
       })}
