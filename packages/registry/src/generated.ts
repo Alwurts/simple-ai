@@ -7,8 +7,8 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     name: "chat-card",
     type: "registry:block",
     title: "Chat card",
-    description: "In-world chat for React Three Fiber and WebXR.",
-    meta: { iframeHeight: 720, fullBleed: true },
+    description: "First-person in-world chat for React Three Fiber and WebXR.",
+    meta: { iframeHeight: 800, fullBleed: true },
     component: lazy(() => import("../registry/blocks/chat-card/page")),
   },
   "chat-input": {

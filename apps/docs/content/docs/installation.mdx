@@ -50,9 +50,9 @@ npx shadcn@latest add @simple-ai/worked
 npx shadcn@latest add @simple-ai/chat-card
 ```
 
-This example is for React Three Fiber apps that enter WebXR. The page lands at `src/features/assistant-card/page.tsx` (or `features/assistant-card/page.tsx` if the app has no `src`). Wire a route to it the same way as `chat-page`.
+This example is a first-person studio for React Three Fiber and WebXR. The page lands at `src/features/assistant-card/page.tsx` (or `features/assistant-card/page.tsx` if the app has no `src`). Wire a route to it the same way as `chat-page`.
 
-The iframe on this site is a preview. On a headset or a WebXR browser, use Enter VR / Enter AR. The composer is a uikit field in the scene, not the 2D chat input. The transcript is mocked until you point a live transport at your API.
+The iframe is the desktop view: left click uses the card, right-drag looks around, WASD walks, wheel stays in the scene. On a Quest, Enter VR or AR. Hands (pinch) and controllers (trigger and ray) hit the same `world-card`. The composer is a uikit field in the scene, not the 2D chat input. The transcript is mocked until you point a live transport at your API.
 
 ## Hosted registry
 

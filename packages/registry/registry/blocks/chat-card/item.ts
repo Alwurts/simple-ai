@@ -5,22 +5,21 @@ const def: RegistryItemDef = {
     name: "chat-card",
     type: "registry:block",
     title: "Chat card",
-    description: "In-world chat for React Three Fiber and WebXR.",
-    docs: `This card ships a mocked transcript so the gallery and a fresh install work without a model.
+    description: "First-person in-world chat for React Three Fiber and WebXR.",
+    docs: `This example is a first-person studio with a mocked in-world chat card.
 
-Add a route to src/features/assistant-card/page.tsx. Enter VR or AR from a WebXR browser (Quest). Point a live transport at your own API when you have one.`,
+Add a route to src/features/assistant-card/page.tsx. On desktop, left click uses the card, right-drag looks around, WASD walks. On a Quest, Enter VR or AR — hands (pinch) and controllers (trigger/ray) drive the same card. Point a live transport at your own API when you have one.`,
     registryDependencies: [
       "@simple-ai/world-card",
       "@simple-ai/tool",
       "@simple-ai/worked",
     ],
     dependencies: [
-      "@react-three/drei",
       "@react-three/uikit",
       "@react-three/uikit-lucide",
       "@react-three/xr",
     ],
-    meta: { iframeHeight: 720, fullBleed: true },
+    meta: { iframeHeight: 800, fullBleed: true },
     files: [
       {
         path: "page.tsx",
@@ -53,9 +52,14 @@ Add a route to src/features/assistant-card/page.tsx. Enter VR or AR from a WebXR
         target: "src/features/assistant-card/mock-messages.ts",
       },
       {
-        path: "enter-xr.tsx",
+        path: "look-controls.tsx",
         type: "registry:component",
-        target: "src/features/assistant-card/enter-xr.tsx",
+        target: "src/features/assistant-card/look-controls.tsx",
+      },
+      {
+        path: "hud.tsx",
+        type: "registry:component",
+        target: "src/features/assistant-card/hud.tsx",
       },
     ],
   },
