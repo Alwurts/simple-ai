@@ -25,24 +25,24 @@ const worldCard = resolve(
   root,
   "../../packages/registry/registry/ui/world-card.tsx"
 );
-const xrButton = resolve(
+const vrButton = resolve(
   root,
   "../../packages/registry/registry/ui/vr-button.tsx"
 );
-const xrChatInput = resolve(
+const vrChatInput = resolve(
   root,
   "../../packages/registry/registry/ui/vr-chat-input.tsx"
 );
-const xrTool = resolve(root, "../../packages/registry/registry/ui/vr-tool.tsx");
-const xrWorked = resolve(
+const vrTool = resolve(root, "../../packages/registry/registry/ui/vr-tool.tsx");
+const vrWorked = resolve(
   root,
   "../../packages/registry/registry/ui/vr-worked.tsx"
 );
-const xrReasoning = resolve(
+const vrReasoning = resolve(
   root,
   "../../packages/registry/registry/ui/vr-reasoning.tsx"
 );
-const xrMarkdown = resolve(
+const vrMarkdown = resolve(
   root,
   "../../packages/registry/registry/ui/vr-markdown.tsx"
 );
@@ -60,12 +60,12 @@ const config = defineConfig(async () => ({
       { find: "@/components/ui/tool", replacement: tool },
       { find: "@/components/ui/worked", replacement: worked },
       { find: "@/components/ui/world-card", replacement: worldCard },
-      { find: "@/components/ui/vr-button", replacement: xrButton },
-      { find: "@/components/ui/vr-chat-input", replacement: xrChatInput },
-      { find: "@/components/ui/vr-tool", replacement: xrTool },
-      { find: "@/components/ui/vr-worked", replacement: xrWorked },
-      { find: "@/components/ui/vr-reasoning", replacement: xrReasoning },
-      { find: "@/components/ui/vr-markdown", replacement: xrMarkdown },
+      { find: "@/components/ui/vr-button", replacement: vrButton },
+      { find: "@/components/ui/vr-chat-input", replacement: vrChatInput },
+      { find: "@/components/ui/vr-tool", replacement: vrTool },
+      { find: "@/components/ui/vr-worked", replacement: vrWorked },
+      { find: "@/components/ui/vr-reasoning", replacement: vrReasoning },
+      { find: "@/components/ui/vr-markdown", replacement: vrMarkdown },
       { find: "@/components/ui", replacement: uiShadcn },
       { find: "@/lib/utils", replacement: utils },
     ],

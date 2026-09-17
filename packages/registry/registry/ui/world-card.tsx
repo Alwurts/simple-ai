@@ -38,25 +38,16 @@ import {
   HANDLE_R,
   HIT_PAD,
   handleCenterY,
-  NEAR_PAD,
   PX,
   type Region,
   rayOnCard,
-  registerCard,
   roundedRectGeometry,
   STROKE,
   stadiumGeometry,
   visibleRaycast,
 } from "./world-card-chrome";
 
-export {
-  cardMeters,
-  clampSize,
-  hitChrome,
-  nearestCard,
-  PX,
-  registerCard,
-} from "./world-card-chrome";
+export { cardMeters, clampSize, PX } from "./world-card-chrome";
 export type { CardSize, Region };
 
 export type WorldAppearance = "light" | "dark";
@@ -477,7 +468,6 @@ function CardChrome({
   notifyStartRef.current = notifyDragStart;
   const notifyEndRef = useRef(notifyDragEnd);
   notifyEndRef.current = notifyDragEnd;
-  const localScratch = useRef(new THREE.Vector3());
   const optsRef = useRef(opts);
   optsRef.current = opts;
   const drag = useRef<Drag | null>(null);
@@ -575,90 +565,6 @@ function CardChrome({
       maybeClose();
     }
   };
-
-  useEffect(() => {
-    const a = anchor.current;
-    if (!a) {
-      return;
-    }
-    const off = registerCard({
-      anchor: a,
-      size: () => sizeRef.current,
-      opts: () => optsRef.current,
-      hover: (on, world) => {
-        if (!on) {
-          setHover("none");
-          return;
-        }
-        if (!world) {
-          return;
-        }
-        a.worldToLocal(localScratch.current.copy(world));
-        const s = sizeRef.current;
-        setHover(
-          classify(
-            localScratch.current.x,
-            localScratch.current.y,
-            s.w,
-            s.h,
-            NEAR_PAD,
-            optsRef.current
-          )
-        );
-      },
-      begin: (world) => {
-        a.worldToLocal(localScratch.current.copy(world));
-        const s = sizeRef.current;
-        const region = classify(
-          localScratch.current.x,
-          localScratch.current.y,
-          s.w,
-          s.h,
-          NEAR_PAD,
-          optsRef.current
-        );
-        if (region.startsWith("corner:")) {
-          beginResizeAt(
-            region.slice(7) as CornerId,
-            localScratch.current.x,
-            localScratch.current.y
-          );
-          return;
-        }
-        if (
-          region.startsWith("edge:") ||
-          region === "handle" ||
-          region === "ring"
-        ) {
-          startMoveAtRef.current(world);
-          drag.current = { kind: "move", region };
-          show(region, true, true);
-          notifyStartRef.current(region);
-          if (region === "handle") {
-            keepOpen();
-          }
-        }
-      },
-      update: (world) => {
-        const d = drag.current;
-        if (d?.kind === "resize") {
-          a.worldToLocal(localScratch.current.copy(world));
-          resizeToLocal(localScratch.current.x, localScratch.current.y);
-          return;
-        }
-        if (d?.kind === "move") {
-          moveToRef.current(world);
-        }
-      },
-      end: () => endChrome(),
-    });
-    return () => {
-      off();
-      if (drag.current) {
-        endChrome();
-      }
-    };
-  }, [anchor]);
 
   const orbOuter = radius + outer;
   const orbDisc = useMemo(

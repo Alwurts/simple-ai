@@ -11,7 +11,6 @@ export const HIT_PAD = 0.008;
 /** Break between the corner L and the mid-edge dash — assigned to the nearer region. */
 export const EDGE_SEP = 0.012;
 export const NEAR_PAD = 0.035;
-export const NEAR_DEPTH = 0.06;
 export const HANDLE_R = 0.004;
 export const HANDLE_GAP = 0.012;
 export const HANDLE_LEN = 0.072;
@@ -277,26 +276,6 @@ export function rayOnCard(
   return parent.worldToLocal(_hit);
 }
 
-export type CardReg = {
-  anchor: THREE.Object3D;
-  size: () => CardSize;
-  opts: () => ChromeOpts;
-  hover: (on: boolean, world?: THREE.Vector3) => void;
-  begin: (world: THREE.Vector3) => void;
-  update: (world: THREE.Vector3) => void;
-  end: () => void;
-};
-
-const cards = new Set<CardReg>();
-const _local = new THREE.Vector3();
-
-export function registerCard(entry: CardReg): () => void {
-  cards.add(entry);
-  return () => {
-    cards.delete(entry);
-  };
-}
-
 function visibleInTree(obj: THREE.Object3D): boolean {
   let o: THREE.Object3D | null = obj;
   while (o) {
@@ -306,20 +285,6 @@ function visibleInTree(obj: THREE.Object3D): boolean {
     o = o.parent;
   }
   return true;
-}
-
-function regionAt(entry: CardReg, world: THREE.Vector3, pad: number): Region {
-  if (!visibleInTree(entry.anchor)) {
-    return "none";
-  }
-  entry.anchor.updateWorldMatrix(true, false);
-  _local.copy(world);
-  entry.anchor.worldToLocal(_local);
-  if (Math.abs(_local.z) > NEAR_DEPTH) {
-    return "none";
-  }
-  const s = entry.size();
-  return classify(_local.x, _local.y, s.w, s.h, pad, entry.opts());
 }
 
 /** Skip ray hits when a parent WorldCard is hidden (wrist gate, card closed). */
@@ -332,50 +297,6 @@ export function visibleRaycast(
     return;
   }
   THREE.Mesh.prototype.raycast.call(this, raycaster, intersects);
-}
-
-/** World point → region on any registered card. `none` and misses are null. */
-export function hitChrome(world: THREE.Vector3, pad = NEAR_PAD): Region | null {
-  for (const entry of cards) {
-    const region = regionAt(entry, world, pad);
-    if (region !== "none") {
-      return region;
-    }
-  }
-  return null;
-}
-
-export function cardContains(
-  entry: CardReg,
-  world: THREE.Vector3,
-  padScale = 1
-): boolean {
-  return regionAt(entry, world, NEAR_PAD * padScale) !== "none";
-}
-
-export function nearestCard(
-  points: THREE.Vector3[],
-  padScale = 1
-): { card: CardReg; point: THREE.Vector3 } | null {
-  let best: CardReg | null = null;
-  let bestPoint: THREE.Vector3 | null = null;
-  let bestD = Number.POSITIVE_INFINITY;
-  const pad = NEAR_PAD * padScale;
-  for (const world of points) {
-    for (const entry of cards) {
-      const region = regionAt(entry, world, pad);
-      if (region === "none") {
-        continue;
-      }
-      if (bestD <= 0) {
-        continue;
-      }
-      bestD = 0;
-      best = entry;
-      bestPoint = world;
-    }
-  }
-  return best && bestPoint ? { card: best, point: bestPoint } : null;
 }
 
 export const CORNER_LAYOUT = [
