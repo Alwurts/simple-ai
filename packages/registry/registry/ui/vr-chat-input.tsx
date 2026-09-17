@@ -1,23 +1,26 @@
 "use client";
 
 import { Container, Input } from "@react-three/uikit";
-import { Send } from "@react-three/uikit-lucide";
+import { Send, Square } from "@react-three/uikit-lucide";
 import { useRef, useState } from "react";
 import { VrButton } from "@/components/ui/vr-button";
 import { useWorldTheme } from "@/components/ui/world-card";
 
 export function VrChatInput({
   disabled = false,
+  onStop,
   onSubmit,
   placeholder = "Ask the assistant",
 }: {
   disabled?: boolean;
+  onStop?: () => void;
   onSubmit: (text: string) => void;
   placeholder?: string;
 }) {
   const theme = useWorldTheme();
   const [inputKey, setInputKey] = useState(0);
   const draft = useRef("");
+  const actAsStop = Boolean(onStop) && disabled;
 
   const send = () => {
     if (disabled) {
@@ -62,8 +65,22 @@ export function VrChatInput({
           width="100%"
         />
       </Container>
-      <VrButton disabled={disabled} height={32} onClick={send} width={32}>
-        <Send color={theme.text} height={18} width={18} />
+      <VrButton
+        height={32}
+        onClick={() => {
+          if (actAsStop) {
+            onStop?.();
+            return;
+          }
+          send();
+        }}
+        width={32}
+      >
+        {actAsStop ? (
+          <Square color={theme.text} height={14} width={14} />
+        ) : (
+          <Send color={theme.text} height={18} width={18} />
+        )}
       </VrButton>
     </Container>
   );

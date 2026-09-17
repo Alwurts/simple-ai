@@ -21,13 +21,14 @@ type ChatSession = {
   busy: boolean;
   messages: CardChatMessage[];
   send: (text: string) => void;
+  stop: () => void;
   streaming: boolean;
 };
 
 const ChatSessionContext = createContext<ChatSession | null>(null);
 
 export function ChatCardProvider({ children }: { children: ReactNode }) {
-  const { messages, sendMessage, status } = useChat<CardChatMessage>({
+  const { messages, sendMessage, status, stop } = useChat<CardChatMessage>({
     throttle: 50,
     messages: initialChatMessages,
     transport: chatTransport,
@@ -41,9 +42,10 @@ export function ChatCardProvider({ children }: { children: ReactNode }) {
       send: (text) => {
         void sendMessage({ text });
       },
+      stop,
       streaming,
     }),
-    [busy, messages, sendMessage, streaming]
+    [busy, messages, sendMessage, stop, streaming]
   );
   return (
     <ChatSessionContext.Provider value={value}>
@@ -212,7 +214,7 @@ export function ChatCardBody({
   height: number;
 }) {
   const theme = useWorldTheme();
-  const { busy, messages, send, streaming } = useChatSession();
+  const { busy, messages, send, stop, streaming } = useChatSession();
   const streamingId =
     streaming && messages.at(-1)?.role === "assistant"
       ? (messages.at(-1)?.id ?? null)
@@ -263,6 +265,7 @@ export function ChatCardBody({
       />
       <VrChatInput
         disabled={busy}
+        onStop={stop}
         onSubmit={send}
         placeholder={busy ? "Working..." : "Ask the assistant"}
       />
