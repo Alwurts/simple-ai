@@ -1,37 +1,55 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
-import { useState } from "react";
-import {
-  type CardSize,
-  WorldCard,
-  WorldThemeProvider,
-} from "@/components/ui/world-card";
+import { Container, Text } from "@react-three/uikit";
+import { useWorldTheme } from "@/components/ui/world-card";
+import { XrChatInput } from "@/components/ui/xr-chat-input";
+import { XrMarkdown } from "@/components/ui/xr-markdown";
+import { XrDemoCanvas } from "./xr-demo-canvas";
+
+function MiniChat() {
+  const theme = useWorldTheme();
+  return (
+    <>
+      <Text color={theme.text} fontSize={14}>
+        Assistant
+      </Text>
+      <Container
+        backgroundColor={theme.border}
+        flexShrink={0}
+        height={1}
+        width="100%"
+      />
+      <Container
+        flexDirection="column"
+        flexGrow={1}
+        gap={8}
+        minHeight={0}
+        overflow="scroll"
+        width="100%"
+      >
+        <Container
+          alignSelf="flex-end"
+          backgroundColor={theme.bubble}
+          borderRadius={10}
+          flexShrink={0}
+          maxWidth="80%"
+          padding={8}
+        >
+          <Text color={theme.text} fontSize={13}>
+            What am I looking at?
+          </Text>
+        </Container>
+        <XrMarkdown markdown="You are looking at an in-world chat card. Drag the handle to move it. Pinch a corner to resize." />
+      </Container>
+      <XrChatInput onSubmit={() => undefined} />
+    </>
+  );
+}
 
 export default function WorldCardDemoScene() {
-  const [size, setSize] = useState<CardSize>({ w: 240, h: 160 });
-  const dark =
-    typeof document !== "undefined" &&
-    document.documentElement.classList.contains("dark");
-
   return (
-    <div className="h-[480px] w-full">
-      <Canvas camera={{ position: [0, 0, 0.55], fov: 42 }}>
-        <color attach="background" args={[dark ? "#18181b" : "#f4f4f5"]} />
-        <ambientLight intensity={0.8} />
-        <WorldThemeProvider appearance={dark ? "dark" : "light"}>
-          <WorldCard
-            size={size}
-            onSizeChange={setSize}
-            limits={{ minW: 160, minH: 120, maxW: 360, maxH: 240 }}
-          >
-            <mesh>
-              <planeGeometry args={[size.w * 0.001, size.h * 0.001]} />
-              <meshStandardMaterial color={dark ? "#27272a" : "#fafafa"} />
-            </mesh>
-          </WorldCard>
-        </WorldThemeProvider>
-      </Canvas>
-    </div>
+    <XrDemoCanvas size={{ h: 280, w: 320 }}>
+      <MiniChat />
+    </XrDemoCanvas>
   );
 }

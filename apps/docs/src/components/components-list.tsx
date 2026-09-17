@@ -3,7 +3,6 @@ import { components } from "@workspace/registry";
 const DOCUMENTED = ["chat-input", "tool", "worked"] as const;
 const IN_WORLD = [
   "world-card",
-  "xr-button",
   "xr-chat-input",
   "xr-tool",
   "xr-worked",

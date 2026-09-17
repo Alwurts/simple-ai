@@ -24,7 +24,6 @@ const LIVE_COMPONENT_DOCS = new Set([
   "tool",
   "worked",
   "world-card",
-  "xr-button",
   "xr-chat-input",
   "xr-tool",
   "xr-worked",
@@ -67,6 +66,9 @@ export function legacyDocsHref(path: string): string | undefined {
     const name = path.slice("components/".length);
     if (name === "composer") {
       return "/docs/components/chat-input";
+    }
+    if (name === "xr-button") {
+      return "/docs/components/xr-chat-input";
     }
     if (name === "chat-voice-button") {
       return "/docs/components";

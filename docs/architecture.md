@@ -23,10 +23,10 @@ The public site is not the source of item code. Item source lives in
 
 - Blocks: `chat-page` (2D, gallery mocked) and `chat-card` (in-world XR, mocked).
 - Documented UI: whatever `apps/docs/content/docs/components/meta.json` lists.
-  2D: `chat-input`, `tool`, `worked`. In-world: `world-card`, `xr-button`,
+  2D: `chat-input`, `tool`, `worked`. In-world: `world-card`,
   `xr-chat-input`, `xr-tool`, `xr-worked`, `xr-reasoning`, `xr-markdown`.
 - `shell` and `reasoning` stay registry items that `chat-page` depends on, with
-  no docs pages of their own.
+  no docs pages of their own. `xr-button` is the same for in-world chat input.
 
 ## Dual registry
 
