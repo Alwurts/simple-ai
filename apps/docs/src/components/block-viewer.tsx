@@ -352,6 +352,7 @@ function PreviewFrame({
           }
         >
           <iframe
+            allow="xr-spatial-tracking; pointer-lock"
             className="no-scrollbar relative z-20 size-full bg-background"
             key={iframeKey}
             loading="lazy"
