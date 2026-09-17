@@ -7,7 +7,13 @@ import { useWorldTheme } from "@/components/ui/world-card";
 
 export const ORB_RADIUS = 0.04;
 
-export function SpeakingOrb({ onClick }: { onClick: () => void }) {
+export function SpeakingOrb({
+  onClick,
+  speaking = false,
+}: {
+  onClick: () => void;
+  speaking?: boolean;
+}) {
   const mesh = useRef<Mesh>(null);
   const theme = useWorldTheme();
 
@@ -17,7 +23,9 @@ export function SpeakingOrb({ onClick }: { onClick: () => void }) {
       return;
     }
     const t = state.clock.elapsedTime;
-    const s = 1 + Math.sin(t * 2.2) * 0.04;
+    const s = speaking
+      ? 1 + Math.sin(t * 8) * 0.08
+      : 1 + Math.sin(t * 2.2) * 0.04;
     m.scale.setScalar(s);
   });
 

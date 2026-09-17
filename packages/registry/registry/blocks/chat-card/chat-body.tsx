@@ -1,7 +1,9 @@
 "use client";
 
+import { useChat } from "@ai-sdk/react";
 import { Container, Text } from "@react-three/uikit";
-import { useState } from "react";
+import { isTextUIPart, isToolUIPart } from "ai";
+import { createContext, type ReactNode, useContext } from "react";
 import { VrChatInput } from "@/components/ui/vr-chat-input";
 import { asciiSafe, VrMarkdown } from "@/components/ui/vr-markdown";
 import { VrReasoning } from "@/components/ui/vr-reasoning";
@@ -10,56 +12,140 @@ import { VrWorked } from "@/components/ui/vr-worked";
 import { splitWorkedParts } from "@/components/ui/worked";
 import { useWorldTheme } from "@/components/ui/world-card";
 import {
-  type CardMessage,
-  type CardPart,
-  INITIAL_MESSAGES,
-} from "./mock-messages";
+  type CardChatMessage,
+  chatTransport,
+  initialChatMessages,
+} from "./lib/chat-transport";
+
+type ChatSession = {
+  busy: boolean;
+  messages: CardChatMessage[];
+  send: (text: string) => void;
+  streaming: boolean;
+};
+
+const ChatSessionContext = createContext<ChatSession | null>(null);
+
+export function ChatCardProvider({ children }: { children: ReactNode }) {
+  const { messages, sendMessage, status } = useChat<CardChatMessage>({
+    throttle: 50,
+    messages: initialChatMessages,
+    transport: chatTransport,
+  });
+  const streaming = status === "streaming";
+  const busy = streaming || status === "submitted";
+  return (
+    <ChatSessionContext.Provider
+      value={{
+        busy,
+        messages,
+        send: (text) => {
+          void sendMessage({ text });
+        },
+        streaming,
+      }}
+    >
+      {children}
+    </ChatSessionContext.Provider>
+  );
+}
+
+export function useChatSession() {
+  const session = useContext(ChatSessionContext);
+  if (!session) {
+    throw new Error("useChatSession must be used under ChatCardProvider");
+  }
+  return session;
+}
+
+type CardPart = CardChatMessage["parts"][number];
+
+function toolNameOf(part: CardPart) {
+  if ("toolName" in part && typeof part.toolName === "string") {
+    return part.toolName;
+  }
+  if (part.type.startsWith("tool-")) {
+    return part.type.slice(5);
+  }
+  return part.type;
+}
 
 function VrPart({ part }: { part: CardPart }) {
-  if (part.type === "text" && part.text) {
+  if (isTextUIPart(part) && part.text) {
     return <VrMarkdown markdown={part.text} />;
   }
-  if (part.type === "reasoning" && part.text) {
+  if (part.type === "reasoning" && "text" in part && part.text) {
     return <VrReasoning text={part.text} />;
   }
-  if (part.type.startsWith("tool-") || part.type === "dynamic-tool") {
+  if (part.type === "dynamic-tool" || isToolUIPart(part)) {
     return (
       <VrTool
-        input={part.input}
-        output={part.output}
-        toolName={part.toolName ?? part.type}
+        input={"input" in part ? part.input : undefined}
+        output={"output" in part ? part.output : undefined}
+        toolName={toolNameOf(part)}
       />
     );
   }
   return null;
 }
 
-function VrAssistantParts({ message }: { message: CardMessage }) {
+function VrAssistantParts({
+  isStreaming,
+  message,
+}: {
+  isStreaming: boolean;
+  message: CardChatMessage;
+}) {
+  const duration = isStreaming
+    ? undefined
+    : message.metadata?.responseTime
+      ? Math.round(message.metadata.responseTime / 1000)
+      : undefined;
   return (
     <Container flexDirection="column" flexShrink={0} gap={8} width="100%">
       {splitWorkedParts(message.parts).map((segment) => {
         if (segment.kind === "worked") {
           const start = segment.items[0]?.index ?? 0;
           return (
-            <VrWorked key={`w-${start}`}>
+            <VrWorked
+              duration={duration}
+              isStreaming={isStreaming}
+              key={`w-${start}`}
+            >
               {segment.items.map((item) => (
                 <VrPart key={item.index} part={item.part} />
               ))}
             </VrWorked>
           );
         }
-        return <VrPart key={segment.item.index} part={segment.item.part} />;
+        const part = segment.item.part;
+        if (part.type === "reasoning" && "text" in part && part.text) {
+          return (
+            <VrReasoning
+              isStreaming={isStreaming}
+              key={segment.item.index}
+              text={part.text}
+            />
+          );
+        }
+        return <VrPart key={segment.item.index} part={part} />;
       })}
     </Container>
   );
 }
 
-function XrMessageRow({ message }: { message: CardMessage }) {
+function MessageRow({
+  isStreaming,
+  message,
+}: {
+  isStreaming: boolean;
+  message: CardChatMessage;
+}) {
   const mine = message.role === "user";
   const theme = useWorldTheme();
   const text = message.parts
-    .filter((part) => part.type === "text")
-    .map((part) => part.text ?? "")
+    .filter(isTextUIPart)
+    .map((part) => part.text)
     .join("\n");
   if (mine && !text) {
     return null;
@@ -87,7 +173,7 @@ function XrMessageRow({ message }: { message: CardMessage }) {
         </Container>
       ) : (
         <Container flexShrink={0} maxWidth="100%" width="100%">
-          <VrAssistantParts message={message} />
+          <VrAssistantParts isStreaming={isStreaming} message={message} />
         </Container>
       )}
     </Container>
@@ -102,25 +188,11 @@ export function ChatCardBody({
   height: number;
 }) {
   const theme = useWorldTheme();
-  const [messages, setMessages] = useState(INITIAL_MESSAGES);
-
-  const send = (text: string) => {
-    const id = `m-${messages.length + 1}`;
-    setMessages((current) => [
-      ...current,
-      { id: `${id}-u`, parts: [{ text, type: "text" }], role: "user" },
-      {
-        id: `${id}-a`,
-        parts: [
-          {
-            text: "Mocked reply. Point the transport at your API when you have one.",
-            type: "text",
-          },
-        ],
-        role: "assistant",
-      },
-    ]);
-  };
+  const { busy, messages, send, streaming } = useChatSession();
+  const streamingId =
+    streaming && messages.at(-1)?.role === "assistant"
+      ? (messages.at(-1)?.id ?? null)
+      : null;
 
   return (
     <Container
@@ -152,7 +224,11 @@ export function ChatCardBody({
         width="100%"
       >
         {messages.map((message) => (
-          <XrMessageRow key={message.id} message={message} />
+          <MessageRow
+            isStreaming={streamingId === message.id}
+            key={message.id}
+            message={message}
+          />
         ))}
       </Container>
       <Container
@@ -161,7 +237,11 @@ export function ChatCardBody({
         height={1}
         width="100%"
       />
-      <VrChatInput onSubmit={send} />
+      <VrChatInput
+        disabled={busy}
+        onSubmit={send}
+        placeholder={busy ? "Working..." : "Ask in world space"}
+      />
     </Container>
   );
 }

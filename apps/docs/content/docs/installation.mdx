@@ -52,7 +52,7 @@ npx shadcn@latest add @simple-ai/chat-card
 
 This example is a VR chat card for React Three Fiber. The page lands at `src/features/assistant-card/page.tsx` (or `features/assistant-card/page.tsx` if the app has no `src`). Wire a route to it the same way as `chat-page`.
 
-The iframe is the desktop view: click the card, drag the handle to move, pinch a corner to resize. On a Quest, Enter VR or AR. Hands (pinch) and controllers (trigger and ray) hit the same `world-card`. The composer is a uikit field in the scene, not the 2D chat input. The transcript is mocked until you point a live transport at your API.
+The iframe is the desktop view: click the card, drag the handle to move, pinch a corner to resize. On a Quest, Enter VR or AR. Hands (pinch) and controllers (trigger and ray) hit the same `world-card`. The composer is a uikit field in the scene, not the 2D chat input. The transcript uses the same mocked `useChat` transport as `chat-page` until you point `chat-transport.ts` at your API.
 
 If you only want a piece:
 

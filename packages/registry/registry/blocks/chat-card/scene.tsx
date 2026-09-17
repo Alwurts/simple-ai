@@ -2,7 +2,13 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { IfInSessionMode, useXR, XR } from "@react-three/xr";
-import { useCallback, useRef, useState } from "react";
+import {
+  type MutableRefObject,
+  type RefObject,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import type { Group } from "three";
 import {
   type CardSize,
@@ -11,7 +17,7 @@ import {
   WorldCard,
   WorldThemeProvider,
 } from "@/components/ui/world-card";
-import { ChatCardBody } from "./chat-body";
+import { ChatCardBody, ChatCardProvider, useChatSession } from "./chat-body";
 import { ExperienceHud } from "./hud";
 import { ORB_RADIUS, SpeakingOrb } from "./speaking-orb";
 import { xrStore } from "./xr-store";
@@ -112,8 +118,42 @@ function ChatDock() {
   };
 
   return (
+    <ChatCardProvider>
+      <ChatDockCard
+        anchor={anchor}
+        dragging={dragging}
+        onToggle={toggleCard}
+        open={open}
+        orbSlot={orbSlot}
+        setSize={setSize}
+        size={size}
+      />
+    </ChatCardProvider>
+  );
+}
+
+function ChatDockCard({
+  anchor,
+  dragging,
+  onToggle,
+  open,
+  orbSlot,
+  setSize,
+  size,
+}: {
+  anchor: RefObject<Group | null>;
+  dragging: MutableRefObject<boolean>;
+  onToggle: () => void;
+  open: boolean;
+  orbSlot: RefObject<Group | null>;
+  setSize: (size: CardSize) => void;
+  size: CardSize;
+}) {
+  const { streaming } = useChatSession();
+  return (
     <WorldCard
       ref={anchor}
+      handle={open}
       limits={CHAT_CARD}
       movable
       onDragEnd={() => {
@@ -122,7 +162,6 @@ function ChatDock() {
       onDragStart={() => {
         dragging.current = true;
       }}
-      handle={open}
       onSizeChange={setSize}
       radius={ORB_RADIUS}
       resizable={open}
@@ -130,7 +169,7 @@ function ChatDock() {
       size={size}
     >
       <group ref={orbSlot}>
-        <SpeakingOrb onClick={toggleCard} />
+        <SpeakingOrb onClick={onToggle} speaking={streaming} />
       </group>
       {open ? <ChatCardBody height={size.h} width={size.w} /> : null}
     </WorldCard>

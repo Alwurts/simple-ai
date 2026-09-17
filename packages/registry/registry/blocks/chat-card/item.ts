@@ -6,7 +6,7 @@ const def: RegistryItemDef = {
     type: "registry:block",
     title: "Chat card",
     description: "VR chat for React Three Fiber.",
-    docs: `This example is a mocked VR chat card.
+    docs: `This example ships a mocked transport so the gallery and a fresh install work without a model.
 
 Add a route to src/features/assistant-card/page.tsx. On desktop, click the card, drag the handle to move, and pinch corners to resize. On a Quest, Enter VR or AR — hands (pinch) and controllers (trigger/ray) drive the same card. Point a live transport at your own API when you have one.`,
     registryDependencies: [
@@ -19,9 +19,12 @@ Add a route to src/features/assistant-card/page.tsx. On desktop, click the card,
       "@simple-ai/vr-markdown",
     ],
     dependencies: [
+      "@ai-sdk/react",
       "@react-three/uikit",
       "@react-three/uikit-lucide",
       "@react-three/xr",
+      "@shadcn/helpers",
+      "ai",
     ],
     meta: { iframeHeight: 800, fullBleed: true },
     files: [
@@ -51,9 +54,19 @@ Add a route to src/features/assistant-card/page.tsx. On desktop, click the card,
         target: "src/features/assistant-card/speaking-orb.tsx",
       },
       {
-        path: "mock-messages.ts",
+        path: "lib/ai-types.ts",
         type: "registry:lib",
-        target: "src/features/assistant-card/mock-messages.ts",
+        target: "src/features/assistant-card/lib/ai-types.ts",
+      },
+      {
+        path: "lib/mock-chat-messages.ts",
+        type: "registry:lib",
+        target: "src/features/assistant-card/lib/mock-chat-messages.ts",
+      },
+      {
+        path: "lib/chat-transport.ts",
+        type: "registry:lib",
+        target: "src/features/assistant-card/lib/chat-transport.ts",
       },
       {
         path: "hud.tsx",
