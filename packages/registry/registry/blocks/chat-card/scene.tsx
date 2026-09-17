@@ -149,6 +149,7 @@ export default function ChatCardScene() {
           near: 0.01,
           far: 50,
           position: [0, 1.6, 0.15],
+          rotation: [0, 0, 0],
         }}
         gl={{ antialias: true, alpha: true }}
         style={{ position: "absolute", inset: 0, touchAction: "none" }}
