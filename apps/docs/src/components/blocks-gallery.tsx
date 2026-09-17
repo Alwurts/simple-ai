@@ -3,7 +3,7 @@
 import { blocks } from "@workspace/registry";
 import { BlockViewer } from "./block-viewer";
 
-const BLOCK_ORDER = ["chat-page"];
+const BLOCK_ORDER = ["chat-page", "chat-card"];
 
 function orderedBlocks() {
   const visible = blocks;

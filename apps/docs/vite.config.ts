@@ -21,6 +21,10 @@ const reasoning = resolve(
 );
 const tool = resolve(root, "../../packages/registry/registry/ui/tool.tsx");
 const worked = resolve(root, "../../packages/registry/registry/ui/worked.tsx");
+const worldCard = resolve(
+  root,
+  "../../packages/registry/registry/ui/world-card.tsx"
+);
 const utils = resolve(root, "../../packages/ui/src/lib/utils.ts");
 const MDX_TYPES = /^(mdx\/types|\*\.mdx)$/;
 const ANY_MODULE = /.*/;
@@ -34,8 +38,19 @@ const config = defineConfig(async () => ({
       { find: "@/components/ui/reasoning", replacement: reasoning },
       { find: "@/components/ui/tool", replacement: tool },
       { find: "@/components/ui/worked", replacement: worked },
+      { find: "@/components/ui/world-card", replacement: worldCard },
       { find: "@/components/ui", replacement: uiShadcn },
       { find: "@/lib/utils", replacement: utils },
+    ],
+  },
+  ssr: {
+    external: [
+      "three",
+      "@react-three/fiber",
+      "@react-three/drei",
+      "@react-three/xr",
+      "@react-three/uikit",
+      "@react-three/uikit-lucide",
     ],
   },
   optimizeDeps: {

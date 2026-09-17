@@ -28,6 +28,7 @@ The docs dev server serves the hosted registry at `http://127.0.0.1:4567/r/{name
 ```bash
 npx shadcn@latest registry add @simple-ai=http://127.0.0.1:4567/r/{name}.json
 npx shadcn@latest add @simple-ai/chat-page -y
+npx shadcn@latest add @simple-ai/chat-card -y
 ```
 
 The page UI lands at `src/features/assistant/page.tsx`. Wire a Next or Start route as in [Installation](apps/docs/content/docs/installation.mdx). The gallery stays mocked.

@@ -44,6 +44,16 @@ npx shadcn@latest add @simple-ai/tool
 npx shadcn@latest add @simple-ai/worked
 ```
 
+## In-world chat (Quest / WebXR)
+
+```bash
+npx shadcn@latest add @simple-ai/chat-card
+```
+
+This example is for React Three Fiber apps that enter WebXR. The page lands at `src/features/assistant-card/page.tsx` (or `features/assistant-card/page.tsx` if the app has no `src`). Wire a route to it the same way as `chat-page`.
+
+The iframe on this site is a preview. On a headset or a WebXR browser, use Enter VR / Enter AR. The composer is a uikit field in the scene, not the 2D chat input. The transcript is mocked until you point a live transport at your API.
+
 ## Hosted registry
 
 If `@simple-ai` is not in the public directory yet, add this to `components.json`:

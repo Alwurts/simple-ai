@@ -17,6 +17,9 @@
       "@/components/ui/worked": [
         "../../packages/registry/registry/ui/worked.tsx"
       ],
+      "@/components/ui/world-card": [
+        "../../packages/registry/registry/ui/world-card.tsx"
+      ],
       "@/components/ui/*": ["../../packages/ui/src/components/shadcn/*"],
       "@/lib/utils": ["../../packages/ui/src/lib/utils.ts"],
       "@/*": ["./src/*"],

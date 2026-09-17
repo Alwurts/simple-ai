@@ -11,6 +11,7 @@
       "@/components/ui/reasoning": ["./registry/ui/reasoning.tsx"],
       "@/components/ui/tool": ["./registry/ui/tool.tsx"],
       "@/components/ui/worked": ["./registry/ui/worked.tsx"],
+      "@/components/ui/world-card": ["./registry/ui/world-card.tsx"],
       "@/components/ui/*": ["../ui/src/components/shadcn/*"],
       "@/lib/utils": ["../ui/src/lib/utils.ts"]
     }

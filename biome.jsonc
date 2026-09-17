@@ -51,6 +51,35 @@
           }
         }
       }
+    },
+    {
+      "includes": [
+        "packages/registry/registry/ui/world-card.tsx",
+        "packages/registry/registry/blocks/chat-card/**",
+        "packages/registry/registry/examples/world-card-demo*.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noStaticElementInteractions": "off"
+          },
+          "complexity": {
+            "noVoid": "off",
+            "useSimplifiedLogicExpression": "off"
+          },
+          "performance": {
+            "noNamespaceImport": "off"
+          },
+          "style": {
+            "useNumericSeparators": "off",
+            "useConsistentTypeDefinitions": "off"
+          },
+          "suspicious": {
+            "noUnknownAttribute": "off",
+            "noEmptyBlockStatements": "off"
+          }
+        }
+      }
     }
   ]
 }

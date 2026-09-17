@@ -26,12 +26,13 @@ After changing a registry item, run `generate` and commit `registry.json`,
 ## Conventions
 
 - This is a **shadcn registry of agent examples**, not a finished app and not a
-  chat-component kit. `chat-page` is the example you copy. shadcn is how you
-  add it.
-- Gallery and `chat-page` stay **mocked**. Do not wire a live model into the
-  docs site.
+  chat-component kit. `chat-page` is the 2D example you copy. `chat-card` is the
+  in-world WebXR example. shadcn is how you add them.
+- Gallery, `chat-page`, and `chat-card` stay **mocked**. Do not wire a live
+  model into the docs site.
 - Documented UI is listed in `apps/docs/content/docs/components/meta.json`.
   `shell` and `reasoning` are registry internals that `chat-page` pulls in.
+  `world-card` is an internal that `chat-card` pulls in.
 - Item `docs` / `envVars` (when present) are the CLI post-add instructions. Keep
   them in sync with Installation.
 - Prefer no code comments. Comment only when names and types cannot express an

@@ -3,6 +3,14 @@ import { lazy } from "react";
 import type { RegistryEntry } from "./types";
 
 export const REGISTRY: Record<string, RegistryEntry> = {
+  "chat-card": {
+    name: "chat-card",
+    type: "registry:block",
+    title: "Chat card",
+    description: "In-world chat for React Three Fiber and WebXR.",
+    meta: { iframeHeight: 720, fullBleed: true },
+    component: lazy(() => import("../registry/blocks/chat-card/page")),
+  },
   "chat-input": {
     name: "chat-input",
     type: "registry:ui",
@@ -50,5 +58,13 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     description: "Fold the agent's work. Keep the answer.",
     meta: {},
     component: lazy(() => import("../registry/examples/worked-demo")),
+  },
+  "world-card": {
+    name: "world-card",
+    type: "registry:ui",
+    title: "World card",
+    description: "Spatial chrome for in-world cards in React Three Fiber.",
+    meta: {},
+    component: lazy(() => import("../registry/examples/world-card-demo")),
   },
 };
