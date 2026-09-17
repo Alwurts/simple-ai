@@ -1,19 +1,19 @@
 "use client";
 
 import { Text } from "@react-three/uikit";
+import { VrWorked } from "@/components/ui/vr-worked";
 import { useWorldTheme } from "@/components/ui/world-card";
-import { XrWorked } from "@/components/ui/xr-worked";
-import { XrDemoCanvas } from "./xr-demo-canvas";
+import { VrDemoCanvas } from "./vr-demo-canvas";
 
 function Demo() {
   const theme = useWorldTheme();
   return (
     <>
-      <XrWorked duration={4}>
+      <VrWorked duration={4}>
         <Text color={theme.subtle} fontSize={12}>
           cad_edit
         </Text>
-      </XrWorked>
+      </VrWorked>
       <Text color={theme.text} fontSize={13}>
         Updated the hole to 8 mm.
       </Text>
@@ -21,10 +21,10 @@ function Demo() {
   );
 }
 
-export default function XrWorkedDemoScene() {
+export default function VrWorkedDemoScene() {
   return (
-    <XrDemoCanvas size={{ h: 180, w: 320 }}>
+    <VrDemoCanvas size={{ h: 180, w: 320 }}>
       <Demo />
-    </XrDemoCanvas>
+    </VrDemoCanvas>
   );
 }

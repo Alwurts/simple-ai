@@ -56,11 +56,11 @@
       "includes": [
         "packages/registry/registry/ui/world-card.tsx",
         "packages/registry/registry/ui/world-card-chrome.ts",
-        "packages/registry/registry/ui/xr-*.tsx",
+        "packages/registry/registry/ui/vr-*.tsx",
         "packages/registry/registry/blocks/chat-card/**",
         "packages/registry/registry/examples/world-card-demo*.tsx",
-        "packages/registry/registry/examples/xr-*-demo*.tsx",
-        "packages/registry/registry/examples/xr-demo-*.tsx"
+        "packages/registry/registry/examples/vr-*-demo*.tsx",
+        "packages/registry/registry/examples/vr-demo-*.tsx"
       ],
       "linter": {
         "rules": {

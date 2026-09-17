@@ -27,12 +27,12 @@ After changing a registry item, run `generate` and commit `registry.json`,
 
 - This is a **shadcn registry of agent examples**, not a finished app and not a
   chat-component kit. `chat-page` is the 2D example you copy. `chat-card` is the
-  in-world WebXR example. shadcn is how you add them.
+  VR example. shadcn is how you add them.
 - Gallery, `chat-page`, and `chat-card` stay **mocked**. Do not wire a live
   model into the docs site.
 - Documented UI is listed in `apps/docs/content/docs/components/meta.json`.
-  2D: `chat-input`, `tool`, `worked`. In-world: `world-card` and the `xr-*`
-  pieces except `xr-button` (pulled in by `xr-chat-input`). `shell` and
+  2D: `chat-input`, `tool`, `worked`. VR: `world-card` and the `vr-*`
+  pieces except `vr-button` (pulled in by `vr-chat-input`). `shell` and
   `reasoning` are registry internals that `chat-page` pulls in.
 - Item `docs` / `envVars` (when present) are the CLI post-add instructions. Keep
   them in sync with Installation.

@@ -322,7 +322,7 @@ function plainNode(node: RootContent | PhrasingContent): string {
   return "";
 }
 
-export function XrMarkdown({ markdown }: { markdown: string }) {
+export function VrMarkdown({ markdown }: { markdown: string }) {
   const palette = useWorldTheme();
   const tree = useMemo(() => {
     try {

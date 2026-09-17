@@ -27,24 +27,24 @@ const worldCard = resolve(
 );
 const xrButton = resolve(
   root,
-  "../../packages/registry/registry/ui/xr-button.tsx"
+  "../../packages/registry/registry/ui/vr-button.tsx"
 );
 const xrChatInput = resolve(
   root,
-  "../../packages/registry/registry/ui/xr-chat-input.tsx"
+  "../../packages/registry/registry/ui/vr-chat-input.tsx"
 );
-const xrTool = resolve(root, "../../packages/registry/registry/ui/xr-tool.tsx");
+const xrTool = resolve(root, "../../packages/registry/registry/ui/vr-tool.tsx");
 const xrWorked = resolve(
   root,
-  "../../packages/registry/registry/ui/xr-worked.tsx"
+  "../../packages/registry/registry/ui/vr-worked.tsx"
 );
 const xrReasoning = resolve(
   root,
-  "../../packages/registry/registry/ui/xr-reasoning.tsx"
+  "../../packages/registry/registry/ui/vr-reasoning.tsx"
 );
 const xrMarkdown = resolve(
   root,
-  "../../packages/registry/registry/ui/xr-markdown.tsx"
+  "../../packages/registry/registry/ui/vr-markdown.tsx"
 );
 const utils = resolve(root, "../../packages/ui/src/lib/utils.ts");
 const MDX_TYPES = /^(mdx\/types|\*\.mdx)$/;
@@ -60,12 +60,12 @@ const config = defineConfig(async () => ({
       { find: "@/components/ui/tool", replacement: tool },
       { find: "@/components/ui/worked", replacement: worked },
       { find: "@/components/ui/world-card", replacement: worldCard },
-      { find: "@/components/ui/xr-button", replacement: xrButton },
-      { find: "@/components/ui/xr-chat-input", replacement: xrChatInput },
-      { find: "@/components/ui/xr-tool", replacement: xrTool },
-      { find: "@/components/ui/xr-worked", replacement: xrWorked },
-      { find: "@/components/ui/xr-reasoning", replacement: xrReasoning },
-      { find: "@/components/ui/xr-markdown", replacement: xrMarkdown },
+      { find: "@/components/ui/vr-button", replacement: xrButton },
+      { find: "@/components/ui/vr-chat-input", replacement: xrChatInput },
+      { find: "@/components/ui/vr-tool", replacement: xrTool },
+      { find: "@/components/ui/vr-worked", replacement: xrWorked },
+      { find: "@/components/ui/vr-reasoning", replacement: xrReasoning },
+      { find: "@/components/ui/vr-markdown", replacement: xrMarkdown },
       { find: "@/components/ui", replacement: uiShadcn },
       { find: "@/lib/utils", replacement: utils },
     ],

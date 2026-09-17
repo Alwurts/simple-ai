@@ -3,10 +3,10 @@
 import { Container, Text } from "@react-three/uikit";
 import { ChevronDown } from "@react-three/uikit-lucide";
 import { useRef, useState } from "react";
+import { asciiSafe } from "@/components/ui/vr-markdown";
 import { useWorldTheme } from "@/components/ui/world-card";
-import { asciiSafe } from "@/components/ui/xr-markdown";
 
-export function XrReasoning({
+export function VrReasoning({
   isStreaming = false,
   text,
 }: {

@@ -6,7 +6,7 @@ import { type ReactNode, useState } from "react";
 import { workedLabel } from "@/components/ui/worked";
 import { useWorldTheme } from "@/components/ui/world-card";
 
-export function XrWorked({
+export function VrWorked({
   children,
   duration,
   isStreaming = false,

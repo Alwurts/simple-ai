@@ -1,0 +1,32 @@
+---
+title: VR tool
+description: Quiet collapsible tool line for VR chat.
+---
+
+<ComponentPreview name="vr-tool" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/vr-tool
+```
+
+The CLI also installs `@simple-ai/tool` (for `toolTitle`) and `@simple-ai/vr-markdown`.
+
+## Usage
+
+The VR analog of `tool`. Starts collapsed. The header is the readable tool name plus a short input summary. Expand to see Input and Output as plain text.
+
+```tsx
+import { VrTool } from "@/components/ui/vr-tool"
+
+export function ToolCall() {
+  return (
+    <VrTool
+      input={{ feature: "hole", diameter_mm: 8 }}
+      output={{ ok: true, diameter_mm: 8 }}
+      toolName="cad_edit"
+    />
+  )
+}
+```

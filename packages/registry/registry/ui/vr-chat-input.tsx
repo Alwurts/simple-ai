@@ -3,10 +3,10 @@
 import { Container, Input } from "@react-three/uikit";
 import { Send } from "@react-three/uikit-lucide";
 import { useRef, useState } from "react";
+import { VrButton } from "@/components/ui/vr-button";
 import { useWorldTheme } from "@/components/ui/world-card";
-import { XrButton } from "@/components/ui/xr-button";
 
-export function XrChatInput({
+export function VrChatInput({
   disabled = false,
   onSubmit,
   placeholder = "Ask in world space",
@@ -57,9 +57,9 @@ export function XrChatInput({
           placeholder={placeholder}
         />
       </Container>
-      <XrButton disabled={disabled} height={32} onClick={send} width={32}>
+      <VrButton disabled={disabled} height={32} onClick={send} width={32}>
         <Send color={theme.text} height={18} width={18} />
-      </XrButton>
+      </VrButton>
     </Container>
   );
 }

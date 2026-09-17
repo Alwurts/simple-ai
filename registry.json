@@ -7,16 +7,16 @@
       "name": "chat-card",
       "type": "registry:block",
       "title": "Chat card",
-      "description": "In-world chat for React Three Fiber and WebXR.",
-      "docs": "This example is a mocked in-world chat card.\n\nAdd a route to src/features/assistant-card/page.tsx. On desktop, click the card, drag the handle to move, and pinch corners to resize. On a Quest, Enter VR or AR — hands (pinch) and controllers (trigger/ray) drive the same card. Point a live transport at your own API when you have one.",
+      "description": "VR chat for React Three Fiber.",
+      "docs": "This example is a mocked VR chat card.\n\nAdd a route to src/features/assistant-card/page.tsx. On desktop, click the card, drag the handle to move, and pinch corners to resize. On a Quest, Enter VR or AR — hands (pinch) and controllers (trigger/ray) drive the same card. Point a live transport at your own API when you have one.",
       "registryDependencies": [
         "@simple-ai/world-card",
-        "@simple-ai/xr-button",
-        "@simple-ai/xr-chat-input",
-        "@simple-ai/xr-tool",
-        "@simple-ai/xr-worked",
-        "@simple-ai/xr-reasoning",
-        "@simple-ai/xr-markdown"
+        "@simple-ai/vr-button",
+        "@simple-ai/vr-chat-input",
+        "@simple-ai/vr-tool",
+        "@simple-ai/vr-worked",
+        "@simple-ai/vr-reasoning",
+        "@simple-ai/vr-markdown"
       ],
       "dependencies": [
         "@react-three/uikit",
@@ -230,6 +230,103 @@
       ]
     },
     {
+      "name": "vr-button",
+      "type": "registry:ui",
+      "title": "VR button",
+      "description": "Hover and press button for VR uikit.",
+      "dependencies": ["@react-three/uikit"],
+      "registryDependencies": ["@simple-ai/world-card"],
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/vr-button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "vr-chat-input",
+      "type": "registry:ui",
+      "title": "VR chat input",
+      "description": "uikit field and send for VR chat.",
+      "dependencies": ["@react-three/uikit", "@react-three/uikit-lucide"],
+      "registryDependencies": ["@simple-ai/world-card", "@simple-ai/vr-button"],
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/vr-chat-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "vr-markdown",
+      "type": "registry:ui",
+      "title": "VR markdown",
+      "description": "MSDF-safe markdown for VR uikit.",
+      "dependencies": [
+        "@react-three/uikit",
+        "@types/mdast",
+        "mdast-util-from-markdown",
+        "mdast-util-gfm",
+        "micromark-extension-gfm"
+      ],
+      "registryDependencies": ["@simple-ai/world-card"],
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/vr-markdown.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "vr-reasoning",
+      "type": "registry:ui",
+      "title": "VR reasoning",
+      "description": "Quiet thinking row for VR chat.",
+      "dependencies": ["@react-three/uikit", "@react-three/uikit-lucide"],
+      "registryDependencies": [
+        "@simple-ai/world-card",
+        "@simple-ai/vr-markdown"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/vr-reasoning.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "vr-tool",
+      "type": "registry:ui",
+      "title": "VR tool",
+      "description": "Quiet collapsible tool line for VR chat.",
+      "dependencies": ["@react-three/uikit", "@react-three/uikit-lucide"],
+      "registryDependencies": [
+        "@simple-ai/world-card",
+        "@simple-ai/tool",
+        "@simple-ai/vr-markdown"
+      ],
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/vr-tool.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "vr-worked",
+      "type": "registry:ui",
+      "title": "VR worked",
+      "description": "Fold the agent's work in world space. Keep the answer.",
+      "dependencies": ["@react-three/uikit", "@react-three/uikit-lucide"],
+      "registryDependencies": ["@simple-ai/world-card", "@simple-ai/worked"],
+      "files": [
+        {
+          "path": "packages/registry/registry/ui/vr-worked.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "worked",
       "type": "registry:ui",
       "title": "Worked",
@@ -246,7 +343,7 @@
       "name": "world-card",
       "type": "registry:ui",
       "title": "World card",
-      "description": "Spatial chrome for in-world cards in React Three Fiber.",
+      "description": "Spatial chrome for VR cards in React Three Fiber.",
       "dependencies": ["three", "@react-three/fiber", "@types/three"],
       "files": [
         {
@@ -256,103 +353,6 @@
         {
           "path": "packages/registry/registry/ui/world-card-chrome.ts",
           "type": "registry:lib"
-        }
-      ]
-    },
-    {
-      "name": "xr-button",
-      "type": "registry:ui",
-      "title": "XR button",
-      "description": "Hover and press button for in-world uikit.",
-      "dependencies": ["@react-three/uikit"],
-      "registryDependencies": ["@simple-ai/world-card"],
-      "files": [
-        {
-          "path": "packages/registry/registry/ui/xr-button.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "xr-chat-input",
-      "type": "registry:ui",
-      "title": "XR chat input",
-      "description": "uikit field and send for in-world chat.",
-      "dependencies": ["@react-three/uikit", "@react-three/uikit-lucide"],
-      "registryDependencies": ["@simple-ai/world-card", "@simple-ai/xr-button"],
-      "files": [
-        {
-          "path": "packages/registry/registry/ui/xr-chat-input.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "xr-markdown",
-      "type": "registry:ui",
-      "title": "XR markdown",
-      "description": "MSDF-safe markdown for in-world uikit.",
-      "dependencies": [
-        "@react-three/uikit",
-        "@types/mdast",
-        "mdast-util-from-markdown",
-        "mdast-util-gfm",
-        "micromark-extension-gfm"
-      ],
-      "registryDependencies": ["@simple-ai/world-card"],
-      "files": [
-        {
-          "path": "packages/registry/registry/ui/xr-markdown.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "xr-reasoning",
-      "type": "registry:ui",
-      "title": "XR reasoning",
-      "description": "Quiet thinking row for in-world chat.",
-      "dependencies": ["@react-three/uikit", "@react-three/uikit-lucide"],
-      "registryDependencies": [
-        "@simple-ai/world-card",
-        "@simple-ai/xr-markdown"
-      ],
-      "files": [
-        {
-          "path": "packages/registry/registry/ui/xr-reasoning.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "xr-tool",
-      "type": "registry:ui",
-      "title": "XR tool",
-      "description": "Quiet collapsible tool line for in-world chat.",
-      "dependencies": ["@react-three/uikit", "@react-three/uikit-lucide"],
-      "registryDependencies": [
-        "@simple-ai/world-card",
-        "@simple-ai/tool",
-        "@simple-ai/xr-markdown"
-      ],
-      "files": [
-        {
-          "path": "packages/registry/registry/ui/xr-tool.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "xr-worked",
-      "type": "registry:ui",
-      "title": "XR worked",
-      "description": "Fold the agent's work in world space. Keep the answer.",
-      "dependencies": ["@react-three/uikit", "@react-three/uikit-lucide"],
-      "registryDependencies": ["@simple-ai/world-card", "@simple-ai/worked"],
-      "files": [
-        {
-          "path": "packages/registry/registry/ui/xr-worked.tsx",
-          "type": "registry:ui"
         }
       ]
     }

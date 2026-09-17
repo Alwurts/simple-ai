@@ -24,11 +24,11 @@ export const INITIAL_MESSAGES: CardMessage[] = [
     parts: [
       {
         type: "reasoning",
-        text: "The wearer is in a WebXR session. I will describe the in-world card, not a 2D page.",
+        text: "The wearer is in a VR session. I will describe the card in the scene, not a 2D page.",
       },
       {
         type: "text",
-        text: "You are looking at an in-world chat card. Drag the handle to move it. Pinch a corner to resize. Enter VR or AR to place it at your gaze.",
+        text: "You are looking at a VR chat card. Drag the handle to move it. Pinch a corner to resize. Enter VR or AR to place it at your gaze.",
       },
     ],
   },

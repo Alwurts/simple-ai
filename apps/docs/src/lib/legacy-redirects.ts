@@ -24,11 +24,11 @@ const LIVE_COMPONENT_DOCS = new Set([
   "tool",
   "worked",
   "world-card",
-  "xr-chat-input",
-  "xr-tool",
-  "xr-worked",
-  "xr-reasoning",
-  "xr-markdown",
+  "vr-chat-input",
+  "vr-tool",
+  "vr-worked",
+  "vr-reasoning",
+  "vr-markdown",
 ]);
 
 const REGISTRY_ALIASES: Record<string, string> = {
@@ -37,6 +37,12 @@ const REGISTRY_ALIASES: Record<string, string> = {
   "chat-02": "chat-page",
   "chat-03": "chat-page",
   "chat-04": "chat-page",
+  "xr-button": "vr-button",
+  "xr-chat-input": "vr-chat-input",
+  "xr-markdown": "vr-markdown",
+  "xr-reasoning": "vr-reasoning",
+  "xr-tool": "vr-tool",
+  "xr-worked": "vr-worked",
 };
 
 const RETIRED_APP_PATHS: Record<string, string> = {
@@ -51,6 +57,25 @@ function startsWithPath(path: string, prefix: string) {
   return path === prefix || path.startsWith(`${prefix}/`);
 }
 
+function componentDocsHref(name: string): string | undefined {
+  if (name === "composer") {
+    return "/docs/components/chat-input";
+  }
+  if (name === "chat-voice-button") {
+    return "/docs/components";
+  }
+  if (name === "vr-button" || name === "xr-button") {
+    return "/docs/components/vr-chat-input";
+  }
+  const renamed = name.startsWith("xr-") ? `vr-${name.slice(3)}` : name;
+  if (LIVE_COMPONENT_DOCS.has(renamed)) {
+    return renamed === name ? undefined : `/docs/components/${renamed}`;
+  }
+  if (name) {
+    return "/docs/components/chat-input";
+  }
+}
+
 /** `/docs/...` splat without the `/docs/` prefix. */
 export function legacyDocsHref(path: string): string | undefined {
   if (path === "blocks" || startsWithPath(path, "blocks")) {
@@ -63,25 +88,17 @@ export function legacyDocsHref(path: string): string | undefined {
     return "/docs";
   }
   if (startsWithPath(path, "components")) {
-    const name = path.slice("components/".length);
-    if (name === "composer") {
-      return "/docs/components/chat-input";
-    }
-    if (name === "xr-button") {
-      return "/docs/components/xr-chat-input";
-    }
-    if (name === "chat-voice-button") {
-      return "/docs/components";
-    }
-    if (name && !LIVE_COMPONENT_DOCS.has(name)) {
-      return "/docs/components/chat-input";
-    }
+    return componentDocsHref(path.slice("components/".length));
   }
 }
 
 export function legacyViewHref(name: string): string | undefined {
   if (name === "composer") {
     return "/view/chat-input";
+  }
+  const alias = REGISTRY_ALIASES[name];
+  if (alias) {
+    return `/view/${alias}`;
   }
   if (RETIRED_CHAT_VIEWS.has(name)) {
     return "/view/chat-page";

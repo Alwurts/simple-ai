@@ -9,9 +9,9 @@ import {
 
 const emptySubscribe = () => () => undefined;
 
-export function xrDemo(load: () => Promise<{ default: ComponentType }>) {
+export function vrDemo(load: () => Promise<{ default: ComponentType }>) {
   const Demo = lazy(load);
-  return function XrDemoPreview() {
+  return function VrDemoPreview() {
     const mounted = useSyncExternalStore(
       emptySubscribe,
       () => true,

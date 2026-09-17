@@ -4,7 +4,7 @@ import { Container, Text } from "@react-three/uikit";
 import type { ReactNode } from "react";
 import { useWorldTheme } from "@/components/ui/world-card";
 
-export function XrButton({
+export function VrButton({
   children,
   disabled = false,
   grow = false,

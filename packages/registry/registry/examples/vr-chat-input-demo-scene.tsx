@@ -2,10 +2,10 @@
 
 import { Text } from "@react-three/uikit";
 import { useState } from "react";
+import { VrChatInput } from "@/components/ui/vr-chat-input";
+import { asciiSafe } from "@/components/ui/vr-markdown";
 import { useWorldTheme } from "@/components/ui/world-card";
-import { XrChatInput } from "@/components/ui/xr-chat-input";
-import { asciiSafe } from "@/components/ui/xr-markdown";
-import { XrDemoCanvas } from "./xr-demo-canvas";
+import { VrDemoCanvas } from "./vr-demo-canvas";
 
 function Demo() {
   const theme = useWorldTheme();
@@ -15,15 +15,15 @@ function Demo() {
       <Text color={theme.text} fontSize={13}>
         {asciiSafe(last)}
       </Text>
-      <XrChatInput onSubmit={setLast} placeholder="Ask in world space" />
+      <VrChatInput onSubmit={setLast} placeholder="Ask in world space" />
     </>
   );
 }
 
-export default function XrChatInputDemoScene() {
+export default function VrChatInputDemoScene() {
   return (
-    <XrDemoCanvas size={{ h: 140, w: 320 }}>
+    <VrDemoCanvas size={{ h: 140, w: 320 }}>
       <Demo />
-    </XrDemoCanvas>
+    </VrDemoCanvas>
   );
 }

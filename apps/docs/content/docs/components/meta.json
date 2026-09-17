@@ -4,12 +4,12 @@
     "chat-input",
     "tool",
     "worked",
-    "---In-world---",
+    "---VR---",
     "world-card",
-    "xr-chat-input",
-    "xr-tool",
-    "xr-worked",
-    "xr-reasoning",
-    "xr-markdown"
+    "vr-chat-input",
+    "vr-tool",
+    "vr-worked",
+    "vr-reasoning",
+    "vr-markdown"
   ]
 }

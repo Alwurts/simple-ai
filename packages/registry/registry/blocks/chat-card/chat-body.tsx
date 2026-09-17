@@ -2,29 +2,29 @@
 
 import { Container, Text } from "@react-three/uikit";
 import { useState } from "react";
+import { VrChatInput } from "@/components/ui/vr-chat-input";
+import { asciiSafe, VrMarkdown } from "@/components/ui/vr-markdown";
+import { VrReasoning } from "@/components/ui/vr-reasoning";
+import { VrTool } from "@/components/ui/vr-tool";
+import { VrWorked } from "@/components/ui/vr-worked";
 import { splitWorkedParts } from "@/components/ui/worked";
 import { useWorldTheme } from "@/components/ui/world-card";
-import { XrChatInput } from "@/components/ui/xr-chat-input";
-import { asciiSafe, XrMarkdown } from "@/components/ui/xr-markdown";
-import { XrReasoning } from "@/components/ui/xr-reasoning";
-import { XrTool } from "@/components/ui/xr-tool";
-import { XrWorked } from "@/components/ui/xr-worked";
 import {
   type CardMessage,
   type CardPart,
   INITIAL_MESSAGES,
 } from "./mock-messages";
 
-function XrPart({ part }: { part: CardPart }) {
+function VrPart({ part }: { part: CardPart }) {
   if (part.type === "text" && part.text) {
-    return <XrMarkdown markdown={part.text} />;
+    return <VrMarkdown markdown={part.text} />;
   }
   if (part.type === "reasoning" && part.text) {
-    return <XrReasoning text={part.text} />;
+    return <VrReasoning text={part.text} />;
   }
   if (part.type.startsWith("tool-") || part.type === "dynamic-tool") {
     return (
-      <XrTool
+      <VrTool
         input={part.input}
         output={part.output}
         toolName={part.toolName ?? part.type}
@@ -34,21 +34,21 @@ function XrPart({ part }: { part: CardPart }) {
   return null;
 }
 
-function XrAssistantParts({ message }: { message: CardMessage }) {
+function VrAssistantParts({ message }: { message: CardMessage }) {
   return (
     <Container flexDirection="column" flexShrink={0} gap={8} width="100%">
       {splitWorkedParts(message.parts).map((segment) => {
         if (segment.kind === "worked") {
           const start = segment.items[0]?.index ?? 0;
           return (
-            <XrWorked key={`w-${start}`}>
+            <VrWorked key={`w-${start}`}>
               {segment.items.map((item) => (
-                <XrPart key={item.index} part={item.part} />
+                <VrPart key={item.index} part={item.part} />
               ))}
-            </XrWorked>
+            </VrWorked>
           );
         }
-        return <XrPart key={segment.item.index} part={segment.item.part} />;
+        return <VrPart key={segment.item.index} part={segment.item.part} />;
       })}
     </Container>
   );
@@ -87,7 +87,7 @@ function XrMessageRow({ message }: { message: CardMessage }) {
         </Container>
       ) : (
         <Container flexShrink={0} maxWidth="100%" width="100%">
-          <XrAssistantParts message={message} />
+          <VrAssistantParts message={message} />
         </Container>
       )}
     </Container>
@@ -161,7 +161,7 @@ export function ChatCardBody({
         height={1}
         width="100%"
       />
-      <XrChatInput onSubmit={send} />
+      <VrChatInput onSubmit={send} />
     </Container>
   );
 }

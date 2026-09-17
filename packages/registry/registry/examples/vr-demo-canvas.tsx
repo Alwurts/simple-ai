@@ -49,7 +49,7 @@ function CardBody({ children, size }: { children: ReactNode; size: CardSize }) {
   );
 }
 
-export function XrDemoCanvas({
+export function VrDemoCanvas({
   children,
   size: initial = { w: 320, h: 200 },
 }: {

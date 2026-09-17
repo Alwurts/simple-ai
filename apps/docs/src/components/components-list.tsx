@@ -1,13 +1,13 @@
 import { components } from "@workspace/registry";
 
 const DOCUMENTED = ["chat-input", "tool", "worked"] as const;
-const IN_WORLD = [
+const VR = [
   "world-card",
-  "xr-chat-input",
-  "xr-tool",
-  "xr-worked",
-  "xr-reasoning",
-  "xr-markdown",
+  "vr-chat-input",
+  "vr-tool",
+  "vr-worked",
+  "vr-reasoning",
+  "vr-markdown",
 ] as const;
 
 function ComponentLinks({ names }: { names: readonly string[] }) {
@@ -40,8 +40,8 @@ export function ComponentsList() {
     <div className="flex flex-col gap-10">
       <ComponentLinks names={DOCUMENTED} />
       <div className="flex flex-col gap-4">
-        <h2 className="font-medium text-xl">In-world</h2>
-        <ComponentLinks names={IN_WORLD} />
+        <h2 className="font-medium text-xl">VR</h2>
+        <ComponentLinks names={VR} />
       </div>
     </div>
   );

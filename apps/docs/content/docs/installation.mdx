@@ -44,13 +44,13 @@ npx shadcn@latest add @simple-ai/tool
 npx shadcn@latest add @simple-ai/worked
 ```
 
-## In-world chat (Quest / WebXR)
+## VR chat
 
 ```bash
 npx shadcn@latest add @simple-ai/chat-card
 ```
 
-This example is an in-world chat card for React Three Fiber and WebXR. The page lands at `src/features/assistant-card/page.tsx` (or `features/assistant-card/page.tsx` if the app has no `src`). Wire a route to it the same way as `chat-page`.
+This example is a VR chat card for React Three Fiber. The page lands at `src/features/assistant-card/page.tsx` (or `features/assistant-card/page.tsx` if the app has no `src`). Wire a route to it the same way as `chat-page`.
 
 The iframe is the desktop view: click the card, drag the handle to move, pinch a corner to resize. On a Quest, Enter VR or AR. Hands (pinch) and controllers (trigger and ray) hit the same `world-card`. The composer is a uikit field in the scene, not the 2D chat input. The transcript is mocked until you point a live transport at your API.
 
@@ -58,11 +58,11 @@ If you only want a piece:
 
 ```bash
 npx shadcn@latest add @simple-ai/world-card
-npx shadcn@latest add @simple-ai/xr-chat-input
-npx shadcn@latest add @simple-ai/xr-tool
-npx shadcn@latest add @simple-ai/xr-worked
-npx shadcn@latest add @simple-ai/xr-reasoning
-npx shadcn@latest add @simple-ai/xr-markdown
+npx shadcn@latest add @simple-ai/vr-chat-input
+npx shadcn@latest add @simple-ai/vr-tool
+npx shadcn@latest add @simple-ai/vr-worked
+npx shadcn@latest add @simple-ai/vr-reasoning
+npx shadcn@latest add @simple-ai/vr-markdown
 ```
 
 ## Hosted registry

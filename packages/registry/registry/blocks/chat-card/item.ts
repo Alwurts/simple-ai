@@ -5,18 +5,18 @@ const def: RegistryItemDef = {
     name: "chat-card",
     type: "registry:block",
     title: "Chat card",
-    description: "In-world chat for React Three Fiber and WebXR.",
-    docs: `This example is a mocked in-world chat card.
+    description: "VR chat for React Three Fiber.",
+    docs: `This example is a mocked VR chat card.
 
 Add a route to src/features/assistant-card/page.tsx. On desktop, click the card, drag the handle to move, and pinch corners to resize. On a Quest, Enter VR or AR — hands (pinch) and controllers (trigger/ray) drive the same card. Point a live transport at your own API when you have one.`,
     registryDependencies: [
       "@simple-ai/world-card",
-      "@simple-ai/xr-button",
-      "@simple-ai/xr-chat-input",
-      "@simple-ai/xr-tool",
-      "@simple-ai/xr-worked",
-      "@simple-ai/xr-reasoning",
-      "@simple-ai/xr-markdown",
+      "@simple-ai/vr-button",
+      "@simple-ai/vr-chat-input",
+      "@simple-ai/vr-tool",
+      "@simple-ai/vr-worked",
+      "@simple-ai/vr-reasoning",
+      "@simple-ai/vr-markdown",
     ],
     dependencies: [
       "@react-three/uikit",

@@ -4,8 +4,8 @@ import { Container, Text } from "@react-three/uikit";
 import { ChevronDown } from "@react-three/uikit-lucide";
 import { useState } from "react";
 import { toolTitle } from "@/components/ui/tool";
+import { asciiSafe } from "@/components/ui/vr-markdown";
 import { useWorldTheme } from "@/components/ui/world-card";
-import { asciiSafe } from "@/components/ui/xr-markdown";
 
 function dump(value: unknown) {
   if (value === undefined) {
@@ -21,7 +21,7 @@ function dump(value: unknown) {
   }
 }
 
-export function XrTool({
+export function VrTool({
   defaultOpen = false,
   input,
   output,

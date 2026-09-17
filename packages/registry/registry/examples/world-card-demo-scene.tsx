@@ -1,10 +1,10 @@
 "use client";
 
 import { Container, Text } from "@react-three/uikit";
+import { VrChatInput } from "@/components/ui/vr-chat-input";
+import { VrMarkdown } from "@/components/ui/vr-markdown";
 import { useWorldTheme } from "@/components/ui/world-card";
-import { XrChatInput } from "@/components/ui/xr-chat-input";
-import { XrMarkdown } from "@/components/ui/xr-markdown";
-import { XrDemoCanvas } from "./xr-demo-canvas";
+import { VrDemoCanvas } from "./vr-demo-canvas";
 
 function MiniChat() {
   const theme = useWorldTheme();
@@ -39,17 +39,17 @@ function MiniChat() {
             What am I looking at?
           </Text>
         </Container>
-        <XrMarkdown markdown="You are looking at an in-world chat card. Drag the handle to move it. Pinch a corner to resize." />
+        <VrMarkdown markdown="You are looking at a VR chat card. Drag the handle to move it. Pinch a corner to resize." />
       </Container>
-      <XrChatInput onSubmit={() => undefined} />
+      <VrChatInput onSubmit={() => undefined} />
     </>
   );
 }
 
 export default function WorldCardDemoScene() {
   return (
-    <XrDemoCanvas size={{ h: 280, w: 320 }}>
+    <VrDemoCanvas size={{ h: 280, w: 320 }}>
       <MiniChat />
-    </XrDemoCanvas>
+    </VrDemoCanvas>
   );
 }

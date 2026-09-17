@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "world-card",
   "title": "World card",
-  "description": "Spatial chrome for in-world cards in React Three Fiber.",
+  "description": "Spatial chrome for VR cards in React Three Fiber.",
   "dependencies": [
     "three",
     "@react-three/fiber",

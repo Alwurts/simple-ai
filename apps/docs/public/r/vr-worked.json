@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vr-worked",
+  "title": "VR worked",
+  "description": "Fold the agent's work in world space. Keep the answer.",
+  "dependencies": [
+    "@react-three/uikit",
+    "@react-three/uikit-lucide"
+  ],
+  "registryDependencies": [
+    "@simple-ai/world-card",
+    "@simple-ai/worked"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/registry/ui/vr-worked.tsx",
+      "content": "\"use client\";\n\nimport { Container, Text } from \"@react-three/uikit\";\nimport { ChevronDown } from \"@react-three/uikit-lucide\";\nimport { type ReactNode, useState } from \"react\";\nimport { workedLabel } from \"@/components/ui/worked\";\nimport { useWorldTheme } from \"@/components/ui/world-card\";\n\nexport function VrWorked({\n  children,\n  duration,\n  isStreaming = false,\n}: {\n  children: ReactNode;\n  duration?: number;\n  isStreaming?: boolean;\n}) {\n  const [userOpen, setUserOpen] = useState<boolean | null>(null);\n  const open = userOpen ?? isStreaming;\n  const theme = useWorldTheme();\n  return (\n    <Container flexDirection=\"column\" flexShrink={0} gap={4} width=\"100%\">\n      <Container\n        alignItems=\"center\"\n        flexDirection=\"row\"\n        gap={4}\n        onClick={() => setUserOpen(!open)}\n      >\n        <ChevronDown\n          color={theme.subtle}\n          height={12}\n          transformRotateZ={open ? 0 : 90}\n          width={12}\n        />\n        <Text color={theme.subtle} fontSize={12}>\n          {workedLabel({ duration, isStreaming })}\n        </Text>\n      </Container>\n      {open ? (\n        <Container\n          flexDirection=\"column\"\n          flexShrink={0}\n          gap={4}\n          paddingLeft={8}\n          width=\"100%\"\n        >\n          {children}\n        </Container>\n      ) : null}\n    </Container>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}
