@@ -2,13 +2,7 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { IfInSessionMode, useXR, XR } from "@react-three/xr";
-import {
-  type MutableRefObject,
-  type RefObject,
-  useCallback,
-  useRef,
-  useState,
-} from "react";
+import { type RefObject, useCallback, useRef, useState } from "react";
 import type { Group } from "three";
 import {
   type CardSize,
@@ -118,39 +112,6 @@ function ChatDock() {
   };
 
   return (
-    <ChatCardProvider>
-      <ChatDockCard
-        anchor={anchor}
-        dragging={dragging}
-        onToggle={toggleCard}
-        open={open}
-        orbSlot={orbSlot}
-        setSize={setSize}
-        size={size}
-      />
-    </ChatCardProvider>
-  );
-}
-
-function ChatDockCard({
-  anchor,
-  dragging,
-  onToggle,
-  open,
-  orbSlot,
-  setSize,
-  size,
-}: {
-  anchor: RefObject<Group | null>;
-  dragging: MutableRefObject<boolean>;
-  onToggle: () => void;
-  open: boolean;
-  orbSlot: RefObject<Group | null>;
-  setSize: (size: CardSize) => void;
-  size: CardSize;
-}) {
-  const { streaming } = useChatSession();
-  return (
     <WorldCard
       ref={anchor}
       handle={open}
@@ -168,11 +129,37 @@ function ChatDockCard({
       shape={open ? "card" : "orb"}
       size={size}
     >
+      <ChatCardProvider>
+        <ChatCardSlot
+          onToggle={toggleCard}
+          open={open}
+          orbSlot={orbSlot}
+          size={size}
+        />
+      </ChatCardProvider>
+    </WorldCard>
+  );
+}
+
+function ChatCardSlot({
+  onToggle,
+  open,
+  orbSlot,
+  size,
+}: {
+  onToggle: () => void;
+  open: boolean;
+  orbSlot: RefObject<Group | null>;
+  size: CardSize;
+}) {
+  const { streaming } = useChatSession();
+  return (
+    <>
       <group ref={orbSlot}>
         <SpeakingOrb onClick={onToggle} speaking={streaming} />
       </group>
       {open ? <ChatCardBody height={size.h} width={size.w} /> : null}
-    </WorldCard>
+    </>
   );
 }
 

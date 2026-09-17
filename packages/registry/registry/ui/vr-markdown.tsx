@@ -10,6 +10,9 @@ import { useWorldTheme, type WorldPalette } from "@/components/ui/world-card";
 
 /** uikit's default Inter MSDF atlas is Latin + basic punctuation. Missing glyphs render as black squares. */
 export function asciiSafe(value: string) {
+  if (typeof value !== "string") {
+    return "";
+  }
   return value
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/[\u201C\u201D]/g, '"')
@@ -325,6 +328,9 @@ function plainNode(node: RootContent | PhrasingContent): string {
 export function VrMarkdown({ markdown }: { markdown: string }) {
   const palette = useWorldTheme();
   const tree = useMemo(() => {
+    if (typeof markdown !== "string" || markdown.trim().length === 0) {
+      return null;
+    }
     try {
       return fromMarkdown(markdown, {
         extensions: [gfm()],
@@ -335,7 +341,7 @@ export function VrMarkdown({ markdown }: { markdown: string }) {
     }
   }, [markdown]);
 
-  if (!markdown.trim()) {
+  if (typeof markdown !== "string" || !markdown.trim()) {
     return null;
   }
   if (!tree) {

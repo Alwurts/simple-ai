@@ -3,7 +3,7 @@
 import { useChat } from "@ai-sdk/react";
 import { Container, Text } from "@react-three/uikit";
 import { isTextUIPart, isToolUIPart } from "ai";
-import { createContext, type ReactNode, useContext } from "react";
+import { createContext, type ReactNode, useContext, useMemo } from "react";
 import { VrChatInput } from "@/components/ui/vr-chat-input";
 import { asciiSafe, VrMarkdown } from "@/components/ui/vr-markdown";
 import { VrReasoning } from "@/components/ui/vr-reasoning";
@@ -34,17 +34,19 @@ export function ChatCardProvider({ children }: { children: ReactNode }) {
   });
   const streaming = status === "streaming";
   const busy = streaming || status === "submitted";
+  const value = useMemo<ChatSession>(
+    () => ({
+      busy,
+      messages,
+      send: (text) => {
+        void sendMessage({ text });
+      },
+      streaming,
+    }),
+    [busy, messages, sendMessage, streaming]
+  );
   return (
-    <ChatSessionContext.Provider
-      value={{
-        busy,
-        messages,
-        send: (text) => {
-          void sendMessage({ text });
-        },
-        streaming,
-      }}
-    >
+    <ChatSessionContext.Provider value={value}>
       {children}
     </ChatSessionContext.Provider>
   );
@@ -70,8 +72,22 @@ function toolNameOf(part: CardPart) {
   return part.type;
 }
 
-function VrPart({ part }: { part: CardPart }) {
+function VrPart({
+  isStreaming,
+  part,
+}: {
+  isStreaming?: boolean;
+  part: CardPart;
+}) {
+  const theme = useWorldTheme();
   if (isTextUIPart(part) && part.text) {
+    if (isStreaming || part.state === "streaming") {
+      return (
+        <Text color={theme.text} fontSize={13}>
+          {asciiSafe(part.text)}
+        </Text>
+      );
+    }
     return <VrMarkdown markdown={part.text} />;
   }
   if (part.type === "reasoning" && "text" in part && part.text) {
@@ -103,7 +119,7 @@ function VrAssistantParts({
       : undefined;
   return (
     <Container flexDirection="column" flexShrink={0} gap={8} width="100%">
-      {splitWorkedParts(message.parts).map((segment) => {
+      {splitWorkedParts(message.parts ?? []).map((segment) => {
         if (segment.kind === "worked") {
           const start = segment.items[0]?.index ?? 0;
           return (
@@ -113,7 +129,11 @@ function VrAssistantParts({
               key={`w-${start}`}
             >
               {segment.items.map((item) => (
-                <VrPart key={item.index} part={item.part} />
+                <VrPart
+                  isStreaming={isStreaming}
+                  key={item.index}
+                  part={item.part}
+                />
               ))}
             </VrWorked>
           );
@@ -128,7 +148,13 @@ function VrAssistantParts({
             />
           );
         }
-        return <VrPart key={segment.item.index} part={part} />;
+        return (
+          <VrPart
+            isStreaming={isStreaming}
+            key={segment.item.index}
+            part={part}
+          />
+        );
       })}
     </Container>
   );
