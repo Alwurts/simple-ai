@@ -51,12 +51,15 @@ export function VrChatInput({
         <Input
           color={theme.text}
           disabled={disabled}
+          fontSize={14}
+          height="100%"
           key={inputKey}
           onValueChange={(value: string) => {
             draft.current = value;
           }}
           placeholder={placeholder}
           placeholderStyle={{ color: theme.subtle }}
+          width="100%"
         />
       </Container>
       <VrButton disabled={disabled} height={32} onClick={send} width={32}>
