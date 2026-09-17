@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/world-card";
 import { ChatCardBody } from "./chat-body";
 import { ExperienceHud } from "./hud";
-import { LookControls, requestLookLock } from "./look-controls";
 import { ORB_RADIUS, SpeakingOrb } from "./speaking-orb";
 import { xrStore } from "./xr-store";
 
@@ -26,7 +25,7 @@ const CHAT_CARD = {
   maxH: 720,
 };
 const ORB_LIFT = 0.08;
-const DESKTOP_POS: [number, number, number] = [0.22, 1.35, -0.55];
+const DESKTOP_POS: [number, number, number] = [0, 1.42, -0.35];
 
 function appearanceFromDom(): "light" | "dark" {
   if (typeof document === "undefined") {
@@ -140,21 +139,10 @@ function ChatDock() {
 
 export default function ChatCardScene() {
   const appearance = appearanceFromDom();
-  const canvasRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div
-      className="relative h-dvh w-full overflow-hidden bg-background"
-      ref={canvasRef}
-    >
-      <ExperienceHud
-        onLookAround={() => {
-          const canvas = canvasRef.current?.querySelector("canvas");
-          if (canvas) {
-            requestLookLock(canvas);
-          }
-        }}
-      />
+    <div className="relative h-dvh w-full overflow-hidden bg-background">
+      <ExperienceHud />
       <Canvas
         camera={{
           fov: 70,
@@ -173,9 +161,6 @@ export default function ChatCardScene() {
               <Studio appearance={appearance} />
             </IfInSessionMode>
             <ChatDock />
-            <IfInSessionMode deny={["immersive-ar", "immersive-vr"]}>
-              <LookControls enabled />
-            </IfInSessionMode>
           </WorldThemeProvider>
         </XR>
       </Canvas>
