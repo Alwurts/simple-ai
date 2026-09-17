@@ -264,7 +264,7 @@ export function ChatCardBody({
       <VrChatInput
         disabled={busy}
         onSubmit={send}
-        placeholder={busy ? "Working..." : "Ask in world space"}
+        placeholder={busy ? "Working..." : "Ask the assistant"}
       />
     </Container>
   );

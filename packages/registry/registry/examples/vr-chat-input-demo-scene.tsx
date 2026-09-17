@@ -15,7 +15,7 @@ function Demo() {
       <Text color={theme.text} fontSize={13}>
         {asciiSafe(last)}
       </Text>
-      <VrChatInput onSubmit={setLast} placeholder="Ask in world space" />
+      <VrChatInput onSubmit={setLast} placeholder="Ask the assistant" />
     </>
   );
 }

@@ -9,7 +9,7 @@ import { useWorldTheme } from "@/components/ui/world-card";
 export function VrChatInput({
   disabled = false,
   onSubmit,
-  placeholder = "Ask in world space",
+  placeholder = "Ask the assistant",
 }: {
   disabled?: boolean;
   onSubmit: (text: string) => void;
@@ -49,12 +49,14 @@ export function VrChatInput({
         paddingX={8}
       >
         <Input
+          color={theme.text}
           disabled={disabled}
           key={inputKey}
           onValueChange={(value: string) => {
             draft.current = value;
           }}
           placeholder={placeholder}
+          placeholderStyle={{ color: theme.subtle }}
         />
       </Container>
       <VrButton disabled={disabled} height={32} onClick={send} width={32}>
