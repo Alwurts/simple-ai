@@ -2,7 +2,7 @@
 
 import { Container, Input, Text } from "@react-three/uikit";
 import { ChevronDown, Send } from "@react-three/uikit-lucide";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useRef, useState } from "react";
 import { toolTitle } from "@/components/ui/tool";
 import { splitWorkedParts, workedLabel } from "@/components/ui/worked";
 import { useWorldTheme } from "@/components/ui/world-card";
@@ -172,13 +172,16 @@ export function ChatCardBody({
 }) {
   const theme = useWorldTheme();
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
-  const [draft, setDraft] = useState("");
+  const [inputKey, setInputKey] = useState(0);
+  const draft = useRef("");
 
   const send = () => {
-    const text = draft.trim();
+    const text = draft.current.trim();
     if (!text) {
       return;
     }
+    draft.current = "";
+    setInputKey((key) => key + 1);
     const id = `m-${messages.length + 1}`;
     setMessages((current) => [
       ...current,
@@ -194,7 +197,6 @@ export function ChatCardBody({
         ],
       },
     ]);
-    setDraft("");
   };
 
   return (
@@ -252,9 +254,11 @@ export function ChatCardBody({
           paddingX={8}
         >
           <Input
-            onValueChange={(value: string) => setDraft(value)}
+            key={inputKey}
+            onValueChange={(value: string) => {
+              draft.current = value;
+            }}
             placeholder="Ask in world space"
-            value={draft}
           />
         </Container>
         <Container onClick={send}>

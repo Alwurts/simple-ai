@@ -1,59 +1,40 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 import { enterAR, enterVR } from "./xr-store";
 
-const emptySubscribe = () => () => undefined;
-
-function useXrSupport() {
-  return useSyncExternalStore(
-    (onStoreChange) => {
-      let cancelled = false;
-      const tick = () => {
-        const xr = navigator.xr;
-        if (!xr) {
-          onStoreChange();
-          return;
-        }
-        Promise.all([
-          xr.isSessionSupported("immersive-ar").catch(() => false),
-          xr.isSessionSupported("immersive-vr").catch(() => false),
-        ]).then(() => {
-          if (!cancelled) {
-            onStoreChange();
-          }
-        });
-      };
-      tick();
-      return () => {
-        cancelled = true;
-      };
-    },
-    () => {
-      const xr = navigator.xr;
-      return {
-        ready: true,
-        ar: Boolean(xr),
-        vr: Boolean(xr),
-      };
-    },
-    () => ({ ready: false, ar: false, vr: false })
-  );
-}
+type XrSupport = { ar: boolean; vr: boolean };
 
 export function EnterXr() {
-  const { ar, vr, ready } = useXrSupport();
-  const mounted = useSyncExternalStore(
-    emptySubscribe,
-    () => true,
-    () => false
-  );
-  if (!(mounted && ready && (ar || vr))) {
+  const [support, setSupport] = useState<XrSupport | null>(null);
+
+  useEffect(() => {
+    const xr = navigator.xr;
+    if (!xr) {
+      setSupport({ ar: false, vr: false });
+      return;
+    }
+    let cancelled = false;
+    Promise.all([
+      xr.isSessionSupported("immersive-ar").catch(() => false),
+      xr.isSessionSupported("immersive-vr").catch(() => false),
+    ]).then(([ar, vr]) => {
+      if (!cancelled) {
+        setSupport({ ar, vr });
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!(support?.ar || support?.vr)) {
     return null;
   }
+
   return (
     <div className="pointer-events-auto absolute right-4 bottom-4 z-10 flex gap-2 rounded-xl border border-border bg-card/95 p-1 shadow-lg">
-      {vr ? (
+      {support.vr ? (
         <button
           className="h-9 rounded-lg px-3 text-sm"
           onClick={() => {
@@ -64,7 +45,7 @@ export function EnterXr() {
           Enter VR
         </button>
       ) : null}
-      {ar ? (
+      {support.ar ? (
         <button
           className="h-9 rounded-lg px-3 text-sm"
           onClick={() => {

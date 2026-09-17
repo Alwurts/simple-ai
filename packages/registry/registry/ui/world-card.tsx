@@ -226,6 +226,8 @@ export function WorldCard({
   cameraRef.current = camera;
   const drag = useRef<{ dist: number; offset: THREE.Vector3 } | null>(null);
   const meters = cardMeters(size);
+  const metersW = meters.w;
+  const metersH = meters.h;
   const onSizeRef = useRef(onSizeChange);
   onSizeRef.current = onSizeChange;
   const sizeRef = useRef(size);
@@ -291,13 +293,13 @@ export function WorldCard({
   const value = useMemo<WorldCardValue>(
     () => ({
       size,
-      meters,
+      meters: { w: metersW, h: metersH },
       startMove,
       dragMove,
       endMove,
       setSize,
     }),
-    [size, meters, startMove, dragMove, endMove, setSize]
+    [size, metersW, metersH, startMove, dragMove, endMove, setSize]
   );
 
   return (
