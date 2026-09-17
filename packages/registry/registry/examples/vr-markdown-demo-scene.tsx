@@ -1,20 +1,41 @@
 "use client";
 
+import { Container } from "@react-three/uikit";
 import { VrMarkdown } from "@/components/ui/vr-markdown";
 import { VrDemoCanvas } from "./vr-demo-canvas";
 
-const SAMPLE = `You are looking at a **VR** chat card.
+const SAMPLE = `## Hole edit
 
-- Drag the handle to move it
+Updated the **8 mm** hole. Keep the _fillet_.
+
+- Drag the handle to move
 - Pinch a corner to resize
-- Enter VR or AR to place it at your gaze
 
-Use \`cad_edit\` for model changes.`;
+1. Measure the feature
+2. Apply \`cad_edit\`
+3. Rebuild
+
+- [x] Hole diameter
+- [ ] Chamfer
+
+| Feature | Size |
+| --- | --- |
+| hole | 8 mm |
+| fillet | 1 mm |
+
+> Enter VR to place the card at your gaze.
+
+\`\`\`
+cad_edit({ diameter_mm: 8 })
+\`\`\`
+`;
 
 export default function VrMarkdownDemoScene() {
   return (
-    <VrDemoCanvas size={{ h: 240, w: 320 }}>
-      <VrMarkdown markdown={SAMPLE} />
+    <VrDemoCanvas size={{ h: 340, w: 340 }}>
+      <Container flexGrow={1} minHeight={0} overflow="scroll" width="100%">
+        <VrMarkdown markdown={SAMPLE} />
+      </Container>
     </VrDemoCanvas>
   );
 }
