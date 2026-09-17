@@ -24,14 +24,14 @@ export function VrButton({
   const theme = useWorldTheme();
   return (
     <Container
-      active={disabled ? undefined : { backgroundColor: theme.pressed }}
+      active={{ backgroundColor: theme.pressed }}
       alignItems="center"
       backgroundColor={theme.muted}
       borderRadius={6}
       flexGrow={grow ? 1 : 0}
       flexShrink={0}
       height={height}
-      hover={disabled ? undefined : { backgroundColor: theme.hover }}
+      hover={{ backgroundColor: theme.hover }}
       justifyContent="center"
       onClick={() => {
         if (!disabled) {
