@@ -1,0 +1,26 @@
+---
+title: XR reasoning
+description: Quiet thinking row for in-world chat.
+---
+
+<ComponentPreview name="xr-reasoning" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/xr-reasoning
+```
+
+## Usage
+
+The in-world analog of `reasoning`. A quiet collapsible row. Streaming turns stay open and read “Reasoning...”. Glyphs that the uikit MSDF atlas cannot draw are folded to ASCII.
+
+```tsx
+import { XrReasoning } from "@/components/ui/xr-reasoning"
+
+export function Thinking() {
+  return (
+    <XrReasoning text="The wearer is in a WebXR session." />
+  )
+}
+```

@@ -19,7 +19,18 @@ const RETIRED_BLOCK_VIEWS = new Set([
   "app-shell",
 ]);
 
-const LIVE_COMPONENT_DOCS = new Set(["chat-input", "tool", "worked"]);
+const LIVE_COMPONENT_DOCS = new Set([
+  "chat-input",
+  "tool",
+  "worked",
+  "world-card",
+  "xr-button",
+  "xr-chat-input",
+  "xr-tool",
+  "xr-worked",
+  "xr-reasoning",
+  "xr-markdown",
+]);
 
 const REGISTRY_ALIASES: Record<string, string> = {
   composer: "chat-input",

@@ -12,6 +12,12 @@
       "@/components/ui/tool": ["./registry/ui/tool.tsx"],
       "@/components/ui/worked": ["./registry/ui/worked.tsx"],
       "@/components/ui/world-card": ["./registry/ui/world-card.tsx"],
+      "@/components/ui/xr-button": ["./registry/ui/xr-button.tsx"],
+      "@/components/ui/xr-chat-input": ["./registry/ui/xr-chat-input.tsx"],
+      "@/components/ui/xr-tool": ["./registry/ui/xr-tool.tsx"],
+      "@/components/ui/xr-worked": ["./registry/ui/xr-worked.tsx"],
+      "@/components/ui/xr-reasoning": ["./registry/ui/xr-reasoning.tsx"],
+      "@/components/ui/xr-markdown": ["./registry/ui/xr-markdown.tsx"],
       "@/components/ui/*": ["../ui/src/components/shadcn/*"],
       "@/lib/utils": ["../ui/src/lib/utils.ts"]
     }

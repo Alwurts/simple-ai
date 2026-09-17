@@ -1,0 +1,30 @@
+---
+title: XR button
+description: Hover and press button for in-world uikit.
+---
+
+<ComponentPreview name="xr-button" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/xr-button
+```
+
+The CLI also installs `@simple-ai/world-card`.
+
+## Usage
+
+Use it inside a uikit tree under `WorldThemeProvider`. Hover and press use the world palette. Pass `disabled` to dim the control and ignore clicks.
+
+```tsx
+import { XrButton } from "@/components/ui/xr-button"
+
+export function Actions() {
+  return (
+    <XrButton label="Press" onClick={() => {}} />
+  )
+}
+```
+
+Pass children instead of `label` for an icon. This is the in-world analog of shadcn `button`. It does not wrap DOM.

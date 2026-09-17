@@ -1,0 +1,23 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "xr-tool",
+  "title": "XR tool",
+  "description": "Quiet collapsible tool line for in-world chat.",
+  "dependencies": [
+    "@react-three/uikit",
+    "@react-three/uikit-lucide"
+  ],
+  "registryDependencies": [
+    "@simple-ai/world-card",
+    "@simple-ai/tool",
+    "@simple-ai/xr-markdown"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/registry/ui/xr-tool.tsx",
+      "content": "\"use client\";\n\nimport { Container, Text } from \"@react-three/uikit\";\nimport { ChevronDown } from \"@react-three/uikit-lucide\";\nimport { useState } from \"react\";\nimport { toolTitle } from \"@/components/ui/tool\";\nimport { useWorldTheme } from \"@/components/ui/world-card\";\nimport { asciiSafe } from \"@/components/ui/xr-markdown\";\n\nfunction dump(value: unknown) {\n  if (value === undefined) {\n    return \"\";\n  }\n  if (typeof value === \"string\") {\n    return asciiSafe(value);\n  }\n  try {\n    return asciiSafe(JSON.stringify(value));\n  } catch {\n    return \"\";\n  }\n}\n\nexport function XrTool({\n  defaultOpen = false,\n  input,\n  output,\n  toolName,\n}: {\n  defaultOpen?: boolean;\n  input?: unknown;\n  output?: unknown;\n  toolName: string;\n}) {\n  const [open, setOpen] = useState(defaultOpen);\n  const theme = useWorldTheme();\n  const inText = dump(input);\n  const outText = dump(output);\n  return (\n    <Container flexDirection=\"column\" flexShrink={0} gap={2} width=\"100%\">\n      <Container\n        alignItems=\"center\"\n        flexDirection=\"row\"\n        gap={4}\n        onClick={() => setOpen((value) => !value)}\n      >\n        <ChevronDown\n          color={theme.subtle}\n          height={12}\n          transformRotateZ={open ? 0 : 90}\n          width={12}\n        />\n        <Text color={theme.subtle} fontSize={12}>\n          {asciiSafe(toolTitle(toolName, input))}\n        </Text>\n      </Container>\n      {open ? (\n        <Container\n          flexDirection=\"column\"\n          flexShrink={0}\n          gap={2}\n          paddingLeft={16}\n          width=\"100%\"\n        >\n          {inText ? (\n            <>\n              <Text color={theme.subtle} fontSize={11} fontWeight=\"semi-bold\">\n                Input\n              </Text>\n              <Text color={theme.subtle} fontSize={11}>\n                {inText}\n              </Text>\n            </>\n          ) : null}\n          {outText ? (\n            <>\n              <Text color={theme.subtle} fontSize={11} fontWeight=\"semi-bold\">\n                Output\n              </Text>\n              <Text color={theme.subtle} fontSize={11}>\n                {outText}\n              </Text>\n            </>\n          ) : null}\n        </Container>\n      ) : null}\n    </Container>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

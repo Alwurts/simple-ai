@@ -1,0 +1,50 @@
+---
+title: XR worked
+description: Fold the agent's work in world space. Keep the answer.
+---
+
+<ComponentPreview name="xr-worked" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/xr-worked
+```
+
+The CLI also installs `@simple-ai/worked` (for `splitWorkedParts` and `workedLabel`).
+
+## Usage
+
+The in-world analog of `worked`. Fold the agent's work before the last assistant text. The answer stays visible. Live turns stay open.
+
+```tsx
+import { splitWorkedParts } from "@/components/ui/worked"
+import { XrWorked } from "@/components/ui/xr-worked"
+
+export function AssistantParts({
+  parts,
+  isStreaming,
+  duration,
+  renderPart,
+}: {
+  parts: Array<{ type: string }>
+  isStreaming: boolean
+  duration?: number
+  renderPart: (part: { type: string }, index: number) => React.ReactNode
+}) {
+  return splitWorkedParts(parts).map((segment) => {
+    if (segment.kind === "worked") {
+      return (
+        <XrWorked
+          duration={duration}
+          isStreaming={isStreaming}
+          key={segment.items[0]?.index}
+        >
+          {segment.items.map((item) => renderPart(item.part, item.index))}
+        </XrWorked>
+      )
+    }
+    return renderPart(segment.item.part, segment.item.index)
+  })
+}
+```

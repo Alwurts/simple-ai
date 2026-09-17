@@ -1,0 +1,40 @@
+---
+title: World card
+description: Spatial chrome for in-world cards in React Three Fiber.
+---
+
+<ComponentPreview name="world-card" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/world-card
+```
+
+## Usage
+
+Grab, resize, and theme a card in the scene. Pair it with the in-world chat pieces, or put your own uikit body inside.
+
+```tsx
+import { Canvas } from "@react-three/fiber"
+import {
+  WorldCard,
+  WorldThemeProvider,
+} from "@/components/ui/world-card"
+
+export function Card() {
+  return (
+    <Canvas camera={{ position: [0, 0, 0.55], fov: 42 }}>
+      <WorldThemeProvider appearance="dark">
+        <WorldCard size={{ w: 340, h: 520 }}>
+          {/* uikit body */}
+        </WorldCard>
+      </WorldThemeProvider>
+    </Canvas>
+  )
+}
+```
+
+Sizes are CSS pixels. The chrome converts them to meters with `pixelSize` `0.001`. Drag the handle to move. Pinch a corner or edge to resize. `shape="orb"` collapses the card to a speaking-orb slot.
+
+This is the spatial chrome only. Look/walk, Enter VR/AR, and the mocked transcript live on the `chat-card` example.

@@ -34,9 +34,13 @@ If the item has `docs` or `envVars`, keep them aligned with
 
 ## Catalog
 
-`apps/docs/content/docs/components/meta.json` is the public list. Items not on
-that list can still exist as registry internals (`shell`, `reasoning` for
-`chat-page`). Do not add docs pages for internals just because the item exists.
+`apps/docs/content/docs/components/meta.json` is the public list. 2D documents
+`chat-input`, `tool`, `worked`. In-world documents `world-card` and the `xr-*`
+pieces. Items not on that list can still exist as registry internals (`shell`,
+`reasoning` for `chat-page`). Do not add docs pages for internals just because
+the item exists. Also allowlist new public names in `DOCUMENTED` /
+`IN_WORLD` (`components-list.tsx`) and `LIVE_COMPONENT_DOCS`
+(`legacy-redirects.ts`) or `/docs/components/<name>` 301s to chat-input.
 
 ## Gallery stays mocked
 

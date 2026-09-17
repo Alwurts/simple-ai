@@ -31,8 +31,9 @@ After changing a registry item, run `generate` and commit `registry.json`,
 - Gallery, `chat-page`, and `chat-card` stay **mocked**. Do not wire a live
   model into the docs site.
 - Documented UI is listed in `apps/docs/content/docs/components/meta.json`.
-  `shell` and `reasoning` are registry internals that `chat-page` pulls in.
-  `world-card` is an internal that `chat-card` pulls in.
+  2D: `chat-input`, `tool`, `worked`. In-world: `world-card` and the `xr-*`
+  pieces. `shell` and `reasoning` are registry internals that `chat-page`
+  pulls in.
 - Item `docs` / `envVars` (when present) are the CLI post-add instructions. Keep
   them in sync with Installation.
 - Prefer no code comments. Comment only when names and types cannot express an

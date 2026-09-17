@@ -1,103 +1,34 @@
 "use client";
 
-import { Container, Input, Text } from "@react-three/uikit";
-import { ChevronDown, Send } from "@react-three/uikit-lucide";
-import { type ReactNode, useRef, useState } from "react";
-import { toolTitle } from "@/components/ui/tool";
-import { splitWorkedParts, workedLabel } from "@/components/ui/worked";
+import { Container, Text } from "@react-three/uikit";
+import { useState } from "react";
+import { splitWorkedParts } from "@/components/ui/worked";
 import { useWorldTheme } from "@/components/ui/world-card";
+import { XrChatInput } from "@/components/ui/xr-chat-input";
+import { asciiSafe, XrMarkdown } from "@/components/ui/xr-markdown";
+import { XrReasoning } from "@/components/ui/xr-reasoning";
+import { XrTool } from "@/components/ui/xr-tool";
+import { XrWorked } from "@/components/ui/xr-worked";
 import {
   type CardMessage,
   type CardPart,
   INITIAL_MESSAGES,
 } from "./mock-messages";
 
-function asciiSafe(value: string) {
-  return value.replace(/[^\u0020-\u007e]/g, "?");
-}
-
-function XrReasoning({ text }: { text: string }) {
-  const [open, setOpen] = useState(false);
-  const theme = useWorldTheme();
-  return (
-    <Container width="100%" flexShrink={0} flexDirection="column" gap={2}>
-      <Container
-        flexDirection="row"
-        alignItems="center"
-        gap={4}
-        onClick={() => setOpen((value) => !value)}
-      >
-        <ChevronDown
-          color={theme.subtle}
-          height={12}
-          transformRotateZ={open ? 0 : 90}
-          width={12}
-        />
-        <Text color={theme.subtle} fontSize={12}>
-          Reasoning
-        </Text>
-      </Container>
-      {open ? (
-        <Text color={theme.subtle} fontSize={12}>
-          {asciiSafe(text)}
-        </Text>
-      ) : null}
-    </Container>
-  );
-}
-
-function XrWorked({ children }: { children: ReactNode }) {
-  const [open, setOpen] = useState(false);
-  const theme = useWorldTheme();
-  return (
-    <Container width="100%" flexShrink={0} flexDirection="column" gap={4}>
-      <Container
-        flexDirection="row"
-        alignItems="center"
-        gap={4}
-        onClick={() => setOpen((value) => !value)}
-      >
-        <ChevronDown
-          color={theme.subtle}
-          height={12}
-          transformRotateZ={open ? 0 : 90}
-          width={12}
-        />
-        <Text color={theme.subtle} fontSize={12}>
-          {workedLabel({ isStreaming: false })}
-        </Text>
-      </Container>
-      {open ? (
-        <Container
-          flexDirection="column"
-          flexShrink={0}
-          gap={4}
-          paddingLeft={8}
-        >
-          {children}
-        </Container>
-      ) : null}
-    </Container>
-  );
-}
-
 function XrPart({ part }: { part: CardPart }) {
-  const theme = useWorldTheme();
   if (part.type === "text" && part.text) {
-    return (
-      <Text color={theme.text} fontSize={13}>
-        {asciiSafe(part.text)}
-      </Text>
-    );
+    return <XrMarkdown markdown={part.text} />;
   }
   if (part.type === "reasoning" && part.text) {
     return <XrReasoning text={part.text} />;
   }
   if (part.type.startsWith("tool-") || part.type === "dynamic-tool") {
     return (
-      <Text color={theme.subtle} fontSize={12}>
-        {asciiSafe(toolTitle(part.toolName ?? part.type, part.input))}
-      </Text>
+      <XrTool
+        input={part.input}
+        output={part.output}
+        toolName={part.toolName ?? part.type}
+      />
     );
   }
   return null;
@@ -172,29 +103,21 @@ export function ChatCardBody({
 }) {
   const theme = useWorldTheme();
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
-  const [inputKey, setInputKey] = useState(0);
-  const draft = useRef("");
 
-  const send = () => {
-    const text = draft.current.trim();
-    if (!text) {
-      return;
-    }
-    draft.current = "";
-    setInputKey((key) => key + 1);
+  const send = (text: string) => {
     const id = `m-${messages.length + 1}`;
     setMessages((current) => [
       ...current,
-      { id: `${id}-u`, role: "user", parts: [{ type: "text", text }] },
+      { id: `${id}-u`, parts: [{ text, type: "text" }], role: "user" },
       {
         id: `${id}-a`,
-        role: "assistant",
         parts: [
           {
-            type: "text",
             text: "Mocked reply. Point the transport at your API when you have one.",
+            type: "text",
           },
         ],
+        role: "assistant",
       },
     ]);
   };
@@ -238,33 +161,7 @@ export function ChatCardBody({
         height={1}
         width="100%"
       />
-      <Container
-        alignItems="center"
-        flexDirection="row"
-        flexShrink={0}
-        gap={4}
-        width="100%"
-      >
-        <Container
-          backgroundColor={theme.muted}
-          borderRadius={8}
-          flexGrow={1}
-          height={36}
-          minWidth={0}
-          paddingX={8}
-        >
-          <Input
-            key={inputKey}
-            onValueChange={(value: string) => {
-              draft.current = value;
-            }}
-            placeholder="Ask in world space"
-          />
-        </Container>
-        <Container onClick={send}>
-          <Send color={theme.text} height={18} width={18} />
-        </Container>
-      </Container>
+      <XrChatInput onSubmit={send} />
     </Container>
   );
 }

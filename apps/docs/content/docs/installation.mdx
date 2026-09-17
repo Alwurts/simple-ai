@@ -54,6 +54,18 @@ This example is a first-person studio for React Three Fiber and WebXR. The page 
 
 The iframe is the desktop view: left click uses the card, right-drag looks around, WASD walks, wheel stays in the scene. On a Quest, Enter VR or AR. Hands (pinch) and controllers (trigger and ray) hit the same `world-card`. The composer is a uikit field in the scene, not the 2D chat input. The transcript is mocked until you point a live transport at your API.
 
+If you only want a piece:
+
+```bash
+npx shadcn@latest add @simple-ai/world-card
+npx shadcn@latest add @simple-ai/xr-button
+npx shadcn@latest add @simple-ai/xr-chat-input
+npx shadcn@latest add @simple-ai/xr-tool
+npx shadcn@latest add @simple-ai/xr-worked
+npx shadcn@latest add @simple-ai/xr-reasoning
+npx shadcn@latest add @simple-ai/xr-markdown
+```
+
 ## Hosted registry
 
 If `@simple-ai` is not in the public directory yet, add this to `components.json`:

@@ -11,8 +11,12 @@ const def: RegistryItemDef = {
 Add a route to src/features/assistant-card/page.tsx. On desktop, left click uses the card, right-drag looks around, WASD walks. On a Quest, Enter VR or AR — hands (pinch) and controllers (trigger/ray) drive the same card. Point a live transport at your own API when you have one.`,
     registryDependencies: [
       "@simple-ai/world-card",
-      "@simple-ai/tool",
-      "@simple-ai/worked",
+      "@simple-ai/xr-button",
+      "@simple-ai/xr-chat-input",
+      "@simple-ai/xr-tool",
+      "@simple-ai/xr-worked",
+      "@simple-ai/xr-reasoning",
+      "@simple-ai/xr-markdown",
     ],
     dependencies: [
       "@react-three/uikit",

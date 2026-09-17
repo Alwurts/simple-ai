@@ -20,6 +20,24 @@
       "@/components/ui/world-card": [
         "../../packages/registry/registry/ui/world-card.tsx"
       ],
+      "@/components/ui/xr-button": [
+        "../../packages/registry/registry/ui/xr-button.tsx"
+      ],
+      "@/components/ui/xr-chat-input": [
+        "../../packages/registry/registry/ui/xr-chat-input.tsx"
+      ],
+      "@/components/ui/xr-tool": [
+        "../../packages/registry/registry/ui/xr-tool.tsx"
+      ],
+      "@/components/ui/xr-worked": [
+        "../../packages/registry/registry/ui/xr-worked.tsx"
+      ],
+      "@/components/ui/xr-reasoning": [
+        "../../packages/registry/registry/ui/xr-reasoning.tsx"
+      ],
+      "@/components/ui/xr-markdown": [
+        "../../packages/registry/registry/ui/xr-markdown.tsx"
+      ],
       "@/components/ui/*": ["../../packages/ui/src/components/shadcn/*"],
       "@/lib/utils": ["../../packages/ui/src/lib/utils.ts"],
       "@/*": ["./src/*"],
