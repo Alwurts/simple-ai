@@ -37,13 +37,7 @@ export function VrWorked({
         </Text>
       </Container>
       {open ? (
-        <Container
-          flexDirection="column"
-          flexShrink={0}
-          gap={4}
-          paddingLeft={8}
-          width="100%"
-        >
+        <Container flexDirection="column" flexShrink={0} gap={4} width="100%">
           {children}
         </Container>
       ) : null}
