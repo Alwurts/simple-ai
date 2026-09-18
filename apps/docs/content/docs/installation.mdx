@@ -13,7 +13,7 @@ Start from a [shadcn/ui](https://ui.shadcn.com) project with the Base UI style. 
 npx shadcn@latest add @simple-ai/chat-page
 ```
 
-`chat-page` is the complete chat. The CLI also pulls in the chat input, tool rows, thinking, and the work fold, plus the page layout. It also installs shadcn `sidebar`, `message`, `bubble`, `attachment`, and `message-scroller`.
+`chat-page` is the [complete chat](/blocks). The CLI also pulls in the [chat input](/docs/components/chat-input), [tool](/docs/components/tool) rows, thinking, and the [work fold](/docs/components/worked), plus the page layout. It also installs shadcn `sidebar`, `message`, `bubble`, `attachment`, and `message-scroller`.
 
 The page UI lands at `src/features/assistant/page.tsx` (or `features/assistant/page.tsx` if the app has no `src`). Wire a route to it:
 
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/assistant")({
 
 ## Pieces
 
-If you only want a piece:
+If you only want a piece, add [chat input](/docs/components/chat-input), [tool](/docs/components/tool), or the [work fold](/docs/components/worked):
 
 ```bash
 npx shadcn@latest add @simple-ai/chat-input
