@@ -16,6 +16,9 @@ import { VrButton } from "@/components/ui/vr-button";
 import { useWorldTheme } from "@/components/ui/world-card";
 
 const EDGE = 8;
+const GUTTER = 8;
+const THUMB = 4;
+const THUMB_RADIUS = 2;
 
 type ScrollerApi = {
   away: boolean;
@@ -55,6 +58,7 @@ export function VrMessageScroller({
   gap?: number;
   scrollEdgeThreshold?: number;
 }) {
+  const theme = useWorldTheme();
   const viewport = useRef<VanillaContainer | null>(null);
   const following = useRef(autoScroll);
   const awayRef = useRef(false);
@@ -151,7 +155,14 @@ export function VrMessageScroller({
           minHeight={0}
           onScroll={onScroll}
           overflow="scroll"
+          paddingRight={GUTTER}
           ref={viewport}
+          scrollbarBorderBottomLeftRadius={THUMB_RADIUS}
+          scrollbarBorderBottomRightRadius={THUMB_RADIUS}
+          scrollbarBorderTopLeftRadius={THUMB_RADIUS}
+          scrollbarBorderTopRightRadius={THUMB_RADIUS}
+          scrollbarColor={away ? theme.subtle : theme.card}
+          scrollbarWidth={THUMB}
           width="100%"
         >
           {children}
