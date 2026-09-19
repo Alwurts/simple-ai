@@ -57,3 +57,5 @@ export function AssistantParts({
 ```
 
 `splitWorkedParts` groups work before the last `text` part. Trailing tools after that text stay outside the fold. Text never folds. While `isStreaming` is true the row reads “Working” and stays open; when the turn settles it reads “Worked” or “Worked for 12s”.
+
+The fold lives in the [chat page](/blocks). Tool calls inside it use [tool](/docs/components/tool).

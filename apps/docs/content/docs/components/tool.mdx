@@ -43,3 +43,5 @@ export function ToolCall({ part }: { part: { toolName: string; state: "output-av
 ```
 
 Tools start collapsed. The header is the readable tool name, plus a short input summary when the call has a path, command, query, or pattern. Expand to see JSON under Input and Output. `approval-requested` reads “Needs approval”; `output-denied` reads “Denied”.
+
+The row is used in the [chat page](/blocks). The prompt there is the [chat input](/docs/components/chat-input).
