@@ -1,0 +1,28 @@
+---
+title: VR markdown
+description: MSDF-safe markdown for VR uikit.
+---
+
+<ComponentPreview name="vr-markdown" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/vr-markdown
+```
+
+## Usage
+
+The VR analog of Streamdown. Parses GFM and renders headings, lists, tables, task lists, code, quotes, and emphasis as uikit text. Missing Inter MSDF glyphs become ASCII via `asciiSafe` so they do not draw as black squares.
+
+```tsx
+import { VrMarkdown } from "@/components/ui/vr-markdown"
+
+export function Answer() {
+  return (
+    <VrMarkdown markdown="Updated the hole to **8 mm**." />
+  )
+}
+```
+
+Do not use Streamdown or HTML inside the card. Import `asciiSafe` for any other string you put in a uikit `Text`.

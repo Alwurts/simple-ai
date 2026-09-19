@@ -51,6 +51,47 @@
           }
         }
       }
+    },
+    {
+      "includes": [
+        "packages/registry/registry/ui/world-card.tsx",
+        "packages/registry/registry/ui/world-card-chrome.ts",
+        "packages/registry/registry/ui/vr-*.tsx",
+        "packages/registry/registry/blocks/chat-card/**",
+        "packages/registry/registry/examples/world-card-demo*.tsx",
+        "packages/registry/registry/examples/vr-*-demo*.tsx",
+        "packages/registry/registry/examples/vr-demo-*.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noStaticElementInteractions": "off"
+          },
+          "complexity": {
+            "noVoid": "off",
+            "useSimplifiedLogicExpression": "off",
+            "noExcessiveCognitiveComplexity": "off",
+            "useOptionalChain": "off"
+          },
+          "correctness": {
+            "useExhaustiveDependencies": "off"
+          },
+          "performance": {
+            "noNamespaceImport": "off"
+          },
+          "style": {
+            "useNumericSeparators": "off",
+            "useConsistentTypeDefinitions": "off",
+            "noExportedImports": "off",
+            "noNestedTernary": "off"
+          },
+          "suspicious": {
+            "noUnknownAttribute": "off",
+            "noEmptyBlockStatements": "off",
+            "noArrayIndexKey": "off"
+          }
+        }
+      }
     }
   ]
 }

@@ -21,6 +21,35 @@ const reasoning = resolve(
 );
 const tool = resolve(root, "../../packages/registry/registry/ui/tool.tsx");
 const worked = resolve(root, "../../packages/registry/registry/ui/worked.tsx");
+const worldCard = resolve(
+  root,
+  "../../packages/registry/registry/ui/world-card.tsx"
+);
+const vrButton = resolve(
+  root,
+  "../../packages/registry/registry/ui/vr-button.tsx"
+);
+const vrChatInput = resolve(
+  root,
+  "../../packages/registry/registry/ui/vr-chat-input.tsx"
+);
+const vrMessageScroller = resolve(
+  root,
+  "../../packages/registry/registry/ui/vr-message-scroller.tsx"
+);
+const vrTool = resolve(root, "../../packages/registry/registry/ui/vr-tool.tsx");
+const vrWorked = resolve(
+  root,
+  "../../packages/registry/registry/ui/vr-worked.tsx"
+);
+const vrReasoning = resolve(
+  root,
+  "../../packages/registry/registry/ui/vr-reasoning.tsx"
+);
+const vrMarkdown = resolve(
+  root,
+  "../../packages/registry/registry/ui/vr-markdown.tsx"
+);
 const utils = resolve(root, "../../packages/ui/src/lib/utils.ts");
 const MDX_TYPES = /^(mdx\/types|\*\.mdx)$/;
 const ANY_MODULE = /.*/;
@@ -34,6 +63,17 @@ const config = defineConfig(async () => ({
       { find: "@/components/ui/reasoning", replacement: reasoning },
       { find: "@/components/ui/tool", replacement: tool },
       { find: "@/components/ui/worked", replacement: worked },
+      { find: "@/components/ui/world-card", replacement: worldCard },
+      { find: "@/components/ui/vr-button", replacement: vrButton },
+      { find: "@/components/ui/vr-chat-input", replacement: vrChatInput },
+      {
+        find: "@/components/ui/vr-message-scroller",
+        replacement: vrMessageScroller,
+      },
+      { find: "@/components/ui/vr-tool", replacement: vrTool },
+      { find: "@/components/ui/vr-worked", replacement: vrWorked },
+      { find: "@/components/ui/vr-reasoning", replacement: vrReasoning },
+      { find: "@/components/ui/vr-markdown", replacement: vrMarkdown },
       { find: "@/components/ui", replacement: uiShadcn },
       { find: "@/lib/utils", replacement: utils },
     ],

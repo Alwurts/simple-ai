@@ -3,6 +3,14 @@ import { lazy } from "react";
 import type { RegistryEntry } from "./types";
 
 export const REGISTRY: Record<string, RegistryEntry> = {
+  "chat-card": {
+    name: "chat-card",
+    type: "registry:block",
+    title: "Chat card",
+    description: "VR chat for React Three Fiber.",
+    meta: { iframeHeight: 800, fullBleed: true },
+    component: lazy(() => import("../registry/blocks/chat-card/page")),
+  },
   "chat-input": {
     name: "chat-input",
     type: "registry:ui",
@@ -43,6 +51,64 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     meta: {},
     component: lazy(() => import("../registry/examples/tool-demo")),
   },
+  "vr-button": {
+    name: "vr-button",
+    type: "registry:ui",
+    title: "VR button",
+    description: "Hover and press button for VR uikit.",
+    meta: {},
+    component: lazy(() => import("../registry/examples/vr-button-demo")),
+  },
+  "vr-chat-input": {
+    name: "vr-chat-input",
+    type: "registry:ui",
+    title: "VR chat input",
+    description: "uikit field and send for VR chat.",
+    meta: {},
+    component: lazy(() => import("../registry/examples/vr-chat-input-demo")),
+  },
+  "vr-markdown": {
+    name: "vr-markdown",
+    type: "registry:ui",
+    title: "VR markdown",
+    description: "MSDF-safe markdown for VR uikit.",
+    meta: {},
+    component: lazy(() => import("../registry/examples/vr-markdown-demo")),
+  },
+  "vr-message-scroller": {
+    name: "vr-message-scroller",
+    type: "registry:ui",
+    title: "VR message scroller",
+    description: "Follow the live edge of a VR chat list.",
+    meta: {},
+    component: lazy(
+      () => import("../registry/examples/vr-message-scroller-demo")
+    ),
+  },
+  "vr-reasoning": {
+    name: "vr-reasoning",
+    type: "registry:ui",
+    title: "VR reasoning",
+    description: "Quiet thinking row for VR chat.",
+    meta: {},
+    component: lazy(() => import("../registry/examples/vr-reasoning-demo")),
+  },
+  "vr-tool": {
+    name: "vr-tool",
+    type: "registry:ui",
+    title: "VR tool",
+    description: "Quiet collapsible tool line for VR chat.",
+    meta: {},
+    component: lazy(() => import("../registry/examples/vr-tool-demo")),
+  },
+  "vr-worked": {
+    name: "vr-worked",
+    type: "registry:ui",
+    title: "VR worked",
+    description: "Fold the agent's work in world space. Keep the answer.",
+    meta: {},
+    component: lazy(() => import("../registry/examples/vr-worked-demo")),
+  },
   worked: {
     name: "worked",
     type: "registry:ui",
@@ -50,5 +116,13 @@ export const REGISTRY: Record<string, RegistryEntry> = {
     description: "Fold the agent's work. Keep the answer.",
     meta: {},
     component: lazy(() => import("../registry/examples/worked-demo")),
+  },
+  "world-card": {
+    name: "world-card",
+    type: "registry:ui",
+    title: "World card",
+    description: "Spatial chrome for VR cards in React Three Fiber.",
+    meta: {},
+    component: lazy(() => import("../registry/examples/world-card-demo")),
   },
 };

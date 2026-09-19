@@ -1,0 +1,50 @@
+---
+title: VR worked
+description: Fold the agent's work in world space. Keep the answer.
+---
+
+<ComponentPreview name="vr-worked" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/vr-worked
+```
+
+The CLI also installs `@simple-ai/worked` (for `splitWorkedParts` and `workedLabel`).
+
+## Usage
+
+The VR analog of `worked`. Fold the agent's work before the last assistant text. The answer stays visible. Live turns stay open.
+
+```tsx
+import { splitWorkedParts } from "@/components/ui/worked"
+import { VrWorked } from "@/components/ui/vr-worked"
+
+export function AssistantParts({
+  parts,
+  isStreaming,
+  duration,
+  renderPart,
+}: {
+  parts: Array<{ type: string }>
+  isStreaming: boolean
+  duration?: number
+  renderPart: (part: { type: string }, index: number) => React.ReactNode
+}) {
+  return splitWorkedParts(parts).map((segment) => {
+    if (segment.kind === "worked") {
+      return (
+        <VrWorked
+          duration={duration}
+          isStreaming={isStreaming}
+          key={segment.items[0]?.index}
+        >
+          {segment.items.map((item) => renderPart(item.part, item.index))}
+        </VrWorked>
+      )
+    }
+    return renderPart(segment.item.part, segment.item.index)
+  })
+}
+```

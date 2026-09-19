@@ -21,10 +21,13 @@ The public site is not the source of item code. Item source lives in
 
 ## Catalog
 
-- Block: `chat-page` (gallery mocked).
+- Blocks: `chat-page` (2D, gallery mocked) and `chat-card` (VR, mocked).
 - Documented UI: whatever `apps/docs/content/docs/components/meta.json` lists.
+  2D: `chat-input`, `tool`, `worked`. VR: `world-card`,
+  `vr-chat-input`, `vr-message-scroller`, `vr-tool`, `vr-worked`,
+  `vr-reasoning`, `vr-markdown`.
 - `shell` and `reasoning` stay registry items that `chat-page` depends on, with
-  no docs pages of their own.
+  no docs pages of their own. `vr-button` is the same for VR chat input.
 
 ## Dual registry
 

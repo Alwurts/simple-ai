@@ -11,6 +11,16 @@
       "@/components/ui/reasoning": ["./registry/ui/reasoning.tsx"],
       "@/components/ui/tool": ["./registry/ui/tool.tsx"],
       "@/components/ui/worked": ["./registry/ui/worked.tsx"],
+      "@/components/ui/world-card": ["./registry/ui/world-card.tsx"],
+      "@/components/ui/vr-button": ["./registry/ui/vr-button.tsx"],
+      "@/components/ui/vr-chat-input": ["./registry/ui/vr-chat-input.tsx"],
+      "@/components/ui/vr-message-scroller": [
+        "./registry/ui/vr-message-scroller.tsx"
+      ],
+      "@/components/ui/vr-tool": ["./registry/ui/vr-tool.tsx"],
+      "@/components/ui/vr-worked": ["./registry/ui/vr-worked.tsx"],
+      "@/components/ui/vr-reasoning": ["./registry/ui/vr-reasoning.tsx"],
+      "@/components/ui/vr-markdown": ["./registry/ui/vr-markdown.tsx"],
       "@/components/ui/*": ["../ui/src/components/shadcn/*"],
       "@/lib/utils": ["../ui/src/lib/utils.ts"]
     }

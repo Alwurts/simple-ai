@@ -17,6 +17,30 @@
       "@/components/ui/worked": [
         "../../packages/registry/registry/ui/worked.tsx"
       ],
+      "@/components/ui/world-card": [
+        "../../packages/registry/registry/ui/world-card.tsx"
+      ],
+      "@/components/ui/vr-button": [
+        "../../packages/registry/registry/ui/vr-button.tsx"
+      ],
+      "@/components/ui/vr-chat-input": [
+        "../../packages/registry/registry/ui/vr-chat-input.tsx"
+      ],
+      "@/components/ui/vr-message-scroller": [
+        "../../packages/registry/registry/ui/vr-message-scroller.tsx"
+      ],
+      "@/components/ui/vr-tool": [
+        "../../packages/registry/registry/ui/vr-tool.tsx"
+      ],
+      "@/components/ui/vr-worked": [
+        "../../packages/registry/registry/ui/vr-worked.tsx"
+      ],
+      "@/components/ui/vr-reasoning": [
+        "../../packages/registry/registry/ui/vr-reasoning.tsx"
+      ],
+      "@/components/ui/vr-markdown": [
+        "../../packages/registry/registry/ui/vr-markdown.tsx"
+      ],
       "@/components/ui/*": ["../../packages/ui/src/components/shadcn/*"],
       "@/lib/utils": ["../../packages/ui/src/lib/utils.ts"],
       "@/*": ["./src/*"],

@@ -1,0 +1,38 @@
+---
+title: VR message scroller
+description: Follow the live edge of a VR chat list.
+---
+
+<ComponentPreview name="vr-message-scroller" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/vr-message-scroller
+```
+
+The CLI also installs `@simple-ai/vr-button` and `@simple-ai/world-card`.
+
+## Usage
+
+The VR analog of shadcn `message-scroller`. It follows new content while you are at the bottom. Scroll away to read; a jump control returns to the live edge. A thin thumb sits in a reserved right gutter so it does not cover messages; the thumb hides while following. Pass `followKey` as the last message id so a new send starts following again.
+
+```tsx
+import { VrMessageScroller } from "@/components/ui/vr-message-scroller"
+
+export function Transcript({
+  messages,
+}: {
+  messages: Array<{ id: string }>
+}) {
+  return (
+    <VrMessageScroller autoScroll followKey={messages.at(-1)?.id}>
+      {messages.map((message) => (
+        <Row key={message.id} message={message} />
+      ))}
+    </VrMessageScroller>
+  )
+}
+```
+
+Render it inside a uikit root on a `world-card`. Do not put the 2D message scroller in WebGL.

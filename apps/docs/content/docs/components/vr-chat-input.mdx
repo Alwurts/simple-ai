@@ -1,0 +1,35 @@
+---
+title: VR chat input
+description: uikit field and send for VR chat.
+---
+
+<ComponentPreview name="vr-chat-input" />
+
+## Installation
+
+```bash
+npx shadcn@latest add @simple-ai/vr-chat-input
+```
+
+The CLI also installs `@simple-ai/vr-button` and `@simple-ai/world-card`.
+
+## Usage
+
+This is the VR analog of `chat-input`. It is a uikit field, not TipTap. The value is uncontrolled so layout cannot echo `setState`. `onSubmit` receives the trimmed string; the field remounts after send. Pass `onStop` and `disabled` while a turn is in flight to turn send into stop.
+
+```tsx
+import { VrChatInput } from "@/components/ui/vr-chat-input"
+
+export function Composer() {
+  return (
+    <VrChatInput
+      onSubmit={(text) => {
+        console.log(text)
+      }}
+      placeholder="Ask the assistant"
+    />
+  )
+}
+```
+
+Render it inside a uikit root on a `world-card`. Do not put the 2D chat input in WebGL.

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vr-chat-input",
+  "title": "VR chat input",
+  "description": "uikit field and send for VR chat.",
+  "dependencies": [
+    "@react-three/uikit",
+    "@react-three/uikit-lucide"
+  ],
+  "registryDependencies": [
+    "@simple-ai/world-card",
+    "@simple-ai/vr-button"
+  ],
+  "files": [
+    {
+      "path": "packages/registry/registry/ui/vr-chat-input.tsx",
+      "content": "\"use client\";\n\nimport { Container, Input } from \"@react-three/uikit\";\nimport { Send, Square } from \"@react-three/uikit-lucide\";\nimport { useRef, useState } from \"react\";\nimport { VrButton } from \"@/components/ui/vr-button\";\nimport { useWorldTheme } from \"@/components/ui/world-card\";\n\nexport function VrChatInput({\n  disabled = false,\n  onStop,\n  onSubmit,\n  placeholder = \"Ask the assistant\",\n}: {\n  disabled?: boolean;\n  onStop?: () => void;\n  onSubmit: (text: string) => void;\n  placeholder?: string;\n}) {\n  const theme = useWorldTheme();\n  const [inputKey, setInputKey] = useState(0);\n  const draft = useRef(\"\");\n  const actAsStop = Boolean(onStop) && disabled;\n\n  const send = () => {\n    if (disabled) {\n      return;\n    }\n    const text = draft.current.trim();\n    if (!text) {\n      return;\n    }\n    draft.current = \"\";\n    setInputKey((key) => key + 1);\n    onSubmit(text);\n  };\n\n  return (\n    <Container\n      alignItems=\"center\"\n      flexDirection=\"row\"\n      flexShrink={0}\n      gap={4}\n      width=\"100%\"\n    >\n      <Container\n        backgroundColor={theme.muted}\n        borderRadius={8}\n        flexGrow={1}\n        height={36}\n        minWidth={0}\n        paddingX={8}\n      >\n        <Input\n          color={theme.text}\n          disabled={disabled}\n          fontSize={14}\n          height=\"100%\"\n          key={inputKey}\n          onValueChange={(value: string) => {\n            draft.current = value;\n          }}\n          placeholder={placeholder}\n          placeholderStyle={{ color: theme.subtle }}\n          width=\"100%\"\n        />\n      </Container>\n      <VrButton\n        height={32}\n        onClick={() => {\n          if (actAsStop) {\n            onStop?.();\n            return;\n          }\n          send();\n        }}\n        width={32}\n      >\n        {actAsStop ? (\n          <Square color={theme.text} height={14} width={14} />\n        ) : (\n          <Send color={theme.text} height={18} width={18} />\n        )}\n      </VrButton>\n    </Container>\n  );\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "type": "registry:ui"
+}

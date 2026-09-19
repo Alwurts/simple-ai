@@ -39,20 +39,35 @@ function itemToPage(item: Item): DocsNavPage {
   };
 }
 
-function folderPages(folder: Folder): DocsNavPage[] {
-  const pages: DocsNavPage[] = [];
-  const childPages: DocsNavPage[] = [];
+function folderGroups(folder: Folder): DocsNavGroup[] {
+  const groups: DocsNavGroup[] = [];
+  let title = asText(folder.name, "Section");
+  let pages: DocsNavPage[] = [];
+
+  const flush = () => {
+    if (pages.length === 0) {
+      return;
+    }
+    groups.push({ pages, title });
+    pages = [];
+  };
+
   for (const child of folder.children) {
+    if (child.type === "separator") {
+      flush();
+      title = asText(child.name, "Section");
+      continue;
+    }
     if (child.type === "page" && child.url !== folder.index?.url) {
-      childPages.push(itemToPage(child));
+      pages.push(itemToPage(child));
     }
   }
-  // Folder index is the section landing — don't repeat the folder name as a page.
-  if (folder.index && childPages.length === 0) {
+
+  if (folder.index && groups.length === 0 && pages.length === 0) {
     pages.push(itemToPage(folder.index));
   }
-  pages.push(...childPages);
-  return pages;
+  flush();
+  return groups;
 }
 
 export function docsNavFromTree(tree: Root): DocsNavGroup[] {
@@ -64,10 +79,7 @@ export function docsNavFromTree(tree: Root): DocsNavGroup[] {
       start.push(itemToPage(node));
     }
     if (node.type === "folder") {
-      groups.push({
-        title: asText(node.name, "Section"),
-        pages: folderPages(node),
-      });
+      groups.push(...folderGroups(node));
     }
   }
 

@@ -1,4 +1,16 @@
 {
   "title": "Components",
-  "pages": ["chat-input", "tool", "worked"]
+  "pages": [
+    "chat-input",
+    "tool",
+    "worked",
+    "---VR---",
+    "world-card",
+    "vr-chat-input",
+    "vr-message-scroller",
+    "vr-tool",
+    "vr-worked",
+    "vr-reasoning",
+    "vr-markdown"
+  ]
 }
