@@ -12,13 +12,13 @@
     "registry:generate": "pnpm --filter @workspace/registry generate"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.2",
+    "@biomejs/biome": "2.5.15",
     "@workspace/biome-config": "workspace:*",
     "@workspace/tsconfig": "workspace:*",
-    "turbo": "^2.10.4",
+    "turbo": "^2.11.6",
     "typescript": "7.0.2"
   },
-  "packageManager": "pnpm@10.24.0",
+  "packageManager": "pnpm@10.34.6",
   "engines": {
     "node": ">=22"
   }
