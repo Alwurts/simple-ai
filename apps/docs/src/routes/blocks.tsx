@@ -10,7 +10,7 @@ import {
 import { seo } from "@/lib/seo";
 
 const title = "Blocks";
-const description = "A whole screen you copy in. Change the source.";
+const description = "Just this screen. The whole app is the starter template.";
 
 export const Route = createFileRoute("/blocks")({
   component: BlocksPage,
@@ -46,6 +46,13 @@ function BlocksPage() {
                 href="/docs/components/chat-input"
               >
                 chat input
+              </a>
+              . The whole app is the{" "}
+              <a
+                className="font-medium text-foreground underline underline-offset-4"
+                href="/templates"
+              >
+                starter template
               </a>
               .
             </p>

@@ -42,8 +42,22 @@ export function LandingHero() {
             Curated agent examples{" "}
             <span className="text-muted-foreground">you can build upon</span>
           </h1>
-          <p className="max-w-md text-muted-foreground text-sm md:text-base">
-            Copy them into your app. Change the source.
+          <p className="max-w-md text-balance text-muted-foreground text-sm md:text-base">
+            Copy the{" "}
+            <a
+              className="font-medium text-foreground underline underline-offset-4"
+              href="/templates"
+            >
+              whole template
+            </a>
+            , or just the{" "}
+            <a
+              className="font-medium text-foreground underline underline-offset-4"
+              href="/blocks"
+            >
+              block
+            </a>{" "}
+            you need. Then change the source.
           </p>
           <div className="flex items-center justify-center gap-2">
             <Button

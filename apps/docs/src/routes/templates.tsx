@@ -8,7 +8,7 @@ import {
 import { seo } from "@/lib/seo";
 
 const title = "Templates";
-const description = "A whole app you can start from. Change the source.";
+const description = "The whole app. Or copy just the chat page.";
 
 const STARTER_REPO = "https://github.com/Alwurts/simple-ai-starter";
 
@@ -43,7 +43,7 @@ function TemplatesPage() {
                 >
                   chat page
                 </a>
-                .
+                . You can also copy just that page.
               </p>
             </div>
             <div className="mt-auto flex flex-wrap gap-2">
