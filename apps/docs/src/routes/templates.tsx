@@ -8,7 +8,7 @@ import {
 import { seo } from "@/lib/seo";
 
 const title = "Templates";
-const description = "The whole app. Or copy just the chat page.";
+const description = "Complete apps to start a new project from.";
 
 const STARTER_REPO = "https://github.com/Alwurts/simple-ai-starter";
 
@@ -35,15 +35,15 @@ function TemplatesPage() {
             <div className="flex flex-col gap-2">
               <h2 className="font-medium text-xl tracking-tight">Starter</h2>
               <p className="text-muted-foreground text-sm">
-                A private app. People sign in, name the organization, and talk
-                to an agent. The chat is the{" "}
+                An app with sign-in and an agent. People sign in, name the
+                organization, and talk to an agent. The chat is the{" "}
                 <a
                   className="font-medium text-foreground underline underline-offset-4"
                   href="/blocks"
                 >
                   chat page
                 </a>
-                . You can also copy just that page.
+                .
               </p>
             </div>
             <div className="mt-auto flex flex-wrap gap-2">

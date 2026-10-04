@@ -7,7 +7,7 @@ export const siteConfig = {
   ogImage: `https://${PUBLIC_HOST}/og.jpg`,
   description: "Curated agent examples you can build upon",
   tagline:
-    "Copy the whole template, or just the block you need. Then change the source.",
+    "Start a new app from the template, or add the block to the one you have. Then change the source.",
   links: {
     twitter: "https://x.com/alwurts",
     github: "https://github.com/Alwurts/simple-ai",
