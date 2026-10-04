@@ -12,8 +12,46 @@ export const siteConfig = {
     github: "https://github.com/Alwurts/simple-ai",
   },
   navItems: [
-    { href: "/docs", label: "Documentation" },
-    { href: "/docs/components/chat-input", label: "Components" },
-    { href: "/blocks", label: "Examples" },
+    { href: "/docs", label: "Docs" },
+    { href: "/docs/components", label: "Components" },
+    { href: "/blocks", label: "Blocks" },
+    { href: "/templates", label: "Templates" },
   ],
 };
+
+export function isSiteNavActive(pathname: string, href: string) {
+  if (href === "/docs") {
+    return pathname === "/docs" || pathname === "/docs/";
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export const catalogNav = [
+  {
+    title: "Blocks",
+    pages: [{ title: "Chat page", url: "/blocks" }],
+  },
+  {
+    title: "Templates",
+    pages: [{ title: "Starter", url: "/templates" }],
+  },
+];
+
+export const mobileOutline = [
+  {
+    title: "Get Started",
+    pages: [
+      { title: "Introduction", url: "/docs" },
+      { title: "Installation", url: "/docs/installation" },
+    ],
+  },
+  {
+    title: "Components",
+    pages: [
+      { title: "Chat input", url: "/docs/components/chat-input" },
+      { title: "Tool", url: "/docs/components/tool" },
+      { title: "Worked", url: "/docs/components/worked" },
+    ],
+  },
+  ...catalogNav,
+];

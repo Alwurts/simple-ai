@@ -2,11 +2,7 @@ import { siteConfig } from "@/lib/config";
 
 const footerLinkClass = "font-medium underline underline-offset-4";
 
-const destinations = [
-  { href: "/blocks", label: "Examples" },
-  { href: "/docs/components/chat-input", label: "Chat input" },
-  { href: "/docs/installation", label: "Installation" },
-] as const;
+const destinations = siteConfig.navItems;
 
 export function SiteFooter() {
   return (

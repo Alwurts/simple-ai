@@ -12,7 +12,7 @@ import {
 import { cn } from "@workspace/ui/lib/utils";
 import { useState } from "react";
 import { LogoIcon } from "@/components/icons/logo-icon";
-import { siteConfig } from "@/lib/config";
+import { isSiteNavActive, mobileOutline, siteConfig } from "@/lib/config";
 
 export function MobileNav({ className }: { className?: string }) {
   const [open, setOpen] = useState(false);
@@ -72,11 +72,7 @@ export function MobileNav({ className }: { className?: string }) {
         <nav className="flex flex-col gap-4 px-4">
           <div className="flex flex-col gap-1">
             {siteConfig.navItems.map((item) => {
-              const active =
-                item.href === "/docs"
-                  ? pathname === "/docs" || pathname === "/docs/"
-                  : pathname === item.href ||
-                    pathname.startsWith(`${item.href}/`);
+              const active = isSiteNavActive(pathname, item.href);
               return (
                 <a
                   className={cn(
@@ -94,35 +90,31 @@ export function MobileNav({ className }: { className?: string }) {
               );
             })}
           </div>
-          <div className="flex flex-col gap-1">
-            <p className="px-2 font-bold text-foreground/70 text-xs uppercase tracking-wider">
-              Docs
-            </p>
-            {[
-              { href: "/docs", label: "Introduction" },
-              { href: "/docs/installation", label: "Installation" },
-              { href: "/docs/components/chat-input", label: "Chat input" },
-              { href: "/docs/components/tool", label: "Tool" },
-              { href: "/docs/components/worked", label: "Worked" },
-            ].map((item) => {
-              const active = pathname === item.href;
-              return (
-                <a
-                  className={cn(
-                    "rounded-md px-2 py-1.5 text-sm transition-colors",
-                    active
-                      ? "bg-brand/5 font-medium text-brand"
-                      : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
-                  )}
-                  href={item.href}
-                  key={item.href}
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
-                </a>
-              );
-            })}
-          </div>
+          {mobileOutline.map((group) => (
+            <div className="flex flex-col gap-1" key={group.title}>
+              <p className="px-2 font-bold text-foreground/70 text-xs uppercase tracking-wider">
+                {group.title}
+              </p>
+              {group.pages.map((page) => {
+                const active = pathname === page.url;
+                return (
+                  <a
+                    className={cn(
+                      "rounded-md px-2 py-1.5 text-sm transition-colors",
+                      active
+                        ? "bg-brand/5 font-medium text-brand"
+                        : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                    )}
+                    href={page.url}
+                    key={page.url}
+                    onClick={() => setOpen(false)}
+                  >
+                    {page.title}
+                  </a>
+                );
+              })}
+            </div>
+          ))}
         </nav>
       </SheetContent>
     </Sheet>

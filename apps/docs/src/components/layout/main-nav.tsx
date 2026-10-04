@@ -3,7 +3,7 @@
 import { useRouterState } from "@tanstack/react-router";
 import { Button } from "@workspace/ui/components/shadcn/button";
 import { cn } from "@workspace/ui/lib/utils";
-import { siteConfig } from "@/lib/config";
+import { isSiteNavActive, siteConfig } from "@/lib/config";
 
 export function MainNav({ className, ...props }: React.ComponentProps<"nav">) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -11,10 +11,7 @@ export function MainNav({ className, ...props }: React.ComponentProps<"nav">) {
   return (
     <nav className={cn("items-center gap-0.5", className)} {...props}>
       {siteConfig.navItems.map((item) => {
-        const active =
-          item.href === "/docs"
-            ? pathname === "/docs" || pathname === "/docs/"
-            : pathname === item.href || pathname.startsWith(`${item.href}/`);
+        const active = isSiteNavActive(pathname, item.href);
 
         return (
           <Button

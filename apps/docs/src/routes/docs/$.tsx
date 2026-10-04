@@ -7,7 +7,7 @@ import { DocsPage } from "@/components/docs/docs-page";
 import { DocsSidebar } from "@/components/docs/docs-sidebar";
 import { getMDXComponents } from "@/components/mdx";
 import { DocsNotFound } from "@/components/not-found";
-import { siteConfig } from "@/lib/config";
+import { catalogNav, siteConfig } from "@/lib/config";
 import { docsNavFromTree, docsNeighbours } from "@/lib/docs-nav";
 import { legacyDocsHref } from "@/lib/legacy-redirects";
 import { seo } from "@/lib/seo";
@@ -59,7 +59,7 @@ const serverLoader = createServerFn({ method: "GET" })
       title: String(page.data.title ?? "Docs"),
       description:
         typeof page.data.description === "string" ? page.data.description : "",
-      nav: docsNavFromTree(tree),
+      nav: [...docsNavFromTree(tree), ...catalogNav],
       previous: neighbours.previous,
       next: neighbours.next,
     };
