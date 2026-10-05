@@ -13,7 +13,7 @@ const input = { dueWithinDays: 7, status: "finalized" };
 export default function ToolPreview() {
   return (
     <div className="w-full max-w-md">
-      <Tool>
+      <Tool defaultOpen>
         <ToolHeader
           input={input}
           state="output-available"

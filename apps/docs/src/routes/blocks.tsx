@@ -9,9 +9,8 @@ import {
 } from "@/components/layout/page-header";
 import { seo } from "@/lib/seo";
 
-const title = "Examples";
-const description =
-  "Copy a complete chat page into your app. Change the source.";
+const title = "Blocks";
+const description = "Full screens you add to your app with one command.";
 
 export const Route = createFileRoute("/blocks")({
   component: BlocksPage,

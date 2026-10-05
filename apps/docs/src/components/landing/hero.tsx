@@ -1,9 +1,11 @@
 "use client";
 
 import { Button } from "@workspace/ui/components/shadcn/button";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { HeroChatPreview } from "@/components/landing/hero-chat-preview";
+
+const STARTER_GENERATE =
+  "https://github.com/Alwurts/simple-ai-starter/generate";
 
 export function LandingHero() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -42,32 +44,57 @@ export function LandingHero() {
             Curated agent examples{" "}
             <span className="text-muted-foreground">you can build upon</span>
           </h1>
-          <p className="max-w-md text-muted-foreground text-sm md:text-base">
-            Copy them into your app. Change the source.
+          <p className="max-w-md text-balance text-muted-foreground text-sm md:text-base">
+            Start a new app from the{" "}
+            <a
+              className="font-medium text-foreground underline underline-offset-4"
+              href="/templates"
+            >
+              template
+            </a>
+            , or add the{" "}
+            <a
+              className="font-medium text-foreground underline underline-offset-4"
+              href="/blocks"
+            >
+              block
+            </a>{" "}
+            to the one you have. Then change the source.
           </p>
-          <div className="flex items-center justify-center gap-2">
-            <Button
-              className="rounded-full border-0 bg-brand text-brand-foreground hover:bg-brand/90"
-              render={<a href="/docs/installation" />}
-              size="sm"
-            >
-              Get started
-              <ArrowRight className="size-3.5" />
-            </Button>
-            <Button
-              className="rounded-full"
-              render={<a href="/view/chat-page" />}
-              size="sm"
-              variant="outline"
-            >
-              Open preview
-              <ArrowUpRight className="size-3.5" />
-            </Button>
+          <div className="mt-2 grid w-full max-w-3xl gap-8 sm:grid-cols-2">
+            <div className="flex flex-col items-center gap-3">
+              <p className="font-medium">A new app</p>
+              <p className="text-muted-foreground text-sm">
+                An app with sign-in and an agent.
+              </p>
+              <Button
+                className="rounded-full border-0 bg-brand text-brand-foreground hover:bg-brand/90"
+                render={
+                  <a href={STARTER_GENERATE} rel="noreferrer" target="_blank" />
+                }
+                size="sm"
+              >
+                Use this template
+              </Button>
+            </div>
+            <div className="flex flex-col items-center gap-3">
+              <p className="font-medium">The app you have</p>
+              <p className="text-muted-foreground text-sm">
+                The chat page, copied into the app you already have.
+              </p>
+              <pre className="max-w-full overflow-x-auto rounded-lg bg-code px-4 py-3 font-mono text-sm">
+                npx shadcn@latest add @simple-ai/chat-page
+              </pre>
+            </div>
           </div>
         </div>
 
         <div className="mt-6 w-full md:mt-8">
           <HeroChatPreview />
+          <p className="mx-auto mt-4 max-w-md text-balance text-muted-foreground text-sm">
+            The thread, the prompt, tools, thinking, and the work folded away so
+            the answer stays readable.
+          </p>
         </div>
       </div>
     </div>
