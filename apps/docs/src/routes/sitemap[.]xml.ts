@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { siteConfig } from "@/lib/config";
 import { source } from "@/lib/source";
 
-const STATIC_PATHS = ["/", "/blocks"];
+const STATIC_PATHS = ["/", "/blocks", "/templates"];
 
 function loc(path: string) {
   if (path === "/") {
