@@ -15,7 +15,7 @@
     "@biomejs/biome": "2.5.15",
     "@workspace/biome-config": "workspace:*",
     "@workspace/tsconfig": "workspace:*",
-    "turbo": "^2.11.6",
+    "turbo": "^2.11.7",
     "typescript": "7.0.2"
   },
   "packageManager": "pnpm@10.34.6",

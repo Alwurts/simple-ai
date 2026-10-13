@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/react": "^4.0.129",
+    "@ai-sdk/react": "^4.0.130",
     "@shadcn/helpers": "0.2.0",
     "@tiptap/core": "^3.31.4",
     "@tiptap/extension-mention": "^3.31.4",
@@ -22,8 +22,8 @@
     "@tiptap/starter-kit": "^3.31.4",
     "@tiptap/suggestion": "^3.31.4",
     "@workspace/ui": "workspace:*",
-    "ai": "^7.0.126",
-    "hono": "^4.13.12",
+    "ai": "^7.0.127",
+    "hono": "^4.13.13",
     "lucide-react": "^0.577.0",
     "motion": "^12.43.0",
     "react": "^19.3.0",
@@ -34,11 +34,11 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@types/node": "^22.20.4",
+    "@types/node": "^22.20.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@workspace/tsconfig": "workspace:*",
-    "shadcn": "4.21.0",
+    "shadcn": "4.21.1",
     "tsx": "^4.23.15",
     "typescript": "7.0.2"
   }
