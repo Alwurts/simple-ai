@@ -16,15 +16,15 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@ai-sdk/react": "^4.0.157",
+    "@ai-sdk/react": "^4.0.166",
     "@shadcn/helpers": "0.3.0",
     "@tanstack/react-router": "1.170.42",
     "@tanstack/react-start": "~1.168.61",
     "@workspace/registry": "workspace:*",
     "@workspace/ui": "workspace:*",
-    "ai": "^7.0.153",
+    "ai": "^7.0.162",
     "class-variance-authority": "^0.7.1",
-    "fumadocs-core": "16.17.8",
+    "fumadocs-core": "16.17.10",
     "lucide-react": "^0.577.0",
     "next-themes": "^0.4.6",
     "react": "^19.3.1",
@@ -32,9 +32,9 @@
     "shiki": "^3.23.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.65.0",
-    "@cloudflare/workers-types": "^5.20261026.1",
-    "@tailwindcss/vite": "^4.3.3",
+    "@cloudflare/vite-plugin": "^1.67.0",
+    "@cloudflare/workers-types": "^5.20261104.1",
+    "@tailwindcss/vite": "^4.3.4",
     "@tanstack/router-cli": "^1.167.46",
     "@tanstack/router-plugin": "1.168.43",
     "@types/node": "^22.20.5",
@@ -45,10 +45,10 @@
     "clsx": "^2.1.1",
     "fumadocs-mdx": "^15.4.10",
     "tailwind-merge": "^3.7.0",
-    "tailwindcss": "^4.3.3",
+    "tailwindcss": "^4.3.4",
     "typescript": "7.0.2",
     "vite": "^7.3.7",
     "vite-tsconfig-paths": "^5.1.4",
-    "wrangler": "^4.152.0"
+    "wrangler": "^4.157.0"
   }
 }
